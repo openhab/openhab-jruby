@@ -33,6 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "guard-yard", "~> 2.2"
   spec.add_development_dependency "httparty", "~> 0.20"
   spec.add_development_dependency "irb", "~> 1.4"
+  spec.add_development_dependency "nokogiri", "~> 1.13.9"
   spec.add_development_dependency "persistent_httparty", "~> 0.1"
   spec.add_development_dependency "process_exists", "~> 0.2"
   spec.add_development_dependency "rake", "~> 13.0"

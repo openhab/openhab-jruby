@@ -48,6 +48,8 @@ module OpenHAB
         # @yield Block executed in the context of a {DSL::Items::Builder}
         # @return [Object] The return value of the block.
         #
+        # (see Items::Builder)
+        #
         def build(preferred_provider = nil, &block)
           DSL::Items::BaseBuilderDSL.new(preferred_provider).instance_eval_with_dummy_items(&block)
         end
