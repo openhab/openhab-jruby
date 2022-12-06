@@ -88,7 +88,7 @@ module OpenHAB
       end
     end
 
-    import_default_presets
+    import_default_presets unless defined?($ir)
   end
 end
 
