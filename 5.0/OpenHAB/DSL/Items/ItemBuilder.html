@@ -1,0 +1,2514 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: OpenHAB::DSL::Items::ItemBuilder
+  
+    &mdash; Documentation by YARD 0.9.28
+  
+</title>
+
+  <link rel="stylesheet" href="../../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "OpenHAB::DSL::Items::ItemBuilder";
+  relpath = '../../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../../_index.html">Index (I)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../../OpenHAB.html" title="OpenHAB (module)">OpenHAB</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../DSL.html" title="OpenHAB::DSL (module)">DSL</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Items.html" title="OpenHAB::DSL::Items (module)">Items</a></span></span>
+     &raquo; 
+    <span class="title">ItemBuilder</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: OpenHAB::DSL::Items::ItemBuilder
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'>Object</span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'>Object</span></li>
+          
+            <li class="next">OpenHAB::DSL::Items::ItemBuilder</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/openhab/dsl/items/builder.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>The ItemBuilder DSL allows you to customize an Item</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><span class='object_link'><a href="GroupItemBuilder.html" title="OpenHAB::DSL::Items::GroupItemBuilder (class)">GroupItemBuilder</a></span></p>
+</div>
+
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#autoupdate-instance_method" title="#autoupdate (instance method)">#<strong>autoupdate</strong>  &#x21d2; true, ... </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Autoupdate setting.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#channels-instance_method" title="#channels (instance method)">#<strong>channels</strong>  &#x21d2; String, ... </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p><span class='object_link'><a href="../../Core/Things/ChannelUID.html" title="OpenHAB::Core::Things::ChannelUID (class)">Channel</a></span> to link the item to.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#dimension-instance_method" title="#dimension (instance method)">#<strong>dimension</strong>  &#x21d2; String<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Unit dimension (for number items only).</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#format-instance_method" title="#format (instance method)">#<strong>format</strong>  &#x21d2; String<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The formatting pattern for the item's state.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#groups-instance_method" title="#groups (instance method)">#<strong>groups</strong>  &#x21d2; Array&lt;String, GroupItem&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Groups to which this item should be added.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#icon-instance_method" title="#icon (instance method)">#<strong>icon</strong>  &#x21d2; Symbol<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The icon to be associated with the item.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#label-instance_method" title="#label (instance method)">#<strong>label</strong>  &#x21d2; String<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Item label.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#metadata-instance_method" title="#metadata (instance method)">#<strong>metadata</strong>  &#x21d2; Core::Items::Metadata::NamespaceHash </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#name-instance_method" title="#name (instance method)">#<strong>name</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Item name.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#state-instance_method" title="#state (instance method)">#<strong>state</strong>  &#x21d2; Core::Types::State </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Initial state.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tags-instance_method" title="#tags (instance method)">#<strong>tags</strong>  &#x21d2; Array&lt;String, Semantics::Tag&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Tags to apply to this item.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#type-instance_method" title="#type (instance method)">#<strong>type</strong>  &#x21d2; Symbol </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The type of this item.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2 id="Instance Method Summary">
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#alexa-instance_method" title="#alexa (instance method)">#<strong>alexa</strong>(value, config = nil)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Shortcut for adding Alexa metadata.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#channel-instance_method" title="#channel (instance method)">#<strong>channel</strong>(channel, config = {})  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Add a channel link to this item.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#expire-instance_method" title="#expire (instance method)">#<strong>expire</strong>(command: nil, state: nil)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Configure item expiration.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#ga-instance_method" title="#ga (instance method)">#<strong>ga</strong>(value, config = nil)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Shortcut for adding Google Assistant metadata.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#group-instance_method" title="#group (instance method)">#<strong>group</strong>(*groups)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Add this item to a group.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#homekit-instance_method" title="#homekit (instance method)">#<strong>homekit</strong>(value, config = nil)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Shortcut for adding Homekit metadata.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(type, name = nil, label = nil, provider:, dimension: nil, format: nil, icon: nil, group: nil, groups: nil, tag: nil, tags: nil, autoupdate: nil, channel: nil, expire: nil, alexa: nil, ga: nil, homekit: nil, metadata: nil, state: nil)  &#x21d2; ItemBuilder </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of ItemBuilder.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#inspect-instance_method" title="#inspect (instance method)">#<strong>inspect</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tag-instance_method" title="#tag (instance method)">#<strong>tag</strong>(*tags)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Tag item.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_s-instance_method" title="#to_s (instance method)">#<strong>to_s</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The item's label if one is defined, otherwise its name.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(type, name = nil, label = nil, provider:, dimension: nil, format: nil, icon: nil, group: nil, groups: nil, tag: nil, tags: nil, autoupdate: nil, channel: nil, expire: nil, alexa: nil, ga: nil, homekit: nil, metadata: nil, state: nil)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::DSL::Items::ItemBuilder (class)">ItemBuilder</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of ItemBuilder.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>dimension</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The unit dimension for a <span class='object_link'><a href="../../Core/Items/NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span> (see <span class='object_link'><a href="#dimension-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#dimension (method)">#dimension</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>format</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The formatting pattern for the item's state (see <span class='object_link'><a href="#format-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#format (method)">#format</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>icon</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The icon to be associated with the item (see <span class='object_link'><a href="#icon-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#icon (method)">#icon</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>group</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../Core/Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItem</a></span></tt>, <tt><span class='object_link'><a href="GroupItemBuilder.html" title="OpenHAB::DSL::Items::GroupItemBuilder (class)">GroupItemBuilder</a></span></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String, <span class='object_link'><a href="../../Core/Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItem</a></span>, <span class='object_link'><a href="GroupItemBuilder.html" title="OpenHAB::DSL::Items::GroupItemBuilder (class)">GroupItemBuilder</a></span>&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Group(s) to which this item should be added (see <span class='object_link'><a href="#group-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#group (method)">#group</a></span>).</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>groups</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../Core/Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItem</a></span></tt>, <tt><span class='object_link'><a href="GroupItemBuilder.html" title="OpenHAB::DSL::Items::GroupItemBuilder (class)">GroupItemBuilder</a></span></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String, <span class='object_link'><a href="../../Core/Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItem</a></span>, <span class='object_link'><a href="GroupItemBuilder.html" title="OpenHAB::DSL::Items::GroupItemBuilder (class)">GroupItemBuilder</a></span>&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Fluent alias for <code>group</code>.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>tag</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String, <span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span>, <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a>&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Tag(s) to apply to this item (see <span class='object_link'><a href="#tag-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#tag (method)">#tag</a></span>).</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>tags</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String, <span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span>, <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a>&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Fluent alias for <code>tag</code>.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>autoupdate</span>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Autoupdate setting (see <span class='object_link'><a href="#autoupdate-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#autoupdate (method)">#autoupdate</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>channel</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../Core/Things/ChannelUID.html" title="OpenHAB::Core::Things::ChannelUID (class)">Core::Things::ChannelUID</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Channel to link the item to</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>expire</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An expiration specification.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>alexa</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;(String, Hash&lt;String, <span class='object_link'>Object</span>&gt;)&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Alexa metadata (see <span class='object_link'><a href="#alexa-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#alexa (method)">#alexa</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>ga</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;(String, Hash&lt;String, <span class='object_link'>Object</span>&gt;)&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Google Assistant metadata (see <span class='object_link'><a href="#ga-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#ga (method)">#ga</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>homekit</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;(String, Hash&lt;String, <span class='object_link'>Object</span>&gt;)&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Homekit metadata (see <span class='object_link'><a href="#homekit-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#homekit (method)">#homekit</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>metadata</span>
+      
+      
+        <span class='type'>(<tt>Hash&lt;String, Hash&gt;</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Generic metadata (see <span class='object_link'><a href="#metadata-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#metadata (method)">#metadata</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>state</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Core/Types/State.html" title="OpenHAB::Core::Types::State (module)">State</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Initial state</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 220</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">initialize</span>(type, name = <span style="color:#069">nil</span>, label = <span style="color:#069">nil</span>,
+               <span style="color:#606">provider</span>:,
+               <span style="color:#606">dimension</span>: <span style="color:#069">nil</span>,
+               <span style="color:#606">format</span>: <span style="color:#069">nil</span>,
+               <span style="color:#606">icon</span>: <span style="color:#069">nil</span>,
+               <span style="color:#606">group</span>: <span style="color:#069">nil</span>,
+               <span style="color:#606">groups</span>: <span style="color:#069">nil</span>,
+               <span style="color:#606">tag</span>: <span style="color:#069">nil</span>,
+               <span style="color:#606">tags</span>: <span style="color:#069">nil</span>,
+               <span style="color:#606">autoupdate</span>: <span style="color:#069">nil</span>,
+               <span style="color:#606">channel</span>: <span style="color:#069">nil</span>,
+               <span style="color:#606">expire</span>: <span style="color:#069">nil</span>,
+               <span style="color:#606">alexa</span>: <span style="color:#069">nil</span>,
+               <span style="color:#606">ga</span>: <span style="color:#069">nil</span>, <span style="color:#777"># rubocop:disable Naming/MethodParameterName</span>
+               <span style="color:#606">homekit</span>: <span style="color:#069">nil</span>,
+               <span style="color:#606">metadata</span>: <span style="color:#069">nil</span>,
+               <span style="color:#606">state</span>: <span style="color:#069">nil</span>)
+  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">`name` cannot be nil</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> name.nil?
+  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">`dimension` can only be specified with NumberItem</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> dimension &amp;&amp; type != <span style="color:#A60">:number</span>
+
+  name = name.name <span style="color:#080;font-weight:bold">if</span> name.respond_to?(<span style="color:#A60">:name</span>)
+  <span style="color:#080;font-weight:bold">if</span> provider.is_a?(<span style="color:#036;font-weight:bold">GroupItemBuilder</span>)
+    name = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>provider.name_base<span style="font-weight:bold;color:#666">}</span></span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
+    label = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>provider.label_base<span style="font-weight:bold;color:#666">}</span></span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>label<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>.strip <span style="color:#080;font-weight:bold">if</span> label
+  <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#33B">@provider</span> = provider
+  <span style="color:#33B">@type</span> = type
+  <span style="color:#33B">@name</span> = name.to_s
+  <span style="color:#33B">@label</span> = label
+  <span style="color:#33B">@dimension</span> = dimension
+  <span style="color:#33B">@format</span> = format
+  <span style="color:#33B">@icon</span> = icon
+  <span style="color:#33B">@groups</span> = []
+  <span style="color:#33B">@tags</span> = []
+  <span style="color:#33B">@metadata</span> = <span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Items</span>::<span style="color:#036;font-weight:bold">Metadata</span>::<span style="color:#036;font-weight:bold">NamespaceHash</span>.new
+  <span style="color:#33B">@metadata</span>.merge!(metadata) <span style="color:#080;font-weight:bold">if</span> metadata
+  <span style="color:#33B">@autoupdate</span> = autoupdate
+  <span style="color:#33B">@channels</span> = []
+  <span style="color:#33B">@expire</span> = <span style="color:#069">nil</span>
+  <span style="color:#080;font-weight:bold">if</span> expire
+    expire = Array(expire)
+    expire_config = expire.pop <span style="color:#080;font-weight:bold">if</span> expire.last.is_a?(<span style="color:#036;font-weight:bold">Hash</span>)
+    expire_config ||= {}
+    <span style="color:#069">self</span>.expire(*expire, **expire_config)
+  <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#069">self</span>.alexa(alexa) <span style="color:#080;font-weight:bold">if</span> alexa
+  <span style="color:#069">self</span>.ga(ga) <span style="color:#080;font-weight:bold">if</span> ga
+  <span style="color:#069">self</span>.homekit(homekit) <span style="color:#080;font-weight:bold">if</span> homekit
+  <span style="color:#33B">@state</span> = state
+
+  <span style="color:#069">self</span>.group(*group)
+  <span style="color:#069">self</span>.group(*groups)
+
+  <span style="color:#069">self</span>.tag(*tag)
+  <span style="color:#069">self</span>.tag(*tags)
+
+  <span style="color:#069">self</span>.channel(*channel) <span style="color:#080;font-weight:bold">if</span> channel
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="autoupdate=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="autoupdate-instance_method">
+  
+    #<strong>autoupdate</strong>  &#x21d2; <tt>true</tt>, ... 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Autoupdate setting</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+173
+174
+175</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 173</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">autoupdate</span>
+  <span style="color:#33B">@autoupdate</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="channels=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="channels-instance_method">
+  
+    #<strong>channels</strong>  &#x21d2; <tt>String</tt>, ... 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p><span class='object_link'><a href="../../Core/Things/ChannelUID.html" title="OpenHAB::Core::Things::ChannelUID (class)">Channel</a></span> to link the item to</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../Core/Things/ChannelUID.html" title="OpenHAB::Core::Things::ChannelUID (class)">Core::Things::ChannelUID</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+176
+177
+178</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 176</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">channels</span>
+  <span style="color:#33B">@channels</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="dimension=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="dimension-instance_method">
+  
+    #<strong>dimension</strong>  &#x21d2; <tt>String</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Unit dimension (for number items only)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+158
+159
+160</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 158</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">dimension</span>
+  <span style="color:#33B">@dimension</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="format=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="format-instance_method">
+  
+    #<strong>format</strong>  &#x21d2; <tt>String</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The formatting pattern for the item's state</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+161
+162
+163</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 161</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">format</span>
+  <span style="color:#33B">@format</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="groups-instance_method">
+  
+    #<strong>groups</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String, <span class='object_link'><a href="../../Core/Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItem</a></span>&gt;</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Groups to which this item should be added</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String, <span class='object_link'><a href="../../Core/Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItem</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+167
+168
+169</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 167</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">groups</span>
+  <span style="color:#33B">@groups</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="icon=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="icon-instance_method">
+  
+    #<strong>icon</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The icon to be associated with the item</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+164
+165
+166</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 164</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">icon</span>
+  <span style="color:#33B">@icon</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="label=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="label-instance_method">
+  
+    #<strong>label</strong>  &#x21d2; <tt>String</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Item label</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+155
+156
+157</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 155</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">label</span>
+  <span style="color:#33B">@label</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="metadata-instance_method">
+  
+    #<strong>metadata</strong>  &#x21d2; <tt><span class='object_link'><a href="../../Core/Items/Metadata/NamespaceHash.html" title="OpenHAB::Core::Items::Metadata::NamespaceHash (class)">Core::Items::Metadata::NamespaceHash</a></span></tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Core/Items/Metadata/NamespaceHash.html" title="OpenHAB::Core::Items::Metadata::NamespaceHash (class)">Core::Items::Metadata::NamespaceHash</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+178
+179
+180</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 178</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">metadata</span>
+  <span style="color:#33B">@metadata</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="name=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="name-instance_method">
+  
+    #<strong>name</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Item name</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+152
+153
+154</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 152</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">name</span>
+  <span style="color:#33B">@name</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="state=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="state-instance_method">
+  
+    #<strong>state</strong>  &#x21d2; <tt><span class='object_link'><a href="../../Core/Types/State.html" title="OpenHAB::Core::Types::State (module)">Core::Types::State</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Initial state</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Core/Types/State.html" title="OpenHAB::Core::Types::State (module)">Core::Types::State</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+181
+182
+183</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 181</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">state</span>
+  <span style="color:#33B">@state</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="tags-instance_method">
+  
+    #<strong>tags</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String, <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a>&gt;</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Tags to apply to this item</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String, <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+170
+171
+172</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 170</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">tags</span>
+  <span style="color:#33B">@tags</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="type-instance_method">
+  
+    #<strong>type</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The type of this item</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>type <span style="color:#777">#=&gt; :switch</span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+149
+150
+151</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 149</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">type</span>
+  <span style="color:#33B">@type</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="alexa-instance_method">
+  
+    #<strong>alexa</strong>(value, config = nil)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Shortcut for adding Alexa metadata</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Type of Alexa endpoint</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>config</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Additional Alexa configuration</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://www.openhab.org/docs/ecosystem/alexa/" target="_parent" title="https://www.openhab.org/docs/ecosystem/alexa/">https://www.openhab.org/docs/ecosystem/alexa/</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 325</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="channel-instance_method">
+  
+    #<strong>channel</strong>(channel, config = {})  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Add a channel link to this item.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>items.build <span style="color:#080;font-weight:bold">do</span>
+  date_time_item <span style="color:#036;font-weight:bold">Bedroom_Light_Updated</span> <span style="color:#080;font-weight:bold">do</span>
+    channel <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">hue:0210:1:bulb1:color</span><span style="color:#710">&quot;</span></span>, <span style="color:#606">profile</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">system:timestamp-update</span><span style="color:#710">&quot;</span></span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>config</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Additional configuration, such as profile</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+378
+379
+380</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 378</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">channel</span>(channel, config = {})
+  <span style="color:#33B">@channels</span> &lt;&lt; [channel, config]
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="expire-instance_method">
+  
+    #<strong>expire</strong>(command: nil, state: nil)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Configure item expiration</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Get the current expire setting</p>
+</div></p>
+      
+      <pre class="example code"><code>expire</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Clear any expire setting</p>
+</div></p>
+      
+      <pre class="example code"><code>expire <span style="color:#069">nil</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Use a duration</p>
+</div></p>
+      
+      <pre class="example code"><code>expire <span style="color:#00D">5</span>.hours</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Use a string duration</p>
+</div></p>
+      
+      <pre class="example code"><code>expire <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">5h</span><span style="color:#710">&quot;</span></span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Set a specific state on expiration</p>
+</div></p>
+      
+      <pre class="example code"><code>expire <span style="color:#00D">5</span>.minutes, <span style="color:#036;font-weight:bold">NULL</span>
+expire <span style="color:#00D">5</span>.minutes, <span style="color:#606">state</span>: <span style="color:#036;font-weight:bold">NULL</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Send a command on expiration</p>
+</div></p>
+      
+      <pre class="example code"><code>expire <span style="color:#00D">5</span>.minutes, <span style="color:#606">command</span>: <span style="color:#036;font-weight:bold">OFF</span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 402</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">expire</span>(*args, <span style="color:#606">command</span>: <span style="color:#069">nil</span>, <span style="color:#606">state</span>: <span style="color:#069">nil</span>)
+  <span style="color:#080;font-weight:bold">unless</span> (<span style="color:#00D">0</span>..<span style="color:#00D">2</span>).cover?(args.length)
+    raise <span style="color:#036;font-weight:bold">ArgumentError</span>,
+          <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">wrong number of arguments (given </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>args.length<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">, expected 0..2)</span><span style="color:#710">&quot;</span></span>
+  <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">return</span> <span style="color:#33B">@expire</span> <span style="color:#080;font-weight:bold">if</span> args.empty?
+
+  state = args.last <span style="color:#080;font-weight:bold">if</span> args.length == <span style="color:#00D">2</span>
+  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">cannot provide both command and state</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> command &amp;&amp; state
+
+  duration = args.first
+  <span style="color:#080;font-weight:bold">return</span> <span style="color:#33B">@expire</span> = <span style="color:#069">nil</span> <span style="color:#080;font-weight:bold">if</span> duration.nil?
+
+  duration = duration.to_s[<span style="color:#00D">2</span>..].downcase <span style="color:#080;font-weight:bold">if</span> duration.is_a?(<span style="color:#036;font-weight:bold">Duration</span>)
+  state = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">'</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>state<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">'</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> state.respond_to?(<span style="color:#A60">:to_str</span>) &amp;&amp; type == <span style="color:#A60">:string</span>
+  <span style="color:#33B">@expire</span> = duration
+  <span style="color:#33B">@expire</span> += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">,state=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>state<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> state
+  <span style="color:#33B">@expire</span> += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">,command=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>command<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> command
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="ga-instance_method">
+  
+    #<strong>ga</strong>(value, config = nil)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Shortcut for adding Google Assistant metadata</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Type of Google Assistant endpoint</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>config</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Additional Google Assistant configuration</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://www.openhab.org/docs/ecosystem/google-assistant/" target="_parent" title="https://www.openhab.org/docs/ecosystem/google-assistant/">https://www.openhab.org/docs/ecosystem/google-assistant/</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 336</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="group-instance_method">
+  
+    #<strong>group</strong>(*groups)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Add this item to a group</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>groups</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="GroupItemBuilder.html" title="OpenHAB::DSL::Items::GroupItemBuilder (class)">GroupItemBuilder</a></span></tt>, <tt><span class='object_link'><a href="../../Core/Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItem</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+315
+316
+317
+318
+319
+320
+321
+322
+323</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 315</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">group</span>(*groups)
+  <span style="color:#080;font-weight:bold">unless</span> groups.all? <span style="color:#080;font-weight:bold">do</span> |group|
+           group.is_a?(<span style="color:#036;font-weight:bold">String</span>) || group.is_a?(<span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Items</span>::<span style="color:#036;font-weight:bold">GroupItem</span>) || group.is_a?(<span style="color:#036;font-weight:bold">GroupItemBuilder</span>)
+         <span style="color:#080;font-weight:bold">end</span>
+    raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">`group` must be a `GroupItem`, `GroupItemBuilder`, or a `String`</span><span style="color:#710">&quot;</span></span>
+  <span style="color:#080;font-weight:bold">end</span>
+
+  <span style="color:#33B">@groups</span>.concat(groups)
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="homekit-instance_method">
+  
+    #<strong>homekit</strong>(value, config = nil)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Shortcut for adding Homekit metadata</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Type of Homekit accessory or characteristic</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>config</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Additional Homekit configuration</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://www.openhab.org/addons/integrations/homekit/" target="_parent" title="https://www.openhab.org/addons/integrations/homekit/">https://www.openhab.org/addons/integrations/homekit/</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+358
+359
+360
+361
+362
+363</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 358</span>
+
+<span style="color:#A60"><span style="color:#740">%i[</span><span style="color:#A60">alexa ga homekit</span><span style="color:#740">]</span></span>.each <span style="color:#080;font-weight:bold">do</span> |shortcut|
+  define_method(shortcut) <span style="color:#080;font-weight:bold">do</span> |value = <span style="color:#069">nil</span>, config = <span style="color:#069">nil</span>|
+    value, config = value <span style="color:#080;font-weight:bold">if</span> value.is_a?(<span style="color:#036;font-weight:bold">Array</span>)
+    metadata[shortcut] = [value, config]
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="inspect-instance_method">
+  
+    #<strong>inspect</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+443
+444
+445
+446
+447
+448
+449
+450</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 443</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">inspect</span>
+  s = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">#&lt;OpenHAB::Core::Items::</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>inspect_type<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">ItemBuilder</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>type_details<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>label.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
+  s += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> category=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>icon.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> icon
+  s += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> tags=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>tags.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> tags.empty?
+  s += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> groups=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>groups.map { |g| g.respond_to?(<span style="color:#A60">:name</span>) ? g.name : g }.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> groups.empty?
+  s += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> metadata=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>metadata.to_h.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> metadata.empty?
+  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>s<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">&gt;</span><span style="color:#710">&quot;</span></span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="tag-instance_method">
+  
+    #<strong>tag</strong>(*tags)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Tag item</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>tags</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 294</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">tag</span>(*tags)
+  <span style="color:#080;font-weight:bold">unless</span> tags.all? <span style="color:#080;font-weight:bold">do</span> |tag|
+           tag.is_a?(<span style="color:#036;font-weight:bold">String</span>) ||
+           tag.is_a?(<span style="color:#036;font-weight:bold">Symbol</span>) ||
+           (tag.is_a?(<span style="color:#036;font-weight:bold">Module</span>) &amp;&amp; tag &lt; <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Tag</span>)
+         <span style="color:#080;font-weight:bold">end</span>
+    raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">`tag` must be a subclass of Semantics::Tag, or a `String``.</span><span style="color:#710">&quot;</span></span>
+  <span style="color:#080;font-weight:bold">end</span>
+
+  tags.each <span style="color:#080;font-weight:bold">do</span> |tag|
+    tag = tag.name.split(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">::</span><span style="color:#710">&quot;</span></span>).last <span style="color:#080;font-weight:bold">if</span> tag.is_a?(<span style="color:#036;font-weight:bold">Module</span>) &amp;&amp; tag &lt; <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Tag</span>
+    <span style="color:#33B">@tags</span> &lt;&lt; tag.to_s
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_s-instance_method">
+  
+    #<strong>to_s</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The item's label if one is defined, otherwise its name.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+284
+285
+286</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 284</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to_s</span>
+  label || name
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Tue Dec  6 23:47:40 2022 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.28 (ruby-3.1.3).
+</div>
+
+    </div>
+  </body>
+</html>

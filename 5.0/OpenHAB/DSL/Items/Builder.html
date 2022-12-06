@@ -1,0 +1,2102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: OpenHAB::DSL::Items::Builder
+  
+    &mdash; Documentation by YARD 0.9.28
+  
+</title>
+
+  <link rel="stylesheet" href="../../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "OpenHAB::DSL::Items::Builder";
+  relpath = '../../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../../_index.html">Index (B)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../../OpenHAB.html" title="OpenHAB (module)">OpenHAB</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../DSL.html" title="OpenHAB::DSL (module)">DSL</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Items.html" title="OpenHAB::DSL::Items (module)">Items</a></span></span>
+     &raquo; 
+    <span class="title">Builder</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: OpenHAB::DSL::Items::Builder
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="../../Core/EntityLookup.html" title="OpenHAB::Core::EntityLookup (module)">Core::EntityLookup</a></span>, <span class='object_link'><a href="../../DSL.html" title="OpenHAB::DSL (module)">OpenHAB::DSL</a></span></dd>
+  </dl>
+  
+  
+
+  
+  <dl>
+    <dt>Included in:</dt>
+    <dd><span class='object_link'><a href="GroupItemBuilder.html" title="OpenHAB::DSL::Items::GroupItemBuilder (class)">GroupItemBuilder</a></span></dd>
+  </dl>
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/openhab/dsl/items/builder.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>An item builder allows you to dynamically create openHAB items at runtime.
+This can be useful either to create items as soon as the script loads,
+or even later based on a rule executing.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>items.build <span style="color:#080;font-weight:bold">do</span>
+  switch_item <span style="color:#036;font-weight:bold">MySwitch</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">My Switch</span><span style="color:#710">&quot;</span></span>
+  switch_item <span style="color:#036;font-weight:bold">NotAutoupdating</span>, <span style="color:#606">autoupdate</span>: <span style="color:#069">false</span>, <span style="color:#606">channel</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">mqtt:topic:1#light</span><span style="color:#710">&quot;</span></span>
+  group_item <span style="color:#036;font-weight:bold">MyGroup</span> <span style="color:#080;font-weight:bold">do</span>
+    contact_item <span style="color:#036;font-weight:bold">ItemInGroup</span>, <span style="color:#606">channel</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">binding:thing#channel</span><span style="color:#710">&quot;</span></span>
+  <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#777"># passing `thing` to a group item will automatically use it as the base</span>
+  <span style="color:#777"># for item channels</span>
+  group_item <span style="color:#036;font-weight:bold">Equipment</span>, <span style="color:#606">tags</span>: <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">HVAC</span>, <span style="color:#606">thing</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">binding:thing</span><span style="color:#710">&quot;</span></span>
+    string_item <span style="color:#036;font-weight:bold">Mode</span>, <span style="color:#606">tags</span>: <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Control</span>, <span style="color:#606">channel</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">mode</span><span style="color:#710">&quot;</span></span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+  </div>
+
+
+</div>
+
+
+  <h2>Constant Summary</h2>
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="../../DSL.html" title="OpenHAB::DSL (module)">OpenHAB::DSL</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../../DSL.html#VERSION-constant" title="OpenHAB::DSL::VERSION (constant)">VERSION</a></span></p>
+
+
+
+
+
+  
+    <h2 id="Instance Method Summary">
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#color_item-instance_method" title="#color_item (instance method)">#<strong>color_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; ColorItem </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a new color item.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#contact_item-instance_method" title="#contact_item (instance method)">#<strong>contact_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; ContactItem </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a new contact item.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#date_time_item-instance_method" title="#date_time_item (instance method)">#<strong>date_time_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; DateTimeItem </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a new date_time item.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#dimmer_item-instance_method" title="#dimmer_item (instance method)">#<strong>dimmer_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; DimmerItem </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a new dimmer item.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#group_item-instance_method" title="#group_item (instance method)">#<strong>group_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; GroupItem </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a new <span class='object_link'><a href="../../Core/Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItem</a></span>.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#image_item-instance_method" title="#image_item (instance method)">#<strong>image_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; ImageItem </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a new image item.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#location_item-instance_method" title="#location_item (instance method)">#<strong>location_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; LocationItem </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a new location item.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#number_item-instance_method" title="#number_item (instance method)">#<strong>number_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; NumberItem </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a new number item.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#player_item-instance_method" title="#player_item (instance method)">#<strong>player_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; PlayerItem </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a new player item.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#rollershutter_item-instance_method" title="#rollershutter_item (instance method)">#<strong>rollershutter_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; RollershutterItem </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a new rollershutter item.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#string_item-instance_method" title="#string_item (instance method)">#<strong>string_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; StringItem </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a new string item.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#switch_item-instance_method" title="#switch_item (instance method)">#<strong>switch_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; SwitchItem </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a new switch item.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../../DSL.html" title="OpenHAB::DSL (module)">OpenHAB::DSL</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../../DSL.html#after-class_method" title="OpenHAB::DSL.after (method)">after</a></span>, <span class='object_link'><a href="../../DSL.html#between-class_method" title="OpenHAB::DSL.between (method)">between</a></span>, <span class='object_link'><a href="../../DSL.html#ensure_states-class_method" title="OpenHAB::DSL.ensure_states (method)">ensure_states</a></span>, <span class='object_link'><a href="../../DSL.html#items-class_method" title="OpenHAB::DSL.items (method)">items</a></span>, <span class='object_link'><a href="../../DSL.html#persistence-class_method" title="OpenHAB::DSL.persistence (method)">persistence</a></span>, <span class='object_link'><a href="../../DSL.html#profile-class_method" title="OpenHAB::DSL.profile (method)">profile</a></span>, <span class='object_link'><a href="../../DSL.html#provider-class_method" title="OpenHAB::DSL.provider (method)">provider</a></span>, <span class='object_link'><a href="../../DSL.html#provider!-class_method" title="OpenHAB::DSL.provider! (method)">provider!</a></span>, <span class='object_link'><a href="../../DSL.html#rule-class_method" title="OpenHAB::DSL.rule (method)">rule</a></span>, <span class='object_link'><a href="../../DSL.html#rules-class_method" title="OpenHAB::DSL.rules (method)">rules</a></span>, <span class='object_link'><a href="../../DSL.html#script-class_method" title="OpenHAB::DSL.script (method)">script</a></span>, <span class='object_link'><a href="../../DSL.html#shared_cache-class_method" title="OpenHAB::DSL.shared_cache (method)">shared_cache</a></span>, <span class='object_link'><a href="../../DSL.html#store_states-class_method" title="OpenHAB::DSL.store_states (method)">store_states</a></span>, <span class='object_link'><a href="../../DSL.html#things-class_method" title="OpenHAB::DSL.things (method)">things</a></span>, <span class='object_link'><a href="../../DSL.html#timers-class_method" title="OpenHAB::DSL.timers (method)">timers</a></span>, <span class='object_link'><a href="../../DSL.html#unit-class_method" title="OpenHAB::DSL.unit (method)">unit</a></span>, <span class='object_link'><a href="../../DSL.html#unit!-class_method" title="OpenHAB::DSL.unit! (method)">unit!</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../../Core/EntityLookup.html" title="OpenHAB::Core::EntityLookup (module)">Core::EntityLookup</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../../Core/EntityLookup.html#method_missing-instance_method" title="OpenHAB::Core::EntityLookup#method_missing (method)">#method_missing</a></span></p>
+<div id="method_missing_details" class="method_details_list">
+  <h2>Dynamic Method Handling</h2>
+  <p class="notice super">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+      in the class <span class='object_link'><a href="../../Core/EntityLookup.html#method_missing-instance_method" title="OpenHAB::Core::EntityLookup#method_missing (method)">OpenHAB::Core::EntityLookup</a></span>
+    
+  </p>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="color_item-instance_method">
+  
+    #<strong>color_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; <tt><span class='object_link'><a href="../../Core/Items/ColorItem.html" title="OpenHAB::Core::Items::ColorItem (class)">ColorItem</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a new color item</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'>Core::Items::Proxy</span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The name for the new item.
+Note that you can use a string, a symbol, or even a literal constant name</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>label</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The item label</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>builder</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="ItemBuilder.html" title="OpenHAB::DSL::Items::ItemBuilder (class)">ItemBuilder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Item for further customization</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Core/Items/ColorItem.html" title="OpenHAB::Core::Items::ColorItem (class)">ColorItem</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="ItemBuilder.html#initialize-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#initialize (method)">ItemBuilder#initialize for additional arguments.</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+53</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 53</span>
+
+def_item_method(<span style="color:#A60">:color</span>)</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="contact_item-instance_method">
+  
+    #<strong>contact_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; <tt><span class='object_link'><a href="../../Core/Items/ContactItem.html" title="OpenHAB::Core::Items::ContactItem (class)">ContactItem</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a new contact item</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'>Core::Items::Proxy</span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The name for the new item.
+Note that you can use a string, a symbol, or even a literal constant name</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>label</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The item label</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>builder</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="ItemBuilder.html" title="OpenHAB::DSL::Items::ItemBuilder (class)">ItemBuilder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Item for further customization</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Core/Items/ContactItem.html" title="OpenHAB::Core::Items::ContactItem (class)">ContactItem</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="ItemBuilder.html#initialize-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#initialize (method)">ItemBuilder#initialize for additional arguments.</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+55</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 55</span>
+
+def_item_method(<span style="color:#A60">:contact</span>)</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="date_time_item-instance_method">
+  
+    #<strong>date_time_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; <tt><span class='object_link'><a href="../../Core/Items/DateTimeItem.html" title="OpenHAB::Core::Items::DateTimeItem (class)">DateTimeItem</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a new date_time item</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'>Core::Items::Proxy</span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The name for the new item.
+Note that you can use a string, a symbol, or even a literal constant name</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>label</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The item label</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>builder</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="ItemBuilder.html" title="OpenHAB::DSL::Items::ItemBuilder (class)">ItemBuilder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Item for further customization</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Core/Items/DateTimeItem.html" title="OpenHAB::Core::Items::DateTimeItem (class)">DateTimeItem</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="ItemBuilder.html#initialize-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#initialize (method)">ItemBuilder#initialize for additional arguments.</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+57</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 57</span>
+
+def_item_method(<span style="color:#A60">:date_time</span>)</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="dimmer_item-instance_method">
+  
+    #<strong>dimmer_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; <tt><span class='object_link'><a href="../../Core/Items/DimmerItem.html" title="OpenHAB::Core::Items::DimmerItem (class)">DimmerItem</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a new dimmer item</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'>Core::Items::Proxy</span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The name for the new item.
+Note that you can use a string, a symbol, or even a literal constant name</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>label</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The item label</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>builder</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="ItemBuilder.html" title="OpenHAB::DSL::Items::ItemBuilder (class)">ItemBuilder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Item for further customization</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Core/Items/DimmerItem.html" title="OpenHAB::Core::Items::DimmerItem (class)">DimmerItem</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="ItemBuilder.html#initialize-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#initialize (method)">ItemBuilder#initialize for additional arguments.</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+59</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 59</span>
+
+def_item_method(<span style="color:#A60">:dimmer</span>)</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="group_item-instance_method">
+  
+    #<strong>group_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; <tt><span class='object_link'><a href="../../Core/Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItem</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a new <span class='object_link'><a href="../../Core/Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItem</a></span></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The name for the new item</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>label</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The item label</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>type</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The base type for the group</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>function</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The combiner function for this group</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>thing</span>
+      
+      
+        <span class='type'>(<tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/thing/ThingUID.html" target="_parent" title="Core::Things::ThingUID">Core::Things::ThingUID</a></tt>, <tt><span class='object_link'><a href="../../Core/Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Core::Things::Thing</a></span></tt>, <tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A Thing to be used as the base for the channel for any contained items.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>dimension</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The unit dimension for a <span class='object_link'><a href="../../Core/Items/NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span> (see <span class='object_link'><a href="ItemBuilder.html#dimension-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#dimension (method)">ItemBuilder#dimension</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>format</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The formatting pattern for the item's state (see <span class='object_link'><a href="ItemBuilder.html#format-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#format (method)">ItemBuilder#format</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>icon</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The icon to be associated with the item (see <span class='object_link'><a href="ItemBuilder.html#icon-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#icon (method)">ItemBuilder#icon</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>group</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../Core/Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItem</a></span></tt>, <tt><span class='object_link'><a href="GroupItemBuilder.html" title="OpenHAB::DSL::Items::GroupItemBuilder (class)">GroupItemBuilder</a></span></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String, <span class='object_link'><a href="../../Core/Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItem</a></span>, <span class='object_link'><a href="GroupItemBuilder.html" title="OpenHAB::DSL::Items::GroupItemBuilder (class)">GroupItemBuilder</a></span>&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Group(s) to which this item should be added (see <span class='object_link'><a href="ItemBuilder.html#group-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#group (method)">ItemBuilder#group</a></span>).</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>groups</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../Core/Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItem</a></span></tt>, <tt><span class='object_link'><a href="GroupItemBuilder.html" title="OpenHAB::DSL::Items::GroupItemBuilder (class)">GroupItemBuilder</a></span></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String, <span class='object_link'><a href="../../Core/Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItem</a></span>, <span class='object_link'><a href="GroupItemBuilder.html" title="OpenHAB::DSL::Items::GroupItemBuilder (class)">GroupItemBuilder</a></span>&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Fluent alias for <code>group</code>.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>tag</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String, <span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span>, <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a>&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Tag(s) to apply to this item (see <span class='object_link'><a href="ItemBuilder.html#tag-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#tag (method)">ItemBuilder#tag</a></span>).</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>tags</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String, <span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span>, <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a>&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Fluent alias for <code>tag</code>.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>autoupdate</span>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Autoupdate setting (see <span class='object_link'><a href="ItemBuilder.html#autoupdate-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#autoupdate (method)">ItemBuilder#autoupdate</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>channel</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../Core/Things/ChannelUID.html" title="OpenHAB::Core::Things::ChannelUID (class)">Core::Things::ChannelUID</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Channel to link the item to</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>expire</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>An expiration specification.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>alexa</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;(String, Hash&lt;String, <span class='object_link'>Object</span>&gt;)&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Alexa metadata (see <span class='object_link'><a href="ItemBuilder.html#alexa-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#alexa (method)">ItemBuilder#alexa</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>ga</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;(String, Hash&lt;String, <span class='object_link'>Object</span>&gt;)&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Google Assistant metadata (see <span class='object_link'><a href="ItemBuilder.html#ga-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#ga (method)">ItemBuilder#ga</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>homekit</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;(String, Hash&lt;String, <span class='object_link'>Object</span>&gt;)&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Homekit metadata (see <span class='object_link'><a href="ItemBuilder.html#homekit-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#homekit (method)">ItemBuilder#homekit</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>metadata</span>
+      
+      
+        <span class='type'>(<tt>Hash&lt;String, Hash&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Generic metadata (see <span class='object_link'><a href="ItemBuilder.html#metadata-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#metadata (method)">ItemBuilder#metadata</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>state</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Core/Types/State.html" title="OpenHAB::Core::Types::State (module)">State</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Initial state</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>builder</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="GroupItemBuilder.html" title="OpenHAB::DSL::Items::GroupItemBuilder (class)">GroupItemBuilder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Item for further customization</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Core/Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItem</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+83
+84
+85
+86
+87
+88
+89
+90
+91</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 83</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">group_item</span>(*args, **kwargs, &amp;block)
+  item = <span style="color:#036;font-weight:bold">GroupItemBuilder</span>.new(*args, <span style="color:#606">provider</span>: provider, **kwargs)
+  item.instance_eval(&amp;block) <span style="color:#080;font-weight:bold">if</span> block
+  result = provider.add(item)
+  item.members.each <span style="color:#080;font-weight:bold">do</span> |i|
+    provider.add(i)
+  <span style="color:#080;font-weight:bold">end</span>
+  result
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="image_item-instance_method">
+  
+    #<strong>image_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; <tt><span class='object_link'><a href="../../Core/Items/ImageItem.html" title="OpenHAB::Core::Items::ImageItem (class)">ImageItem</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a new image item</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'>Core::Items::Proxy</span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The name for the new item.
+Note that you can use a string, a symbol, or even a literal constant name</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>label</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The item label</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>builder</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="ItemBuilder.html" title="OpenHAB::DSL::Items::ItemBuilder (class)">ItemBuilder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Item for further customization</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Core/Items/ImageItem.html" title="OpenHAB::Core::Items::ImageItem (class)">ImageItem</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="ItemBuilder.html#initialize-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#initialize (method)">ItemBuilder#initialize for additional arguments.</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+61</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 61</span>
+
+def_item_method(<span style="color:#A60">:image</span>)</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="location_item-instance_method">
+  
+    #<strong>location_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; <tt><span class='object_link'><a href="../../Core/Items/LocationItem.html" title="OpenHAB::Core::Items::LocationItem (class)">LocationItem</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a new location item</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'>Core::Items::Proxy</span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The name for the new item.
+Note that you can use a string, a symbol, or even a literal constant name</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>label</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The item label</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>builder</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="ItemBuilder.html" title="OpenHAB::DSL::Items::ItemBuilder (class)">ItemBuilder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Item for further customization</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Core/Items/LocationItem.html" title="OpenHAB::Core::Items::LocationItem (class)">LocationItem</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="ItemBuilder.html#initialize-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#initialize (method)">ItemBuilder#initialize for additional arguments.</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+63</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 63</span>
+
+def_item_method(<span style="color:#A60">:location</span>)</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="number_item-instance_method">
+  
+    #<strong>number_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; <tt><span class='object_link'><a href="../../Core/Items/NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a new number item</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'>Core::Items::Proxy</span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The name for the new item.
+Note that you can use a string, a symbol, or even a literal constant name</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>label</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The item label</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>builder</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="ItemBuilder.html" title="OpenHAB::DSL::Items::ItemBuilder (class)">ItemBuilder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Item for further customization</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Core/Items/NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="ItemBuilder.html#initialize-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#initialize (method)">ItemBuilder#initialize for additional arguments.</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+65</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 65</span>
+
+def_item_method(<span style="color:#A60">:number</span>)</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="player_item-instance_method">
+  
+    #<strong>player_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; <tt><span class='object_link'><a href="../../Core/Items/PlayerItem.html" title="OpenHAB::Core::Items::PlayerItem (class)">PlayerItem</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a new player item</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'>Core::Items::Proxy</span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The name for the new item.
+Note that you can use a string, a symbol, or even a literal constant name</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>label</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The item label</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>builder</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="ItemBuilder.html" title="OpenHAB::DSL::Items::ItemBuilder (class)">ItemBuilder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Item for further customization</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Core/Items/PlayerItem.html" title="OpenHAB::Core::Items::PlayerItem (class)">PlayerItem</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="ItemBuilder.html#initialize-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#initialize (method)">ItemBuilder#initialize for additional arguments.</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+67</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 67</span>
+
+def_item_method(<span style="color:#A60">:player</span>)</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="rollershutter_item-instance_method">
+  
+    #<strong>rollershutter_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; <tt><span class='object_link'><a href="../../Core/Items/RollershutterItem.html" title="OpenHAB::Core::Items::RollershutterItem (class)">RollershutterItem</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a new rollershutter item</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'>Core::Items::Proxy</span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The name for the new item.
+Note that you can use a string, a symbol, or even a literal constant name</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>label</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The item label</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>builder</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="ItemBuilder.html" title="OpenHAB::DSL::Items::ItemBuilder (class)">ItemBuilder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Item for further customization</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Core/Items/RollershutterItem.html" title="OpenHAB::Core::Items::RollershutterItem (class)">RollershutterItem</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="ItemBuilder.html#initialize-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#initialize (method)">ItemBuilder#initialize for additional arguments.</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+69</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 69</span>
+
+def_item_method(<span style="color:#A60">:rollershutter</span>)</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="string_item-instance_method">
+  
+    #<strong>string_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; <tt><span class='object_link'><a href="../../Core/Items/StringItem.html" title="OpenHAB::Core::Items::StringItem (class)">StringItem</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a new string item</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'>Core::Items::Proxy</span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The name for the new item.
+Note that you can use a string, a symbol, or even a literal constant name</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>label</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The item label</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>builder</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="ItemBuilder.html" title="OpenHAB::DSL::Items::ItemBuilder (class)">ItemBuilder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Item for further customization</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Core/Items/StringItem.html" title="OpenHAB::Core::Items::StringItem (class)">StringItem</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="ItemBuilder.html#initialize-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#initialize (method)">ItemBuilder#initialize for additional arguments.</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+71</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 71</span>
+
+def_item_method(<span style="color:#A60">:string</span>)</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="switch_item-instance_method">
+  
+    #<strong>switch_item</strong>(name, label = nil, **kwargs) {|builder| ... } &#x21d2; <tt><span class='object_link'><a href="../../Core/Items/SwitchItem.html" title="OpenHAB::Core::Items::SwitchItem (class)">SwitchItem</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a new switch item</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'>Core::Items::Proxy</span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The name for the new item.
+Note that you can use a string, a symbol, or even a literal constant name</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>label</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The item label</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>builder</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="ItemBuilder.html" title="OpenHAB::DSL::Items::ItemBuilder (class)">ItemBuilder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Item for further customization</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Core/Items/SwitchItem.html" title="OpenHAB::Core::Items::SwitchItem (class)">SwitchItem</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="ItemBuilder.html#initialize-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#initialize (method)">ItemBuilder#initialize for additional arguments.</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+73</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 73</span>
+
+def_item_method(<span style="color:#A60">:switch</span>)</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Tue Dec  6 23:47:39 2022 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.28 (ruby-3.1.3).
+</div>
+
+    </div>
+  </body>
+</html>
