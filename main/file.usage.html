@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: Usage
+  
+    &mdash; Documentation by YARD 0.9.28
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "usage";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: Usage</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><h1>Usage</h1>
+<h2>Loading the Scripting Library</h2>
+<p>To make all the features offered by this library available to your rule, the JRuby scripting addon needs to
+be <a href="file.installation.html#from-the-user-interface">configured</a> to install the <code>openhab-jrubyscripting</code> gem and
+require the <code>openhab/dsl</code> script. This will enable all the special methods for <span class='object_link'><a href="OpenHAB/Core/Items.html" title="OpenHAB::Core::Items (module)">Items</a></span>,
+<span class='object_link'><a href="OpenHAB/Core/Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Things</a></span>, <span class='object_link'><a href="OpenHAB/Core/Actions.html" title="OpenHAB::Core::Actions (module)">Actions</a></span>, <span class='object_link'><a href="OpenHAB/Log.html" title="OpenHAB::Log (module)">Logging</a></span>, etc. that are documented here,
+and the <span class='object_link'><a href="OpenHAB/Core/Events/AbstractEvent.html" title="OpenHAB::Core::Events::AbstractEvent (class)">event</a></span> properties documented for the
+<span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#run-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#run (method)">run execution blocks</a></span>.</p>
+<h2>Creating File-Based Rules</h2>
+<ol>
+<li>Place Ruby script files in <code>${OPENHAB_CONF}/automation/ruby</code> directory.</li>
+<li>Put <code>require 'openhab/dsl'</code> at the top of any Ruby based scripts .</li>
+</ol>
+<p>For details on the rules syntax, see <span class='object_link'><a href="OpenHAB/DSL/Rules/Builder.html" title="OpenHAB::DSL::Rules::Builder (class)">OpenHAB::DSL::Rules::Builder</a></span>.</p>
+<h2>Creating Rules in Main UI</h2>
+<p>Rules can be created in the UI as well as in rules files, but some things are a bit different.
+First of all, only the execution blocks need to be created in the script. All triggers and conditions
+are created directly in the UI instead.</p>
+<p><strong>To create a rule:</strong></p>
+<ol>
+<li>Go to the Rules section in the UI and add a new rule.</li>
+<li>Input a name for your rule, and configure the Triggers through the UI.</li>
+<li>When adding an Action, select <strong>Run script</strong>, and then <strong>Ruby</strong>. A script editor will open where you can write your code.</li>
+<li>When you are done, save the script and go back to complete the configuration.</li>
+</ol>
+<h2>UI Rules vs File-based Rules</h2>
+<p>The following features of this library are only usable within file-based rules:</p>
+<ul>
+<li><code>Triggers</code>: UI-based rules provide equivalent triggers through the UI.</li>
+<li><code>Guards</code>: UI-based rules use <code>Conditions</code> in the UI instead. Alternatively it can be implemented inside the rule code.</li>
+<li><code>Execution Blocks</code>: The UI-based rules will execute your JRuby script as if it's inside a <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#run-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#run (method)">run execution blocks</a></span>.
+A special <span class='object_link'><a href="OpenHAB/Core/Events/AbstractEvent.html" title="OpenHAB::Core::Events::AbstractEvent (class)">event</a></span> variable is available within your code to provide it with additional information regarding the event.
+For more details see the <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#run-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#run (method)">run execution blocks</a></span>.</li>
+<li><code>delay</code>: There is no direct equivalent in the UI. It can be achieved using <span class='object_link'><a href="OpenHAB/DSL.html#after-class_method" title="OpenHAB::DSL.after (method)">timers</a></span>.</li>
+<li><code>otherwise</code>: There is no direct equivalent in the UI. However, it can be implemented within the rule using an <code>if-else</code> block.</li>
+</ul>
+</div></div>
+
+      <div id="footer">
+  Generated on Tue Dec  6 23:29:28 2022 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.28 (ruby-3.1.3).
+</div>
+
+    </div>
+  </body>
+</html>

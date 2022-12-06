@@ -1,0 +1,3193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: OpenHAB::DSL
+  
+    &mdash; Documentation by YARD 0.9.28
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "OpenHAB::DSL";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (D)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../OpenHAB.html" title="OpenHAB (module)">OpenHAB</a></span></span>
+     &raquo; 
+    <span class="title">DSL</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: OpenHAB::DSL
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="Core/EntityLookup.html" title="OpenHAB::Core::EntityLookup (module)">Core::EntityLookup</a></span></dd>
+  </dl>
+  
+  
+
+  
+  <dl>
+    <dt>Included in:</dt>
+    <dd><span class='object_link'><a href="DSL/Items/Builder.html" title="OpenHAB::DSL::Items::Builder (module)">Items::Builder</a></span>, <span class='object_link'><a href="DSL/Rules/BuilderDSL.html" title="OpenHAB::DSL::Rules::BuilderDSL (class)">Rules::BuilderDSL</a></span></dd>
+  </dl>
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/openhab/dsl.rb<span class="defines">,<br />
+  lib/openhab/dsl/rules.rb,<br /> lib/openhab/dsl/events.rb,<br /> lib/openhab/dsl/version.rb,<br /> lib/openhab/dsl/rules/guard.rb,<br /> lib/openhab/dsl/rules/terse.rb,<br /> lib/openhab/dsl/items/ensure.rb,<br /> lib/openhab/dsl/thread_local.rb,<br /> lib/openhab/dsl/items/builder.rb,<br /> lib/openhab/dsl/rules/builder.rb,<br /> lib/openhab/dsl/timer_manager.rb,<br /> lib/openhab/dsl/rules/property.rb,<br /> lib/openhab/dsl/rules/triggers.rb,<br /> lib/openhab/dsl/things/builder.rb,<br /> lib/openhab/dsl/events/watch_event.rb,<br /> lib/openhab/dsl/items/timed_command.rb,<br /> lib/openhab/dsl/rules/rule_triggers.rb,<br /> lib/openhab/dsl/rules/name_inference.rb,<br /> lib/openhab/dsl/rules/automation_rule.rb,<br /> lib/openhab/dsl/rules/triggers/changed.rb,<br /> lib/openhab/dsl/rules/triggers/channel.rb,<br /> lib/openhab/dsl/rules/triggers/command.rb,<br /> lib/openhab/dsl/rules/triggers/trigger.rb,<br /> lib/openhab/dsl/rules/triggers/updated.rb,<br /> lib/openhab/dsl/rules/triggers/cron/cron.rb,<br /> lib/openhab/dsl/rules/triggers/watch/watch.rb,<br /> lib/openhab/dsl/rules/triggers/conditions/proc.rb,<br /> lib/openhab/dsl/rules/triggers/cron/cron_handler.rb,<br /> lib/openhab/dsl/rules/triggers/conditions/duration.rb,<br /> lib/openhab/dsl/rules/triggers/watch/watch_handler.rb</span>
+</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>The main DSL available to rules.</p>
+<p>Methods on this module are extended onto <code>main</code>, the top level <code>self</code> in
+any file. You can also access them as class methods on the module for use
+inside of other classes, or include the module.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="DSL/Events.html" title="OpenHAB::DSL::Events (module)">Events</a></span>, <span class='object_link'><a href="DSL/Items.html" title="OpenHAB::DSL::Items (module)">Items</a></span>, <span class='object_link'><a href="DSL/Rules.html" title="OpenHAB::DSL::Rules (module)">Rules</a></span>, <span class='object_link'><a href="DSL/Things.html" title="OpenHAB::DSL::Things (module)">Things</a></span>
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="DSL/TimerManager.html" title="OpenHAB::DSL::TimerManager (class)">TimerManager</a></span>
+    
+  
+</p>
+
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="VERSION-constant" class="">VERSION =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Version of openHAB helper libraries</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+        </dt>
+        <dd><pre class="code"><span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">5.0.0.rc8</span><span style="color:#710">&quot;</span></span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2 id="Rule Creation-group">
+      Rule Creation
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#rule-class_method" title="rule (class method)">.<strong>rule</strong>(name = nil, **kwargs) {|rule| ... } &#x21d2; Core::Rules::Rule<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a new rule.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#script-class_method" title="script (class method)">.<strong>script</strong>(name = nil, id: nil, **kwargs) { ... } &#x21d2; Core::Rules::Rule </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a new script.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2 id="Rule Support-group">
+      Rule Support
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#profile-class_method" title="profile (class method)">.<strong>profile</strong>(id) {|event, command: nil, state: nil, link:, item:, channel_uid:, configuration:, context:| ... } &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Defines a new profile that can be applied to item channel links.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2 id="Object Access-group">
+      Object Access
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#items-class_method" title="items (class method)">.<strong>items</strong>  &#x21d2; Core::Items::Registry </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Fetches all items from the item registry.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#rules-class_method" title="rules (class method)">.<strong>rules</strong>  &#x21d2; Core::Rules::Registry </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Fetches all rules from the rule registry.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#shared_cache-class_method" title="shared_cache (class method)">.<strong>shared_cache</strong>  &#x21d2; Core::ValueCache </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>ValueCache is the interface used to access a <span class='object_link'><a href="#shared_cache-class_method" title="OpenHAB::DSL.shared_cache (method)">shared cache</a></span> available between scripts and/or rule executions.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#things-class_method" title="things (class method)">.<strong>things</strong>  &#x21d2; Core::Things::Registry </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Get all things known to openHAB.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#timers-class_method" title="timers (class method)">.<strong>timers</strong>  &#x21d2; TimerManager </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Provides access to timers created by <span class='object_link'><a href="#after-class_method" title="OpenHAB::DSL.after (method)">after</a></span>.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2 id="Utilities-group">
+      Utilities
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#after-class_method" title="after (class method)">.<strong>after</strong>(duration, id: nil, reschedule: true) {|timer| ... } &#x21d2; Core::Timer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a timer and execute the supplied block after the specified duration.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#between-class_method" title="between (class method)">.<strong>between</strong>(range)  &#x21d2; Range </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Convert a string based range into a range of LocalTime, LocalDate, MonthDay, or ZonedDateTime depending on the format of the string.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#store_states-class_method" title="store_states (class method)">.<strong>store_states</strong>(*items)  &#x21d2; Core::Items::StateStorage </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Store states of supplied items.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2 id="Block Modifiers-group">
+      Block Modifiers
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <div class="docstring">
+  <div class="discussion">
+    <p>These methods allow certain operations to be grouped inside the given block
+to reduce repetitions</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#ensure_states-class_method" title="ensure_states (class method)">.<strong>ensure_states</strong> { ... } &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Global method that takes a block and for the duration of the block all commands sent will check if the item is in the command's state before sending the command.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#persistence-class_method" title="persistence (class method)">.<strong>persistence</strong>(service) { ... } &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sets a thread local variable to set the default persistence service for method calls inside the block.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#provider-class_method" title="provider (class method)">.<strong>provider</strong>(*args, **kwargs) { ... } &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sets the implicit provider(s) for operations inside the block.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#provider!-class_method" title="provider! (class method)">.<strong>provider!</strong>(things: nil, items: nil, metadata: nil, links: nil, **metadata_items)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Permanently set the implicit provider(s) for this thread.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#unit-class_method" title="unit (class method)">.<strong>unit</strong>(*units) { ... } &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sets the implicit unit(s) for operations inside the block.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#unit!-class_method" title="unit! (class method)">.<strong>unit!</strong>(*units)  &#x21d2; Hash&lt;javax.measure.Dimension=&gt;javax.measure.Unit&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Permanently sets the implicit unit(s) for this thread.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Core/EntityLookup.html" title="OpenHAB::Core::EntityLookup (module)">Core::EntityLookup</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Core/EntityLookup.html#method_missing-instance_method" title="OpenHAB::Core::EntityLookup#method_missing (method)">#method_missing</a></span></p>
+<div id="method_missing_details" class="method_details_list">
+  <h2>Dynamic Method Handling</h2>
+  <p class="notice super">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+      in the class <span class='object_link'><a href="Core/EntityLookup.html#method_missing-instance_method" title="OpenHAB::Core::EntityLookup#method_missing (method)">OpenHAB::Core::EntityLookup</a></span>
+    
+  </p>
+  
+</div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="after-class_method">
+  
+    .<strong>after</strong>(duration, id: nil, reschedule: true) {|timer| ... } &#x21d2; <tt><span class='object_link'><a href="Core/Timer.html" title="OpenHAB::Core::Timer (class)">Core::Timer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a timer and execute the supplied block after the specified duration</p>
+<h3>Reentrant Timers</h3>
+<p>Timers with an id are reentrant by id. Reentrant means that when the same id is encountered,
+the timer is rescheduled rather than creating a second new timer. Note that the timer will
+execute the block provided in the latest call.</p>
+<p>This removes the need for the usual boilerplate code to manually keep track of timer objects.</p>
+<p>Timers with <code>id</code> can be managed with the built-in <span class='object_link'><a href="#timers-class_method" title="OpenHAB::DSL.timers (method)">timers</a></span> object.</p>
+<p>When a timer is cancelled, it will be removed from the object.</p>
+<p>Be sure that your ids are unique. For example, if you're using <span class='object_link'><a href="Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">items</a></span> as your
+ids, you either need to be sure you don't use the same item for multiple logical contexts,
+or you need to make your id more specific, by doing something like embedding the item in
+array with a symbol of the timer's purpose, like <code>[:vacancy, item]</code>. But also note that
+assuming default settings, every Ruby file (for file-based rules) or UI rule gets its
+own instance of the timers object, so you don't need to worry about collisions among
+different files.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Create a simple timer</p>
+</div></p>
+      
+      <pre class="example code"><code>after <span style="color:#00D">5</span>.seconds <span style="color:#080;font-weight:bold">do</span>
+  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Timer Fired</span><span style="color:#710">&quot;</span></span>)
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Timers delegate methods to openHAB timer objects</p>
+</div></p>
+      
+      <pre class="example code"><code>after <span style="color:#00D">1</span>.second <span style="color:#080;font-weight:bold">do</span> |timer|
+  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Timer is active? </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>timer.active?<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Timers can be rescheduled to run again, waiting the original duration</p>
+</div></p>
+      
+      <pre class="example code"><code>after <span style="color:#00D">3</span>.seconds <span style="color:#080;font-weight:bold">do</span> |timer|
+  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Timer Fired</span><span style="color:#710">&quot;</span></span>)
+  timer.reschedule
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Timers can be rescheduled for different durations</p>
+</div></p>
+      
+      <pre class="example code"><code>after <span style="color:#00D">3</span>.seconds <span style="color:#080;font-weight:bold">do</span> |timer|
+  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Timer Fired</span><span style="color:#710">&quot;</span></span>)
+  timer.reschedule <span style="color:#00D">5</span>.seconds
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Timers can be manipulated through the returned object</p>
+</div></p>
+      
+      <pre class="example code"><code>mytimer = after <span style="color:#00D">1</span>.minute <span style="color:#080;font-weight:bold">do</span>
+  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">It has been 1 minute</span><span style="color:#710">&quot;</span></span>)
+<span style="color:#080;font-weight:bold">end</span>
+
+mytimer.cancel</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Reentrant timers will automatically reschedule if the same id is encountered again</p>
+</div></p>
+      
+      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Turn off closet light after 10 minutes</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
+  changed <span style="color:#036;font-weight:bold">ClosetLights</span>.members, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">ON</span>
+  triggered <span style="color:#080;font-weight:bold">do</span> |item|
+    after <span style="color:#00D">10</span>.minutes, <span style="color:#606">id</span>: item <span style="color:#080;font-weight:bold">do</span>
+      item.ensure.off
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Timers with id can be managed through the built-in <code>timers</code> object</p>
+</div></p>
+      
+      <pre class="example code"><code>after <span style="color:#00D">1</span>.minute, <span style="color:#606">id</span>: <span style="color:#A60">:foo</span> <span style="color:#080;font-weight:bold">do</span>
+  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">managed timer has fired</span><span style="color:#710">&quot;</span></span>)
+<span style="color:#080;font-weight:bold">end</span>
+
+timers.cancel(<span style="color:#A60">:foo</span>)
+
+<span style="color:#080;font-weight:bold">if</span> timers.include?(<span style="color:#A60">:foo</span>)
+  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">The timer :foo is not active</span><span style="color:#710">&quot;</span></span>)
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Only create a new timer if it isn't already scheduled</p>
+</div></p>
+      
+      <pre class="example code"><code>after(<span style="color:#00D">1</span>.minute, <span style="color:#606">id</span>: <span style="color:#A60">:foo</span>, <span style="color:#606">reschedule</span>: <span style="color:#069">false</span>) <span style="color:#080;font-weight:bold">do</span>
+  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Timer fired</span><span style="color:#710">&quot;</span></span>)
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Reentrant timers will execute the block from the most recent call</p>
+</div></p>
+      
+      <pre class="example code"><code><span style="color:#777"># In the following example, if Item1 received a command, followed by Item2,</span>
+<span style="color:#777"># the timer will execute the block referring to Item2.</span>
+rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Execute The Most Recent Block</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
+  received_command <span style="color:#036;font-weight:bold">Item1</span>, <span style="color:#036;font-weight:bold">Item2</span>
+  run <span style="color:#080;font-weight:bold">do</span> |event|
+    after(<span style="color:#00D">10</span>.minutes, <span style="color:#606">id</span>: <span style="color:#A60">:common_timer</span>) <span style="color:#080;font-weight:bold">do</span>
+      logger.info <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">The latest command was received from </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>event.item<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>duration</span>
+      
+      
+        <span class='type'>(<tt><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/temporal/TemporalAmount.html" target="_parent" title="java.time.temporal.TemporalAmount">java.time.temporal.TemporalAmount</a></tt>, <tt>#to_zoned_date_time</tt>, <tt>Proc</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Duration after which to execute the block</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>id</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'>Object</span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>ID to associate with timer. The timer can be managed via <span class='object_link'><a href="#timers-class_method" title="OpenHAB::DSL.timers (method)">timers</a></span>.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>reschedule</span>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Reschedule the timer if it already exists.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>Block to execute when the timer is elapsed.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>timer</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Core/Timer.html" title="OpenHAB::Core::Timer (class)">Core::Timer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Core/Timer.html" title="OpenHAB::Core::Timer (class)">Core::Timer</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>if <code>reschedule</code> is false, the existing timer.
+Otherwise the new timer.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#timers-class_method" title="OpenHAB::DSL.timers (method)">timers</a></span></li>
+    
+      <li><span class='object_link'><a href="DSL/Rules/BuilderDSL.html#changed-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#changed (method)">OpenHAB::DSL::Rules::BuilderDSL#changed</a></span></li>
+    
+      <li><span class='object_link'><a href="DSL/Items/TimedCommand.html" title="OpenHAB::DSL::Items::TimedCommand (module)">OpenHAB::DSL::Items::TimedCommand</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+300
+301
+302
+303
+304
+305
+306</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 300</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">after</span>(duration, <span style="color:#606">id</span>: <span style="color:#069">nil</span>, <span style="color:#606">reschedule</span>: <span style="color:#069">true</span>, &amp;block)
+  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Block is required</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> block
+
+  <span style="color:#777"># Carry rule name to timer</span>
+  thread_locals = <span style="color:#036;font-weight:bold">ThreadLocal</span>.persist
+  timers.create(duration, <span style="color:#606">id</span>: id, <span style="color:#606">reschedule</span>: reschedule, <span style="color:#606">thread_locals</span>: thread_locals, <span style="color:#606">block</span>: block)
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="between-class_method">
+  
+    .<strong>between</strong>(range)  &#x21d2; <tt><span class='object_link'><a href="../Range.html" title="Range (class)">Range</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Convert a string based range into a range of LocalTime, LocalDate, MonthDay, or ZonedDateTime
+depending on the format of the string.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Range#cover?</p>
+</div></p>
+      
+      <pre class="example code"><code>logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Within month-day range</span><span style="color:#710">&quot;</span></span>) <span style="color:#080;font-weight:bold">if</span> between(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">02-20</span><span style="color:#710">'</span></span>..<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">06-01</span><span style="color:#710">'</span></span>).cover?(<span style="color:#036;font-weight:bold">MonthDay</span>.now)</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Use in a Case</p>
+</div></p>
+      
+      <pre class="example code"><code><span style="color:#080;font-weight:bold">case</span> <span style="color:#036;font-weight:bold">MonthDay</span>.now
+<span style="color:#080;font-weight:bold">when</span> between(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">01-01</span><span style="color:#710">'</span></span>..<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">03-31</span><span style="color:#710">'</span></span>)
+  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">First quarter</span><span style="color:#710">&quot;</span></span>)
+<span style="color:#080;font-weight:bold">when</span> between(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">04-01</span><span style="color:#710">'</span></span>..<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">06-30</span><span style="color:#710">'</span></span>)
+ logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Second quarter</span><span style="color:#710">&quot;</span></span>)
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Create a time range</p>
+</div></p>
+      
+      <pre class="example code"><code>between(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">7am</span><span style="color:#710">'</span></span>..<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">12pm</span><span style="color:#710">'</span></span>).cover?(<span style="color:#036;font-weight:bold">LocalTime</span>.now)</code></pre>
+    
+  </div>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Range.html" title="Range (class)">Range</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>converted range object</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="CoreExt/Between.html#between%3F-instance_method" title="OpenHAB::CoreExt::Between#between? (method)">#between?</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+330
+331
+332
+333
+334
+335
+336</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 330</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">between</span>(range)
+  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Supplied object must be a range</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> range.is_a?(<span style="color:#036;font-weight:bold">Range</span>)
+
+  start = try_parse_time_like(range.begin)
+  finish = try_parse_time_like(range.end)
+  <span style="color:#036;font-weight:bold">Range</span>.new(start, finish, range.exclude_end?)
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="ensure_states-class_method">
+  
+    .<strong>ensure_states</strong> { ... } &#x21d2; <tt><span class='object_link'>Object</span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Global method that takes a block and for the duration of the block
+all commands sent will check if the item is in the command's state
+before sending the command.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Turn on several switches only if they're not already on</p>
+</div></p>
+      
+      <pre class="example code"><code>ensure_states <span style="color:#080;font-weight:bold">do</span>
+  <span style="color:#036;font-weight:bold">Switch1</span>.on
+  <span style="color:#036;font-weight:bold">Switch2</span>.on
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+      
+      <pre class="example code"><code><span style="color:#777"># VirtualSwitch is in state `ON`</span>
+ensure_states <span style="color:#080;font-weight:bold">do</span>
+  <span style="color:#036;font-weight:bold">VirtualSwitch</span> &lt;&lt; <span style="color:#036;font-weight:bold">ON</span>       <span style="color:#777"># No command will be sent</span>
+  <span style="color:#036;font-weight:bold">VirtualSwitch</span>.update(<span style="color:#036;font-weight:bold">ON</span>)  <span style="color:#777"># No update will be posted</span>
+  <span style="color:#036;font-weight:bold">VirtualSwitch</span> &lt;&lt; <span style="color:#036;font-weight:bold">OFF</span>      <span style="color:#777"># Off command will be sent</span>
+  <span style="color:#036;font-weight:bold">VirtualSwitch</span>.update(<span style="color:#036;font-weight:bold">OFF</span>) <span style="color:#777"># No update will be posted</span>
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+      
+      <pre class="example code"><code>ensure_states <span style="color:#080;font-weight:bold">do</span>
+  rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Items in an execution block will have ensure_states applied to them</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+    changed <span style="color:#036;font-weight:bold">VirtualSwitch</span>
+    run <span style="color:#080;font-weight:bold">do</span>
+      <span style="color:#036;font-weight:bold">VirtualSwitch</span>.on
+      <span style="color:#036;font-weight:bold">VirtualSwitch2</span>.on
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+      
+      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">ensure_states must be in an execution block</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+  changed <span style="color:#036;font-weight:bold">VirtualSwitch</span>
+  run <span style="color:#080;font-weight:bold">do</span>
+     ensure_states <span style="color:#080;font-weight:bold">do</span>
+        <span style="color:#036;font-weight:bold">VirtualSwitch</span>.on
+        <span style="color:#036;font-weight:bold">VirtualSwitch2</span>.on
+     <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'>Object</span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The result of the block.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+422
+423
+424
+425
+426
+427
+428</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 422</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">ensure_states</span>
+  old = <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_ensure_states</span>]
+  <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_ensure_states</span>] = <span style="color:#069">true</span>
+  <span style="color:#080;font-weight:bold">yield</span>
+<span style="color:#080;font-weight:bold">ensure</span>
+  <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_ensure_states</span>] = old
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="items-class_method">
+  
+    .<strong>items</strong>  &#x21d2; <tt><span class='object_link'><a href="Core/Items/Registry.html" title="OpenHAB::Core::Items::Registry (class)">Core::Items::Registry</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Fetches all items from the item registry</p>
+<p>The examples all assume the following items exist.</p>
+<pre class="code xtend"><code class="xtend">Dimmer DimmerTest &quot;Test Dimmer&quot;
+Switch SwitchTest &quot;Test Switch&quot;
+</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Item Count: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>items.count<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)  <span style="color:#777"># Item Count: 2</span>
+logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Items: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>items.map(&amp;<span style="color:#A60">:label</span>).sort.join(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">, </span><span style="color:#710">'</span></span>)<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)  <span style="color:#777"># Items: Test Dimmer, Test Switch'</span>
+logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">DimmerTest exists? </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>items.key?(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">DimmerTest</span><span style="color:#710">'</span></span>)<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># DimmerTest exists? true</span>
+logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">StringTest exists? </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>items.key?(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">StringTest</span><span style="color:#710">'</span></span>)<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># StringTest exists? false</span></code></pre>
+    
+      
+      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Use dynamic item lookup to increase related dimmer brightness when switch is turned on</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+  changed <span style="color:#036;font-weight:bold">SwitchTest</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">ON</span>
+  triggered { |item| items[item.name.gsub(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Switch</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Dimmer</span><span style="color:#710">'</span></span>)].brighten(<span style="color:#00D">10</span>) }
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+      
+      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">search for a suitable item</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+  on_load
+  triggered <span style="color:#080;font-weight:bold">do</span>
+    <span style="color:#777"># Send ON to DimmerTest if it exists, otherwise send it to SwitchTest</span>
+    (items[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">DimmerTest</span><span style="color:#710">'</span></span>] || items[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">SwitchTest</span><span style="color:#710">'</span></span>])&amp;.on
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Core/Items/Registry.html" title="OpenHAB::Core::Items::Registry (class)">Core::Items::Registry</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+164
+165
+166</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 164</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">items</span>
+  <span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Items</span>::<span style="color:#036;font-weight:bold">Registry</span>.instance
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="persistence-class_method">
+  
+    .<strong>persistence</strong>(service) { ... } &#x21d2; <tt><span class='object_link'>Object</span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sets a thread local variable to set the default persistence service
+for method calls inside the block</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>persistence(<span style="color:#A60">:influxdb</span>) <span style="color:#080;font-weight:bold">do</span>
+  <span style="color:#036;font-weight:bold">Item1</span>.persist
+  <span style="color:#036;font-weight:bold">Item1</span>.changed_since(<span style="color:#00D">1</span>.hour)
+  <span style="color:#036;font-weight:bold">Item1</span>.average_since(<span style="color:#00D">12</span>.hours)
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'>Object</span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>service either as a String or a Symbol</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>[] Block executed in context of the supplied persistence service</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'>Object</span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The return value from the block.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Core/Items/Persistence.html" title="OpenHAB::Core::Items::Persistence (module)">Core::Items::Persistence</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+447
+448
+449
+450
+451
+452
+453</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 447</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">persistence</span>(service)
+  old = <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_persistence_service</span>]
+  <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_persistence_service</span>] = service
+  <span style="color:#080;font-weight:bold">yield</span>
+<span style="color:#080;font-weight:bold">ensure</span>
+  <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_persistence_service</span>] = old
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="profile-class_method">
+  
+    .<strong>profile</strong>(id) {|event, command: nil, state: nil, link:, item:, channel_uid:, configuration:, context:| ... } &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Defines a new profile that can be applied to item channel links.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>profile(<span style="color:#A60">:veto_closing_shades</span>) <span style="color:#080;font-weight:bold">do</span> |event, <span style="color:#606">item</span>:, <span style="color:#606">command</span>: <span style="color:#069">nil</span>|
+  <span style="color:#080;font-weight:bold">next</span> <span style="color:#069">false</span> <span style="color:#080;font-weight:bold">if</span> command&amp;.down?
+
+  <span style="color:#069">true</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+items.build <span style="color:#080;font-weight:bold">do</span>
+  rollershutter_item <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">MyShade</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
+    channel <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">thing:rollershutter</span><span style="color:#710">&quot;</span></span>, <span style="color:#606">profile</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ruby:veto_closing_shades</span><span style="color:#710">&quot;</span></span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+<span style="color:#777"># can also be referenced from an `.items` file:</span>
+<span style="color:#777"># Rollershutter MyShade { channel=&quot;thing:rollershutter&quot;[profile=&quot;ruby:veto_closing_shades&quot;] }</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>id</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The id for the profile.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>event</tt>, <tt>command: nil</tt>, <tt>state: nil</tt>, <tt>link:</tt>, <tt>item:</tt>, <tt>channel_uid:</tt>, <tt>configuration:</tt>, <tt>context:</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>All keyword params are optional. Any that aren't defined won't be passed.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>callback</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Core/Things/ProfileCallback.html" title="OpenHAB::Core::Things::ProfileCallback (module)">Core::Things::ProfileCallback</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The callback to be used to customize the action taken.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>event</span>
+      
+      
+        <span class='type'>(<tt>:command_from_item</tt>, <tt>:state_from_item</tt>, <tt>:command_from_handler</tt>, <tt>:state_from_handler</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The event that needs to be processed.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>command</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Core/Types/Command.html" title="OpenHAB::Core::Types::Command (module)">Command</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The command being sent for <code>:command_from_item</code> and <code>:command_from_handler</code> events.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>state</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Core/Types/State.html" title="OpenHAB::Core::Types::State (module)">State</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The state being sent for <code>:state_from_item</code> and <code>:state_from_handler</code> events.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>link</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Core/Things/ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">Core::Things::ItemChannelLink</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The link between the item and the channel, including its configuration.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>item</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The linked item.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>channel_uid</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Core/Things/ChannelUID.html" title="OpenHAB::Core::Things::ChannelUID (class)">Core::Things::ChannelUID</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The linked channel.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>configuration</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The profile configuration.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>context</span>
+      
+      
+        <span class='type'>(<tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/thing/profiles/ProfileContext.html" target="_parent" title="org.openhab.core.thing.profiles.ProfileContext">org.openhab.core.thing.profiles.ProfileContext</a></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The profile context.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Yield Returns:</p>
+<ul class="yieldreturn">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Return true from the block in order to have default processing.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li>org.openhab.thing.Profile</li>
+    
+      <li>org.openhab.thing.StateProfile</li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+97
+98
+99
+100
+101
+102
+103
+104
+105</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 97</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">profile</span>(id, &amp;block)
+  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Block is required</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> block
+
+  uid = org.openhab.core.thing.profiles.ProfileTypeUID.new(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ruby</span><span style="color:#710">&quot;</span></span>, id)
+
+  <span style="color:#036;font-weight:bold">ThreadLocal</span>.thread_local(<span style="color:#606">openhab_rule_type</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">profile</span><span style="color:#710">&quot;</span></span>, <span style="color:#606">openhab_rule_uid</span>: id) <span style="color:#080;font-weight:bold">do</span>
+    <span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">ProfileFactory</span>.instance.register(uid, block)
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="provider-class_method">
+  
+    .<strong>provider</strong>(*args, **kwargs) { ... } &#x21d2; <tt><span class='object_link'>Object</span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sets the implicit provider(s) for operations inside the block.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>provider(<span style="color:#606">metadata</span>: <span style="color:#A60">:persistent</span>) <span style="color:#080;font-weight:bold">do</span>
+  <span style="color:#036;font-weight:bold">Switch1</span>.metadata[<span style="color:#A60">:last_status_from_service</span>] = status
+<span style="color:#080;font-weight:bold">end</span>
+
+provider!(<span style="color:#606">metadata</span>: { <span style="color:#606">last_status_from_service</span>: <span style="color:#A60">:persistent</span> }, <span style="color:#606">Switch2</span>: <span style="color:#A60">:persistent</span>)
+<span style="color:#036;font-weight:bold">Switch1</span>.metadata[<span style="color:#A60">:last_status_from_service</span>] = status <span style="color:#777"># this will persist in JSONDB</span>
+<span style="color:#036;font-weight:bold">Switch1</span>.metadata[<span style="color:#A60">:homekit</span>] = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Lightbulb</span><span style="color:#710">&quot;</span></span> <span style="color:#777"># this will be removed when the script is deleted</span>
+<span style="color:#036;font-weight:bold">Switch2</span>.metadata[<span style="color:#A60">:homekit</span>] = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Lightbulb</span><span style="color:#710">&quot;</span></span> <span style="color:#777"># this will persist in JSONDB</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>providers</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Core/Provider.html" title="OpenHAB::Core::Provider (class)">Core::Provider</a></span></tt>, <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/registry/common/ManagedProvider.html" target="_parent" title="org.openhab.core.registry.common.ManagedProvider">org.openhab.core.registry.common.ManagedProvider</a></tt>, <tt>:persistent</tt>, <tt>:transient</tt>, <tt>Proc</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>An explicit provider to use. If it's a <span class='object_link'><a href="Core/Provider.html" title="OpenHAB::Core::Provider (class)">Core::Provider</a></span>, the type will be inferred automatically.
+Otherwise it's applied to all types.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>providers_by_type</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A list of providers by type. Type can be <code>:items</code>, <code>:metadata</code>, <code>:things</code>, <code>:links</code>,
+an <span class='object_link'><a href="Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span> applying the provider to all metadata on that item, or a String or Symbol
+applying the provider to all metadata of that namespace.</p>
+<p>The provider can be a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/common/registry/Provider.html" target="_parent" title="Provider">Provider</a>, <code>:persistent</code>,
+<code>:transient</code>, or a Proc returning one of those types. When the Proc is called for metadata
+elements, the <span class='object_link'><a href="Core/Items/Metadata/Hash.html" title="OpenHAB::Core::Items::Metadata::Hash (class)">Core::Items::Metadata::Hash</a></span> will be passed as an argument. Therefore it's
+recommended that you use a Proc, not a Lambda, for permissive argument matching.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>[] The block will be executed in the context of the specified unit(s).</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'>Object</span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the result of the block</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#provider!-class_method" title="OpenHAB::DSL.provider! (method)">provider!</a></span></li>
+    
+      <li><span class='object_link'><a href="Core/Provider.html#current-class_method" title="OpenHAB::Core::Provider.current (method)">Provider.current for how the current provider is calculated</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 603</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">provider</span>(*args, **kwargs)
+  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">You must give a block to set the provider for the duration of</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> block_given?
+
+  <span style="color:#080;font-weight:bold">begin</span>
+    old_providers = provider!(*args, **kwargs)
+    <span style="color:#080;font-weight:bold">yield</span>
+  <span style="color:#080;font-weight:bold">ensure</span>
+    <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_providers</span>] = old_providers
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="provider!-class_method">
+  
+    .<strong>provider!</strong>(things: nil, items: nil, metadata: nil, links: nil, **metadata_items)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>This method is only intended for use at the top level of rule
+scripts. If it's used within library methods, or hap-hazardly within
+rules, things can get very confusing because the prior state won't be
+properly restored.</p>
+</div>
+  </div>
+
+<p class="note returns_void">This method returns an undefined value.</p><p>Permanently set the implicit provider(s) for this thread.</p>
+<p><span class='object_link'><a href="#provider!-class_method" title="OpenHAB::DSL.provider! (method)">provider!</a></span> calls are cumulative - additional calls will not erase the effects
+of previous calls unless they are for the same provider type.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>providers</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Core/Provider.html" title="OpenHAB::Core::Provider (class)">Core::Provider</a></span></tt>, <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/registry/common/ManagedProvider.html" target="_parent" title="org.openhab.core.registry.common.ManagedProvider">org.openhab.core.registry.common.ManagedProvider</a></tt>, <tt>:persistent</tt>, <tt>:transient</tt>, <tt>Proc</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>An explicit provider to use. If it's a <span class='object_link'><a href="Core/Provider.html" title="OpenHAB::Core::Provider (class)">Core::Provider</a></span>, the type will be inferred automatically.
+Otherwise it's applied to all types.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>providers_by_type</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A list of providers by type. Type can be <code>:items</code>, <code>:metadata</code>, <code>:things</code>, <code>:links</code>,
+an <span class='object_link'><a href="Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span> applying the provider to all metadata on that item, or a String or Symbol
+applying the provider to all metadata of that namespace.</p>
+<p>The provider can be a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/common/registry/Provider.html" target="_parent" title="Provider">Provider</a>, <code>:persistent</code>,
+<code>:transient</code>, or a Proc returning one of those types. When the Proc is called for metadata
+elements, the <span class='object_link'><a href="Core/Items/Metadata/Hash.html" title="OpenHAB::Core::Items::Metadata::Hash (class)">Core::Items::Metadata::Hash</a></span> will be passed as an argument. Therefore it's
+recommended that you use a Proc, not a Lambda, for permissive argument matching.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#provider-class_method" title="OpenHAB::DSL.provider (method)">provider</a></span></li>
+    
+      <li><span class='object_link'><a href="Core/Provider.html#current-class_method" title="OpenHAB::Core::Provider.current (method)">Provider.current for how the current provider is calculated</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+645
+646
+647
+648
+649
+650
+651
+652
+653
+654
+655
+656
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699
+700
+701
+702
+703
+704</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 645</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">provider!</span>(*providers, **providers_by_type)
+  thread_providers = <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_providers</span>] ||= {}
+  old_providers = thread_providers.dup
+
+  providers.each <span style="color:#080;font-weight:bold">do</span> |provider|
+    <span style="color:#080;font-weight:bold">case</span> provider
+    <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Provider</span>
+      thread_providers[provider.class.type] = provider
+    <span style="color:#080;font-weight:bold">when</span> org.openhab.core.common.registry.ManagedProvider
+      type = provider.type
+      <span style="color:#080;font-weight:bold">unless</span> type
+        raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>provider.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is for objects which are not supported by openhab-jrubyscripting</span><span style="color:#710">&quot;</span></span>
+      <span style="color:#080;font-weight:bold">end</span>
+
+      thread_providers[type] = provider
+    <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Proc</span>,
+      <span style="color:#A60">:transient</span>,
+      <span style="color:#A60">:persistent</span>
+      <span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Provider</span>::<span style="color:#036;font-weight:bold">KNOWN_TYPES</span>.each <span style="color:#080;font-weight:bold">do</span> |known_type|
+        thread_providers[known_type] = provider
+      <span style="color:#080;font-weight:bold">end</span>
+    <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Hash</span>
+      <span style="color:#777"># non-symbols can't be used as kwargs, so Item keys show up as a separate hash here</span>
+      <span style="color:#777"># just merge it in, and allow it to be handled below</span>
+      providers_by_type.merge!(provider)
+    <span style="color:#080;font-weight:bold">else</span>
+      raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>provider.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is not a valid provider</span><span style="color:#710">&quot;</span></span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+
+  providers_by_type.each <span style="color:#080;font-weight:bold">do</span> |type, provider|
+    <span style="color:#080;font-weight:bold">case</span> provider
+    <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Proc</span>,
+      org.openhab.core.common.registry.ManagedProvider,
+      <span style="color:#A60">:transient</span>,
+      <span style="color:#A60">:persistent</span>,
+      <span style="color:#069">nil</span>
+      <span style="color:#069">nil</span>
+    <span style="color:#080;font-weight:bold">else</span>
+      raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>provider.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is not a valid provider</span><span style="color:#710">&quot;</span></span>
+    <span style="color:#080;font-weight:bold">end</span>
+
+    <span style="color:#080;font-weight:bold">case</span> type
+    <span style="color:#080;font-weight:bold">when</span> <span style="color:#A60">:items</span>, <span style="color:#A60">:metadata</span>, <span style="color:#A60">:things</span>, <span style="color:#A60">:links</span>
+      <span style="color:#080;font-weight:bold">if</span> provider.is_a?(org.openhab.core.common.registry.ManagedProvider) &amp;&amp; provider.type != type
+        raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>provider.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is not a provider for </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>type<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
+      <span style="color:#080;font-weight:bold">end</span>
+
+      thread_providers[type] = provider
+    <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Symbol</span>, <span style="color:#036;font-weight:bold">String</span>
+      (thread_providers[<span style="color:#A60">:metadata_namespaces</span>] ||= {})[type.to_s] = provider
+    <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Item</span>
+      (thread_providers[<span style="color:#A60">:metadata_items</span>] ||= {})[type.name] = provider
+    <span style="color:#080;font-weight:bold">else</span>
+      raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>type.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is not provider type</span><span style="color:#710">&quot;</span></span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+
+  old_providers
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="rule-class_method">
+  
+    .<strong>rule</strong>(name = nil, **kwargs) {|rule| ... } &#x21d2; <tt><span class='object_link'><a href="Core/Rules/Rule.html" title="OpenHAB::Core::Rules::Rule (module)">Core::Rules::Rule</a></span></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a new rule</p>
+<p>The rule must have at least one trigger and one execution block.
+To create a &quot;script&quot; without any triggers, use <span class='object_link'>#script</span>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">openhab/dsl</span><span style="color:#710">&quot;</span></span>
+
+rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">name</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
+  &lt;one <span style="color:#080;font-weight:bold">or</span> more triggers&gt;
+  &lt;one <span style="color:#080;font-weight:bold">or</span> more execution blocks&gt;
+  &lt;zero <span style="color:#080;font-weight:bold">or</span> more guards&gt;
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The rule name</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>Block executed in the context of a <span class='object_link'><a href="DSL/Rules/BuilderDSL.html" title="OpenHAB::DSL::Rules::BuilderDSL (class)">OpenHAB::DSL::Rules::BuilderDSL</a></span></p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>rule</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="DSL/Rules/BuilderDSL.html" title="OpenHAB::DSL::Rules::BuilderDSL (class)">Rules::BuilderDSL</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Optional parameter to access the rule configuration from within execution blocks and guards.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Core/Rules/Rule.html" title="OpenHAB::Core::Rules::Rule (module)">Core::Rules::Rule</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The rule object, or nil if no rule was created.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="DSL/Rules/BuilderDSL.html" title="OpenHAB::DSL::Rules::BuilderDSL (class)">Rule BuilderDSL for details on rule triggers, guards and execution blocks</a></span></li>
+    
+      <li><span class='object_link'><a href="DSL/Rules/Terse.html" title="OpenHAB::DSL::Rules::Terse (module)">Terse Rules</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+45
+46
+47</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 45</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">rule</span>(name = <span style="color:#069">nil</span>, **kwargs, &amp;block)
+  rules.build { rule(name, **kwargs, &amp;block) }
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="rules-class_method">
+  
+    .<strong>rules</strong>  &#x21d2; <tt><span class='object_link'><a href="Core/Rules/Registry.html" title="OpenHAB::Core::Rules::Registry (class)">Core::Rules::Registry</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Fetches all rules from the rule registry.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Core/Rules/Registry.html" title="OpenHAB::Core::Rules::Registry (class)">Core::Rules::Registry</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+127
+128
+129</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 127</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">rules</span>
+  <span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Rules</span>::<span style="color:#036;font-weight:bold">Registry</span>.instance
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="script-class_method">
+  
+    .<strong>script</strong>(name = nil, id: nil, **kwargs) { ... } &#x21d2; <tt><span class='object_link'><a href="Core/Rules/Rule.html" title="OpenHAB::Core::Rules::Rule (module)">Core::Rules::Rule</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a new script</p>
+<p>A script is a rule with no triggers. It can be called by various other actions,
+such as the Run Rules action.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>A descriptive name</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>id</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The script's ID</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>[] Block executed when the script is executed.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Core/Rules/Rule.html" title="OpenHAB::Core::Rules::Rule (module)">Core::Rules::Rule</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+50
+51
+52</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 50</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">script</span>(name = <span style="color:#069">nil</span>, <span style="color:#606">id</span>: <span style="color:#069">nil</span>, **kwargs, &amp;block)
+  rules.build { script(name, <span style="color:#606">id</span>: id, **kwargs, &amp;block) }
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="shared_cache-class_method">
+  
+    .<strong>shared_cache</strong>  &#x21d2; <tt><span class='object_link'><a href="Core/ValueCache.html" title="OpenHAB::Core::ValueCache (module)">Core::ValueCache</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>Only the <span class='object_link'><a href="#shared_cache-class_method" title="OpenHAB::DSL.shared_cache (method)">sharedCache</a></span> is exposed in Ruby.
+For a private cache, simply use an instance variable. See
+<a href="../file.ruby-basics.html#Variables" title="Instance Variables">Instance Variables</a>.</p>
+</div>
+  </div>
+
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>Because every script or UI rule gets it own JRuby engine instance,
+you cannot rely on being able to access Ruby objects between them. Only
+objects that implement a Java interface that's part of Java or openHAB
+Core (such as Hash implements <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" target="_parent" title="java.util.Map">java.util.Map</a>, or other basic
+datatypes) can be reliably stored and accessed from the shared cache.
+Likewise, you can use the cache to access data from other scripting
+languages, but they'll be all but useless in Ruby. It's best to stick
+to simple data types. If you're having troubles, serializing to_json
+before storing may help.</p>
+</div>
+  </div>
+
+<p>ValueCache is the interface used to access a
+<span class='object_link'><a href="#shared_cache-class_method" title="OpenHAB::DSL.shared_cache (method)">shared cache</a></span> available between scripts and/or
+rule executions.</p>
+<p>While ValueCache looks somewhat like a Hash, it does not support
+iteration of the contained elements. So it's limited to strictly storing,
+fetching, or removing known elements.</p>
+<p>Shared caches are <em>not</em> persisted between openHAB restarts. And in fact,
+if all scripts are unloaded that reference a particular key, that key is
+removed.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>shared_cache.compute_if_absent(<span style="color:#A60">:execution_count</span>) { <span style="color:#00D">0</span> }
+shared_cache[<span style="color:#A60">:execution_count</span>] += <span style="color:#00D">1</span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Core/ValueCache.html" title="OpenHAB::Core::ValueCache (module)">Core::ValueCache</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the cache shared among all scripts and UI rules in all languages.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://www.openhab.org/docs/configuration/jsr223.html#cache-preset" target="_parent" title="openHAB Cache Preset">openHAB Cache Preset</a></li>
+    
+      <li><span class='object_link'><a href="Core/ValueCache.html" title="OpenHAB::Core::ValueCache (module)">ValueCache</a></span></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 3.4.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+118
+119
+120</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 118</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">shared_cache</span>
+  <span style="color:#d70">$sharedCache</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="store_states-class_method">
+  
+    .<strong>store_states</strong>(*items)  &#x21d2; <tt><span class='object_link'><a href="Core/Items/StateStorage.html" title="OpenHAB::Core::Items::StateStorage (class)">Core::Items::StateStorage</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Store states of supplied items</p>
+<p>Takes one or more items and returns a map <code>{Item =&gt; State}</code> with the
+current state of each item. It is implemented by calling openHAB's
+<a href="https://www.openhab.org/docs/configuration/actions.html#event-bus-actions">events.storeStates()</a>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>states = store_states <span style="color:#036;font-weight:bold">Item1</span>, <span style="color:#036;font-weight:bold">Item2</span>
+...
+states.restore</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>With a block</p>
+</div></p>
+      
+      <pre class="example code"><code>store_states <span style="color:#036;font-weight:bold">Item1</span>, <span style="color:#036;font-weight:bold">Item2</span> <span style="color:#080;font-weight:bold">do</span>
+  ...
+<span style="color:#080;font-weight:bold">end</span> <span style="color:#777"># the states will be restored here</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>items</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Items to store states of.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Core/Items/StateStorage.html" title="OpenHAB::Core::Items::StateStorage (class)">Core::Items::StateStorage</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>item states</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 359</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">store_states</span>(*items)
+  items = items.flatten.map <span style="color:#080;font-weight:bold">do</span> |item|
+    item.respond_to?(<span style="color:#A60">:__getobj__</span>) ? item.__getobj__ : item
+  <span style="color:#080;font-weight:bold">end</span>
+  states = <span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Items</span>::<span style="color:#036;font-weight:bold">StateStorage</span>.from_items(*items)
+  <span style="color:#080;font-weight:bold">if</span> block_given?
+    <span style="color:#080;font-weight:bold">yield</span>
+    states.restore
+  <span style="color:#080;font-weight:bold">end</span>
+  states
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="things-class_method">
+  
+    .<strong>things</strong>  &#x21d2; <tt><span class='object_link'><a href="Core/Things/Registry.html" title="OpenHAB::Core::Things::Registry (class)">Core::Things::Registry</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Get all things known to openHAB</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>things.each { |thing| logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Thing: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>thing.uid<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)}
+logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Thing: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>things[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">astro:sun:home</span><span style="color:#710">'</span></span>].uid<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
+homie_things = things.select { |t| t.thing_type_uid == <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">mqtt:homie300</span><span style="color:#710">&quot;</span></span> }
+zwave_things = things.select { |t| t.binding_id == <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">zwave</span><span style="color:#710">&quot;</span></span> }
+homeseer_dimmers = zwave_things.select { |t| t.thing_type_uid.id == <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">homeseer_hswd200_00_000</span><span style="color:#710">&quot;</span></span> }
+things[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">zwave:device:512:node90</span><span style="color:#710">'</span></span>].uid.bridge_ids <span style="color:#777"># =&gt; [&quot;512&quot;]</span>
+things[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">mqtt:topic:4</span><span style="color:#710">'</span></span>].uid.bridge_ids <span style="color:#777"># =&gt; []</span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Core/Things/Registry.html" title="OpenHAB::Core::Things::Registry (class)">Core::Things::Registry</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>all Thing objects known to openHAB</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+182
+183
+184</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 182</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">things</span>
+  <span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Things</span>::<span style="color:#036;font-weight:bold">Registry</span>.instance
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="timers-class_method">
+  
+    .<strong>timers</strong>  &#x21d2; <tt><span class='object_link'><a href="DSL/TimerManager.html" title="OpenHAB::DSL::TimerManager (class)">TimerManager</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Provides access to timers created by <span class='object_link'><a href="#after-class_method" title="OpenHAB::DSL.after (method)">after</a></span></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="DSL/TimerManager.html" title="OpenHAB::DSL::TimerManager (class)">TimerManager</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+190
+191
+192</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 190</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">timers</span>
+  <span style="color:#036;font-weight:bold">TimerManager</span>.instance
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="unit-class_method">
+  
+    
+      <span class="overload">.<strong>unit</strong>(*units) { ... } &#x21d2; <tt><span class='object_link'>Object</span></tt> </span>
+    
+      <span class="overload">.<strong>unit</strong>(dimension)  &#x21d2; <tt><a href="https://javadoc.io/doc/javax.measure/unit-api/latest/javax/measure/Unit.html" target="_parent" title="javax.measure.Unit">javax.measure.Unit</a></tt> </span>
+    
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sets the implicit unit(s) for operations inside the block.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <p class="tag_title">Overloads:</p>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">.<strong>unit</strong>(*units) { ... } &#x21d2; <tt><span class='object_link'>Object</span></tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    <p>Sets the implicit unit(s) for this thread such that classes
+operating inside the block can perform automatic conversions to the
+supplied unit for <span class='object_link'><a href="Core/Types/QuantityType.html" title="OpenHAB::Core::Types::QuantityType (class)">QuantityType</a></span>.</p>
+<p>To facilitate conversion of multiple dimensioned and dimensionless
+numbers the unit block may be used. The unit block attempts to do the
+<em>right thing</em> based on the mix of dimensioned and dimensionless items
+within the block. Specifically all dimensionless items are converted to
+the supplied unit, except when they are used for multiplication or
+division.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Arithmetic Operations Between QuantityType and Numeric</p>
+</div></p>
+      
+      <pre class="example code"><code><span style="color:#777"># Number:Temperature NumberC = 23 °C</span>
+<span style="color:#777"># Number:Temperature NumberF = 70 °F</span>
+<span style="color:#777"># Number Dimensionless = 2</span>
+unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°F</span><span style="color:#710">'</span></span>) { <span style="color:#036;font-weight:bold">NumberC</span>.state - <span style="color:#036;font-weight:bold">NumberF</span>.state &lt; <span style="color:#00D">4</span> }                                      <span style="color:#777"># =&gt; true</span>
+unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°F</span><span style="color:#710">'</span></span>) { <span style="color:#036;font-weight:bold">NumberC</span>.state - <span style="color:#00D">24</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span> &lt; <span style="color:#00D">4</span> }                                          <span style="color:#777"># =&gt; true</span>
+unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°F</span><span style="color:#710">'</span></span>) { (<span style="color:#00D">24</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) - <span style="color:#036;font-weight:bold">NumberC</span>.state &lt; <span style="color:#00D">4</span> }                                        <span style="color:#777"># =&gt; true</span>
+unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) { <span style="color:#036;font-weight:bold">NumberF</span>.state - <span style="color:#00D">20</span> &lt; <span style="color:#00D">2</span> }                                                 <span style="color:#777"># =&gt; true</span>
+unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) { <span style="color:#036;font-weight:bold">NumberF</span>.state - <span style="color:#036;font-weight:bold">Dimensionless</span>.state }                                    <span style="color:#777"># =&gt; 19.11 °C</span>
+unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) { <span style="color:#036;font-weight:bold">NumberF</span>.state - <span style="color:#036;font-weight:bold">Dimensionless</span>.state &lt; <span style="color:#00D">20</span> }                               <span style="color:#777"># =&gt; true</span>
+unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) { <span style="color:#036;font-weight:bold">Dimensionless</span>.state + <span style="color:#036;font-weight:bold">NumberC</span>.state == <span style="color:#00D">25</span> }                              <span style="color:#777"># =&gt; true</span>
+unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) { <span style="color:#00D">2</span> + <span style="color:#036;font-weight:bold">NumberC</span>.state == <span style="color:#00D">25</span> }                                                <span style="color:#777"># =&gt; true</span>
+unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) { <span style="color:#036;font-weight:bold">Dimensionless</span>.state * <span style="color:#036;font-weight:bold">NumberC</span>.state == <span style="color:#00D">46</span> }                              <span style="color:#777"># =&gt; true</span>
+unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) { <span style="color:#00D">2</span> * <span style="color:#036;font-weight:bold">NumberC</span>.state == <span style="color:#00D">46</span> }                                                <span style="color:#777"># =&gt; true</span>
+unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) { ( (<span style="color:#00D">2</span> * (<span style="color:#036;font-weight:bold">NumberF</span>.state + <span style="color:#036;font-weight:bold">NumberC</span>.state) ) / <span style="color:#036;font-weight:bold">Dimensionless</span>.state ) &lt; <span style="color:#00D">45</span> }  <span style="color:#777"># =&gt; true</span>
+unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) { [<span style="color:#036;font-weight:bold">NumberC</span>.state, <span style="color:#036;font-weight:bold">NumberF</span>.state, <span style="color:#036;font-weight:bold">Dimensionless</span>.state].min }                <span style="color:#777"># =&gt; 2</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Commands and Updates inside a unit block</p>
+</div></p>
+      
+      <pre class="example code"><code>unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°F</span><span style="color:#710">'</span></span>) { <span style="color:#036;font-weight:bold">NumberC</span> &lt;&lt; <span style="color:#00D">32</span> }; <span style="color:#036;font-weight:bold">NumberC</span>.state                                           <span style="color:#777"># =&gt; 0 °C</span>
+<span style="color:#777"># Equivalent to</span>
+<span style="color:#036;font-weight:bold">NumberC</span> &lt;&lt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">32 °F</span><span style="color:#710">&quot;</span></span>
+<span style="color:#777"># or</span>
+<span style="color:#036;font-weight:bold">NumberC</span> &lt;&lt; <span style="color:#00D">32</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Specifying Multiple Units</p>
+</div></p>
+      
+      <pre class="example code"><code>unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°C</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">kW</span><span style="color:#710">&quot;</span></span>) <span style="color:#080;font-weight:bold">do</span>
+  <span style="color:#036;font-weight:bold">TemperatureItem</span>.update(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">50 °F</span><span style="color:#710">&quot;</span></span>)
+  <span style="color:#036;font-weight:bold">TemperatureItem</span>.state &lt; <span style="color:#00D">20</span>          <span style="color:#777"># =&gt; true. TemperatureItem.state &lt; 20 °C</span>
+  <span style="color:#036;font-weight:bold">PowerUsage</span>.update(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">3000 W</span><span style="color:#710">&quot;</span></span>)
+  <span style="color:#036;font-weight:bold">PowerUsage</span>.state &lt; <span style="color:#00D">10</span>               <span style="color:#777"># =&gt; true. PowerUsage.state &lt; 10 kW</span>
+<span style="color:#080;font-weight:bold">end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>units</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><a href="https://javadoc.io/doc/javax.measure/unit-api/latest/javax/measure/Unit.html" target="_parent" title="javax.measure.Unit">javax.measure.Unit</a></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Unit or String representing unit</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>[] The block will be executed in the context of the specified unit(s).</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'>Object</span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the result of the block</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">.<strong>unit</strong>(dimension)  &#x21d2; <tt><a href="https://javadoc.io/doc/javax.measure/unit-api/latest/javax/measure/Unit.html" target="_parent" title="javax.measure.Unit">javax.measure.Unit</a></tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    <p>Returns The current unit for the thread of the specified dimensions.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>unit(<span style="color:#036;font-weight:bold">SIUnits</span>::<span style="color:#036;font-weight:bold">METRE</span>.dimension) <span style="color:#777"># =&gt; ImperialUnits::FOOT</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>dimension</span>
+      
+      
+        <span class='type'>(<tt><a href="https://javadoc.io/doc/javax.measure/unit-api/latest/javax/measure/Dimension.html" target="_parent" title="javax.measure.Dimension">javax.measure.Dimension</a></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The dimension to fetch the unit for.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><a href="https://javadoc.io/doc/javax.measure/unit-api/latest/javax/measure/Unit.html" target="_parent" title="javax.measure.Unit">javax.measure.Unit</a></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The current unit for the thread of the specified dimensions</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+  </ul>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 516</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">unit</span>(*units)
+  <span style="color:#080;font-weight:bold">if</span> units.length == <span style="color:#00D">1</span> &amp;&amp; units.first.is_a?(javax.measure.Dimension)
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_units</span>]&amp;.[](units.first)
+  <span style="color:#080;font-weight:bold">end</span>
+
+  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">You must give a block to set the unit for the duration of</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> block_given?
+
+  <span style="color:#080;font-weight:bold">begin</span>
+    old_units = unit!(*units)
+    <span style="color:#080;font-weight:bold">yield</span>
+  <span style="color:#080;font-weight:bold">ensure</span>
+    <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_units</span>] = old_units
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="unit!-class_method">
+  
+    
+      <span class="overload">.<strong>unit!</strong>(*units)  &#x21d2; <tt>Hash&lt;<a href="https://javadoc.io/doc/javax.measure/unit-api/latest/javax/measure/Dimension.html" target="_parent" title="javax.measure.Dimension">javax.measure.Dimension</a>=&gt;<a href="https://javadoc.io/doc/javax.measure/unit-api/latest/javax/measure/Unit.html" target="_parent" title="javax.measure.Unit">javax.measure.Unit</a>&gt;</tt> </span>
+    
+      <span class="overload">.<strong>unit!</strong>  &#x21d2; <tt>Hash&lt;<a href="https://javadoc.io/doc/javax.measure/unit-api/latest/javax/measure/Dimension.html" target="_parent" title="javax.measure.Dimension">javax.measure.Dimension</a>=&gt;<a href="https://javadoc.io/doc/javax.measure/unit-api/latest/javax/measure/Unit.html" target="_parent" title="javax.measure.Unit">javax.measure.Unit</a>&gt;</tt> </span>
+    
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>This method is only intended for use at the top level of rule
+scripts. If it's used within library methods, or hap-hazardly within
+rules, things can get very confusing because the prior state won't be
+properly restored.</p>
+</div>
+  </div>
+
+<p>Permanently sets the implicit unit(s) for this thread</p>
+<p><span class='object_link'><a href="#unit!-class_method" title="OpenHAB::DSL.unit! (method)">unit!</a></span> calls are cumulative - additional calls will not erase the effects
+of previous calls unless they are for the same dimension.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <p class="tag_title">Overloads:</p>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">.<strong>unit!</strong>(*units)  &#x21d2; <tt>Hash&lt;<a href="https://javadoc.io/doc/javax.measure/unit-api/latest/javax/measure/Dimension.html" target="_parent" title="javax.measure.Dimension">javax.measure.Dimension</a>=&gt;<a href="https://javadoc.io/doc/javax.measure/unit-api/latest/javax/measure/Unit.html" target="_parent" title="javax.measure.Unit">javax.measure.Unit</a>&gt;</tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Set several defaults at once</p>
+</div></p>
+      
+      <pre class="example code"><code>unit!(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ft</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">lbs</span><span style="color:#710">&quot;</span></span>)
+(<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) == <span style="color:#00D">50</span> <span style="color:#777"># =&gt; true</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Calls are cumulative</p>
+</div></p>
+      
+      <pre class="example code"><code>unit!(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>)
+unit!(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ft</span><span style="color:#710">&quot;</span></span>)
+(<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) == <span style="color:#00D">50</span> <span style="color:#777"># =&gt; true</span>
+(<span style="color:#00D">2</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">yd</span><span style="color:#710">&quot;</span></span>) == <span style="color:#00D">6</span> <span style="color:#777"># =&gt; true</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Subsequent calls override the same dimension from previous calls</p>
+</div></p>
+      
+      <pre class="example code"><code>unit!(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">yd</span><span style="color:#710">&quot;</span></span>)
+unit!(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ft</span><span style="color:#710">&quot;</span></span>)
+(<span style="color:#00D">2</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">yd</span><span style="color:#710">&quot;</span></span>) == <span style="color:#00D">6</span> <span style="color:#777"># =&gt; true</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>units</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><a href="https://javadoc.io/doc/javax.measure/unit-api/latest/javax/measure/Unit.html" target="_parent" title="javax.measure.Unit">javax.measure.Unit</a></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Unit or String representing unit.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">.<strong>unit!</strong>  &#x21d2; <tt>Hash&lt;<a href="https://javadoc.io/doc/javax.measure/unit-api/latest/javax/measure/Dimension.html" target="_parent" title="javax.measure.Dimension">javax.measure.Dimension</a>=&gt;<a href="https://javadoc.io/doc/javax.measure/unit-api/latest/javax/measure/Unit.html" target="_parent" title="javax.measure.Unit">javax.measure.Unit</a>&gt;</tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    <p>Clear all unit settings</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Clear all unit settings</p>
+</div></p>
+      
+      <pre class="example code"><code>unit!(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ft</span><span style="color:#710">&quot;</span></span>)
+unit!
+(<span style="color:#00D">2</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">yd</span><span style="color:#710">&quot;</span></span>) == <span style="color:#00D">6</span> <span style="color:#777"># =&gt; false</span></code></pre>
+    
+  </div>
+
+
+</div>
+      </li>
+    
+  </ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash&lt;<a href="https://javadoc.io/doc/javax.measure/unit-api/latest/javax/measure/Dimension.html" target="_parent" title="javax.measure.Dimension">javax.measure.Dimension</a>=&gt;<a href="https://javadoc.io/doc/javax.measure/unit-api/latest/javax/measure/Unit.html" target="_parent" title="javax.measure.Unit">javax.measure.Unit</a>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the prior unit configuration</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 572</span>
+
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">unit!</span>(*units)
+  units = units.each_with_object({}) <span style="color:#080;font-weight:bold">do</span> |unit, r|
+    unit = org.openhab.core.types.util.UnitUtils.parse_unit(unit) <span style="color:#080;font-weight:bold">if</span> unit.is_a?(<span style="color:#036;font-weight:bold">String</span>)
+    r[unit.dimension] = unit
+  <span style="color:#080;font-weight:bold">end</span>
+
+  old_units = <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_units</span>] || {}
+  <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_units</span>] = units.empty? ? {} : old_units.merge(units)
+  old_units
+<span style="color:#080;font-weight:bold">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Tue Dec  6 23:29:28 2022 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.28 (ruby-3.1.3).
+</div>
+
+    </div>
+  </body>
+</html>

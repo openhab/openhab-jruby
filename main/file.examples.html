@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: Examples
+  
+    &mdash; Documentation by YARD 0.9.28
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "examples";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: Examples</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><h2>Detailed Examples</h2>
+<ul>
+<li><a href="file.conversions.html">Rule Conversions</a></li>
+<li><a href="file.gem_cleanup.html">Gem Cleanup</a></li>
+<li><a href="file.generated_rule.html">Generated Rules</a></li>
+<li><a href="file.how_do_i.html">How Do I...?</a></li>
+</ul>
+<h2>File-based Rules</h2>
+<p>The following examples are for file-based rules but most of them are applicable to <a href="file.usage.html#creating-rules-in-main-ui">GUI rules</a> as well.</p>
+<h3>Trigger when an item changed state</h3>
+<pre class="code ruby"><code class="ruby">rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Turn on light when sensor changed to open</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+  changed <span style="color:#036;font-weight:bold">Door_Sensor</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">OPEN</span> 
+  run { <span style="color:#036;font-weight:bold">Cupboard_Light</span>.on }
+<span style="color:#080;font-weight:bold">end</span>
+</code></pre>
+<p>Use multiple triggers</p>
+<pre class="code ruby"><code class="ruby">rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Control light based on multiple doors</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+  changed <span style="color:#036;font-weight:bold">Door_Sensor1</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">OPEN</span>
+  changed <span style="color:#036;font-weight:bold">Door_Sensor2</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">OPEN</span>
+  run { <span style="color:#036;font-weight:bold">Cupboard_Light</span>.on }
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#777"># Which is the same as:</span>
+rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Control light based on multiple doors</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+  changed <span style="color:#036;font-weight:bold">Door_Sensor1</span>, <span style="color:#036;font-weight:bold">Door_Sensor2</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">OPEN</span>
+  run { <span style="color:#036;font-weight:bold">Cupboard_Light</span>.on }
+<span style="color:#080;font-weight:bold">end</span>
+</code></pre>
+<p>Check against multiple states</p>
+<pre class="code ruby"><code class="ruby">rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Control light based on door state</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+  changed <span style="color:#036;font-weight:bold">Door_Sensor</span>, <span style="color:#606">to</span>: [<span style="color:#036;font-weight:bold">OPEN</span>, <span style="color:#036;font-weight:bold">CLOSED</span>]
+  run { <span style="color:#036;font-weight:bold">Cupboard_Light</span> &lt;&lt; <span style="color:#036;font-weight:bold">Door_Sensor</span>.open? } <span style="color:#777"># Send a boolean command to a Switch Item</span>
+<span style="color:#080;font-weight:bold">end</span>
+</code></pre>
+<h3>Trigger when a group member changed state:</h3>
+<pre class="code ruby"><code class="ruby"><span style="color:#777"># Assumption: Motion sensor items are named using the pattern RoomName_Motion</span>
+<span style="color:#777"># and Light switch items are named with the pattern RoomName_Light</span>
+rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Generic motion rule</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+  changed <span style="color:#036;font-weight:bold">Motion_Sensors</span>.members, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">ON</span>
+  run <span style="color:#080;font-weight:bold">do</span> |event|
+    light = items[event.item.name.sub(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">_Motion</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">_Light</span><span style="color:#710">'</span></span>)] <span style="color:#777"># Lookup item name from a string</span>
+    light&amp;.on 
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+</code></pre>
+<p>See also: <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#Triggers-group" title="group::OpenHAB::DSL::Rules::BuilderDSL::Triggers (group)">Triggers</a></span></p>
+<h3>Various ways of sending a command to an item</h3>
+<pre class="code ruby"><code class="ruby"><span style="color:#777"># Using the shovel operator</span>
+<span style="color:#036;font-weight:bold">Light1</span> &lt;&lt; <span style="color:#036;font-weight:bold">ON</span>
+<span style="color:#036;font-weight:bold">DimmerItem1</span> &lt;&lt; <span style="color:#00D">100</span>
+<span style="color:#036;font-weight:bold">Set_Temperature</span> &lt;&lt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">24 °C</span><span style="color:#710">'</span></span>     
+
+<span style="color:#777"># Using command predicates</span>
+<span style="color:#036;font-weight:bold">Light1</span>.on
+<span style="color:#036;font-weight:bold">Rollershutter1</span>.up  
+<span style="color:#036;font-weight:bold">Player1</span>.play
+
+<span style="color:#777"># Using .command</span>
+<span style="color:#036;font-weight:bold">ColorItem1</span>.command <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">#ffff00</span><span style="color:#710">'</span></span>
+<span style="color:#036;font-weight:bold">ColorItem1</span>.command {<span style="color:#606">r</span>: <span style="color:#00D">255</span>, <span style="color:#606">g</span>: <span style="color:#00D">0xFF</span>, <span style="color:#606">b</span>: <span style="color:#00D">0</span>} 
+
+<span style="color:#777"># Send a command to all the array members</span>
+<span style="color:#777"># Note The &lt;&lt; operator doesn't send a command here because it's for appending to the array</span>
+[<span style="color:#036;font-weight:bold">SwitchItem1</span>, <span style="color:#036;font-weight:bold">SwitchItem2</span>, <span style="color:#036;font-weight:bold">SwitchItem3</span>].on           
+[<span style="color:#036;font-weight:bold">RollerItem1</span>, <span style="color:#036;font-weight:bold">RollerItem2</span>, <span style="color:#036;font-weight:bold">RollerItem3</span>].down    
+[<span style="color:#036;font-weight:bold">NumberItem1</span>, <span style="color:#036;font-weight:bold">NumberItem2</span>, <span style="color:#036;font-weight:bold">NumberItem3</span>].command <span style="color:#00D">100</span>  
+</code></pre>
+<p>Each item type supports command predicates relevant to the type. For example, a
+<span class='object_link'><a href="OpenHAB/Core/Items/SwitchItem.html" title="OpenHAB::Core::Items::SwitchItem (class)">SwitchItem</a></span> supports <span class='object_link'><a href="OpenHAB/Core/Items/SwitchItem.html#on-instance_method" title="OpenHAB::Core::Items::SwitchItem#on (method)">on</a></span> and <span class='object_link'><a href="OpenHAB/Core/Items/SwitchItem.html#off-instance_method" title="OpenHAB::Core::Items::SwitchItem#off (method)">off</a></span>.
+See specific item types under <span class='object_link'><a href="OpenHAB/Core/Items.html" title="OpenHAB::Core::Items (module)">OpenHAB::Core::Items</a></span></p>
+<h3>Dealing with Item States</h3>
+<pre class="code ruby"><code class="ruby"><span style="color:#777"># Items:</span>
+<span style="color:#777"># Number:Temperature Outside_Temperature e.g. 28 °C</span>
+<span style="color:#777"># Number:Temperature Inside_Temperature e.g. 22 °C</span>
+temperature_difference = <span style="color:#036;font-weight:bold">Outside_Temperature</span>.state - <span style="color:#036;font-weight:bold">Inside_Temperature</span>.state
+logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Temperature difference: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>temperature_difference<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># &quot;Temperature difference: 6 °C&quot;</span>
+</code></pre>
+<p>Items have predicates to query its state.</p>
+<pre class="code ruby"><code class="ruby"><span style="color:#036;font-weight:bold">Switch1</span>.on?    <span style="color:#777"># =&gt; true if Switch1.state == ON</span>
+<span style="color:#036;font-weight:bold">Shutter1</span>.up?   <span style="color:#777"># =&gt; true if Shutter1.state == UP</span>
+</code></pre>
+<h3>Detect change duration without creating an explicit timer</h3>
+<pre class="code ruby"><code class="ruby">rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Warn when garage door is open a long time</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+  changed <span style="color:#036;font-weight:bold">Garage_Door</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">OPEN</span>, <span style="color:#606">for</span>: <span style="color:#00D">15</span>.minutes
+  run { say <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Warning, the garage door is open</span><span style="color:#710">&quot;</span></span> } <span style="color:#777"># call TTS to the default audio sink</span>
+<span style="color:#080;font-weight:bold">end</span>
+</code></pre>
+<h3>Use timers</h3>
+<p>Timers are created using <span class='object_link'><a href="OpenHAB/DSL.html#after-class_method" title="OpenHAB::DSL.after (method)">after</a></span> with an easier way to specify when it should execute,
+based on <a href="file.time.html#Durations">duration</a> syntax, e.g. <code>10.minutes</code> instead of using ZonedDateTime.</p>
+<pre class="code ruby"><code class="ruby">rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">simple timer</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+  changed <span style="color:#036;font-weight:bold">Watering_System</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">ON</span>
+  run <span style="color:#080;font-weight:bold">do</span>
+    after(<span style="color:#00D">5</span>.minutes) { <span style="color:#036;font-weight:bold">Watering_System</span>.off }
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+</code></pre>
+<h4>Rescheduling timers manually</h4>
+<pre class="code ruby"><code class="ruby"><span style="color:#33B">@timer</span> = <span style="color:#069">nil</span> <span style="color:#777"># variables starting with @ are instance variables</span>
+
+rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">reschedule timer</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+  updated <span style="color:#036;font-weight:bold">Motion_Sensor</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">OPEN</span>
+  run <span style="color:#080;font-weight:bold">do</span>
+    <span style="color:#036;font-weight:bold">Light_Item</span>.on
+    <span style="color:#080;font-weight:bold">if</span> (<span style="color:#33B">@timer</span>.nil?)
+      <span style="color:#33B">@timer</span> = after(<span style="color:#00D">5</span>.minutes) { <span style="color:#036;font-weight:bold">Light_Item</span>.off } <span style="color:#777"># This is the equivalent of createTimer() in rulesdsl</span>
+    <span style="color:#080;font-weight:bold">else</span>
+      <span style="color:#33B">@timer</span>.reschedule <span style="color:#777"># This automatically reschedules it for the original duration (5 minutes)</span>
+      <span style="color:#777"># To reschedule it a different duration, use @timer.reschedule 10.minutes</span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">cancel timer</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+  changed <span style="color:#036;font-weight:bold">Light_Item</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">OFF</span>
+  run { <span style="color:#33B">@timer</span>&amp;.cancel }
+<span style="color:#080;font-weight:bold">end</span>
+
+</code></pre>
+<h4>Reentrant Timer</h4>
+<p>Timers with <code>id</code> will automatically reschedule itself when executed again,
+and can be managed through <span class='object_link'><a href="OpenHAB/DSL.html#timers-class_method" title="OpenHAB::DSL.timers (method)">timers</a></span> object.</p>
+<pre class="code ruby"><code class="ruby">rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">automatic reentrant timer</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+  updated <span style="color:#036;font-weight:bold">Motion_Sensor</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">OPEN</span>
+  run <span style="color:#080;font-weight:bold">do</span>
+    <span style="color:#036;font-weight:bold">Light_Item</span>.ensure.on <span style="color:#777"># 'ensure' only sends the command if it's not already on</span>
+    <span style="color:#777"># Using a unique ID, this timer automatically reschedules when called again before 5 mins is up</span>
+    after(<span style="color:#00D">5</span>.minutes, <span style="color:#606">id</span>: <span style="color:#036;font-weight:bold">Motion_Sensor</span>) { <span style="color:#036;font-weight:bold">Light_Item</span>.off } 
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+
+<span style="color:#777"># timers is a built-in object that keeps track of reentrant timer ids</span>
+rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">cancel timer</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+  changed <span style="color:#036;font-weight:bold">Light_Item</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">OFF</span>
+  run { timers.cancel(<span style="color:#036;font-weight:bold">Motion_Sensor</span>) }
+<span style="color:#080;font-weight:bold">end</span>
+</code></pre>
+<h4>Using Timed Command Feature</h4>
+<p>The two timer examples above require an extra rule to keep track of the Light_Item state, so when it's turned off,
+the timer is cancelled. However, the <span class='object_link'><a href="OpenHAB/DSL/Items/TimedCommand.html" title="OpenHAB::DSL::Items::TimedCommand (module)">timed command</a></span>
+feature in the next example handles that automatically for you.</p>
+<pre class="code ruby"><code class="ruby">rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">timed command</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+  updated <span style="color:#036;font-weight:bold">Motion_Sensor</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">OPEN</span>
+  run { <span style="color:#036;font-weight:bold">Light_Item</span>.on <span style="color:#606">for</span>: <span style="color:#00D">5</span>.minutes } <span style="color:#777"># it will turn it off after 5 minutes</span>
+<span style="color:#080;font-weight:bold">end</span>
+</code></pre>
+<h3>Automatic activation of exhaust fan based on humidity sensor</h3>
+<p>This uses the <code>evolution_rate</code> <span class='object_link'><a href="OpenHAB/Core/Items/Persistence.html" title="OpenHAB::Core::Items::Persistence (module)">persistence</a></span>
+feature,  coupled with an easy way to specify
+<a href="file.time.html#Durations">duration</a>.
+It is accessed simply through <code>ItemName.persistence_function</code>.</p>
+<pre class="code ruby"><code class="ruby"><span style="color:#777"># Note: don't activate the exhaust fan if the bathroom light is off at night</span>
+<span style="color:#777"># Sun_Elevation is an Astro item. Its state is positive during daylight</span>
+rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Humidity: Control ExhaustFan</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+  updated <span style="color:#036;font-weight:bold">BathRoom_Humidity</span>
+  triggered <span style="color:#080;font-weight:bold">do</span> |humidity|
+    evo_rate = humidity.evolution_rate(<span style="color:#00D">4</span>.minutes.ago, <span style="color:#A60">:influxdb</span>)
+    logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>humidity.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>humidity.state<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> evolution_rate: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>evo_rate<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
+
+    <span style="color:#080;font-weight:bold">if</span> (humidity.state &gt; <span style="color:#00D">70</span> &amp;&amp; evo_rate &gt; <span style="color:#00D">15</span>) || humidity.state &gt; <span style="color:#00D">85</span>
+      <span style="color:#036;font-weight:bold">BathRoom_ExhaustFan</span>.ensure.on <span style="color:#080;font-weight:bold">if</span> <span style="color:#036;font-weight:bold">Sun_Elevation</span>.state.positive? || <span style="color:#036;font-weight:bold">BathRoom_Light</span>.state.nil? || <span style="color:#036;font-weight:bold">BathRoom_Light</span>.on?
+    <span style="color:#080;font-weight:bold">elsif</span> humidity.state &lt; <span style="color:#00D">70</span> || evo_rate &lt; <span style="color:#00D">-5</span>
+      <span style="color:#036;font-weight:bold">BathRoom_ExhaustFan</span>.ensure.off
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
+</code></pre>
+<h2>UI rules</h2>
+<h3>Reset the switch that triggered the rule after 5 seconds</h3>
+<p>Trigger defined as:</p>
+<ul>
+<li>When: a member of an item group receives a command</li>
+<li>Group: <code>Reset_5Seconds</code></li>
+<li>Command: <code>ON</code></li>
+</ul>
+<pre class="code ruby"><code class="ruby">logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>event.item.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> Triggered the rule</span><span style="color:#710">&quot;</span></span>)
+after <span style="color:#00D">5</span>.seconds <span style="color:#080;font-weight:bold">do</span>
+  event.item.off
+<span style="color:#080;font-weight:bold">end</span>
+</code></pre>
+<h3>Update a DateTime Item with the current time when a motion sensor is triggered</h3>
+<p>Given the following group and items:</p>
+<pre class="code ruby"><code class="ruby"><span style="color:#036;font-weight:bold">Group</span> <span style="color:#036;font-weight:bold">MotionSensors</span>
+<span style="color:#036;font-weight:bold">Switch</span> <span style="color:#036;font-weight:bold">Sensor1</span> (<span style="color:#036;font-weight:bold">MotionSensors</span>)
+<span style="color:#036;font-weight:bold">Switch</span> <span style="color:#036;font-weight:bold">Sensor2</span> (<span style="color:#036;font-weight:bold">MotionSensors</span>)
+
+<span style="color:#036;font-weight:bold">DateTime</span> <span style="color:#036;font-weight:bold">Sensor1_LastMotion</span>
+<span style="color:#036;font-weight:bold">DateTime</span> <span style="color:#036;font-weight:bold">Sensor2_LastMotion</span>
+</code></pre>
+<p>Trigger defined as:</p>
+<ul>
+<li>When: the state of a member of an item group is updated</li>
+<li>Group: <code>MotionSensors</code></li>
+<li>State: <code>ON</code></li>
+</ul>
+<pre class="code ruby"><code class="ruby">logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>event.item.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> Triggered</span><span style="color:#710">&quot;</span></span>)
+items[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>event.item_name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">_LastMotion</span><span style="color:#710">&quot;</span></span>].update <span style="color:#036;font-weight:bold">Time</span>.now
+</code></pre>
+</div></div>
+
+      <div id="footer">
+  Generated on Tue Dec  6 23:29:28 2022 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.28 (ruby-3.1.3).
+</div>
+
+    </div>
+  </body>
+</html>
