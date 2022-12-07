@@ -57,14 +57,14 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><div id='filecontents'><h1>Testing</h1>
+      <div id="content"><div id='filecontents'><h1 id="testing">Testing</h1>
 <p><code>openhab-jrubyscripting</code> includes framework classes to allow you to write unit tests
 for your openHAB rules written in JRuby. It loads up a limited actual openHAB runtime
 environment. Because it is a limited environment, with no actual bindings or things,
 you may need to stub out those actions in your tests. The autoupdate manager is
 running, so any commands sent to items that aren't marked as <code>autoupdate=&quot;false&quot;</code> will
 update automatically.</p>
-<h2>Usage</h2>
+<h2 id="usage">Usage</h2>
 <p>You must run tests on a system with an actual openHAB instance installed, with your
 configuration. JRuby &gt;= 9.3.8.0 must also be installed.</p>
 <ul>
@@ -134,7 +134,7 @@ require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:
 specs or for writing rules) via a REPL, run <code>bundle console</code>, and inside of that
 run <code>Bundler.require(:test)</code>. It will first load up the openHAB dependencies,
 and then load rules in, then drop you into IRB.</p>
-<h3>Spec Writing Tips</h3>
+<h3 id="spec-writing-tips">Spec Writing Tips</h3>
 <ul>
 <li>See <span class='object_link'><a href="OpenHAB/RSpec/Helpers.html" title="OpenHAB::RSpec::Helpers (module)">OpenHAB::RSpec::Helpers</a></span> for all helper methods available in specs.</li>
 <li>All items are reset to <span class='object_link'><a href="OpenHAB/Core/Types/UnDefType.html#NULL-constant" title="OpenHAB::Core::Types::UnDefType::NULL (constant)">NULL</a></span> before each spec.</li>
@@ -181,7 +181,7 @@ addon like <code>binding-astro</code> if you need to be able to create things fr
 rules. Note that the addon isn't actually allowed to start, just be installed to
 make type metadata from XML available.</li>
 </ul>
-<h2>Configuration</h2>
+<h2 id="configuration">Configuration</h2>
 <p>There are a few environment variables you can set to help the gem find the
 necessary dependencies. The default should work for an OpenHABian install
 or installation on Ubuntu or Debian with .debs. You may need to customize them
@@ -208,7 +208,7 @@ specific system properties will be set the same as openHAB would.</p>
 </tr>
 </tbody>
 </table>
-<h2>Transformations</h2>
+<h2 id="transformations">Transformations</h2>
 <p>Ruby transformations <em>must</em> have a magic comment <code># -*- mode: ruby -*-</code> in them to be loaded.
 Then they can be accessed as a method on <span class='object_link'><a href="OpenHAB/Transform.html" title="OpenHAB::Transform (module)">OpenHAB::Transform</a></span> based on the filename:</p>
 <pre class="code ruby"><code class="ruby"><span style="color:#036;font-weight:bold">OpenHAB</span>::<span style="color:#036;font-weight:bold">Transform</span>.compass(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">59 °</span><span style="color:#710">&quot;</span></span>)
@@ -216,7 +216,7 @@ Then they can be accessed as a method on <span class='object_link'><a href="Open
 <span style="color:#036;font-weight:bold">OpenHAB</span>::<span style="color:#036;font-weight:bold">Transform</span>::<span style="color:#036;font-weight:bold">Ruby</span>.compass(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">59 °</span><span style="color:#710">&quot;</span></span>)
 </code></pre>
 <p>They're loaded into a sub-JRuby engine, just like they run in openHAB.</p>
-<h2>IRB</h2>
+<h2 id="irb">IRB</h2>
 <p>If you would like to use a REPL sandbox to play with your items,
 you can run <code>bundle console</code>. You may want to create an <code>.irbrc</code>
 with the following contents to automatically boot things up:</p>
@@ -238,7 +238,7 @@ load_transforms
 </div></div>
 
       <div id="footer">
-  Generated on Tue Dec  6 23:47:38 2022 by
+  Generated on Wed Dec  7 15:28:42 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </div>

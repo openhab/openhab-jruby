@@ -180,15 +180,7 @@ function generateTOC() {
     if (this.id == "filecontents") return;
     show = true;
     var thisTag = parseInt(this.tagName[1], 10);
-    if (this.id.length === 0) {
-      var proposedId = $(this).attr('toc-id');
-      if (typeof(proposedId) != "undefined") this.id = proposedId;
-      else {
-        var proposedId = $(this).text().replace(/[^a-z0-9-]/ig, '_');
-        if ($('#' + proposedId).length > 0) { proposedId += counter; counter++; }
-        this.id = proposedId;
-      }
-    }
+    if (this.id.length === 0) return;
     if (thisTag > lastTag) {
       for (i = 0; i < thisTag - lastTag; i++) {
         if ( typeof(curli) == "undefined" ) {
