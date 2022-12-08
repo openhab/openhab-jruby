@@ -225,22 +225,44 @@ RegExp.escape = function(text) {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
 
-function populateSearchCache() {
-  $('.search-results li .item').each(function() {
-    var $node = $(this);
-    var $link = $node.find('.object_link a');
-    if ($link.length > 0) {
-      searchCache.push({
-        node: $node,
-        link: $link,
-        name: $link.text(),
-        fullName: $link.attr('title').split(' ')[0]
+function populateSearchCacheClasses(classes) {
+  var toRecurse = []
+
+  classes.forEach(klass => {
+    if (klass.hasOwnProperty("c")) {
+      klass.c.forEach(child => {
+        var parent;
+        if (klass.hasOwnProperty("p")) {
+          parent = klass.p + "::" + klass.n;
+        } else {
+          parent = klass.n;
+        }
+        child.p = parent;
+        toRecurse.push(child);
       });
+      delete klass["c"]
     }
+    searchCache.push(klass)
+  });
+
+  if (toRecurse.length !== 0) {
+    populateSearchCacheClasses(toRecurse);
+  }
+}
+
+function populateSearchCache() {
+  $.ajax($("script#index").attr("href"), { dataType: "json" }).success(function(data) {
+    populateSearchCacheClasses(data.classes);
+
+    searchCache = searchCache.concat(data.methods);
+
+    enableSearch();
+    escapeShortcut();
   });
 }
 
 function enableSearch() {
+  $('.search-box').show();
   $('#search-input').keyup(function(event) {
     if (ignoredKeyPress(event)) return;
     if (this.value === "") {
@@ -278,29 +300,35 @@ function clearSearchTimeout() {
 
 function clearSearch() {
   clearSearchTimeout();
-  $('.search-results .found').removeClass('found')
+  $('.search-results li').remove();
   $('.search-results').hide();
 }
 
 function performSearch(searchString) {
   clearSearchTimeout();
-  $('.noresults li').removeClass('found');
+  $('.search-results li').remove();
   $('.search-results').show();
   partialSearch(searchString, 0);
 }
 
 function partialSearch(searchString, offset) {
   var i = null;
+  var matchString = buildMatchString(searchString);
+  var matchRegexp = new RegExp(matchString, caseSensitiveMatch ? "" : "i");
+  var fullNameSearch = searchString.indexOf('::') !== -1;
+  search_list = $(".search-results ul");
+
   for (i = offset; i < Math.min(offset + 50, searchCache.length); i++) {
     var item = searchCache[i];
-    var searchName = (searchString.indexOf('::') != -1 ? item.fullName : item.name);
-    var matchString = buildMatchString(searchString);
-    var matchRegexp = new RegExp(matchString, caseSensitiveMatch ? "" : "i");
-    if (searchName.match(matchRegexp) == null) {
-      item.node.parent().removeClass('found');
-    }
-    else {
-      item.node.parent().addClass('found');
+    var searchName = fullNameSearch ? item.p + "::" + item.n : item.n;
+    if (searchName.match(matchRegexp) !== null) {
+      html = "<li><div class='item'><span class='object_link'><a href='" + item.u + "' + title='" + item.p + "::" + item.n + "'>" + item.n + "</a></span>";
+      if (item.hasOwnProperty("s")) {
+        html += "&lt; " + item.s;
+      }
+      html += "\n<small class='search_info'>" + (item.p || "Top-level Namespace") + "</small></div></li>"
+
+      search_list.append(html);
     }
   }
   if(i == searchCache.length) {
@@ -314,20 +342,14 @@ function partialSearch(searchString, offset) {
 
 function searchDone() {
   searchTimeout = null;
-  if ($('.search-results li:visible').size() === 0) {
-    $('.noresults li').addClass('found');
+  if ($('.search-results li').size() === 0) {
+    $(".search-results ul").append("<li>No Results</li>");
   }
 }
 
-function buildMatchString(searchString, event) {
+function buildMatchString(searchString) {
   caseSensitiveMatch = searchString.match(/[A-Z]/) != null;
-  var regexSearchString = RegExp.escape(searchString);
-  if (caseSensitiveMatch) {
-    regexSearchString += "|" +
-      $.map(searchString.split(''), function(e) { return RegExp.escape(e); }).
-      join('.+?');
-  }
-  return regexSearchString;
+  return RegExp.escape(searchString);
 }
 
 $(document).ready(function() {
@@ -344,8 +366,6 @@ $(document).ready(function() {
   enableHovers();
   selectVersion();
   populateSearchCache();
-  enableSearch();
-  escapeShortcut();
 });
 
 })();
