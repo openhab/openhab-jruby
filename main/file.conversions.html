@@ -11030,29 +11030,29 @@
 
       <main class="page">
         <div class="content"><div id='filecontents'><h2 id="conversion-examples">Conversion Examples<a href="#conversion-examples" class="header-anchor">#</a></h2>
-<p>DSL</p>
-<pre class="code xtend"><code class="xtend">rule &#39;Snap Fan to preset percentages&#39;
-when Member of CeilingFans changed
+<h3 id="dsl">DSL<a href="#dsl" class="header-anchor">#</a></h3>
+<pre class="code java"><code class="java">rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Snap Fan to preset percentages</span><span style="color:#710">'</span></span>
+when <span style="color:#0a8;font-weight:bold">Member</span> of CeilingFans changed
 then
   val fan = triggeringItem
-  val name = String.join(&quot; &quot;, fan.name.replace(&quot;LoadLevelStatus&quot;,&quot;&quot;).split(&quot;(?&lt;!^)(?=[A-Z])&quot;))
-  logInfo(&quot;Fan&quot;, &quot;Ceiling fan group rule triggered for {}, value {}&quot;, name,fan.state)
-  switch fan {
-  	case fan.state &gt;0 &amp;&amp; fan.state &lt; 25 : {
-  		logInfo(&quot;Fan&quot;, &quot;Snapping {} to 25%&quot;, name)
-  		sendCommand(fan, 25)
-  	}
-  	case fan.state &gt; 25 &amp;&amp; fan.state &lt; 66 : {
-  		logInfo(&quot;Fan&quot;, &quot;Snapping {} to 66%&quot;, name)
-  		sendCommand(fan, 66)
-  	}
-  	case fan.state &gt; 66 &amp;&amp; fan.state &lt; 100 : {
-  		logInfo(&quot;Fan&quot;, &quot;Snapping {} to 100%&quot;, name)
-  		sendCommand(fan, 100)
-  	}
-	default: {
-  		logInfo(&quot;Fan&quot;, &quot;{} set to snapped percentage, no action taken&quot;, name)
-	}
+  val name = <span style="color:#0a8;font-weight:bold">String</span>.join(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> </span><span style="color:#710">&quot;</span></span>, fan.name.replace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">LoadLevelStatus</span><span style="color:#710">&quot;</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#710">&quot;</span></span>).split(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">(?&lt;!^)(?=[A-Z])</span><span style="color:#710">&quot;</span></span>))
+  logInfo(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Fan</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Ceiling fan group rule triggered for {}, value {}</span><span style="color:#710">&quot;</span></span>, name,fan.state)
+  <span style="color:#080;font-weight:bold">switch</span> fan {
+    <span style="color:#080;font-weight:bold">case</span> fan.state &gt;<span style="color:#00D">0</span> &amp;&amp; fan.state &lt; <span style="color:#00D">25</span> : {
+      logInfo(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Fan</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Snapping {} to 25%</span><span style="color:#710">&quot;</span></span>, name)
+      sendCommand(fan, <span style="color:#00D">25</span>)
+    }
+    <span style="color:#080;font-weight:bold">case</span> fan.state &gt; <span style="color:#00D">25</span> &amp;&amp; fan.state &lt; <span style="color:#00D">66</span> : {
+      logInfo(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Fan</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Snapping {} to 66%</span><span style="color:#710">&quot;</span></span>, name)
+      sendCommand(fan, <span style="color:#00D">66</span>)
+    }
+    <span style="color:#080;font-weight:bold">case</span> fan.state &gt; <span style="color:#00D">66</span> &amp;&amp; fan.state &lt; <span style="color:#00D">100</span> : {
+      logInfo(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Fan</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Snapping {} to 100%</span><span style="color:#710">&quot;</span></span>, name)
+      sendCommand(fan, <span style="color:#00D">100</span>)
+    }
+    <span style="color:#080;font-weight:bold">default</span>: {
+      logInfo(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Fan</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">{} set to snapped percentage, no action taken</span><span style="color:#710">&quot;</span></span>, name)
+    }
   }
 end
 </code></pre>
@@ -11074,7 +11074,7 @@ end
   <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 </code></pre>
-<p>Python</p>
+<h3 id="python">Python<a href="#python" class="header-anchor">#</a></h3>
 <pre class="code python"><code class="python"><span style="color:#B0B">@rule</span>(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Use Supplemental Heat In Office</span><span style="color:#710">&quot;</span></span>)
 <span style="color:#B0B">@when</span>(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Item Office_Temperature changed</span><span style="color:#710">&quot;</span></span>)
 <span style="color:#B0B">@when</span>(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Item Thermostats_Upstairs_Temp changed</span><span style="color:#710">&quot;</span></span>)
@@ -11088,53 +11088,30 @@ end
   occupied = items[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Office_Occupied</span><span style="color:#710">&quot;</span></span>]
   door = items[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">OfficeDoor</span><span style="color:#710">&quot;</span></span>]
   difference = hall_temp - office_temp
-  logging.warn(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Office Temperature: {} Upstairs Hallway Temperature: {} Differnce: {}</span><span style="color:#710">&quot;</span></span>.format(office_temp,hall_temp,difference))
-  logging.warn(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Themostat Status: {} Heat Set: {}</span><span style="color:#710">&quot;</span></span>.format(therm_status,heat_set))
-  logging.warn(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Office Occupied: {}</span><span style="color:#710">&quot;</span></span>.format(occupied))
-  logging.warn(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Office Door: {}</span><span style="color:#710">&quot;</span></span>.format(door))
   degree_difference = <span style="color:#60E">2.0</span>
-  trigger = <span style="color:#069">False</span>
-  <span style="color:#080;font-weight:bold">if</span> heat_set &gt; office_temp:
-    <span style="color:#080;font-weight:bold">if</span> difference &gt; degree_difference:
-     <span style="color:#080;font-weight:bold">if</span> occupied == ON:
-      <span style="color:#080;font-weight:bold">if</span> <span style="color:#069">True</span>:
-          <span style="color:#080;font-weight:bold">if</span> therm_status == <span style="color:#00D">0</span>:
-            <span style="color:#080;font-weight:bold">if</span> door == CLOSED:
-                trigger = <span style="color:#069">True</span>
-            <span style="color:#080;font-weight:bold">else</span>:
-               logging.warn(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Door Open, no action taken</span><span style="color:#710">&quot;</span></span>)
-          <span style="color:#080;font-weight:bold">else</span>:
-            logging.warn(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">HVAC on, no action taken</span><span style="color:#710">&quot;</span></span>)
-      <span style="color:#080;font-weight:bold">else</span>:
-        logging.warn(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Office unoccupied, no action taken</span><span style="color:#710">&quot;</span></span>)
-    <span style="color:#080;font-weight:bold">else</span>:
-      logging.warn(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Thermstat and office temperature difference {} is less than {} degrees, no action taken</span><span style="color:#710">&quot;</span></span>.format(difference, degree_difference))
-  <span style="color:#080;font-weight:bold">else</span>:
-    logging.warn(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Heat set lower than office temp, no action taken</span><span style="color:#710">&quot;</span></span>.format(difference, degree_difference))
-
+  trigger = occupied == ON &amp;&amp; door == CLOSED &amp;&amp; heat_set &gt; office_temp &amp;&amp; difference &gt; degree_difference 
 
   <span style="color:#080;font-weight:bold">if</span> trigger:
-    logging.warn(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Turning on heater</span><span style="color:#710">&quot;</span></span>)
     events.sendCommand(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Lights_Office_Outlet</span><span style="color:#710">&quot;</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ON</span><span style="color:#710">&quot;</span></span>)
   <span style="color:#080;font-weight:bold">else</span>:
-    logging.warn(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Turning off heater</span><span style="color:#710">&quot;</span></span>)
     events.sendCommand(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Lights_Office_Outlet</span><span style="color:#710">&quot;</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">OFF</span><span style="color:#710">&quot;</span></span>)
 </code></pre>
 <p>Ruby</p>
-<pre class="code ruby"><code class="ruby">rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Use supplemental heat in office</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+<pre class="code ruby"><code class="ruby">rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Use supplemental heat in office</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
   changed <span style="color:#036;font-weight:bold">Office_Temperature</span>, <span style="color:#036;font-weight:bold">Thermostats_Upstairs_Temp</span>, <span style="color:#036;font-weight:bold">Office_Occupied</span>, <span style="color:#036;font-weight:bold">OfficeDoor</span>
-  run { <span style="color:#036;font-weight:bold">Lights_Office_Outlet</span> &lt;&lt; <span style="color:#036;font-weight:bold">ON</span> }
-  only_if { <span style="color:#036;font-weight:bold">Office_Occupied</span>.on? }
-  only_if { <span style="color:#036;font-weight:bold">OfficeDoor</span>.closed? }
-  only_if { <span style="color:#036;font-weight:bold">Thermostate_Upstairs_Heat_Set</span>.state &gt; <span style="color:#036;font-weight:bold">Office_Temperature</span>.state }
-  only_if { <span style="color:#036;font-weight:bold">Thermostat_Upstairs_Temp</span>.state - <span style="color:#036;font-weight:bold">Office_Temperature</span>.state &gt; <span style="color:#00D">2</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°F</span><span style="color:#710">'</span></span> }
-  otherwise { <span style="color:#036;font-weight:bold">Lights_Office_Outlet</span> &lt;&lt; <span style="color:#036;font-weight:bold">OFF</span> <span style="color:#080;font-weight:bold">if</span> <span style="color:#036;font-weight:bold">Lights_Office_Outlet</span>.on? }
+  run <span style="color:#080;font-weight:bold">do</span>
+    trigger = <span style="color:#036;font-weight:bold">Office_Occupied</span>.on? &amp;&amp;
+              <span style="color:#036;font-weight:bold">OfficeDoor</span>.closed? &amp;&amp;
+              <span style="color:#036;font-weight:bold">Thermostate_Upstairs_Heat_Set</span>.state &gt; <span style="color:#036;font-weight:bold">Office_Temperature</span>.state &amp;&amp;
+              <span style="color:#036;font-weight:bold">Thermostat_Upstairs_Temp</span>.state - <span style="color:#036;font-weight:bold">Office_Temperature</span>.state &gt; <span style="color:#00D">2</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>
+    <span style="color:#036;font-weight:bold">Lights_Office_Outlet</span>.ensure &lt;&lt; trigger <span style="color:#777"># send a boolean command to a SwitchItem, but only if it's different</span>
+  <span style="color:#080;font-weight:bold">end</span>
 <span style="color:#080;font-weight:bold">end</span>
 </code></pre>
 </div></div>
 
         <footer>
-  Generated on Thu Dec  8 00:29:46 2022 by
+  Generated on Thu Dec  8 01:41:41 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
