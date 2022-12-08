@@ -205,10 +205,10 @@ function enableHovers() {
 }
 
 function selectVersion() {
-  if (document.location.pathname.startsWith("/5.0/")) {
+  if (document.location.pathname.startsWith("/openhab-jrubyscripting/5.0/")) {
     $(".version-button.stable").toggleClass("current");
   } else if (document.location.pathname.startsWith("/docs/") ||
-    document.location.pathname.startsWith("/main/") ||
+    document.location.pathname.startsWith("/openhab-jrubyscripting/main/") ||
     document.location.protocol === "file:") {
     $(".version-button.main").toggleClass("current");
   }
