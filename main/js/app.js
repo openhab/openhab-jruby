@@ -251,7 +251,7 @@ function populateSearchCacheClasses(classes) {
 }
 
 function populateSearchCache() {
-  $.ajax($("script#index").attr("href"), { dataType: "json" }).success(function(data) {
+  $.ajax(indexpath, { cache: true, dataType: "json" }).success(function(data) {
     populateSearchCacheClasses(data.classes);
 
     searchCache = searchCache.concat(data.methods);
@@ -322,7 +322,8 @@ function partialSearch(searchString, offset) {
     var item = searchCache[i];
     var searchName = fullNameSearch ? item.p + "::" + item.n : item.n;
     if (searchName.match(matchRegexp) !== null) {
-      html = "<li><div class='item'><span class='object_link'><a href='" + item.u + "' + title='" + item.p + "::" + item.n + "'>" + item.n + "</a></span>";
+      var href = base_url + item.u;
+      html = "<li><div class='item'><span class='object_link'><a href='" + href + "' + title='" + item.p + "::" + item.n + "'>" + item.n + "</a></span>";
       if (item.hasOwnProperty("s")) {
         html += "&lt; " + item.s;
       }
