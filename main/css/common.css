@@ -13,11 +13,9 @@ body {
     overflow: auto;
 }
 
-@media (prefers-color-scheme: dark) {
-    body, html {
-        background-color: #111;
-        color: #ddd;
-    }
+#filecontents {
+    font-size: 16px;
+    line-height: 1.7;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -83,6 +81,7 @@ h1:hover .header-anchor, h2:hover .header-anchor, h3:hover .header-anchor, h4:ho
         padding: 2rem;
     }
 }
+
 .content a:hover {
     text-decoration: underline;
 }
@@ -143,4 +142,41 @@ footer {
 
 img {
     max-width: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+    body, html {
+        background-color: #111;
+        color: #ddd;
+    }
+
+    *:not(pre) > code,
+    #filecontents pre.code, .docstring pre.code,
+    .tags pre.example {
+        color: #f7f7f7;
+        background: #2f353c;
+        border: none;
+    }
+
+    *:not(pre) > code {
+        border: none;
+    }
+
+    #filecontents table th, #filecontents table td,
+    .docstring table th, .docstring table td { border-color: #444!important; background: #111!important; }
+    #filecontents table tr:nth-child(odd),
+    .docstring table tr:nth-child(odd) { background: #111; }
+    #filecontents table tr:nth-child(even),
+    .docstring table tr:nth-child(even) { background: #000; }
+    #filecontents table th, .docstring table th { background: #111; }
+    
+    /* style for <dl> */
+    #filecontents dl, .docstring dl { border: #444; }
+    #filecontents dt, .docstring dt { background: #111; }
+
+    footer {
+        border-top-color: #000;
+        background: #111;
+        color: #ccc;
+    }
 }
