@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Things::Thing";
   relpath = '../../../';
@@ -2403,26 +2405,26 @@ or cloud service) from the real world. It contains a list of
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>thing = things[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">chromecast:audiogroup:dd9f8622-eee-4eaf-b33f-cdcdcdeee001121</span><span style="color:#710">&quot;</span></span>]
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Audiogroup Status: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>thing&amp;.status<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Audiogroup Online? </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>thing&amp;.online?<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Channel ids: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>thing.channels.map(&amp;<span style="color:#A60">:uid</span>)<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Items linked to volume channel: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>thing.channels[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">volume</span><span style="color:#710">'</span></span>]&amp;.items&amp;.map(&amp;<span style="color:#A60">:name</span>)&amp;.join(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">, </span><span style="color:#710">'</span></span>)<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Item linked to volume channel: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>thing.channels[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">volume</span><span style="color:#710">'</span></span>]&amp;.item&amp;.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)</code></pre>
+      <pre class="example code"><code>thing = things[<span class="string"><span class="delimiter">&quot;</span><span class="content">chromecast:audiogroup:dd9f8622-eee-4eaf-b33f-cdcdcdeee001121</span><span class="delimiter">&quot;</span></span>]
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Audiogroup Status: </span><span class="inline"><span class="inline-delimiter">#{</span>thing&amp;.status<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Audiogroup Online? </span><span class="inline"><span class="inline-delimiter">#{</span>thing&amp;.online?<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Channel ids: </span><span class="inline"><span class="inline-delimiter">#{</span>thing.channels.map(&amp;<span class="symbol">:uid</span>)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Items linked to volume channel: </span><span class="inline"><span class="inline-delimiter">#{</span>thing.channels[<span class="string"><span class="delimiter">'</span><span class="content">volume</span><span class="delimiter">'</span></span>]&amp;.items&amp;.map(&amp;<span class="symbol">:name</span>)&amp;.join(<span class="string"><span class="delimiter">'</span><span class="content">, </span><span class="delimiter">'</span></span>)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Item linked to volume channel: </span><span class="inline"><span class="inline-delimiter">#{</span>thing.channels[<span class="string"><span class="delimiter">'</span><span class="content">volume</span><span class="delimiter">'</span></span>]&amp;.item&amp;.name<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Thing actions can be called directly through a Thing object</p>
 </div></p>
       
-      <pre class="example code"><code>things[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">mqtt:broker:mosquitto</span><span style="color:#710">&quot;</span></span>].publish_mqtt(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">zigbee2mqttt/bridge/config/permit_join</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">true</span><span style="color:#710">&quot;</span></span>)
-things[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">mail:smtp:local</span><span style="color:#710">&quot;</span></span>].send_mail(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">me@example.com</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Subject</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Email body</span><span style="color:#710">&quot;</span></span>)</code></pre>
+      <pre class="example code"><code>things[<span class="string"><span class="delimiter">&quot;</span><span class="content">mqtt:broker:mosquitto</span><span class="delimiter">&quot;</span></span>].publish_mqtt(<span class="string"><span class="delimiter">&quot;</span><span class="content">zigbee2mqttt/bridge/config/permit_join</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span>)
+things[<span class="string"><span class="delimiter">&quot;</span><span class="content">mail:smtp:local</span><span class="delimiter">&quot;</span></span>].send_mail(<span class="string"><span class="delimiter">&quot;</span><span class="content">me@example.com</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Subject</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Email body</span><span class="delimiter">&quot;</span></span>)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Thing can be accessed directly through <span class='object_link'><a href="../EntityLookup.html" title="OpenHAB::Core::EntityLookup (module)">entity lookup</a></span></p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#777"># replace ':' with '_' in thing uid</span>
-mqtt_broker_mosquitto.online? <span style="color:#777"># is mqtt:broker:mosquitto thing online?</span></code></pre>
+      <pre class="example code"><code><span class="comment"># replace ':' with '_' in thing uid</span>
+mqtt_broker_mosquitto.online? <span class="comment"># is mqtt:broker:mosquitto thing online?</span></code></pre>
     
   </div>
 
@@ -2854,7 +2856,7 @@ mqtt_broker_mosquitto.online? <span style="color:#777"># is mqtt:broker:mosquitt
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>things[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">mail:smtp:local</span><span style="color:#710">'</span></span>].send_email(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">me@example.com</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">subject</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">message</span><span style="color:#710">'</span></span>)</code></pre>
+      <pre class="example code"><code>things[<span class="string"><span class="delimiter">'</span><span class="content">mail:smtp:local</span><span class="delimiter">'</span></span>].send_email(<span class="string"><span class="delimiter">'</span><span class="content">me@example.com</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">subject</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">message</span><span class="delimiter">'</span></span>)</code></pre>
     
   </div>
 
@@ -2874,11 +2876,11 @@ mqtt_broker_mosquitto.online? <span style="color:#777"># is mqtt:broker:mosquitt
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 178</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">method_missing</span>(method, *args, &amp;block)
-  <span style="color:#080;font-weight:bold">return</span> actions.public_send(method, *args, &amp;block) <span style="color:#080;font-weight:bold">if</span> actions.respond_to?(method)
+<span class="keyword">def</span> <span class="function">method_missing</span>(method, *args, &amp;block)
+  <span class="keyword">return</span> actions.public_send(method, *args, &amp;block) <span class="keyword">if</span> actions.respond_to?(method)
 
-  <span style="color:#080;font-weight:bold">super</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">super</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3084,158 +3086,158 @@ mqtt_broker_mosquitto.online? <span style="color:#777"># is mqtt:broker:mosquitt
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 40</span>
 
-<span style="color:#080;font-weight:bold">module</span> <span style="color:#B06;font-weight:bold">Thing</span>
-  <span style="color:#777"># Array wrapper class to allow searching a list of channels</span>
-  <span style="color:#777"># by channel id</span>
-  <span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">ChannelsArray</span> &lt; <span style="color:#036;font-weight:bold">Array</span>
-    <span style="color:#777"># Allows indexing by both integer as an array or channel id acting like a hash.</span>
-    <span style="color:#777"># @param [Integer, String] index Numeric index or string channel id to search for.</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">[]</span>(index)
-      <span style="color:#080;font-weight:bold">if</span> index.respond_to?(<span style="color:#A60">:to_str</span>)
+<span class="keyword">module</span> <span class="class">Thing</span>
+  <span class="comment"># Array wrapper class to allow searching a list of channels</span>
+  <span class="comment"># by channel id</span>
+  <span class="keyword">class</span> <span class="class">ChannelsArray</span> &lt; <span class="constant">Array</span>
+    <span class="comment"># Allows indexing by both integer as an array or channel id acting like a hash.</span>
+    <span class="comment"># @param [Integer, String] index Numeric index or string channel id to search for.</span>
+    <span class="keyword">def</span> <span class="function">[]</span>(index)
+      <span class="keyword">if</span> index.respond_to?(<span class="symbol">:to_str</span>)
         key = index.to_str
-        <span style="color:#080;font-weight:bold">return</span> find { |channel| channel.uid.id == key }
-      <span style="color:#080;font-weight:bold">end</span>
+        <span class="keyword">return</span> find { |channel| channel.uid.id == key }
+      <span class="keyword">end</span>
 
-      <span style="color:#080;font-weight:bold">super</span>
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
+      <span class="keyword">super</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#080;font-weight:bold">class</span> &lt;&lt; <span style="color:#B06;font-weight:bold">self</span>
-    <span style="color:#777"># @!visibility private</span>
-    <span style="color:#777">#</span>
-    <span style="color:#777"># Override to support Proxy</span>
-    <span style="color:#777">#</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">===</span>(other)
-      other.is_a?(<span style="color:#069">self</span>)
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="keyword">class</span> &lt;&lt; <span class="class">self</span>
+    <span class="comment"># @!visibility private</span>
+    <span class="comment">#</span>
+    <span class="comment"># Override to support Proxy</span>
+    <span class="comment">#</span>
+    <span class="keyword">def</span> <span class="function">===</span>(other)
+      other.is_a?(<span class="predefined-constant">self</span>)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @!method uninitialized?</span>
-  <span style="color:#777">#   Check if thing status == UNINITIALIZED</span>
-  <span style="color:#777">#   @return [true,false]</span>
-  <span style="color:#777">#</span>
+  <span class="comment">#</span>
+  <span class="comment"># @!method uninitialized?</span>
+  <span class="comment">#   Check if thing status == UNINITIALIZED</span>
+  <span class="comment">#   @return [true,false]</span>
+  <span class="comment">#</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @!method initialized?</span>
-  <span style="color:#777">#   Check if thing status == INITIALIZED</span>
-  <span style="color:#777">#   @return [true,false]</span>
-  <span style="color:#777">#</span>
+  <span class="comment">#</span>
+  <span class="comment"># @!method initialized?</span>
+  <span class="comment">#   Check if thing status == INITIALIZED</span>
+  <span class="comment">#   @return [true,false]</span>
+  <span class="comment">#</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @!method unknown?</span>
-  <span style="color:#777">#   Check if thing status == UNKNOWN</span>
-  <span style="color:#777">#   @return [true,false]</span>
-  <span style="color:#777">#</span>
+  <span class="comment">#</span>
+  <span class="comment"># @!method unknown?</span>
+  <span class="comment">#   Check if thing status == UNKNOWN</span>
+  <span class="comment">#   @return [true,false]</span>
+  <span class="comment">#</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @!method online?</span>
-  <span style="color:#777">#   Check if thing status == ONLINE</span>
-  <span style="color:#777">#   @return [true,false]</span>
-  <span style="color:#777">#</span>
+  <span class="comment">#</span>
+  <span class="comment"># @!method online?</span>
+  <span class="comment">#   Check if thing status == ONLINE</span>
+  <span class="comment">#   @return [true,false]</span>
+  <span class="comment">#</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @!method offline?</span>
-  <span style="color:#777">#   Check if thing status == OFFLINE</span>
-  <span style="color:#777">#   @return [true,false]</span>
-  <span style="color:#777">#</span>
+  <span class="comment">#</span>
+  <span class="comment"># @!method offline?</span>
+  <span class="comment">#   Check if thing status == OFFLINE</span>
+  <span class="comment">#   @return [true,false]</span>
+  <span class="comment">#</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @!method removing?</span>
-  <span style="color:#777">#   Check if thing status == REMOVING</span>
-  <span style="color:#777">#   @return [true,false]</span>
-  <span style="color:#777">#</span>
+  <span class="comment">#</span>
+  <span class="comment"># @!method removing?</span>
+  <span class="comment">#   Check if thing status == REMOVING</span>
+  <span class="comment">#   @return [true,false]</span>
+  <span class="comment">#</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @!method removed?</span>
-  <span style="color:#777">#   Check if thing status == REMOVED</span>
-  <span style="color:#777">#   @return [true,false]</span>
-  <span style="color:#777">#</span>
+  <span class="comment">#</span>
+  <span class="comment"># @!method removed?</span>
+  <span class="comment">#   Check if thing status == REMOVED</span>
+  <span class="comment">#   @return [true,false]</span>
+  <span class="comment">#</span>
 
-  <span style="color:#036;font-weight:bold">ThingStatus</span>.constants.each <span style="color:#080;font-weight:bold">do</span> |thingstatus|
-    define_method(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>thingstatus.to_s.downcase<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">?</span><span style="color:#710">&quot;</span></span>) { status == <span style="color:#036;font-weight:bold">ThingStatus</span>.value_of(thingstatus) }
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="constant">ThingStatus</span>.constants.each <span class="keyword">do</span> |thingstatus|
+    define_method(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>thingstatus.to_s.downcase<span class="inline-delimiter">}</span></span><span class="content">?</span><span class="delimiter">&quot;</span></span>) { status == <span class="constant">ThingStatus</span>.value_of(thingstatus) }
+  <span class="keyword">end</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Enable the Thing</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @param [true, false] enabled</span>
-  <span style="color:#777"># @return [void]</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">enable</span>(<span style="color:#606">enabled</span>: <span style="color:#069">true</span>)
-    <span style="color:#036;font-weight:bold">Things</span>.manager.set_enabled(uid, enabled)
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="comment">#</span>
+  <span class="comment"># Enable the Thing</span>
+  <span class="comment">#</span>
+  <span class="comment"># @param [true, false] enabled</span>
+  <span class="comment"># @return [void]</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">enable</span>(<span class="key">enabled</span>: <span class="predefined-constant">true</span>)
+    <span class="constant">Things</span>.manager.set_enabled(uid, enabled)
+  <span class="keyword">end</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Disable the Thing</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @return [void]</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">disable</span>
-    enable(<span style="color:#606">enabled</span>: <span style="color:#069">false</span>)
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="comment">#</span>
+  <span class="comment"># Disable the Thing</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [void]</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">disable</span>
+    enable(<span class="key">enabled</span>: <span class="predefined-constant">false</span>)
+  <span class="keyword">end</span>
 
-  <span style="color:#777"># @return [String]</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">inspect</span>
-    r = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">#&lt;OpenHAB::Core::Things::Thing </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>uid<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-    r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>label.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> label
-    r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> (</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>location.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> location
-    r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>status<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-    <span style="color:#080;font-weight:bold">unless</span> status_info.status_detail == org.openhab.core.thing.ThingStatusDetail::<span style="color:#036;font-weight:bold">NONE</span>
-      r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> (</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>status_info.status_detail<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span>
-    <span style="color:#080;font-weight:bold">end</span>
-    r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> configuration=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>configuration.properties.to_h<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> configuration.properties.empty?
-    r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> properties=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>properties.to_h<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> properties.empty?
-    <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>r<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">&gt;</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="comment"># @return [String]</span>
+  <span class="keyword">def</span> <span class="function">inspect</span>
+    r = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Things::Thing </span><span class="inline"><span class="inline-delimiter">#{</span>uid<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>label.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> label
+    r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>location.inspect<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> location
+    r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>status<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">unless</span> status_info.status_detail == org.openhab.core.thing.ThingStatusDetail::<span class="constant">NONE</span>
+      r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>status_info.status_detail<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
+    r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> configuration=</span><span class="inline"><span class="inline-delimiter">#{</span>configuration.properties.to_h<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> configuration.properties.empty?
+    r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> properties=</span><span class="inline"><span class="inline-delimiter">#{</span>properties.to_h<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> properties.empty?
+    <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>r<span class="inline-delimiter">}</span></span><span class="content">&gt;</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Return Thing's uid as a string</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @return [String]</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to_s</span>
+  <span class="comment">#</span>
+  <span class="comment"># Return Thing's uid as a string</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [String]</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">to_s</span>
     uid.to_s
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Fetches the actions available for this thing.</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Default scope actions are available directly on the thing object, via</span>
-  <span style="color:#777"># {#method_missing}.</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @param [String, nil] scope The action scope. Default's to the thing's binding.</span>
-  <span style="color:#777"># @return [Object, nil]</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @example</span>
-  <span style="color:#777">#   things[&quot;max:thermostat:mybridge:thermostat&quot;].actions(&quot;max-devices&quot;).delete_from_cube</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @example (see #method_missing)</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">actions</span>(scope = <span style="color:#069">nil</span>)
-    <span style="color:#d70">$actions</span>.get(scope || uid.binding_id, uid.to_s)
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="comment">#</span>
+  <span class="comment"># Fetches the actions available for this thing.</span>
+  <span class="comment">#</span>
+  <span class="comment"># Default scope actions are available directly on the thing object, via</span>
+  <span class="comment"># {#method_missing}.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @param [String, nil] scope The action scope. Default's to the thing's binding.</span>
+  <span class="comment"># @return [Object, nil]</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example</span>
+  <span class="comment">#   things[&quot;max:thermostat:mybridge:thermostat&quot;].actions(&quot;max-devices&quot;).delete_from_cube</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example (see #method_missing)</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">actions</span>(scope = <span class="predefined-constant">nil</span>)
+    <span class="global-variable">$actions</span>.get(scope || uid.binding_id, uid.to_s)
+  <span class="keyword">end</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Delegate missing methods to the thing's default actions scope.</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @example</span>
-  <span style="color:#777">#   things['mail:smtp:local'].send_email('me@example.com', 'subject', 'message')</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">method_missing</span>(method, *args, &amp;block)
-    <span style="color:#080;font-weight:bold">return</span> actions.public_send(method, *args, &amp;block) <span style="color:#080;font-weight:bold">if</span> actions.respond_to?(method)
+  <span class="comment">#</span>
+  <span class="comment"># Delegate missing methods to the thing's default actions scope.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example</span>
+  <span class="comment">#   things['mail:smtp:local'].send_email('me@example.com', 'subject', 'message')</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">method_missing</span>(method, *args, &amp;block)
+    <span class="keyword">return</span> actions.public_send(method, *args, &amp;block) <span class="keyword">if</span> actions.respond_to?(method)
 
-    <span style="color:#080;font-weight:bold">super</span>
-  <span style="color:#080;font-weight:bold">end</span>
+    <span class="keyword">super</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#777"># @!visibility private</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">respond_to_missing?</span>(method_name, _include_private = <span style="color:#069">false</span>)
-    logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Checking if Thing </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>uid<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> supports </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>method_name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> action</span><span style="color:#710">&quot;</span></span>)
-    <span style="color:#080;font-weight:bold">return</span> <span style="color:#069">true</span> <span style="color:#080;font-weight:bold">if</span> actions.respond_to?(method_name)
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">respond_to_missing?</span>(method_name, _include_private = <span class="predefined-constant">false</span>)
+    logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Checking if Thing </span><span class="inline"><span class="inline-delimiter">#{</span>uid<span class="inline-delimiter">}</span></span><span class="content"> supports </span><span class="inline"><span class="inline-delimiter">#{</span>method_name<span class="inline-delimiter">}</span></span><span class="content"> action</span><span class="delimiter">&quot;</span></span>)
+    <span class="keyword">return</span> <span class="predefined-constant">true</span> <span class="keyword">if</span> actions.respond_to?(method_name)
 
-    <span style="color:#080;font-weight:bold">super</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+    <span class="keyword">super</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3437,158 +3439,158 @@ mqtt_broker_mosquitto.online? <span style="color:#777"># is mqtt:broker:mosquitt
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 40</span>
 
-<span style="color:#080;font-weight:bold">module</span> <span style="color:#B06;font-weight:bold">Thing</span>
-  <span style="color:#777"># Array wrapper class to allow searching a list of channels</span>
-  <span style="color:#777"># by channel id</span>
-  <span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">ChannelsArray</span> &lt; <span style="color:#036;font-weight:bold">Array</span>
-    <span style="color:#777"># Allows indexing by both integer as an array or channel id acting like a hash.</span>
-    <span style="color:#777"># @param [Integer, String] index Numeric index or string channel id to search for.</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">[]</span>(index)
-      <span style="color:#080;font-weight:bold">if</span> index.respond_to?(<span style="color:#A60">:to_str</span>)
+<span class="keyword">module</span> <span class="class">Thing</span>
+  <span class="comment"># Array wrapper class to allow searching a list of channels</span>
+  <span class="comment"># by channel id</span>
+  <span class="keyword">class</span> <span class="class">ChannelsArray</span> &lt; <span class="constant">Array</span>
+    <span class="comment"># Allows indexing by both integer as an array or channel id acting like a hash.</span>
+    <span class="comment"># @param [Integer, String] index Numeric index or string channel id to search for.</span>
+    <span class="keyword">def</span> <span class="function">[]</span>(index)
+      <span class="keyword">if</span> index.respond_to?(<span class="symbol">:to_str</span>)
         key = index.to_str
-        <span style="color:#080;font-weight:bold">return</span> find { |channel| channel.uid.id == key }
-      <span style="color:#080;font-weight:bold">end</span>
+        <span class="keyword">return</span> find { |channel| channel.uid.id == key }
+      <span class="keyword">end</span>
 
-      <span style="color:#080;font-weight:bold">super</span>
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
+      <span class="keyword">super</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#080;font-weight:bold">class</span> &lt;&lt; <span style="color:#B06;font-weight:bold">self</span>
-    <span style="color:#777"># @!visibility private</span>
-    <span style="color:#777">#</span>
-    <span style="color:#777"># Override to support Proxy</span>
-    <span style="color:#777">#</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">===</span>(other)
-      other.is_a?(<span style="color:#069">self</span>)
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="keyword">class</span> &lt;&lt; <span class="class">self</span>
+    <span class="comment"># @!visibility private</span>
+    <span class="comment">#</span>
+    <span class="comment"># Override to support Proxy</span>
+    <span class="comment">#</span>
+    <span class="keyword">def</span> <span class="function">===</span>(other)
+      other.is_a?(<span class="predefined-constant">self</span>)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @!method uninitialized?</span>
-  <span style="color:#777">#   Check if thing status == UNINITIALIZED</span>
-  <span style="color:#777">#   @return [true,false]</span>
-  <span style="color:#777">#</span>
+  <span class="comment">#</span>
+  <span class="comment"># @!method uninitialized?</span>
+  <span class="comment">#   Check if thing status == UNINITIALIZED</span>
+  <span class="comment">#   @return [true,false]</span>
+  <span class="comment">#</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @!method initialized?</span>
-  <span style="color:#777">#   Check if thing status == INITIALIZED</span>
-  <span style="color:#777">#   @return [true,false]</span>
-  <span style="color:#777">#</span>
+  <span class="comment">#</span>
+  <span class="comment"># @!method initialized?</span>
+  <span class="comment">#   Check if thing status == INITIALIZED</span>
+  <span class="comment">#   @return [true,false]</span>
+  <span class="comment">#</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @!method unknown?</span>
-  <span style="color:#777">#   Check if thing status == UNKNOWN</span>
-  <span style="color:#777">#   @return [true,false]</span>
-  <span style="color:#777">#</span>
+  <span class="comment">#</span>
+  <span class="comment"># @!method unknown?</span>
+  <span class="comment">#   Check if thing status == UNKNOWN</span>
+  <span class="comment">#   @return [true,false]</span>
+  <span class="comment">#</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @!method online?</span>
-  <span style="color:#777">#   Check if thing status == ONLINE</span>
-  <span style="color:#777">#   @return [true,false]</span>
-  <span style="color:#777">#</span>
+  <span class="comment">#</span>
+  <span class="comment"># @!method online?</span>
+  <span class="comment">#   Check if thing status == ONLINE</span>
+  <span class="comment">#   @return [true,false]</span>
+  <span class="comment">#</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @!method offline?</span>
-  <span style="color:#777">#   Check if thing status == OFFLINE</span>
-  <span style="color:#777">#   @return [true,false]</span>
-  <span style="color:#777">#</span>
+  <span class="comment">#</span>
+  <span class="comment"># @!method offline?</span>
+  <span class="comment">#   Check if thing status == OFFLINE</span>
+  <span class="comment">#   @return [true,false]</span>
+  <span class="comment">#</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @!method removing?</span>
-  <span style="color:#777">#   Check if thing status == REMOVING</span>
-  <span style="color:#777">#   @return [true,false]</span>
-  <span style="color:#777">#</span>
+  <span class="comment">#</span>
+  <span class="comment"># @!method removing?</span>
+  <span class="comment">#   Check if thing status == REMOVING</span>
+  <span class="comment">#   @return [true,false]</span>
+  <span class="comment">#</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @!method removed?</span>
-  <span style="color:#777">#   Check if thing status == REMOVED</span>
-  <span style="color:#777">#   @return [true,false]</span>
-  <span style="color:#777">#</span>
+  <span class="comment">#</span>
+  <span class="comment"># @!method removed?</span>
+  <span class="comment">#   Check if thing status == REMOVED</span>
+  <span class="comment">#   @return [true,false]</span>
+  <span class="comment">#</span>
 
-  <span style="color:#036;font-weight:bold">ThingStatus</span>.constants.each <span style="color:#080;font-weight:bold">do</span> |thingstatus|
-    define_method(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>thingstatus.to_s.downcase<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">?</span><span style="color:#710">&quot;</span></span>) { status == <span style="color:#036;font-weight:bold">ThingStatus</span>.value_of(thingstatus) }
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="constant">ThingStatus</span>.constants.each <span class="keyword">do</span> |thingstatus|
+    define_method(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>thingstatus.to_s.downcase<span class="inline-delimiter">}</span></span><span class="content">?</span><span class="delimiter">&quot;</span></span>) { status == <span class="constant">ThingStatus</span>.value_of(thingstatus) }
+  <span class="keyword">end</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Enable the Thing</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @param [true, false] enabled</span>
-  <span style="color:#777"># @return [void]</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">enable</span>(<span style="color:#606">enabled</span>: <span style="color:#069">true</span>)
-    <span style="color:#036;font-weight:bold">Things</span>.manager.set_enabled(uid, enabled)
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="comment">#</span>
+  <span class="comment"># Enable the Thing</span>
+  <span class="comment">#</span>
+  <span class="comment"># @param [true, false] enabled</span>
+  <span class="comment"># @return [void]</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">enable</span>(<span class="key">enabled</span>: <span class="predefined-constant">true</span>)
+    <span class="constant">Things</span>.manager.set_enabled(uid, enabled)
+  <span class="keyword">end</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Disable the Thing</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @return [void]</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">disable</span>
-    enable(<span style="color:#606">enabled</span>: <span style="color:#069">false</span>)
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="comment">#</span>
+  <span class="comment"># Disable the Thing</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [void]</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">disable</span>
+    enable(<span class="key">enabled</span>: <span class="predefined-constant">false</span>)
+  <span class="keyword">end</span>
 
-  <span style="color:#777"># @return [String]</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">inspect</span>
-    r = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">#&lt;OpenHAB::Core::Things::Thing </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>uid<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-    r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>label.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> label
-    r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> (</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>location.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> location
-    r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>status<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-    <span style="color:#080;font-weight:bold">unless</span> status_info.status_detail == org.openhab.core.thing.ThingStatusDetail::<span style="color:#036;font-weight:bold">NONE</span>
-      r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> (</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>status_info.status_detail<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span>
-    <span style="color:#080;font-weight:bold">end</span>
-    r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> configuration=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>configuration.properties.to_h<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> configuration.properties.empty?
-    r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> properties=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>properties.to_h<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> properties.empty?
-    <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>r<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">&gt;</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="comment"># @return [String]</span>
+  <span class="keyword">def</span> <span class="function">inspect</span>
+    r = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Things::Thing </span><span class="inline"><span class="inline-delimiter">#{</span>uid<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>label.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> label
+    r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>location.inspect<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> location
+    r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>status<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">unless</span> status_info.status_detail == org.openhab.core.thing.ThingStatusDetail::<span class="constant">NONE</span>
+      r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>status_info.status_detail<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
+    r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> configuration=</span><span class="inline"><span class="inline-delimiter">#{</span>configuration.properties.to_h<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> configuration.properties.empty?
+    r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> properties=</span><span class="inline"><span class="inline-delimiter">#{</span>properties.to_h<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> properties.empty?
+    <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>r<span class="inline-delimiter">}</span></span><span class="content">&gt;</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Return Thing's uid as a string</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @return [String]</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to_s</span>
+  <span class="comment">#</span>
+  <span class="comment"># Return Thing's uid as a string</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [String]</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">to_s</span>
     uid.to_s
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Fetches the actions available for this thing.</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Default scope actions are available directly on the thing object, via</span>
-  <span style="color:#777"># {#method_missing}.</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @param [String, nil] scope The action scope. Default's to the thing's binding.</span>
-  <span style="color:#777"># @return [Object, nil]</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @example</span>
-  <span style="color:#777">#   things[&quot;max:thermostat:mybridge:thermostat&quot;].actions(&quot;max-devices&quot;).delete_from_cube</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @example (see #method_missing)</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">actions</span>(scope = <span style="color:#069">nil</span>)
-    <span style="color:#d70">$actions</span>.get(scope || uid.binding_id, uid.to_s)
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="comment">#</span>
+  <span class="comment"># Fetches the actions available for this thing.</span>
+  <span class="comment">#</span>
+  <span class="comment"># Default scope actions are available directly on the thing object, via</span>
+  <span class="comment"># {#method_missing}.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @param [String, nil] scope The action scope. Default's to the thing's binding.</span>
+  <span class="comment"># @return [Object, nil]</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example</span>
+  <span class="comment">#   things[&quot;max:thermostat:mybridge:thermostat&quot;].actions(&quot;max-devices&quot;).delete_from_cube</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example (see #method_missing)</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">actions</span>(scope = <span class="predefined-constant">nil</span>)
+    <span class="global-variable">$actions</span>.get(scope || uid.binding_id, uid.to_s)
+  <span class="keyword">end</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Delegate missing methods to the thing's default actions scope.</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @example</span>
-  <span style="color:#777">#   things['mail:smtp:local'].send_email('me@example.com', 'subject', 'message')</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">method_missing</span>(method, *args, &amp;block)
-    <span style="color:#080;font-weight:bold">return</span> actions.public_send(method, *args, &amp;block) <span style="color:#080;font-weight:bold">if</span> actions.respond_to?(method)
+  <span class="comment">#</span>
+  <span class="comment"># Delegate missing methods to the thing's default actions scope.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example</span>
+  <span class="comment">#   things['mail:smtp:local'].send_email('me@example.com', 'subject', 'message')</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">method_missing</span>(method, *args, &amp;block)
+    <span class="keyword">return</span> actions.public_send(method, *args, &amp;block) <span class="keyword">if</span> actions.respond_to?(method)
 
-    <span style="color:#080;font-weight:bold">super</span>
-  <span style="color:#080;font-weight:bold">end</span>
+    <span class="keyword">super</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#777"># @!visibility private</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">respond_to_missing?</span>(method_name, _include_private = <span style="color:#069">false</span>)
-    logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Checking if Thing </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>uid<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> supports </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>method_name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> action</span><span style="color:#710">&quot;</span></span>)
-    <span style="color:#080;font-weight:bold">return</span> <span style="color:#069">true</span> <span style="color:#080;font-weight:bold">if</span> actions.respond_to?(method_name)
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">respond_to_missing?</span>(method_name, _include_private = <span class="predefined-constant">false</span>)
+    logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Checking if Thing </span><span class="inline"><span class="inline-delimiter">#{</span>uid<span class="inline-delimiter">}</span></span><span class="content"> supports </span><span class="inline"><span class="inline-delimiter">#{</span>method_name<span class="inline-delimiter">}</span></span><span class="content"> action</span><span class="delimiter">&quot;</span></span>)
+    <span class="keyword">return</span> <span class="predefined-constant">true</span> <span class="keyword">if</span> actions.respond_to?(method_name)
 
-    <span style="color:#080;font-weight:bold">super</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+    <span class="keyword">super</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3625,10 +3627,10 @@ mqtt_broker_mosquitto.online? <span style="color:#777"># is mqtt:broker:mosquitt
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>things[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">max:thermostat:mybridge:thermostat</span><span style="color:#710">&quot;</span></span>].actions(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">max-devices</span><span style="color:#710">&quot;</span></span>).delete_from_cube</code></pre>
+      <pre class="example code"><code>things[<span class="string"><span class="delimiter">&quot;</span><span class="content">max:thermostat:mybridge:thermostat</span><span class="delimiter">&quot;</span></span>].actions(<span class="string"><span class="delimiter">&quot;</span><span class="content">max-devices</span><span class="delimiter">&quot;</span></span>).delete_from_cube</code></pre>
     
       
-      <pre class="example code"><code>things[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">mail:smtp:local</span><span style="color:#710">'</span></span>].send_email(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">me@example.com</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">subject</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">message</span><span style="color:#710">'</span></span>)</code></pre>
+      <pre class="example code"><code>things[<span class="string"><span class="delimiter">'</span><span class="content">mail:smtp:local</span><span class="delimiter">'</span></span>].send_email(<span class="string"><span class="delimiter">'</span><span class="content">me@example.com</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">subject</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">message</span><span class="delimiter">'</span></span>)</code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -3680,9 +3682,9 @@ mqtt_broker_mosquitto.online? <span style="color:#777"># is mqtt:broker:mosquitt
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 168</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">actions</span>(scope = <span style="color:#069">nil</span>)
-  <span style="color:#d70">$actions</span>.get(scope || uid.binding_id, uid.to_s)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">actions</span>(scope = <span class="predefined-constant">nil</span>)
+  <span class="global-variable">$actions</span>.get(scope || uid.binding_id, uid.to_s)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3720,9 +3722,9 @@ mqtt_broker_mosquitto.online? <span style="color:#777"># is mqtt:broker:mosquitt
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 127</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">disable</span>
-  enable(<span style="color:#606">enabled</span>: <span style="color:#069">false</span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">disable</span>
+  enable(<span class="key">enabled</span>: <span class="predefined-constant">false</span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3777,9 +3779,9 @@ mqtt_broker_mosquitto.online? <span style="color:#777"># is mqtt:broker:mosquitt
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 118</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">enable</span>(<span style="color:#606">enabled</span>: <span style="color:#069">true</span>)
-  <span style="color:#036;font-weight:bold">Things</span>.manager.set_enabled(uid, enabled)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">enable</span>(<span class="key">enabled</span>: <span class="predefined-constant">true</span>)
+  <span class="constant">Things</span>.manager.set_enabled(uid, enabled)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3887,18 +3889,18 @@ mqtt_broker_mosquitto.online? <span style="color:#777"># is mqtt:broker:mosquitt
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 132</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">inspect</span>
-  r = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">#&lt;OpenHAB::Core::Things::Thing </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>uid<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-  r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>label.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> label
-  r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> (</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>location.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> location
-  r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>status<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">unless</span> status_info.status_detail == org.openhab.core.thing.ThingStatusDetail::<span style="color:#036;font-weight:bold">NONE</span>
-    r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> (</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>status_info.status_detail<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
-  r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> configuration=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>configuration.properties.to_h<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> configuration.properties.empty?
-  r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> properties=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>properties.to_h<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> properties.empty?
-  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>r<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">&gt;</span><span style="color:#710">&quot;</span></span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">inspect</span>
+  r = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Things::Thing </span><span class="inline"><span class="inline-delimiter">#{</span>uid<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+  r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>label.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> label
+  r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>location.inspect<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> location
+  r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>status<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">unless</span> status_info.status_detail == org.openhab.core.thing.ThingStatusDetail::<span class="constant">NONE</span>
+    r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>status_info.status_detail<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
+  r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> configuration=</span><span class="inline"><span class="inline-delimiter">#{</span>configuration.properties.to_h<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> configuration.properties.empty?
+  r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> properties=</span><span class="inline"><span class="inline-delimiter">#{</span>properties.to_h<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> properties.empty?
+  <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>r<span class="inline-delimiter">}</span></span><span class="content">&gt;</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4047,9 +4049,9 @@ mqtt_broker_mosquitto.online? <span style="color:#777"># is mqtt:broker:mosquitt
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 108</span>
 
-<span style="color:#036;font-weight:bold">ThingStatus</span>.constants.each <span style="color:#080;font-weight:bold">do</span> |thingstatus|
-  define_method(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>thingstatus.to_s.downcase<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">?</span><span style="color:#710">&quot;</span></span>) { status == <span style="color:#036;font-weight:bold">ThingStatus</span>.value_of(thingstatus) }
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="constant">ThingStatus</span>.constants.each <span class="keyword">do</span> |thingstatus|
+  define_method(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>thingstatus.to_s.downcase<span class="inline-delimiter">}</span></span><span class="content">?</span><span class="delimiter">&quot;</span></span>) { status == <span class="constant">ThingStatus</span>.value_of(thingstatus) }
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4149,9 +4151,9 @@ mqtt_broker_mosquitto.online? <span style="color:#777"># is mqtt:broker:mosquitt
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 150</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to_s</span>
+<span class="keyword">def</span> <span class="function">to_s</span>
   uid.to_s
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4260,7 +4262,7 @@ mqtt_broker_mosquitto.online? <span style="color:#777"># is mqtt:broker:mosquitt
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:31 2022 by
+  Generated on Fri Dec  9 22:46:45 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

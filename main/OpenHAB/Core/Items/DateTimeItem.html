@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Items::DateTimeItem";
   relpath = '../../../';
@@ -2422,41 +2424,41 @@
         <p class="example_title"><div class='inline'><p>DateTime items can be updated and commanded with Ruby Time objects or Java ZonedDateTime objects</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Example_DateTimeItem</span> &lt;&lt; <span style="color:#036;font-weight:bold">Time</span>.now
-<span style="color:#036;font-weight:bold">Example_DateTimeItem</span> &lt;&lt; <span style="color:#036;font-weight:bold">ZonedDateTime</span>.now</code></pre>
+      <pre class="example code"><code><span class="constant">Example_DateTimeItem</span> &lt;&lt; <span class="constant">Time</span>.now
+<span class="constant">Example_DateTimeItem</span> &lt;&lt; <span class="constant">ZonedDateTime</span>.now</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Math operations (+ and -) are available to make calculations with time in a few different ways</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Example_DateTimeItem</span>.state + <span style="color:#00D">600</span> <span style="color:#777"># Number of seconds</span>
-<span style="color:#036;font-weight:bold">Example_DateTimeItem</span>.state - <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">01:15</span><span style="color:#710">'</span></span> <span style="color:#777"># Subtracts 1h 15 min</span>
-<span style="color:#036;font-weight:bold">Example_DateTimeItem</span>.state + <span style="color:#00D">2</span>.hours <span style="color:#777"># Use the helper library's duration methods</span>
+      <pre class="example code"><code><span class="constant">Example_DateTimeItem</span>.state + <span class="integer">600</span> <span class="comment"># Number of seconds</span>
+<span class="constant">Example_DateTimeItem</span>.state - <span class="string"><span class="delimiter">'</span><span class="content">01:15</span><span class="delimiter">'</span></span> <span class="comment"># Subtracts 1h 15 min</span>
+<span class="constant">Example_DateTimeItem</span>.state + <span class="integer">2</span>.hours <span class="comment"># Use the helper library's duration methods</span>
 
-<span style="color:#036;font-weight:bold">Example_DateTimeItem</span>.state - <span style="color:#036;font-weight:bold">Example_DateTimeItem2</span>.state <span style="color:#777"># Calculate the time difference, in seconds</span>
-<span style="color:#036;font-weight:bold">Example_DateTimeItem</span>.state - <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">2021-01-01 15:40</span><span style="color:#710">'</span></span> <span style="color:#777"># Calculates time difference</span></code></pre>
+<span class="constant">Example_DateTimeItem</span>.state - <span class="constant">Example_DateTimeItem2</span>.state <span class="comment"># Calculate the time difference, in seconds</span>
+<span class="constant">Example_DateTimeItem</span>.state - <span class="string"><span class="delimiter">'</span><span class="content">2021-01-01 15:40</span><span class="delimiter">'</span></span> <span class="comment"># Calculates time difference</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Comparisons between different time objects can be performed</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Example_DateTimeItem</span>.state == <span style="color:#036;font-weight:bold">Example_DateTimeItem2</span>.state <span style="color:#777"># Equality, works across time zones</span>
-<span style="color:#036;font-weight:bold">Example_DateTimeItem</span>.state &gt; <span style="color:#036;font-weight:bold">Date</span>.parse(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">2021-01-31</span><span style="color:#710">'</span></span>) <span style="color:#777"># After midnight jan 31st 2021</span>
-<span style="color:#036;font-weight:bold">Example_DateTimeItem</span>.state &lt;= <span style="color:#036;font-weight:bold">Time</span>.now <span style="color:#777"># Before or equal to now</span>
-<span style="color:#036;font-weight:bold">Example_DateTimeItem</span>.state &lt; <span style="color:#036;font-weight:bold">LocalTime</span>::<span style="color:#036;font-weight:bold">NOON</span> <span style="color:#777"># Before noon</span></code></pre>
+      <pre class="example code"><code><span class="constant">Example_DateTimeItem</span>.state == <span class="constant">Example_DateTimeItem2</span>.state <span class="comment"># Equality, works across time zones</span>
+<span class="constant">Example_DateTimeItem</span>.state &gt; <span class="constant">Date</span>.parse(<span class="string"><span class="delimiter">'</span><span class="content">2021-01-31</span><span class="delimiter">'</span></span>) <span class="comment"># After midnight jan 31st 2021</span>
+<span class="constant">Example_DateTimeItem</span>.state &lt;= <span class="constant">Time</span>.now <span class="comment"># Before or equal to now</span>
+<span class="constant">Example_DateTimeItem</span>.state &lt; <span class="constant">LocalTime</span>::<span class="constant">NOON</span> <span class="comment"># Before noon</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>LocalTime ranges created also work</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#080;font-weight:bold">case</span> <span style="color:#036;font-weight:bold">Example_DateTimeItem</span>.state
-<span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">LocalTime</span>.parse(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">00:00</span><span style="color:#710">'</span></span>)...<span style="color:#036;font-weight:bold">LocalTime</span>.parse(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">08:00</span><span style="color:#710">'</span></span>)
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Example_DateTimeItem is between 00:00..08:00</span><span style="color:#710">'</span></span>)
-<span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">LocalTime</span>.parse(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">08:00</span><span style="color:#710">'</span></span>)...<span style="color:#036;font-weight:bold">LocalTime</span>.parse(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">16:00</span><span style="color:#710">'</span></span>)
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Example_DateTimeItem is between 08:00..16:00</span><span style="color:#710">'</span></span>)
-<span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">LocalTime</span>.parse(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">16:00</span><span style="color:#710">'</span></span>)..<span style="color:#036;font-weight:bold">LocalTime</span>.parse<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">23:59</span><span style="color:#710">'</span></span>)
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Example_DateTimeItem is between 16:00...23:59</span><span style="color:#710">'</span></span>)
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code><span class="keyword">case</span> <span class="constant">Example_DateTimeItem</span>.state
+<span class="keyword">when</span> <span class="constant">LocalTime</span>.parse(<span class="string"><span class="delimiter">'</span><span class="content">00:00</span><span class="delimiter">'</span></span>)...<span class="constant">LocalTime</span>.parse(<span class="string"><span class="delimiter">'</span><span class="content">08:00</span><span class="delimiter">'</span></span>)
+  logger.info(<span class="string"><span class="delimiter">'</span><span class="content">Example_DateTimeItem is between 00:00..08:00</span><span class="delimiter">'</span></span>)
+<span class="keyword">when</span> <span class="constant">LocalTime</span>.parse(<span class="string"><span class="delimiter">'</span><span class="content">08:00</span><span class="delimiter">'</span></span>)...<span class="constant">LocalTime</span>.parse(<span class="string"><span class="delimiter">'</span><span class="content">16:00</span><span class="delimiter">'</span></span>)
+  logger.info(<span class="string"><span class="delimiter">'</span><span class="content">Example_DateTimeItem is between 08:00..16:00</span><span class="delimiter">'</span></span>)
+<span class="keyword">when</span> <span class="constant">LocalTime</span>.parse(<span class="string"><span class="delimiter">'</span><span class="content">16:00</span><span class="delimiter">'</span></span>)..<span class="constant">LocalTime</span>.parse<span class="string"><span class="delimiter">'</span><span class="content">23:59</span><span class="delimiter">'</span></span>)
+  logger.info(<span class="string"><span class="delimiter">'</span><span class="content">Example_DateTimeItem is between 16:00...23:59</span><span class="delimiter">'</span></span>)
+<span class="keyword">end</span></code></pre>
     
   </div>
 
@@ -2651,16 +2653,16 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/date_time_item.rb', line 44</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">DateTimeItem</span> &lt; <span style="color:#036;font-weight:bold">GenericItem</span>
-  <span style="color:#777"># Time types need formatted as ISO8601</span>
-  <span style="color:#777"># @!visibility private</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">format_type</span>(command)
-    <span style="color:#080;font-weight:bold">return</span> <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">DateTimeType</span>.new(command) <span style="color:#080;font-weight:bold">if</span> command.is_a?(java.time.ZonedDateTime)
+<span class="keyword">class</span> <span class="class">DateTimeItem</span> &lt; <span class="constant">GenericItem</span>
+  <span class="comment"># Time types need formatted as ISO8601</span>
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">format_type</span>(command)
+    <span class="keyword">return</span> <span class="constant">Types</span>::<span class="constant">DateTimeType</span>.new(command) <span class="keyword">if</span> command.is_a?(java.time.ZonedDateTime)
 
-    command = command.iso8601 <span style="color:#080;font-weight:bold">if</span> command.respond_to?(<span style="color:#A60">:iso8601</span>)
-    <span style="color:#080;font-weight:bold">super</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+    command = command.iso8601 <span class="keyword">if</span> command.respond_to?(<span class="symbol">:iso8601</span>)
+    <span class="keyword">super</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2672,7 +2674,7 @@
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:37 2022 by
+  Generated on Fri Dec  9 22:46:51 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

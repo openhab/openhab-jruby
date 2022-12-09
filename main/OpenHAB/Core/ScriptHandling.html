@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::ScriptHandling";
   relpath = '../../';
@@ -2496,14 +2498,14 @@ They can be used to perform final initializations.</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>script_loaded <span style="color:#080;font-weight:bold">do</span>
-  logger.info <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Hi, this script has just finished loading</span><span style="color:#710">'</span></span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>script_loaded <span class="keyword">do</span>
+  logger.info <span class="string"><span class="delimiter">'</span><span class="content">Hi, this script has just finished loading</span><span class="delimiter">'</span></span>
+<span class="keyword">end</span></code></pre>
     
       
-      <pre class="example code"><code>script_loaded <span style="color:#080;font-weight:bold">do</span>
-  logger.info <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">I will be called after the script finished loading too</span><span style="color:#710">'</span></span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>script_loaded <span class="keyword">do</span>
+  logger.info <span class="string"><span class="delimiter">'</span><span class="content">I will be called after the script finished loading too</span><span class="delimiter">'</span></span>
+<span class="keyword">end</span></code></pre>
     
   </div>
 
@@ -2521,9 +2523,9 @@ They can be used to perform final initializations.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/script_handling.rb', line 31</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">script_loaded</span>(&amp;block)
-  <span style="color:#036;font-weight:bold">ScriptHandlingCallbacks</span>.script_loaded_hooks &lt;&lt; block
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">script_loaded</span>(&amp;block)
+  <span class="constant">ScriptHandlingCallbacks</span>.script_loaded_hooks &lt;&lt; block
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2554,9 +2556,9 @@ They can be used to perform final cleanup.</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>script_unloaded <span style="color:#080;font-weight:bold">do</span>
-  logger.info <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Hi, this script has been unloaded</span><span style="color:#710">'</span></span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>script_unloaded <span class="keyword">do</span>
+  logger.info <span class="string"><span class="delimiter">'</span><span class="content">Hi, this script has been unloaded</span><span class="delimiter">'</span></span>
+<span class="keyword">end</span></code></pre>
     
   </div>
 
@@ -2576,11 +2578,11 @@ They can be used to perform final cleanup.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/script_handling.rb', line 52</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">script_unloaded</span>(<span style="color:#606">before</span>: <span style="color:#069">nil</span>, &amp;block)
-  <span style="color:#777"># `before` is as yet undocumented, because I'm not set on its interface</span>
-  index = before.call(<span style="color:#036;font-weight:bold">ScriptHandlingCallbacks</span>.script_unloaded_hooks) <span style="color:#080;font-weight:bold">if</span> before
-  <span style="color:#036;font-weight:bold">ScriptHandlingCallbacks</span>.script_unloaded_hooks.insert(index || <span style="color:#00D">-1</span>, block)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">script_unloaded</span>(<span class="key">before</span>: <span class="predefined-constant">nil</span>, &amp;block)
+  <span class="comment"># `before` is as yet undocumented, because I'm not set on its interface</span>
+  index = before.call(<span class="constant">ScriptHandlingCallbacks</span>.script_unloaded_hooks) <span class="keyword">if</span> before
+  <span class="constant">ScriptHandlingCallbacks</span>.script_unloaded_hooks.insert(index || <span class="integer">-1</span>, block)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2591,7 +2593,7 @@ They can be used to perform final cleanup.</p>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:31 2022 by
+  Generated on Fri Dec  9 22:46:46 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

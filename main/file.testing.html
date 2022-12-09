@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "testing";
   relpath = '';
@@ -2380,19 +2382,19 @@ configuration. JRuby &gt;= 9.3.8.0 must also be installed.</p>
 is untested)</li>
 <li>Create a <code>Gemfile</code> with the following contents (or add to an existing one):</li>
 </ul>
-<pre class="code ruby"><code class="ruby">source <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">https://rubygems.org</span><span style="color:#710">&quot;</span></span>
+<pre class="code ruby"><code class="ruby">source <span class="string"><span class="delimiter">&quot;</span><span class="content">https://rubygems.org</span><span class="delimiter">&quot;</span></span>
 
-group(<span style="color:#A60">:test</span>) <span style="color:#080;font-weight:bold">do</span>
-  gem <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">rspec</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">~&gt; 3.11</span><span style="color:#710">&quot;</span></span>
-  gem <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">openhab-jrubyscripting</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">~&gt; 0.1</span><span style="color:#710">&quot;</span></span>
-  gem <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">timecop</span><span style="color:#710">&quot;</span></span>
-<span style="color:#080;font-weight:bold">end</span>
+group(<span class="symbol">:test</span>) <span class="keyword">do</span>
+  gem <span class="string"><span class="delimiter">&quot;</span><span class="content">rspec</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">~&gt; 3.11</span><span class="delimiter">&quot;</span></span>
+  gem <span class="string"><span class="delimiter">&quot;</span><span class="content">openhab-jrubyscripting</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">~&gt; 0.1</span><span class="delimiter">&quot;</span></span>
+  gem <span class="string"><span class="delimiter">&quot;</span><span class="content">timecop</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span>
 
-group(<span style="color:#A60">:rules</span>) <span style="color:#080;font-weight:bold">do</span>
-  <span style="color:#777"># include any gems you reference from `gemfile` calls in your rules so that</span>
-  <span style="color:#777"># they'll already be available in the rules, and won't need to be</span>
-  <span style="color:#777"># re-installed on every run, slowing down spec runs considerably</span>
-<span style="color:#080;font-weight:bold">end</span>
+group(<span class="symbol">:rules</span>) <span class="keyword">do</span>
+  <span class="comment"># include any gems you reference from `gemfile` calls in your rules so that</span>
+  <span class="comment"># they'll already be available in the rules, and won't need to be</span>
+  <span class="comment"># re-installed on every run, slowing down spec runs considerably</span>
+<span class="keyword">end</span>
 </code></pre>
 <ul>
 <li>Run <code>gem install bundler</code></li>
@@ -2401,38 +2403,38 @@ group(<span style="color:#A60">:rules</span>) <span style="color:#080;font-weigh
 <li>Edit the generated <code>spec/spec_helper.rb</code> to satisfy your preferences, and
 add:</li>
 </ul>
-<pre class="code ruby"><code class="ruby">require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">rubygems</span><span style="color:#710">&quot;</span></span>
-require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">bundler</span><span style="color:#710">&quot;</span></span>
+<pre class="code ruby"><code class="ruby">require <span class="string"><span class="delimiter">&quot;</span><span class="content">rubygems</span><span class="delimiter">&quot;</span></span>
+require <span class="string"><span class="delimiter">&quot;</span><span class="content">bundler</span><span class="delimiter">&quot;</span></span>
 
-<span style="color:#036;font-weight:bold">Bundler</span>.require(<span style="color:#A60">:default</span>, <span style="color:#A60">:test</span>)
+<span class="constant">Bundler</span>.require(<span class="symbol">:default</span>, <span class="symbol">:test</span>)
 
-require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">openhab/rspec</span><span style="color:#710">&quot;</span></span>
+require <span class="string"><span class="delimiter">&quot;</span><span class="content">openhab/rspec</span><span class="delimiter">&quot;</span></span>
 
-<span style="color:#777"># if you have any automatic requires setup in jrubyscripting's config,</span>
-<span style="color:#777"># (besides `openhab`), you need to manually require them here</span>
+<span class="comment"># if you have any automatic requires setup in jrubyscripting's config,</span>
+<span class="comment"># (besides `openhab`), you need to manually require them here</span>
 </code></pre>
 <ul>
 <li>Create some specs! An example of <code>spec/switches_spec.rb</code>:</li>
 </ul>
-<pre class="code ruby"><code class="ruby"><span style="color:#036;font-weight:bold">RSpec</span>.describe <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">switches.rb</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
-  describe <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">gFullOn</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
-    it <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">works</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
-      <span style="color:#036;font-weight:bold">GuestCans_Dimmer</span>.update(<span style="color:#00D">0</span>)
-      <span style="color:#036;font-weight:bold">GuestCans_Scene</span>.update(<span style="color:#60E">1.3</span>)
-      expect(<span style="color:#036;font-weight:bold">GuestCans_Dimmer</span>.state).to eq <span style="color:#00D">100</span>
-    <span style="color:#080;font-weight:bold">end</span>
+<pre class="code ruby"><code class="ruby"><span class="constant">RSpec</span>.describe <span class="string"><span class="delimiter">&quot;</span><span class="content">switches.rb</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+  describe <span class="string"><span class="delimiter">&quot;</span><span class="content">gFullOn</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+    it <span class="string"><span class="delimiter">&quot;</span><span class="content">works</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+      <span class="constant">GuestCans_Dimmer</span>.update(<span class="integer">0</span>)
+      <span class="constant">GuestCans_Scene</span>.update(<span class="float">1.3</span>)
+      expect(<span class="constant">GuestCans_Dimmer</span>.state).to eq <span class="integer">100</span>
+    <span class="keyword">end</span>
 
-    it <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">sets some state</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
-      rules[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">my rule</span><span style="color:#710">&quot;</span></span>].trigger
-      expect(<span style="color:#036;font-weight:bold">GuestCans_Scene</span>.state).to be_nil
-    <span style="color:#080;font-weight:bold">end</span>
+    it <span class="string"><span class="delimiter">&quot;</span><span class="content">sets some state</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+      rules[<span class="string"><span class="delimiter">&quot;</span><span class="content">my rule</span><span class="delimiter">&quot;</span></span>].trigger
+      expect(<span class="constant">GuestCans_Scene</span>.state).to be_nil
+    <span class="keyword">end</span>
 
-    it <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">triggers a rule expecting an event</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
-      rules[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">my rule 2</span><span style="color:#710">&quot;</span></span>].trigger(<span style="color:#036;font-weight:bold">Struct</span>.new(<span style="color:#A60">:item</span>).new(<span style="color:#036;font-weight:bold">GuestCans_Scene</span>))
-      expect(<span style="color:#036;font-weight:bold">GuestCans_Scene</span>.state).to be_nil
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span>
+    it <span class="string"><span class="delimiter">&quot;</span><span class="content">triggers a rule expecting an event</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+      rules[<span class="string"><span class="delimiter">&quot;</span><span class="content">my rule 2</span><span class="delimiter">&quot;</span></span>].trigger(<span class="constant">Struct</span>.new(<span class="symbol">:item</span>).new(<span class="constant">GuestCans_Scene</span>))
+      expect(<span class="constant">GuestCans_Scene</span>.state).to be_nil
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
 </code></pre>
 <ul>
 <li>Run your specs: <code>bundle exec rspec</code></li>
@@ -2460,10 +2462,10 @@ includes implicit timers created by rules that use the <code>for:</code> feature
 further up the chain (separated by dots) applies to all loggers underneath
 it.</li>
 </ul>
-<pre class="code ruby"><code class="ruby"><span style="color:#036;font-weight:bold">OpenHAB</span>::<span style="color:#036;font-weight:bold">Log</span>.logger(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">org.openhab.core.automation.internal.RuleEngineImpl</span><span style="color:#710">&quot;</span></span>).level = <span style="color:#A60">:debug</span>
-<span style="color:#036;font-weight:bold">OpenHAB</span>::<span style="color:#036;font-weight:bold">Log</span>.gem_root.level = <span style="color:#A60">:debug</span>
-<span style="color:#036;font-weight:bold">OpenHAB</span>::<span style="color:#036;font-weight:bold">Log</span>.root.level = <span style="color:#A60">:debug</span>
-<span style="color:#036;font-weight:bold">OpenHAB</span>::<span style="color:#036;font-weight:bold">Log</span>.events.level = <span style="color:#A60">:info</span>
+<pre class="code ruby"><code class="ruby"><span class="constant">OpenHAB</span>::<span class="constant">Log</span>.logger(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.automation.internal.RuleEngineImpl</span><span class="delimiter">&quot;</span></span>).level = <span class="symbol">:debug</span>
+<span class="constant">OpenHAB</span>::<span class="constant">Log</span>.gem_root.level = <span class="symbol">:debug</span>
+<span class="constant">OpenHAB</span>::<span class="constant">Log</span>.root.level = <span class="symbol">:debug</span>
+<span class="constant">OpenHAB</span>::<span class="constant">Log</span>.events.level = <span class="symbol">:info</span>
 </code></pre>
 <ul>
 <li>Sometimes items are set to <code>autoupdate="false"</code> in production to ensure the
@@ -2518,23 +2520,23 @@ specific system properties will be set the same as openHAB would.</p>
 <h2 id="transformations"><a href="#transformations" class="header-anchor">#</a>Transformations</h2>
 <p>Ruby transformations <em>must</em> have a magic comment <code># -*- mode: ruby -*-</code> in them to be loaded.
 Then they can be accessed as a method on <span class='object_link'><a href="OpenHAB/Transform.html" title="OpenHAB::Transform (module)">OpenHAB::Transform</a></span> based on the filename:</p>
-<pre class="code ruby"><code class="ruby"><span style="color:#036;font-weight:bold">OpenHAB</span>::<span style="color:#036;font-weight:bold">Transform</span>.compass(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">59 °</span><span style="color:#710">&quot;</span></span>)
-<span style="color:#036;font-weight:bold">OpenHAB</span>::<span style="color:#036;font-weight:bold">Transform</span>.compass(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">30</span><span style="color:#710">&quot;</span></span>, <span style="color:#606">param</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">7</span><span style="color:#710">&quot;</span></span>)
-<span style="color:#036;font-weight:bold">OpenHAB</span>::<span style="color:#036;font-weight:bold">Transform</span>::<span style="color:#036;font-weight:bold">Ruby</span>.compass(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">59 °</span><span style="color:#710">&quot;</span></span>)
+<pre class="code ruby"><code class="ruby"><span class="constant">OpenHAB</span>::<span class="constant">Transform</span>.compass(<span class="string"><span class="delimiter">&quot;</span><span class="content">59 °</span><span class="delimiter">&quot;</span></span>)
+<span class="constant">OpenHAB</span>::<span class="constant">Transform</span>.compass(<span class="string"><span class="delimiter">&quot;</span><span class="content">30</span><span class="delimiter">&quot;</span></span>, <span class="key">param</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">7</span><span class="delimiter">&quot;</span></span>)
+<span class="constant">OpenHAB</span>::<span class="constant">Transform</span>::<span class="constant">Ruby</span>.compass(<span class="string"><span class="delimiter">&quot;</span><span class="content">59 °</span><span class="delimiter">&quot;</span></span>)
 </code></pre>
 <p>They're loaded into a sub-JRuby engine, just like they run in openHAB.</p>
 <h2 id="irb"><a href="#irb" class="header-anchor">#</a>IRB</h2>
 <p>If you would like to use a REPL sandbox to play with your items,
 you can run <code>bundle console</code>. You may want to create an <code>.irbrc</code>
 with the following contents to automatically boot things up:</p>
-<pre class="code ruby"><code class="ruby"><span style="color:#777"># frozen_string_literal: true</span>
+<pre class="code ruby"><code class="ruby"><span class="comment"># frozen_string_literal: true</span>
 
-require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">rubygems</span><span style="color:#710">&quot;</span></span>
-require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">bundler</span><span style="color:#710">&quot;</span></span>
+require <span class="string"><span class="delimiter">&quot;</span><span class="content">rubygems</span><span class="delimiter">&quot;</span></span>
+require <span class="string"><span class="delimiter">&quot;</span><span class="content">bundler</span><span class="delimiter">&quot;</span></span>
 
-<span style="color:#036;font-weight:bold">Bundler</span>.require(<span style="color:#A60">:default</span>, <span style="color:#A60">:development</span>, <span style="color:#A60">:test</span>)
+<span class="constant">Bundler</span>.require(<span class="symbol">:default</span>, <span class="symbol">:development</span>, <span class="symbol">:test</span>)
 
-require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">openhab/rspec</span><span style="color:#710">&quot;</span></span>
+require <span class="string"><span class="delimiter">&quot;</span><span class="content">openhab/rspec</span><span class="delimiter">&quot;</span></span>
 
 launch_karaf
 autorequires
@@ -2545,7 +2547,7 @@ load_transforms
 </div></div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:29 2022 by
+  Generated on Fri Dec  9 22:46:43 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

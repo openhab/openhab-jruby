@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Things::Registry";
   relpath = '../../../';
@@ -2647,9 +2649,9 @@ or via the ThingUID</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/registry.rb', line 22</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">[]</span>(uid)
-  <span style="color:#036;font-weight:bold">EntityLookup</span>.lookup_thing(uid)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">[]</span>(uid)
+  <span class="constant">EntityLookup</span>.lookup_thing(uid)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2761,9 +2763,9 @@ it defaults to <code>:transient</code>.</li>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/registry.rb', line 45</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">build</span>(preferred_provider = <span style="color:#069">nil</span>, &amp;block)
-  <span style="color:#036;font-weight:bold">DSL</span>::<span style="color:#036;font-weight:bold">Things</span>::<span style="color:#036;font-weight:bold">Builder</span>.new(preferred_provider).instance_eval(&amp;block)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">build</span>(preferred_provider = <span class="predefined-constant">nil</span>, &amp;block)
+  <span class="constant">DSL</span>::<span class="constant">Things</span>::<span class="constant">Builder</span>.new(preferred_provider).instance_eval(&amp;block)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2841,16 +2843,16 @@ it defaults to <code>:transient</code>.</li>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/registry.rb', line 56</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">remove</span>(thing_uid)
-  thing_uid = thing.uid <span style="color:#080;font-weight:bold">if</span> thing_uid.is_a?(<span style="color:#036;font-weight:bold">Thing</span>)
-  thing_uid = <span style="color:#036;font-weight:bold">ThingUID</span>.new(thing_uid) <span style="color:#080;font-weight:bold">if</span> thing_uid.is_a?(<span style="color:#036;font-weight:bold">String</span>)
-  provider = <span style="color:#036;font-weight:bold">Provider</span>.registry.provider_for(thing_uid)
-  <span style="color:#080;font-weight:bold">unless</span> provider.is_a?(org.openhab.core.common.registry.ManagedProvider)
-    raise <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Cannot remove thing </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>thing_uid<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> from non-managed provider </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>provider.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
+<span class="keyword">def</span> <span class="function">remove</span>(thing_uid)
+  thing_uid = thing.uid <span class="keyword">if</span> thing_uid.is_a?(<span class="constant">Thing</span>)
+  thing_uid = <span class="constant">ThingUID</span>.new(thing_uid) <span class="keyword">if</span> thing_uid.is_a?(<span class="constant">String</span>)
+  provider = <span class="constant">Provider</span>.registry.provider_for(thing_uid)
+  <span class="keyword">unless</span> provider.is_a?(org.openhab.core.common.registry.ManagedProvider)
+    raise <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot remove thing </span><span class="inline"><span class="inline-delimiter">#{</span>thing_uid<span class="inline-delimiter">}</span></span><span class="content"> from non-managed provider </span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
 
   provider.remove(thing_uid)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2901,9 +2903,9 @@ it defaults to <code>:transient</code>.</li>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/registry.rb', line 35</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to_a</span>
-  <span style="color:#d70">$things</span>.all.map { |thing| <span style="color:#036;font-weight:bold">Proxy</span>.new(thing) }
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">to_a</span>
+  <span class="global-variable">$things</span>.all.map { |thing| <span class="constant">Proxy</span>.new(thing) }
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2914,7 +2916,7 @@ it defaults to <code>:transient</code>.</li>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:35 2022 by
+  Generated on Fri Dec  9 22:46:49 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

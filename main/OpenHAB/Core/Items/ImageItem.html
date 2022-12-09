@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Items::ImageItem";
   relpath = '../../../';
@@ -2422,32 +2424,32 @@
         <p class="example_title"><div class='inline'><p>Update from a base 64 encode image string</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Image</span>.update(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII=</span><span style="color:#710">&quot;</span></span>)</code></pre>
+      <pre class="example code"><code><span class="constant">Image</span>.update(<span class="string"><span class="delimiter">&quot;</span><span class="content">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII=</span><span class="delimiter">&quot;</span></span>)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Update from image bytes and mime type</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Image</span>.update_from_bytes(<span style="color:#036;font-weight:bold">File</span>.binread(<span style="color:#036;font-weight:bold">File</span>.join(<span style="color:#036;font-weight:bold">Dir</span>.tmpdir,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">1x1.png</span><span style="color:#710">'</span></span>)), <span style="color:#606">mime_type</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">image/png</span><span style="color:#710">'</span></span>)</code></pre>
+      <pre class="example code"><code><span class="constant">Image</span>.update_from_bytes(<span class="constant">File</span>.binread(<span class="constant">File</span>.join(<span class="constant">Dir</span>.tmpdir,<span class="string"><span class="delimiter">'</span><span class="content">1x1.png</span><span class="delimiter">'</span></span>)), <span class="key">mime_type</span>: <span class="string"><span class="delimiter">'</span><span class="content">image/png</span><span class="delimiter">'</span></span>)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Update from URL</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Image</span>.update_from_url(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">https://raw.githubusercontent.com/boc-tothefuture/openhab-jruby/main/features/assets/1x1.png</span><span style="color:#710">'</span></span>)</code></pre>
+      <pre class="example code"><code><span class="constant">Image</span>.update_from_url(<span class="string"><span class="delimiter">'</span><span class="content">https://raw.githubusercontent.com/boc-tothefuture/openhab-jruby/main/features/assets/1x1.png</span><span class="delimiter">'</span></span>)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Update from File</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Image</span>.update_from_file(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">/tmp/1x1.png</span><span style="color:#710">'</span></span>)</code></pre>
+      <pre class="example code"><code><span class="constant">Image</span>.update_from_file(<span class="string"><span class="delimiter">'</span><span class="content">/tmp/1x1.png</span><span class="delimiter">'</span></span>)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Log image data</p>
 </div></p>
       
-      <pre class="example code"><code>logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Mime type: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">Image</span>.state.mime_type<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Number of bytes: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">Image</span>.state.bytes.length<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)</code></pre>
+      <pre class="example code"><code>logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Mime type: </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Image</span>.state.mime_type<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Number of bytes: </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Image</span>.state.bytes.length<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)</code></pre>
     
   </div>
 
@@ -2782,74 +2784,74 @@ logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/image_item.rb', line 37</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">ImageItem</span> &lt; <span style="color:#036;font-weight:bold">GenericItem</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Update image from file</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @param [String] file location</span>
-  <span style="color:#777"># @param [String] mime_type of image</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">update_from_file</span>(file, <span style="color:#606">mime_type</span>: <span style="color:#069">nil</span>)
-    file_data = <span style="color:#036;font-weight:bold">File</span>.binread(file)
-    mime_type ||= <span style="color:#036;font-weight:bold">Marcel</span>::<span style="color:#036;font-weight:bold">MimeType</span>.for(<span style="color:#036;font-weight:bold">Pathname</span>.new(file)) || <span style="color:#036;font-weight:bold">Marcel</span>::<span style="color:#036;font-weight:bold">MimeType</span>.for(file_data)
-    update_from_bytes(file_data, <span style="color:#606">mime_type</span>: mime_type)
-  <span style="color:#080;font-weight:bold">end</span>
+<span class="keyword">class</span> <span class="class">ImageItem</span> &lt; <span class="constant">GenericItem</span>
+  <span class="comment">#</span>
+  <span class="comment"># Update image from file</span>
+  <span class="comment">#</span>
+  <span class="comment"># @param [String] file location</span>
+  <span class="comment"># @param [String] mime_type of image</span>
+  <span class="comment">#</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">update_from_file</span>(file, <span class="key">mime_type</span>: <span class="predefined-constant">nil</span>)
+    file_data = <span class="constant">File</span>.binread(file)
+    mime_type ||= <span class="constant">Marcel</span>::<span class="constant">MimeType</span>.for(<span class="constant">Pathname</span>.new(file)) || <span class="constant">Marcel</span>::<span class="constant">MimeType</span>.for(file_data)
+    update_from_bytes(file_data, <span class="key">mime_type</span>: mime_type)
+  <span class="keyword">end</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Update image from image at URL</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @param [String] uri location of image</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">update_from_url</span>(uri)
-    logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Downloading image from </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>uri<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-    response = <span style="color:#036;font-weight:bold">Net</span>::<span style="color:#036;font-weight:bold">HTTP</span>.get_response(URI(uri))
-    mime_type = response[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">content-type</span><span style="color:#710">&quot;</span></span>]
+  <span class="comment">#</span>
+  <span class="comment"># Update image from image at URL</span>
+  <span class="comment">#</span>
+  <span class="comment"># @param [String] uri location of image</span>
+  <span class="comment">#</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">update_from_url</span>(uri)
+    logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Downloading image from </span><span class="inline"><span class="inline-delimiter">#{</span>uri<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+    response = <span class="constant">Net</span>::<span class="constant">HTTP</span>.get_response(URI(uri))
+    mime_type = response[<span class="string"><span class="delimiter">&quot;</span><span class="content">content-type</span><span class="delimiter">&quot;</span></span>]
     bytes = response.body
-    mime_type ||= detect_mime_from_bytes(<span style="color:#606">bytes</span>: bytes)
-    update_from_bytes(bytes, <span style="color:#606">mime_type</span>: mime_type)
-  <span style="color:#080;font-weight:bold">end</span>
+    mime_type ||= detect_mime_from_bytes(<span class="key">bytes</span>: bytes)
+    update_from_bytes(bytes, <span class="key">mime_type</span>: mime_type)
+  <span class="keyword">end</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Update image from image bytes</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @param [String] mime_type of image</span>
-  <span style="color:#777"># @param [Object] bytes image data</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">update_from_bytes</span>(bytes, <span style="color:#606">mime_type</span>: <span style="color:#069">nil</span>)
-    mime_type ||= detect_mime_from_bytes(<span style="color:#606">bytes</span>: bytes)
-    base_64_image = encode_image(<span style="color:#606">mime_type</span>: mime_type, <span style="color:#606">bytes</span>: bytes)
+  <span class="comment">#</span>
+  <span class="comment"># Update image from image bytes</span>
+  <span class="comment">#</span>
+  <span class="comment"># @param [String] mime_type of image</span>
+  <span class="comment"># @param [Object] bytes image data</span>
+  <span class="comment">#</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">update_from_bytes</span>(bytes, <span class="key">mime_type</span>: <span class="predefined-constant">nil</span>)
+    mime_type ||= detect_mime_from_bytes(<span class="key">bytes</span>: bytes)
+    base_64_image = encode_image(<span class="key">mime_type</span>: mime_type, <span class="key">bytes</span>: bytes)
     update(base_64_image)
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="keyword">end</span>
 
   private
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Encode image information in the format required by openHAB</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @param [String] mime_type for image</span>
-  <span style="color:#777"># @param [Object] bytes image data</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @return [String] openHAB image format with image data Base64 encoded</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">encode_image</span>(<span style="color:#606">mime_type</span>:, <span style="color:#606">bytes</span>:)
-    <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">data:</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>mime_type<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">;base64,</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">Base64</span>.strict_encode64(bytes)<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="comment">#</span>
+  <span class="comment"># Encode image information in the format required by openHAB</span>
+  <span class="comment">#</span>
+  <span class="comment"># @param [String] mime_type for image</span>
+  <span class="comment"># @param [Object] bytes image data</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [String] openHAB image format with image data Base64 encoded</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">encode_image</span>(<span class="key">mime_type</span>:, <span class="key">bytes</span>:)
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">data:</span><span class="inline"><span class="inline-delimiter">#{</span>mime_type<span class="inline-delimiter">}</span></span><span class="content">;base64,</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Base64</span>.strict_encode64(bytes)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Detect the mime type based on bytes</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @param [Array] bytes representing image data</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @return [String] mime type if it can be detected, nil otherwise</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">detect_mime_from_bytes</span>(<span style="color:#606">bytes</span>:)
-    logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Detecting mime type from file image contents</span><span style="color:#710">&quot;</span></span>)
-    <span style="color:#036;font-weight:bold">Marcel</span>::<span style="color:#036;font-weight:bold">MimeType</span>.for(bytes)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="comment">#</span>
+  <span class="comment"># Detect the mime type based on bytes</span>
+  <span class="comment">#</span>
+  <span class="comment"># @param [Array] bytes representing image data</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [String] mime type if it can be detected, nil otherwise</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">detect_mime_from_bytes</span>(<span class="key">bytes</span>:)
+    logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Detecting mime type from file image contents</span><span class="delimiter">&quot;</span></span>)
+    <span class="constant">Marcel</span>::<span class="constant">MimeType</span>.for(bytes)
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2932,11 +2934,11 @@ logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/image_item.rb', line 73</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">update_from_bytes</span>(bytes, <span style="color:#606">mime_type</span>: <span style="color:#069">nil</span>)
-  mime_type ||= detect_mime_from_bytes(<span style="color:#606">bytes</span>: bytes)
-  base_64_image = encode_image(<span style="color:#606">mime_type</span>: mime_type, <span style="color:#606">bytes</span>: bytes)
+<span class="keyword">def</span> <span class="function">update_from_bytes</span>(bytes, <span class="key">mime_type</span>: <span class="predefined-constant">nil</span>)
+  mime_type ||= detect_mime_from_bytes(<span class="key">bytes</span>: bytes)
+  base_64_image = encode_image(<span class="key">mime_type</span>: mime_type, <span class="key">bytes</span>: bytes)
   update(base_64_image)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3012,11 +3014,11 @@ logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/image_item.rb', line 45</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">update_from_file</span>(file, <span style="color:#606">mime_type</span>: <span style="color:#069">nil</span>)
-  file_data = <span style="color:#036;font-weight:bold">File</span>.binread(file)
-  mime_type ||= <span style="color:#036;font-weight:bold">Marcel</span>::<span style="color:#036;font-weight:bold">MimeType</span>.for(<span style="color:#036;font-weight:bold">Pathname</span>.new(file)) || <span style="color:#036;font-weight:bold">Marcel</span>::<span style="color:#036;font-weight:bold">MimeType</span>.for(file_data)
-  update_from_bytes(file_data, <span style="color:#606">mime_type</span>: mime_type)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">update_from_file</span>(file, <span class="key">mime_type</span>: <span class="predefined-constant">nil</span>)
+  file_data = <span class="constant">File</span>.binread(file)
+  mime_type ||= <span class="constant">Marcel</span>::<span class="constant">MimeType</span>.for(<span class="constant">Pathname</span>.new(file)) || <span class="constant">Marcel</span>::<span class="constant">MimeType</span>.for(file_data)
+  update_from_bytes(file_data, <span class="key">mime_type</span>: mime_type)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3078,14 +3080,14 @@ logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/image_item.rb', line 57</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">update_from_url</span>(uri)
-  logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Downloading image from </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>uri<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-  response = <span style="color:#036;font-weight:bold">Net</span>::<span style="color:#036;font-weight:bold">HTTP</span>.get_response(URI(uri))
-  mime_type = response[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">content-type</span><span style="color:#710">&quot;</span></span>]
+<span class="keyword">def</span> <span class="function">update_from_url</span>(uri)
+  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Downloading image from </span><span class="inline"><span class="inline-delimiter">#{</span>uri<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+  response = <span class="constant">Net</span>::<span class="constant">HTTP</span>.get_response(URI(uri))
+  mime_type = response[<span class="string"><span class="delimiter">&quot;</span><span class="content">content-type</span><span class="delimiter">&quot;</span></span>]
   bytes = response.body
-  mime_type ||= detect_mime_from_bytes(<span style="color:#606">bytes</span>: bytes)
-  update_from_bytes(bytes, <span style="color:#606">mime_type</span>: mime_type)
-<span style="color:#080;font-weight:bold">end</span></pre>
+  mime_type ||= detect_mime_from_bytes(<span class="key">bytes</span>: bytes)
+  update_from_bytes(bytes, <span class="key">mime_type</span>: mime_type)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3096,7 +3098,7 @@ logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:35 2022 by
+  Generated on Fri Dec  9 22:46:49 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

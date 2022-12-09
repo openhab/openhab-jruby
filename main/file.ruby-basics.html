@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "ruby-basics";
   relpath = '';
@@ -2397,149 +2399,149 @@ Instance variables are similar to member variables or fields in other languages.
 <p>Instance variables are created as soon as they are referenced.
 They are persisted on whatever <code>self</code> is.
 In most simple file-based rules, and in UI based rules, <code>self</code> is simply a top level <code>Object</code> named <code>main</code>, and instance variables will be persisted between multiple executions of the same rule:</p>
-<pre class="code ruby"><code class="ruby">rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">light turned on</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
-  changed <span style="color:#036;font-weight:bold">Light_Switch</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">ON</span>
-  run <span style="color:#080;font-weight:bold">do</span>
-    <span style="color:#33B">@turned_on_count</span> ||= <span style="color:#00D">0</span>
-    <span style="color:#33B">@turned_on_count</span> += <span style="color:#00D">1</span>
-    logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">The light has been turned on </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#33B">@turned_on_count</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> times</span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span>
+<pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">light turned on</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+  changed <span class="constant">Light_Switch</span>, <span class="key">to</span>: <span class="constant">ON</span>
+  run <span class="keyword">do</span>
+    <span class="instance-variable">@turned_on_count</span> ||= <span class="integer">0</span>
+    <span class="instance-variable">@turned_on_count</span> += <span class="integer">1</span>
+    logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">The light has been turned on </span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@turned_on_count</span><span class="inline-delimiter">}</span></span><span class="content"> times</span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
 </code></pre>
 <h2 id="control-expressions"><a href="#control-expressions" class="header-anchor">#</a>Control Expressions</h2>
 <p>Ruby supports various <a href="https://ruby-doc.org/core-2.6.8/doc/syntax/control_expressions_rdoc.html">control expressions</a> such as <code>if/else</code>, ternary operator, <code>case</code>, etc.</p>
 <p>Example:</p>
-<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">if</span> a
-  <span style="color:#777"># do something here</span>
-<span style="color:#080;font-weight:bold">elsif</span> b
-  <span style="color:#777"># something else</span>
-<span style="color:#080;font-weight:bold">else</span> 
-  <span style="color:#777"># something here</span>
-<span style="color:#080;font-weight:bold">end</span>
+<pre class="code ruby"><code class="ruby"><span class="keyword">if</span> a
+  <span class="comment"># do something here</span>
+<span class="keyword">elsif</span> b
+  <span class="comment"># something else</span>
+<span class="keyword">else</span> 
+  <span class="comment"># something here</span>
+<span class="keyword">end</span>
 
-<span style="color:#777"># modifier if form</span>
-a = b <span style="color:#080;font-weight:bold">if</span> c == <span style="color:#00D">5</span>
+<span class="comment"># modifier if form</span>
+a = b <span class="keyword">if</span> c == <span class="integer">5</span>
 
-<span style="color:#777"># ternary operator</span>
-a = b == <span style="color:#00D">5</span> ? <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">five</span><span style="color:#710">'</span></span> : <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">other</span><span style="color:#710">'</span></span>
+<span class="comment"># ternary operator</span>
+a = b == <span class="integer">5</span> ? <span class="string"><span class="delimiter">'</span><span class="content">five</span><span class="delimiter">'</span></span> : <span class="string"><span class="delimiter">'</span><span class="content">other</span><span class="delimiter">'</span></span>
 
-<span style="color:#777"># case/when similar to the switch() { case... } in c / java.</span>
-rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">x</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  received_command <span style="color:#036;font-weight:bold">DimmerItem1</span>
-  run <span style="color:#080;font-weight:bold">do</span> |event|
-    <span style="color:#080;font-weight:bold">case</span> event.command
-    <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">OFF</span>
-      <span style="color:#036;font-weight:bold">Light1</span>.off
-      <span style="color:#036;font-weight:bold">Light2</span>.off
-    <span style="color:#080;font-weight:bold">when</span> <span style="color:#00D">0</span>...<span style="color:#00D">50</span>
-      <span style="color:#036;font-weight:bold">Light1</span>.on
-      <span style="color:#036;font-weight:bold">Light2</span>.off
-    <span style="color:#080;font-weight:bold">when</span> <span style="color:#00D">50</span>..<span style="color:#00D">100</span>, <span style="color:#036;font-weight:bold">ON</span>
-      <span style="color:#036;font-weight:bold">Light1</span>.on
-      <span style="color:#036;font-weight:bold">Light2</span>.on
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span>
+<span class="comment"># case/when similar to the switch() { case... } in c / java.</span>
+rule <span class="string"><span class="delimiter">'</span><span class="content">x</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  received_command <span class="constant">DimmerItem1</span>
+  run <span class="keyword">do</span> |event|
+    <span class="keyword">case</span> event.command
+    <span class="keyword">when</span> <span class="constant">OFF</span>
+      <span class="constant">Light1</span>.off
+      <span class="constant">Light2</span>.off
+    <span class="keyword">when</span> <span class="integer">0</span>...<span class="integer">50</span>
+      <span class="constant">Light1</span>.on
+      <span class="constant">Light2</span>.off
+    <span class="keyword">when</span> <span class="integer">50</span>..<span class="integer">100</span>, <span class="constant">ON</span>
+      <span class="constant">Light1</span>.on
+      <span class="constant">Light2</span>.on
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
 </code></pre>
 <h2 id="loops"><a href="#loops" class="header-anchor">#</a>Loops</h2>
 <p>While Ruby supports the traditional <code>for</code> and <code>while</code> loop, they are rarely used.
 Ruby objects such as Array, Hash, Set, etc. provide a plethora of methods to
 achieve the same thing in a more "Ruby" way.</p>
 <h3 id="examples"><a href="#examples" class="header-anchor">#</a>Examples</h3>
-<pre class="code ruby"><code class="ruby">array = [<span style="color:#00D">1</span>, <span style="color:#00D">2</span>, <span style="color:#00D">3</span>]
-array.each <span style="color:#080;font-weight:bold">do</span> |elem|
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Element: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>elem<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-<span style="color:#080;font-weight:bold">end</span>
+<pre class="code ruby"><code class="ruby">array = [<span class="integer">1</span>, <span class="integer">2</span>, <span class="integer">3</span>]
+array.each <span class="keyword">do</span> |elem|
+  logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Element: </span><span class="inline"><span class="inline-delimiter">#{</span>elem<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">end</span>
 
-array.each_with_index <span style="color:#080;font-weight:bold">do</span> |elem, index|
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Element </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>index<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>elem<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-<span style="color:#080;font-weight:bold">end</span>
+array.each_with_index <span class="keyword">do</span> |elem, index|
+  logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Element </span><span class="inline"><span class="inline-delimiter">#{</span>index<span class="inline-delimiter">}</span></span><span class="content">: </span><span class="inline"><span class="inline-delimiter">#{</span>elem<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">end</span>
 
-<span style="color:#036;font-weight:bold">SWITCH_TO_LIGHT_HASH</span> = { <span style="color:#036;font-weight:bold">Switch1</span> =&gt; <span style="color:#036;font-weight:bold">Light1</span>, <span style="color:#036;font-weight:bold">Switch2</span> =&gt; <span style="color:#036;font-weight:bold">Light2</span> }
+<span class="constant">SWITCH_TO_LIGHT_HASH</span> = { <span class="constant">Switch1</span> =&gt; <span class="constant">Light1</span>, <span class="constant">Switch2</span> =&gt; <span class="constant">Light2</span> }
 
-<span style="color:#036;font-weight:bold">SWITCH_TO_LIGHT_HASH</span>.each <span style="color:#080;font-weight:bold">do</span> |switch, light|
-  logger.info <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>switch.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> =&gt; </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>light.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-<span style="color:#080;font-weight:bold">end</span>
+<span class="constant">SWITCH_TO_LIGHT_HASH</span>.each <span class="keyword">do</span> |switch, light|
+  logger.info <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>switch.name<span class="inline-delimiter">}</span></span><span class="content"> =&gt; </span><span class="inline"><span class="inline-delimiter">#{</span>light.name<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span>
 
-rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">turn light on</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  changed <span style="color:#036;font-weight:bold">Switches</span>.members
-  triggered <span style="color:#080;font-weight:bold">do</span> |item|
-    <span style="color:#036;font-weight:bold">SWITCH_TO_LIGHT_HASH</span>[item]&amp;.command item.state
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span>
+rule <span class="string"><span class="delimiter">'</span><span class="content">turn light on</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  changed <span class="constant">Switches</span>.members
+  triggered <span class="keyword">do</span> |item|
+    <span class="constant">SWITCH_TO_LIGHT_HASH</span>[item]&amp;.command item.state
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
 </code></pre>
 <p>Note: <code>next</code> is similar to <code>continue</code> in C/Java. <code>break</code> in Ruby is the same as in C/Java.</p>
 <h2 id="blocks"><a href="#blocks" class="header-anchor">#</a>Blocks</h2>
 <p>Multi-line blocks in Ruby are enclosed in a <code>do</code> .. <code>end</code> pair and single line blocks are enclosed with braces <code>{</code> .. <code>}</code>. You have encountered blocks in the examples above.
 Rules are implemented in a block:</p>
-<pre class="code ruby"><code class="ruby">rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">rulename</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+<pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">rulename</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   ...
-<span style="color:#080;font-weight:bold">end</span>
+<span class="keyword">end</span>
 </code></pre>
 <p>The execution part is also in a block for the run method, nested inside the rule block:</p>
-<pre class="code ruby"><code class="ruby">rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">rulename</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  changed <span style="color:#036;font-weight:bold">Item1</span>
-  run <span style="color:#080;font-weight:bold">do</span> 
+<pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">rulename</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  changed <span class="constant">Item1</span>
+  run <span class="keyword">do</span> 
     ...
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
 </code></pre>
 <h3 id="block-arguments"><a href="#block-arguments" class="header-anchor">#</a>Block arguments</h3>
 <p>Blocks can receive arguments which are passed by its caller. We will often encounter this in <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#run-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#run (method)">run</a></span> and <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#triggered-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#triggered (method)">triggered</a></span> blocks.</p>
-<pre class="code ruby"><code class="ruby">rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">name</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  changed <span style="color:#036;font-weight:bold">Switches</span>.members
-  run <span style="color:#080;font-weight:bold">do</span> |event|
-    <span style="color:#777"># do something based on the event argument</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span>
+<pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">name</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  changed <span class="constant">Switches</span>.members
+  run <span class="keyword">do</span> |event|
+    <span class="comment"># do something based on the event argument</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
 </code></pre>
 <h2 id="rubys-safe-navigation-operator"><a href="#rubys-safe-navigation-operator" class="header-anchor">#</a>Ruby's Safe Navigation Operator</h2>
 <p>Ruby has a <a href="https://ruby-doc.org/core-2.6/doc/syntax/calling_methods_rdoc.html#label-Safe+navigation+operator">safe navigation operator</a>
 <code>&amp;.</code> which is similar to <code>?.</code> in C#, Groovy, Kotlin, etc.</p>
-<pre class="code ruby"><code class="ruby"><span style="color:#777"># Instead of:</span>
-<span style="color:#080;font-weight:bold">if</span> items[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">My_Item</span><span style="color:#710">'</span></span>]
-  items[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">My_Item</span><span style="color:#710">'</span></span>].on
-<span style="color:#080;font-weight:bold">end</span>
+<pre class="code ruby"><code class="ruby"><span class="comment"># Instead of:</span>
+<span class="keyword">if</span> items[<span class="string"><span class="delimiter">'</span><span class="content">My_Item</span><span class="delimiter">'</span></span>]
+  items[<span class="string"><span class="delimiter">'</span><span class="content">My_Item</span><span class="delimiter">'</span></span>].on
+<span class="keyword">end</span>
 
-<span style="color:#777"># We can write it as:</span>
-items[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">My_Item</span><span style="color:#710">'</span></span>]&amp;.on
+<span class="comment"># We can write it as:</span>
+items[<span class="string"><span class="delimiter">'</span><span class="content">My_Item</span><span class="delimiter">'</span></span>]&amp;.on
 </code></pre>
 <h2 id="some-gotchas"><a href="#some-gotchas" class="header-anchor">#</a>Some Gotchas</h2>
 <h3 id="exiting-early"><a href="#exiting-early" class="header-anchor">#</a>Exiting early</h3>
 <p>To <a href="https://stackoverflow.com/questions/1402757/how-to-break-out-from-a-ruby-block">exit early from a block</a>, use <code>next</code> instead of <code>return</code>.</p>
-<pre class="code ruby"><code class="ruby">rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">rule name</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  changed <span style="color:#036;font-weight:bold">Item1</span>
-  run <span style="color:#080;font-weight:bold">do</span> 
-    <span style="color:#080;font-weight:bold">next</span> <span style="color:#080;font-weight:bold">if</span> <span style="color:#036;font-weight:bold">Item1</span>.off? <span style="color:#777"># exit early</span>
+<pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">rule name</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  changed <span class="constant">Item1</span>
+  run <span class="keyword">do</span> 
+    <span class="keyword">next</span> <span class="keyword">if</span> <span class="constant">Item1</span>.off? <span class="comment"># exit early</span>
 
-    <span style="color:#036;font-weight:bold">Item2</span>.on <span style="color:#777"># Turn on Item2 if Item1 turned on</span>
-    <span style="color:#777"># Do other things</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span>
+    <span class="constant">Item2</span>.on <span class="comment"># Turn on Item2 if Item1 turned on</span>
+    <span class="comment"># Do other things</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
 </code></pre>
 <p>Note: To exit early from a UI rule, use <code>return</code>.</p>
 <h3 id="parentheses"><a href="#parentheses" class="header-anchor">#</a>Parentheses</h3>
 <p>In Ruby, parentheses are optional when calling a method. However, when calling a method with arguments and a single-line block,
 the parentheses must be used. Example:</p>
-<pre class="code ruby"><code class="ruby">after(<span style="color:#00D">5</span>.seconds) {  }
+<pre class="code ruby"><code class="ruby">after(<span class="integer">5</span>.seconds) {  }
 
-after(<span style="color:#00D">5</span>.seconds) <span style="color:#080;font-weight:bold">do</span>
-  <span style="color:#777"># ...</span>
-<span style="color:#080;font-weight:bold">end</span>
+after(<span class="integer">5</span>.seconds) <span class="keyword">do</span>
+  <span class="comment"># ...</span>
+<span class="keyword">end</span>
 
-after <span style="color:#00D">5</span>.seconds <span style="color:#080;font-weight:bold">do</span>
-  <span style="color:#777"># parentheses aren't a must before a do..end block</span>
-<span style="color:#080;font-weight:bold">end</span>
+after <span class="integer">5</span>.seconds <span class="keyword">do</span>
+  <span class="comment"># parentheses aren't a must before a do..end block</span>
+<span class="keyword">end</span>
 
-<span style="color:#777"># the following example will cause an error</span>
-after <span style="color:#00D">5</span>.seconds { }
+<span class="comment"># the following example will cause an error</span>
+after <span class="integer">5</span>.seconds { }
 </code></pre>
 <h3 id="zero-is-truthy-in-ruby"><a href="#zero-is-truthy-in-ruby" class="header-anchor">#</a>Zero is "truthy" in Ruby</h3>
-<pre class="code ruby"><code class="ruby"><span style="color:#080;font-weight:bold">if</span> <span style="color:#00D">0</span>
-  logger.info <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">This will always be executed</span><span style="color:#710">&quot;</span></span>
-<span style="color:#080;font-weight:bold">else</span>
-  logger.info <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">This will never be executed</span><span style="color:#710">&quot;</span></span>
-<span style="color:#080;font-weight:bold">end</span>
+<pre class="code ruby"><code class="ruby"><span class="keyword">if</span> <span class="integer">0</span>
+  logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">This will always be executed</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">else</span>
+  logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">This will never be executed</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span>
 </code></pre>
 <h2 id="source-code-formatting"><a href="#source-code-formatting" class="header-anchor">#</a>Source Code Formatting</h2>
 <p>The <a href="https://rubystyle.guide">ruby style guide</a> offers the generally accepted standards for Ruby source code formatting.</p>
@@ -2550,7 +2552,7 @@ as the source code formatter and linter for Ruby.</p>
 </div></div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:29 2022 by
+  Generated on Fri Dec  9 22:46:43 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

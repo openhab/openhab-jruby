@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Items::NumberItem";
   relpath = '../../../';
@@ -2434,9 +2436,9 @@ the different states of a <span class='object_link'><a href="" title="OpenHAB::C
         <p class="example_title"><div class='inline'><p>Number Items can be selected in an enumerable with grep.</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#777"># Get all NumberItems</span>
-items.grep(<span style="color:#036;font-weight:bold">NumberItem</span>)
-     .each { |number| logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>item.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is a Number Item</span><span style="color:#710">&quot;</span></span>) }</code></pre>
+      <pre class="example code"><code><span class="comment"># Get all NumberItems</span>
+items.grep(<span class="constant">NumberItem</span>)
+     .each { |number| logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>item.name<span class="inline-delimiter">}</span></span><span class="content"> is a Number Item</span><span class="delimiter">&quot;</span></span>) }</code></pre>
     
   </div>
 
@@ -2747,30 +2749,30 @@ items.grep(<span style="color:#036;font-weight:bold">NumberItem</span>)
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/number_item.rb', line 34</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">NumberItem</span> &lt; <span style="color:#036;font-weight:bold">GenericItem</span>
-  include <span style="color:#036;font-weight:bold">NumericItem</span>
+<span class="keyword">class</span> <span class="class">NumberItem</span> &lt; <span class="constant">GenericItem</span>
+  include <span class="constant">NumericItem</span>
 
-  <span style="color:#777"># raw numbers translate directly to {DecimalType}, not a string</span>
-  <span style="color:#777"># @!visibility private</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">format_type</span>(command)
-    <span style="color:#080;font-weight:bold">if</span> command.is_a?(<span style="color:#036;font-weight:bold">Numeric</span>)
-      <span style="color:#080;font-weight:bold">if</span> unit &amp;&amp; (target_unit = <span style="color:#036;font-weight:bold">DSL</span>.unit(unit.dimension) || unit)
-        <span style="color:#080;font-weight:bold">return</span> <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">QuantityType</span>.new(command, target_unit)
-      <span style="color:#080;font-weight:bold">end</span>
+  <span class="comment"># raw numbers translate directly to {DecimalType}, not a string</span>
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">format_type</span>(command)
+    <span class="keyword">if</span> command.is_a?(<span class="constant">Numeric</span>)
+      <span class="keyword">if</span> unit &amp;&amp; (target_unit = <span class="constant">DSL</span>.unit(unit.dimension) || unit)
+        <span class="keyword">return</span> <span class="constant">Types</span>::<span class="constant">QuantityType</span>.new(command, target_unit)
+      <span class="keyword">end</span>
 
-      <span style="color:#080;font-weight:bold">return</span> <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">DecimalType</span>.new(command)
-    <span style="color:#080;font-weight:bold">end</span>
+      <span class="keyword">return</span> <span class="constant">Types</span>::<span class="constant">DecimalType</span>.new(command)
+    <span class="keyword">end</span>
 
-    <span style="color:#080;font-weight:bold">super</span>
-  <span style="color:#080;font-weight:bold">end</span>
+    <span class="keyword">super</span>
+  <span class="keyword">end</span>
 
   protected
 
-  <span style="color:#777"># Adds the unit dimension</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">type_details</span>
-    <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">:</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>dimension<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> dimension
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="comment"># Adds the unit dimension</span>
+  <span class="keyword">def</span> <span class="function">type_details</span>
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">:</span><span class="inline"><span class="inline-delimiter">#{</span>dimension<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> dimension
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2843,30 +2845,30 @@ items.grep(<span style="color:#036;font-weight:bold">NumberItem</span>)
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/number_item.rb', line 34</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">NumberItem</span> &lt; <span style="color:#036;font-weight:bold">GenericItem</span>
-  include <span style="color:#036;font-weight:bold">NumericItem</span>
+<span class="keyword">class</span> <span class="class">NumberItem</span> &lt; <span class="constant">GenericItem</span>
+  include <span class="constant">NumericItem</span>
 
-  <span style="color:#777"># raw numbers translate directly to {DecimalType}, not a string</span>
-  <span style="color:#777"># @!visibility private</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">format_type</span>(command)
-    <span style="color:#080;font-weight:bold">if</span> command.is_a?(<span style="color:#036;font-weight:bold">Numeric</span>)
-      <span style="color:#080;font-weight:bold">if</span> unit &amp;&amp; (target_unit = <span style="color:#036;font-weight:bold">DSL</span>.unit(unit.dimension) || unit)
-        <span style="color:#080;font-weight:bold">return</span> <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">QuantityType</span>.new(command, target_unit)
-      <span style="color:#080;font-weight:bold">end</span>
+  <span class="comment"># raw numbers translate directly to {DecimalType}, not a string</span>
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">format_type</span>(command)
+    <span class="keyword">if</span> command.is_a?(<span class="constant">Numeric</span>)
+      <span class="keyword">if</span> unit &amp;&amp; (target_unit = <span class="constant">DSL</span>.unit(unit.dimension) || unit)
+        <span class="keyword">return</span> <span class="constant">Types</span>::<span class="constant">QuantityType</span>.new(command, target_unit)
+      <span class="keyword">end</span>
 
-      <span style="color:#080;font-weight:bold">return</span> <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">DecimalType</span>.new(command)
-    <span style="color:#080;font-weight:bold">end</span>
+      <span class="keyword">return</span> <span class="constant">Types</span>::<span class="constant">DecimalType</span>.new(command)
+    <span class="keyword">end</span>
 
-    <span style="color:#080;font-weight:bold">super</span>
-  <span style="color:#080;font-weight:bold">end</span>
+    <span class="keyword">super</span>
+  <span class="keyword">end</span>
 
   protected
 
-  <span style="color:#777"># Adds the unit dimension</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">type_details</span>
-    <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">:</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>dimension<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> dimension
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="comment"># Adds the unit dimension</span>
+  <span class="keyword">def</span> <span class="function">type_details</span>
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">:</span><span class="inline"><span class="inline-delimiter">#{</span>dimension<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> dimension
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2939,30 +2941,30 @@ items.grep(<span style="color:#036;font-weight:bold">NumberItem</span>)
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/number_item.rb', line 34</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">NumberItem</span> &lt; <span style="color:#036;font-weight:bold">GenericItem</span>
-  include <span style="color:#036;font-weight:bold">NumericItem</span>
+<span class="keyword">class</span> <span class="class">NumberItem</span> &lt; <span class="constant">GenericItem</span>
+  include <span class="constant">NumericItem</span>
 
-  <span style="color:#777"># raw numbers translate directly to {DecimalType}, not a string</span>
-  <span style="color:#777"># @!visibility private</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">format_type</span>(command)
-    <span style="color:#080;font-weight:bold">if</span> command.is_a?(<span style="color:#036;font-weight:bold">Numeric</span>)
-      <span style="color:#080;font-weight:bold">if</span> unit &amp;&amp; (target_unit = <span style="color:#036;font-weight:bold">DSL</span>.unit(unit.dimension) || unit)
-        <span style="color:#080;font-weight:bold">return</span> <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">QuantityType</span>.new(command, target_unit)
-      <span style="color:#080;font-weight:bold">end</span>
+  <span class="comment"># raw numbers translate directly to {DecimalType}, not a string</span>
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">format_type</span>(command)
+    <span class="keyword">if</span> command.is_a?(<span class="constant">Numeric</span>)
+      <span class="keyword">if</span> unit &amp;&amp; (target_unit = <span class="constant">DSL</span>.unit(unit.dimension) || unit)
+        <span class="keyword">return</span> <span class="constant">Types</span>::<span class="constant">QuantityType</span>.new(command, target_unit)
+      <span class="keyword">end</span>
 
-      <span style="color:#080;font-weight:bold">return</span> <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">DecimalType</span>.new(command)
-    <span style="color:#080;font-weight:bold">end</span>
+      <span class="keyword">return</span> <span class="constant">Types</span>::<span class="constant">DecimalType</span>.new(command)
+    <span class="keyword">end</span>
 
-    <span style="color:#080;font-weight:bold">super</span>
-  <span style="color:#080;font-weight:bold">end</span>
+    <span class="keyword">super</span>
+  <span class="keyword">end</span>
 
   protected
 
-  <span style="color:#777"># Adds the unit dimension</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">type_details</span>
-    <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">:</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>dimension<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> dimension
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="comment"># Adds the unit dimension</span>
+  <span class="keyword">def</span> <span class="function">type_details</span>
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">:</span><span class="inline"><span class="inline-delimiter">#{</span>dimension<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> dimension
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3007,9 +3009,9 @@ items.grep(<span style="color:#036;font-weight:bold">NumberItem</span>)
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/number_item.rb', line 54</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">type_details</span>
-  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">:</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>dimension<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> dimension
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">type_details</span>
+  <span class="string"><span class="delimiter">&quot;</span><span class="content">:</span><span class="inline"><span class="inline-delimiter">#{</span>dimension<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> dimension
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3020,7 +3022,7 @@ items.grep(<span style="color:#036;font-weight:bold">NumberItem</span>)
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:35 2022 by
+  Generated on Fri Dec  9 22:46:49 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

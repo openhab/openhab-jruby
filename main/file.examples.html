@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "examples";
   relpath = '';
@@ -2367,119 +2369,119 @@
         <div class="content"><div id='filecontents'><h1 id="examples"><a href="#examples" class="header-anchor">#</a>Examples</h1>
 <p>The following examples are for file-based rules but most of them are applicable to <a href="file.USAGE.html#ui-based-scripts">UI rules</a> as well.</p>
 <h2 id="trigger-when-an-item-changed-state"><a href="#trigger-when-an-item-changed-state" class="header-anchor">#</a>Trigger when an item changed state</h2>
-<pre class="code ruby"><code class="ruby">rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Turn on light when sensor changed to open</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  changed <span style="color:#036;font-weight:bold">Door_Sensor</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">OPEN</span> 
-  run { <span style="color:#036;font-weight:bold">Cupboard_Light</span>.on }
-<span style="color:#080;font-weight:bold">end</span>
+<pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">Turn on light when sensor changed to open</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  changed <span class="constant">Door_Sensor</span>, <span class="key">to</span>: <span class="constant">OPEN</span> 
+  run { <span class="constant">Cupboard_Light</span>.on }
+<span class="keyword">end</span>
 </code></pre>
 <p>Use multiple triggers</p>
-<pre class="code ruby"><code class="ruby">rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Control light based on multiple doors</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  changed <span style="color:#036;font-weight:bold">Door_Sensor1</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">OPEN</span>
-  changed <span style="color:#036;font-weight:bold">Door_Sensor2</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">OPEN</span>
-  run { <span style="color:#036;font-weight:bold">Cupboard_Light</span>.on }
-<span style="color:#080;font-weight:bold">end</span>
+<pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">Control light based on multiple doors</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  changed <span class="constant">Door_Sensor1</span>, <span class="key">to</span>: <span class="constant">OPEN</span>
+  changed <span class="constant">Door_Sensor2</span>, <span class="key">to</span>: <span class="constant">OPEN</span>
+  run { <span class="constant">Cupboard_Light</span>.on }
+<span class="keyword">end</span>
 
-<span style="color:#777"># Which is the same as:</span>
-rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Control light based on multiple doors</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  changed <span style="color:#036;font-weight:bold">Door_Sensor1</span>, <span style="color:#036;font-weight:bold">Door_Sensor2</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">OPEN</span>
-  run { <span style="color:#036;font-weight:bold">Cupboard_Light</span>.on }
-<span style="color:#080;font-weight:bold">end</span>
+<span class="comment"># Which is the same as:</span>
+rule <span class="string"><span class="delimiter">'</span><span class="content">Control light based on multiple doors</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  changed <span class="constant">Door_Sensor1</span>, <span class="constant">Door_Sensor2</span>, <span class="key">to</span>: <span class="constant">OPEN</span>
+  run { <span class="constant">Cupboard_Light</span>.on }
+<span class="keyword">end</span>
 </code></pre>
 <p>Check against multiple states</p>
-<pre class="code ruby"><code class="ruby">rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Control light based on door state</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  changed <span style="color:#036;font-weight:bold">Door_Sensor</span>, <span style="color:#606">to</span>: [<span style="color:#036;font-weight:bold">OPEN</span>, <span style="color:#036;font-weight:bold">CLOSED</span>]
-  run { <span style="color:#036;font-weight:bold">Cupboard_Light</span> &lt;&lt; <span style="color:#036;font-weight:bold">Door_Sensor</span>.open? } <span style="color:#777"># Send a boolean command to a Switch Item</span>
-<span style="color:#080;font-weight:bold">end</span>
+<pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">Control light based on door state</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  changed <span class="constant">Door_Sensor</span>, <span class="key">to</span>: [<span class="constant">OPEN</span>, <span class="constant">CLOSED</span>]
+  run { <span class="constant">Cupboard_Light</span> &lt;&lt; <span class="constant">Door_Sensor</span>.open? } <span class="comment"># Send a boolean command to a Switch Item</span>
+<span class="keyword">end</span>
 </code></pre>
 <h2 id="trigger-when-a-group-member-changed-state"><a href="#trigger-when-a-group-member-changed-state" class="header-anchor">#</a>Trigger when a group member changed state</h2>
-<pre class="code ruby"><code class="ruby"><span style="color:#777"># Assumption: Motion sensor items are named using the pattern RoomName_Motion</span>
-<span style="color:#777"># and Light switch items are named with the pattern RoomName_Light</span>
-rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Generic motion rule</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  changed <span style="color:#036;font-weight:bold">Motion_Sensors</span>.members, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">ON</span>
-  run <span style="color:#080;font-weight:bold">do</span> |event|
-    light = items[event.item.name.sub(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">_Motion</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">_Light</span><span style="color:#710">'</span></span>)] <span style="color:#777"># Lookup item name from a string</span>
+<pre class="code ruby"><code class="ruby"><span class="comment"># Assumption: Motion sensor items are named using the pattern RoomName_Motion</span>
+<span class="comment"># and Light switch items are named with the pattern RoomName_Light</span>
+rule <span class="string"><span class="delimiter">'</span><span class="content">Generic motion rule</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  changed <span class="constant">Motion_Sensors</span>.members, <span class="key">to</span>: <span class="constant">ON</span>
+  run <span class="keyword">do</span> |event|
+    light = items[event.item.name.sub(<span class="string"><span class="delimiter">'</span><span class="content">_Motion</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">_Light</span><span class="delimiter">'</span></span>)] <span class="comment"># Lookup item name from a string</span>
     light&amp;.on 
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
 </code></pre>
 <p>See also: <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#Triggers-group" title="group::OpenHAB::DSL::Rules::BuilderDSL::Triggers (group)">Triggers</a></span></p>
 <h2 id="various-ways-of-sending-a-command-to-an-item"><a href="#various-ways-of-sending-a-command-to-an-item" class="header-anchor">#</a>Various ways of sending a command to an item</h2>
-<pre class="code ruby"><code class="ruby"><span style="color:#777"># Using the shovel operator</span>
-<span style="color:#036;font-weight:bold">Light1</span> &lt;&lt; <span style="color:#036;font-weight:bold">ON</span>
-<span style="color:#036;font-weight:bold">DimmerItem1</span> &lt;&lt; <span style="color:#00D">100</span>
-<span style="color:#036;font-weight:bold">Set_Temperature</span> &lt;&lt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">24 °C</span><span style="color:#710">'</span></span>     
+<pre class="code ruby"><code class="ruby"><span class="comment"># Using the shovel operator</span>
+<span class="constant">Light1</span> &lt;&lt; <span class="constant">ON</span>
+<span class="constant">DimmerItem1</span> &lt;&lt; <span class="integer">100</span>
+<span class="constant">Set_Temperature</span> &lt;&lt; <span class="string"><span class="delimiter">'</span><span class="content">24 °C</span><span class="delimiter">'</span></span>     
 
-<span style="color:#777"># Using command predicates</span>
-<span style="color:#036;font-weight:bold">Light1</span>.on
-<span style="color:#036;font-weight:bold">Rollershutter1</span>.up  
-<span style="color:#036;font-weight:bold">Player1</span>.play
+<span class="comment"># Using command predicates</span>
+<span class="constant">Light1</span>.on
+<span class="constant">Rollershutter1</span>.up  
+<span class="constant">Player1</span>.play
 
-<span style="color:#777"># Using .command</span>
-<span style="color:#036;font-weight:bold">ColorItem1</span>.command <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">#ffff00</span><span style="color:#710">'</span></span>
-<span style="color:#036;font-weight:bold">ColorItem1</span>.command {<span style="color:#606">r</span>: <span style="color:#00D">255</span>, <span style="color:#606">g</span>: <span style="color:#00D">0xFF</span>, <span style="color:#606">b</span>: <span style="color:#00D">0</span>} 
+<span class="comment"># Using .command</span>
+<span class="constant">ColorItem1</span>.command <span class="string"><span class="delimiter">'</span><span class="content">#ffff00</span><span class="delimiter">'</span></span>
+<span class="constant">ColorItem1</span>.command {<span class="key">r</span>: <span class="integer">255</span>, <span class="key">g</span>: <span class="integer">0xFF</span>, <span class="key">b</span>: <span class="integer">0</span>} 
 
-<span style="color:#777"># Send a command to all the array members</span>
-<span style="color:#777"># Note The &lt;&lt; operator doesn't send a command here because it's for appending to the array</span>
-[<span style="color:#036;font-weight:bold">SwitchItem1</span>, <span style="color:#036;font-weight:bold">SwitchItem2</span>, <span style="color:#036;font-weight:bold">SwitchItem3</span>].on           
-[<span style="color:#036;font-weight:bold">RollerItem1</span>, <span style="color:#036;font-weight:bold">RollerItem2</span>, <span style="color:#036;font-weight:bold">RollerItem3</span>].down    
-[<span style="color:#036;font-weight:bold">NumberItem1</span>, <span style="color:#036;font-weight:bold">NumberItem2</span>, <span style="color:#036;font-weight:bold">NumberItem3</span>].command <span style="color:#00D">100</span>  
+<span class="comment"># Send a command to all the array members</span>
+<span class="comment"># Note The &lt;&lt; operator doesn't send a command here because it's for appending to the array</span>
+[<span class="constant">SwitchItem1</span>, <span class="constant">SwitchItem2</span>, <span class="constant">SwitchItem3</span>].on           
+[<span class="constant">RollerItem1</span>, <span class="constant">RollerItem2</span>, <span class="constant">RollerItem3</span>].down    
+[<span class="constant">NumberItem1</span>, <span class="constant">NumberItem2</span>, <span class="constant">NumberItem3</span>].command <span class="integer">100</span>  
 </code></pre>
 <p>Each item type supports command helpers relevant to the type.
 For example, a <span class='object_link'><a href="OpenHAB/Core/Items/SwitchItem.html" title="OpenHAB::Core::Items::SwitchItem (class)">SwitchItem</a></span> supports <span class='object_link'><a href="OpenHAB/Core/Items/SwitchItem.html#on-instance_method" title="OpenHAB::Core::Items::SwitchItem#on (method)">on</a></span> and <span class='object_link'><a href="OpenHAB/Core/Items/SwitchItem.html#off-instance_method" title="OpenHAB::Core::Items::SwitchItem#off (method)">off</a></span>.
 See specific item types under <span class='object_link'><a href="OpenHAB/Core/Items.html" title="OpenHAB::Core::Items (module)">OpenHAB::Core::Items</a></span></p>
 <h2 id="dealing-with-item-states"><a href="#dealing-with-item-states" class="header-anchor">#</a>Dealing with Item States</h2>
-<pre class="code ruby"><code class="ruby"><span style="color:#777"># Items:</span>
-<span style="color:#777"># Number:Temperature Outside_Temperature e.g. 28 °C</span>
-<span style="color:#777"># Number:Temperature Inside_Temperature e.g. 22 °C</span>
-temperature_difference = <span style="color:#036;font-weight:bold">Outside_Temperature</span>.state - <span style="color:#036;font-weight:bold">Inside_Temperature</span>.state
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Temperature difference: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>temperature_difference<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># &quot;Temperature difference: 6 °C&quot;</span>
+<pre class="code ruby"><code class="ruby"><span class="comment"># Items:</span>
+<span class="comment"># Number:Temperature Outside_Temperature e.g. 28 °C</span>
+<span class="comment"># Number:Temperature Inside_Temperature e.g. 22 °C</span>
+temperature_difference = <span class="constant">Outside_Temperature</span>.state - <span class="constant">Inside_Temperature</span>.state
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Temperature difference: </span><span class="inline"><span class="inline-delimiter">#{</span>temperature_difference<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>) <span class="comment"># &quot;Temperature difference: 6 °C&quot;</span>
 </code></pre>
 <p>Items have predicates to query its state.</p>
-<pre class="code ruby"><code class="ruby"><span style="color:#036;font-weight:bold">Switch1</span>.on?    <span style="color:#777"># =&gt; true if Switch1.state == ON</span>
-<span style="color:#036;font-weight:bold">Shutter1</span>.up?   <span style="color:#777"># =&gt; true if Shutter1.state == UP</span>
+<pre class="code ruby"><code class="ruby"><span class="constant">Switch1</span>.on?    <span class="comment"># =&gt; true if Switch1.state == ON</span>
+<span class="constant">Shutter1</span>.up?   <span class="comment"># =&gt; true if Shutter1.state == UP</span>
 </code></pre>
 <h3 id="detect-change-duration-without-creating-an-explicit-timer"><a href="#detect-change-duration-without-creating-an-explicit-timer" class="header-anchor">#</a>Detect change duration without creating an explicit timer</h3>
-<pre class="code ruby"><code class="ruby">rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Warn when garage door is open a long time</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  changed <span style="color:#036;font-weight:bold">Garage_Door</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">OPEN</span>, <span style="color:#606">for</span>: <span style="color:#00D">15</span>.minutes
-  run { say <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Warning, the garage door is open</span><span style="color:#710">&quot;</span></span> } <span style="color:#777"># call TTS to the default audio sink</span>
-<span style="color:#080;font-weight:bold">end</span>
+<pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">Warn when garage door is open a long time</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  changed <span class="constant">Garage_Door</span>, <span class="key">to</span>: <span class="constant">OPEN</span>, <span class="key">for</span>: <span class="integer">15</span>.minutes
+  run { say <span class="string"><span class="delimiter">&quot;</span><span class="content">Warning, the garage door is open</span><span class="delimiter">&quot;</span></span> } <span class="comment"># call TTS to the default audio sink</span>
+<span class="keyword">end</span>
 </code></pre>
 <h3 id="automatic-activation-of-exhaust-fan-based-on-humidity-sensor"><a href="#automatic-activation-of-exhaust-fan-based-on-humidity-sensor" class="header-anchor">#</a>Automatic activation of exhaust fan based on humidity sensor</h3>
 <p>This uses the <code>evolution_rate</code> <span class='object_link'><a href="OpenHAB/Core/Items/Persistence.html" title="OpenHAB::Core::Items::Persistence (module)">persistence</a></span> feature,  coupled with an easy way to specify <a href="file.USAGE.html#durations">duration</a>.
 It is accessed simply through <code>ItemName.persistence_function</code>.</p>
-<pre class="code ruby"><code class="ruby"><span style="color:#777"># Note: don't activate the exhaust fan if the bathroom light is off at night</span>
-<span style="color:#777"># Sun_Elevation is an Astro item. Its state is positive during daylight</span>
-rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Humidity: Control ExhaustFan</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
-  updated <span style="color:#036;font-weight:bold">BathRoom_Humidity</span>
-  triggered <span style="color:#080;font-weight:bold">do</span> |humidity|
-    evo_rate = humidity.evolution_rate(<span style="color:#00D">4</span>.minutes.ago, <span style="color:#A60">:influxdb</span>)
-    logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>humidity.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>humidity.state<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> evolution_rate: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>evo_rate<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
+<pre class="code ruby"><code class="ruby"><span class="comment"># Note: don't activate the exhaust fan if the bathroom light is off at night</span>
+<span class="comment"># Sun_Elevation is an Astro item. Its state is positive during daylight</span>
+rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Humidity: Control ExhaustFan</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+  updated <span class="constant">BathRoom_Humidity</span>
+  triggered <span class="keyword">do</span> |humidity|
+    evo_rate = humidity.evolution_rate(<span class="integer">4</span>.minutes.ago, <span class="symbol">:influxdb</span>)
+    logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>humidity.name<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>humidity.state<span class="inline-delimiter">}</span></span><span class="content"> evolution_rate: </span><span class="inline"><span class="inline-delimiter">#{</span>evo_rate<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
 
-    <span style="color:#080;font-weight:bold">if</span> (humidity.state &gt; <span style="color:#00D">70</span> &amp;&amp; evo_rate &gt; <span style="color:#00D">15</span>) || humidity.state &gt; <span style="color:#00D">85</span>
-      <span style="color:#036;font-weight:bold">BathRoom_ExhaustFan</span>.ensure.on <span style="color:#080;font-weight:bold">if</span> <span style="color:#036;font-weight:bold">Sun_Elevation</span>.state.positive? || <span style="color:#036;font-weight:bold">BathRoom_Light</span>.state.nil? || <span style="color:#036;font-weight:bold">BathRoom_Light</span>.on?
-    <span style="color:#080;font-weight:bold">elsif</span> humidity.state &lt; <span style="color:#00D">70</span> || evo_rate &lt; <span style="color:#00D">-5</span>
-      <span style="color:#036;font-weight:bold">BathRoom_ExhaustFan</span>.ensure.off
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span>
+    <span class="keyword">if</span> (humidity.state &gt; <span class="integer">70</span> &amp;&amp; evo_rate &gt; <span class="integer">15</span>) || humidity.state &gt; <span class="integer">85</span>
+      <span class="constant">BathRoom_ExhaustFan</span>.ensure.on <span class="keyword">if</span> <span class="constant">Sun_Elevation</span>.state.positive? || <span class="constant">BathRoom_Light</span>.state.nil? || <span class="constant">BathRoom_Light</span>.on?
+    <span class="keyword">elsif</span> humidity.state &lt; <span class="integer">70</span> || evo_rate &lt; <span class="integer">-5</span>
+      <span class="constant">BathRoom_ExhaustFan</span>.ensure.off
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
 </code></pre>
 <h2 id="gem-cleanup"><a href="#gem-cleanup" class="header-anchor">#</a>Gem Cleanup</h2>
 <p>The openHAB JRuby add-on will automatically download and install the latest version of the library according to the <a href="file.USAGE.html#configuration">settings in jruby.cfg</a>.
 Over time, the older versions of the library will accumulate in the gem_home directory.
 The following code saved as <code>gem_cleanup.rb</code> or another name of your choice can be placed in the <code>automation/ruby</code> directory to perform uninstallation of the older gem versions every time openHAB starts up.</p>
-<pre class="code ruby"><code class="ruby">require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">rubygems/commands/uninstall_command</span><span style="color:#710">'</span></span>
+<pre class="code ruby"><code class="ruby">require <span class="string"><span class="delimiter">'</span><span class="content">rubygems/commands/uninstall_command</span><span class="delimiter">'</span></span>
 
-cmd = <span style="color:#036;font-weight:bold">Gem</span>::<span style="color:#036;font-weight:bold">Commands</span>::<span style="color:#036;font-weight:bold">UninstallCommand</span>.new
+cmd = <span class="constant">Gem</span>::<span class="constant">Commands</span>::<span class="constant">UninstallCommand</span>.new
 
-<span style="color:#777"># uninstall all the older versions of the openhab-jrubyscripting gems</span>
-<span style="color:#036;font-weight:bold">Gem</span>::<span style="color:#036;font-weight:bold">Specification</span>.find_all
-                  .select { |gem| gem.name == <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">openhab-jrubyscripting</span><span style="color:#710">'</span></span> }
-                  .sort_by(&amp;<span style="color:#A60">:version</span>)
-                  .tap(&amp;<span style="color:#A60">:pop</span>) <span style="color:#777"># don't include the latest version</span>
-                  .each <span style="color:#080;font-weight:bold">do</span> |gem|
-  cmd.handle_options [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">-x</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">-I</span><span style="color:#710">'</span></span>, gem.name, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">--version</span><span style="color:#710">'</span></span>, gem.version.to_s]
+<span class="comment"># uninstall all the older versions of the openhab-jrubyscripting gems</span>
+<span class="constant">Gem</span>::<span class="constant">Specification</span>.find_all
+                  .select { |gem| gem.name == <span class="string"><span class="delimiter">'</span><span class="content">openhab-jrubyscripting</span><span class="delimiter">'</span></span> }
+                  .sort_by(&amp;<span class="symbol">:version</span>)
+                  .tap(&amp;<span class="symbol">:pop</span>) <span class="comment"># don't include the latest version</span>
+                  .each <span class="keyword">do</span> |gem|
+  cmd.handle_options [<span class="string"><span class="delimiter">'</span><span class="content">-x</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">-I</span><span class="delimiter">'</span></span>, gem.name, <span class="string"><span class="delimiter">'</span><span class="content">--version</span><span class="delimiter">'</span></span>, gem.version.to_s]
   cmd.execute
-<span style="color:#080;font-weight:bold">end</span>
+<span class="keyword">end</span>
 </code></pre>
 <h2 id="ui-rules"><a href="#ui-rules" class="header-anchor">#</a>UI rules</h2>
 <h3 id="reset-the-switch-that-triggered-the-rule-after-5-seconds"><a href="#reset-the-switch-that-triggered-the-rule-after-5-seconds" class="header-anchor">#</a>Reset the switch that triggered the rule after 5 seconds</h3>
@@ -2489,19 +2491,19 @@ cmd = <span style="color:#036;font-weight:bold">Gem</span>::<span style="color:#
 <li>Group: <code>Reset_5Seconds</code></li>
 <li>Command: <code>ON</code></li>
 </ul>
-<pre class="code ruby"><code class="ruby">logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>event.item.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> Triggered the rule</span><span style="color:#710">&quot;</span></span>)
-after <span style="color:#00D">5</span>.seconds <span style="color:#080;font-weight:bold">do</span>
+<pre class="code ruby"><code class="ruby">logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>event.item.name<span class="inline-delimiter">}</span></span><span class="content"> Triggered the rule</span><span class="delimiter">&quot;</span></span>)
+after <span class="integer">5</span>.seconds <span class="keyword">do</span>
   event.item.off
-<span style="color:#080;font-weight:bold">end</span>
+<span class="keyword">end</span>
 </code></pre>
 <h3 id="update-a-datetime-item-with-the-current-time-when-a-motion-sensor-is-triggered"><a href="#update-a-datetime-item-with-the-current-time-when-a-motion-sensor-is-triggered" class="header-anchor">#</a>Update a DateTime Item with the current time when a motion sensor is triggered</h3>
 <p>Given the following group and items:</p>
-<pre class="code ruby"><code class="ruby"><span style="color:#036;font-weight:bold">Group</span> <span style="color:#036;font-weight:bold">MotionSensors</span>
-<span style="color:#036;font-weight:bold">Switch</span> <span style="color:#036;font-weight:bold">Sensor1</span> (<span style="color:#036;font-weight:bold">MotionSensors</span>)
-<span style="color:#036;font-weight:bold">Switch</span> <span style="color:#036;font-weight:bold">Sensor2</span> (<span style="color:#036;font-weight:bold">MotionSensors</span>)
+<pre class="code ruby"><code class="ruby"><span class="constant">Group</span> <span class="constant">MotionSensors</span>
+<span class="constant">Switch</span> <span class="constant">Sensor1</span> (<span class="constant">MotionSensors</span>)
+<span class="constant">Switch</span> <span class="constant">Sensor2</span> (<span class="constant">MotionSensors</span>)
 
-<span style="color:#036;font-weight:bold">DateTime</span> <span style="color:#036;font-weight:bold">Sensor1_LastMotion</span>
-<span style="color:#036;font-weight:bold">DateTime</span> <span style="color:#036;font-weight:bold">Sensor2_LastMotion</span>
+<span class="constant">DateTime</span> <span class="constant">Sensor1_LastMotion</span>
+<span class="constant">DateTime</span> <span class="constant">Sensor2_LastMotion</span>
 </code></pre>
 <p>Trigger defined as:</p>
 <ul>
@@ -2509,13 +2511,13 @@ after <span style="color:#00D">5</span>.seconds <span style="color:#080;font-wei
 <li>Group: <code>MotionSensors</code></li>
 <li>State: <code>ON</code></li>
 </ul>
-<pre class="code ruby"><code class="ruby">logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>event.item.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> Triggered</span><span style="color:#710">&quot;</span></span>)
-items[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>event.item_name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">_LastMotion</span><span style="color:#710">&quot;</span></span>].update <span style="color:#036;font-weight:bold">Time</span>.now
+<pre class="code ruby"><code class="ruby">logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>event.item.name<span class="inline-delimiter">}</span></span><span class="content"> Triggered</span><span class="delimiter">&quot;</span></span>)
+items[<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>event.item_name<span class="inline-delimiter">}</span></span><span class="content">_LastMotion</span><span class="delimiter">&quot;</span></span>].update <span class="constant">Time</span>.now
 </code></pre>
 </div></div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:29 2022 by
+  Generated on Fri Dec  9 22:46:43 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

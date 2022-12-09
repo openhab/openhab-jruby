@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::DSL::Rules::Triggers::Conditions::Proc";
   relpath = '../../../../../';
@@ -2436,7 +2438,7 @@
 
 </div>
         </dt>
-        <dd><pre class="code"><span style="color:#036;font-weight:bold">Proc</span>.new.freeze</pre></dd>
+        <dd><pre class="code"><span class="constant">Proc</span>.new.freeze</pre></dd>
       
     </dl>
   
@@ -2779,11 +2781,11 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/conditions/proc.rb', line 69</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">initialize</span>(<span style="color:#606">from</span>: <span style="color:#069">nil</span>, <span style="color:#606">to</span>: <span style="color:#069">nil</span>, <span style="color:#606">command</span>: <span style="color:#069">nil</span>)
-  <span style="color:#33B">@from</span> = from
-  <span style="color:#33B">@to</span> = to
-  <span style="color:#33B">@command</span> = command
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">initialize</span>(<span class="key">from</span>: <span class="predefined-constant">nil</span>, <span class="key">to</span>: <span class="predefined-constant">nil</span>, <span class="key">command</span>: <span class="predefined-constant">nil</span>)
+  <span class="instance-variable">@from</span> = from
+  <span class="instance-variable">@to</span> = to
+  <span class="instance-variable">@command</span> = command
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2851,13 +2853,13 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/conditions/proc.rb', line 40</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">equality_proc</span>(value)
-  logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Creating equality proc for </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>value<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-  lambda <span style="color:#080;font-weight:bold">do</span> |state|
-    logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Equality proc comparing </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>value<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> against </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>state<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
+<span class="keyword">def</span> <span class="predefined-constant">self</span>.<span class="function">equality_proc</span>(value)
+  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Creating equality proc for </span><span class="inline"><span class="inline-delimiter">#{</span>value<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+  lambda <span class="keyword">do</span> |state|
+    logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Equality proc comparing </span><span class="inline"><span class="inline-delimiter">#{</span>value<span class="inline-delimiter">}</span></span><span class="content"> against </span><span class="inline"><span class="inline-delimiter">#{</span>state<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
     value == state
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2923,14 +2925,14 @@ otherwise create an equality proc</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/conditions/proc.rb', line 55</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">from_value</span>(value)
-  logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Creating proc for Value(</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>value<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#080;font-weight:bold">return</span> value <span style="color:#080;font-weight:bold">if</span> value.nil?
-  <span style="color:#080;font-weight:bold">return</span> value <span style="color:#080;font-weight:bold">if</span> value.is_a?(::<span style="color:#036;font-weight:bold">Proc</span>)
-  <span style="color:#080;font-weight:bold">return</span> range_proc(value) <span style="color:#080;font-weight:bold">if</span> value.is_a?(<span style="color:#036;font-weight:bold">Range</span>)
+<span class="keyword">def</span> <span class="predefined-constant">self</span>.<span class="function">from_value</span>(value)
+  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Creating proc for Value(</span><span class="inline"><span class="inline-delimiter">#{</span>value<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">return</span> value <span class="keyword">if</span> value.nil?
+  <span class="keyword">return</span> value <span class="keyword">if</span> value.is_a?(::<span class="constant">Proc</span>)
+  <span class="keyword">return</span> range_proc(value) <span class="keyword">if</span> value.is_a?(<span class="constant">Range</span>)
 
   equality_proc(value)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2991,13 +2993,13 @@ otherwise create an equality proc</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/conditions/proc.rb', line 28</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">range_proc</span>(range)
-  logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Creating range proc for </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>range<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-  lambda <span style="color:#080;font-weight:bold">do</span> |val|
-    logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Range proc checking if </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>val<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is in </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>range<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
+<span class="keyword">def</span> <span class="predefined-constant">self</span>.<span class="function">range_proc</span>(range)
+  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Creating range proc for </span><span class="inline"><span class="inline-delimiter">#{</span>range<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+  lambda <span class="keyword">do</span> |val|
+    logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Range proc checking if </span><span class="inline"><span class="inline-delimiter">#{</span>val<span class="inline-delimiter">}</span></span><span class="content"> is in </span><span class="inline"><span class="inline-delimiter">#{</span>range<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
     range.cover? val
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3071,9 +3073,9 @@ otherwise create an equality proc</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/conditions/proc.rb', line 20</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">range_procs</span>(*ranges)
-  ranges.map { |range| range.is_a?(<span style="color:#036;font-weight:bold">Range</span>) ? range_proc(range) : range }
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="predefined-constant">self</span>.<span class="function">range_procs</span>(*ranges)
+  ranges.map { |range| range.is_a?(<span class="constant">Range</span>) ? range_proc(range) : range }
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3157,11 +3159,11 @@ otherwise create an equality proc</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/conditions/proc.rb', line 92</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">check_command</span>(<span style="color:#606">inputs</span>: <span style="color:#069">nil</span>)
-  command = input_state(inputs, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">command</span><span style="color:#710">&quot;</span></span>)
-  logger.trace <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Checking command(</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#33B">@command</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">) against command(</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>command<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span>
-  check_proc(<span style="color:#606">proc</span>: <span style="color:#33B">@command</span>, <span style="color:#606">value</span>: command)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">check_command</span>(<span class="key">inputs</span>: <span class="predefined-constant">nil</span>)
+  command = input_state(inputs, <span class="string"><span class="delimiter">&quot;</span><span class="content">command</span><span class="delimiter">&quot;</span></span>)
+  logger.trace <span class="string"><span class="delimiter">&quot;</span><span class="content">Checking command(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@command</span><span class="inline-delimiter">}</span></span><span class="content">) against command(</span><span class="inline"><span class="inline-delimiter">#{</span>command<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>
+  check_proc(<span class="key">proc</span>: <span class="instance-variable">@command</span>, <span class="key">value</span>: command)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3256,11 +3258,11 @@ otherwise create an equality proc</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/conditions/proc.rb', line 104</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">check_from</span>(<span style="color:#606">inputs</span>: <span style="color:#069">nil</span>, <span style="color:#606">state</span>: <span style="color:#069">nil</span>)
-  state ||= input_state(inputs, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">oldState</span><span style="color:#710">&quot;</span></span>)
-  logger.trace <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Checking from(</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#33B">@from</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">) against state(</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>state<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span>
-  check_proc(<span style="color:#606">proc</span>: <span style="color:#33B">@from</span>, <span style="color:#606">value</span>: state)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">check_from</span>(<span class="key">inputs</span>: <span class="predefined-constant">nil</span>, <span class="key">state</span>: <span class="predefined-constant">nil</span>)
+  state ||= input_state(inputs, <span class="string"><span class="delimiter">&quot;</span><span class="content">oldState</span><span class="delimiter">&quot;</span></span>)
+  logger.trace <span class="string"><span class="delimiter">&quot;</span><span class="content">Checking from(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@from</span><span class="inline-delimiter">}</span></span><span class="content">) against state(</span><span class="inline"><span class="inline-delimiter">#{</span>state<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>
+  check_proc(<span class="key">proc</span>: <span class="instance-variable">@from</span>, <span class="key">value</span>: state)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3355,11 +3357,11 @@ otherwise create an equality proc</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/conditions/proc.rb', line 116</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">check_to</span>(<span style="color:#606">inputs</span>: <span style="color:#069">nil</span>, <span style="color:#606">state</span>: <span style="color:#069">nil</span>)
-  state ||= input_state(inputs, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">newState</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">state</span><span style="color:#710">&quot;</span></span>)
-  logger.trace <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Checking to(</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#33B">@to</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">) against state(</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>state<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span>
-  check_proc(<span style="color:#606">proc</span>: <span style="color:#33B">@to</span>, <span style="color:#606">value</span>: state)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">check_to</span>(<span class="key">inputs</span>: <span class="predefined-constant">nil</span>, <span class="key">state</span>: <span class="predefined-constant">nil</span>)
+  state ||= input_state(inputs, <span class="string"><span class="delimiter">&quot;</span><span class="content">newState</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">state</span><span class="delimiter">&quot;</span></span>)
+  logger.trace <span class="string"><span class="delimiter">&quot;</span><span class="content">Checking to(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@to</span><span class="inline-delimiter">}</span></span><span class="content">) against state(</span><span class="inline"><span class="inline-delimiter">#{</span>state<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>
+  check_proc(<span class="key">proc</span>: <span class="instance-variable">@to</span>, <span class="key">value</span>: state)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3417,10 +3419,10 @@ otherwise create an equality proc</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/conditions/proc.rb', line 82</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">process</span>(<span style="color:#606">mod</span>:, <span style="color:#606">inputs</span>:) <span style="color:#777"># rubocop:disable Lint/UnusedMethodArgument - mod is unused here but required</span>
-  logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Checking </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>inputs<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> against condition trigger </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#069">self</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#080;font-weight:bold">yield</span> <span style="color:#080;font-weight:bold">if</span> check_procs(<span style="color:#606">inputs</span>: inputs)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">process</span>(<span class="key">mod</span>:, <span class="key">inputs</span>:) <span class="comment"># rubocop:disable Lint/UnusedMethodArgument - mod is unused here but required</span>
+  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Checking </span><span class="inline"><span class="inline-delimiter">#{</span>inputs<span class="inline-delimiter">}</span></span><span class="content"> against condition trigger </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">yield</span> <span class="keyword">if</span> check_procs(<span class="key">inputs</span>: inputs)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3475,9 +3477,9 @@ otherwise create an equality proc</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/conditions/proc.rb', line 125</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to_s</span>
-  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">From:(</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#33B">@from</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">) To:(</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#33B">@to</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">) Command:(</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#33B">@command</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">to_s</span>
+  <span class="string"><span class="delimiter">&quot;</span><span class="content">From:(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@from</span><span class="inline-delimiter">}</span></span><span class="content">) To:(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@to</span><span class="inline-delimiter">}</span></span><span class="content">) Command:(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@command</span><span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3488,7 +3490,7 @@ otherwise create an equality proc</p>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:38 2022 by
+  Generated on Fri Dec  9 22:46:52 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

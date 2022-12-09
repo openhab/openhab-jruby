@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::EntityLookup";
   relpath = '../../';
@@ -2419,16 +2421,16 @@ as an alternative to <code>things["astro:sun:home"]</code></p>
         <p class="example_title"><div class='inline'><p>Accessing Items and Groups</p>
 </div></p>
       
-      <pre class="example code"><code>gAll_Lights       <span style="color:#777"># Access the gAll_Lights group. It is the same as items[&quot;gAll_Lights&quot;]</span>
-<span style="color:#036;font-weight:bold">Kitchen_Light</span>.on  <span style="color:#777"># The openHAB object for the Kitchen_Light item and send an ON command</span></code></pre>
+      <pre class="example code"><code>gAll_Lights       <span class="comment"># Access the gAll_Lights group. It is the same as items[&quot;gAll_Lights&quot;]</span>
+<span class="constant">Kitchen_Light</span>.on  <span class="comment"># The openHAB object for the Kitchen_Light item and send an ON command</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Accessing Things</p>
 </div></p>
       
-      <pre class="example code"><code>smtp_mail_local.send_mail(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">me@example.com</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Subject</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Dear Person, ...</span><span style="color:#710">'</span></span>)
-<span style="color:#777"># Is equivalent to:</span>
-things[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">smtp:mail:local</span><span style="color:#710">'</span></span>].send_mail(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">me@example.com</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Subject</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Dear Person, ...</span><span style="color:#710">'</span></span>)</code></pre>
+      <pre class="example code"><code>smtp_mail_local.send_mail(<span class="string"><span class="delimiter">'</span><span class="content">me@example.com</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Subject</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Dear Person, ...</span><span class="delimiter">'</span></span>)
+<span class="comment"># Is equivalent to:</span>
+things[<span class="string"><span class="delimiter">'</span><span class="content">smtp:mail:local</span><span class="delimiter">'</span></span>].send_mail(<span class="string"><span class="delimiter">'</span><span class="content">me@example.com</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Subject</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Dear Person, ...</span><span class="delimiter">'</span></span>)</code></pre>
     
   </div>
 
@@ -2543,14 +2545,14 @@ things[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/entity_lookup.rb', line 74</span>
 
-ruby2_keywords <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">method_missing</span>(method, *args)
-  <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">super</span> <span style="color:#080;font-weight:bold">unless</span> args.empty? &amp;&amp; !block_given?
+ruby2_keywords <span class="keyword">def</span> <span class="function">method_missing</span>(method, *args)
+  <span class="keyword">return</span> <span class="keyword">super</span> <span class="keyword">unless</span> args.empty? &amp;&amp; !block_given?
 
-  logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">method missing, performing openHAB Lookup for: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>method<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#036;font-weight:bold">EntityLookup</span>.lookup_entity(method,
-                             <span style="color:#606">create_dummy_items</span>: <span style="color:#069">self</span>.class.respond_to?(<span style="color:#A60">:create_dummy_items?</span>) &amp;&amp;
-                               <span style="color:#069">self</span>.class.create_dummy_items?) || <span style="color:#080;font-weight:bold">super</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">method missing, performing openHAB Lookup for: </span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+  <span class="constant">EntityLookup</span>.lookup_entity(method,
+                             <span class="key">create_dummy_items</span>: <span class="predefined-constant">self</span>.class.respond_to?(<span class="symbol">:create_dummy_items?</span>) &amp;&amp;
+                               <span class="predefined-constant">self</span>.class.create_dummy_items?) || <span class="keyword">super</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2562,7 +2564,7 @@ ruby2_keywords <span style="color:#080;font-weight:bold">def</span> <span style=
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:31 2022 by
+  Generated on Fri Dec  9 22:46:45 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

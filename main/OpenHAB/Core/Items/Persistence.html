@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Items::Persistence";
   relpath = '../../../';
@@ -2410,40 +2412,40 @@
         <p class="example_title"><div class='inline'><p>The following examples are based on these items</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Number</span>        <span style="color:#036;font-weight:bold">UV_Index</span>
-<span style="color:#606">Number</span>:<span style="color:#036;font-weight:bold">Power</span>  <span style="color:#036;font-weight:bold">Power_Usage</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Power Usage [%.2f W]</span><span style="color:#710">&quot;</span></span></code></pre>
+      <pre class="example code"><code><span class="constant">Number</span>        <span class="constant">UV_Index</span>
+<span class="key">Number</span>:<span class="constant">Power</span>  <span class="constant">Power_Usage</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Power Usage [%.2f W]</span><span class="delimiter">&quot;</span></span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Getting persistence data from the system default persistence service</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">UV_Index</span>.average_since(<span style="color:#00D">1</span>.hour.ago)      <span style="color:#777"># returns a DecimalType</span>
-<span style="color:#036;font-weight:bold">Power_Usage</span>.average_since(<span style="color:#00D">12</span>.hours.ago) <span style="color:#777"># returns a QuantityType that corresponds to the item's type</span></code></pre>
+      <pre class="example code"><code><span class="constant">UV_Index</span>.average_since(<span class="integer">1</span>.hour.ago)      <span class="comment"># returns a DecimalType</span>
+<span class="constant">Power_Usage</span>.average_since(<span class="integer">12</span>.hours.ago) <span class="comment"># returns a QuantityType that corresponds to the item's type</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Querying a non-default persistence service</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">UV_Index</span>.average_since(<span style="color:#00D">1</span>.hour.ago, <span style="color:#A60">:influxdb</span>)
-<span style="color:#036;font-weight:bold">Power_Usage</span>.average_since(<span style="color:#00D">12</span>.hours.ago, <span style="color:#A60">:rrd4j</span>)</code></pre>
+      <pre class="example code"><code><span class="constant">UV_Index</span>.average_since(<span class="integer">1</span>.hour.ago, <span class="symbol">:influxdb</span>)
+<span class="constant">Power_Usage</span>.average_since(<span class="integer">12</span>.hours.ago, <span class="symbol">:rrd4j</span>)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Comparison using Quantity</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#777"># Because Power_Usage has a unit, the return value</span>
-<span style="color:#777"># from average_since is a QuantityType which can be</span>
-<span style="color:#777"># compared against a string with quantity</span>
-<span style="color:#080;font-weight:bold">if</span> <span style="color:#036;font-weight:bold">Power_Usage</span>.average_since(<span style="color:#00D">15</span>.minutes.ago) &gt; <span style="color:#00D">5</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">kW</span><span style="color:#710">&quot;</span></span>
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">The power usage exceeded its 15 min average)
+      <pre class="example code"><code><span class="comment"># Because Power_Usage has a unit, the return value</span>
+<span class="comment"># from average_since is a QuantityType which can be</span>
+<span class="comment"># compared against a string with quantity</span>
+<span class="keyword">if</span> <span class="constant">Power_Usage</span>.average_since(<span class="integer">15</span>.minutes.ago) &gt; <span class="integer">5</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">kW</span><span class="delimiter">&quot;</span></span>
+  logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">The power usage exceeded its 15 min average)
 end</span></span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>HistoricState</p>
 </div></p>
       
-      <pre class="example code"><code>max = <span style="color:#036;font-weight:bold">Power_Usage</span>.maximum_since(<span style="color:#036;font-weight:bold">LocalTime</span>::<span style="color:#036;font-weight:bold">MIDNIGHT</span>)
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Max power usage today: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>max<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">, at: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>max.timestamp<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span></span></code></pre>
+      <pre class="example code"><code>max = <span class="constant">Power_Usage</span>.maximum_since(<span class="constant">LocalTime</span>::<span class="constant">MIDNIGHT</span>)
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Max power usage today: </span><span class="inline"><span class="inline-delimiter">#{</span>max<span class="inline-delimiter">}</span></span><span class="content">, at: </span><span class="inline"><span class="inline-delimiter">#{</span>max.timestamp<span class="inline-delimiter">}</span></span><span class="content">)</span></span></code></pre>
     
   </div>
 
@@ -4592,11 +4594,11 @@ does not refer to a valid service</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 255</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">previous_state</span>(service = <span style="color:#069">nil</span>, <span style="color:#606">skip_equal</span>: <span style="color:#069">false</span>)
+<span class="keyword">def</span> <span class="function">previous_state</span>(service = <span class="predefined-constant">nil</span>, <span class="key">skip_equal</span>: <span class="predefined-constant">false</span>)
   service ||= persistence_service
-  result = <span style="color:#036;font-weight:bold">Actions</span>::<span style="color:#036;font-weight:bold">PersistenceExtensions</span>.previous_state(<span style="color:#069">self</span>, skip_equal, service&amp;.to_s)
-  <span style="color:#036;font-weight:bold">HistoricState</span>.new(quantify(result.state), result) <span style="color:#080;font-weight:bold">if</span> result
-<span style="color:#080;font-weight:bold">end</span></pre>
+  result = <span class="constant">Actions</span>::<span class="constant">PersistenceExtensions</span>.previous_state(<span class="predefined-constant">self</span>, skip_equal, service&amp;.to_s)
+  <span class="constant">HistoricState</span>.new(quantify(result.state), result) <span class="keyword">if</span> result
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4900,12 +4902,12 @@ or nil if no previous state could be found.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 237</span>
 
-<span style="color:#A60"><span style="color:#740">%i[</span><span style="color:#A60">persist last_update</span><span style="color:#740">]</span></span>.each <span style="color:#080;font-weight:bold">do</span> |method|
-  define_method(method) <span style="color:#080;font-weight:bold">do</span> |service = <span style="color:#069">nil</span>|
+<span class="symbol"><span class="delimiter">%i[</span><span class="content">persist last_update</span><span class="delimiter">]</span></span>.each <span class="keyword">do</span> |method|
+  define_method(method) <span class="keyword">do</span> |service = <span class="predefined-constant">nil</span>|
     service ||= persistence_service
-    <span style="color:#036;font-weight:bold">Actions</span>::<span style="color:#036;font-weight:bold">PersistenceExtensions</span>.public_send(method, <span style="color:#069">self</span>, service&amp;.to_s)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+    <span class="constant">Actions</span>::<span class="constant">PersistenceExtensions</span>.public_send(method, <span class="predefined-constant">self</span>, service&amp;.to_s)
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -5200,7 +5202,7 @@ or nil if no previous state could be found.</p>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:32 2022 by
+  Generated on Fri Dec  9 22:46:46 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

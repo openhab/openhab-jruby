@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Types::DateTimeType";
   relpath = '../../../';
@@ -2876,24 +2878,24 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 81</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">initialize</span>(value = <span style="color:#069">nil</span>)
-  <span style="color:#080;font-weight:bold">if</span> value.respond_to?(<span style="color:#A60">:to_zoned_date_time</span>)
-    <span style="color:#080;font-weight:bold">super</span>(value.to_zoned_date_time)
-    <span style="color:#080;font-weight:bold">return</span>
-  <span style="color:#080;font-weight:bold">elsif</span> value.respond_to?(<span style="color:#A60">:to_time</span>)
-    <span style="color:#080;font-weight:bold">super</span>(value.to_time.to_zoned_date_time)
-    <span style="color:#080;font-weight:bold">return</span>
-  <span style="color:#080;font-weight:bold">elsif</span> value.respond_to?(<span style="color:#A60">:to_str</span>)
-    <span style="color:#777"># strings respond_do?(:to_d), but we want to avoid that conversion</span>
-    <span style="color:#080;font-weight:bold">super</span>(value.to_str)
-    <span style="color:#080;font-weight:bold">return</span>
-  <span style="color:#080;font-weight:bold">elsif</span> value.respond_to?(<span style="color:#A60">:to_d</span>)
-    <span style="color:#080;font-weight:bold">super</span>(<span style="color:#036;font-weight:bold">Time</span>.at(value.to_d).to_zoned_date_time)
-    <span style="color:#080;font-weight:bold">return</span>
-  <span style="color:#080;font-weight:bold">end</span>
+<span class="keyword">def</span> <span class="function">initialize</span>(value = <span class="predefined-constant">nil</span>)
+  <span class="keyword">if</span> value.respond_to?(<span class="symbol">:to_zoned_date_time</span>)
+    <span class="keyword">super</span>(value.to_zoned_date_time)
+    <span class="keyword">return</span>
+  <span class="keyword">elsif</span> value.respond_to?(<span class="symbol">:to_time</span>)
+    <span class="keyword">super</span>(value.to_time.to_zoned_date_time)
+    <span class="keyword">return</span>
+  <span class="keyword">elsif</span> value.respond_to?(<span class="symbol">:to_str</span>)
+    <span class="comment"># strings respond_do?(:to_d), but we want to avoid that conversion</span>
+    <span class="keyword">super</span>(value.to_str)
+    <span class="keyword">return</span>
+  <span class="keyword">elsif</span> value.respond_to?(<span class="symbol">:to_d</span>)
+    <span class="keyword">super</span>(<span class="constant">Time</span>.at(value.to_d).to_zoned_date_time)
+    <span class="keyword">return</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#080;font-weight:bold">super</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">super</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2943,12 +2945,12 @@ object representing the same instant</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 206</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">method_missing</span>(method, *args, &amp;block)
-  <span style="color:#080;font-weight:bold">return</span> zoned_date_time.send(method, *args, &amp;block) <span style="color:#080;font-weight:bold">if</span> zoned_date_time.respond_to?(method)
-  <span style="color:#080;font-weight:bold">return</span> to_time.send(method, *args, &amp;block) <span style="color:#080;font-weight:bold">if</span> ::<span style="color:#036;font-weight:bold">Time</span>.instance_methods.include?(method.to_sym)
+<span class="keyword">def</span> <span class="function">method_missing</span>(method, *args, &amp;block)
+  <span class="keyword">return</span> zoned_date_time.send(method, *args, &amp;block) <span class="keyword">if</span> zoned_date_time.respond_to?(method)
+  <span class="keyword">return</span> to_time.send(method, *args, &amp;block) <span class="keyword">if</span> ::<span class="constant">Time</span>.instance_methods.include?(method.to_sym)
 
-  <span style="color:#080;font-weight:bold">super</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">super</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3030,17 +3032,17 @@ using Java's parser, then falls back to the Ruby <code>Time.parse</code>.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 43</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">parse</span>(time_string)
-  time_string = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>time_string<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">Z</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> <span style="color:#036;font-weight:bold">TIME_ONLY_REGEX</span>.match?(time_string)
-  <span style="color:#036;font-weight:bold">DateTimeType</span>.new(time_string)
-<span style="color:#080;font-weight:bold">rescue</span> java.lang.StringIndexOutOfBoundsException, java.lang.IllegalArgumentException =&gt; e
-  <span style="color:#777"># Try Ruby's Time.parse if DateTimeType parser fails</span>
-  <span style="color:#080;font-weight:bold">begin</span>
-    ::<span style="color:#036;font-weight:bold">Time</span>.parse(time_string).to_zoned_date_time
-  <span style="color:#080;font-weight:bold">rescue</span> <span style="color:#036;font-weight:bold">ArgumentError</span>
-    raise <span style="color:#036;font-weight:bold">ArgumentError</span>, e.message
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">parse</span>(time_string)
+  time_string = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>time_string<span class="inline-delimiter">}</span></span><span class="content">Z</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> <span class="constant">TIME_ONLY_REGEX</span>.match?(time_string)
+  <span class="constant">DateTimeType</span>.new(time_string)
+<span class="keyword">rescue</span> java.lang.StringIndexOutOfBoundsException, java.lang.IllegalArgumentException =&gt; e
+  <span class="comment"># Try Ruby's Time.parse if DateTimeType parser fails</span>
+  <span class="keyword">begin</span>
+    ::<span class="constant">Time</span>.parse(time_string).to_zoned_date_time
+  <span class="keyword">rescue</span> <span class="constant">ArgumentError</span>
+    raise <span class="constant">ArgumentError</span>, e.message
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3120,17 +3122,17 @@ using Java's parser, then falls back to the Ruby <code>Time.parse</code>.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 218</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">+</span>(other)
-  <span style="color:#080;font-weight:bold">if</span> other.is_a?(<span style="color:#036;font-weight:bold">Duration</span>)
-    <span style="color:#036;font-weight:bold">DateTimeType</span>.new(zoned_date_time.plus(other))
-  <span style="color:#080;font-weight:bold">elsif</span> other.respond_to?(<span style="color:#A60">:to_d</span>)
-    <span style="color:#036;font-weight:bold">DateTimeType</span>.new(zoned_date_time.plus_nanos((other.to_d * <span style="color:#00D">1_000_000_000</span>).to_i))
-  <span style="color:#080;font-weight:bold">elsif</span> other.respond_to?(<span style="color:#A60">:coerce</span>) &amp;&amp; (lhs, rhs = other.coerce(to_d))
+<span class="keyword">def</span> <span class="function">+</span>(other)
+  <span class="keyword">if</span> other.is_a?(<span class="constant">Duration</span>)
+    <span class="constant">DateTimeType</span>.new(zoned_date_time.plus(other))
+  <span class="keyword">elsif</span> other.respond_to?(<span class="symbol">:to_d</span>)
+    <span class="constant">DateTimeType</span>.new(zoned_date_time.plus_nanos((other.to_d * <span class="integer">1_000_000_000</span>).to_i))
+  <span class="keyword">elsif</span> other.respond_to?(<span class="symbol">:coerce</span>) &amp;&amp; (lhs, rhs = other.coerce(to_d))
     lhs + rhs
-  <span style="color:#080;font-weight:bold">else</span>
-    raise <span style="color:#036;font-weight:bold">TypeError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#b0b">\#</span><span style="color:#D20">{other.class} can't be coerced into </span><span style="color:#b0b">\#</span><span style="color:#D20">{self.class}</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">else</span>
+    raise <span class="constant">TypeError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="char">\#</span><span class="content">{other.class} can't be coerced into </span><span class="char">\#</span><span class="content">{self.class}</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3210,19 +3212,19 @@ representing how long between the two instants in time.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 241</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">-</span>(other)
-  <span style="color:#080;font-weight:bold">if</span> other.is_a?(<span style="color:#036;font-weight:bold">Duration</span>)
-    <span style="color:#036;font-weight:bold">DateTimeType</span>.new(zoned_date_time.minus(other))
-  <span style="color:#080;font-weight:bold">elsif</span> other.respond_to?(<span style="color:#A60">:to_time</span>)
+<span class="keyword">def</span> <span class="function">-</span>(other)
+  <span class="keyword">if</span> other.is_a?(<span class="constant">Duration</span>)
+    <span class="constant">DateTimeType</span>.new(zoned_date_time.minus(other))
+  <span class="keyword">elsif</span> other.respond_to?(<span class="symbol">:to_time</span>)
     to_time - other.to_time
-  <span style="color:#080;font-weight:bold">elsif</span> other.respond_to?(<span style="color:#A60">:to_d</span>)
-    <span style="color:#036;font-weight:bold">DateTimeType</span>.new(zoned_date_time.minus_nanos((other.to_d * <span style="color:#00D">1_000_000_000</span>).to_i))
-  <span style="color:#080;font-weight:bold">elsif</span> other.respond_to?(<span style="color:#A60">:coerce</span>) &amp;&amp; (lhs, rhs = other.coerce(to_d))
+  <span class="keyword">elsif</span> other.respond_to?(<span class="symbol">:to_d</span>)
+    <span class="constant">DateTimeType</span>.new(zoned_date_time.minus_nanos((other.to_d * <span class="integer">1_000_000_000</span>).to_i))
+  <span class="keyword">elsif</span> other.respond_to?(<span class="symbol">:coerce</span>) &amp;&amp; (lhs, rhs = other.coerce(to_d))
     lhs - rhs
-  <span style="color:#080;font-weight:bold">else</span>
-    raise <span style="color:#036;font-weight:bold">TypeError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#b0b">\#</span><span style="color:#D20">{other.class} can't be coerced into </span><span style="color:#b0b">\#</span><span style="color:#D20">{self.class}</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">else</span>
+    raise <span class="constant">TypeError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="char">\#</span><span class="content">{other.class} can't be coerced into </span><span class="char">\#</span><span class="content">{self.class}</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3307,18 +3309,18 @@ less than, equal to, or greater than self</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 121</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">&lt;=&gt;</span>(other)
-  logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">(</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#069">self</span>.class<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">) </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#069">self</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> &lt;=&gt; </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>other<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> (</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>other.class<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#080;font-weight:bold">if</span> other.is_a?(<span style="color:#069">self</span>.class)
+<span class="keyword">def</span> <span class="function">&lt;=&gt;</span>(other)
+  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span>.class<span class="inline-delimiter">}</span></span><span class="content">) </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> &lt;=&gt; </span><span class="inline"><span class="inline-delimiter">#{</span>other<span class="inline-delimiter">}</span></span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">if</span> other.is_a?(<span class="predefined-constant">self</span>.class)
     zoned_date_time &lt;=&gt; other.zoned_date_time
-  <span style="color:#080;font-weight:bold">elsif</span> other.respond_to?(<span style="color:#A60">:to_time</span>)
+  <span class="keyword">elsif</span> other.respond_to?(<span class="symbol">:to_time</span>)
     to_time &lt;=&gt; other.to_time
-  <span style="color:#080;font-weight:bold">elsif</span> other.respond_to?(<span style="color:#A60">:coerce</span>)
-    <span style="color:#080;font-weight:bold">return</span> <span style="color:#069">nil</span> <span style="color:#080;font-weight:bold">unless</span> (lhs, rhs = other.coerce(<span style="color:#069">self</span>))
+  <span class="keyword">elsif</span> other.respond_to?(<span class="symbol">:coerce</span>)
+    <span class="keyword">return</span> <span class="predefined-constant">nil</span> <span class="keyword">unless</span> (lhs, rhs = other.coerce(<span class="predefined-constant">self</span>))
 
     lhs &lt;=&gt; rhs
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3391,11 +3393,11 @@ less than, equal to, or greater than self</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 143</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">coerce</span>(other)
-  logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Coercing </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#069">self</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> as a request from </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>other.class<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#080;font-weight:bold">return</span> [other, zoned_date_time] <span style="color:#080;font-weight:bold">if</span> other.respond_to?(<span style="color:#A60">:to_zoned_date_time</span>)
-  <span style="color:#080;font-weight:bold">return</span> [<span style="color:#036;font-weight:bold">DateTimeType</span>.new(other), <span style="color:#069">self</span>] <span style="color:#080;font-weight:bold">if</span> other.respond_to?(<span style="color:#A60">:to_time</span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">coerce</span>(other)
+  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Coercing </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> as a request from </span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">return</span> [other, zoned_date_time] <span class="keyword">if</span> other.respond_to?(<span class="symbol">:to_zoned_date_time</span>)
+  <span class="keyword">return</span> [<span class="constant">DateTimeType</span>.new(other), <span class="predefined-constant">self</span>] <span class="keyword">if</span> other.respond_to?(<span class="symbol">:to_time</span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3453,11 +3455,11 @@ conversion</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 105</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">eql?</span>(other)
-  <span style="color:#080;font-weight:bold">return</span> <span style="color:#069">false</span> <span style="color:#080;font-weight:bold">unless</span> other.instance_of?(<span style="color:#069">self</span>.class)
+<span class="keyword">def</span> <span class="function">eql?</span>(other)
+  <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> other.instance_of?(<span class="predefined-constant">self</span>.class)
 
   zoned_date_time.compare_to(other.zoned_date_time).zero?
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3512,9 +3514,9 @@ conversion</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 154</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to_f</span>
-  zoned_date_time.to_epoch_second + (zoned_date_time.nano / <span style="color:#00D">1_000_000_000</span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">to_f</span>
+  zoned_date_time.to_epoch_second + (zoned_date_time.nano / <span class="integer">1_000_000_000</span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3586,9 +3588,9 @@ fields during conversion. Not used in this class.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 60</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to_zoned_date_time</span>(context = <span style="color:#069">nil</span>) <span style="color:#777"># rubocop:disable Lint/UnusedMethodArgument</span>
+<span class="keyword">def</span> <span class="function">to_zoned_date_time</span>(context = <span class="predefined-constant">nil</span>) <span class="comment"># rubocop:disable Lint/UnusedMethodArgument</span>
   zoned_date_time
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3643,9 +3645,9 @@ fields during conversion. Not used in this class.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 172</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">utc?</span>
+<span class="keyword">def</span> <span class="function">utc?</span>
   utc_offset.zero?
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3700,9 +3702,9 @@ fields during conversion. Not used in this class.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 163</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">utc_offset</span>
+<span class="keyword">def</span> <span class="function">utc_offset</span>
   zoned_date_time.offset.total_seconds
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3757,9 +3759,9 @@ fields during conversion. Not used in this class.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 181</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">wday</span>
-  zoned_date_time.day_of_week.value % <span style="color:#00D">7</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">wday</span>
+  zoned_date_time.day_of_week.value % <span class="integer">7</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3814,9 +3816,9 @@ fields during conversion. Not used in this class.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 190</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">zone</span>
+<span class="keyword">def</span> <span class="function">zone</span>
   zoned_date_time.zone.id
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3827,7 +3829,7 @@ fields during conversion. Not used in this class.</p>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:37 2022 by
+  Generated on Fri Dec  9 22:46:51 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

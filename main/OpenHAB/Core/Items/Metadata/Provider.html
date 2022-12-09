@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Items::Metadata::Provider";
   relpath = '../../../../';
@@ -2601,9 +2603,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/metadata/provider.rb', line 19</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">registry</span>
-  <span style="color:#33B">@registry</span> ||= <span style="color:#036;font-weight:bold">OSGi</span>.service(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">org.openhab.core.items.MetadataRegistry</span><span style="color:#710">&quot;</span></span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">registry</span>
+  <span class="instance-variable">@registry</span> ||= <span class="constant">OSGi</span>.service(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.items.MetadataRegistry</span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2672,15 +2674,15 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/metadata/provider.rb', line 34</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">remove_item_metadata</span>(item_name)
-  <span style="color:#33B">@elements</span>.delete_if <span style="color:#080;font-weight:bold">do</span> |k, v|
-    <span style="color:#080;font-weight:bold">next</span> <span style="color:#080;font-weight:bold">unless</span> k.item_name == item_name
+<span class="keyword">def</span> <span class="function">remove_item_metadata</span>(item_name)
+  <span class="instance-variable">@elements</span>.delete_if <span class="keyword">do</span> |k, v|
+    <span class="keyword">next</span> <span class="keyword">unless</span> k.item_name == item_name
 
     notify_listeners_about_removed_element(v)
-    <span style="color:#069">true</span>
-  <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#069">nil</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+    <span class="predefined-constant">true</span>
+  <span class="keyword">end</span>
+  <span class="predefined-constant">nil</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2691,7 +2693,7 @@
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:37 2022 by
+  Generated on Fri Dec  9 22:46:51 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::RSpec::Helpers";
   relpath = '../../';
@@ -2775,23 +2777,23 @@ explicitly.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 184</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">autorequires</span>
-  <span style="color:#069">ENV</span>[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">RUBYLIB</span><span style="color:#710">&quot;</span></span>] ||= <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#069">ENV</span>[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">RUBYLIB</span><span style="color:#710">&quot;</span></span>] += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">:</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> <span style="color:#069">ENV</span>[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">RUBYLIB</span><span style="color:#710">&quot;</span></span>].empty?
-  <span style="color:#069">ENV</span>[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">RUBYLIB</span><span style="color:#710">&quot;</span></span>] += rubylib_dirs.join(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">:</span><span style="color:#710">&quot;</span></span>)
+<span class="keyword">def</span> <span class="function">autorequires</span>
+  <span class="predefined-constant">ENV</span>[<span class="string"><span class="delimiter">&quot;</span><span class="content">RUBYLIB</span><span class="delimiter">&quot;</span></span>] ||= <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>
+  <span class="predefined-constant">ENV</span>[<span class="string"><span class="delimiter">&quot;</span><span class="content">RUBYLIB</span><span class="delimiter">&quot;</span></span>] += <span class="string"><span class="delimiter">&quot;</span><span class="content">:</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> <span class="predefined-constant">ENV</span>[<span class="string"><span class="delimiter">&quot;</span><span class="content">RUBYLIB</span><span class="delimiter">&quot;</span></span>].empty?
+  <span class="predefined-constant">ENV</span>[<span class="string"><span class="delimiter">&quot;</span><span class="content">RUBYLIB</span><span class="delimiter">&quot;</span></span>] += rubylib_dirs.join(<span class="string"><span class="delimiter">&quot;</span><span class="content">:</span><span class="delimiter">&quot;</span></span>)
 
-  <span style="color:#d70">$LOAD_PATH</span>.unshift(*<span style="color:#069">ENV</span>[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">RUBYLIB</span><span style="color:#710">&quot;</span></span>]
-    .split(<span style="color:#036;font-weight:bold">File</span>::<span style="color:#036;font-weight:bold">PATH_SEPARATOR</span>)
-      .reject(&amp;<span style="color:#A60">:empty?</span>)
-      .reject <span style="color:#080;font-weight:bold">do</span> |path|
-                       <span style="color:#d70">$LOAD_PATH</span>.include?(path)
-                     <span style="color:#080;font-weight:bold">end</span>)
+  <span class="global-variable">$LOAD_PATH</span>.unshift(*<span class="predefined-constant">ENV</span>[<span class="string"><span class="delimiter">&quot;</span><span class="content">RUBYLIB</span><span class="delimiter">&quot;</span></span>]
+    .split(<span class="constant">File</span>::<span class="constant">PATH_SEPARATOR</span>)
+      .reject(&amp;<span class="symbol">:empty?</span>)
+      .reject <span class="keyword">do</span> |path|
+                       <span class="global-variable">$LOAD_PATH</span>.include?(path)
+                     <span class="keyword">end</span>)
 
-  requires = jrubyscripting_config&amp;.get(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">require</span><span style="color:#710">&quot;</span></span>) || <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#710">&quot;</span></span>
-  requires.split(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">,</span><span style="color:#710">&quot;</span></span>).each <span style="color:#080;font-weight:bold">do</span> |f|
+  requires = jrubyscripting_config&amp;.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">require</span><span class="delimiter">&quot;</span></span>) || <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>
+  requires.split(<span class="string"><span class="delimiter">&quot;</span><span class="content">,</span><span class="delimiter">&quot;</span></span>).each <span class="keyword">do</span> |f|
     require f.strip
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2846,25 +2848,25 @@ explicitly.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 83</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">autoupdate_all_items</span>
-  <span style="color:#080;font-weight:bold">if</span> instance_variable_defined?(<span style="color:#A60">:@autoupdated_items</span>)
-    raise <span style="color:#036;font-weight:bold">RuntimeError</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">You should only call `autoupdate_all_items` once per spec</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
+<span class="keyword">def</span> <span class="function">autoupdate_all_items</span>
+  <span class="keyword">if</span> instance_variable_defined?(<span class="symbol">:@autoupdated_items</span>)
+    raise <span class="constant">RuntimeError</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">You should only call `autoupdate_all_items` once per spec</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
 
-  <span style="color:#33B">@autoupdated_items</span> = []
-  <span style="color:#33B">@spec_metadata_provider</span> = <span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Items</span>::<span style="color:#036;font-weight:bold">Metadata</span>::<span style="color:#036;font-weight:bold">Provider</span>.current
+  <span class="instance-variable">@autoupdated_items</span> = []
+  <span class="instance-variable">@spec_metadata_provider</span> = <span class="constant">Core</span>::<span class="constant">Items</span>::<span class="constant">Metadata</span>::<span class="constant">Provider</span>.current
 
-  <span style="color:#d70">$ir</span>.for_each <span style="color:#080;font-weight:bold">do</span> |_provider, item|
-    <span style="color:#080;font-weight:bold">if</span> (hash = item.metadata[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">autoupdate</span><span style="color:#710">&quot;</span></span>])
-      provider = <span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Items</span>::<span style="color:#036;font-weight:bold">Metadata</span>::<span style="color:#036;font-weight:bold">Provider</span>.registry.provider_for(hash.uid)
+  <span class="global-variable">$ir</span>.for_each <span class="keyword">do</span> |_provider, item|
+    <span class="keyword">if</span> (hash = item.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">autoupdate</span><span class="delimiter">&quot;</span></span>])
+      provider = <span class="constant">Core</span>::<span class="constant">Items</span>::<span class="constant">Metadata</span>::<span class="constant">Provider</span>.registry.provider_for(hash.uid)
       provider.remove(hash.uid)
-      <span style="color:#33B">@autoupdated_items</span> &lt;&lt; [provider, hash]
-      provider(<span style="color:#33B">@spec_metadata_provider</span>) <span style="color:#080;font-weight:bold">do</span>
-        item.metadata[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">autoupdate</span><span style="color:#710">&quot;</span></span>] = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">true</span><span style="color:#710">&quot;</span></span>
-      <span style="color:#080;font-weight:bold">end</span>
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+      <span class="instance-variable">@autoupdated_items</span> &lt;&lt; [provider, hash]
+      provider(<span class="instance-variable">@spec_metadata_provider</span>) <span class="keyword">do</span>
+        item.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">autoupdate</span><span class="delimiter">&quot;</span></span>] = <span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span>
+      <span class="keyword">end</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2907,14 +2909,14 @@ explicitly.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 108</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">execute_timers</span>
-  raise <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Cannot execute timers when timers aren't mocked</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> <span style="color:#069">self</span>.class.mock_timers?
+<span class="keyword">def</span> <span class="function">execute_timers</span>
+  raise <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot execute timers when timers aren't mocked</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> <span class="predefined-constant">self</span>.class.mock_timers?
 
-  now = <span style="color:#036;font-weight:bold">ZonedDateTime</span>.now
-  <span style="color:#036;font-weight:bold">DSL</span>::<span style="color:#036;font-weight:bold">TimerManager</span>.instance.instance_variable_get(<span style="color:#A60">:@timers</span>).each_key <span style="color:#080;font-weight:bold">do</span> |t|
-    t.execute <span style="color:#080;font-weight:bold">if</span> t.active? &amp;&amp; t.execution_time &lt;= now
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  now = <span class="constant">ZonedDateTime</span>.now
+  <span class="constant">DSL</span>::<span class="constant">TimerManager</span>.instance.instance_variable_get(<span class="symbol">:@timers</span>).each_key <span class="keyword">do</span> |t|
+    t.execute <span class="keyword">if</span> t.active? &amp;&amp; t.execution_time &lt;= now
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3036,39 +3038,39 @@ The addon's bundle id is used as the identifier.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 322</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">install_addon</span>(addon_id, <span style="color:#606">wait</span>: <span style="color:#069">true</span>, <span style="color:#606">ready_markers</span>: <span style="color:#069">nil</span>)
-  addon_service = <span style="color:#036;font-weight:bold">OSGi</span>.service(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">org.openhab.core.addon.AddonService</span><span style="color:#710">&quot;</span></span>)
+<span class="keyword">def</span> <span class="function">install_addon</span>(addon_id, <span class="key">wait</span>: <span class="predefined-constant">true</span>, <span class="key">ready_markers</span>: <span class="predefined-constant">nil</span>)
+  addon_service = <span class="constant">OSGi</span>.service(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.addon.AddonService</span><span class="delimiter">&quot;</span></span>)
   addon_service.install(addon_id)
-  <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">unless</span> wait
+  <span class="keyword">return</span> <span class="keyword">unless</span> wait
 
-  addon = <span style="color:#069">nil</span>
-  loop <span style="color:#080;font-weight:bold">do</span>
-    addon = addon_service.get_addon(addon_id, <span style="color:#069">nil</span>)
-    <span style="color:#080;font-weight:bold">break</span> <span style="color:#080;font-weight:bold">if</span> addon.installed?
+  addon = <span class="predefined-constant">nil</span>
+  loop <span class="keyword">do</span>
+    addon = addon_service.get_addon(addon_id, <span class="predefined-constant">nil</span>)
+    <span class="keyword">break</span> <span class="keyword">if</span> addon.installed?
 
-    sleep <span style="color:#60E">0.25</span>
-  <span style="color:#080;font-weight:bold">end</span>
+    sleep <span class="float">0.25</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">unless</span> ready_markers
+  <span class="keyword">return</span> <span class="keyword">unless</span> ready_markers
 
   package_id = addon.logger_packages.first
 
-  ready_markers = Array(ready_markers).map <span style="color:#080;font-weight:bold">do</span> |marker|
-    <span style="color:#080;font-weight:bold">case</span> marker
-    <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">String</span>
+  ready_markers = Array(ready_markers).map <span class="keyword">do</span> |marker|
+    <span class="keyword">case</span> marker
+    <span class="keyword">when</span> <span class="constant">String</span>
       org.openhab.core.service.ReadyMarker.new(marker, package_id)
-    <span style="color:#080;font-weight:bold">else</span>
+    <span class="keyword">else</span>
       marker
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
 
-  rs = <span style="color:#036;font-weight:bold">OSGi</span>.service(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">org.openhab.core.service.ReadyService</span><span style="color:#710">&quot;</span></span>)
-  loop <span style="color:#080;font-weight:bold">do</span>
-    <span style="color:#080;font-weight:bold">break</span> <span style="color:#080;font-weight:bold">if</span> ready_markers.all? { |rm| rs.ready?(rm) }
+  rs = <span class="constant">OSGi</span>.service(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.service.ReadyService</span><span class="delimiter">&quot;</span></span>)
+  loop <span class="keyword">do</span>
+    <span class="keyword">break</span> <span class="keyword">if</span> ready_markers.all? { |rm| rs.ready?(rm) }
 
-    sleep <span style="color:#60E">0.25</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+    sleep <span class="float">0.25</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3160,55 +3162,55 @@ The addon's bundle id is used as the identifier.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 210</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">launch_karaf</span>(<span style="color:#606">include_bindings</span>: <span style="color:#069">true</span>,
-                 <span style="color:#606">include_jsondb</span>: <span style="color:#069">true</span>,
-                 <span style="color:#606">private_confdir</span>: <span style="color:#069">false</span>,
-                 <span style="color:#606">use_root_instance</span>: <span style="color:#069">false</span>)
-  karaf = <span style="color:#036;font-weight:bold">Karaf</span>.new(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">Dir</span>.pwd<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">/.karaf</span><span style="color:#710">&quot;</span></span>)
+<span class="keyword">def</span> <span class="function">launch_karaf</span>(<span class="key">include_bindings</span>: <span class="predefined-constant">true</span>,
+                 <span class="key">include_jsondb</span>: <span class="predefined-constant">true</span>,
+                 <span class="key">private_confdir</span>: <span class="predefined-constant">false</span>,
+                 <span class="key">use_root_instance</span>: <span class="predefined-constant">false</span>)
+  karaf = <span class="constant">Karaf</span>.new(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Dir</span>.pwd<span class="inline-delimiter">}</span></span><span class="content">/.karaf</span><span class="delimiter">&quot;</span></span>)
   karaf.include_bindings = include_bindings
   karaf.include_jsondb = include_jsondb
   karaf.private_confdir = private_confdir
   karaf.use_root_instance = use_root_instance
   main = karaf.launch
 
-  require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">openhab/dsl</span><span style="color:#710">&quot;</span></span>
+  require <span class="string"><span class="delimiter">&quot;</span><span class="content">openhab/dsl</span><span class="delimiter">&quot;</span></span>
 
-  require_relative <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">mocks/persistence_service</span><span style="color:#710">&quot;</span></span>
-  require_relative <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">mocks/timer</span><span style="color:#710">&quot;</span></span>
+  require_relative <span class="string"><span class="delimiter">&quot;</span><span class="content">mocks/persistence_service</span><span class="delimiter">&quot;</span></span>
+  require_relative <span class="string"><span class="delimiter">&quot;</span><span class="content">mocks/timer</span><span class="delimiter">&quot;</span></span>
 
-  <span style="color:#777"># override several DSL methods</span>
-  require_relative <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">openhab/core/items/proxy</span><span style="color:#710">&quot;</span></span>
-  require_relative <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">openhab/core/things/proxy</span><span style="color:#710">&quot;</span></span>
-  require_relative <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">openhab/core/actions</span><span style="color:#710">&quot;</span></span>
+  <span class="comment"># override several DSL methods</span>
+  require_relative <span class="string"><span class="delimiter">&quot;</span><span class="content">openhab/core/items/proxy</span><span class="delimiter">&quot;</span></span>
+  require_relative <span class="string"><span class="delimiter">&quot;</span><span class="content">openhab/core/things/proxy</span><span class="delimiter">&quot;</span></span>
+  require_relative <span class="string"><span class="delimiter">&quot;</span><span class="content">openhab/core/actions</span><span class="delimiter">&quot;</span></span>
 
-  ps = <span style="color:#036;font-weight:bold">Mocks</span>::<span style="color:#036;font-weight:bold">PersistenceService</span>.instance
+  ps = <span class="constant">Mocks</span>::<span class="constant">PersistenceService</span>.instance
   bundle = org.osgi.framework.FrameworkUtil.get_bundle(org.openhab.core.persistence.PersistenceService)
-  bundle.bundle_context.register_service(org.openhab.core.persistence.PersistenceService.java_class, ps, <span style="color:#069">nil</span>)
+  bundle.bundle_context.register_service(org.openhab.core.persistence.PersistenceService.java_class, ps, <span class="predefined-constant">nil</span>)
 
-  <span style="color:#777"># wait for the rule engine</span>
-  rs = <span style="color:#036;font-weight:bold">OSGi</span>.service(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">org.openhab.core.service.ReadyService</span><span style="color:#710">&quot;</span></span>)
+  <span class="comment"># wait for the rule engine</span>
+  rs = <span class="constant">OSGi</span>.service(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.service.ReadyService</span><span class="delimiter">&quot;</span></span>)
   filter = org.openhab.core.service.ReadyMarkerFilter.new
-              .with_type(org.openhab.core.service.StartLevelService::<span style="color:#036;font-weight:bold">STARTLEVEL_MARKER_TYPE</span>)
-              .with_identifier(org.openhab.core.service.StartLevelService::<span style="color:#036;font-weight:bold">STARTLEVEL_RULEENGINE</span>.to_s)
+              .with_type(org.openhab.core.service.StartLevelService::<span class="constant">STARTLEVEL_MARKER_TYPE</span>)
+              .with_identifier(org.openhab.core.service.StartLevelService::<span class="constant">STARTLEVEL_RULEENGINE</span>.to_s)
 
-  karaf.send(<span style="color:#A60">:wait</span>) <span style="color:#080;font-weight:bold">do</span> |continue|
-    rs.register_tracker(org.openhab.core.service.ReadyService::<span style="color:#036;font-weight:bold">ReadyTracker</span>.impl { continue.call }, filter)
-  <span style="color:#080;font-weight:bold">end</span>
+  karaf.send(<span class="symbol">:wait</span>) <span class="keyword">do</span> |continue|
+    rs.register_tracker(org.openhab.core.service.ReadyService::<span class="constant">ReadyTracker</span>.impl { continue.call }, filter)
+  <span class="keyword">end</span>
 
-  <span style="color:#777"># RSpec additions</span>
-  require_relative <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">suspend_rules</span><span style="color:#710">&quot;</span></span>
+  <span class="comment"># RSpec additions</span>
+  require_relative <span class="string"><span class="delimiter">&quot;</span><span class="content">suspend_rules</span><span class="delimiter">&quot;</span></span>
 
-  <span style="color:#080;font-weight:bold">if</span> <span style="color:#080;font-weight:bold">defined?</span>(::<span style="color:#036;font-weight:bold">RSpec</span>)
-    ::<span style="color:#036;font-weight:bold">RSpec</span>.configure <span style="color:#080;font-weight:bold">do</span> |config|
-      config.include <span style="color:#036;font-weight:bold">OpenHAB</span>::<span style="color:#036;font-weight:bold">DSL</span>
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="keyword">if</span> <span class="keyword">defined?</span>(::<span class="constant">RSpec</span>)
+    ::<span class="constant">RSpec</span>.configure <span class="keyword">do</span> |config|
+      config.include <span class="constant">OpenHAB</span>::<span class="constant">DSL</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
   main
-<span style="color:#080;font-weight:bold">rescue</span> <span style="color:#036;font-weight:bold">Exception</span> =&gt; e
+<span class="keyword">rescue</span> <span class="constant">Exception</span> =&gt; e
   puts e.inspect
   puts e.backtrace
   raise
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3262,24 +3264,24 @@ The addon's bundle id is used as the identifier.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 267</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">load_rules</span>
-  automation_path = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>org.openhab.core.OpenHAB.config_folder<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">/automation/ruby</span><span style="color:#710">&quot;</span></span>
-  lib_dirs = rubylib_dirs.map { |d| <span style="color:#036;font-weight:bold">File</span>.join(d, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#710">&quot;</span></span>) }
-  lib_dirs &lt;&lt; <span style="color:#036;font-weight:bold">File</span>.join(gem_home, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#710">&quot;</span></span>)
+<span class="keyword">def</span> <span class="function">load_rules</span>
+  automation_path = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>org.openhab.core.OpenHAB.config_folder<span class="inline-delimiter">}</span></span><span class="content">/automation/ruby</span><span class="delimiter">&quot;</span></span>
+  lib_dirs = rubylib_dirs.map { |d| <span class="constant">File</span>.join(d, <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>) }
+  lib_dirs &lt;&lt; <span class="constant">File</span>.join(gem_home, <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>)
 
-  <span style="color:#036;font-weight:bold">SuspendRules</span>.suspend_rules <span style="color:#080;font-weight:bold">do</span>
-    files = <span style="color:#036;font-weight:bold">Dir</span>[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>automation_path<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">/**/*.rb</span><span style="color:#710">&quot;</span></span>]
-    files.reject! <span style="color:#080;font-weight:bold">do</span> |f|
+  <span class="constant">SuspendRules</span>.suspend_rules <span class="keyword">do</span>
+    files = <span class="constant">Dir</span>[<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>automation_path<span class="inline-delimiter">}</span></span><span class="content">/**/*.rb</span><span class="delimiter">&quot;</span></span>]
+    files.reject! <span class="keyword">do</span> |f|
       lib_dirs.any? { |l| f.start_with?(l) }
-    <span style="color:#080;font-weight:bold">end</span>
-    files.sort_by { |f| [get_start_level(f), f] }.each <span style="color:#080;font-weight:bold">do</span> |f|
+    <span class="keyword">end</span>
+    files.sort_by { |f| [get_start_level(f), f] }.each <span class="keyword">do</span> |f|
       load f
-    <span style="color:#080;font-weight:bold">rescue</span> <span style="color:#036;font-weight:bold">Exception</span> =&gt; e
-      warn <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Failed loading </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>f<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>e.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
+    <span class="keyword">rescue</span> <span class="constant">Exception</span> =&gt; e
+      warn <span class="string"><span class="delimiter">&quot;</span><span class="content">Failed loading </span><span class="inline"><span class="inline-delimiter">#{</span>f<span class="inline-delimiter">}</span></span><span class="content">: </span><span class="inline"><span class="inline-delimiter">#{</span>e.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
       warn e.backtrace
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3333,21 +3335,21 @@ recognized.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 297</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">load_transforms</span>
-  transform_path = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>org.openhab.core.OpenHAB.config_folder<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">/transform</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#036;font-weight:bold">Dir</span>[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>transform_path<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">/**/*.script</span><span style="color:#710">&quot;</span></span>].each <span style="color:#080;font-weight:bold">do</span> |filename|
-    script = <span style="color:#036;font-weight:bold">File</span>.read(filename)
-    <span style="color:#080;font-weight:bold">next</span> <span style="color:#080;font-weight:bold">unless</span> ruby_file?(script)
+<span class="keyword">def</span> <span class="function">load_transforms</span>
+  transform_path = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>org.openhab.core.OpenHAB.config_folder<span class="inline-delimiter">}</span></span><span class="content">/transform</span><span class="delimiter">&quot;</span></span>
+  <span class="constant">Dir</span>[<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>transform_path<span class="inline-delimiter">}</span></span><span class="content">/**/*.script</span><span class="delimiter">&quot;</span></span>].each <span class="keyword">do</span> |filename|
+    script = <span class="constant">File</span>.read(filename)
+    <span class="keyword">next</span> <span class="keyword">unless</span> ruby_file?(script)
 
-    filename.slice!(<span style="color:#00D">0</span>..transform_path.length)
-    dir = <span style="color:#036;font-weight:bold">File</span>.dirname(filename)
-    modules = (dir == <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">.</span><span style="color:#710">&quot;</span></span>) ? [] : moduleize(dir)
-    basename = <span style="color:#036;font-weight:bold">File</span>.basename(filename)
-    method = basename[<span style="color:#00D">0</span>...<span style="color:#00D">-7</span>]
+    filename.slice!(<span class="integer">0</span>..transform_path.length)
+    dir = <span class="constant">File</span>.dirname(filename)
+    modules = (dir == <span class="string"><span class="delimiter">&quot;</span><span class="content">.</span><span class="delimiter">&quot;</span></span>) ? [] : moduleize(dir)
+    basename = <span class="constant">File</span>.basename(filename)
+    method = basename[<span class="integer">0</span>...<span class="integer">-7</span>]
     modules &lt;&lt; method
-    <span style="color:#036;font-weight:bold">Transform</span>.add_script(modules, script)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+    <span class="constant">Transform</span>.add_script(modules, script)
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3402,9 +3404,9 @@ recognized.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 357</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">log_file</span>
-  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>java.lang.System.get_property(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">openhab.logdir</span><span style="color:#710">&quot;</span></span>, <span style="color:#069">nil</span>)<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">/openhab.log</span><span style="color:#710">&quot;</span></span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">log_file</span>
+  <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>java.lang.System.get_property(<span class="string"><span class="delimiter">&quot;</span><span class="content">openhab.logdir</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">nil</span>)<span class="inline-delimiter">}</span></span><span class="content">/openhab.log</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3432,10 +3434,10 @@ recognized.</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>it <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">logs</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
-  logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">log line</span><span style="color:#710">&quot;</span></span>)
-  expect(spec_log_lines).to include(match(<span style="background-color:hsla(300,100%,50%,0.06)"><span style="color:#404">/</span><span style="color:#808">TRACE.*log line</span><span style="color:#404">/</span></span>))
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>it <span class="string"><span class="delimiter">&quot;</span><span class="content">logs</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">log line</span><span class="delimiter">&quot;</span></span>)
+  expect(spec_log_lines).to include(match(<span class="regexp"><span class="delimiter">/</span><span class="content">TRACE.*log line</span><span class="delimiter">/</span></span>))
+<span class="keyword">end</span></code></pre>
     
   </div>
 
@@ -3473,12 +3475,12 @@ recognized.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 370</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">spec_log_lines</span>
-  <span style="color:#036;font-weight:bold">File</span>.open(log_file, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">rb</span><span style="color:#710">&quot;</span></span>) <span style="color:#080;font-weight:bold">do</span> |f|
-    f.seek(<span style="color:#33B">@log_index</span>) <span style="color:#080;font-weight:bold">if</span> <span style="color:#33B">@log_index</span>
-    f.read.split(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#b0b">\n</span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">spec_log_lines</span>
+  <span class="constant">File</span>.open(log_file, <span class="string"><span class="delimiter">&quot;</span><span class="content">rb</span><span class="delimiter">&quot;</span></span>) <span class="keyword">do</span> |f|
+    f.seek(<span class="instance-variable">@log_index</span>) <span class="keyword">if</span> <span class="instance-variable">@log_index</span>
+    f.read.split(<span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3533,9 +3535,9 @@ recognized.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 139</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">suspend_rules</span>(&amp;block)
-  <span style="color:#036;font-weight:bold">SuspendRules</span>.suspend_rules(&amp;block)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">suspend_rules</span>(&amp;block)
+  <span class="constant">SuspendRules</span>.suspend_rules(&amp;block)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3580,14 +3582,14 @@ will just sleep for <code>duration</code></p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 125</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">time_travel_and_execute_timers</span>(duration)
-  <span style="color:#080;font-weight:bold">if</span> <span style="color:#069">self</span>.class.mock_timers?
-    <span style="color:#036;font-weight:bold">Timecop</span>.frozen? ? <span style="color:#036;font-weight:bold">Timecop</span>.freeze(duration) : <span style="color:#036;font-weight:bold">Timecop</span>.travel(duration)
+<span class="keyword">def</span> <span class="function">time_travel_and_execute_timers</span>(duration)
+  <span class="keyword">if</span> <span class="predefined-constant">self</span>.class.mock_timers?
+    <span class="constant">Timecop</span>.frozen? ? <span class="constant">Timecop</span>.freeze(duration) : <span class="constant">Timecop</span>.travel(duration)
     execute_timers
-  <span style="color:#080;font-weight:bold">else</span>
+  <span class="keyword">else</span>
     sleep duration
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3664,12 +3666,12 @@ will just sleep for <code>duration</code></p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 170</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">trigger_channel</span>(channel, event = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#710">&quot;</span></span>)
-  channel = org.openhab.core.thing.ChannelUID.new(channel) <span style="color:#080;font-weight:bold">if</span> channel.is_a?(<span style="color:#036;font-weight:bold">String</span>)
-  channel = channel.uid <span style="color:#080;font-weight:bold">if</span> channel.is_a?(org.openhab.core.thing.Channel)
+<span class="keyword">def</span> <span class="function">trigger_channel</span>(channel, event = <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>)
+  channel = org.openhab.core.thing.ChannelUID.new(channel) <span class="keyword">if</span> channel.is_a?(<span class="constant">String</span>)
+  channel = channel.uid <span class="keyword">if</span> channel.is_a?(org.openhab.core.thing.Channel)
   thing = channel.thing
-  thing.handler.callback.channel_triggered(<span style="color:#069">nil</span>, channel, event)
-<span style="color:#080;font-weight:bold">end</span></pre>
+  thing.handler.callback.channel_triggered(<span class="predefined-constant">nil</span>, channel, event)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3751,19 +3753,19 @@ will just sleep for <code>duration</code></p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 149</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">wait</span>(how_long = <span style="color:#00D">2</span>.seconds)
-  start = <span style="color:#036;font-weight:bold">Process</span>.clock_gettime(<span style="color:#036;font-weight:bold">Process</span>::<span style="color:#036;font-weight:bold">CLOCK_MONOTONIC</span>)
+<span class="keyword">def</span> <span class="function">wait</span>(how_long = <span class="integer">2</span>.seconds)
+  start = <span class="constant">Process</span>.clock_gettime(<span class="constant">Process</span>::<span class="constant">CLOCK_MONOTONIC</span>)
 
-  <span style="color:#080;font-weight:bold">begin</span>
-    <span style="color:#080;font-weight:bold">yield</span>
-  <span style="color:#080;font-weight:bold">rescue</span> ::<span style="color:#036;font-weight:bold">RSpec</span>::<span style="color:#036;font-weight:bold">Expectations</span>::<span style="color:#036;font-weight:bold">ExpectationNotMetError</span>,
-         ::<span style="color:#036;font-weight:bold">RSpec</span>::<span style="color:#036;font-weight:bold">Mocks</span>::<span style="color:#036;font-weight:bold">MockExpectationError</span>
-    raise <span style="color:#080;font-weight:bold">if</span> <span style="color:#036;font-weight:bold">Process</span>.clock_gettime(<span style="color:#036;font-weight:bold">Process</span>::<span style="color:#036;font-weight:bold">CLOCK_MONOTONIC</span>) &gt; start + how_long.to_f
+  <span class="keyword">begin</span>
+    <span class="keyword">yield</span>
+  <span class="keyword">rescue</span> ::<span class="constant">RSpec</span>::<span class="constant">Expectations</span>::<span class="constant">ExpectationNotMetError</span>,
+         ::<span class="constant">RSpec</span>::<span class="constant">Mocks</span>::<span class="constant">MockExpectationError</span>
+    raise <span class="keyword">if</span> <span class="constant">Process</span>.clock_gettime(<span class="constant">Process</span>::<span class="constant">CLOCK_MONOTONIC</span>) &gt; start + how_long.to_f
 
-    sleep <span style="color:#60E">0.1</span>
-    <span style="color:#080;font-weight:bold">retry</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+    sleep <span class="float">0.1</span>
+    <span class="keyword">retry</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3774,7 +3776,7 @@ will just sleep for <code>duration</code></p>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:30 2022 by
+  Generated on Fri Dec  9 22:46:44 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

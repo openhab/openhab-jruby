@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Items::ContactItem";
   relpath = '../../../';
@@ -2421,18 +2423,18 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Log state of all doors on system startup</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Log state of all doors on system startup</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   on_load
-  run <span style="color:#080;font-weight:bold">do</span>
-    <span style="color:#036;font-weight:bold">Doors</span>.each <span style="color:#080;font-weight:bold">do</span> |door|
-      <span style="color:#080;font-weight:bold">case</span> door.state
-      <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">OPEN</span> <span style="color:#080;font-weight:bold">then</span> logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>door.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is Open</span><span style="color:#710">&quot;</span></span>)
-      <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">CLOSED</span> <span style="color:#080;font-weight:bold">then</span> logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>door.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is Open</span><span style="color:#710">&quot;</span></span>)
-      <span style="color:#080;font-weight:bold">else</span> logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>door.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is not initialized</span><span style="color:#710">&quot;</span></span>)
-      <span style="color:#080;font-weight:bold">end</span>
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+  run <span class="keyword">do</span>
+    <span class="constant">Doors</span>.each <span class="keyword">do</span> |door|
+      <span class="keyword">case</span> door.state
+      <span class="keyword">when</span> <span class="constant">OPEN</span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>door.name<span class="inline-delimiter">}</span></span><span class="content"> is Open</span><span class="delimiter">&quot;</span></span>)
+      <span class="keyword">when</span> <span class="constant">CLOSED</span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>door.name<span class="inline-delimiter">}</span></span><span class="content"> is Open</span><span class="delimiter">&quot;</span></span>)
+      <span class="keyword">else</span> logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>door.name<span class="inline-delimiter">}</span></span><span class="content"> is not initialized</span><span class="delimiter">&quot;</span></span>)
+      <span class="keyword">end</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
   </div>
 
@@ -2632,21 +2634,21 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/contact_item.rb', line 33</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">ContactItem</span> &lt; <span style="color:#036;font-weight:bold">GenericItem</span>
-  <span style="color:#777"># @!method open?</span>
-  <span style="color:#777">#   Check if the item state == {OPEN}</span>
-  <span style="color:#777">#   @return [true,false]</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @example Log open contacts</span>
-  <span style="color:#777">#   Contacts.select(&amp;:open?).each { |contact| logger.info(&quot;Contact #{contact.name} is open&quot;)}</span>
+<span class="keyword">class</span> <span class="class">ContactItem</span> &lt; <span class="constant">GenericItem</span>
+  <span class="comment"># @!method open?</span>
+  <span class="comment">#   Check if the item state == {OPEN}</span>
+  <span class="comment">#   @return [true,false]</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example Log open contacts</span>
+  <span class="comment">#   Contacts.select(&amp;:open?).each { |contact| logger.info(&quot;Contact #{contact.name} is open&quot;)}</span>
 
-  <span style="color:#777"># @!method closed?</span>
-  <span style="color:#777">#   Check if the item state == {CLOSED}</span>
-  <span style="color:#777">#   @return [true,false]</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @example Log closed contacts</span>
-  <span style="color:#777">#   Contacts.select(&amp;:closed?).each { |contact| logger.info(&quot;Contact #{contact.name} is closed&quot;)}</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="comment"># @!method closed?</span>
+  <span class="comment">#   Check if the item state == {CLOSED}</span>
+  <span class="comment">#   @return [true,false]</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example Log closed contacts</span>
+  <span class="comment">#   Contacts.select(&amp;:closed?).each { |contact| logger.info(&quot;Contact #{contact.name} is closed&quot;)}</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2658,7 +2660,7 @@
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:36 2022 by
+  Generated on Fri Dec  9 22:46:50 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

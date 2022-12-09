@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Items::SwitchItem";
   relpath = '../../../';
@@ -2423,33 +2425,33 @@ Useful for normal lights, presence detection etc.</p>
         <p class="example_title"><div class='inline'><p>Turn on all switches in a <code>Group:Switch</code> called Switches</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Switches</span>.on</code></pre>
+      <pre class="example code"><code><span class="constant">Switches</span>.on</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Turn on all switches in a group called Switches that are off</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Switches</span>.select(&amp;<span style="color:#A60">:off?</span>).each(&amp;<span style="color:#A60">:on</span>)</code></pre>
+      <pre class="example code"><code><span class="constant">Switches</span>.select(&amp;<span class="symbol">:off?</span>).each(&amp;<span class="symbol">:on</span>)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Switches accept booelan commands (true/false)</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#777"># Turn on switch</span>
-<span style="color:#036;font-weight:bold">SwitchItem</span> &lt;&lt; <span style="color:#069">true</span>
+      <pre class="example code"><code><span class="comment"># Turn on switch</span>
+<span class="constant">SwitchItem</span> &lt;&lt; <span class="predefined-constant">true</span>
 
-<span style="color:#777"># Turn off switch</span>
-<span style="color:#036;font-weight:bold">SwitchItem</span> &lt;&lt; <span style="color:#069">false</span>
+<span class="comment"># Turn off switch</span>
+<span class="constant">SwitchItem</span> &lt;&lt; <span class="predefined-constant">false</span>
 
-<span style="color:#777"># Turn off switch if any in another group is on</span>
-<span style="color:#036;font-weight:bold">SwitchItem</span> &lt;&lt; <span style="color:#036;font-weight:bold">Switches</span>.any?(&amp;<span style="color:#A60">:on?</span>)</code></pre>
+<span class="comment"># Turn off switch if any in another group is on</span>
+<span class="constant">SwitchItem</span> &lt;&lt; <span class="constant">Switches</span>.any?(&amp;<span class="symbol">:on?</span>)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Invert all Switches</p>
 </div></p>
       
-      <pre class="example code"><code>items.grep(<span style="color:#036;font-weight:bold">SwitchItem</span>)
-     .each(&amp;<span style="color:#A60">:toggle</span>)</code></pre>
+      <pre class="example code"><code>items.grep(<span class="constant">SwitchItem</span>)
+     .each(&amp;<span class="symbol">:toggle</span>)</code></pre>
     
   </div>
 
@@ -2802,42 +2804,42 @@ Useful for normal lights, presence detection etc.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/switch_item.rb', line 38</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">SwitchItem</span> &lt; <span style="color:#036;font-weight:bold">GenericItem</span>
-  <span style="color:#777"># Convert boolean commands to ON/OFF</span>
-  <span style="color:#777"># @!visibility private</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">format_type</span>(command)
-    <span style="color:#080;font-weight:bold">return</span> <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">OnOffType</span>.from(command) <span style="color:#080;font-weight:bold">if</span> [<span style="color:#069">true</span>, <span style="color:#069">false</span>].include?(command)
+<span class="keyword">class</span> <span class="class">SwitchItem</span> &lt; <span class="constant">GenericItem</span>
+  <span class="comment"># Convert boolean commands to ON/OFF</span>
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">format_type</span>(command)
+    <span class="keyword">return</span> <span class="constant">Types</span>::<span class="constant">OnOffType</span>.from(command) <span class="keyword">if</span> [<span class="predefined-constant">true</span>, <span class="predefined-constant">false</span>].include?(command)
 
-    <span style="color:#080;font-weight:bold">super</span>
-  <span style="color:#080;font-weight:bold">end</span>
+    <span class="keyword">super</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Send a command to invert the state of the switch</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @return [self]</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">toggle</span>
-    <span style="color:#080;font-weight:bold">return</span> on <span style="color:#080;font-weight:bold">unless</span> state?
+  <span class="comment">#</span>
+  <span class="comment"># Send a command to invert the state of the switch</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [self]</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">toggle</span>
+    <span class="keyword">return</span> on <span class="keyword">unless</span> state?
 
     command(!state)
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#777"># @!method on?</span>
-  <span style="color:#777">#   Check if the item state == {ON}</span>
-  <span style="color:#777">#   @return [true,false]</span>
+  <span class="comment"># @!method on?</span>
+  <span class="comment">#   Check if the item state == {ON}</span>
+  <span class="comment">#   @return [true,false]</span>
 
-  <span style="color:#777"># @!method off?</span>
-  <span style="color:#777">#   Check if the item state == {OFF}</span>
-  <span style="color:#777">#   @return [true,false]</span>
+  <span class="comment"># @!method off?</span>
+  <span class="comment">#   Check if the item state == {OFF}</span>
+  <span class="comment">#   @return [true,false]</span>
 
-  <span style="color:#777"># @!method on</span>
-  <span style="color:#777">#   Send the {ON} command to the item</span>
-  <span style="color:#777">#   @return [SwitchItem] `self`</span>
+  <span class="comment"># @!method on</span>
+  <span class="comment">#   Send the {ON} command to the item</span>
+  <span class="comment">#   @return [SwitchItem] `self`</span>
 
-  <span style="color:#777"># @!method off</span>
-  <span style="color:#777">#   Send the {OFF} command to the item</span>
-  <span style="color:#777">#   @return [SwitchItem] `self`</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="comment"># @!method off</span>
+  <span class="comment">#   Send the {OFF} command to the item</span>
+  <span class="comment">#   @return [SwitchItem] `self`</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3101,11 +3103,11 @@ Useful for normal lights, presence detection etc.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/switch_item.rb', line 52</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">toggle</span>
-  <span style="color:#080;font-weight:bold">return</span> on <span style="color:#080;font-weight:bold">unless</span> state?
+<span class="keyword">def</span> <span class="function">toggle</span>
+  <span class="keyword">return</span> on <span class="keyword">unless</span> state?
 
   command(!state)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3116,7 +3118,7 @@ Useful for normal lights, presence detection etc.</p>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:36 2022 by
+  Generated on Fri Dec  9 22:46:49 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

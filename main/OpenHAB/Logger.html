@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Logger";
   relpath = '../';
@@ -2436,7 +2438,7 @@
 
 </div>
         </dt>
-        <dd><pre class="code"><span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">org.openhab.automation.jrubyscripting</span><span style="color:#710">&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.automation.jrubyscripting</span><span class="delimiter">&quot;</span></span></pre></dd>
       
         <dt id="LEVELS-constant" class="">LEVELS =
           <div class="docstring">
@@ -2468,7 +2470,7 @@
 
 </div>
         </dt>
-        <dd><pre class="code"><span style="color:#A60"><span style="color:#740">%i[</span><span style="color:#A60">trace debug warn info error</span><span style="color:#740">]</span></span>.freeze</pre></dd>
+        <dd><pre class="code"><span class="symbol"><span class="delimiter">%i[</span><span class="content">trace debug warn info error</span><span class="delimiter">]</span></span>.freeze</pre></dd>
       
     </dl>
   
@@ -2967,9 +2969,9 @@ to reload, and logging may be completely unavailable for a short time.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 244</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">level</span>
-  <span style="color:#036;font-weight:bold">Logger</span>.log_service.get_level(name)[name]&amp;.downcase&amp;.to_sym
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">level</span>
+  <span class="constant">Logger</span>.log_service.get_level(name)[name]&amp;.downcase&amp;.to_sym
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3027,9 +3029,9 @@ to reload, and logging may be completely unavailable for a short time.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 167</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">events</span>
-  <span style="color:#036;font-weight:bold">Log</span>.logger(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">openhab.event</span><span style="color:#710">&quot;</span></span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">events</span>
+  <span class="constant">Log</span>.logger(<span class="string"><span class="delimiter">&quot;</span><span class="content">openhab.event</span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3080,9 +3082,9 @@ to reload, and logging may be completely unavailable for a short time.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 161</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">gem_root</span>
-  <span style="color:#036;font-weight:bold">Log</span>.logger(<span style="color:#036;font-weight:bold">PREFIX</span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">gem_root</span>
+  <span class="constant">Log</span>.logger(<span class="constant">PREFIX</span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3133,9 +3135,9 @@ to reload, and logging may be completely unavailable for a short time.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 155</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">root</span>
-  <span style="color:#036;font-weight:bold">Log</span>.logger(org.slf4j.Logger::<span style="color:#036;font-weight:bold">ROOT_LOGGER_NAME</span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">root</span>
+  <span class="constant">Log</span>.logger(org.slf4j.Logger::<span class="constant">ROOT_LOGGER_NAME</span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3169,11 +3171,11 @@ to reload, and logging may be completely unavailable for a short time.</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>logger.debug <span style="color:#080;font-weight:bold">do</span>
-  total = <span style="color:#036;font-weight:bold">Item1</span>.state + <span style="color:#036;font-weight:bold">Item2</span>.state
-  average = total / <span style="color:#00D">2</span>
-<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Total: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>total<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">, Average: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>average<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>logger.debug <span class="keyword">do</span>
+  total = <span class="constant">Item1</span>.state + <span class="constant">Item2</span>.state
+  average = total / <span class="integer">2</span>
+<span class="string"><span class="delimiter">&quot;</span><span class="content">Total: </span><span class="inline"><span class="inline-delimiter">#{</span>total<span class="inline-delimiter">}</span></span><span class="content">, Average: </span><span class="inline"><span class="inline-delimiter">#{</span>average<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -3245,7 +3247,7 @@ confirmed that logging is enabled at debug level.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 260</span>
 
-def_level_method(<span style="color:#A60">:debug</span>)</pre>
+def_level_method(<span class="symbol">:debug</span>)</pre>
     </td>
   </tr>
 </table>
@@ -3294,7 +3296,7 @@ def_level_method(<span style="color:#A60">:debug</span>)</pre>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 261</span>
 
-def_level_predicate(<span style="color:#A60">:debug</span>)</pre>
+def_level_predicate(<span class="symbol">:debug</span>)</pre>
     </td>
   </tr>
 </table>
@@ -3322,11 +3324,11 @@ def_level_predicate(<span style="color:#A60">:debug</span>)</pre>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>logger.error <span style="color:#080;font-weight:bold">do</span>
-  total = <span style="color:#036;font-weight:bold">Item1</span>.state + <span style="color:#036;font-weight:bold">Item2</span>.state
-  average = total / <span style="color:#00D">2</span>
-<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Total: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>total<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">, Average: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>average<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>logger.error <span class="keyword">do</span>
+  total = <span class="constant">Item1</span>.state + <span class="constant">Item2</span>.state
+  average = total / <span class="integer">2</span>
+<span class="string"><span class="delimiter">&quot;</span><span class="content">Total: </span><span class="inline"><span class="inline-delimiter">#{</span>total<span class="inline-delimiter">}</span></span><span class="content">, Average: </span><span class="inline"><span class="inline-delimiter">#{</span>average<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -3398,7 +3400,7 @@ confirmed that logging is enabled at error level.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 254</span>
 
-def_level_method(<span style="color:#A60">:error</span>)</pre>
+def_level_method(<span class="symbol">:error</span>)</pre>
     </td>
   </tr>
 </table>
@@ -3447,7 +3449,7 @@ def_level_method(<span style="color:#A60">:error</span>)</pre>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 255</span>
 
-def_level_predicate(<span style="color:#A60">:error</span>)</pre>
+def_level_predicate(<span class="symbol">:error</span>)</pre>
     </td>
   </tr>
 </table>
@@ -3475,11 +3477,11 @@ def_level_predicate(<span style="color:#A60">:error</span>)</pre>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>logger.info <span style="color:#080;font-weight:bold">do</span>
-  total = <span style="color:#036;font-weight:bold">Item1</span>.state + <span style="color:#036;font-weight:bold">Item2</span>.state
-  average = total / <span style="color:#00D">2</span>
-<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Total: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>total<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">, Average: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>average<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>logger.info <span class="keyword">do</span>
+  total = <span class="constant">Item1</span>.state + <span class="constant">Item2</span>.state
+  average = total / <span class="integer">2</span>
+<span class="string"><span class="delimiter">&quot;</span><span class="content">Total: </span><span class="inline"><span class="inline-delimiter">#{</span>total<span class="inline-delimiter">}</span></span><span class="content">, Average: </span><span class="inline"><span class="inline-delimiter">#{</span>average<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -3551,7 +3553,7 @@ confirmed that logging is enabled at info level.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 258</span>
 
-def_level_method(<span style="color:#A60">:info</span>)</pre>
+def_level_method(<span class="symbol">:info</span>)</pre>
     </td>
   </tr>
 </table>
@@ -3600,7 +3602,7 @@ def_level_method(<span style="color:#A60">:info</span>)</pre>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 259</span>
 
-def_level_predicate(<span style="color:#A60">:info</span>)</pre>
+def_level_predicate(<span class="symbol">:info</span>)</pre>
     </td>
   </tr>
 </table>
@@ -3654,9 +3656,9 @@ def_level_predicate(<span style="color:#A60">:info</span>)</pre>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 232</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">inspect</span>
-  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">#&lt;OpenHAB::Logger </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">&gt;</span><span style="color:#710">&quot;</span></span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">inspect</span>
+  <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Logger </span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="content">&gt;</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3716,12 +3718,12 @@ def_level_predicate(<span style="color:#A60">:info</span>)</pre>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 271</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">log_exception</span>(exception)
+<span class="keyword">def</span> <span class="function">log_exception</span>(exception)
   exception = clean_backtrace(exception)
-  error <span style="color:#080;font-weight:bold">do</span>
-    <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>exception.message<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> (</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>exception.class<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#b0b">\n</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>exception.backtrace&amp;.join(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#b0b">\n</span><span style="color:#710">&quot;</span></span>)<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  error <span class="keyword">do</span>
+    <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>exception.message<span class="inline-delimiter">}</span></span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>exception.class<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="char">\n</span><span class="inline"><span class="inline-delimiter">#{</span>exception.backtrace&amp;.join(<span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3772,9 +3774,9 @@ def_level_predicate(<span style="color:#A60">:info</span>)</pre>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 227</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">name</span>
-  <span style="color:#33B">@slf4j_logger</span>.name
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">name</span>
+  <span class="instance-variable">@slf4j_logger</span>.name
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3802,11 +3804,11 @@ def_level_predicate(<span style="color:#A60">:info</span>)</pre>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>logger.trace <span style="color:#080;font-weight:bold">do</span>
-  total = <span style="color:#036;font-weight:bold">Item1</span>.state + <span style="color:#036;font-weight:bold">Item2</span>.state
-  average = total / <span style="color:#00D">2</span>
-<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Total: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>total<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">, Average: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>average<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>logger.trace <span class="keyword">do</span>
+  total = <span class="constant">Item1</span>.state + <span class="constant">Item2</span>.state
+  average = total / <span class="integer">2</span>
+<span class="string"><span class="delimiter">&quot;</span><span class="content">Total: </span><span class="inline"><span class="inline-delimiter">#{</span>total<span class="inline-delimiter">}</span></span><span class="content">, Average: </span><span class="inline"><span class="inline-delimiter">#{</span>average<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -3878,7 +3880,7 @@ confirmed that logging is enabled at trace level.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 262</span>
 
-def_level_method(<span style="color:#A60">:trace</span>)</pre>
+def_level_method(<span class="symbol">:trace</span>)</pre>
     </td>
   </tr>
 </table>
@@ -3927,7 +3929,7 @@ def_level_method(<span style="color:#A60">:trace</span>)</pre>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 263</span>
 
-def_level_predicate(<span style="color:#A60">:trace</span>)</pre>
+def_level_predicate(<span class="symbol">:trace</span>)</pre>
     </td>
   </tr>
 </table>
@@ -3955,11 +3957,11 @@ def_level_predicate(<span style="color:#A60">:trace</span>)</pre>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>logger.warn <span style="color:#080;font-weight:bold">do</span>
-  total = <span style="color:#036;font-weight:bold">Item1</span>.state + <span style="color:#036;font-weight:bold">Item2</span>.state
-  average = total / <span style="color:#00D">2</span>
-<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Total: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>total<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">, Average: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>average<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>logger.warn <span class="keyword">do</span>
+  total = <span class="constant">Item1</span>.state + <span class="constant">Item2</span>.state
+  average = total / <span class="integer">2</span>
+<span class="string"><span class="delimiter">&quot;</span><span class="content">Total: </span><span class="inline"><span class="inline-delimiter">#{</span>total<span class="inline-delimiter">}</span></span><span class="content">, Average: </span><span class="inline"><span class="inline-delimiter">#{</span>average<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -4031,7 +4033,7 @@ confirmed that logging is enabled at warn level.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 256</span>
 
-def_level_method(<span style="color:#A60">:warn</span>)</pre>
+def_level_method(<span class="symbol">:warn</span>)</pre>
     </td>
   </tr>
 </table>
@@ -4080,7 +4082,7 @@ def_level_method(<span style="color:#A60">:warn</span>)</pre>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 257</span>
 
-def_level_predicate(<span style="color:#A60">:warn</span>)</pre>
+def_level_predicate(<span class="symbol">:warn</span>)</pre>
     </td>
   </tr>
 </table>
@@ -4091,7 +4093,7 @@ def_level_predicate(<span style="color:#A60">:warn</span>)</pre>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:32 2022 by
+  Generated on Fri Dec  9 22:46:46 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

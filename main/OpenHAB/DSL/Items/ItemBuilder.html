@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::DSL::Items::ItemBuilder";
   relpath = '../../../';
@@ -3356,64 +3358,64 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 220</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">initialize</span>(type, name = <span style="color:#069">nil</span>, label = <span style="color:#069">nil</span>,
-               <span style="color:#606">provider</span>:,
-               <span style="color:#606">dimension</span>: <span style="color:#069">nil</span>,
-               <span style="color:#606">format</span>: <span style="color:#069">nil</span>,
-               <span style="color:#606">icon</span>: <span style="color:#069">nil</span>,
-               <span style="color:#606">group</span>: <span style="color:#069">nil</span>,
-               <span style="color:#606">groups</span>: <span style="color:#069">nil</span>,
-               <span style="color:#606">tag</span>: <span style="color:#069">nil</span>,
-               <span style="color:#606">tags</span>: <span style="color:#069">nil</span>,
-               <span style="color:#606">autoupdate</span>: <span style="color:#069">nil</span>,
-               <span style="color:#606">channel</span>: <span style="color:#069">nil</span>,
-               <span style="color:#606">expire</span>: <span style="color:#069">nil</span>,
-               <span style="color:#606">alexa</span>: <span style="color:#069">nil</span>,
-               <span style="color:#606">ga</span>: <span style="color:#069">nil</span>, <span style="color:#777"># rubocop:disable Naming/MethodParameterName</span>
-               <span style="color:#606">homekit</span>: <span style="color:#069">nil</span>,
-               <span style="color:#606">metadata</span>: <span style="color:#069">nil</span>,
-               <span style="color:#606">state</span>: <span style="color:#069">nil</span>)
-  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">`name` cannot be nil</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> name.nil?
-  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">`dimension` can only be specified with NumberItem</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> dimension &amp;&amp; type != <span style="color:#A60">:number</span>
+<span class="keyword">def</span> <span class="function">initialize</span>(type, name = <span class="predefined-constant">nil</span>, label = <span class="predefined-constant">nil</span>,
+               <span class="key">provider</span>:,
+               <span class="key">dimension</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">format</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">icon</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">group</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">groups</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">tag</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">tags</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">autoupdate</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">channel</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">expire</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">alexa</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">ga</span>: <span class="predefined-constant">nil</span>, <span class="comment"># rubocop:disable Naming/MethodParameterName</span>
+               <span class="key">homekit</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">metadata</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">state</span>: <span class="predefined-constant">nil</span>)
+  raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">`name` cannot be nil</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> name.nil?
+  raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">`dimension` can only be specified with NumberItem</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> dimension &amp;&amp; type != <span class="symbol">:number</span>
 
-  name = name.name <span style="color:#080;font-weight:bold">if</span> name.respond_to?(<span style="color:#A60">:name</span>)
-  <span style="color:#080;font-weight:bold">if</span> provider.is_a?(<span style="color:#036;font-weight:bold">GroupItemBuilder</span>)
-    name = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>provider.name_base<span style="font-weight:bold;color:#666">}</span></span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-    label = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>provider.label_base<span style="font-weight:bold;color:#666">}</span></span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>label<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>.strip <span style="color:#080;font-weight:bold">if</span> label
-  <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#33B">@provider</span> = provider
-  <span style="color:#33B">@type</span> = type
-  <span style="color:#33B">@name</span> = name.to_s
-  <span style="color:#33B">@label</span> = label
-  <span style="color:#33B">@dimension</span> = dimension
-  <span style="color:#33B">@format</span> = format
-  <span style="color:#33B">@icon</span> = icon
-  <span style="color:#33B">@groups</span> = []
-  <span style="color:#33B">@tags</span> = []
-  <span style="color:#33B">@metadata</span> = <span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Items</span>::<span style="color:#036;font-weight:bold">Metadata</span>::<span style="color:#036;font-weight:bold">NamespaceHash</span>.new
-  <span style="color:#33B">@metadata</span>.merge!(metadata) <span style="color:#080;font-weight:bold">if</span> metadata
-  <span style="color:#33B">@autoupdate</span> = autoupdate
-  <span style="color:#33B">@channels</span> = []
-  <span style="color:#33B">@expire</span> = <span style="color:#069">nil</span>
-  <span style="color:#080;font-weight:bold">if</span> expire
+  name = name.name <span class="keyword">if</span> name.respond_to?(<span class="symbol">:name</span>)
+  <span class="keyword">if</span> provider.is_a?(<span class="constant">GroupItemBuilder</span>)
+    name = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>provider.name_base<span class="inline-delimiter">}</span></span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    label = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>provider.label_base<span class="inline-delimiter">}</span></span><span class="inline"><span class="inline-delimiter">#{</span>label<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>.strip <span class="keyword">if</span> label
+  <span class="keyword">end</span>
+  <span class="instance-variable">@provider</span> = provider
+  <span class="instance-variable">@type</span> = type
+  <span class="instance-variable">@name</span> = name.to_s
+  <span class="instance-variable">@label</span> = label
+  <span class="instance-variable">@dimension</span> = dimension
+  <span class="instance-variable">@format</span> = format
+  <span class="instance-variable">@icon</span> = icon
+  <span class="instance-variable">@groups</span> = []
+  <span class="instance-variable">@tags</span> = []
+  <span class="instance-variable">@metadata</span> = <span class="constant">Core</span>::<span class="constant">Items</span>::<span class="constant">Metadata</span>::<span class="constant">NamespaceHash</span>.new
+  <span class="instance-variable">@metadata</span>.merge!(metadata) <span class="keyword">if</span> metadata
+  <span class="instance-variable">@autoupdate</span> = autoupdate
+  <span class="instance-variable">@channels</span> = []
+  <span class="instance-variable">@expire</span> = <span class="predefined-constant">nil</span>
+  <span class="keyword">if</span> expire
     expire = Array(expire)
-    expire_config = expire.pop <span style="color:#080;font-weight:bold">if</span> expire.last.is_a?(<span style="color:#036;font-weight:bold">Hash</span>)
+    expire_config = expire.pop <span class="keyword">if</span> expire.last.is_a?(<span class="constant">Hash</span>)
     expire_config ||= {}
-    <span style="color:#069">self</span>.expire(*expire, **expire_config)
-  <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#069">self</span>.alexa(alexa) <span style="color:#080;font-weight:bold">if</span> alexa
-  <span style="color:#069">self</span>.ga(ga) <span style="color:#080;font-weight:bold">if</span> ga
-  <span style="color:#069">self</span>.homekit(homekit) <span style="color:#080;font-weight:bold">if</span> homekit
-  <span style="color:#33B">@state</span> = state
+    <span class="predefined-constant">self</span>.expire(*expire, **expire_config)
+  <span class="keyword">end</span>
+  <span class="predefined-constant">self</span>.alexa(alexa) <span class="keyword">if</span> alexa
+  <span class="predefined-constant">self</span>.ga(ga) <span class="keyword">if</span> ga
+  <span class="predefined-constant">self</span>.homekit(homekit) <span class="keyword">if</span> homekit
+  <span class="instance-variable">@state</span> = state
 
-  <span style="color:#069">self</span>.group(*group)
-  <span style="color:#069">self</span>.group(*groups)
+  <span class="predefined-constant">self</span>.group(*group)
+  <span class="predefined-constant">self</span>.group(*groups)
 
-  <span style="color:#069">self</span>.tag(*tag)
-  <span style="color:#069">self</span>.tag(*tags)
+  <span class="predefined-constant">self</span>.tag(*tag)
+  <span class="predefined-constant">self</span>.tag(*tags)
 
-  <span style="color:#069">self</span>.channel(*channel) <span style="color:#080;font-weight:bold">if</span> channel
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="predefined-constant">self</span>.channel(*channel) <span class="keyword">if</span> channel
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3471,9 +3473,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 173</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">autoupdate</span>
-  <span style="color:#33B">@autoupdate</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">autoupdate</span>
+  <span class="instance-variable">@autoupdate</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3526,9 +3528,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 176</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">channels</span>
-  <span style="color:#33B">@channels</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">channels</span>
+  <span class="instance-variable">@channels</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3581,9 +3583,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 158</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">dimension</span>
-  <span style="color:#33B">@dimension</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">dimension</span>
+  <span class="instance-variable">@dimension</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3636,9 +3638,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 161</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">format</span>
-  <span style="color:#33B">@format</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">format</span>
+  <span class="instance-variable">@format</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3691,9 +3693,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 167</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">groups</span>
-  <span style="color:#33B">@groups</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">groups</span>
+  <span class="instance-variable">@groups</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3746,9 +3748,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 164</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">icon</span>
-  <span style="color:#33B">@icon</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">icon</span>
+  <span class="instance-variable">@icon</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3801,9 +3803,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 155</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">label</span>
-  <span style="color:#33B">@label</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">label</span>
+  <span class="instance-variable">@label</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3855,9 +3857,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 178</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">metadata</span>
-  <span style="color:#33B">@metadata</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">metadata</span>
+  <span class="instance-variable">@metadata</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3910,9 +3912,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 152</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">name</span>
-  <span style="color:#33B">@name</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">name</span>
+  <span class="instance-variable">@name</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3965,9 +3967,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 181</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">state</span>
-  <span style="color:#33B">@state</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">state</span>
+  <span class="instance-variable">@state</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4020,9 +4022,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 170</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">tags</span>
-  <span style="color:#33B">@tags</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">tags</span>
+  <span class="instance-variable">@tags</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4052,7 +4054,7 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>type <span style="color:#777">#=&gt; :switch</span></code></pre>
+      <pre class="example code"><code>type <span class="comment">#=&gt; :switch</span></code></pre>
     
   </div>
 
@@ -4083,9 +4085,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 149</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">type</span>
-  <span style="color:#33B">@type</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">type</span>
+  <span class="instance-variable">@type</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4199,11 +4201,11 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>items.build <span style="color:#080;font-weight:bold">do</span>
-  date_time_item <span style="color:#036;font-weight:bold">Bedroom_Light_Updated</span> <span style="color:#080;font-weight:bold">do</span>
-    channel <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">hue:0210:1:bulb1:color</span><span style="color:#710">&quot;</span></span>, <span style="color:#606">profile</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">system:timestamp-update</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>items.build <span class="keyword">do</span>
+  date_time_item <span class="constant">Bedroom_Light_Updated</span> <span class="keyword">do</span>
+    channel <span class="string"><span class="delimiter">&quot;</span><span class="content">hue:0210:1:bulb1:color</span><span class="delimiter">&quot;</span></span>, <span class="key">profile</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">system:timestamp-update</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -4242,9 +4244,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 378</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">channel</span>(channel, config = {})
-  <span style="color:#33B">@channels</span> &lt;&lt; [channel, config]
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">channel</span>(channel, config = {})
+  <span class="instance-variable">@channels</span> &lt;&lt; [channel, config]
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4281,32 +4283,32 @@
         <p class="example_title"><div class='inline'><p>Clear any expire setting</p>
 </div></p>
       
-      <pre class="example code"><code>expire <span style="color:#069">nil</span></code></pre>
+      <pre class="example code"><code>expire <span class="predefined-constant">nil</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Use a duration</p>
 </div></p>
       
-      <pre class="example code"><code>expire <span style="color:#00D">5</span>.hours</code></pre>
+      <pre class="example code"><code>expire <span class="integer">5</span>.hours</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Use a string duration</p>
 </div></p>
       
-      <pre class="example code"><code>expire <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">5h</span><span style="color:#710">&quot;</span></span></code></pre>
+      <pre class="example code"><code>expire <span class="string"><span class="delimiter">&quot;</span><span class="content">5h</span><span class="delimiter">&quot;</span></span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Set a specific state on expiration</p>
 </div></p>
       
-      <pre class="example code"><code>expire <span style="color:#00D">5</span>.minutes, <span style="color:#036;font-weight:bold">NULL</span>
-expire <span style="color:#00D">5</span>.minutes, <span style="color:#606">state</span>: <span style="color:#036;font-weight:bold">NULL</span></code></pre>
+      <pre class="example code"><code>expire <span class="integer">5</span>.minutes, <span class="constant">NULL</span>
+expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <span class="constant">NULL</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Send a command on expiration</p>
 </div></p>
       
-      <pre class="example code"><code>expire <span style="color:#00D">5</span>.minutes, <span style="color:#606">command</span>: <span style="color:#036;font-weight:bold">OFF</span></code></pre>
+      <pre class="example code"><code>expire <span class="integer">5</span>.minutes, <span class="key">command</span>: <span class="constant">OFF</span></code></pre>
     
   </div>
 
@@ -4353,25 +4355,25 @@ expire <span style="color:#00D">5</span>.minutes, <span style="color:#606">state
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 402</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">expire</span>(*args, <span style="color:#606">command</span>: <span style="color:#069">nil</span>, <span style="color:#606">state</span>: <span style="color:#069">nil</span>)
-  <span style="color:#080;font-weight:bold">unless</span> (<span style="color:#00D">0</span>..<span style="color:#00D">2</span>).cover?(args.length)
-    raise <span style="color:#036;font-weight:bold">ArgumentError</span>,
-          <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">wrong number of arguments (given </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>args.length<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">, expected 0..2)</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">return</span> <span style="color:#33B">@expire</span> <span style="color:#080;font-weight:bold">if</span> args.empty?
+<span class="keyword">def</span> <span class="function">expire</span>(*args, <span class="key">command</span>: <span class="predefined-constant">nil</span>, <span class="key">state</span>: <span class="predefined-constant">nil</span>)
+  <span class="keyword">unless</span> (<span class="integer">0</span>..<span class="integer">2</span>).cover?(args.length)
+    raise <span class="constant">ArgumentError</span>,
+          <span class="string"><span class="delimiter">&quot;</span><span class="content">wrong number of arguments (given </span><span class="inline"><span class="inline-delimiter">#{</span>args.length<span class="inline-delimiter">}</span></span><span class="content">, expected 0..2)</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
+  <span class="keyword">return</span> <span class="instance-variable">@expire</span> <span class="keyword">if</span> args.empty?
 
-  state = args.last <span style="color:#080;font-weight:bold">if</span> args.length == <span style="color:#00D">2</span>
-  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">cannot provide both command and state</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> command &amp;&amp; state
+  state = args.last <span class="keyword">if</span> args.length == <span class="integer">2</span>
+  raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">cannot provide both command and state</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> command &amp;&amp; state
 
   duration = args.first
-  <span style="color:#080;font-weight:bold">return</span> <span style="color:#33B">@expire</span> = <span style="color:#069">nil</span> <span style="color:#080;font-weight:bold">if</span> duration.nil?
+  <span class="keyword">return</span> <span class="instance-variable">@expire</span> = <span class="predefined-constant">nil</span> <span class="keyword">if</span> duration.nil?
 
-  duration = duration.to_s[<span style="color:#00D">2</span>..].downcase <span style="color:#080;font-weight:bold">if</span> duration.is_a?(<span style="color:#036;font-weight:bold">Duration</span>)
-  state = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">'</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>state<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">'</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> state.respond_to?(<span style="color:#A60">:to_str</span>) &amp;&amp; type == <span style="color:#A60">:string</span>
-  <span style="color:#33B">@expire</span> = duration
-  <span style="color:#33B">@expire</span> += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">,state=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>state<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> state
-  <span style="color:#33B">@expire</span> += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">,command=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>command<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> command
-<span style="color:#080;font-weight:bold">end</span></pre>
+  duration = duration.to_s[<span class="integer">2</span>..].downcase <span class="keyword">if</span> duration.is_a?(<span class="constant">Duration</span>)
+  state = <span class="string"><span class="delimiter">&quot;</span><span class="content">'</span><span class="inline"><span class="inline-delimiter">#{</span>state<span class="inline-delimiter">}</span></span><span class="content">'</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> state.respond_to?(<span class="symbol">:to_str</span>) &amp;&amp; type == <span class="symbol">:string</span>
+  <span class="instance-variable">@expire</span> = duration
+  <span class="instance-variable">@expire</span> += <span class="string"><span class="delimiter">&quot;</span><span class="content">,state=</span><span class="inline"><span class="inline-delimiter">#{</span>state<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> state
+  <span class="instance-variable">@expire</span> += <span class="string"><span class="delimiter">&quot;</span><span class="content">,command=</span><span class="inline"><span class="inline-delimiter">#{</span>command<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> command
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4509,15 +4511,15 @@ expire <span style="color:#00D">5</span>.minutes, <span style="color:#606">state
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 315</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">group</span>(*groups)
-  <span style="color:#080;font-weight:bold">unless</span> groups.all? <span style="color:#080;font-weight:bold">do</span> |group|
-           group.is_a?(<span style="color:#036;font-weight:bold">String</span>) || group.is_a?(<span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Items</span>::<span style="color:#036;font-weight:bold">GroupItem</span>) || group.is_a?(<span style="color:#036;font-weight:bold">GroupItemBuilder</span>)
-         <span style="color:#080;font-weight:bold">end</span>
-    raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">`group` must be a `GroupItem`, `GroupItemBuilder`, or a `String`</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
+<span class="keyword">def</span> <span class="function">group</span>(*groups)
+  <span class="keyword">unless</span> groups.all? <span class="keyword">do</span> |group|
+           group.is_a?(<span class="constant">String</span>) || group.is_a?(<span class="constant">Core</span>::<span class="constant">Items</span>::<span class="constant">GroupItem</span>) || group.is_a?(<span class="constant">GroupItemBuilder</span>)
+         <span class="keyword">end</span>
+    raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">`group` must be a `GroupItem`, `GroupItemBuilder`, or a `String`</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
 
-  <span style="color:#33B">@groups</span>.concat(groups)
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="instance-variable">@groups</span>.concat(groups)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4601,12 +4603,12 @@ expire <span style="color:#00D">5</span>.minutes, <span style="color:#606">state
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 358</span>
 
-<span style="color:#A60"><span style="color:#740">%i[</span><span style="color:#A60">alexa ga homekit</span><span style="color:#740">]</span></span>.each <span style="color:#080;font-weight:bold">do</span> |shortcut|
-  define_method(shortcut) <span style="color:#080;font-weight:bold">do</span> |value = <span style="color:#069">nil</span>, config = <span style="color:#069">nil</span>|
-    value, config = value <span style="color:#080;font-weight:bold">if</span> value.is_a?(<span style="color:#036;font-weight:bold">Array</span>)
+<span class="symbol"><span class="delimiter">%i[</span><span class="content">alexa ga homekit</span><span class="delimiter">]</span></span>.each <span class="keyword">do</span> |shortcut|
+  define_method(shortcut) <span class="keyword">do</span> |value = <span class="predefined-constant">nil</span>, config = <span class="predefined-constant">nil</span>|
+    value, config = value <span class="keyword">if</span> value.is_a?(<span class="constant">Array</span>)
     metadata[shortcut] = [value, config]
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4661,14 +4663,14 @@ expire <span style="color:#00D">5</span>.minutes, <span style="color:#606">state
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 443</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">inspect</span>
-  s = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">#&lt;OpenHAB::Core::Items::</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>inspect_type<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">ItemBuilder</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>type_details<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>label.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-  s += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> category=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>icon.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> icon
-  s += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> tags=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>tags.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> tags.empty?
-  s += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> groups=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>groups.map { |g| g.respond_to?(<span style="color:#A60">:name</span>) ? g.name : g }.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> groups.empty?
-  s += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> metadata=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>metadata.to_h.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> metadata.empty?
-  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>s<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">&gt;</span><span style="color:#710">&quot;</span></span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">inspect</span>
+  s = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Items::</span><span class="inline"><span class="inline-delimiter">#{</span>inspect_type<span class="inline-delimiter">}</span></span><span class="content">ItemBuilder</span><span class="inline"><span class="inline-delimiter">#{</span>type_details<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>label.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+  s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> category=</span><span class="inline"><span class="inline-delimiter">#{</span>icon.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> icon
+  s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> tags=</span><span class="inline"><span class="inline-delimiter">#{</span>tags.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> tags.empty?
+  s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> groups=</span><span class="inline"><span class="inline-delimiter">#{</span>groups.map { |g| g.respond_to?(<span class="symbol">:name</span>) ? g.name : g }.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> groups.empty?
+  s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> metadata=</span><span class="inline"><span class="inline-delimiter">#{</span>metadata.to_h.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> metadata.empty?
+  <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>s<span class="inline-delimiter">}</span></span><span class="content">&gt;</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4732,20 +4734,20 @@ expire <span style="color:#00D">5</span>.minutes, <span style="color:#606">state
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 294</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">tag</span>(*tags)
-  <span style="color:#080;font-weight:bold">unless</span> tags.all? <span style="color:#080;font-weight:bold">do</span> |tag|
-           tag.is_a?(<span style="color:#036;font-weight:bold">String</span>) ||
-           tag.is_a?(<span style="color:#036;font-weight:bold">Symbol</span>) ||
-           (tag.is_a?(<span style="color:#036;font-weight:bold">Module</span>) &amp;&amp; tag &lt; <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Tag</span>)
-         <span style="color:#080;font-weight:bold">end</span>
-    raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">`tag` must be a subclass of Semantics::Tag, or a `String``.</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
+<span class="keyword">def</span> <span class="function">tag</span>(*tags)
+  <span class="keyword">unless</span> tags.all? <span class="keyword">do</span> |tag|
+           tag.is_a?(<span class="constant">String</span>) ||
+           tag.is_a?(<span class="constant">Symbol</span>) ||
+           (tag.is_a?(<span class="constant">Module</span>) &amp;&amp; tag &lt; <span class="constant">Semantics</span>::<span class="constant">Tag</span>)
+         <span class="keyword">end</span>
+    raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">`tag` must be a subclass of Semantics::Tag, or a `String``.</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
 
-  tags.each <span style="color:#080;font-weight:bold">do</span> |tag|
-    tag = tag.name.split(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">::</span><span style="color:#710">&quot;</span></span>).last <span style="color:#080;font-weight:bold">if</span> tag.is_a?(<span style="color:#036;font-weight:bold">Module</span>) &amp;&amp; tag &lt; <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Tag</span>
-    <span style="color:#33B">@tags</span> &lt;&lt; tag.to_s
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  tags.each <span class="keyword">do</span> |tag|
+    tag = tag.name.split(<span class="string"><span class="delimiter">&quot;</span><span class="content">::</span><span class="delimiter">&quot;</span></span>).last <span class="keyword">if</span> tag.is_a?(<span class="constant">Module</span>) &amp;&amp; tag &lt; <span class="constant">Semantics</span>::<span class="constant">Tag</span>
+    <span class="instance-variable">@tags</span> &lt;&lt; tag.to_s
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4796,9 +4798,9 @@ expire <span style="color:#00D">5</span>.minutes, <span style="color:#606">state
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 284</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to_s</span>
+<span class="keyword">def</span> <span class="function">to_s</span>
   label || name
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4809,7 +4811,7 @@ expire <span style="color:#00D">5</span>.minutes, <span style="color:#606">state
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:33 2022 by
+  Generated on Fri Dec  9 22:46:47 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

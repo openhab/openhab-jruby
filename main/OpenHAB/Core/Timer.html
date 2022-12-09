@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Timer";
   relpath = '../../';
@@ -2718,10 +2720,10 @@ has been scheduled to run later with <span class='object_link'><a href="../DSL.h
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 83</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">execution_time</span>
-  <span style="color:#777"># DEPRECATED: openHAB 3.4.0.M6 (just remove the entire method)</span>
-  <span style="color:#33B">@timer</span>.future.scheduled_time
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">execution_time</span>
+  <span class="comment"># DEPRECATED: openHAB 3.4.0.M6 (just remove the entire method)</span>
+  <span class="instance-variable">@timer</span>.future.scheduled_time
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2773,9 +2775,9 @@ has been scheduled to run later with <span class='object_link'><a href="../DSL.h
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 34</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">id</span>
-  <span style="color:#33B">@id</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">id</span>
+  <span class="instance-variable">@id</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2887,10 +2889,10 @@ has been scheduled to run later with <span class='object_link'><a href="../DSL.h
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 108</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">cancel</span>
-  <span style="color:#036;font-weight:bold">DSL</span>.timers.delete(<span style="color:#069">self</span>)
+<span class="keyword">def</span> <span class="function">cancel</span>
+  <span class="constant">DSL</span>.timers.delete(<span class="predefined-constant">self</span>)
   cancel!
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3000,16 +3002,16 @@ has been scheduled to run later with <span class='object_link'><a href="../DSL.h
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 69</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">inspect</span>
-  r = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">#&lt;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#069">self</span>.class.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>id.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> </span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> id<span style="font-weight:bold;color:#666">}</span></span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>block.source_location.join(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">:</span><span style="color:#710">&quot;</span></span>)<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">if</span> cancelled?
-    r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> (cancelled)</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">else</span>
-    r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> @ </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>execution_time<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-    r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> (executed)</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> terminated?
-  <span style="color:#080;font-weight:bold">end</span>
-  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>r<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">&gt;</span><span style="color:#710">&quot;</span></span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">inspect</span>
+  r = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span>.class.name<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span><span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>id.inspect<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> id<span class="inline-delimiter">}</span></span><span class="inline"><span class="inline-delimiter">#{</span>block.source_location.join(<span class="string"><span class="delimiter">&quot;</span><span class="content">:</span><span class="delimiter">&quot;</span></span>)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">if</span> cancelled?
+    r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> (cancelled)</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">else</span>
+    r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> @ </span><span class="inline"><span class="inline-delimiter">#{</span>execution_time<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> (executed)</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> terminated?
+  <span class="keyword">end</span>
+  <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>r<span class="inline-delimiter">}</span></span><span class="content">&gt;</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3085,12 +3087,12 @@ If unspecified, the original time is used.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 96</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">reschedule</span>(time = <span style="color:#069">nil</span>)
-  <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_rescheduled_timer</span>] = <span style="color:#069">true</span> <span style="color:#080;font-weight:bold">if</span> <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_rescheduled_timer</span>] == <span style="color:#069">self</span>
-  <span style="color:#036;font-weight:bold">DSL</span>.timers.add(<span style="color:#069">self</span>)
-  <span style="color:#33B">@timer</span>.reschedule(new_execution_time(time || <span style="color:#33B">@time</span>))
-  <span style="color:#069">self</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">reschedule</span>(time = <span class="predefined-constant">nil</span>)
+  <span class="constant">Thread</span>.current[<span class="symbol">:openhab_rescheduled_timer</span>] = <span class="predefined-constant">true</span> <span class="keyword">if</span> <span class="constant">Thread</span>.current[<span class="symbol">:openhab_rescheduled_timer</span>] == <span class="predefined-constant">self</span>
+  <span class="constant">DSL</span>.timers.add(<span class="predefined-constant">self</span>)
+  <span class="instance-variable">@timer</span>.reschedule(new_execution_time(time || <span class="instance-variable">@time</span>))
+  <span class="predefined-constant">self</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3188,7 +3190,7 @@ If unspecified, the original time is used.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 30</span>
 
-def_delegator <span style="color:#A60">:@timer</span>, <span style="color:#A60">:has_terminated</span>, <span style="color:#A60">:terminated?</span></pre>
+def_delegator <span class="symbol">:@timer</span>, <span class="symbol">:has_terminated</span>, <span class="symbol">:terminated?</span></pre>
     </td>
   </tr>
 </table>
@@ -3199,7 +3201,7 @@ def_delegator <span style="color:#A60">:@timer</span>, <span style="color:#A60">
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:32 2022 by
+  Generated on Fri Dec  9 22:46:47 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Types::QuantityType";
   relpath = '../../../';
@@ -2428,119 +2430,119 @@ You can construct a <span class='object_link'><a href="" title="OpenHAB::Core::T
         <p class="example_title"><div class='inline'><p>QuantityTypes can perform math operations between them.</p>
 </div></p>
       
-      <pre class="example code"><code>(<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) + (<span style="color:#00D">-25</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># =&gt; 25.0 °F</span>
-(<span style="color:#00D">100</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) / (<span style="color:#00D">2</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># =&gt; 50</span>
-(<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) - (<span style="color:#00D">25</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># =&gt; 25 °F</span>
-(<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) + (<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># =&gt; 100 °F</span></code></pre>
+      <pre class="example code"><code>(<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) + (<span class="integer">-25</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) <span class="comment"># =&gt; 25.0 °F</span>
+(<span class="integer">100</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) / (<span class="integer">2</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) <span class="comment"># =&gt; 50</span>
+(<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) - (<span class="integer">25</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) <span class="comment"># =&gt; 25 °F</span>
+(<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) + (<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) <span class="comment"># =&gt; 100 °F</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>If the operand is a number, it will be unit-less, but the result of the operation will have a unit. This only works for multiplication and division.</p>
 </div></p>
       
-      <pre class="example code"><code>(<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) * <span style="color:#00D">2</span> <span style="color:#777"># =&gt; 100 °F</span>
-(<span style="color:#00D">100</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) / <span style="color:#00D">2</span> <span style="color:#777"># =&gt; 50 °F</span></code></pre>
+      <pre class="example code"><code>(<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) * <span class="integer">2</span> <span class="comment"># =&gt; 100 °F</span>
+(<span class="integer">100</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) / <span class="integer">2</span> <span class="comment"># =&gt; 50 °F</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>If the operand is a dimensioned NumberItem it will automatically be converted to a quantity for the operation.</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#777"># NumberF = &quot;2 °F&quot;</span>
-<span style="color:#777"># NumberC = &quot;2 °C&quot;</span>
-(<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) + <span style="color:#036;font-weight:bold">NumberF</span>.state <span style="color:#777"># =&gt; 52.0 °F</span>
-(<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) + <span style="color:#036;font-weight:bold">NumberC</span>.state <span style="color:#777"># =&gt; 85.60 °F</span></code></pre>
+      <pre class="example code"><code><span class="comment"># NumberF = &quot;2 °F&quot;</span>
+<span class="comment"># NumberC = &quot;2 °C&quot;</span>
+(<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) + <span class="constant">NumberF</span>.state <span class="comment"># =&gt; 52.0 °F</span>
+(<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) + <span class="constant">NumberC</span>.state <span class="comment"># =&gt; 85.60 °F</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>If the operand is a non-dimensioned NumberItem it can be used only in multiplication and division operations.</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#777"># Number Dimensionless = 2</span>
-(<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) * <span style="color:#036;font-weight:bold">Dimensionless</span>.state <span style="color:#777"># =&gt; 100 °F</span>
-(<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) / <span style="color:#036;font-weight:bold">Dimensionless</span>.state <span style="color:#777"># =&gt; 25 °F</span></code></pre>
+      <pre class="example code"><code><span class="comment"># Number Dimensionless = 2</span>
+(<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) * <span class="constant">Dimensionless</span>.state <span class="comment"># =&gt; 100 °F</span>
+(<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) / <span class="constant">Dimensionless</span>.state <span class="comment"># =&gt; 25 °F</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Quantities can be compared, if they have comparable units.</p>
 </div></p>
       
-      <pre class="example code"><code>(<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) &gt;  (<span style="color:#00D">25</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>)
-(<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) &gt;  (<span style="color:#00D">525</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>)
-(<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) &gt;= (<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>)
-(<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) == (<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>)
-(<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) &lt;  (<span style="color:#00D">25</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°C</span><span style="color:#710">&quot;</span></span>)</code></pre>
+      <pre class="example code"><code>(<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) &gt;  (<span class="integer">25</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>)
+(<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) &gt;  (<span class="integer">525</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>)
+(<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) &gt;= (<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>)
+(<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) == (<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>)
+(<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) &lt;  (<span class="integer">25</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>A Range can be used with QuantityType:</p>
 </div></p>
       
-      <pre class="example code"><code>((<span style="color:#00D">0</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°C</span><span style="color:#710">&quot;</span></span>)..(<span style="color:#00D">100</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°C</span><span style="color:#710">&quot;</span></span>)).cover?(<span style="color:#036;font-weight:bold">NumberC</span>)</code></pre>
+      <pre class="example code"><code>((<span class="integer">0</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)..(<span class="integer">100</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)).cover?(<span class="constant">NumberC</span>)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>A Range can also be used in a case statement for a dimensioned item:</p>
 </div></p>
       
-      <pre class="example code"><code>description = <span style="color:#080;font-weight:bold">case</span> <span style="color:#036;font-weight:bold">NumberC</span>.state
-              <span style="color:#080;font-weight:bold">when</span> (<span style="color:#00D">-20</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°C</span><span style="color:#710">&quot;</span></span>)...(<span style="color:#00D">18</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°C</span><span style="color:#710">&quot;</span></span>) <span style="color:#080;font-weight:bold">then</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">too cold</span><span style="color:#710">&quot;</span></span>
-              <span style="color:#080;font-weight:bold">when</span> (<span style="color:#00D">18</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°C</span><span style="color:#710">&quot;</span></span>)...(<span style="color:#00D">25</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°C</span><span style="color:#710">&quot;</span></span>) <span style="color:#080;font-weight:bold">then</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">comfortable</span><span style="color:#710">&quot;</span></span>
-              <span style="color:#080;font-weight:bold">when</span> (<span style="color:#00D">25</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°C</span><span style="color:#710">&quot;</span></span>)...(<span style="color:#00D">40</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°C</span><span style="color:#710">&quot;</span></span>) <span style="color:#080;font-weight:bold">then</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">too warm</span><span style="color:#710">&quot;</span></span>
-              <span style="color:#080;font-weight:bold">else</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">out of range</span><span style="color:#710">&quot;</span></span>
-              <span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>description = <span class="keyword">case</span> <span class="constant">NumberC</span>.state
+              <span class="keyword">when</span> (<span class="integer">-20</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)...(<span class="integer">18</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>) <span class="keyword">then</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">too cold</span><span class="delimiter">&quot;</span></span>
+              <span class="keyword">when</span> (<span class="integer">18</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)...(<span class="integer">25</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>) <span class="keyword">then</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">comfortable</span><span class="delimiter">&quot;</span></span>
+              <span class="keyword">when</span> (<span class="integer">25</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)...(<span class="integer">40</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>) <span class="keyword">then</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">too warm</span><span class="delimiter">&quot;</span></span>
+              <span class="keyword">else</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">out of range</span><span class="delimiter">&quot;</span></span>
+              <span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Dimensioned Number Items can be converted to quantities with other units using the | operator</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#777"># NumberC = &quot;23 °C&quot;</span>
+      <pre class="example code"><code><span class="comment"># NumberC = &quot;23 °C&quot;</span>
 
-<span style="color:#777"># Using a unit</span>
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">In Fahrenheit </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">NumberC</span>.state | <span style="color:#036;font-weight:bold">ImperialUnits</span>::<span style="color:#036;font-weight:bold">FAHRENHEIT</span> <span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
+<span class="comment"># Using a unit</span>
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">In Fahrenheit </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">NumberC</span>.state | <span class="constant">ImperialUnits</span>::<span class="constant">FAHRENHEIT</span> <span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
 
-<span style="color:#777"># Using a string</span>
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">In Fahrenheit </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">NumberC</span>.state | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)</code></pre>
+<span class="comment"># Using a string</span>
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">In Fahrenheit </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">NumberC</span>.state | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Dimensionless Number Items can be converted to quantities with units using the | operator</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#777"># Dimensionless = 70</span>
+      <pre class="example code"><code><span class="comment"># Dimensionless = 70</span>
 
-<span style="color:#777"># Using a unit</span>
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">In Fahrenheit </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">Dimensionless</span>.state | <span style="color:#036;font-weight:bold">ImperialUnits</span>::<span style="color:#036;font-weight:bold">FAHRENHEIT</span> <span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
+<span class="comment"># Using a unit</span>
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">In Fahrenheit </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Dimensionless</span>.state | <span class="constant">ImperialUnits</span>::<span class="constant">FAHRENHEIT</span> <span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
 
-<span style="color:#777"># Using a string</span>
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">In Fahrenheit </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">Dimensionless</span>.state | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)</code></pre>
+<span class="comment"># Using a string</span>
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">In Fahrenheit </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Dimensionless</span>.state | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Dimensioned Number Items automatically use their units and convert automatically for math operations</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#777"># Number:Temperature NumberC = 23 °C</span>
-<span style="color:#777"># Number:Temperature NumberF = 70 °F</span>
-<span style="color:#036;font-weight:bold">NumberC</span>.state - <span style="color:#036;font-weight:bold">NumberF</span>.state <span style="color:#777"># =&gt; 1.88 °C</span>
-<span style="color:#036;font-weight:bold">NumberF</span>.state + <span style="color:#036;font-weight:bold">NumberC</span>.state <span style="color:#777"># =&gt; 143.40 °F</span></code></pre>
+      <pre class="example code"><code><span class="comment"># Number:Temperature NumberC = 23 °C</span>
+<span class="comment"># Number:Temperature NumberF = 70 °F</span>
+<span class="constant">NumberC</span>.state - <span class="constant">NumberF</span>.state <span class="comment"># =&gt; 1.88 °C</span>
+<span class="constant">NumberF</span>.state + <span class="constant">NumberC</span>.state <span class="comment"># =&gt; 143.40 °F</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Dimensionless Number Items can be used for multiplication and division.</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#777"># Number Dimensionless = 2</span>
-<span style="color:#777"># Number:Temperature NumberF = 70 °F</span>
-<span style="color:#036;font-weight:bold">NumberF</span>.state * <span style="color:#036;font-weight:bold">Dimensionless</span>.state <span style="color:#777"># =&gt; 140.0 °F</span>
-<span style="color:#036;font-weight:bold">NumberF</span>.state / <span style="color:#036;font-weight:bold">Dimensionless</span>.state <span style="color:#777"># =&gt; 35.0 °F</span>
-<span style="color:#036;font-weight:bold">Dimensionless</span>.state * <span style="color:#036;font-weight:bold">NumberF</span>.state <span style="color:#777"># =&gt; 140.0 °F</span>
-<span style="color:#00D">2</span> * <span style="color:#036;font-weight:bold">NumberF</span>.state                   <span style="color:#777"># =&gt; 140.0 °F</span></code></pre>
+      <pre class="example code"><code><span class="comment"># Number Dimensionless = 2</span>
+<span class="comment"># Number:Temperature NumberF = 70 °F</span>
+<span class="constant">NumberF</span>.state * <span class="constant">Dimensionless</span>.state <span class="comment"># =&gt; 140.0 °F</span>
+<span class="constant">NumberF</span>.state / <span class="constant">Dimensionless</span>.state <span class="comment"># =&gt; 35.0 °F</span>
+<span class="constant">Dimensionless</span>.state * <span class="constant">NumberF</span>.state <span class="comment"># =&gt; 140.0 °F</span>
+<span class="integer">2</span> * <span class="constant">NumberF</span>.state                   <span class="comment"># =&gt; 140.0 °F</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Comparisons work on dimensioned number items with different, but comparable units.</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#777"># Number:Temperature NumberC = 23 °C</span>
-<span style="color:#777"># Number:Temperature NumberF = 70 °F</span>
-<span style="color:#036;font-weight:bold">NumberC</span>.state &gt; <span style="color:#036;font-weight:bold">NumberF</span>.state <span style="color:#777"># =&gt; true</span></code></pre>
+      <pre class="example code"><code><span class="comment"># Number:Temperature NumberC = 23 °C</span>
+<span class="comment"># Number:Temperature NumberF = 70 °F</span>
+<span class="constant">NumberC</span>.state &gt; <span class="constant">NumberF</span>.state <span class="comment"># =&gt; true</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>For certain unit types, such as temperature, all unit needs to be normalized to the comparator for all operations when combining comparison operators with dimensioned numbers.</p>
 </div></p>
       
-      <pre class="example code"><code>(<span style="color:#036;font-weight:bold">NumberC</span>.state | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) - (<span style="color:#036;font-weight:bold">NumberF</span>.state | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) &lt; <span style="color:#00D">4</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span></code></pre>
+      <pre class="example code"><code>(<span class="constant">NumberC</span>.state | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) - (<span class="constant">NumberF</span>.state | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) &lt; <span class="integer">4</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span></code></pre>
     
   </div>
 
@@ -2759,26 +2761,26 @@ less than, equal to, or greater than self</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/quantity_type.rb', line 134</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">&lt;=&gt;</span>(other)
-  logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">(</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#069">self</span>.class<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">) </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#069">self</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> &lt;=&gt; </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>other<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> (</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>other.class<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#080;font-weight:bold">case</span> other
-  <span style="color:#080;font-weight:bold">when</span> <span style="color:#069">self</span>.class
-    <span style="color:#080;font-weight:bold">return</span> unitize(other.unit).compare_to(other) <span style="color:#080;font-weight:bold">if</span> unit == <span style="color:#036;font-weight:bold">Units</span>::<span style="color:#036;font-weight:bold">ONE</span>
-    <span style="color:#080;font-weight:bold">return</span> compare_to(other.unitize(unit)) <span style="color:#080;font-weight:bold">if</span> other.unit == <span style="color:#036;font-weight:bold">Units</span>::<span style="color:#036;font-weight:bold">ONE</span>
+<span class="keyword">def</span> <span class="function">&lt;=&gt;</span>(other)
+  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span>.class<span class="inline-delimiter">}</span></span><span class="content">) </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> &lt;=&gt; </span><span class="inline"><span class="inline-delimiter">#{</span>other<span class="inline-delimiter">}</span></span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">case</span> other
+  <span class="keyword">when</span> <span class="predefined-constant">self</span>.class
+    <span class="keyword">return</span> unitize(other.unit).compare_to(other) <span class="keyword">if</span> unit == <span class="constant">Units</span>::<span class="constant">ONE</span>
+    <span class="keyword">return</span> compare_to(other.unitize(unit)) <span class="keyword">if</span> other.unit == <span class="constant">Units</span>::<span class="constant">ONE</span>
 
-    <span style="color:#080;font-weight:bold">return</span> compare_to(other)
-  <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Numeric</span>, <span style="color:#036;font-weight:bold">DecimalType</span>
-    <span style="color:#080;font-weight:bold">if</span> (unit = <span style="color:#036;font-weight:bold">OpenHAB</span>::<span style="color:#036;font-weight:bold">DSL</span>.unit(dimension))
-      <span style="color:#080;font-weight:bold">return</span> compare_to(<span style="color:#036;font-weight:bold">QuantityType</span>.new(other, unit))
-    <span style="color:#080;font-weight:bold">end</span>
+    <span class="keyword">return</span> compare_to(other)
+  <span class="keyword">when</span> <span class="constant">Numeric</span>, <span class="constant">DecimalType</span>
+    <span class="keyword">if</span> (unit = <span class="constant">OpenHAB</span>::<span class="constant">DSL</span>.unit(dimension))
+      <span class="keyword">return</span> compare_to(<span class="constant">QuantityType</span>.new(other, unit))
+    <span class="keyword">end</span>
 
-    <span style="color:#080;font-weight:bold">return</span> <span style="color:#069">nil</span> <span style="color:#777"># don't allow comparison with numeric outside a unit block</span>
-  <span style="color:#080;font-weight:bold">end</span>
+    <span class="keyword">return</span> <span class="predefined-constant">nil</span> <span class="comment"># don't allow comparison with numeric outside a unit block</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#080;font-weight:bold">return</span> <span style="color:#069">nil</span> <span style="color:#080;font-weight:bold">unless</span> other.respond_to?(<span style="color:#A60">:coerce</span>)
+  <span class="keyword">return</span> <span class="predefined-constant">nil</span> <span class="keyword">unless</span> other.respond_to?(<span class="symbol">:coerce</span>)
 
-  other.coerce(<span style="color:#069">self</span>)&amp;.<span style="color:#080;font-weight:bold">then</span> { |lhs, rhs| lhs &lt;=&gt; rhs }
-<span style="color:#080;font-weight:bold">end</span></pre>
+  other.coerce(<span class="predefined-constant">self</span>)&amp;.<span class="keyword">then</span> { |lhs, rhs| lhs &lt;=&gt; rhs }
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2856,14 +2858,14 @@ to that type to accomodate comparison with things such as <span class='object_li
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/quantity_type.rb', line 166</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">coerce</span>(other)
-  logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Coercing </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#069">self</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> as a request from </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>other.class<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#080;font-weight:bold">if</span> other.is_a?(<span style="color:#036;font-weight:bold">Type</span>)
+<span class="keyword">def</span> <span class="function">coerce</span>(other)
+  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Coercing </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> as a request from </span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">if</span> other.is_a?(<span class="constant">Type</span>)
     [other, as(other.class)]
-  <span style="color:#080;font-weight:bold">elsif</span> other.respond_to?(<span style="color:#A60">:to_d</span>)
-    [<span style="color:#036;font-weight:bold">QuantityType</span>.new(other.to_d.to_java, <span style="color:#036;font-weight:bold">Units</span>::<span style="color:#036;font-weight:bold">ONE</span>), <span style="color:#069">self</span>]
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">elsif</span> other.respond_to?(<span class="symbol">:to_d</span>)
+    [<span class="constant">QuantityType</span>.new(other.to_d.to_java, <span class="constant">Units</span>::<span class="constant">ONE</span>), <span class="predefined-constant">self</span>]
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2895,7 +2897,7 @@ to that type to accomodate comparison with things such as <span class='object_li
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">NumberC</span>.state | <span style="color:#036;font-weight:bold">ImperialUnits</span>::<span style="color:#036;font-weight:bold">FAHRENHEIT</span></code></pre>
+      <pre class="example code"><code><span class="constant">NumberC</span>.state | <span class="constant">ImperialUnits</span>::<span class="constant">FAHRENHEIT</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -2939,7 +2941,7 @@ to that type to accomodate comparison with things such as <span class='object_li
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/quantity_type.rb', line 10</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to_unit</span>(unit); <span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">to_unit</span>(unit); <span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2950,7 +2952,7 @@ to that type to accomodate comparison with things such as <span class='object_li
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:37 2022 by
+  Generated on Fri Dec  9 22:46:51 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

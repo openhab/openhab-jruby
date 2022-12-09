@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::DSL::Rules::Triggers::WatchHandler::Watcher";
   relpath = '../../../../../';
@@ -2446,10 +2448,10 @@ rubocop:disable Naming/MethodName</p>
 </div>
         </dt>
         <dd><pre class="code">{
-  <span style="color:#606">created</span>: <span style="color:#036;font-weight:bold">StandardWatchEventKinds</span>::<span style="color:#036;font-weight:bold">ENTRY_CREATE</span>,
-  <span style="color:#606">deleted</span>: <span style="color:#036;font-weight:bold">StandardWatchEventKinds</span>::<span style="color:#036;font-weight:bold">ENTRY_DELETE</span>,
-  <span style="color:#606">modified</span>: <span style="color:#036;font-weight:bold">StandardWatchEventKinds</span>::<span style="color:#036;font-weight:bold">ENTRY_MODIFY</span>
-}.transform_keys(&amp;<span style="color:#A60">:to_s</span>).freeze</pre></dd>
+  <span class="key">created</span>: <span class="constant">StandardWatchEventKinds</span>::<span class="constant">ENTRY_CREATE</span>,
+  <span class="key">deleted</span>: <span class="constant">StandardWatchEventKinds</span>::<span class="constant">ENTRY_DELETE</span>,
+  <span class="key">modified</span>: <span class="constant">StandardWatchEventKinds</span>::<span class="constant">ENTRY_MODIFY</span>
+}.transform_keys(&amp;<span class="symbol">:to_s</span>).freeze</pre></dd>
       
         <dt id="EVENT_TO_SYMBOL-constant" class="">EVENT_TO_SYMBOL =
           <div class="docstring">
@@ -2464,7 +2466,7 @@ rubocop:disable Naming/MethodName</p>
 
 </div>
         </dt>
-        <dd><pre class="code"><span style="color:#036;font-weight:bold">STRING_TO_EVENT</span>.invert.transform_values(&amp;<span style="color:#A60">:to_sym</span>).freeze</pre></dd>
+        <dd><pre class="code"><span class="constant">STRING_TO_EVENT</span>.invert.transform_values(&amp;<span class="symbol">:to_sym</span>).freeze</pre></dd>
       
     </dl>
   
@@ -2626,11 +2628,11 @@ rubocop:disable Naming/MethodName</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 48</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">initialize</span>(path, types, &amp;block)
-  <span style="color:#080;font-weight:bold">super</span>(path)
-  <span style="color:#33B">@types</span> = types.map { |type| <span style="color:#036;font-weight:bold">STRING_TO_EVENT</span>[type] }
-  <span style="color:#33B">@block</span> = block
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">initialize</span>(path, types, &amp;block)
+  <span class="keyword">super</span>(path)
+  <span class="instance-variable">@types</span> = types.map { |type| <span class="constant">STRING_TO_EVENT</span>[type] }
+  <span class="instance-variable">@block</span> = block
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2711,9 +2713,9 @@ rubocop:disable Naming/MethodName</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 58</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">getWatchEventKinds</span>(_path)
-  <span style="color:#33B">@types</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">getWatchEventKinds</span>(_path)
+  <span class="instance-variable">@types</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2800,9 +2802,9 @@ rubocop:disable Naming/MethodName</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 72</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">processWatchEvent</span>(_event, kind, path)
-  <span style="color:#33B">@block</span>.call(<span style="color:#036;font-weight:bold">Events</span>::<span style="color:#036;font-weight:bold">WatchEvent</span>.new(<span style="color:#036;font-weight:bold">EVENT_TO_SYMBOL</span>[kind], <span style="color:#036;font-weight:bold">Pathname</span>.new(path.to_s)))
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">processWatchEvent</span>(_event, kind, path)
+  <span class="instance-variable">@block</span>.call(<span class="constant">Events</span>::<span class="constant">WatchEvent</span>.new(<span class="constant">EVENT_TO_SYMBOL</span>[kind], <span class="constant">Pathname</span>.new(path.to_s)))
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2857,9 +2859,9 @@ rubocop:disable Naming/MethodName</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 64</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">watchSubDirectories</span>
-  <span style="color:#069">false</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">watchSubDirectories</span>
+  <span class="predefined-constant">false</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2870,7 +2872,7 @@ rubocop:disable Naming/MethodName</p>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:38 2022 by
+  Generated on Fri Dec  9 22:46:52 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

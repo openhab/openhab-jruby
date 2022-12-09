@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::CoreExt::Ruby::Range";
   relpath = '../../../';
@@ -2555,17 +2557,17 @@ instead of <code>begin</code> and <code>end</code>.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/range.rb', line 54</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">circular?</span>
-  <span style="color:#080;font-weight:bold">return</span> <span style="color:#069">false</span> <span style="color:#080;font-weight:bold">if</span> <span style="color:#069">self</span>.begin.nil? || <span style="color:#069">self</span>.end.nil?
-  <span style="color:#080;font-weight:bold">return</span> <span style="color:#069">false</span> <span style="color:#080;font-weight:bold">if</span> <span style="color:#069">self</span>.begin &lt;= <span style="color:#069">self</span>.end
+<span class="keyword">def</span> <span class="function">circular?</span>
+  <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">if</span> <span class="predefined-constant">self</span>.begin.nil? || <span class="predefined-constant">self</span>.end.nil?
+  <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">if</span> <span class="predefined-constant">self</span>.begin &lt;= <span class="predefined-constant">self</span>.end
 
-  <span style="color:#080;font-weight:bold">case</span> <span style="color:#069">self</span>.begin || <span style="color:#069">self</span>.end
-  <span style="color:#080;font-weight:bold">when</span> java.time.LocalTime, java.time.MonthDay, java.time.Month
-    <span style="color:#069">true</span>
-  <span style="color:#080;font-weight:bold">else</span>
-    <span style="color:#069">false</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">case</span> <span class="predefined-constant">self</span>.begin || <span class="predefined-constant">self</span>.end
+  <span class="keyword">when</span> java.time.LocalTime, java.time.MonthDay, java.time.Month
+    <span class="predefined-constant">true</span>
+  <span class="keyword">else</span>
+    <span class="predefined-constant">false</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2621,15 +2623,15 @@ instead of <code>begin</code> and <code>end</code>.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/range.rb', line 8</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">cover?</span>(object)
-  <span style="color:#777"># inverted circular range</span>
-  <span style="color:#080;font-weight:bold">if</span> circular?
-    <span style="color:#080;font-weight:bold">return</span> object &gt;= <span style="color:#069">self</span>.begin || object &lt; <span style="color:#069">self</span>.end <span style="color:#080;font-weight:bold">if</span> exclude_end?
+<span class="keyword">def</span> <span class="function">cover?</span>(object)
+  <span class="comment"># inverted circular range</span>
+  <span class="keyword">if</span> circular?
+    <span class="keyword">return</span> object &gt;= <span class="predefined-constant">self</span>.begin || object &lt; <span class="predefined-constant">self</span>.end <span class="keyword">if</span> exclude_end?
 
-    <span style="color:#080;font-weight:bold">return</span> object &gt;= <span style="color:#069">self</span>.begin || object &lt;= <span style="color:#069">self</span>.end
-  <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">super</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+    <span class="keyword">return</span> object &gt;= <span class="predefined-constant">self</span>.begin || object &lt;= <span class="predefined-constant">self</span>.end
+  <span class="keyword">end</span>
+  <span class="keyword">super</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2679,21 +2681,21 @@ instead of <code>begin</code> and <code>end</code>.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/range.rb', line 27</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">each</span>
-  <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">super</span> <span style="color:#080;font-weight:bold">unless</span> circular?
-  <span style="color:#080;font-weight:bold">return</span> to_enum(<span style="color:#A60">:each</span>) <span style="color:#080;font-weight:bold">unless</span> block_given?
+<span class="keyword">def</span> <span class="function">each</span>
+  <span class="keyword">return</span> <span class="keyword">super</span> <span class="keyword">unless</span> circular?
+  <span class="keyword">return</span> to_enum(<span class="symbol">:each</span>) <span class="keyword">unless</span> block_given?
 
-  val = <span style="color:#069">self</span>.begin
-  loop <span style="color:#080;font-weight:bold">do</span>
-    is_end = val == <span style="color:#069">self</span>.end
-    <span style="color:#080;font-weight:bold">break</span> <span style="color:#080;font-weight:bold">if</span> is_end &amp;&amp; exclude_end?
+  val = <span class="predefined-constant">self</span>.begin
+  loop <span class="keyword">do</span>
+    is_end = val == <span class="predefined-constant">self</span>.end
+    <span class="keyword">break</span> <span class="keyword">if</span> is_end &amp;&amp; exclude_end?
 
-    <span style="color:#080;font-weight:bold">yield</span> val
-    <span style="color:#080;font-weight:bold">break</span> <span style="color:#080;font-weight:bold">if</span> is_end
+    <span class="keyword">yield</span> val
+    <span class="keyword">break</span> <span class="keyword">if</span> is_end
 
     val = val.succ
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2704,7 +2706,7 @@ instead of <code>begin</code> and <code>end</code>.</p>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:31 2022 by
+  Generated on Fri Dec  9 22:46:45 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

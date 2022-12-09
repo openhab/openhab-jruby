@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::DSL::Rules::Triggers::WatchHandler::WatchTriggerHandler";
   relpath = '../../../../../';
@@ -2590,14 +2592,14 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 85</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">initialize</span>(trigger)
-  <span style="color:#33B">@trigger</span> = trigger
-  config = trigger.configuration.properties.to_hash.transform_keys(&amp;<span style="color:#A60">:to_sym</span>)
-  <span style="color:#33B">@path</span> = config[<span style="color:#A60">:path</span>]
-  <span style="color:#33B">@watcher</span> = <span style="color:#036;font-weight:bold">Watcher</span>.new(<span style="color:#33B">@path</span>, config[<span style="color:#A60">:types</span>], &amp;watch_event_handler(config[<span style="color:#A60">:glob</span>]))
-  <span style="color:#33B">@watcher</span>.activate
-  logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Created watcher for </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#33B">@path</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">initialize</span>(trigger)
+  <span class="instance-variable">@trigger</span> = trigger
+  config = trigger.configuration.properties.to_hash.transform_keys(&amp;<span class="symbol">:to_sym</span>)
+  <span class="instance-variable">@path</span> = config[<span class="symbol">:path</span>]
+  <span class="instance-variable">@watcher</span> = <span class="constant">Watcher</span>.new(<span class="instance-variable">@path</span>, config[<span class="symbol">:types</span>], &amp;watch_event_handler(config[<span class="symbol">:glob</span>]))
+  <span class="instance-variable">@watcher</span>.activate
+  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Created watcher for </span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@path</span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2643,10 +2645,10 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 118</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">dispose</span>
-  logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Deactivating watcher for </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#33B">@path</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#33B">@watcher</span>&amp;.deactivate
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">dispose</span>
+  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Deactivating watcher for </span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@path</span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+  <span class="instance-variable">@watcher</span>&amp;.deactivate
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2684,9 +2686,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 111</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">setCallback</span>(callback) <span style="color:#777"># rubocop:disable Naming/MethodName</span>
-  <span style="color:#33B">@rule_engine_callback</span> = callback
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">setCallback</span>(callback) <span class="comment"># rubocop:disable Naming/MethodName</span>
+  <span class="instance-variable">@rule_engine_callback</span> = callback
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2767,16 +2769,16 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 99</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">watch_event_handler</span>(glob)
-  lambda <span style="color:#080;font-weight:bold">do</span> |watch_event|
-    <span style="color:#080;font-weight:bold">if</span> watch_event.path.fnmatch?(glob)
-      logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Received event(</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>watch_event<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span>)
-      <span style="color:#33B">@rule_engine_callback</span>&amp;.triggered(<span style="color:#33B">@trigger</span>, { <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">event</span><span style="color:#710">&quot;</span></span> =&gt; watch_event })
-    <span style="color:#080;font-weight:bold">else</span>
-      logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Event </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>watch_event<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> did not match glob(</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>glob<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span>)
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">watch_event_handler</span>(glob)
+  lambda <span class="keyword">do</span> |watch_event|
+    <span class="keyword">if</span> watch_event.path.fnmatch?(glob)
+      logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Received event(</span><span class="inline"><span class="inline-delimiter">#{</span>watch_event<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>)
+      <span class="instance-variable">@rule_engine_callback</span>&amp;.triggered(<span class="instance-variable">@trigger</span>, { <span class="string"><span class="delimiter">&quot;</span><span class="content">event</span><span class="delimiter">&quot;</span></span> =&gt; watch_event })
+    <span class="keyword">else</span>
+      logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Event </span><span class="inline"><span class="inline-delimiter">#{</span>watch_event<span class="inline-delimiter">}</span></span><span class="content"> did not match glob(</span><span class="inline"><span class="inline-delimiter">#{</span>glob<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2787,7 +2789,7 @@
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:38 2022 by
+  Generated on Fri Dec  9 22:46:52 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

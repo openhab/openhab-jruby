@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "Enumerable";
   relpath = '';
@@ -3068,9 +3070,9 @@ otherwise self</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 77</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">command</span>(command)
-  <span style="color:#069">self</span> <span style="color:#080;font-weight:bold">if</span> count { |i| i.command(command) }.positive?
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">command</span>(command)
+  <span class="predefined-constant">self</span> <span class="keyword">if</span> count { |i| i.command(command) }.positive?
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3210,7 +3212,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
         <p class="example_title"><div class='inline'><p>Get all TVs in a room</p>
 </div></p>
       
-      <pre class="example code"><code>lGreatRoom.equipments(<span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Screen</span>)</code></pre>
+      <pre class="example code"><code>lGreatRoom.equipments(<span class="constant">Semantics</span>::<span class="constant">Screen</span>)</code></pre>
     
   </div>
 
@@ -3248,16 +3250,16 @@ before calling <span class='object_link'><a href="#points-instance_method" title
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 431</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">equipments</span>(type = <span style="color:#069">nil</span>)
-  <span style="color:#080;font-weight:bold">if</span> type &amp;&amp; (!type.is_a?(<span style="color:#036;font-weight:bold">Module</span>) || !(type &lt; <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Equipment</span>))
-    raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">type must be a subclass of Equipment</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
+<span class="keyword">def</span> <span class="function">equipments</span>(type = <span class="predefined-constant">nil</span>)
+  <span class="keyword">if</span> type &amp;&amp; (!type.is_a?(<span class="constant">Module</span>) || !(type &lt; <span class="constant">Semantics</span>::<span class="constant">Equipment</span>))
+    raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">type must be a subclass of Equipment</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
 
-  result = select(&amp;<span style="color:#A60">:equipment?</span>)
-  result.select! { |i| i.equipment_type &lt;= type } <span style="color:#080;font-weight:bold">if</span> type
+  result = select(&amp;<span class="symbol">:equipment?</span>)
+  result.select! { |i| i.equipment_type &lt;= type } <span class="keyword">if</span> type
 
   result
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3413,16 +3415,16 @@ before calling <span class='object_link'><a href="#points-instance_method" title
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 408</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">locations</span>(type = <span style="color:#069">nil</span>)
-  <span style="color:#080;font-weight:bold">if</span> type &amp;&amp; (!type.is_a?(<span style="color:#036;font-weight:bold">Module</span>) || !(type &lt; <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Location</span>))
-    raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">type must be a subclass of Location</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
+<span class="keyword">def</span> <span class="function">locations</span>(type = <span class="predefined-constant">nil</span>)
+  <span class="keyword">if</span> type &amp;&amp; (!type.is_a?(<span class="constant">Module</span>) || !(type &lt; <span class="constant">Semantics</span>::<span class="constant">Location</span>))
+    raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">type must be a subclass of Location</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
 
-  result = select(&amp;<span style="color:#A60">:location?</span>)
-  result.select! { |i| i.location_type &lt;= type } <span style="color:#080;font-weight:bold">if</span> type
+  result = select(&amp;<span class="symbol">:location?</span>)
+  result.select! { |i| i.location_type &lt;= type } <span class="keyword">if</span> type
 
   result
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3473,9 +3475,9 @@ before calling <span class='object_link'><a href="#points-instance_method" title
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 56</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">member_of</span>(*groups)
-  reject { |i| (groups.map(&amp;<span style="color:#A60">:name</span>) &amp; i.group_names).empty? }
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">member_of</span>(*groups)
+  reject { |i| (groups.map(&amp;<span class="symbol">:name</span>) &amp; i.group_names).empty? }
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3526,9 +3528,9 @@ before calling <span class='object_link'><a href="#points-instance_method" title
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 68</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">members</span>
-  grep(<span style="color:#036;font-weight:bold">OpenHAB</span>::<span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Items</span>::<span style="color:#036;font-weight:bold">GroupItem</span>).flat_map(&amp;<span style="color:#A60">:members</span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">members</span>
+  grep(<span class="constant">OpenHAB</span>::<span class="constant">Core</span>::<span class="constant">Items</span>::<span class="constant">GroupItem</span>).flat_map(&amp;<span class="symbol">:members</span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3677,9 +3679,9 @@ before calling <span class='object_link'><a href="#points-instance_method" title
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 62</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">not_member_of</span>(*groups)
-  select { |i| (groups.map(&amp;<span style="color:#A60">:name</span>) &amp; i.group_names).empty? }
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">not_member_of</span>(*groups)
+  select { |i| (groups.map(&amp;<span class="symbol">:name</span>) &amp; i.group_names).empty? }
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3730,9 +3732,9 @@ before calling <span class='object_link'><a href="#points-instance_method" title
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 50</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">not_tagged</span>(*tags)
+<span class="keyword">def</span> <span class="function">not_tagged</span>(*tags)
   select { |i| (tags &amp; i.tags.to_a).empty? }
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3959,7 +3961,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
         <p class="example_title"><div class='inline'><p>Get all the power switch items for every equipment in a room</p>
 </div></p>
       
-      <pre class="example code"><code>lGreatRoom.equipments.members.points(<span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Switch</span>)</code></pre>
+      <pre class="example code"><code>lGreatRoom.equipments.members.points(<span class="constant">Semantics</span>::<span class="constant">Switch</span>)</code></pre>
     
   </div>
 
@@ -4016,28 +4018,28 @@ before calling <span class='object_link'><a href="#points-instance_method" title
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 451</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">points</span>(*point_or_property_types)
-  <span style="color:#080;font-weight:bold">unless</span> (<span style="color:#00D">0</span>..<span style="color:#00D">2</span>).cover?(point_or_property_types.length)
-    raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">wrong number of arguments (given </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>point_or_property_types.length<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">, expected 0..2)</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">unless</span> point_or_property_types.all? <span style="color:#080;font-weight:bold">do</span> |tag|
-           tag.is_a?(<span style="color:#036;font-weight:bold">Module</span>) &amp;&amp;
-           (tag &lt; <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Point</span> || tag &lt; <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Property</span>)
-         <span style="color:#080;font-weight:bold">end</span>
-    raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">point_or_property_types must all be a subclass of Point or Property</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">if</span> point_or_property_types.count { |tag| tag &lt; <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Point</span> } &gt; <span style="color:#00D">1</span> ||
-     point_or_property_types.count { |tag| tag &lt; <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Property</span> } &gt; <span style="color:#00D">1</span>
-    raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">point_or_property_types cannot both be a subclass of Point or Property</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
+<span class="keyword">def</span> <span class="function">points</span>(*point_or_property_types)
+  <span class="keyword">unless</span> (<span class="integer">0</span>..<span class="integer">2</span>).cover?(point_or_property_types.length)
+    raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">wrong number of arguments (given </span><span class="inline"><span class="inline-delimiter">#{</span>point_or_property_types.length<span class="inline-delimiter">}</span></span><span class="content">, expected 0..2)</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
+  <span class="keyword">unless</span> point_or_property_types.all? <span class="keyword">do</span> |tag|
+           tag.is_a?(<span class="constant">Module</span>) &amp;&amp;
+           (tag &lt; <span class="constant">Semantics</span>::<span class="constant">Point</span> || tag &lt; <span class="constant">Semantics</span>::<span class="constant">Property</span>)
+         <span class="keyword">end</span>
+    raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">point_or_property_types must all be a subclass of Point or Property</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
+  <span class="keyword">if</span> point_or_property_types.count { |tag| tag &lt; <span class="constant">Semantics</span>::<span class="constant">Point</span> } &gt; <span class="integer">1</span> ||
+     point_or_property_types.count { |tag| tag &lt; <span class="constant">Semantics</span>::<span class="constant">Property</span> } &gt; <span class="integer">1</span>
+    raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">point_or_property_types cannot both be a subclass of Point or Property</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
 
-  select <span style="color:#080;font-weight:bold">do</span> |point|
-    point.point? &amp;&amp; point_or_property_types.all? <span style="color:#080;font-weight:bold">do</span> |tag|
-      (tag &lt; <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Point</span> &amp;&amp; point.point_type &lt;= tag) ||
-        (tag &lt; <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Property</span> &amp;&amp; point.property_type&amp;.&lt;=(tag))
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  select <span class="keyword">do</span> |point|
+    point.point? &amp;&amp; point_or_property_types.all? <span class="keyword">do</span> |tag|
+      (tag &lt; <span class="constant">Semantics</span>::<span class="constant">Point</span> &amp;&amp; point.point_type &lt;= tag) ||
+        (tag &lt; <span class="constant">Semantics</span>::<span class="constant">Property</span> &amp;&amp; point.property_type&amp;.&lt;=(tag))
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4284,9 +4286,9 @@ before calling <span class='object_link'><a href="#points-instance_method" title
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 44</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">tagged</span>(*tags)
+<span class="keyword">def</span> <span class="function">tagged</span>(*tags)
   reject { |i| (tags &amp; i.tags.to_a).empty? }
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4391,9 +4393,9 @@ otherwise self</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 84</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">update</span>(state)
-  <span style="color:#069">self</span> <span style="color:#080;font-weight:bold">if</span> count { |i| i.update(state) }.positive?
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">update</span>(state)
+  <span class="predefined-constant">self</span> <span class="keyword">if</span> count { |i| i.update(state) }.positive?
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4404,7 +4406,7 @@ otherwise self</p>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:32 2022 by
+  Generated on Fri Dec  9 22:46:46 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

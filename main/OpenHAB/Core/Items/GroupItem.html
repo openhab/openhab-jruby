@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Items::GroupItem";
   relpath = '../../../';
@@ -2440,49 +2442,49 @@ Number Den_Temp &quot;Den temperature&quot; (GroundFloor, Temperatures)
         <p class="example_title"><div class='inline'><p>Operate on items in a group using enumerable methods</p>
 </div></p>
       
-      <pre class="example code"><code>logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Total Temperatures: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">Temperatures</span>.members.count<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-<span style="color:#777"># Total Temperatures: 3</span>
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Temperatures: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">House</span>.members.map(&amp;<span style="color:#A60">:name</span>).sort.join(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">, </span><span style="color:#710">'</span></span>)<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-<span style="color:#777"># Temperatures: GroundFloor, Sensors</span></code></pre>
+      <pre class="example code"><code>logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Total Temperatures: </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Temperatures</span>.members.count<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+<span class="comment"># Total Temperatures: 3</span>
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Temperatures: </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">House</span>.members.map(&amp;<span class="symbol">:name</span>).sort.join(<span class="string"><span class="delimiter">'</span><span class="content">, </span><span class="delimiter">'</span></span>)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+<span class="comment"># Temperatures: GroundFloor, Sensors</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Access to the methods and attributes like any item</p>
 </div></p>
       
-      <pre class="example code"><code>logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Group: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">Temperatures</span>.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#777"># Group: Temperatures'</span></code></pre>
+      <pre class="example code"><code>logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Group: </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Temperatures</span>.name<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="comment"># Group: Temperatures'</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Operates on items in nested groups using enumerable methods</p>
 </div></p>
       
-      <pre class="example code"><code>logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">House Count: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">House</span>.all_members.count<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-<span style="color:#777"># House Count: 7</span>
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Items: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">House</span>.all_members.grep_v(<span style="color:#036;font-weight:bold">GroupItem</span>).map(&amp;<span style="color:#A60">:label</span>).sort.join(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">, </span><span style="color:#710">'</span></span>)<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-<span style="color:#777"># Items: Bedroom temperature, Den temperature, Living Room temperature</span></code></pre>
+      <pre class="example code"><code>logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">House Count: </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">House</span>.all_members.count<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+<span class="comment"># House Count: 7</span>
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Items: </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">House</span>.all_members.grep_v(<span class="constant">GroupItem</span>).map(&amp;<span class="symbol">:label</span>).sort.join(<span class="string"><span class="delimiter">'</span><span class="content">, </span><span class="delimiter">'</span></span>)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+<span class="comment"># Items: Bedroom temperature, Den temperature, Living Room temperature</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Iterate through the direct members of the group</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Temperatures</span>.members.each <span style="color:#080;font-weight:bold">do</span> |item|
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>item.label<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>item.state<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-<span style="color:#080;font-weight:bold">end</span>
-<span style="color:#777"># Living Room temperature is 22</span>
-<span style="color:#777"># Bedroom temperature is 21</span>
-<span style="color:#777"># Den temperature is 19</span></code></pre>
+      <pre class="example code"><code><span class="constant">Temperatures</span>.members.each <span class="keyword">do</span> |item|
+  logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>item.label<span class="inline-delimiter">}</span></span><span class="content"> is: </span><span class="inline"><span class="inline-delimiter">#{</span>item.state<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">end</span>
+<span class="comment"># Living Room temperature is 22</span>
+<span class="comment"># Bedroom temperature is 21</span>
+<span class="comment"># Den temperature is 19</span></code></pre>
     
       
-      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Turn off any switch that changes</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  changed <span style="color:#036;font-weight:bold">Switches</span>.members
-  triggered(&amp;<span style="color:#A60">:off</span>)
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Turn off any switch that changes</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  changed <span class="constant">Switches</span>.members
+  triggered(&amp;<span class="symbol">:off</span>)
+<span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Built in <span class='object_link'><a href="../../../Enumerable.html" title="Enumerable (module)">Enumerable</a></span> functions can be applied to groups.</p>
 </div></p>
       
-      <pre class="example code"><code>logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Max is </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">Temperatures</span>.members.map(&amp;<span style="color:#A60">:state</span>).max<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Min is </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">Temperatures</span>.members.map(&amp;<span style="color:#A60">:state</span>).min<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)</code></pre>
+      <pre class="example code"><code>logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Max is </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Temperatures</span>.members.map(&amp;<span class="symbol">:state</span>).max<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Min is </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Temperatures</span>.members.map(&amp;<span class="symbol">:state</span>).min<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)</code></pre>
     
   </div>
 
@@ -2790,11 +2792,11 @@ logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/group_item.rb', line 160</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">method_missing</span>(method, *args, &amp;block)
-  <span style="color:#080;font-weight:bold">return</span> base_item.__send__(method, *args, &amp;block) <span style="color:#080;font-weight:bold">if</span> base_item&amp;.respond_to?(method) <span style="color:#777"># rubocop:disable Lint/RedundantSafeNavigation nil responds to :to_a</span>
+<span class="keyword">def</span> <span class="function">method_missing</span>(method, *args, &amp;block)
+  <span class="keyword">return</span> base_item.__send__(method, *args, &amp;block) <span class="keyword">if</span> base_item&amp;.respond_to?(method) <span class="comment"># rubocop:disable Lint/RedundantSafeNavigation nil responds to :to_a</span>
 
-  <span style="color:#080;font-weight:bold">super</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">super</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2863,9 +2865,9 @@ logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/group_item.rb', line 134</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">all_members</span>
-  getAllMembers.map { |m| <span style="color:#036;font-weight:bold">Proxy</span>.new(m) }
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">all_members</span>
+  getAllMembers.map { |m| <span class="constant">Proxy</span>.new(m) }
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3020,107 +3022,107 @@ logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/group_item.rb', line 71</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">GroupItem</span> &lt; <span style="color:#036;font-weight:bold">GenericItem</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Class for indicating to triggers that a group trigger should be used</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Members</span>
-    include <span style="color:#036;font-weight:bold">LazyArray</span>
+<span class="keyword">class</span> <span class="class">GroupItem</span> &lt; <span class="constant">GenericItem</span>
+  <span class="comment">#</span>
+  <span class="comment"># Class for indicating to triggers that a group trigger should be used</span>
+  <span class="comment">#</span>
+  <span class="keyword">class</span> <span class="class">Members</span>
+    include <span class="constant">LazyArray</span>
 
-    <span style="color:#777"># @return [GroupItem]</span>
-    attr_reader <span style="color:#A60">:group</span>
+    <span class="comment"># @return [GroupItem]</span>
+    attr_reader <span class="symbol">:group</span>
 
-    <span style="color:#777"># @!visibility private</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">initialize</span>(group_item)
-      <span style="color:#33B">@group</span> = group_item
-    <span style="color:#080;font-weight:bold">end</span>
+    <span class="comment"># @!visibility private</span>
+    <span class="keyword">def</span> <span class="function">initialize</span>(group_item)
+      <span class="instance-variable">@group</span> = group_item
+    <span class="keyword">end</span>
 
-    <span style="color:#777"># Explicit conversion to Array</span>
-    <span style="color:#777">#</span>
-    <span style="color:#777"># @return [Array]</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to_a</span>
-      group.get_members.map { |i| <span style="color:#036;font-weight:bold">Proxy</span>.new(i) }
-    <span style="color:#080;font-weight:bold">end</span>
+    <span class="comment"># Explicit conversion to Array</span>
+    <span class="comment">#</span>
+    <span class="comment"># @return [Array]</span>
+    <span class="keyword">def</span> <span class="function">to_a</span>
+      group.get_members.map { |i| <span class="constant">Proxy</span>.new(i) }
+    <span class="keyword">end</span>
 
-    <span style="color:#777"># Name of the group</span>
-    <span style="color:#777">#</span>
-    <span style="color:#777"># @return [String]</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">name</span>
+    <span class="comment"># Name of the group</span>
+    <span class="comment">#</span>
+    <span class="comment"># @return [String]</span>
+    <span class="keyword">def</span> <span class="function">name</span>
       group.name
-    <span style="color:#080;font-weight:bold">end</span>
+    <span class="keyword">end</span>
 
-    <span style="color:#777"># @return [String]</span>
-    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">inspect</span>
-      r = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">#&lt;OpenHAB::Core::Items::GroupItems::Members </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-      r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>map(&amp;<span style="color:#A60">:name</span>).inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">&gt;</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> <span style="color:#33B">@group</span>.__getobj__.nil?
-      <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>r<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">&gt;</span><span style="color:#710">&quot;</span></span>
-    <span style="color:#080;font-weight:bold">end</span>
-    alias_method <span style="color:#A60">:to_s</span>, <span style="color:#A60">:inspect</span>
-  <span style="color:#080;font-weight:bold">end</span>
+    <span class="comment"># @return [String]</span>
+    <span class="keyword">def</span> <span class="function">inspect</span>
+      r = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Items::GroupItems::Members </span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+      r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>map(&amp;<span class="symbol">:name</span>).inspect<span class="inline-delimiter">}</span></span><span class="content">&gt;</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> <span class="instance-variable">@group</span>.__getobj__.nil?
+      <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>r<span class="inline-delimiter">}</span></span><span class="content">&gt;</span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
+    alias_method <span class="symbol">:to_s</span>, <span class="symbol">:inspect</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#777"># Override because we want to send them to the base item if possible</span>
-  <span style="color:#A60"><span style="color:#740">%i[</span><span style="color:#A60">command update</span><span style="color:#740">]</span></span>.each <span style="color:#080;font-weight:bold">do</span> |method|
-    define_method(method) <span style="color:#080;font-weight:bold">do</span> |command|
-      <span style="color:#080;font-weight:bold">return</span> base_item.__send__(method, command) <span style="color:#080;font-weight:bold">if</span> base_item
+  <span class="comment"># Override because we want to send them to the base item if possible</span>
+  <span class="symbol"><span class="delimiter">%i[</span><span class="content">command update</span><span class="delimiter">]</span></span>.each <span class="keyword">do</span> |method|
+    define_method(method) <span class="keyword">do</span> |command|
+      <span class="keyword">return</span> base_item.__send__(method, command) <span class="keyword">if</span> base_item
 
-      <span style="color:#080;font-weight:bold">super</span>(command)
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
+      <span class="keyword">super</span>(command)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @!attribute [r] members</span>
-  <span style="color:#777"># @return [Members] Get an Array-like object representing the members of the group</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @see Enumerable</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">members</span>
-    <span style="color:#036;font-weight:bold">Members</span>.new(<span style="color:#036;font-weight:bold">Proxy</span>.new(<span style="color:#069">self</span>))
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="comment">#</span>
+  <span class="comment"># @!attribute [r] members</span>
+  <span class="comment"># @return [Members] Get an Array-like object representing the members of the group</span>
+  <span class="comment">#</span>
+  <span class="comment"># @see Enumerable</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">members</span>
+    <span class="constant">Members</span>.new(<span class="constant">Proxy</span>.new(<span class="predefined-constant">self</span>))
+  <span class="keyword">end</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @!attribute [r] all_members</span>
-  <span style="color:#777"># @return [Array] Get all non-group members of the group recursively.</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @see Enumerable</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">all_members</span>
-    getAllMembers.map { |m| <span style="color:#036;font-weight:bold">Proxy</span>.new(m) }
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="comment">#</span>
+  <span class="comment"># @!attribute [r] all_members</span>
+  <span class="comment"># @return [Array] Get all non-group members of the group recursively.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @see Enumerable</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">all_members</span>
+    getAllMembers.map { |m| <span class="constant">Proxy</span>.new(m) }
+  <span class="keyword">end</span>
 
-  <span style="color:#777"># give the base item type a chance to format commands</span>
-  <span style="color:#777"># @!visibility private</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">format_type</span>(command)
-    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">super</span> <span style="color:#080;font-weight:bold">unless</span> base_item
+  <span class="comment"># give the base item type a chance to format commands</span>
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">format_type</span>(command)
+    <span class="keyword">return</span> <span class="keyword">super</span> <span class="keyword">unless</span> base_item
 
     base_item.format_type(command)
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="keyword">end</span>
 
   private
 
-  <span style="color:#777"># Add base type and function details</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">type_details</span>
-    r = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#710">&quot;</span></span>
-    r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">:</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>base_item.type<span style="font-weight:bold;color:#666">}</span></span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>base_item.__send__(<span style="color:#A60">:type_details</span>)<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> base_item
-    <span style="color:#080;font-weight:bold">if</span> function &amp;&amp; (fn = function.class.java_class.simple_name.upcase) != <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">EQUALITY</span><span style="color:#710">&quot;</span></span>
-      r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">:</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>fn<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-      r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">(</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>function.parameters.map(&amp;<span style="color:#A60">:inspect</span>).join(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">,</span><span style="color:#710">&quot;</span></span>)<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> function.parameters.empty?
-    <span style="color:#080;font-weight:bold">end</span>
+  <span class="comment"># Add base type and function details</span>
+  <span class="keyword">def</span> <span class="function">type_details</span>
+    r = <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>
+    r += <span class="string"><span class="delimiter">&quot;</span><span class="content">:</span><span class="inline"><span class="inline-delimiter">#{</span>base_item.type<span class="inline-delimiter">}</span></span><span class="inline"><span class="inline-delimiter">#{</span>base_item.__send__(<span class="symbol">:type_details</span>)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> base_item
+    <span class="keyword">if</span> function &amp;&amp; (fn = function.class.java_class.simple_name.upcase) != <span class="string"><span class="delimiter">&quot;</span><span class="content">EQUALITY</span><span class="delimiter">&quot;</span></span>
+      r += <span class="string"><span class="delimiter">&quot;</span><span class="content">:</span><span class="inline"><span class="inline-delimiter">#{</span>fn<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+      r += <span class="string"><span class="delimiter">&quot;</span><span class="content">(</span><span class="inline"><span class="inline-delimiter">#{</span>function.parameters.map(&amp;<span class="symbol">:inspect</span>).join(<span class="string"><span class="delimiter">&quot;</span><span class="content">,</span><span class="delimiter">&quot;</span></span>)<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> function.parameters.empty?
+    <span class="keyword">end</span>
     r
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#777"># Delegate missing methods to {base_item} if possible</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">method_missing</span>(method, *args, &amp;block)
-    <span style="color:#080;font-weight:bold">return</span> base_item.__send__(method, *args, &amp;block) <span style="color:#080;font-weight:bold">if</span> base_item&amp;.respond_to?(method) <span style="color:#777"># rubocop:disable Lint/RedundantSafeNavigation nil responds to :to_a</span>
+  <span class="comment"># Delegate missing methods to {base_item} if possible</span>
+  <span class="keyword">def</span> <span class="function">method_missing</span>(method, *args, &amp;block)
+    <span class="keyword">return</span> base_item.__send__(method, *args, &amp;block) <span class="keyword">if</span> base_item&amp;.respond_to?(method) <span class="comment"># rubocop:disable Lint/RedundantSafeNavigation nil responds to :to_a</span>
 
-    <span style="color:#080;font-weight:bold">super</span>
-  <span style="color:#080;font-weight:bold">end</span>
+    <span class="keyword">super</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">respond_to_missing?</span>(method, include_private = <span style="color:#069">false</span>)
-    <span style="color:#080;font-weight:bold">return</span> <span style="color:#069">true</span> <span style="color:#080;font-weight:bold">if</span> base_item&amp;.respond_to?(method) <span style="color:#777"># rubocop:disable Lint/RedundantSafeNavigation</span>
+  <span class="keyword">def</span> <span class="function">respond_to_missing?</span>(method, include_private = <span class="predefined-constant">false</span>)
+    <span class="keyword">return</span> <span class="predefined-constant">true</span> <span class="keyword">if</span> base_item&amp;.respond_to?(method) <span class="comment"># rubocop:disable Lint/RedundantSafeNavigation</span>
 
-    <span style="color:#080;font-weight:bold">super</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+    <span class="keyword">super</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3178,7 +3180,7 @@ logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 11</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">equipments</span>; <span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">equipments</span>; <span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3236,7 +3238,7 @@ logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 22</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">locations</span>; <span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">locations</span>; <span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3300,9 +3302,9 @@ logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/group_item.rb', line 124</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">members</span>
-  <span style="color:#036;font-weight:bold">Members</span>.new(<span style="color:#036;font-weight:bold">Proxy</span>.new(<span style="color:#069">self</span>))
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">members</span>
+  <span class="constant">Members</span>.new(<span class="constant">Proxy</span>.new(<span class="predefined-constant">self</span>))
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3314,7 +3316,7 @@ logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:35 2022 by
+  Generated on Fri Dec  9 22:46:49 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

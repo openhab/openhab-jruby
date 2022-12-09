@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Items::PlayerItem";
   relpath = '../../../';
@@ -2422,13 +2424,13 @@
         <p class="example_title"><div class='inline'><p>Start playing on a player item</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Chromecast</span>.play</code></pre>
+      <pre class="example code"><code><span class="constant">Chromecast</span>.play</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Check if a player is paused</p>
 </div></p>
       
-      <pre class="example code"><code>logger.warn(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>item.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is paused) if Chromecast.paused?</span></span></code></pre>
+      <pre class="example code"><code>logger.warn(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>item.name<span class="inline-delimiter">}</span></span><span class="content"> is paused) if Chromecast.paused?</span></span></code></pre>
     
   </div>
 
@@ -2654,47 +2656,47 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/player_item.rb', line 21</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">PlayerItem</span> &lt; <span style="color:#036;font-weight:bold">GenericItem</span>
-  <span style="color:#777"># @!method play?</span>
-  <span style="color:#777">#   Check if the item state == {PLAY}</span>
-  <span style="color:#777">#   @return [true,false]</span>
+<span class="keyword">class</span> <span class="class">PlayerItem</span> &lt; <span class="constant">GenericItem</span>
+  <span class="comment"># @!method play?</span>
+  <span class="comment">#   Check if the item state == {PLAY}</span>
+  <span class="comment">#   @return [true,false]</span>
 
-  <span style="color:#777"># @!method paused?</span>
-  <span style="color:#777">#   Check if the item state == {PAUSE}</span>
-  <span style="color:#777">#   @return [true,false]</span>
+  <span class="comment"># @!method paused?</span>
+  <span class="comment">#   Check if the item state == {PAUSE}</span>
+  <span class="comment">#   @return [true,false]</span>
 
-  <span style="color:#777"># @!method rewinding?</span>
-  <span style="color:#777">#   Check if the item state == {REWIND}</span>
-  <span style="color:#777">#   @return [true,false]</span>
+  <span class="comment"># @!method rewinding?</span>
+  <span class="comment">#   Check if the item state == {REWIND}</span>
+  <span class="comment">#   @return [true,false]</span>
 
-  <span style="color:#777"># @!method fast_forwarding?</span>
-  <span style="color:#777">#   Check if the item state == {FASTFORWARD}</span>
-  <span style="color:#777">#   @return [true,false]</span>
+  <span class="comment"># @!method fast_forwarding?</span>
+  <span class="comment">#   Check if the item state == {FASTFORWARD}</span>
+  <span class="comment">#   @return [true,false]</span>
 
-  <span style="color:#777"># @!method play</span>
-  <span style="color:#777">#   Send the {PLAY} command to the item</span>
-  <span style="color:#777">#   @return [PlayerItem] `self`</span>
+  <span class="comment"># @!method play</span>
+  <span class="comment">#   Send the {PLAY} command to the item</span>
+  <span class="comment">#   @return [PlayerItem] `self`</span>
 
-  <span style="color:#777"># @!method pause</span>
-  <span style="color:#777">#   Send the {PAUSE} command to the item</span>
-  <span style="color:#777">#   @return [PlayerItem] `self`</span>
+  <span class="comment"># @!method pause</span>
+  <span class="comment">#   Send the {PAUSE} command to the item</span>
+  <span class="comment">#   @return [PlayerItem] `self`</span>
 
-  <span style="color:#777"># @!method rewind</span>
-  <span style="color:#777">#   Send the {REWIND} command to the item</span>
-  <span style="color:#777">#   @return [PlayerItem] `self`</span>
+  <span class="comment"># @!method rewind</span>
+  <span class="comment">#   Send the {REWIND} command to the item</span>
+  <span class="comment">#   @return [PlayerItem] `self`</span>
 
-  <span style="color:#777"># @!method fast_forward</span>
-  <span style="color:#777">#   Send the {FASTFORWARD} command to the item</span>
-  <span style="color:#777">#   @return [PlayerItem] `self`</span>
+  <span class="comment"># @!method fast_forward</span>
+  <span class="comment">#   Send the {FASTFORWARD} command to the item</span>
+  <span class="comment">#   @return [PlayerItem] `self`</span>
 
-  <span style="color:#777"># @!method next</span>
-  <span style="color:#777">#   Send the {NEXT} command to the item</span>
-  <span style="color:#777">#   @return [PlayerItem] `self`</span>
+  <span class="comment"># @!method next</span>
+  <span class="comment">#   Send the {NEXT} command to the item</span>
+  <span class="comment">#   @return [PlayerItem] `self`</span>
 
-  <span style="color:#777"># @!method previous</span>
-  <span style="color:#777">#   Send the {PREVIOUS} command to the item</span>
-  <span style="color:#777">#   @return [PlayerItem] `self`</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="comment"># @!method previous</span>
+  <span class="comment">#   Send the {PREVIOUS} command to the item</span>
+  <span class="comment">#   @return [PlayerItem] `self`</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2706,7 +2708,7 @@
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:35 2022 by
+  Generated on Fri Dec  9 22:46:49 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

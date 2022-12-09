@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::DSL::Rules::Triggers::CronHandler::CronTriggerHandler";
   relpath = '../../../../../';
@@ -2632,13 +2634,13 @@ the entire thing must be recreated here</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/cron/cron_handler.rb', line 27</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">initialize</span>(trigger)
-  <span style="color:#33B">@trigger</span> = trigger
-  <span style="color:#33B">@scheduler</span> = <span style="color:#036;font-weight:bold">OSGi</span>.service(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">org.openhab.core.scheduler.CronScheduler</span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#33B">@schedule</span> = <span style="color:#069">nil</span>
-  <span style="color:#33B">@expression</span> = trigger.configuration.get(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">cronExpression</span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#080;font-weight:bold">super</span>(trigger)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">initialize</span>(trigger)
+  <span class="instance-variable">@trigger</span> = trigger
+  <span class="instance-variable">@scheduler</span> = <span class="constant">OSGi</span>.service(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.scheduler.CronScheduler</span><span class="delimiter">&quot;</span></span>)
+  <span class="instance-variable">@schedule</span> = <span class="predefined-constant">nil</span>
+  <span class="instance-variable">@expression</span> = trigger.configuration.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">cronExpression</span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">super</span>(trigger)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2691,16 +2693,16 @@ cancel the cron scheduled task</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/cron/cron_handler.rb', line 66</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">dispose</span>
-  synchronized <span style="color:#080;font-weight:bold">do</span>
-    <span style="color:#080;font-weight:bold">super</span>
-    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">unless</span> <span style="color:#33B">@schedule</span>
+<span class="keyword">def</span> <span class="function">dispose</span>
+  synchronized <span class="keyword">do</span>
+    <span class="keyword">super</span>
+    <span class="keyword">return</span> <span class="keyword">unless</span> <span class="instance-variable">@schedule</span>
 
-    <span style="color:#33B">@schedule</span>.cancel(<span style="color:#069">true</span>)
-    <span style="color:#33B">@schedule</span> = <span style="color:#069">nil</span>
-  <span style="color:#080;font-weight:bold">end</span>
-  logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">cancelled job for trigger '</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#33B">@trigger</span>.id<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">'.</span><span style="color:#710">&quot;</span></span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+    <span class="instance-variable">@schedule</span>.cancel(<span class="predefined-constant">true</span>)
+    <span class="instance-variable">@schedule</span> = <span class="predefined-constant">nil</span>
+  <span class="keyword">end</span>
+  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">cancelled job for trigger '</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@trigger</span>.id<span class="inline-delimiter">}</span></span><span class="content">'.</span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2751,9 +2753,9 @@ cancel the cron scheduled task</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/cron/cron_handler.rb', line 51</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">getTemporalAdjuster</span> <span style="color:#777"># rubocop:disable Naming/MethodName</span>
+<span class="keyword">def</span> <span class="function">getTemporalAdjuster</span> <span class="comment"># rubocop:disable Naming/MethodName</span>
   org.openhab.core.scheduler.CronAdjuster.new(expression)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2791,9 +2793,9 @@ cancel the cron scheduled task</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/cron/cron_handler.rb', line 58</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">run</span>
-  callback&amp;.triggered(<span style="color:#33B">@trigger</span>, { <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">module</span><span style="color:#710">&quot;</span></span> =&gt; <span style="color:#33B">@trigger</span>.id })
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">run</span>
+  callback&amp;.triggered(<span class="instance-variable">@trigger</span>, { <span class="string"><span class="delimiter">&quot;</span><span class="content">module</span><span class="delimiter">&quot;</span></span> =&gt; <span class="instance-variable">@trigger</span>.id })
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2854,13 +2856,13 @@ cancel the cron scheduled task</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/cron/cron_handler.rb', line 39</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">setCallback</span>(callback) <span style="color:#777"># rubocop:disable Naming/MethodName</span>
-  synchronized <span style="color:#080;font-weight:bold">do</span>
-    <span style="color:#080;font-weight:bold">super</span>(callback)
-    <span style="color:#33B">@schedule</span> = <span style="color:#33B">@scheduler</span>.schedule(<span style="color:#069">self</span>, <span style="color:#33B">@expression</span>)
-    logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Scheduled cron job '</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#33B">@expression</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">' for trigger '</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#33B">@trigger</span>.id<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">'.</span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">setCallback</span>(callback) <span class="comment"># rubocop:disable Naming/MethodName</span>
+  synchronized <span class="keyword">do</span>
+    <span class="keyword">super</span>(callback)
+    <span class="instance-variable">@schedule</span> = <span class="instance-variable">@scheduler</span>.schedule(<span class="predefined-constant">self</span>, <span class="instance-variable">@expression</span>)
+    logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Scheduled cron job '</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@expression</span><span class="inline-delimiter">}</span></span><span class="content">' for trigger '</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@trigger</span>.id<span class="inline-delimiter">}</span></span><span class="content">'.</span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2871,7 +2873,7 @@ cancel the cron scheduled task</p>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:38 2022 by
+  Generated on Fri Dec  9 22:46:52 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

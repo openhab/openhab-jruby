@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Items::ColorItem";
   relpath = '../../../';
@@ -2430,24 +2432,24 @@ helpers for working with RGB values of various forms.</p>
         <p class="example_title"><div class='inline'><p>Sending commands</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">HueBulb</span> &lt;&lt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">#ff0000</span><span style="color:#710">&quot;</span></span> <span style="color:#777"># send 'red' as a command</span>
-<span style="color:#036;font-weight:bold">HueBulb</span>.on
-<span style="color:#036;font-weight:bold">HueBulb</span>.dim</code></pre>
+      <pre class="example code"><code><span class="constant">HueBulb</span> &lt;&lt; <span class="string"><span class="delimiter">&quot;</span><span class="content">#ff0000</span><span class="delimiter">&quot;</span></span> <span class="comment"># send 'red' as a command</span>
+<span class="constant">HueBulb</span>.on
+<span class="constant">HueBulb</span>.dim</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Inspect state</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">HueBulb</span>.on? <span style="color:#777"># =&gt; true</span>
-<span style="color:#036;font-weight:bold">HueBulb</span>.state.red <span style="color:#777"># =&gt; 100%</span>
-<span style="color:#036;font-weight:bold">HueBulb</span>.state.hue <span style="color:#777"># =&gt; 0 °</span>
-<span style="color:#036;font-weight:bold">HueBulb</span>.state.brightness <span style="color:#777"># =&gt; 100%</span>
-<span style="color:#036;font-weight:bold">HueBulb</span>.state.to_rgb <span style="color:#777"># =&gt; [100%, 0%, 0%]</span>
-<span style="color:#036;font-weight:bold">HueBulb</span>.state.rgb <span style="color:#777"># =&gt; 16711680</span>
-<span style="color:#036;font-weight:bold">HueBulb</span>.state.to_hex <span style="color:#777"># =&gt; &quot;0xff0000&quot;</span>
-<span style="color:#036;font-weight:bold">HueBulb</span>.state.on? <span style="color:#777"># =&gt; true</span>
-<span style="color:#036;font-weight:bold">HueBulb</span>.state.red.to_byte <span style="color:#777"># =&gt; 255</span>
-<span style="color:#036;font-weight:bold">HueBulb</span>.state.blue.to_byte <span style="color:#777"># =&gt; 0</span></code></pre>
+      <pre class="example code"><code><span class="constant">HueBulb</span>.on? <span class="comment"># =&gt; true</span>
+<span class="constant">HueBulb</span>.state.red <span class="comment"># =&gt; 100%</span>
+<span class="constant">HueBulb</span>.state.hue <span class="comment"># =&gt; 0 °</span>
+<span class="constant">HueBulb</span>.state.brightness <span class="comment"># =&gt; 100%</span>
+<span class="constant">HueBulb</span>.state.to_rgb <span class="comment"># =&gt; [100%, 0%, 0%]</span>
+<span class="constant">HueBulb</span>.state.rgb <span class="comment"># =&gt; 16711680</span>
+<span class="constant">HueBulb</span>.state.to_hex <span class="comment"># =&gt; &quot;0xff0000&quot;</span>
+<span class="constant">HueBulb</span>.state.on? <span class="comment"># =&gt; true</span>
+<span class="constant">HueBulb</span>.state.red.to_byte <span class="comment"># =&gt; 255</span>
+<span class="constant">HueBulb</span>.state.blue.to_byte <span class="comment"># =&gt; 0</span></code></pre>
     
   </div>
 
@@ -2670,16 +2672,16 @@ helpers for working with RGB values of various forms.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/color_item.rb', line 38</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">ColorItem</span> &lt; <span style="color:#036;font-weight:bold">DimmerItem</span>
-  <span style="color:#777"># Make sure to do the String =&gt; HSBType conversion in Ruby,</span>
-  <span style="color:#777"># where we add support for hex</span>
-  <span style="color:#777"># @!visibility private</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">format_type</span>(type)
-    <span style="color:#080;font-weight:bold">return</span> <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">HSBType</span>.new(type) <span style="color:#080;font-weight:bold">if</span> type.respond_to?(<span style="color:#A60">:to_str</span>)
+<span class="keyword">class</span> <span class="class">ColorItem</span> &lt; <span class="constant">DimmerItem</span>
+  <span class="comment"># Make sure to do the String =&gt; HSBType conversion in Ruby,</span>
+  <span class="comment"># where we add support for hex</span>
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">format_type</span>(type)
+    <span class="keyword">return</span> <span class="constant">Types</span>::<span class="constant">HSBType</span>.new(type) <span class="keyword">if</span> type.respond_to?(<span class="symbol">:to_str</span>)
 
-    <span style="color:#080;font-weight:bold">super</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+    <span class="keyword">super</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2691,7 +2693,7 @@ helpers for working with RGB values of various forms.</p>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:35 2022 by
+  Generated on Fri Dec  9 22:46:49 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

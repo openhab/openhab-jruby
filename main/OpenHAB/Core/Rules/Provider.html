@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Rules::Provider";
   relpath = '../../../';
@@ -2596,20 +2598,20 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/provider.rb', line 23</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">initialize</span>
-  <span style="color:#080;font-weight:bold">super</span>(<span style="color:#606">script_unloaded_before</span>: lambda <span style="color:#080;font-weight:bold">do</span> |callbacks|
-    callbacks.index <span style="color:#080;font-weight:bold">do</span> |cb|
-      <span style="color:#080;font-weight:bold">case</span> cb.binding.receiver
-      <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Items</span>::<span style="color:#036;font-weight:bold">Provider</span>,
-        <span style="color:#036;font-weight:bold">Things</span>::<span style="color:#036;font-weight:bold">Provider</span>,
-        <span style="color:#036;font-weight:bold">DSL</span>::<span style="color:#036;font-weight:bold">TimerManager</span>
-        <span style="color:#069">true</span>
-      <span style="color:#080;font-weight:bold">else</span>
-        <span style="color:#069">false</span>
-      <span style="color:#080;font-weight:bold">end</span>
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">initialize</span>
+  <span class="keyword">super</span>(<span class="key">script_unloaded_before</span>: lambda <span class="keyword">do</span> |callbacks|
+    callbacks.index <span class="keyword">do</span> |cb|
+      <span class="keyword">case</span> cb.binding.receiver
+      <span class="keyword">when</span> <span class="constant">Items</span>::<span class="constant">Provider</span>,
+        <span class="constant">Things</span>::<span class="constant">Provider</span>,
+        <span class="constant">DSL</span>::<span class="constant">TimerManager</span>
+        <span class="predefined-constant">true</span>
+      <span class="keyword">else</span>
+        <span class="predefined-constant">false</span>
+      <span class="keyword">end</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2667,9 +2669,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/provider.rb', line 18</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">registry</span>
-  <span style="color:#d70">$rules</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">registry</span>
+  <span class="global-variable">$rules</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2680,7 +2682,7 @@
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:34 2022 by
+  Generated on Fri Dec  9 22:46:48 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

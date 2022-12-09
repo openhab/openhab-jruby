@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::DSL::Items::TimedCommand";
   relpath = '../../../';
@@ -2512,16 +2514,16 @@ the expiration command to the item</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Switch</span>.command(<span style="color:#036;font-weight:bold">ON</span>, <span style="color:#606">for</span>: <span style="color:#00D">5</span>.minutes)</code></pre>
+      <pre class="example code"><code><span class="constant">Switch</span>.command(<span class="constant">ON</span>, <span class="key">for</span>: <span class="integer">5</span>.minutes)</code></pre>
     
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Switch</span>.on <span style="color:#606">for</span>: <span style="color:#00D">5</span>.minutes</code></pre>
+      <pre class="example code"><code><span class="constant">Switch</span>.on <span class="key">for</span>: <span class="integer">5</span>.minutes</code></pre>
     
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Dimmer</span>.on <span style="color:#606">for</span>: <span style="color:#00D">5</span>.minutes, <span style="color:#606">on_expire</span>: <span style="color:#00D">50</span></code></pre>
+      <pre class="example code"><code><span class="constant">Dimmer</span>.on <span class="key">for</span>: <span class="integer">5</span>.minutes, <span class="key">on_expire</span>: <span class="integer">50</span></code></pre>
     
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Dimmer</span>.on(<span style="color:#606">for</span>: <span style="color:#00D">5</span>.minutes) { |event| <span style="color:#036;font-weight:bold">Dimmer</span>.off <span style="color:#080;font-weight:bold">if</span> <span style="color:#036;font-weight:bold">Light</span>.on? }</code></pre>
+      <pre class="example code"><code><span class="constant">Dimmer</span>.on(<span class="key">for</span>: <span class="integer">5</span>.minutes) { |event| <span class="constant">Dimmer</span>.off <span class="keyword">if</span> <span class="constant">Light</span>.on? }</code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -2674,44 +2676,44 @@ other action.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/timed_command.rb', line 99</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">command</span>(command, <span style="color:#606">for</span>: <span style="color:#069">nil</span>, <span style="color:#606">on_expire</span>: <span style="color:#069">nil</span>, &amp;block)
-  duration = binding.local_variable_get(<span style="color:#A60">:for</span>)
-  <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">super</span>(command) <span style="color:#080;font-weight:bold">unless</span> duration
+<span class="keyword">def</span> <span class="function">command</span>(command, <span class="key">for</span>: <span class="predefined-constant">nil</span>, <span class="key">on_expire</span>: <span class="predefined-constant">nil</span>, &amp;block)
+  duration = binding.local_variable_get(<span class="symbol">:for</span>)
+  <span class="keyword">return</span> <span class="keyword">super</span>(command) <span class="keyword">unless</span> duration
 
-  on_expire = block <span style="color:#080;font-weight:bold">if</span> block
+  on_expire = block <span class="keyword">if</span> block
 
-  <span style="color:#036;font-weight:bold">TimedCommand</span>.timed_commands.compute(<span style="color:#069">self</span>) <span style="color:#080;font-weight:bold">do</span> |_key, timed_command_details|
-    <span style="color:#080;font-weight:bold">if</span> timed_command_details.nil?
-      <span style="color:#777"># no prior timed command</span>
+  <span class="constant">TimedCommand</span>.timed_commands.compute(<span class="predefined-constant">self</span>) <span class="keyword">do</span> |_key, timed_command_details|
+    <span class="keyword">if</span> timed_command_details.nil?
+      <span class="comment"># no prior timed command</span>
       on_expire ||= default_on_expire(command)
-      <span style="color:#080;font-weight:bold">super</span>(command)
-      create_timed_command(<span style="color:#606">duration</span>: duration, <span style="color:#606">on_expire</span>: on_expire)
-    <span style="color:#080;font-weight:bold">else</span>
-      timed_command_details.mutex.synchronize <span style="color:#080;font-weight:bold">do</span>
-        <span style="color:#080;font-weight:bold">if</span> timed_command_details.resolution
-          <span style="color:#777"># timed command that finished, but hadn't removed itself from the map yet</span>
-          <span style="color:#777"># (it doesn't do so under the mutex to prevent a deadlock).</span>
-          <span style="color:#777"># just create a new one</span>
+      <span class="keyword">super</span>(command)
+      create_timed_command(<span class="key">duration</span>: duration, <span class="key">on_expire</span>: on_expire)
+    <span class="keyword">else</span>
+      timed_command_details.mutex.synchronize <span class="keyword">do</span>
+        <span class="keyword">if</span> timed_command_details.resolution
+          <span class="comment"># timed command that finished, but hadn't removed itself from the map yet</span>
+          <span class="comment"># (it doesn't do so under the mutex to prevent a deadlock).</span>
+          <span class="comment"># just create a new one</span>
           on_expire ||= default_on_expire(command)
-          <span style="color:#080;font-weight:bold">super</span>(command)
-          create_timed_command(<span style="color:#606">duration</span>: duration, <span style="color:#606">on_expire</span>: on_expire)
-        <span style="color:#080;font-weight:bold">else</span>
-          <span style="color:#777"># timed command still pending; reset it</span>
-          logger.trace <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Outstanding Timed Command </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>timed_command_details<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> encountered - rescheduling</span><span style="color:#710">&quot;</span></span>
-          timed_command_details.on_expire = on_expire <span style="color:#080;font-weight:bold">unless</span> on_expire.nil?
+          <span class="keyword">super</span>(command)
+          create_timed_command(<span class="key">duration</span>: duration, <span class="key">on_expire</span>: on_expire)
+        <span class="keyword">else</span>
+          <span class="comment"># timed command still pending; reset it</span>
+          logger.trace <span class="string"><span class="delimiter">&quot;</span><span class="content">Outstanding Timed Command </span><span class="inline"><span class="inline-delimiter">#{</span>timed_command_details<span class="inline-delimiter">}</span></span><span class="content"> encountered - rescheduling</span><span class="delimiter">&quot;</span></span>
+          timed_command_details.on_expire = on_expire <span class="keyword">unless</span> on_expire.nil?
           timed_command_details.timer.reschedule(duration)
-          <span style="color:#777"># disable the cancel rule while we send the new command</span>
-          <span style="color:#036;font-weight:bold">DSL</span>.rules[timed_command_details.rule_uid].disable
-          <span style="color:#080;font-weight:bold">super</span>(command)
-          <span style="color:#036;font-weight:bold">DSL</span>.rules[timed_command_details.rule_uid].enable
+          <span class="comment"># disable the cancel rule while we send the new command</span>
+          <span class="constant">DSL</span>.rules[timed_command_details.rule_uid].disable
+          <span class="keyword">super</span>(command)
+          <span class="constant">DSL</span>.rules[timed_command_details.rule_uid].enable
           timed_command_details
-        <span style="color:#080;font-weight:bold">end</span>
-      <span style="color:#080;font-weight:bold">end</span>
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
+        <span class="keyword">end</span>
+      <span class="keyword">end</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#069">self</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="predefined-constant">self</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2722,7 +2724,7 @@ other action.</p>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:32 2022 by
+  Generated on Fri Dec  9 22:46:46 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

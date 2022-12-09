@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Items";
   relpath = '../../';
@@ -2790,14 +2792,14 @@ for convenient access.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items.rb', line 22</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">import_into_global_namespace</span>
-  concrete_item_classes.each <span style="color:#080;font-weight:bold">do</span> |k|
+<span class="keyword">def</span> <span class="function">import_into_global_namespace</span>
+  concrete_item_classes.each <span class="keyword">do</span> |k|
     const_name = k.java_class.simple_name
-    <span style="color:#036;font-weight:bold">Object</span>.const_set(const_name, k) <span style="color:#080;font-weight:bold">unless</span> <span style="color:#036;font-weight:bold">Object</span>.const_defined?(const_name)
-  <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#036;font-weight:bold">Object</span>.const_set(<span style="color:#A60">:GenericItem</span>, <span style="color:#036;font-weight:bold">GenericItem</span>) <span style="color:#080;font-weight:bold">unless</span> <span style="color:#036;font-weight:bold">Object</span>.const_defined?(<span style="color:#A60">:GenericItem</span>)
-  <span style="color:#036;font-weight:bold">Object</span>.const_set(<span style="color:#A60">:Item</span>, <span style="color:#036;font-weight:bold">Item</span>) <span style="color:#080;font-weight:bold">unless</span> <span style="color:#036;font-weight:bold">Object</span>.const_defined?(<span style="color:#A60">:Item</span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+    <span class="constant">Object</span>.const_set(const_name, k) <span class="keyword">unless</span> <span class="constant">Object</span>.const_defined?(const_name)
+  <span class="keyword">end</span>
+  <span class="constant">Object</span>.const_set(<span class="symbol">:GenericItem</span>, <span class="constant">GenericItem</span>) <span class="keyword">unless</span> <span class="constant">Object</span>.const_defined?(<span class="symbol">:GenericItem</span>)
+  <span class="constant">Object</span>.const_set(<span class="symbol">:Item</span>, <span class="constant">Item</span>) <span class="keyword">unless</span> <span class="constant">Object</span>.const_defined?(<span class="symbol">:Item</span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3426,7 +3428,7 @@ for convenient access.</p>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:30 2022 by
+  Generated on Fri Dec  9 22:46:44 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

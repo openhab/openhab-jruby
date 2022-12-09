@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::DSL";
   relpath = '../';
@@ -2460,7 +2462,7 @@ inside of other classes, or include the module.</p>
 
 </div>
         </dt>
-        <dd><pre class="code"><span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">5.0.0.rc10</span><span style="color:#710">&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class="string"><span class="delimiter">&quot;</span><span class="content">5.0.0.rc10</span><span class="delimiter">&quot;</span></span></pre></dd>
       
     </dl>
   
@@ -2997,43 +2999,43 @@ different files.</p>
         <p class="example_title"><div class='inline'><p>Create a simple timer</p>
 </div></p>
       
-      <pre class="example code"><code>after <span style="color:#00D">5</span>.seconds <span style="color:#080;font-weight:bold">do</span>
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Timer Fired</span><span style="color:#710">&quot;</span></span>)
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>after <span class="integer">5</span>.seconds <span class="keyword">do</span>
+  logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Timer Fired</span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Timers delegate methods to openHAB timer objects</p>
 </div></p>
       
-      <pre class="example code"><code>after <span style="color:#00D">1</span>.second <span style="color:#080;font-weight:bold">do</span> |timer|
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Timer is active? </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>timer.active?<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>after <span class="integer">1</span>.second <span class="keyword">do</span> |timer|
+  logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Timer is active? </span><span class="inline"><span class="inline-delimiter">#{</span>timer.active?<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Timers can be rescheduled to run again, waiting the original duration</p>
 </div></p>
       
-      <pre class="example code"><code>after <span style="color:#00D">3</span>.seconds <span style="color:#080;font-weight:bold">do</span> |timer|
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Timer Fired</span><span style="color:#710">&quot;</span></span>)
+      <pre class="example code"><code>after <span class="integer">3</span>.seconds <span class="keyword">do</span> |timer|
+  logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Timer Fired</span><span class="delimiter">&quot;</span></span>)
   timer.reschedule
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+<span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Timers can be rescheduled for different durations</p>
 </div></p>
       
-      <pre class="example code"><code>after <span style="color:#00D">3</span>.seconds <span style="color:#080;font-weight:bold">do</span> |timer|
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Timer Fired</span><span style="color:#710">&quot;</span></span>)
-  timer.reschedule <span style="color:#00D">5</span>.seconds
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>after <span class="integer">3</span>.seconds <span class="keyword">do</span> |timer|
+  logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Timer Fired</span><span class="delimiter">&quot;</span></span>)
+  timer.reschedule <span class="integer">5</span>.seconds
+<span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Timers can be manipulated through the returned object</p>
 </div></p>
       
-      <pre class="example code"><code>mytimer = after <span style="color:#00D">1</span>.minute <span style="color:#080;font-weight:bold">do</span>
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">It has been 1 minute</span><span style="color:#710">&quot;</span></span>)
-<span style="color:#080;font-weight:bold">end</span>
+      <pre class="example code"><code>mytimer = after <span class="integer">1</span>.minute <span class="keyword">do</span>
+  logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">It has been 1 minute</span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">end</span>
 
 mytimer.cancel</code></pre>
     
@@ -3041,51 +3043,51 @@ mytimer.cancel</code></pre>
         <p class="example_title"><div class='inline'><p>Reentrant timers will automatically reschedule if the same id is encountered again</p>
 </div></p>
       
-      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Turn off closet light after 10 minutes</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
-  changed <span style="color:#036;font-weight:bold">ClosetLights</span>.members, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">ON</span>
-  triggered <span style="color:#080;font-weight:bold">do</span> |item|
-    after <span style="color:#00D">10</span>.minutes, <span style="color:#606">id</span>: item <span style="color:#080;font-weight:bold">do</span>
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Turn off closet light after 10 minutes</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+  changed <span class="constant">ClosetLights</span>.members, <span class="key">to</span>: <span class="constant">ON</span>
+  triggered <span class="keyword">do</span> |item|
+    after <span class="integer">10</span>.minutes, <span class="key">id</span>: item <span class="keyword">do</span>
       item.ensure.off
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Timers with id can be managed through the built-in <code>timers</code> object</p>
 </div></p>
       
-      <pre class="example code"><code>after <span style="color:#00D">1</span>.minute, <span style="color:#606">id</span>: <span style="color:#A60">:foo</span> <span style="color:#080;font-weight:bold">do</span>
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">managed timer has fired</span><span style="color:#710">&quot;</span></span>)
-<span style="color:#080;font-weight:bold">end</span>
+      <pre class="example code"><code>after <span class="integer">1</span>.minute, <span class="key">id</span>: <span class="symbol">:foo</span> <span class="keyword">do</span>
+  logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">managed timer has fired</span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">end</span>
 
-timers.cancel(<span style="color:#A60">:foo</span>)
+timers.cancel(<span class="symbol">:foo</span>)
 
-<span style="color:#080;font-weight:bold">if</span> timers.include?(<span style="color:#A60">:foo</span>)
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">The timer :foo is not active</span><span style="color:#710">&quot;</span></span>)
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+<span class="keyword">if</span> timers.include?(<span class="symbol">:foo</span>)
+  logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">The timer :foo is not active</span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Only create a new timer if it isn't already scheduled</p>
 </div></p>
       
-      <pre class="example code"><code>after(<span style="color:#00D">1</span>.minute, <span style="color:#606">id</span>: <span style="color:#A60">:foo</span>, <span style="color:#606">reschedule</span>: <span style="color:#069">false</span>) <span style="color:#080;font-weight:bold">do</span>
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Timer fired</span><span style="color:#710">&quot;</span></span>)
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>after(<span class="integer">1</span>.minute, <span class="key">id</span>: <span class="symbol">:foo</span>, <span class="key">reschedule</span>: <span class="predefined-constant">false</span>) <span class="keyword">do</span>
+  logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Timer fired</span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Reentrant timers will execute the block from the most recent call</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#777"># In the following example, if Item1 received a command, followed by Item2,</span>
-<span style="color:#777"># the timer will execute the block referring to Item2.</span>
-rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Execute The Most Recent Block</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
-  received_command <span style="color:#036;font-weight:bold">Item1</span>, <span style="color:#036;font-weight:bold">Item2</span>
-  run <span style="color:#080;font-weight:bold">do</span> |event|
-    after(<span style="color:#00D">10</span>.minutes, <span style="color:#606">id</span>: <span style="color:#A60">:common_timer</span>) <span style="color:#080;font-weight:bold">do</span>
-      logger.info <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">The latest command was received from </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>event.item<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code><span class="comment"># In the following example, if Item1 received a command, followed by Item2,</span>
+<span class="comment"># the timer will execute the block referring to Item2.</span>
+rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Execute The Most Recent Block</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+  received_command <span class="constant">Item1</span>, <span class="constant">Item2</span>
+  run <span class="keyword">do</span> |event|
+    after(<span class="integer">10</span>.minutes, <span class="key">id</span>: <span class="symbol">:common_timer</span>) <span class="keyword">do</span>
+      logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">The latest command was received from </span><span class="inline"><span class="inline-delimiter">#{</span>event.item<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -3234,13 +3236,13 @@ Otherwise the new timer.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 300</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">after</span>(duration, <span style="color:#606">id</span>: <span style="color:#069">nil</span>, <span style="color:#606">reschedule</span>: <span style="color:#069">true</span>, &amp;block)
-  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Block is required</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> block
+<span class="keyword">def</span> <span class="function">after</span>(duration, <span class="key">id</span>: <span class="predefined-constant">nil</span>, <span class="key">reschedule</span>: <span class="predefined-constant">true</span>, &amp;block)
+  raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Block is required</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block
 
-  <span style="color:#777"># Carry rule name to timer</span>
-  thread_locals = <span style="color:#036;font-weight:bold">ThreadLocal</span>.persist
-  timers.create(duration, <span style="color:#606">id</span>: id, <span style="color:#606">reschedule</span>: reschedule, <span style="color:#606">thread_locals</span>: thread_locals, <span style="color:#606">block</span>: block)
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="comment"># Carry rule name to timer</span>
+  thread_locals = <span class="constant">ThreadLocal</span>.persist
+  timers.create(duration, <span class="key">id</span>: id, <span class="key">reschedule</span>: reschedule, <span class="key">thread_locals</span>: thread_locals, <span class="key">block</span>: block)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3272,24 +3274,24 @@ depending on the format of the string.</p>
         <p class="example_title"><div class='inline'><p>Range#cover?</p>
 </div></p>
       
-      <pre class="example code"><code>logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Within month-day range</span><span style="color:#710">&quot;</span></span>) <span style="color:#080;font-weight:bold">if</span> between(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">02-20</span><span style="color:#710">'</span></span>..<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">06-01</span><span style="color:#710">'</span></span>).cover?(<span style="color:#036;font-weight:bold">MonthDay</span>.now)</code></pre>
+      <pre class="example code"><code>logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Within month-day range</span><span class="delimiter">&quot;</span></span>) <span class="keyword">if</span> between(<span class="string"><span class="delimiter">'</span><span class="content">02-20</span><span class="delimiter">'</span></span>..<span class="string"><span class="delimiter">'</span><span class="content">06-01</span><span class="delimiter">'</span></span>).cover?(<span class="constant">MonthDay</span>.now)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Use in a Case</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#080;font-weight:bold">case</span> <span style="color:#036;font-weight:bold">MonthDay</span>.now
-<span style="color:#080;font-weight:bold">when</span> between(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">01-01</span><span style="color:#710">'</span></span>..<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">03-31</span><span style="color:#710">'</span></span>)
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">First quarter</span><span style="color:#710">&quot;</span></span>)
-<span style="color:#080;font-weight:bold">when</span> between(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">04-01</span><span style="color:#710">'</span></span>..<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">06-30</span><span style="color:#710">'</span></span>)
- logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Second quarter</span><span style="color:#710">&quot;</span></span>)
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code><span class="keyword">case</span> <span class="constant">MonthDay</span>.now
+<span class="keyword">when</span> between(<span class="string"><span class="delimiter">'</span><span class="content">01-01</span><span class="delimiter">'</span></span>..<span class="string"><span class="delimiter">'</span><span class="content">03-31</span><span class="delimiter">'</span></span>)
+  logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">First quarter</span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">when</span> between(<span class="string"><span class="delimiter">'</span><span class="content">04-01</span><span class="delimiter">'</span></span>..<span class="string"><span class="delimiter">'</span><span class="content">06-30</span><span class="delimiter">'</span></span>)
+ logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Second quarter</span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Create a time range</p>
 </div></p>
       
-      <pre class="example code"><code>between(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">7am</span><span style="color:#710">'</span></span>..<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">12pm</span><span style="color:#710">'</span></span>).cover?(<span style="color:#036;font-weight:bold">LocalTime</span>.now)</code></pre>
+      <pre class="example code"><code>between(<span class="string"><span class="delimiter">'</span><span class="content">7am</span><span class="delimiter">'</span></span>..<span class="string"><span class="delimiter">'</span><span class="content">12pm</span><span class="delimiter">'</span></span>).cover?(<span class="constant">LocalTime</span>.now)</code></pre>
     
   </div>
 
@@ -3348,13 +3350,13 @@ depending on the format of the string.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 330</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">between</span>(range)
-  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Supplied object must be a range</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> range.is_a?(<span style="color:#036;font-weight:bold">Range</span>)
+<span class="keyword">def</span> <span class="function">between</span>(range)
+  raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Supplied object must be a range</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> range.is_a?(<span class="constant">Range</span>)
 
   start = try_parse_time_like(range.begin)
   finish = try_parse_time_like(range.end)
-  <span style="color:#036;font-weight:bold">Range</span>.new(start, finish, range.exclude_end?)
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="constant">Range</span>.new(start, finish, range.exclude_end?)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3387,41 +3389,41 @@ before sending the command.</p>
         <p class="example_title"><div class='inline'><p>Turn on several switches only if they're not already on</p>
 </div></p>
       
-      <pre class="example code"><code>ensure_states <span style="color:#080;font-weight:bold">do</span>
-  <span style="color:#036;font-weight:bold">Switch1</span>.on
-  <span style="color:#036;font-weight:bold">Switch2</span>.on
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>ensure_states <span class="keyword">do</span>
+  <span class="constant">Switch1</span>.on
+  <span class="constant">Switch2</span>.on
+<span class="keyword">end</span></code></pre>
     
       
-      <pre class="example code"><code><span style="color:#777"># VirtualSwitch is in state `ON`</span>
-ensure_states <span style="color:#080;font-weight:bold">do</span>
-  <span style="color:#036;font-weight:bold">VirtualSwitch</span> &lt;&lt; <span style="color:#036;font-weight:bold">ON</span>       <span style="color:#777"># No command will be sent</span>
-  <span style="color:#036;font-weight:bold">VirtualSwitch</span>.update(<span style="color:#036;font-weight:bold">ON</span>)  <span style="color:#777"># No update will be posted</span>
-  <span style="color:#036;font-weight:bold">VirtualSwitch</span> &lt;&lt; <span style="color:#036;font-weight:bold">OFF</span>      <span style="color:#777"># Off command will be sent</span>
-  <span style="color:#036;font-weight:bold">VirtualSwitch</span>.update(<span style="color:#036;font-weight:bold">OFF</span>) <span style="color:#777"># No update will be posted</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code><span class="comment"># VirtualSwitch is in state `ON`</span>
+ensure_states <span class="keyword">do</span>
+  <span class="constant">VirtualSwitch</span> &lt;&lt; <span class="constant">ON</span>       <span class="comment"># No command will be sent</span>
+  <span class="constant">VirtualSwitch</span>.update(<span class="constant">ON</span>)  <span class="comment"># No update will be posted</span>
+  <span class="constant">VirtualSwitch</span> &lt;&lt; <span class="constant">OFF</span>      <span class="comment"># Off command will be sent</span>
+  <span class="constant">VirtualSwitch</span>.update(<span class="constant">OFF</span>) <span class="comment"># No update will be posted</span>
+<span class="keyword">end</span></code></pre>
     
       
-      <pre class="example code"><code>ensure_states <span style="color:#080;font-weight:bold">do</span>
-  rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Items in an execution block will have ensure_states applied to them</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-    changed <span style="color:#036;font-weight:bold">VirtualSwitch</span>
-    run <span style="color:#080;font-weight:bold">do</span>
-      <span style="color:#036;font-weight:bold">VirtualSwitch</span>.on
-      <span style="color:#036;font-weight:bold">VirtualSwitch2</span>.on
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>ensure_states <span class="keyword">do</span>
+  rule <span class="string"><span class="delimiter">'</span><span class="content">Items in an execution block will have ensure_states applied to them</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+    changed <span class="constant">VirtualSwitch</span>
+    run <span class="keyword">do</span>
+      <span class="constant">VirtualSwitch</span>.on
+      <span class="constant">VirtualSwitch2</span>.on
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
       
-      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">ensure_states must be in an execution block</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  changed <span style="color:#036;font-weight:bold">VirtualSwitch</span>
-  run <span style="color:#080;font-weight:bold">do</span>
-     ensure_states <span style="color:#080;font-weight:bold">do</span>
-        <span style="color:#036;font-weight:bold">VirtualSwitch</span>.on
-        <span style="color:#036;font-weight:bold">VirtualSwitch2</span>.on
-     <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">ensure_states must be in an execution block</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  changed <span class="constant">VirtualSwitch</span>
+  run <span class="keyword">do</span>
+     ensure_states <span class="keyword">do</span>
+        <span class="constant">VirtualSwitch</span>.on
+        <span class="constant">VirtualSwitch2</span>.on
+     <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
   </div>
 
@@ -3473,13 +3475,13 @@ ensure_states <span style="color:#080;font-weight:bold">do</span>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 422</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">ensure_states</span>
-  old = <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_ensure_states</span>]
-  <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_ensure_states</span>] = <span style="color:#069">true</span>
-  <span style="color:#080;font-weight:bold">yield</span>
-<span style="color:#080;font-weight:bold">ensure</span>
-  <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_ensure_states</span>] = old
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">ensure_states</span>
+  old = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_ensure_states</span>]
+  <span class="constant">Thread</span>.current[<span class="symbol">:openhab_ensure_states</span>] = <span class="predefined-constant">true</span>
+  <span class="keyword">yield</span>
+<span class="keyword">ensure</span>
+  <span class="constant">Thread</span>.current[<span class="symbol">:openhab_ensure_states</span>] = old
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3511,25 +3513,25 @@ Switch SwitchTest &quot;Test Switch&quot;
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Item Count: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>items.count<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)  <span style="color:#777"># Item Count: 2</span>
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Items: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>items.map(&amp;<span style="color:#A60">:label</span>).sort.join(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">, </span><span style="color:#710">'</span></span>)<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)  <span style="color:#777"># Items: Test Dimmer, Test Switch'</span>
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">DimmerTest exists? </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>items.key?(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">DimmerTest</span><span style="color:#710">'</span></span>)<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># DimmerTest exists? true</span>
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">StringTest exists? </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>items.key?(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">StringTest</span><span style="color:#710">'</span></span>)<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># StringTest exists? false</span></code></pre>
+      <pre class="example code"><code>logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Item Count: </span><span class="inline"><span class="inline-delimiter">#{</span>items.count<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)  <span class="comment"># Item Count: 2</span>
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Items: </span><span class="inline"><span class="inline-delimiter">#{</span>items.map(&amp;<span class="symbol">:label</span>).sort.join(<span class="string"><span class="delimiter">'</span><span class="content">, </span><span class="delimiter">'</span></span>)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)  <span class="comment"># Items: Test Dimmer, Test Switch'</span>
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">DimmerTest exists? </span><span class="inline"><span class="inline-delimiter">#{</span>items.key?(<span class="string"><span class="delimiter">'</span><span class="content">DimmerTest</span><span class="delimiter">'</span></span>)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>) <span class="comment"># DimmerTest exists? true</span>
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">StringTest exists? </span><span class="inline"><span class="inline-delimiter">#{</span>items.key?(<span class="string"><span class="delimiter">'</span><span class="content">StringTest</span><span class="delimiter">'</span></span>)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>) <span class="comment"># StringTest exists? false</span></code></pre>
     
       
-      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Use dynamic item lookup to increase related dimmer brightness when switch is turned on</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  changed <span style="color:#036;font-weight:bold">SwitchTest</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">ON</span>
-  triggered { |item| items[item.name.gsub(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Switch</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Dimmer</span><span style="color:#710">'</span></span>)].brighten(<span style="color:#00D">10</span>) }
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Use dynamic item lookup to increase related dimmer brightness when switch is turned on</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  changed <span class="constant">SwitchTest</span>, <span class="key">to</span>: <span class="constant">ON</span>
+  triggered { |item| items[item.name.gsub(<span class="string"><span class="delimiter">'</span><span class="content">Switch</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">Dimmer</span><span class="delimiter">'</span></span>)].brighten(<span class="integer">10</span>) }
+<span class="keyword">end</span></code></pre>
     
       
-      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">search for a suitable item</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">search for a suitable item</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   on_load
-  triggered <span style="color:#080;font-weight:bold">do</span>
-    <span style="color:#777"># Send ON to DimmerTest if it exists, otherwise send it to SwitchTest</span>
-    (items[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">DimmerTest</span><span style="color:#710">'</span></span>] || items[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">SwitchTest</span><span style="color:#710">'</span></span>])&amp;.on
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+  triggered <span class="keyword">do</span>
+    <span class="comment"># Send ON to DimmerTest if it exists, otherwise send it to SwitchTest</span>
+    (items[<span class="string"><span class="delimiter">'</span><span class="content">DimmerTest</span><span class="delimiter">'</span></span>] || items[<span class="string"><span class="delimiter">'</span><span class="content">SwitchTest</span><span class="delimiter">'</span></span>])&amp;.on
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
   </div>
 
@@ -3560,9 +3562,9 @@ logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 164</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">items</span>
-  <span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Items</span>::<span style="color:#036;font-weight:bold">Registry</span>.instance
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">items</span>
+  <span class="constant">Core</span>::<span class="constant">Items</span>::<span class="constant">Registry</span>.instance
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3591,11 +3593,11 @@ for method calls inside the block</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>persistence(<span style="color:#A60">:influxdb</span>) <span style="color:#080;font-weight:bold">do</span>
-  <span style="color:#036;font-weight:bold">Item1</span>.persist
-  <span style="color:#036;font-weight:bold">Item1</span>.changed_since(<span style="color:#00D">1</span>.hour)
-  <span style="color:#036;font-weight:bold">Item1</span>.average_since(<span style="color:#00D">12</span>.hours)
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>persistence(<span class="symbol">:influxdb</span>) <span class="keyword">do</span>
+  <span class="constant">Item1</span>.persist
+  <span class="constant">Item1</span>.changed_since(<span class="integer">1</span>.hour)
+  <span class="constant">Item1</span>.average_since(<span class="integer">12</span>.hours)
+<span class="keyword">end</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -3677,13 +3679,13 @@ for method calls inside the block</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 447</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">persistence</span>(service)
-  old = <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_persistence_service</span>]
-  <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_persistence_service</span>] = service
-  <span style="color:#080;font-weight:bold">yield</span>
-<span style="color:#080;font-weight:bold">ensure</span>
-  <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_persistence_service</span>] = old
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">persistence</span>(service)
+  old = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_persistence_service</span>]
+  <span class="constant">Thread</span>.current[<span class="symbol">:openhab_persistence_service</span>] = service
+  <span class="keyword">yield</span>
+<span class="keyword">ensure</span>
+  <span class="constant">Thread</span>.current[<span class="symbol">:openhab_persistence_service</span>] = old
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3711,19 +3713,19 @@ for method calls inside the block</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>profile(<span style="color:#A60">:veto_closing_shades</span>) <span style="color:#080;font-weight:bold">do</span> |event, <span style="color:#606">item</span>:, <span style="color:#606">command</span>: <span style="color:#069">nil</span>|
-  <span style="color:#080;font-weight:bold">next</span> <span style="color:#069">false</span> <span style="color:#080;font-weight:bold">if</span> command&amp;.down?
+      <pre class="example code"><code>profile(<span class="symbol">:veto_closing_shades</span>) <span class="keyword">do</span> |event, <span class="key">item</span>:, <span class="key">command</span>: <span class="predefined-constant">nil</span>|
+  <span class="keyword">next</span> <span class="predefined-constant">false</span> <span class="keyword">if</span> command&amp;.down?
 
-  <span style="color:#069">true</span>
-<span style="color:#080;font-weight:bold">end</span>
+  <span class="predefined-constant">true</span>
+<span class="keyword">end</span>
 
-items.build <span style="color:#080;font-weight:bold">do</span>
-  rollershutter_item <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">MyShade</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
-    channel <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">thing:rollershutter</span><span style="color:#710">&quot;</span></span>, <span style="color:#606">profile</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ruby:veto_closing_shades</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span>
-<span style="color:#777"># can also be referenced from an `.items` file:</span>
-<span style="color:#777"># Rollershutter MyShade { channel=&quot;thing:rollershutter&quot;[profile=&quot;ruby:veto_closing_shades&quot;] }</span></code></pre>
+items.build <span class="keyword">do</span>
+  rollershutter_item <span class="string"><span class="delimiter">&quot;</span><span class="content">MyShade</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+    channel <span class="string"><span class="delimiter">&quot;</span><span class="content">thing:rollershutter</span><span class="delimiter">&quot;</span></span>, <span class="key">profile</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">ruby:veto_closing_shades</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="comment"># can also be referenced from an `.items` file:</span>
+<span class="comment"># Rollershutter MyShade { channel=&quot;thing:rollershutter&quot;[profile=&quot;ruby:veto_closing_shades&quot;] }</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -3961,15 +3963,15 @@ items.build <span style="color:#080;font-weight:bold">do</span>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 97</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">profile</span>(id, &amp;block)
-  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Block is required</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> block
+<span class="keyword">def</span> <span class="function">profile</span>(id, &amp;block)
+  raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Block is required</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block
 
-  uid = org.openhab.core.thing.profiles.ProfileTypeUID.new(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ruby</span><span style="color:#710">&quot;</span></span>, id)
+  uid = org.openhab.core.thing.profiles.ProfileTypeUID.new(<span class="string"><span class="delimiter">&quot;</span><span class="content">ruby</span><span class="delimiter">&quot;</span></span>, id)
 
-  <span style="color:#036;font-weight:bold">ThreadLocal</span>.thread_local(<span style="color:#606">openhab_rule_type</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">profile</span><span style="color:#710">&quot;</span></span>, <span style="color:#606">openhab_rule_uid</span>: id) <span style="color:#080;font-weight:bold">do</span>
-    <span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">ProfileFactory</span>.instance.register(uid, block)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="constant">ThreadLocal</span>.thread_local(<span class="key">openhab_rule_type</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">profile</span><span class="delimiter">&quot;</span></span>, <span class="key">openhab_rule_uid</span>: id) <span class="keyword">do</span>
+    <span class="constant">Core</span>::<span class="constant">ProfileFactory</span>.instance.register(uid, block)
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3997,14 +3999,14 @@ items.build <span style="color:#080;font-weight:bold">do</span>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>provider(<span style="color:#606">metadata</span>: <span style="color:#A60">:persistent</span>) <span style="color:#080;font-weight:bold">do</span>
-  <span style="color:#036;font-weight:bold">Switch1</span>.metadata[<span style="color:#A60">:last_status_from_service</span>] = status
-<span style="color:#080;font-weight:bold">end</span>
+      <pre class="example code"><code>provider(<span class="key">metadata</span>: <span class="symbol">:persistent</span>) <span class="keyword">do</span>
+  <span class="constant">Switch1</span>.metadata[<span class="symbol">:last_status_from_service</span>] = status
+<span class="keyword">end</span>
 
-provider!(<span style="color:#606">metadata</span>: { <span style="color:#606">last_status_from_service</span>: <span style="color:#A60">:persistent</span> }, <span style="color:#606">Switch2</span>: <span style="color:#A60">:persistent</span>)
-<span style="color:#036;font-weight:bold">Switch1</span>.metadata[<span style="color:#A60">:last_status_from_service</span>] = status <span style="color:#777"># this will persist in JSONDB</span>
-<span style="color:#036;font-weight:bold">Switch1</span>.metadata[<span style="color:#A60">:homekit</span>] = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Lightbulb</span><span style="color:#710">&quot;</span></span> <span style="color:#777"># this will be removed when the script is deleted</span>
-<span style="color:#036;font-weight:bold">Switch2</span>.metadata[<span style="color:#A60">:homekit</span>] = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Lightbulb</span><span style="color:#710">&quot;</span></span> <span style="color:#777"># this will persist in JSONDB</span></code></pre>
+provider!(<span class="key">metadata</span>: { <span class="key">last_status_from_service</span>: <span class="symbol">:persistent</span> }, <span class="key">Switch2</span>: <span class="symbol">:persistent</span>)
+<span class="constant">Switch1</span>.metadata[<span class="symbol">:last_status_from_service</span>] = status <span class="comment"># this will persist in JSONDB</span>
+<span class="constant">Switch1</span>.metadata[<span class="symbol">:homekit</span>] = <span class="string"><span class="delimiter">&quot;</span><span class="content">Lightbulb</span><span class="delimiter">&quot;</span></span> <span class="comment"># this will be removed when the script is deleted</span>
+<span class="constant">Switch2</span>.metadata[<span class="symbol">:homekit</span>] = <span class="string"><span class="delimiter">&quot;</span><span class="content">Lightbulb</span><span class="delimiter">&quot;</span></span> <span class="comment"># this will persist in JSONDB</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -4126,16 +4128,16 @@ recommended that you use a Proc, not a Lambda, for permissive argument matching.
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 603</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">provider</span>(*args, **kwargs)
-  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">You must give a block to set the provider for the duration of</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> block_given?
+<span class="keyword">def</span> <span class="function">provider</span>(*args, **kwargs)
+  raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">You must give a block to set the provider for the duration of</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block_given?
 
-  <span style="color:#080;font-weight:bold">begin</span>
+  <span class="keyword">begin</span>
     old_providers = provider!(*args, **kwargs)
-    <span style="color:#080;font-weight:bold">yield</span>
-  <span style="color:#080;font-weight:bold">ensure</span>
-    <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_providers</span>] = old_providers
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+    <span class="keyword">yield</span>
+  <span class="keyword">ensure</span>
+    <span class="constant">Thread</span>.current[<span class="symbol">:openhab_providers</span>] = old_providers
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4294,66 +4296,66 @@ recommended that you use a Proc, not a Lambda, for permissive argument matching.
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 645</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">provider!</span>(*providers, **providers_by_type)
-  thread_providers = <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_providers</span>] ||= {}
+<span class="keyword">def</span> <span class="function">provider!</span>(*providers, **providers_by_type)
+  thread_providers = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_providers</span>] ||= {}
   old_providers = thread_providers.dup
 
-  providers.each <span style="color:#080;font-weight:bold">do</span> |provider|
-    <span style="color:#080;font-weight:bold">case</span> provider
-    <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Provider</span>
+  providers.each <span class="keyword">do</span> |provider|
+    <span class="keyword">case</span> provider
+    <span class="keyword">when</span> <span class="constant">Core</span>::<span class="constant">Provider</span>
       thread_providers[provider.class.type] = provider
-    <span style="color:#080;font-weight:bold">when</span> org.openhab.core.common.registry.ManagedProvider
+    <span class="keyword">when</span> org.openhab.core.common.registry.ManagedProvider
       type = provider.type
-      <span style="color:#080;font-weight:bold">unless</span> type
-        raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>provider.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is for objects which are not supported by openhab-jrubyscripting</span><span style="color:#710">&quot;</span></span>
-      <span style="color:#080;font-weight:bold">end</span>
+      <span class="keyword">unless</span> type
+        raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="content"> is for objects which are not supported by openhab-jrubyscripting</span><span class="delimiter">&quot;</span></span>
+      <span class="keyword">end</span>
 
       thread_providers[type] = provider
-    <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Proc</span>,
-      <span style="color:#A60">:transient</span>,
-      <span style="color:#A60">:persistent</span>
-      <span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Provider</span>::<span style="color:#036;font-weight:bold">KNOWN_TYPES</span>.each <span style="color:#080;font-weight:bold">do</span> |known_type|
+    <span class="keyword">when</span> <span class="constant">Proc</span>,
+      <span class="symbol">:transient</span>,
+      <span class="symbol">:persistent</span>
+      <span class="constant">Core</span>::<span class="constant">Provider</span>::<span class="constant">KNOWN_TYPES</span>.each <span class="keyword">do</span> |known_type|
         thread_providers[known_type] = provider
-      <span style="color:#080;font-weight:bold">end</span>
-    <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Hash</span>
-      <span style="color:#777"># non-symbols can't be used as kwargs, so Item keys show up as a separate hash here</span>
-      <span style="color:#777"># just merge it in, and allow it to be handled below</span>
+      <span class="keyword">end</span>
+    <span class="keyword">when</span> <span class="constant">Hash</span>
+      <span class="comment"># non-symbols can't be used as kwargs, so Item keys show up as a separate hash here</span>
+      <span class="comment"># just merge it in, and allow it to be handled below</span>
       providers_by_type.merge!(provider)
-    <span style="color:#080;font-weight:bold">else</span>
-      raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>provider.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is not a valid provider</span><span style="color:#710">&quot;</span></span>
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
+    <span class="keyword">else</span>
+      raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="content"> is not a valid provider</span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
 
-  providers_by_type.each <span style="color:#080;font-weight:bold">do</span> |type, provider|
-    <span style="color:#080;font-weight:bold">case</span> provider
-    <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Proc</span>,
+  providers_by_type.each <span class="keyword">do</span> |type, provider|
+    <span class="keyword">case</span> provider
+    <span class="keyword">when</span> <span class="constant">Proc</span>,
       org.openhab.core.common.registry.ManagedProvider,
-      <span style="color:#A60">:transient</span>,
-      <span style="color:#A60">:persistent</span>,
-      <span style="color:#069">nil</span>
-      <span style="color:#069">nil</span>
-    <span style="color:#080;font-weight:bold">else</span>
-      raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>provider.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is not a valid provider</span><span style="color:#710">&quot;</span></span>
-    <span style="color:#080;font-weight:bold">end</span>
+      <span class="symbol">:transient</span>,
+      <span class="symbol">:persistent</span>,
+      <span class="predefined-constant">nil</span>
+      <span class="predefined-constant">nil</span>
+    <span class="keyword">else</span>
+      raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="content"> is not a valid provider</span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
 
-    <span style="color:#080;font-weight:bold">case</span> type
-    <span style="color:#080;font-weight:bold">when</span> <span style="color:#A60">:items</span>, <span style="color:#A60">:metadata</span>, <span style="color:#A60">:things</span>, <span style="color:#A60">:links</span>
-      <span style="color:#080;font-weight:bold">if</span> provider.is_a?(org.openhab.core.common.registry.ManagedProvider) &amp;&amp; provider.type != type
-        raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>provider.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is not a provider for </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>type<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-      <span style="color:#080;font-weight:bold">end</span>
+    <span class="keyword">case</span> type
+    <span class="keyword">when</span> <span class="symbol">:items</span>, <span class="symbol">:metadata</span>, <span class="symbol">:things</span>, <span class="symbol">:links</span>
+      <span class="keyword">if</span> provider.is_a?(org.openhab.core.common.registry.ManagedProvider) &amp;&amp; provider.type != type
+        raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="content"> is not a provider for </span><span class="inline"><span class="inline-delimiter">#{</span>type<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+      <span class="keyword">end</span>
 
       thread_providers[type] = provider
-    <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Symbol</span>, <span style="color:#036;font-weight:bold">String</span>
-      (thread_providers[<span style="color:#A60">:metadata_namespaces</span>] ||= {})[type.to_s] = provider
-    <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Item</span>
-      (thread_providers[<span style="color:#A60">:metadata_items</span>] ||= {})[type.name] = provider
-    <span style="color:#080;font-weight:bold">else</span>
-      raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>type.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is not provider type</span><span style="color:#710">&quot;</span></span>
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
+    <span class="keyword">when</span> <span class="constant">Symbol</span>, <span class="constant">String</span>
+      (thread_providers[<span class="symbol">:metadata_namespaces</span>] ||= {})[type.to_s] = provider
+    <span class="keyword">when</span> <span class="constant">Item</span>
+      (thread_providers[<span class="symbol">:metadata_items</span>] ||= {})[type.name] = provider
+    <span class="keyword">else</span>
+      raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>type.inspect<span class="inline-delimiter">}</span></span><span class="content"> is not provider type</span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
 
   old_providers
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4383,13 +4385,13 @@ To create a "script" without any triggers, use <span class='object_link'>#script
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">openhab/dsl</span><span style="color:#710">&quot;</span></span>
+      <pre class="example code"><code>require <span class="string"><span class="delimiter">&quot;</span><span class="content">openhab/dsl</span><span class="delimiter">&quot;</span></span>
 
-rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">name</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
-  &lt;one <span style="color:#080;font-weight:bold">or</span> more triggers&gt;
-  &lt;one <span style="color:#080;font-weight:bold">or</span> more execution blocks&gt;
-  &lt;zero <span style="color:#080;font-weight:bold">or</span> more guards&gt;
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+rule <span class="string"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+  &lt;one <span class="keyword">or</span> more triggers&gt;
+  &lt;one <span class="keyword">or</span> more execution blocks&gt;
+  &lt;zero <span class="keyword">or</span> more guards&gt;
+<span class="keyword">end</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -4490,9 +4492,9 @@ rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#71
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 45</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">rule</span>(name = <span style="color:#069">nil</span>, **kwargs, &amp;block)
+<span class="keyword">def</span> <span class="function">rule</span>(name = <span class="predefined-constant">nil</span>, **kwargs, &amp;block)
   rules.build { rule(name, **kwargs, &amp;block) }
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4543,9 +4545,9 @@ rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#71
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 127</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">rules</span>
-  <span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Rules</span>::<span style="color:#036;font-weight:bold">Registry</span>.instance
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">rules</span>
+  <span class="constant">Core</span>::<span class="constant">Rules</span>::<span class="constant">Registry</span>.instance
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4653,9 +4655,9 @@ such as the Run Rules action.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 50</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">script</span>(name = <span style="color:#069">nil</span>, <span style="color:#606">id</span>: <span style="color:#069">nil</span>, **kwargs, &amp;block)
-  rules.build { script(name, <span style="color:#606">id</span>: id, **kwargs, &amp;block) }
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">script</span>(name = <span class="predefined-constant">nil</span>, <span class="key">id</span>: <span class="predefined-constant">nil</span>, **kwargs, &amp;block)
+  rules.build { script(name, <span class="key">id</span>: id, **kwargs, &amp;block) }
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4714,8 +4716,8 @@ removed.</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>shared_cache.compute_if_absent(<span style="color:#A60">:execution_count</span>) { <span style="color:#00D">0</span> }
-shared_cache[<span style="color:#A60">:execution_count</span>] += <span style="color:#00D">1</span></code></pre>
+      <pre class="example code"><code>shared_cache.compute_if_absent(<span class="symbol">:execution_count</span>) { <span class="integer">0</span> }
+shared_cache[<span class="symbol">:execution_count</span>] += <span class="integer">1</span></code></pre>
     
   </div>
 
@@ -4774,9 +4776,9 @@ shared_cache[<span style="color:#A60">:execution_count</span>] += <span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 118</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">shared_cache</span>
-  <span style="color:#d70">$sharedCache</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">shared_cache</span>
+  <span class="global-variable">$sharedCache</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4807,7 +4809,7 @@ current state of each item. It is implemented by calling openHAB's
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>states = store_states <span style="color:#036;font-weight:bold">Item1</span>, <span style="color:#036;font-weight:bold">Item2</span>
+      <pre class="example code"><code>states = store_states <span class="constant">Item1</span>, <span class="constant">Item2</span>
 ...
 states.restore</code></pre>
     
@@ -4815,9 +4817,9 @@ states.restore</code></pre>
         <p class="example_title"><div class='inline'><p>With a block</p>
 </div></p>
       
-      <pre class="example code"><code>store_states <span style="color:#036;font-weight:bold">Item1</span>, <span style="color:#036;font-weight:bold">Item2</span> <span style="color:#080;font-weight:bold">do</span>
+      <pre class="example code"><code>store_states <span class="constant">Item1</span>, <span class="constant">Item2</span> <span class="keyword">do</span>
   ...
-<span style="color:#080;font-weight:bold">end</span> <span style="color:#777"># the states will be restored here</span></code></pre>
+<span class="keyword">end</span> <span class="comment"># the states will be restored here</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -4879,17 +4881,17 @@ states.restore</code></pre>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 359</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">store_states</span>(*items)
-  items = items.flatten.map <span style="color:#080;font-weight:bold">do</span> |item|
-    item.respond_to?(<span style="color:#A60">:__getobj__</span>) ? item.__getobj__ : item
-  <span style="color:#080;font-weight:bold">end</span>
-  states = <span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Items</span>::<span style="color:#036;font-weight:bold">StateStorage</span>.from_items(*items)
-  <span style="color:#080;font-weight:bold">if</span> block_given?
-    <span style="color:#080;font-weight:bold">yield</span>
+<span class="keyword">def</span> <span class="function">store_states</span>(*items)
+  items = items.flatten.map <span class="keyword">do</span> |item|
+    item.respond_to?(<span class="symbol">:__getobj__</span>) ? item.__getobj__ : item
+  <span class="keyword">end</span>
+  states = <span class="constant">Core</span>::<span class="constant">Items</span>::<span class="constant">StateStorage</span>.from_items(*items)
+  <span class="keyword">if</span> block_given?
+    <span class="keyword">yield</span>
     states.restore
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="keyword">end</span>
   states
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4917,13 +4919,13 @@ states.restore</code></pre>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>things.each { |thing| logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Thing: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>thing.uid<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)}
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Thing: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>things[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">astro:sun:home</span><span style="color:#710">'</span></span>].uid<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-homie_things = things.select { |t| t.thing_type_uid == <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">mqtt:homie300</span><span style="color:#710">&quot;</span></span> }
-zwave_things = things.select { |t| t.binding_id == <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">zwave</span><span style="color:#710">&quot;</span></span> }
-homeseer_dimmers = zwave_things.select { |t| t.thing_type_uid.id == <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">homeseer_hswd200_00_000</span><span style="color:#710">&quot;</span></span> }
-things[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">zwave:device:512:node90</span><span style="color:#710">'</span></span>].uid.bridge_ids <span style="color:#777"># =&gt; [&quot;512&quot;]</span>
-things[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">mqtt:topic:4</span><span style="color:#710">'</span></span>].uid.bridge_ids <span style="color:#777"># =&gt; []</span></code></pre>
+      <pre class="example code"><code>things.each { |thing| logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Thing: </span><span class="inline"><span class="inline-delimiter">#{</span>thing.uid<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)}
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Thing: </span><span class="inline"><span class="inline-delimiter">#{</span>things[<span class="string"><span class="delimiter">'</span><span class="content">astro:sun:home</span><span class="delimiter">'</span></span>].uid<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+homie_things = things.select { |t| t.thing_type_uid == <span class="string"><span class="delimiter">&quot;</span><span class="content">mqtt:homie300</span><span class="delimiter">&quot;</span></span> }
+zwave_things = things.select { |t| t.binding_id == <span class="string"><span class="delimiter">&quot;</span><span class="content">zwave</span><span class="delimiter">&quot;</span></span> }
+homeseer_dimmers = zwave_things.select { |t| t.thing_type_uid.id == <span class="string"><span class="delimiter">&quot;</span><span class="content">homeseer_hswd200_00_000</span><span class="delimiter">&quot;</span></span> }
+things[<span class="string"><span class="delimiter">'</span><span class="content">zwave:device:512:node90</span><span class="delimiter">'</span></span>].uid.bridge_ids <span class="comment"># =&gt; [&quot;512&quot;]</span>
+things[<span class="string"><span class="delimiter">'</span><span class="content">mqtt:topic:4</span><span class="delimiter">'</span></span>].uid.bridge_ids <span class="comment"># =&gt; []</span></code></pre>
     
   </div>
 
@@ -4958,9 +4960,9 @@ things[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 182</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">things</span>
-  <span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Things</span>::<span style="color:#036;font-weight:bold">Registry</span>.instance
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">things</span>
+  <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Registry</span>.instance
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -5011,9 +5013,9 @@ things[<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 190</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">timers</span>
-  <span style="color:#036;font-weight:bold">TimerManager</span>.instance
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">timers</span>
+  <span class="constant">TimerManager</span>.instance
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -5071,42 +5073,42 @@ division.</p>
         <p class="example_title"><div class='inline'><p>Arithmetic Operations Between QuantityType and Numeric</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#777"># Number:Temperature NumberC = 23 °C</span>
-<span style="color:#777"># Number:Temperature NumberF = 70 °F</span>
-<span style="color:#777"># Number Dimensionless = 2</span>
-unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°F</span><span style="color:#710">'</span></span>) { <span style="color:#036;font-weight:bold">NumberC</span>.state - <span style="color:#036;font-weight:bold">NumberF</span>.state &lt; <span style="color:#00D">4</span> }                                      <span style="color:#777"># =&gt; true</span>
-unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°F</span><span style="color:#710">'</span></span>) { <span style="color:#036;font-weight:bold">NumberC</span>.state - <span style="color:#00D">24</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span> &lt; <span style="color:#00D">4</span> }                                          <span style="color:#777"># =&gt; true</span>
-unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°F</span><span style="color:#710">'</span></span>) { (<span style="color:#00D">24</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) - <span style="color:#036;font-weight:bold">NumberC</span>.state &lt; <span style="color:#00D">4</span> }                                        <span style="color:#777"># =&gt; true</span>
-unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) { <span style="color:#036;font-weight:bold">NumberF</span>.state - <span style="color:#00D">20</span> &lt; <span style="color:#00D">2</span> }                                                 <span style="color:#777"># =&gt; true</span>
-unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) { <span style="color:#036;font-weight:bold">NumberF</span>.state - <span style="color:#036;font-weight:bold">Dimensionless</span>.state }                                    <span style="color:#777"># =&gt; 19.11 °C</span>
-unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) { <span style="color:#036;font-weight:bold">NumberF</span>.state - <span style="color:#036;font-weight:bold">Dimensionless</span>.state &lt; <span style="color:#00D">20</span> }                               <span style="color:#777"># =&gt; true</span>
-unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) { <span style="color:#036;font-weight:bold">Dimensionless</span>.state + <span style="color:#036;font-weight:bold">NumberC</span>.state == <span style="color:#00D">25</span> }                              <span style="color:#777"># =&gt; true</span>
-unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) { <span style="color:#00D">2</span> + <span style="color:#036;font-weight:bold">NumberC</span>.state == <span style="color:#00D">25</span> }                                                <span style="color:#777"># =&gt; true</span>
-unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) { <span style="color:#036;font-weight:bold">Dimensionless</span>.state * <span style="color:#036;font-weight:bold">NumberC</span>.state == <span style="color:#00D">46</span> }                              <span style="color:#777"># =&gt; true</span>
-unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) { <span style="color:#00D">2</span> * <span style="color:#036;font-weight:bold">NumberC</span>.state == <span style="color:#00D">46</span> }                                                <span style="color:#777"># =&gt; true</span>
-unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) { ( (<span style="color:#00D">2</span> * (<span style="color:#036;font-weight:bold">NumberF</span>.state + <span style="color:#036;font-weight:bold">NumberC</span>.state) ) / <span style="color:#036;font-weight:bold">Dimensionless</span>.state ) &lt; <span style="color:#00D">45</span> }  <span style="color:#777"># =&gt; true</span>
-unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°C</span><span style="color:#710">'</span></span>) { [<span style="color:#036;font-weight:bold">NumberC</span>.state, <span style="color:#036;font-weight:bold">NumberF</span>.state, <span style="color:#036;font-weight:bold">Dimensionless</span>.state].min }                <span style="color:#777"># =&gt; 2</span></code></pre>
+      <pre class="example code"><code><span class="comment"># Number:Temperature NumberC = 23 °C</span>
+<span class="comment"># Number:Temperature NumberF = 70 °F</span>
+<span class="comment"># Number Dimensionless = 2</span>
+unit(<span class="string"><span class="delimiter">'</span><span class="content">°F</span><span class="delimiter">'</span></span>) { <span class="constant">NumberC</span>.state - <span class="constant">NumberF</span>.state &lt; <span class="integer">4</span> }                                      <span class="comment"># =&gt; true</span>
+unit(<span class="string"><span class="delimiter">'</span><span class="content">°F</span><span class="delimiter">'</span></span>) { <span class="constant">NumberC</span>.state - <span class="integer">24</span> | <span class="string"><span class="delimiter">'</span><span class="content">°C</span><span class="delimiter">'</span></span> &lt; <span class="integer">4</span> }                                          <span class="comment"># =&gt; true</span>
+unit(<span class="string"><span class="delimiter">'</span><span class="content">°F</span><span class="delimiter">'</span></span>) { (<span class="integer">24</span> | <span class="string"><span class="delimiter">'</span><span class="content">°C</span><span class="delimiter">'</span></span>) - <span class="constant">NumberC</span>.state &lt; <span class="integer">4</span> }                                        <span class="comment"># =&gt; true</span>
+unit(<span class="string"><span class="delimiter">'</span><span class="content">°C</span><span class="delimiter">'</span></span>) { <span class="constant">NumberF</span>.state - <span class="integer">20</span> &lt; <span class="integer">2</span> }                                                 <span class="comment"># =&gt; true</span>
+unit(<span class="string"><span class="delimiter">'</span><span class="content">°C</span><span class="delimiter">'</span></span>) { <span class="constant">NumberF</span>.state - <span class="constant">Dimensionless</span>.state }                                    <span class="comment"># =&gt; 19.11 °C</span>
+unit(<span class="string"><span class="delimiter">'</span><span class="content">°C</span><span class="delimiter">'</span></span>) { <span class="constant">NumberF</span>.state - <span class="constant">Dimensionless</span>.state &lt; <span class="integer">20</span> }                               <span class="comment"># =&gt; true</span>
+unit(<span class="string"><span class="delimiter">'</span><span class="content">°C</span><span class="delimiter">'</span></span>) { <span class="constant">Dimensionless</span>.state + <span class="constant">NumberC</span>.state == <span class="integer">25</span> }                              <span class="comment"># =&gt; true</span>
+unit(<span class="string"><span class="delimiter">'</span><span class="content">°C</span><span class="delimiter">'</span></span>) { <span class="integer">2</span> + <span class="constant">NumberC</span>.state == <span class="integer">25</span> }                                                <span class="comment"># =&gt; true</span>
+unit(<span class="string"><span class="delimiter">'</span><span class="content">°C</span><span class="delimiter">'</span></span>) { <span class="constant">Dimensionless</span>.state * <span class="constant">NumberC</span>.state == <span class="integer">46</span> }                              <span class="comment"># =&gt; true</span>
+unit(<span class="string"><span class="delimiter">'</span><span class="content">°C</span><span class="delimiter">'</span></span>) { <span class="integer">2</span> * <span class="constant">NumberC</span>.state == <span class="integer">46</span> }                                                <span class="comment"># =&gt; true</span>
+unit(<span class="string"><span class="delimiter">'</span><span class="content">°C</span><span class="delimiter">'</span></span>) { ( (<span class="integer">2</span> * (<span class="constant">NumberF</span>.state + <span class="constant">NumberC</span>.state) ) / <span class="constant">Dimensionless</span>.state ) &lt; <span class="integer">45</span> }  <span class="comment"># =&gt; true</span>
+unit(<span class="string"><span class="delimiter">'</span><span class="content">°C</span><span class="delimiter">'</span></span>) { [<span class="constant">NumberC</span>.state, <span class="constant">NumberF</span>.state, <span class="constant">Dimensionless</span>.state].min }                <span class="comment"># =&gt; 2</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Commands and Updates inside a unit block</p>
 </div></p>
       
-      <pre class="example code"><code>unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">°F</span><span style="color:#710">'</span></span>) { <span style="color:#036;font-weight:bold">NumberC</span> &lt;&lt; <span style="color:#00D">32</span> }; <span style="color:#036;font-weight:bold">NumberC</span>.state                                           <span style="color:#777"># =&gt; 0 °C</span>
-<span style="color:#777"># Equivalent to</span>
-<span style="color:#036;font-weight:bold">NumberC</span> &lt;&lt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">32 °F</span><span style="color:#710">&quot;</span></span>
-<span style="color:#777"># or</span>
-<span style="color:#036;font-weight:bold">NumberC</span> &lt;&lt; <span style="color:#00D">32</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span></code></pre>
+      <pre class="example code"><code>unit(<span class="string"><span class="delimiter">'</span><span class="content">°F</span><span class="delimiter">'</span></span>) { <span class="constant">NumberC</span> &lt;&lt; <span class="integer">32</span> }; <span class="constant">NumberC</span>.state                                           <span class="comment"># =&gt; 0 °C</span>
+<span class="comment"># Equivalent to</span>
+<span class="constant">NumberC</span> &lt;&lt; <span class="string"><span class="delimiter">&quot;</span><span class="content">32 °F</span><span class="delimiter">&quot;</span></span>
+<span class="comment"># or</span>
+<span class="constant">NumberC</span> &lt;&lt; <span class="integer">32</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Specifying Multiple Units</p>
 </div></p>
       
-      <pre class="example code"><code>unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°C</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">kW</span><span style="color:#710">&quot;</span></span>) <span style="color:#080;font-weight:bold">do</span>
-  <span style="color:#036;font-weight:bold">TemperatureItem</span>.update(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">50 °F</span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#036;font-weight:bold">TemperatureItem</span>.state &lt; <span style="color:#00D">20</span>          <span style="color:#777"># =&gt; true. TemperatureItem.state &lt; 20 °C</span>
-  <span style="color:#036;font-weight:bold">PowerUsage</span>.update(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">3000 W</span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#036;font-weight:bold">PowerUsage</span>.state &lt; <span style="color:#00D">10</span>               <span style="color:#777"># =&gt; true. PowerUsage.state &lt; 10 kW</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>unit(<span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">kW</span><span class="delimiter">&quot;</span></span>) <span class="keyword">do</span>
+  <span class="constant">TemperatureItem</span>.update(<span class="string"><span class="delimiter">&quot;</span><span class="content">50 °F</span><span class="delimiter">&quot;</span></span>)
+  <span class="constant">TemperatureItem</span>.state &lt; <span class="integer">20</span>          <span class="comment"># =&gt; true. TemperatureItem.state &lt; 20 °C</span>
+  <span class="constant">PowerUsage</span>.update(<span class="string"><span class="delimiter">&quot;</span><span class="content">3000 W</span><span class="delimiter">&quot;</span></span>)
+  <span class="constant">PowerUsage</span>.state &lt; <span class="integer">10</span>               <span class="comment"># =&gt; true. PowerUsage.state &lt; 10 kW</span>
+<span class="keyword">end</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -5183,7 +5185,7 @@ unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#71
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>unit(<span style="color:#036;font-weight:bold">SIUnits</span>::<span style="color:#036;font-weight:bold">METRE</span>.dimension) <span style="color:#777"># =&gt; ImperialUnits::FOOT</span></code></pre>
+      <pre class="example code"><code>unit(<span class="constant">SIUnits</span>::<span class="constant">METRE</span>.dimension) <span class="comment"># =&gt; ImperialUnits::FOOT</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -5280,20 +5282,20 @@ unit(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#71
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 516</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">unit</span>(*units)
-  <span style="color:#080;font-weight:bold">if</span> units.length == <span style="color:#00D">1</span> &amp;&amp; units.first.is_a?(javax.measure.Dimension)
-    <span style="color:#080;font-weight:bold">return</span> <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_units</span>]&amp;.[](units.first)
-  <span style="color:#080;font-weight:bold">end</span>
+<span class="keyword">def</span> <span class="function">unit</span>(*units)
+  <span class="keyword">if</span> units.length == <span class="integer">1</span> &amp;&amp; units.first.is_a?(javax.measure.Dimension)
+    <span class="keyword">return</span> <span class="constant">Thread</span>.current[<span class="symbol">:openhab_units</span>]&amp;.[](units.first)
+  <span class="keyword">end</span>
 
-  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">You must give a block to set the unit for the duration of</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> block_given?
+  raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">You must give a block to set the unit for the duration of</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block_given?
 
-  <span style="color:#080;font-weight:bold">begin</span>
+  <span class="keyword">begin</span>
     old_units = unit!(*units)
-    <span style="color:#080;font-weight:bold">yield</span>
-  <span style="color:#080;font-weight:bold">ensure</span>
-    <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_units</span>] = old_units
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+    <span class="keyword">yield</span>
+  <span class="keyword">ensure</span>
+    <span class="constant">Thread</span>.current[<span class="symbol">:openhab_units</span>] = old_units
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -5354,25 +5356,25 @@ of previous calls unless they are for the same dimension.</p>
         <p class="example_title"><div class='inline'><p>Set several defaults at once</p>
 </div></p>
       
-      <pre class="example code"><code>unit!(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ft</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">lbs</span><span style="color:#710">&quot;</span></span>)
-(<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) == <span style="color:#00D">50</span> <span style="color:#777"># =&gt; true</span></code></pre>
+      <pre class="example code"><code>unit!(<span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">ft</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">lbs</span><span class="delimiter">&quot;</span></span>)
+(<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) == <span class="integer">50</span> <span class="comment"># =&gt; true</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Calls are cumulative</p>
 </div></p>
       
-      <pre class="example code"><code>unit!(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>)
-unit!(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ft</span><span style="color:#710">&quot;</span></span>)
-(<span style="color:#00D">50</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">°F</span><span style="color:#710">&quot;</span></span>) == <span style="color:#00D">50</span> <span style="color:#777"># =&gt; true</span>
-(<span style="color:#00D">2</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">yd</span><span style="color:#710">&quot;</span></span>) == <span style="color:#00D">6</span> <span style="color:#777"># =&gt; true</span></code></pre>
+      <pre class="example code"><code>unit!(<span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>)
+unit!(<span class="string"><span class="delimiter">&quot;</span><span class="content">ft</span><span class="delimiter">&quot;</span></span>)
+(<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) == <span class="integer">50</span> <span class="comment"># =&gt; true</span>
+(<span class="integer">2</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">yd</span><span class="delimiter">&quot;</span></span>) == <span class="integer">6</span> <span class="comment"># =&gt; true</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Subsequent calls override the same dimension from previous calls</p>
 </div></p>
       
-      <pre class="example code"><code>unit!(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">yd</span><span style="color:#710">&quot;</span></span>)
-unit!(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ft</span><span style="color:#710">&quot;</span></span>)
-(<span style="color:#00D">2</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">yd</span><span style="color:#710">&quot;</span></span>) == <span style="color:#00D">6</span> <span style="color:#777"># =&gt; true</span></code></pre>
+      <pre class="example code"><code>unit!(<span class="string"><span class="delimiter">&quot;</span><span class="content">yd</span><span class="delimiter">&quot;</span></span>)
+unit!(<span class="string"><span class="delimiter">&quot;</span><span class="content">ft</span><span class="delimiter">&quot;</span></span>)
+(<span class="integer">2</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">yd</span><span class="delimiter">&quot;</span></span>) == <span class="integer">6</span> <span class="comment"># =&gt; true</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -5418,9 +5420,9 @@ unit!(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#7
         <p class="example_title"><div class='inline'><p>Clear all unit settings</p>
 </div></p>
       
-      <pre class="example code"><code>unit!(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">ft</span><span style="color:#710">&quot;</span></span>)
+      <pre class="example code"><code>unit!(<span class="string"><span class="delimiter">&quot;</span><span class="content">ft</span><span class="delimiter">&quot;</span></span>)
 unit!
-(<span style="color:#00D">2</span> | <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">yd</span><span style="color:#710">&quot;</span></span>) == <span style="color:#00D">6</span> <span style="color:#777"># =&gt; false</span></code></pre>
+(<span class="integer">2</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">yd</span><span class="delimiter">&quot;</span></span>) == <span class="integer">6</span> <span class="comment"># =&gt; false</span></code></pre>
     
   </div>
 
@@ -5468,16 +5470,16 @@ unit!
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 572</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">unit!</span>(*units)
-  units = units.each_with_object({}) <span style="color:#080;font-weight:bold">do</span> |unit, r|
-    unit = org.openhab.core.types.util.UnitUtils.parse_unit(unit) <span style="color:#080;font-weight:bold">if</span> unit.is_a?(<span style="color:#036;font-weight:bold">String</span>)
+<span class="keyword">def</span> <span class="function">unit!</span>(*units)
+  units = units.each_with_object({}) <span class="keyword">do</span> |unit, r|
+    unit = org.openhab.core.types.util.UnitUtils.parse_unit(unit) <span class="keyword">if</span> unit.is_a?(<span class="constant">String</span>)
     r[unit.dimension] = unit
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="keyword">end</span>
 
-  old_units = <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_units</span>] || {}
-  <span style="color:#036;font-weight:bold">Thread</span>.current[<span style="color:#A60">:openhab_units</span>] = units.empty? ? {} : old_units.merge(units)
+  old_units = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_units</span>] || {}
+  <span class="constant">Thread</span>.current[<span class="symbol">:openhab_units</span>] = units.empty? ? {} : old_units.merge(units)
   old_units
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -5488,7 +5490,7 @@ unit!
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:29 2022 by
+  Generated on Fri Dec  9 22:46:44 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

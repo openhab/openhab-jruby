@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Items::Semantics";
   relpath = '../../../';
@@ -2476,113 +2478,113 @@ and <span class='object_link'><a href="#property_type-instance_method" title="Op
         <p class="example_title"><div class='inline'><p>Working with tags</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#777"># Return an array of sibling points with a &quot;Switch&quot; tag</span>
-<span style="color:#036;font-weight:bold">Light_Color</span>.points(<span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Switch</span>)
+      <pre class="example code"><code><span class="comment"># Return an array of sibling points with a &quot;Switch&quot; tag</span>
+<span class="constant">Light_Color</span>.points(<span class="constant">Semantics</span>::<span class="constant">Switch</span>)
 
-<span style="color:#777"># check semantic type</span>
-<span style="color:#036;font-weight:bold">LoungeRoom_Light</span>.equipment_type == <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Lightbulb</span>
-<span style="color:#036;font-weight:bold">Light_Color</span>.property_type == <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Light</span></code></pre>
+<span class="comment"># check semantic type</span>
+<span class="constant">LoungeRoom_Light</span>.equipment_type == <span class="constant">Semantics</span>::<span class="constant">Lightbulb</span>
+<span class="constant">Light_Color</span>.property_type == <span class="constant">Semantics</span>::<span class="constant">Light</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>switches.items</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Group</span>   gFullOn
-<span style="color:#036;font-weight:bold">Group</span>   gRoomOff
+      <pre class="example code"><code><span class="constant">Group</span>   gFullOn
+<span class="constant">Group</span>   gRoomOff
 
-<span style="color:#036;font-weight:bold">Group</span>   eGarageLights        <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Garage Lights</span><span style="color:#710">&quot;</span></span>             (lGarage)                 [ <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Lightbulb</span><span style="color:#710">&quot;</span></span> ]
-<span style="color:#036;font-weight:bold">Dimmer</span>  <span style="color:#036;font-weight:bold">GarageLights_Dimmer</span>  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Garage Lights</span><span style="color:#710">&quot;</span></span>    &lt;light&gt;  (eGarageLights)           [ <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Switch</span><span style="color:#710">&quot;</span></span> ]
-<span style="color:#036;font-weight:bold">Number</span>  <span style="color:#036;font-weight:bold">GarageLights_Scene</span>   <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Scene</span><span style="color:#710">&quot;</span></span>                     (eGarageLights, gFullOn, gRoomOff)
+<span class="constant">Group</span>   eGarageLights        <span class="string"><span class="delimiter">&quot;</span><span class="content">Garage Lights</span><span class="delimiter">&quot;</span></span>             (lGarage)                 [ <span class="string"><span class="delimiter">&quot;</span><span class="content">Lightbulb</span><span class="delimiter">&quot;</span></span> ]
+<span class="constant">Dimmer</span>  <span class="constant">GarageLights_Dimmer</span>  <span class="string"><span class="delimiter">&quot;</span><span class="content">Garage Lights</span><span class="delimiter">&quot;</span></span>    &lt;light&gt;  (eGarageLights)           [ <span class="string"><span class="delimiter">&quot;</span><span class="content">Switch</span><span class="delimiter">&quot;</span></span> ]
+<span class="constant">Number</span>  <span class="constant">GarageLights_Scene</span>   <span class="string"><span class="delimiter">&quot;</span><span class="content">Scene</span><span class="delimiter">&quot;</span></span>                     (eGarageLights, gFullOn, gRoomOff)
 
-<span style="color:#036;font-weight:bold">Group</span>   eMudLights           <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Mud Room Lights</span><span style="color:#710">&quot;</span></span>           (lMud)                    [ <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Lightbulb</span><span style="color:#710">&quot;</span></span> ]
-<span style="color:#036;font-weight:bold">Dimmer</span>  <span style="color:#036;font-weight:bold">MudLights_Dimmer</span>     <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Garage Lights</span><span style="color:#710">&quot;</span></span>    &lt;light&gt;  (eMudLights)              [ <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Switch</span><span style="color:#710">&quot;</span></span> ]
-<span style="color:#036;font-weight:bold">Number</span>  <span style="color:#036;font-weight:bold">MudLights_Scene</span>      <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Scene</span><span style="color:#710">&quot;</span></span>                     (eMudLights, gFullOn, gRoomOff)</code></pre>
+<span class="constant">Group</span>   eMudLights           <span class="string"><span class="delimiter">&quot;</span><span class="content">Mud Room Lights</span><span class="delimiter">&quot;</span></span>           (lMud)                    [ <span class="string"><span class="delimiter">&quot;</span><span class="content">Lightbulb</span><span class="delimiter">&quot;</span></span> ]
+<span class="constant">Dimmer</span>  <span class="constant">MudLights_Dimmer</span>     <span class="string"><span class="delimiter">&quot;</span><span class="content">Garage Lights</span><span class="delimiter">&quot;</span></span>    &lt;light&gt;  (eMudLights)              [ <span class="string"><span class="delimiter">&quot;</span><span class="content">Switch</span><span class="delimiter">&quot;</span></span> ]
+<span class="constant">Number</span>  <span class="constant">MudLights_Scene</span>      <span class="string"><span class="delimiter">&quot;</span><span class="content">Scene</span><span class="delimiter">&quot;</span></span>                     (eMudLights, gFullOn, gRoomOff)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Find the switch item for a scene channel on a zwave dimmer</p>
 </div></p>
       
-      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">turn dimmer to full on when switch double-tapped up</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
-  changed gFullOn.members, <span style="color:#606">to</span>: <span style="color:#60E">1.3</span>
-  run <span style="color:#080;font-weight:bold">do</span> |event|
-    dimmer_item = event.item.points(<span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Switch</span>).first
-    dimmer_item.ensure &lt;&lt; <span style="color:#00D">100</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">turn dimmer to full on when switch double-tapped up</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+  changed gFullOn.members, <span class="key">to</span>: <span class="float">1.3</span>
+  run <span class="keyword">do</span> |event|
+    dimmer_item = event.item.points(<span class="constant">Semantics</span>::<span class="constant">Switch</span>).first
+    dimmer_item.ensure &lt;&lt; <span class="integer">100</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Turn off all the lights in a room</p>
 </div></p>
       
-      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">turn off all lights in the room when switch double-tapped down</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
-  changed gRoomOff.members, <span style="color:#606">to</span>: <span style="color:#60E">2.3</span>
-  run <span style="color:#080;font-weight:bold">do</span> |event|
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">turn off all lights in the room when switch double-tapped down</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+  changed gRoomOff.members, <span class="key">to</span>: <span class="float">2.3</span>
+  run <span class="keyword">do</span> |event|
     event
       .item
       .location
-      .equipments(<span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Lightbulb</span>)
+      .equipments(<span class="constant">Semantics</span>::<span class="constant">Lightbulb</span>)
       .members
-      .points(<span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Switch</span>)
+      .points(<span class="constant">Semantics</span>::<span class="constant">Switch</span>)
       .ensure.off
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Finding a related item that doesn't fit in the semantic model</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#777"># We can use custom tags to identify certain items that don't quite fit in the semantic model.</span>
-<span style="color:#777"># The extensions to the Enumerable mentioned above can help in this scenario.</span>
+      <pre class="example code"><code><span class="comment"># We can use custom tags to identify certain items that don't quite fit in the semantic model.</span>
+<span class="comment"># The extensions to the Enumerable mentioned above can help in this scenario.</span>
 
-<span style="color:#777"># In the following example, the TV `Equipment` has three `Points`. However, we are using custom tags</span>
-<span style="color:#777"># `Application` and `Channel` to identify the corresponding points, since the semantic model</span>
-<span style="color:#777"># doesn't have a specific property for them.</span>
+<span class="comment"># In the following example, the TV `Equipment` has three `Points`. However, we are using custom tags</span>
+<span class="comment"># `Application` and `Channel` to identify the corresponding points, since the semantic model</span>
+<span class="comment"># doesn't have a specific property for them.</span>
 
-<span style="color:#777"># Here, we use Enumerable#tagged</span>
-<span style="color:#777"># to find the point with the custom tag that we want.</span>
+<span class="comment"># Here, we use Enumerable#tagged</span>
+<span class="comment"># to find the point with the custom tag that we want.</span>
 
-<span style="color:#777"># Item model:</span>
-<span style="color:#036;font-weight:bold">Group</span>   gTVPower
-<span style="color:#036;font-weight:bold">Group</span>   lLivingRoom                                 [ <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">LivingRoom</span><span style="color:#710">&quot;</span></span> ]
+<span class="comment"># Item model:</span>
+<span class="constant">Group</span>   gTVPower
+<span class="constant">Group</span>   lLivingRoom                                 [ <span class="string"><span class="delimiter">&quot;</span><span class="content">LivingRoom</span><span class="delimiter">&quot;</span></span> ]
 
-<span style="color:#036;font-weight:bold">Group</span>   eTV             <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">TV</span><span style="color:#710">&quot;</span></span>       (lLivingRoom)    [ <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Television</span><span style="color:#710">&quot;</span></span> ]
-<span style="color:#036;font-weight:bold">Switch</span>  <span style="color:#036;font-weight:bold">TV_Power</span>        <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Power</span><span style="color:#710">&quot;</span></span>    (eTV, gTVPower)  [ <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Switch</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Power</span><span style="color:#710">&quot;</span></span> ]
-<span style="color:#036;font-weight:bold">String</span>  <span style="color:#036;font-weight:bold">TV_Application</span>  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">App</span><span style="color:#710">&quot;</span></span>      (eTV)            [ <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Control</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Application</span><span style="color:#710">&quot;</span></span> ]
-<span style="color:#036;font-weight:bold">String</span>  <span style="color:#036;font-weight:bold">TV_Channel</span>      <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Channel</span><span style="color:#710">&quot;</span></span>  (eTV)            [ <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Control</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Channel</span><span style="color:#710">&quot;</span></span> ]
+<span class="constant">Group</span>   eTV             <span class="string"><span class="delimiter">&quot;</span><span class="content">TV</span><span class="delimiter">&quot;</span></span>       (lLivingRoom)    [ <span class="string"><span class="delimiter">&quot;</span><span class="content">Television</span><span class="delimiter">&quot;</span></span> ]
+<span class="constant">Switch</span>  <span class="constant">TV_Power</span>        <span class="string"><span class="delimiter">&quot;</span><span class="content">Power</span><span class="delimiter">&quot;</span></span>    (eTV, gTVPower)  [ <span class="string"><span class="delimiter">&quot;</span><span class="content">Switch</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Power</span><span class="delimiter">&quot;</span></span> ]
+<span class="constant">String</span>  <span class="constant">TV_Application</span>  <span class="string"><span class="delimiter">&quot;</span><span class="content">App</span><span class="delimiter">&quot;</span></span>      (eTV)            [ <span class="string"><span class="delimiter">&quot;</span><span class="content">Control</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Application</span><span class="delimiter">&quot;</span></span> ]
+<span class="constant">String</span>  <span class="constant">TV_Channel</span>      <span class="string"><span class="delimiter">&quot;</span><span class="content">Channel</span><span class="delimiter">&quot;</span></span>  (eTV)            [ <span class="string"><span class="delimiter">&quot;</span><span class="content">Control</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Channel</span><span class="delimiter">&quot;</span></span> ]
 
-<span style="color:#777"># Rule:</span>
-rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Switch TV to Netflix on startup</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  changed gTVPower.members, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">ON</span>
-  run <span style="color:#080;font-weight:bold">do</span> |event|
-    application = event.item.points.tagged(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Application</span><span style="color:#710">'</span></span>).first
-    application &lt;&lt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">netflix</span><span style="color:#710">'</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+<span class="comment"># Rule:</span>
+rule <span class="string"><span class="delimiter">'</span><span class="content">Switch TV to Netflix on startup</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  changed gTVPower.members, <span class="key">to</span>: <span class="constant">ON</span>
+  run <span class="keyword">do</span> |event|
+    application = event.item.points.tagged(<span class="string"><span class="delimiter">'</span><span class="content">Application</span><span class="delimiter">'</span></span>).first
+    application &lt;&lt; <span class="string"><span class="delimiter">'</span><span class="content">netflix</span><span class="delimiter">'</span></span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Find all semantic entities regardless of hierarchy</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#777"># All locations</span>
+      <pre class="example code"><code><span class="comment"># All locations</span>
 items.locations
 
-<span style="color:#777"># All rooms</span>
-items.locations(<span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Room</span>)
+<span class="comment"># All rooms</span>
+items.locations(<span class="constant">Semantics</span>::<span class="constant">Room</span>)
 
-<span style="color:#777"># All equipments</span>
+<span class="comment"># All equipments</span>
 items.equipments
 
-<span style="color:#777"># All lightbulbs</span>
-items.equipments(<span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Lightbulb</span>)
+<span class="comment"># All lightbulbs</span>
+items.equipments(<span class="constant">Semantics</span>::<span class="constant">Lightbulb</span>)
 
-<span style="color:#777"># All blinds</span>
-items.equipments(<span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Blinds</span>)
+<span class="comment"># All blinds</span>
+items.equipments(<span class="constant">Semantics</span>::<span class="constant">Blinds</span>)
 
-<span style="color:#777"># Turn off all &quot;Power control&quot;</span>
-items.points(<span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Control</span>, <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Power</span>).off
+<span class="comment"># Turn off all &quot;Power control&quot;</span>
+items.points(<span class="constant">Semantics</span>::<span class="constant">Control</span>, <span class="constant">Semantics</span>::<span class="constant">Power</span>).off
 
-<span style="color:#777"># All items tagged &quot;SmartLightControl&quot;</span>
-items.tagged(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">SmartLightControl</span><span style="color:#710">&quot;</span></span>)</code></pre>
+<span class="comment"># All items tagged &quot;SmartLightControl&quot;</span>
+items.tagged(<span class="string"><span class="delimiter">&quot;</span><span class="content">SmartLightControl</span><span class="delimiter">&quot;</span></span>)</code></pre>
     
   </div>
 
@@ -3069,9 +3071,9 @@ items.tagged(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 305</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">equipment</span>
-  <span style="color:#036;font-weight:bold">Actions</span>::<span style="color:#036;font-weight:bold">Semantics</span>.get_equipment(<span style="color:#069">self</span>)&amp;.<span style="color:#080;font-weight:bold">then</span>(&amp;<span style="color:#036;font-weight:bold">Proxy</span>.method(<span style="color:#A60">:new</span>))
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">equipment</span>
+  <span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_equipment(<span class="predefined-constant">self</span>)&amp;.<span class="keyword">then</span>(&amp;<span class="constant">Proxy</span>.method(<span class="symbol">:new</span>))
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3125,9 +3127,9 @@ items.tagged(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 318</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">equipment_type</span>
-  <span style="color:#036;font-weight:bold">Actions</span>::<span style="color:#036;font-weight:bold">Semantics</span>.get_equipment_type(<span style="color:#069">self</span>)&amp;.ruby_class
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">equipment_type</span>
+  <span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_equipment_type(<span class="predefined-constant">self</span>)&amp;.ruby_class
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3182,9 +3184,9 @@ items.tagged(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 279</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">location</span>
-  <span style="color:#036;font-weight:bold">Actions</span>::<span style="color:#036;font-weight:bold">Semantics</span>.get_location(<span style="color:#069">self</span>)&amp;.<span style="color:#080;font-weight:bold">then</span>(&amp;<span style="color:#036;font-weight:bold">Proxy</span>.method(<span style="color:#A60">:new</span>))
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">location</span>
+  <span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_location(<span class="predefined-constant">self</span>)&amp;.<span class="keyword">then</span>(&amp;<span class="constant">Proxy</span>.method(<span class="symbol">:new</span>))
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3238,9 +3240,9 @@ items.tagged(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 292</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">location_type</span>
-  <span style="color:#036;font-weight:bold">Actions</span>::<span style="color:#036;font-weight:bold">Semantics</span>.get_location_type(<span style="color:#069">self</span>)&amp;.ruby_class
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">location_type</span>
+  <span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_location_type(<span class="predefined-constant">self</span>)&amp;.ruby_class
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3293,9 +3295,9 @@ items.tagged(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 329</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">point_type</span>
-  <span style="color:#036;font-weight:bold">Actions</span>::<span style="color:#036;font-weight:bold">Semantics</span>.get_point_type(<span style="color:#069">self</span>)&amp;.ruby_class
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">point_type</span>
+  <span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_point_type(<span class="predefined-constant">self</span>)&amp;.ruby_class
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3348,9 +3350,9 @@ items.tagged(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 340</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">property_type</span>
-  <span style="color:#036;font-weight:bold">Actions</span>::<span style="color:#036;font-weight:bold">Semantics</span>.get_property_type(<span style="color:#069">self</span>)&amp;.ruby_class
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">property_type</span>
+  <span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_property_type(<span class="predefined-constant">self</span>)&amp;.ruby_class
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3406,9 +3408,9 @@ and if none of those are found, looks for a <a href="https://www.openhab.org/jav
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 354</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">semantic_type</span>
-  <span style="color:#036;font-weight:bold">Actions</span>::<span style="color:#036;font-weight:bold">Semantics</span>.get_semantic_type(<span style="color:#069">self</span>)&amp;.ruby_class
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">semantic_type</span>
+  <span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_semantic_type(<span class="predefined-constant">self</span>)&amp;.ruby_class
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3468,9 +3470,9 @@ is an <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 245</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">equipment?</span>
-  <span style="color:#036;font-weight:bold">Actions</span>::<span style="color:#036;font-weight:bold">Semantics</span>.equipment?(<span style="color:#069">self</span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">equipment?</span>
+  <span class="constant">Actions</span>::<span class="constant">Semantics</span>.equipment?(<span class="predefined-constant">self</span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3523,9 +3525,9 @@ is a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 233</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">location?</span>
-  <span style="color:#036;font-weight:bold">Actions</span>::<span style="color:#036;font-weight:bold">Semantics</span>.location?(<span style="color:#069">self</span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">location?</span>
+  <span class="constant">Actions</span>::<span class="constant">Semantics</span>.location?(<span class="predefined-constant">self</span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3578,9 +3580,9 @@ is a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 256</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">point?</span>
-  <span style="color:#036;font-weight:bold">Actions</span>::<span style="color:#036;font-weight:bold">Semantics</span>.point?(<span style="color:#069">self</span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">point?</span>
+  <span class="constant">Actions</span>::<span class="constant">Semantics</span>.point?(<span class="predefined-constant">self</span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3620,27 +3622,27 @@ is a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/
         <p class="example_title"><div class='inline'><p>Search an Equipment item for its switch</p>
 </div></p>
       
-      <pre class="example code"><code>eGuestFan.points(<span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Switch</span>) <span style="color:#777"># =&gt; [GuestFan_Dimmer]</span></code></pre>
+      <pre class="example code"><code>eGuestFan.points(<span class="constant">Semantics</span>::<span class="constant">Switch</span>) <span class="comment"># =&gt; [GuestFan_Dimmer]</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Search a Thermostat item for its current temperature item</p>
 </div></p>
       
-      <pre class="example code"><code>eFamilyThermostat.points(<span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Status</span>, <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Temperature</span>)
-<span style="color:#777"># =&gt; [FamilyThermostat_AmbTemp]</span></code></pre>
+      <pre class="example code"><code>eFamilyThermostat.points(<span class="constant">Semantics</span>::<span class="constant">Status</span>, <span class="constant">Semantics</span>::<span class="constant">Temperature</span>)
+<span class="comment"># =&gt; [FamilyThermostat_AmbTemp]</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Search a Thermostat item for is setpoints</p>
 </div></p>
       
-      <pre class="example code"><code>eFamilyThermostat.points(<span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Control</span>, <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Temperature</span>)
-<span style="color:#777"># =&gt; [FamilyThermostat_HeatingSetpoint, FamilyThermostat_CoolingSetpoint]</span></code></pre>
+      <pre class="example code"><code>eFamilyThermostat.points(<span class="constant">Semantics</span>::<span class="constant">Control</span>, <span class="constant">Semantics</span>::<span class="constant">Temperature</span>)
+<span class="comment"># =&gt; [FamilyThermostat_HeatingSetpoint, FamilyThermostat_CoolingSetpoint]</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Given a A/V receiver's input item, search for its power item</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">FamilyReceiver_Input</span>.points(<span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Switch</span>) <span style="color:#777"># =&gt; [FamilyReceiver_Switch]</span></code></pre>
+      <pre class="example code"><code><span class="constant">FamilyReceiver_Input</span>.points(<span class="constant">Semantics</span>::<span class="constant">Switch</span>) <span class="comment"># =&gt; [FamilyReceiver_Switch]</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -3697,14 +3699,14 @@ So if you search for [Control], you'll get items tagged with [Switch].</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 385</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">points</span>(*point_or_property_types)
-  <span style="color:#080;font-weight:bold">return</span> members.points(*point_or_property_types) <span style="color:#080;font-weight:bold">if</span> equipment? || location?
+<span class="keyword">def</span> <span class="function">points</span>(*point_or_property_types)
+  <span class="keyword">return</span> members.points(*point_or_property_types) <span class="keyword">if</span> equipment? || location?
 
-  <span style="color:#777"># automatically search the parent equipment (or location?!) for sibling points</span>
+  <span class="comment"># automatically search the parent equipment (or location?!) for sibling points</span>
   result = (equipment || location)&amp;.points(*point_or_property_types) || []
-  result.delete(<span style="color:#069">self</span>)
+  result.delete(<span class="predefined-constant">self</span>)
   result
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3755,9 +3757,9 @@ So if you search for [Control], you'll get items tagged with [Switch].</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 265</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">semantic?</span>
+<span class="keyword">def</span> <span class="function">semantic?</span>
   !!semantic_type
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3768,7 +3770,7 @@ So if you search for [Control], you'll get items tagged with [Switch].</p>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:31 2022 by
+  Generated on Fri Dec  9 22:46:46 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

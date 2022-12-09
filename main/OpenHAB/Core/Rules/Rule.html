@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Rules::Rule";
   relpath = '../../../';
@@ -2826,9 +2828,9 @@ met, enabling the core dynamic functionality of openHAB.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 109</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">status</span>
-  <span style="color:#036;font-weight:bold">Rules</span>.manager.get_status(uid)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">status</span>
+  <span class="constant">Rules</span>.manager.get_status(uid)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2880,9 +2882,9 @@ met, enabling the core dynamic functionality of openHAB.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 117</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">status_info</span>
-  <span style="color:#036;font-weight:bold">Rules</span>.manager.get_status_info(uid)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">status_info</span>
+  <span class="constant">Rules</span>.manager.get_status_info(uid)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2927,9 +2929,9 @@ met, enabling the core dynamic functionality of openHAB.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 91</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">disable</span>
-  enable(<span style="color:#606">enabled</span>: <span style="color:#069">false</span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">disable</span>
+  enable(<span class="key">enabled</span>: <span class="predefined-constant">false</span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2981,10 +2983,10 @@ met, enabling the core dynamic functionality of openHAB.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 100</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">disabled?</span>
+<span class="keyword">def</span> <span class="function">disabled?</span>
   info = status_info
-  info.nil? || info.status_detail == <span style="color:#036;font-weight:bold">RuleStatusDetail</span>::<span style="color:#036;font-weight:bold">DISABLED</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  info.nil? || info.status_detail == <span class="constant">RuleStatusDetail</span>::<span class="constant">DISABLED</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3039,9 +3041,9 @@ met, enabling the core dynamic functionality of openHAB.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 82</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">enable</span>(<span style="color:#606">enabled</span>: <span style="color:#069">true</span>)
-  <span style="color:#036;font-weight:bold">Rules</span>.manager.set_enabled(uid, enabled)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">enable</span>(<span class="key">enabled</span>: <span class="predefined-constant">true</span>)
+  <span class="constant">Rules</span>.manager.set_enabled(uid, enabled)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3194,13 +3196,13 @@ met, enabling the core dynamic functionality of openHAB.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 48</span>
 
-<span style="color:#036;font-weight:bold">Visibility</span>.constants.each <span style="color:#080;font-weight:bold">do</span> |visibility|
-  class_eval <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&lt;&lt;~RUBY</span></span>, <span style="color:#069">__FILE__</span>, <span style="color:#069">__LINE__</span> + <span style="color:#00D">1</span><span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#D20">
-    def </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>visibility.to_s.downcase<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">?           # def visibile?
-      visibility == Visibility::</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>visibility<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">  #   visibility == Visibility::VISIBLE
-    end                                        # end</span><span style="color:#710">
+<span class="constant">Visibility</span>.constants.each <span class="keyword">do</span> |visibility|
+  class_eval <span class="string"><span class="delimiter">&lt;&lt;~RUBY</span></span>, <span class="predefined-constant">__FILE__</span>, <span class="predefined-constant">__LINE__</span> + <span class="integer">1</span><span class="string"><span class="content">
+    def </span><span class="inline"><span class="inline-delimiter">#{</span>visibility.to_s.downcase<span class="inline-delimiter">}</span></span><span class="content">?           # def visibile?
+      visibility == Visibility::</span><span class="inline"><span class="inline-delimiter">#{</span>visibility<span class="inline-delimiter">}</span></span><span class="content">  #   visibility == Visibility::VISIBLE
+    end                                        # end</span><span class="delimiter">
   RUBY</span></span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3255,13 +3257,13 @@ met, enabling the core dynamic functionality of openHAB.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 48</span>
 
-<span style="color:#036;font-weight:bold">Visibility</span>.constants.each <span style="color:#080;font-weight:bold">do</span> |visibility|
-  class_eval <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&lt;&lt;~RUBY</span></span>, <span style="color:#069">__FILE__</span>, <span style="color:#069">__LINE__</span> + <span style="color:#00D">1</span><span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#D20">
-    def </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>visibility.to_s.downcase<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">?           # def visibile?
-      visibility == Visibility::</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>visibility<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">  #   visibility == Visibility::VISIBLE
-    end                                        # end</span><span style="color:#710">
+<span class="constant">Visibility</span>.constants.each <span class="keyword">do</span> |visibility|
+  class_eval <span class="string"><span class="delimiter">&lt;&lt;~RUBY</span></span>, <span class="predefined-constant">__FILE__</span>, <span class="predefined-constant">__LINE__</span> + <span class="integer">1</span><span class="string"><span class="content">
+    def </span><span class="inline"><span class="inline-delimiter">#{</span>visibility.to_s.downcase<span class="inline-delimiter">}</span></span><span class="content">?           # def visibile?
+      visibility == Visibility::</span><span class="inline"><span class="inline-delimiter">#{</span>visibility<span class="inline-delimiter">}</span></span><span class="content">  #   visibility == Visibility::VISIBLE
+    end                                        # end</span><span class="delimiter">
   RUBY</span></span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3318,16 +3320,16 @@ met, enabling the core dynamic functionality of openHAB.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 122</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">inspect</span>
-  r = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">#&lt;OpenHAB::Core::Rules::Rule </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>uid<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-  r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>name.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> name
-  r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>visibility<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> visible?
-  r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>status || <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">&lt;detached&gt;</span><span style="color:#710">&quot;</span></span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-  r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> (</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>status_info.status_detail<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> status_info &amp;&amp; status_info.status_detail != <span style="color:#036;font-weight:bold">RuleStatusDetail</span>::<span style="color:#036;font-weight:bold">NONE</span>
-  r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> tags=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>tags.to_a.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> tags.empty?
-  r += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20"> configuration=</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>configuration.properties.to_h<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> configuration &amp;&amp; !configuration.properties.empty?
-  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>r<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">&gt;</span><span style="color:#710">&quot;</span></span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">inspect</span>
+  r = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Rules::Rule </span><span class="inline"><span class="inline-delimiter">#{</span>uid<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+  r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>name.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> name
+  r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>visibility<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> visible?
+  r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>status || <span class="string"><span class="delimiter">&quot;</span><span class="content">&lt;detached&gt;</span><span class="delimiter">&quot;</span></span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+  r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>status_info.status_detail<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> status_info &amp;&amp; status_info.status_detail != <span class="constant">RuleStatusDetail</span>::<span class="constant">NONE</span>
+  r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> tags=</span><span class="inline"><span class="inline-delimiter">#{</span>tags.to_a.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> tags.empty?
+  r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> configuration=</span><span class="inline"><span class="inline-delimiter">#{</span>configuration.properties.to_h<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> configuration &amp;&amp; !configuration.properties.empty?
+  <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>r<span class="inline-delimiter">}</span></span><span class="content">&gt;</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3382,13 +3384,13 @@ met, enabling the core dynamic functionality of openHAB.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 48</span>
 
-<span style="color:#036;font-weight:bold">Visibility</span>.constants.each <span style="color:#080;font-weight:bold">do</span> |visibility|
-  class_eval <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&lt;&lt;~RUBY</span></span>, <span style="color:#069">__FILE__</span>, <span style="color:#069">__LINE__</span> + <span style="color:#00D">1</span><span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#D20">
-    def </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>visibility.to_s.downcase<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">?           # def visibile?
-      visibility == Visibility::</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>visibility<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">  #   visibility == Visibility::VISIBLE
-    end                                        # end</span><span style="color:#710">
+<span class="constant">Visibility</span>.constants.each <span class="keyword">do</span> |visibility|
+  class_eval <span class="string"><span class="delimiter">&lt;&lt;~RUBY</span></span>, <span class="predefined-constant">__FILE__</span>, <span class="predefined-constant">__LINE__</span> + <span class="integer">1</span><span class="string"><span class="content">
+    def </span><span class="inline"><span class="inline-delimiter">#{</span>visibility.to_s.downcase<span class="inline-delimiter">}</span></span><span class="content">?           # def visibile?
+      visibility == Visibility::</span><span class="inline"><span class="inline-delimiter">#{</span>visibility<span class="inline-delimiter">}</span></span><span class="content">  #   visibility == Visibility::VISIBLE
+    end                                        # end</span><span class="delimiter">
   RUBY</span></span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3438,9 +3440,9 @@ met, enabling the core dynamic functionality of openHAB.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 134</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to_s</span>
+<span class="keyword">def</span> <span class="function">to_s</span>
   uid
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3499,9 +3501,9 @@ met, enabling the core dynamic functionality of openHAB.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 144</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">trigger</span>(event = <span style="color:#069">nil</span>)
-  <span style="color:#036;font-weight:bold">Rules</span>.manager.run_now(uid, <span style="color:#069">false</span>, { <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">event</span><span style="color:#710">&quot;</span></span> =&gt; event })
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">trigger</span>(event = <span class="predefined-constant">nil</span>)
+  <span class="constant">Rules</span>.manager.run_now(uid, <span class="predefined-constant">false</span>, { <span class="string"><span class="delimiter">&quot;</span><span class="content">event</span><span class="delimiter">&quot;</span></span> =&gt; event })
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3553,10 +3555,10 @@ met, enabling the core dynamic functionality of openHAB.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 71</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">uninitialized?</span>
+<span class="keyword">def</span> <span class="function">uninitialized?</span>
   s = status
-  s.nil? || s == <span style="color:#036;font-weight:bold">RuleStatus</span>::<span style="color:#036;font-weight:bold">UNINITIALIZED</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  s.nil? || s == <span class="constant">RuleStatus</span>::<span class="constant">UNINITIALIZED</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3616,7 +3618,7 @@ met, enabling the core dynamic functionality of openHAB.</p>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:30 2022 by
+  Generated on Fri Dec  9 22:46:45 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Actions";
   relpath = '../../';
@@ -2425,54 +2427,54 @@ See <span class='object_link'><a href="Things/Thing.html#actions-instance_method
         <p class="example_title"><div class='inline'><p>Run the TTS engine and output to the default audio sink. For more information see <a href="https://www.openhab.org/docs/configuration/multimedia.html#voice">Voice</a></p>
 </div></p>
       
-      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Say the time every hour</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  every <span style="color:#A60">:hour</span>
-  run { say <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">The time is </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">TimeOfDay</span>.now<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> }
-<span style="color:#080;font-weight:bold">end</span>
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Say the time every hour</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  every <span class="symbol">:hour</span>
+  run { say <span class="string"><span class="delimiter">&quot;</span><span class="content">The time is </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">TimeOfDay</span>.now<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
+<span class="keyword">end</span>
 
-rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Play an audio file</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  every <span style="color:#A60">:hour</span>
-  run { play_sound <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">beep.mp3</span><span style="color:#710">&quot;</span></span>, <span style="color:#606">volume</span>: <span style="color:#00D">100</span> }
-<span style="color:#080;font-weight:bold">end</span>
+rule <span class="string"><span class="delimiter">'</span><span class="content">Play an audio file</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  every <span class="symbol">:hour</span>
+  run { play_sound <span class="string"><span class="delimiter">&quot;</span><span class="content">beep.mp3</span><span class="delimiter">&quot;</span></span>, <span class="key">volume</span>: <span class="integer">100</span> }
+<span class="keyword">end</span>
 
-play_stream <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">example.com</span><span style="color:#710">'</span></span></code></pre>
+play_stream <span class="string"><span class="delimiter">'</span><span class="content">example.com</span><span class="delimiter">'</span></span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Send a broadcast notification via the openHAB Cloud</p>
 </div></p>
       
-      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Send an alert</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  changed <span style="color:#036;font-weight:bold">Alarm_Triggered</span>, <span style="color:#606">to</span>: <span style="color:#036;font-weight:bold">ON</span>
-  run { notify <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Red Alert!</span><span style="color:#710">'</span></span> }
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Send an alert</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  changed <span class="constant">Alarm_Triggered</span>, <span class="key">to</span>: <span class="constant">ON</span>
+  run { notify <span class="string"><span class="delimiter">'</span><span class="content">Red Alert!</span><span class="delimiter">'</span></span> }
+<span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Execute an external command</p>
 </div></p>
       
-      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Run a command</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  every <span style="color:#A60">:day</span>
-  run <span style="color:#080;font-weight:bold">do</span>
-    execute_command_line(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">/bin/true</span><span style="color:#710">'</span></span>)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Run a command</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  every <span class="symbol">:day</span>
+  run <span class="keyword">do</span>
+    execute_command_line(<span class="string"><span class="delimiter">'</span><span class="content">/bin/true</span><span class="delimiter">'</span></span>)
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Execute an external command, referencing the Exec module directly</p>
 </div></p>
       
-      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Run a command</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  every <span style="color:#A60">:day</span>
-  run <span style="color:#080;font-weight:bold">do</span>
-    <span style="color:#036;font-weight:bold">OpenHAB</span>::<span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Actions</span>::<span style="color:#036;font-weight:bold">Exec</span>::execute_command_line(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">/bin/true</span><span style="color:#710">'</span></span>)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Run a command</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  every <span class="symbol">:day</span>
+  run <span class="keyword">do</span>
+    <span class="constant">OpenHAB</span>::<span class="constant">Core</span>::<span class="constant">Actions</span>::<span class="constant">Exec</span>::execute_command_line(<span class="string"><span class="delimiter">'</span><span class="content">/bin/true</span><span class="delimiter">'</span></span>)
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Run a transformation</p>
 </div></p>
       
-      <pre class="example code"><code>transform(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">MAP</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">myfan.map</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">0</span><span style="color:#710">&quot;</span></span>)</code></pre>
+      <pre class="example code"><code>transform(<span class="string"><span class="delimiter">&quot;</span><span class="content">MAP</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">myfan.map</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">0</span><span class="delimiter">&quot;</span></span>)</code></pre>
     
   </div>
 
@@ -2657,14 +2659,14 @@ play_stream <span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/actions.rb', line 159</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">method_missing</span>(method, *args, &amp;block)
-  <span style="color:#036;font-weight:bold">Actions</span>.constants.each <span style="color:#080;font-weight:bold">do</span> |constant|
-    mod = <span style="color:#036;font-weight:bold">Actions</span>.const_get(constant)
-    <span style="color:#080;font-weight:bold">return</span> mod.public_send(method, *args, &amp;block) <span style="color:#080;font-weight:bold">if</span> mod.respond_to?(method)
-  <span style="color:#080;font-weight:bold">end</span>
+<span class="keyword">def</span> <span class="function">method_missing</span>(method, *args, &amp;block)
+  <span class="constant">Actions</span>.constants.each <span class="keyword">do</span> |constant|
+    mod = <span class="constant">Actions</span>.const_get(constant)
+    <span class="keyword">return</span> mod.public_send(method, *args, &amp;block) <span class="keyword">if</span> mod.respond_to?(method)
+  <span class="keyword">end</span>
 
-  <span style="color:#080;font-weight:bold">super</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">super</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2714,14 +2716,14 @@ play_stream <span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/actions.rb', line 159</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">method_missing</span>(method, *args, &amp;block)
-  <span style="color:#036;font-weight:bold">Actions</span>.constants.each <span style="color:#080;font-weight:bold">do</span> |constant|
-    mod = <span style="color:#036;font-weight:bold">Actions</span>.const_get(constant)
-    <span style="color:#080;font-weight:bold">return</span> mod.public_send(method, *args, &amp;block) <span style="color:#080;font-weight:bold">if</span> mod.respond_to?(method)
-  <span style="color:#080;font-weight:bold">end</span>
+<span class="keyword">def</span> <span class="function">method_missing</span>(method, *args, &amp;block)
+  <span class="constant">Actions</span>.constants.each <span class="keyword">do</span> |constant|
+    mod = <span class="constant">Actions</span>.const_get(constant)
+    <span class="keyword">return</span> mod.public_send(method, *args, &amp;block) <span class="keyword">if</span> mod.respond_to?(method)
+  <span class="keyword">end</span>
 
-  <span style="color:#080;font-weight:bold">super</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">super</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2829,17 +2831,17 @@ play_stream <span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/actions.rb', line 103</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">notify</span>(msg, <span style="color:#606">email</span>: <span style="color:#069">nil</span>, <span style="color:#606">icon</span>: <span style="color:#069">nil</span>, <span style="color:#606">severity</span>: <span style="color:#069">nil</span>)
-  <span style="color:#080;font-weight:bold">unless</span> <span style="color:#036;font-weight:bold">Actions</span>.const_defined?(<span style="color:#A60">:NotificationAction</span>)
-    raise <span style="color:#036;font-weight:bold">NoMethodError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">NotificationAction is not available. Please install the openHAB cloud addon</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
+<span class="keyword">def</span> <span class="function">notify</span>(msg, <span class="key">email</span>: <span class="predefined-constant">nil</span>, <span class="key">icon</span>: <span class="predefined-constant">nil</span>, <span class="key">severity</span>: <span class="predefined-constant">nil</span>)
+  <span class="keyword">unless</span> <span class="constant">Actions</span>.const_defined?(<span class="symbol">:NotificationAction</span>)
+    raise <span class="constant">NoMethodError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">NotificationAction is not available. Please install the openHAB cloud addon</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
 
-  <span style="color:#080;font-weight:bold">if</span> email
-    <span style="color:#036;font-weight:bold">NotificationAction</span>.send_notification(email.to_s, msg.to_s, icon&amp;.to_s, severity&amp;.to_s)
-  <span style="color:#080;font-weight:bold">else</span>
-    <span style="color:#036;font-weight:bold">NotificationAction</span>.send_broadcast_notification(msg.to_s, icon&amp;.to_s, severity&amp;.to_s)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">if</span> email
+    <span class="constant">NotificationAction</span>.send_notification(email.to_s, msg.to_s, icon&amp;.to_s, severity&amp;.to_s)
+  <span class="keyword">else</span>
+    <span class="constant">NotificationAction</span>.send_broadcast_notification(msg.to_s, icon&amp;.to_s, severity&amp;.to_s)
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2931,10 +2933,10 @@ play_stream <span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/actions.rb', line 139</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">play_sound</span>(filename, <span style="color:#606">sink</span>: <span style="color:#069">nil</span>, <span style="color:#606">volume</span>: <span style="color:#069">nil</span>)
-  volume = <span style="color:#036;font-weight:bold">PercentType</span>.new(volume) <span style="color:#080;font-weight:bold">unless</span> volume.is_a?(<span style="color:#036;font-weight:bold">PercentType</span>) || volume.nil?
-  <span style="color:#036;font-weight:bold">Audio</span>.play_sound(sink&amp;.to_s, filename.to_s, volume)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">play_sound</span>(filename, <span class="key">sink</span>: <span class="predefined-constant">nil</span>, <span class="key">volume</span>: <span class="predefined-constant">nil</span>)
+  volume = <span class="constant">PercentType</span>.new(volume) <span class="keyword">unless</span> volume.is_a?(<span class="constant">PercentType</span>) || volume.nil?
+  <span class="constant">Audio</span>.play_sound(sink&amp;.to_s, filename.to_s, volume)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3008,9 +3010,9 @@ play_stream <span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/actions.rb', line 152</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">play_stream</span>(url, <span style="color:#606">sink</span>: <span style="color:#069">nil</span>)
-  <span style="color:#036;font-weight:bold">Audio</span>.play_stream(sink&amp;.to_s, url)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">play_stream</span>(url, <span class="key">sink</span>: <span class="predefined-constant">nil</span>)
+  <span class="constant">Audio</span>.play_stream(sink&amp;.to_s, url)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3119,10 +3121,10 @@ play_stream <span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/actions.rb', line 125</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">say</span>(text, <span style="color:#606">voice</span>: <span style="color:#069">nil</span>, <span style="color:#606">sink</span>: <span style="color:#069">nil</span>, <span style="color:#606">volume</span>: <span style="color:#069">nil</span>)
-  volume = <span style="color:#036;font-weight:bold">PercentType</span>.new(volume) <span style="color:#080;font-weight:bold">unless</span> volume.is_a?(<span style="color:#036;font-weight:bold">PercentType</span>) || volume.nil?
-  <span style="color:#036;font-weight:bold">Voice</span>.say(text.to_s, voice&amp;.to_s, sink&amp;.to_s, volume)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">say</span>(text, <span class="key">voice</span>: <span class="predefined-constant">nil</span>, <span class="key">sink</span>: <span class="predefined-constant">nil</span>, <span class="key">volume</span>: <span class="predefined-constant">nil</span>)
+  volume = <span class="constant">PercentType</span>.new(volume) <span class="keyword">unless</span> volume.is_a?(<span class="constant">PercentType</span>) || volume.nil?
+  <span class="constant">Voice</span>.say(text.to_s, voice&amp;.to_s, sink&amp;.to_s, volume)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3133,7 +3135,7 @@ play_stream <span style="background-color:hsla(0,100%,50%,0.05)"><span style="co
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:30 2022 by
+  Generated on Fri Dec  9 22:46:44 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

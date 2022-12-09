@@ -148,20 +148,25 @@ img {
     max-width: 100%;
 }
 
+*:not(pre) > code,
+#filecontents pre.code, .docstring pre.code,
+.tags pre.example {
+    color: #f7f7f7;
+    background: #2f353c;
+    border: none;
+}
+
 @media (prefers-color-scheme: dark) {
     body, html {
         background-color: #111;
         color: #ddd;
     }
 
-    *:not(pre) > code,
     #filecontents pre.code, .docstring pre.code,
     .tags pre.example {
-        color: #f7f7f7;
-        background: #2f353c;
-        border: none;
+      line-height: 1.4em;
     }
-
+    
     .summary_desc .object_link a, .docstring .object_link a {
         color: #f60;
         background: #2f353c;
@@ -172,6 +177,8 @@ img {
 
     p.signature, h3.signature { background: #2f353c; border-color: #444; }
 
+    .tags .overload .overload_item .signature { background: #2f353c; border-color: #444; }
+
     p.signature .aliases,
     h3.signature .aliases { color: #f7f7f767; }
     p.signature .aliases .names,
@@ -180,6 +187,19 @@ img {
     p.signature .extras,
     h3.signature .extras { color: #f7f7f767; }
 
+    .docstring .note { border-left-color: #444; }
+    .note { color: #ccc; border-color: #444; }
+    .note.todo { background: #2f353c; border-color: #444; }
+    .note.returns_void { background: #2f353c; }
+    .note.deprecated { background: #2f353c; border-color: ##444; }
+    .note.title.deprecated { background: #2f353c; border-color: #444; }
+    .note.private { background: #2f353c; border-color: #444; }
+    .note.title { background: #2f353c; }
+
+    /* .note.title.constructor { color: #fff; background: #6a98d6; border-color: #6689d6; }
+    .note.title.writeonly { color: #fff; background: #45a638; border-color: #2da31d; }
+    .note.title.readonly { color: #fff; background: #6a98d6; border-color: #6689d6; } */
+    
     .docstring p > code, .docstring p > tt, .tags p > code, .tags p > tt { color: #f7f7f7; background: #2f353c; }
 
     .box_info dl dt, .box_info dl dd { border-color: #444!important; }
@@ -205,22 +225,12 @@ img {
         background: #111;
         color: #ccc;
     }
-
-    .note {
-        color: #ddd;
-        border-color: #333;
-    }
-
-    .docstring .note {
-        border-left-color: #333;
-    }
-
-    .note.returns_void {
-        background-color: #333;
-    }
 }
 
 pre.code {
     white-space: pre-wrap;
     overflow-wrap: anywhere;
 }
+
+/* override for coderay */
+.code .content { padding: 0; }

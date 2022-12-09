@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Items::DimmerItem";
   relpath = '../../../';
@@ -2427,91 +2429,91 @@ percent values to reflect the dimmed state.</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">DimmerOne</span> &lt;&lt; <span style="color:#036;font-weight:bold">DimmerOne</span>.state - <span style="color:#00D">5</span>
-<span style="color:#036;font-weight:bold">DimmerOne</span> &lt;&lt; <span style="color:#00D">100</span> - <span style="color:#036;font-weight:bold">DimmerOne</span>.state</code></pre>
+      <pre class="example code"><code><span class="constant">DimmerOne</span> &lt;&lt; <span class="constant">DimmerOne</span>.state - <span class="integer">5</span>
+<span class="constant">DimmerOne</span> &lt;&lt; <span class="integer">100</span> - <span class="constant">DimmerOne</span>.state</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Turn on all dimmers in group</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Dimmers</span>.members.each(&amp;<span style="color:#A60">:on</span>)</code></pre>
+      <pre class="example code"><code><span class="constant">Dimmers</span>.members.each(&amp;<span class="symbol">:on</span>)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Turn off all dimmers in group</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Dimmers</span>.members.each(&amp;<span style="color:#A60">:off</span>)</code></pre>
+      <pre class="example code"><code><span class="constant">Dimmers</span>.members.each(&amp;<span class="symbol">:off</span>)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Turn on switches that are off</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Dimmers</span>.select(&amp;<span style="color:#A60">:off?</span>).each(&amp;<span style="color:#A60">:on</span>)</code></pre>
+      <pre class="example code"><code><span class="constant">Dimmers</span>.select(&amp;<span class="symbol">:off?</span>).each(&amp;<span class="symbol">:on</span>)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Turn off switches that are on</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">Dimmers</span>.select(&amp;<span style="color:#A60">:on?</span>).each(&amp;<span style="color:#A60">:off</span>)</code></pre>
+      <pre class="example code"><code><span class="constant">Dimmers</span>.select(&amp;<span class="symbol">:on?</span>).each(&amp;<span class="symbol">:off</span>)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Dimmers can be selected in an enumerable with grep.</p>
 </div></p>
       
-      <pre class="example code"><code>items.grep(<span style="color:#036;font-weight:bold">DimmerItem</span>)
-     .each { |dimmer| logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>dimmer.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is a Dimmer</span><span style="color:#710">&quot;</span></span>) }</code></pre>
+      <pre class="example code"><code>items.grep(<span class="constant">DimmerItem</span>)
+     .each { |dimmer| logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>dimmer.name<span class="inline-delimiter">}</span></span><span class="content"> is a Dimmer</span><span class="delimiter">&quot;</span></span>) }</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Dimmers can also be used in case statements with ranges.</p>
 </div></p>
       
-      <pre class="example code"><code>items.grep(<span style="color:#036;font-weight:bold">DimmerItem</span>)
-     .each <span style="color:#080;font-weight:bold">do</span> |dimmer|
-  <span style="color:#080;font-weight:bold">case</span> dimmer.state
-  <span style="color:#080;font-weight:bold">when</span> (<span style="color:#00D">0</span>..<span style="color:#00D">50</span>)
-    logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>dimmer.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is less than 50%</span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#080;font-weight:bold">when</span> (<span style="color:#00D">51</span>..<span style="color:#00D">100</span>)
-    logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>dimmer.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is greater than 50%</span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>items.grep(<span class="constant">DimmerItem</span>)
+     .each <span class="keyword">do</span> |dimmer|
+  <span class="keyword">case</span> dimmer.state
+  <span class="keyword">when</span> (<span class="integer">0</span>..<span class="integer">50</span>)
+    logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>dimmer.name<span class="inline-delimiter">}</span></span><span class="content"> is less than 50%</span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">when</span> (<span class="integer">51</span>..<span class="integer">100</span>)
+    logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>dimmer.name<span class="inline-delimiter">}</span></span><span class="content"> is greater than 50%</span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
       
-      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Dim a switch on system startup over 100 seconds</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Dim a switch on system startup over 100 seconds</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   on_load
-  <span style="color:#00D">100</span>.times <span style="color:#080;font-weight:bold">do</span>
-    run { <span style="color:#036;font-weight:bold">DimmerSwitch</span>.dim }
-    delay <span style="color:#00D">1</span>.second
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+  <span class="integer">100</span>.times <span class="keyword">do</span>
+    run { <span class="constant">DimmerSwitch</span>.dim }
+    delay <span class="integer">1</span>.second
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
       
-      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Dim a switch on system startup by 5, pausing every second</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Dim a switch on system startup by 5, pausing every second</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   on_load
-  <span style="color:#00D">100</span>.step(<span style="color:#00D">-5</span>, <span style="color:#00D">0</span>) <span style="color:#080;font-weight:bold">do</span> |level|
-    run { <span style="color:#036;font-weight:bold">DimmerSwitch</span> &lt;&lt; level }
-    delay <span style="color:#00D">1</span>.second
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+  <span class="integer">100</span>.step(<span class="integer">-5</span>, <span class="integer">0</span>) <span class="keyword">do</span> |level|
+    run { <span class="constant">DimmerSwitch</span> &lt;&lt; level }
+    delay <span class="integer">1</span>.second
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
       
-      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Turn off any dimmers curently on at midnight</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  every <span style="color:#A60">:day</span>
-  run <span style="color:#080;font-weight:bold">do</span>
-    items.grep(<span style="color:#036;font-weight:bold">DimmerItem</span>)
-         .select(&amp;<span style="color:#A60">:on?</span>)
-         .each(&amp;<span style="color:#A60">:off</span>)
-    <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Turn off any dimmers curently on at midnight</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  every <span class="symbol">:day</span>
+  run <span class="keyword">do</span>
+    items.grep(<span class="constant">DimmerItem</span>)
+         .select(&amp;<span class="symbol">:on?</span>)
+         .each(&amp;<span class="symbol">:off</span>)
+    <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
       
-      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Turn off any dimmers set to less than 50 at midnight</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  every <span style="color:#A60">:day</span>
-  run <span style="color:#080;font-weight:bold">do</span>
-    items.grep(<span style="color:#036;font-weight:bold">DimmerItem</span>)
-         .select { |i| (<span style="color:#00D">1</span>...<span style="color:#00D">50</span>).cover?(i.state) }
-         .each(&amp;<span style="color:#A60">:off</span>)
-    <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Turn off any dimmers set to less than 50 at midnight</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  every <span class="symbol">:day</span>
+  run <span class="keyword">do</span>
+    items.grep(<span class="constant">DimmerItem</span>)
+         .select { |i| (<span class="integer">1</span>...<span class="integer">50</span>).cover?(i.state) }
+         .each(&amp;<span class="symbol">:off</span>)
+    <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
   </div>
 
@@ -2879,63 +2881,63 @@ percent values to reflect the dimmed state.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/dimmer_item.rb', line 87</span>
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">DimmerItem</span> &lt; <span style="color:#036;font-weight:bold">SwitchItem</span>
-  include <span style="color:#036;font-weight:bold">NumericItem</span>
+<span class="keyword">class</span> <span class="class">DimmerItem</span> &lt; <span class="constant">SwitchItem</span>
+  include <span class="constant">NumericItem</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Dim the dimmer</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @param [Integer] amount to dim by</span>
-  <span style="color:#777">#  If 1 is the amount, the DECREASE command is sent, otherwise the</span>
-  <span style="color:#777">#  current state - amount is sent as a command.</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @return [Integer] level target for dimmer</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @example</span>
-  <span style="color:#777">#   DimmerOne.dim</span>
-  <span style="color:#777">#   DimmerOne.dim(2)</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">dim</span>(amount = <span style="color:#00D">1</span>)
-    target = [state&amp;.-(amount), <span style="color:#00D">0</span>].compact.max
+  <span class="comment">#</span>
+  <span class="comment"># Dim the dimmer</span>
+  <span class="comment">#</span>
+  <span class="comment"># @param [Integer] amount to dim by</span>
+  <span class="comment">#  If 1 is the amount, the DECREASE command is sent, otherwise the</span>
+  <span class="comment">#  current state - amount is sent as a command.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Integer] level target for dimmer</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example</span>
+  <span class="comment">#   DimmerOne.dim</span>
+  <span class="comment">#   DimmerOne.dim(2)</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">dim</span>(amount = <span class="integer">1</span>)
+    target = [state&amp;.-(amount), <span class="integer">0</span>].compact.max
     command(target)
     target
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#777">#</span>
-  <span style="color:#777"># Brighten the dimmer</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @param [Integer] amount to brighten by</span>
-  <span style="color:#777">#   If 1 is the amount, the INCREASE command is sent, otherwise the</span>
-  <span style="color:#777"># current state + amount is sent as a command.</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @return [Integer] level target for dimmer</span>
-  <span style="color:#777">#</span>
-  <span style="color:#777"># @example</span>
-  <span style="color:#777">#   DimmerOne.brighten</span>
-  <span style="color:#777">#   DimmerOne.brighten(2)</span>
-  <span style="color:#777">#</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">brighten</span>(amount = <span style="color:#00D">1</span>)
-    target = [state&amp;.+(amount), <span style="color:#00D">100</span>].compact.min
+  <span class="comment">#</span>
+  <span class="comment"># Brighten the dimmer</span>
+  <span class="comment">#</span>
+  <span class="comment"># @param [Integer] amount to brighten by</span>
+  <span class="comment">#   If 1 is the amount, the INCREASE command is sent, otherwise the</span>
+  <span class="comment"># current state + amount is sent as a command.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Integer] level target for dimmer</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example</span>
+  <span class="comment">#   DimmerOne.brighten</span>
+  <span class="comment">#   DimmerOne.brighten(2)</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">brighten</span>(amount = <span class="integer">1</span>)
+    target = [state&amp;.+(amount), <span class="integer">100</span>].compact.min
     command(target)
     target
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="keyword">end</span>
 
-  <span style="color:#777"># @!method increase</span>
-  <span style="color:#777">#   Send the {INCREASE} command to the item</span>
-  <span style="color:#777">#   @return [DimmerItem] `self`</span>
+  <span class="comment"># @!method increase</span>
+  <span class="comment">#   Send the {INCREASE} command to the item</span>
+  <span class="comment">#   @return [DimmerItem] `self`</span>
 
-  <span style="color:#777"># @!method decrease</span>
-  <span style="color:#777">#   Send the {DECREASE} command to the item</span>
-  <span style="color:#777">#   @return [DimmerItem] `self`</span>
+  <span class="comment"># @!method decrease</span>
+  <span class="comment">#   Send the {DECREASE} command to the item</span>
+  <span class="comment">#   @return [DimmerItem] `self`</span>
 
-  <span style="color:#777"># raw numbers translate directly to PercentType, not a DecimalType</span>
-  <span style="color:#777"># @!visibility private</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">format_type</span>(command)
-    <span style="color:#080;font-weight:bold">return</span> <span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">PercentType</span>.new(command) <span style="color:#080;font-weight:bold">if</span> command.is_a?(<span style="color:#036;font-weight:bold">Numeric</span>)
+  <span class="comment"># raw numbers translate directly to PercentType, not a DecimalType</span>
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">format_type</span>(command)
+    <span class="keyword">return</span> <span class="constant">Types</span>::<span class="constant">PercentType</span>.new(command) <span class="keyword">if</span> command.is_a?(<span class="constant">Numeric</span>)
 
-    <span style="color:#080;font-weight:bold">super</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+    <span class="keyword">super</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2971,8 +2973,8 @@ percent values to reflect the dimmed state.</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">DimmerOne</span>.brighten
-<span style="color:#036;font-weight:bold">DimmerOne</span>.brighten(<span style="color:#00D">2</span>)</code></pre>
+      <pre class="example code"><code><span class="constant">DimmerOne</span>.brighten
+<span class="constant">DimmerOne</span>.brighten(<span class="integer">2</span>)</code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -3031,11 +3033,11 @@ If 1 is the amount, the INCREASE command is sent, otherwise the</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/dimmer_item.rb', line 122</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">brighten</span>(amount = <span style="color:#00D">1</span>)
-  target = [state&amp;.+(amount), <span style="color:#00D">100</span>].compact.min
+<span class="keyword">def</span> <span class="function">brighten</span>(amount = <span class="integer">1</span>)
+  target = [state&amp;.+(amount), <span class="integer">100</span>].compact.min
   command(target)
   target
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3116,8 +3118,8 @@ If 1 is the amount, the INCREASE command is sent, otherwise the</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code><span style="color:#036;font-weight:bold">DimmerOne</span>.dim
-<span style="color:#036;font-weight:bold">DimmerOne</span>.dim(<span style="color:#00D">2</span>)</code></pre>
+      <pre class="example code"><code><span class="constant">DimmerOne</span>.dim
+<span class="constant">DimmerOne</span>.dim(<span class="integer">2</span>)</code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -3177,11 +3179,11 @@ current state - amount is sent as a command.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/dimmer_item.rb', line 103</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">dim</span>(amount = <span style="color:#00D">1</span>)
-  target = [state&amp;.-(amount), <span style="color:#00D">0</span>].compact.max
+<span class="keyword">def</span> <span class="function">dim</span>(amount = <span class="integer">1</span>)
+  target = [state&amp;.-(amount), <span class="integer">0</span>].compact.max
   command(target)
   target
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3245,7 +3247,7 @@ current state - amount is sent as a command.</p>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:35 2022 by
+  Generated on Fri Dec  9 22:46:49 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

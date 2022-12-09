@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::ValueCache";
   relpath = '../../';
@@ -2432,8 +2434,8 @@ removed.</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>shared_cache.compute_if_absent(<span style="color:#A60">:execution_count</span>) { <span style="color:#00D">0</span> }
-shared_cache[<span style="color:#A60">:execution_count</span>] += <span style="color:#00D">1</span></code></pre>
+      <pre class="example code"><code>shared_cache.compute_if_absent(<span class="symbol">:execution_count</span>) { <span class="integer">0</span> }
+shared_cache[<span class="symbol">:execution_count</span>] += <span class="integer">1</span></code></pre>
     
   </div>
 
@@ -2807,9 +2809,9 @@ shared_cache[<span style="color:#A60">:execution_count</span>] += <span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 49</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">[]</span>(key)
+<span class="keyword">def</span> <span class="function">[]</span>(key)
   get(key.to_s)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2853,9 +2855,9 @@ shared_cache[<span style="color:#A60">:execution_count</span>] += <span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 65</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">[]=</span>(key, value)
+<span class="keyword">def</span> <span class="function">[]=</span>(key, value)
   put(key.to_s, value)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2902,12 +2904,12 @@ shared_cache[<span style="color:#A60">:execution_count</span>] += <span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 109</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">assoc</span>(key)
-  [key, fetch(key) <span style="color:#080;font-weight:bold">do</span>
-    <span style="color:#777"># return nil directly, without storing a value to the cache</span>
-    <span style="color:#080;font-weight:bold">return</span> <span style="color:#069">nil</span>
-  <span style="color:#080;font-weight:bold">end</span>]
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">assoc</span>(key)
+  [key, fetch(key) <span class="keyword">do</span>
+    <span class="comment"># return nil directly, without storing a value to the cache</span>
+    <span class="keyword">return</span> <span class="predefined-constant">nil</span>
+  <span class="keyword">end</span>]
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2994,9 +2996,9 @@ shared_cache[<span style="color:#A60">:execution_count</span>] += <span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 60</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">compute_if_absent</span>(key, &amp;block)
+<span class="keyword">def</span> <span class="function">compute_if_absent</span>(key, &amp;block)
   get(key.to_s, &amp;block)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3046,15 +3048,15 @@ shared_cache[<span style="color:#A60">:execution_count</span>] += <span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 71</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">delete</span>(key)
+<span class="keyword">def</span> <span class="function">delete</span>(key)
   key = key.to_s
-  <span style="color:#080;font-weight:bold">if</span> block_given?
-    fetch(key) <span style="color:#080;font-weight:bold">do</span>
-      <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">yield</span>(key)
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="keyword">if</span> block_given?
+    fetch(key) <span class="keyword">do</span>
+      <span class="keyword">return</span> <span class="keyword">yield</span>(key)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
   remove(key)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3099,10 +3101,10 @@ shared_cache[<span style="color:#A60">:execution_count</span>] += <span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 117</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">dig</span>(key, *identifiers)
-  r = fetch(key) { <span style="color:#080;font-weight:bold">return</span> <span style="color:#069">nil</span> }
+<span class="keyword">def</span> <span class="function">dig</span>(key, *identifiers)
+  r = fetch(key) { <span class="keyword">return</span> <span class="predefined-constant">nil</span> }
   r&amp;.dig(*identifiers)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3129,7 +3131,7 @@ shared_cache[<span style="color:#A60">:execution_count</span>] += <span style="c
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>shared_cache.fetch(<span style="color:#A60">:key_from_another_script</span>) <span style="color:#777"># raises NoKeyError</span></code></pre>
+      <pre class="example code"><code>shared_cache.fetch(<span class="symbol">:key_from_another_script</span>) <span class="comment"># raises NoKeyError</span></code></pre>
     
   </div>
 
@@ -3172,27 +3174,27 @@ shared_cache[<span style="color:#A60">:execution_count</span>] += <span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 86</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">fetch</span>(key, *default_value)
-  <span style="color:#080;font-weight:bold">if</span> default_value.length &gt; <span style="color:#00D">1</span>
-    raise <span style="color:#036;font-weight:bold">ArgumentError</span>,
-          <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">wrong number of arguments (given </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>default_value.length + <span style="color:#00D">1</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">, expected 0..1)</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
+<span class="keyword">def</span> <span class="function">fetch</span>(key, *default_value)
+  <span class="keyword">if</span> default_value.length &gt; <span class="integer">1</span>
+    raise <span class="constant">ArgumentError</span>,
+          <span class="string"><span class="delimiter">&quot;</span><span class="content">wrong number of arguments (given </span><span class="inline"><span class="inline-delimiter">#{</span>default_value.length + <span class="integer">1</span><span class="inline-delimiter">}</span></span><span class="content">, expected 0..1)</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
 
   key = key.to_s
-  <span style="color:#080;font-weight:bold">if</span> default_value.empty?
-    <span style="color:#080;font-weight:bold">if</span> block_given?
-      get(key) <span style="color:#080;font-weight:bold">do</span>
-        <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">yield</span>(key)
-      <span style="color:#080;font-weight:bold">end</span>
-    <span style="color:#080;font-weight:bold">else</span>
-      get(key) <span style="color:#080;font-weight:bold">do</span>
-        raise <span style="color:#036;font-weight:bold">KeyError</span>.new(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">key not found: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>key.inspect<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>, <span style="color:#606">key</span>: key)
-      <span style="color:#080;font-weight:bold">end</span>
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">else</span>
-    get(key) { <span style="color:#080;font-weight:bold">return</span> default_value.first }
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">if</span> default_value.empty?
+    <span class="keyword">if</span> block_given?
+      get(key) <span class="keyword">do</span>
+        <span class="keyword">return</span> <span class="keyword">yield</span>(key)
+      <span class="keyword">end</span>
+    <span class="keyword">else</span>
+      get(key) <span class="keyword">do</span>
+        raise <span class="constant">KeyError</span>.new(<span class="string"><span class="delimiter">&quot;</span><span class="content">key not found: </span><span class="inline"><span class="inline-delimiter">#{</span>key.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>, <span class="key">key</span>: key)
+      <span class="keyword">end</span>
+    <span class="keyword">end</span>
+  <span class="keyword">else</span>
+    get(key) { <span class="keyword">return</span> default_value.first }
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3246,19 +3248,19 @@ shared_cache[<span style="color:#A60">:execution_count</span>] += <span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 123</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">fetch_values</span>(*keys, &amp;block)
+<span class="keyword">def</span> <span class="function">fetch_values</span>(*keys, &amp;block)
   result = []
-  keys.each <span style="color:#080;font-weight:bold">do</span> |key|
-    <span style="color:#080;font-weight:bold">if</span> block
+  keys.each <span class="keyword">do</span> |key|
+    <span class="keyword">if</span> block
       result &lt;&lt; fetch(key, &amp;block)
-    <span style="color:#080;font-weight:bold">else</span>
-      has_value = <span style="color:#069">true</span>
-      value = fetch(key) { has_value = <span style="color:#069">false</span> }
-      result &lt;&lt; value <span style="color:#080;font-weight:bold">if</span> has_value
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
+    <span class="keyword">else</span>
+      has_value = <span class="predefined-constant">true</span>
+      value = fetch(key) { has_value = <span class="predefined-constant">false</span> }
+      result &lt;&lt; value <span class="keyword">if</span> has_value
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
   result
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3319,9 +3321,9 @@ shared_cache[<span style="color:#A60">:execution_count</span>] += <span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 138</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">key?</span>(key)
-  !!fetch(key) { <span style="color:#080;font-weight:bold">return</span> <span style="color:#069">false</span> }
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">key?</span>(key)
+  !!fetch(key) { <span class="keyword">return</span> <span class="predefined-constant">false</span> }
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3383,23 +3385,23 @@ shared_cache[<span style="color:#A60">:execution_count</span>] += <span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 146</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">merge!</span>(*other_hashes)
-  other_hashes.each <span style="color:#080;font-weight:bold">do</span> |hash|
-    hash.each <span style="color:#080;font-weight:bold">do</span> |(k, v)|
+<span class="keyword">def</span> <span class="function">merge!</span>(*other_hashes)
+  other_hashes.each <span class="keyword">do</span> |hash|
+    hash.each <span class="keyword">do</span> |(k, v)|
       k = k.to_s
-      <span style="color:#080;font-weight:bold">if</span> block_given?
-        dup = <span style="color:#069">true</span>
-        old_value = fetch(k) <span style="color:#080;font-weight:bold">do</span>
-          dup = <span style="color:#069">false</span>
-        <span style="color:#080;font-weight:bold">end</span>
-        <span style="color:#069">self</span>[k] = dup ? <span style="color:#080;font-weight:bold">yield</span>(k, old_value, v) : v
-      <span style="color:#080;font-weight:bold">else</span>
-        <span style="color:#069">self</span>[k] = v
-      <span style="color:#080;font-weight:bold">end</span>
-    <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#069">self</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+      <span class="keyword">if</span> block_given?
+        dup = <span class="predefined-constant">true</span>
+        old_value = fetch(k) <span class="keyword">do</span>
+          dup = <span class="predefined-constant">false</span>
+        <span class="keyword">end</span>
+        <span class="predefined-constant">self</span>[k] = dup ? <span class="keyword">yield</span>(k, old_value, v) : v
+      <span class="keyword">else</span>
+        <span class="predefined-constant">self</span>[k] = v
+      <span class="keyword">end</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+  <span class="predefined-constant">self</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3448,14 +3450,14 @@ shared_cache[<span style="color:#A60">:execution_count</span>] += <span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 166</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">slice</span>(*keys)
+<span class="keyword">def</span> <span class="function">slice</span>(*keys)
   result = {}
-  keys.each <span style="color:#080;font-weight:bold">do</span> |k|
+  keys.each <span class="keyword">do</span> |k|
     k = k.to_s
-    result[k] = <span style="color:#069">self</span>[k] <span style="color:#080;font-weight:bold">if</span> key?(k)
-  <span style="color:#080;font-weight:bold">end</span>
+    result[k] = <span class="predefined-constant">self</span>[k] <span class="keyword">if</span> key?(k)
+  <span class="keyword">end</span>
   result
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3499,9 +3501,9 @@ shared_cache[<span style="color:#A60">:execution_count</span>] += <span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 176</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to_proc</span>
-  <span style="color:#33B">@to_proc</span> ||= -&gt;(k) { <span style="color:#069">self</span>[k] }
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">to_proc</span>
+  <span class="instance-variable">@to_proc</span> ||= -&gt;(k) { <span class="predefined-constant">self</span>[k] }
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3547,11 +3549,11 @@ shared_cache[<span style="color:#A60">:execution_count</span>] += <span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 181</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">values_at</span>(*keys)
-  keys.map <span style="color:#080;font-weight:bold">do</span> |k|
-    <span style="color:#069">self</span>[k]
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">values_at</span>(*keys)
+  keys.map <span class="keyword">do</span> |k|
+    <span class="predefined-constant">self</span>[k]
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3562,7 +3564,7 @@ shared_cache[<span style="color:#A60">:execution_count</span>] += <span style="c
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:31 2022 by
+  Generated on Fri Dec  9 22:46:45 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

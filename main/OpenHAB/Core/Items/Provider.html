@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Items::Provider";
   relpath = '../../../';
@@ -2599,9 +2601,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/provider.rb', line 18</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">registry</span>
-  <span style="color:#d70">$ir</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">registry</span>
+  <span class="global-variable">$ir</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2694,13 +2696,13 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/provider.rb', line 30</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">remove</span>(item_name, recursive = <span style="color:#069">false</span>) <span style="color:#777"># rubocop:disable Style/OptionalBooleanParameter matches Java method</span>
-  <span style="color:#080;font-weight:bold">return</span> <span style="color:#069">nil</span> <span style="color:#080;font-weight:bold">unless</span> <span style="color:#33B">@elements</span>.key?(item_name)
+<span class="keyword">def</span> <span class="function">remove</span>(item_name, recursive = <span class="predefined-constant">false</span>) <span class="comment"># rubocop:disable Style/OptionalBooleanParameter matches Java method</span>
+  <span class="keyword">return</span> <span class="predefined-constant">nil</span> <span class="keyword">unless</span> <span class="instance-variable">@elements</span>.key?(item_name)
 
-  item = <span style="color:#080;font-weight:bold">super</span>(item_name)
-  item.members.each { |member| remove(member.name, <span style="color:#069">true</span>) } <span style="color:#080;font-weight:bold">if</span> recursive &amp;&amp; item.is_a?(<span style="color:#036;font-weight:bold">GroupItem</span>)
+  item = <span class="keyword">super</span>(item_name)
+  item.members.each { |member| remove(member.name, <span class="predefined-constant">true</span>) } <span class="keyword">if</span> recursive &amp;&amp; item.is_a?(<span class="constant">GroupItem</span>)
   item
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2711,7 +2713,7 @@
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:34 2022 by
+  Generated on Fri Dec  9 22:46:48 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

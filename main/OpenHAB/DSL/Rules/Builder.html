@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::DSL::Rules::Builder";
   relpath = '../../../';
@@ -2601,9 +2603,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 33</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">initialize</span>(provider)
-  <span style="color:#33B">@provider</span> = <span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Rules</span>::<span style="color:#036;font-weight:bold">Provider</span>.current(provider)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">initialize</span>(provider)
+  <span class="instance-variable">@provider</span> = <span class="constant">Core</span>::<span class="constant">Rules</span>::<span class="constant">Provider</span>.current(provider)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2670,9 +2672,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 31</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">provider</span>
-  <span style="color:#33B">@provider</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">provider</span>
+  <span class="instance-variable">@provider</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2709,13 +2711,13 @@ To create a "script" without any triggers, use <span class='object_link'><a href
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">openhab/dsl</span><span style="color:#710">&quot;</span></span>
+      <pre class="example code"><code>require <span class="string"><span class="delimiter">&quot;</span><span class="content">openhab/dsl</span><span class="delimiter">&quot;</span></span>
 
-rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">name</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">do</span>
-  &lt;one <span style="color:#080;font-weight:bold">or</span> more triggers&gt;
-  &lt;one <span style="color:#080;font-weight:bold">or</span> more execution blocks&gt;
-  &lt;zero <span style="color:#080;font-weight:bold">or</span> more guards&gt;
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+rule <span class="string"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+  &lt;one <span class="keyword">or</span> more triggers&gt;
+  &lt;one <span class="keyword">or</span> more execution blocks&gt;
+  &lt;zero <span class="keyword">or</span> more guards&gt;
+<span class="keyword">end</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -2849,29 +2851,29 @@ rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#71
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 61</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">rule</span>(name = <span style="color:#069">nil</span>, <span style="color:#606">id</span>: <span style="color:#069">nil</span>, <span style="color:#606">script</span>: <span style="color:#069">nil</span>, <span style="color:#606">binding</span>: <span style="color:#069">nil</span>, &amp;block)
-  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Block is required</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> block
+<span class="keyword">def</span> <span class="function">rule</span>(name = <span class="predefined-constant">nil</span>, <span class="key">id</span>: <span class="predefined-constant">nil</span>, <span class="key">script</span>: <span class="predefined-constant">nil</span>, <span class="key">binding</span>: <span class="predefined-constant">nil</span>, &amp;block)
+  raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Block is required</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block
 
-  id ||= <span style="color:#036;font-weight:bold">NameInference</span>.infer_rule_id_from_block(block)
-  script ||= block.source <span style="color:#080;font-weight:bold">rescue</span> <span style="color:#069">nil</span> <span style="color:#777"># rubocop:disable Style/RescueModifier</span>
+  id ||= <span class="constant">NameInference</span>.infer_rule_id_from_block(block)
+  script ||= block.source <span class="keyword">rescue</span> <span class="predefined-constant">nil</span> <span class="comment"># rubocop:disable Style/RescueModifier</span>
 
-  builder = <span style="color:#069">nil</span>
+  builder = <span class="predefined-constant">nil</span>
 
-  <span style="color:#036;font-weight:bold">ThreadLocal</span>.thread_local(<span style="color:#606">openhab_rule_type</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">rule</span><span style="color:#710">&quot;</span></span>, <span style="color:#606">openhab_rule_uid</span>: id) <span style="color:#080;font-weight:bold">do</span>
-    builder = <span style="color:#036;font-weight:bold">BuilderDSL</span>.new(binding || block.binding)
+  <span class="constant">ThreadLocal</span>.thread_local(<span class="key">openhab_rule_type</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">rule</span><span class="delimiter">&quot;</span></span>, <span class="key">openhab_rule_uid</span>: id) <span class="keyword">do</span>
+    builder = <span class="constant">BuilderDSL</span>.new(binding || block.binding)
     builder.uid(id)
     builder.instance_exec(builder, &amp;block)
-    builder.guard = <span style="color:#036;font-weight:bold">Guard</span>.new(<span style="color:#606">run_context</span>: builder.caller, <span style="color:#606">only_if</span>: builder.only_if,
-                              <span style="color:#606">not_if</span>: builder.not_if)
+    builder.guard = <span class="constant">Guard</span>.new(<span class="key">run_context</span>: builder.caller, <span class="key">only_if</span>: builder.only_if,
+                              <span class="key">not_if</span>: builder.not_if)
 
-    name ||= <span style="color:#036;font-weight:bold">NameInference</span>.infer_rule_name(builder)
+    name ||= <span class="constant">NameInference</span>.infer_rule_name(builder)
     name ||= id
 
     builder.name(name)
     logger.trace { builder.inspect }
     builder.build(provider, script)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3007,24 +3009,24 @@ such as the Run Rules action.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 96</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">script</span>(name = <span style="color:#069">nil</span>, <span style="color:#606">id</span>: <span style="color:#069">nil</span>, <span style="color:#606">script</span>: <span style="color:#069">nil</span>, &amp;block)
-  raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Block is required</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> block
+<span class="keyword">def</span> <span class="function">script</span>(name = <span class="predefined-constant">nil</span>, <span class="key">id</span>: <span class="predefined-constant">nil</span>, <span class="key">script</span>: <span class="predefined-constant">nil</span>, &amp;block)
+  raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Block is required</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block
 
-  id ||= <span style="color:#036;font-weight:bold">NameInference</span>.infer_rule_id_from_block(block)
+  id ||= <span class="constant">NameInference</span>.infer_rule_id_from_block(block)
   name ||= id
-  script ||= block.source <span style="color:#080;font-weight:bold">rescue</span> <span style="color:#069">nil</span> <span style="color:#777"># rubocop:disable Style/RescueModifier</span>
+  script ||= block.source <span class="keyword">rescue</span> <span class="predefined-constant">nil</span> <span class="comment"># rubocop:disable Style/RescueModifier</span>
 
-  builder = <span style="color:#069">nil</span>
-  <span style="color:#036;font-weight:bold">ThreadLocal</span>.thread_local(<span style="color:#606">openhab_rule_type</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">script</span><span style="color:#710">&quot;</span></span>, <span style="color:#606">openhab_rule_uid</span>: id) <span style="color:#080;font-weight:bold">do</span>
-    builder = <span style="color:#036;font-weight:bold">BuilderDSL</span>.new(block.binding)
+  builder = <span class="predefined-constant">nil</span>
+  <span class="constant">ThreadLocal</span>.thread_local(<span class="key">openhab_rule_type</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">script</span><span class="delimiter">&quot;</span></span>, <span class="key">openhab_rule_uid</span>: id) <span class="keyword">do</span>
+    builder = <span class="constant">BuilderDSL</span>.new(block.binding)
     builder.uid(id)
-    builder.tags([<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Script</span><span style="color:#710">&quot;</span></span>])
+    builder.tags([<span class="string"><span class="delimiter">&quot;</span><span class="content">Script</span><span class="delimiter">&quot;</span></span>])
     builder.name(name)
     builder.script(&amp;block)
     logger.trace { builder.inspect }
     builder.build(provider, script)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3035,7 +3037,7 @@ such as the Run Rules action.</p>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:33 2022 by
+  Generated on Fri Dec  9 22:46:47 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

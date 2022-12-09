@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::DSL::Items::Builder";
   relpath = '../../../';
@@ -2413,18 +2415,18 @@ or even later based on a rule executing.</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>items.build <span style="color:#080;font-weight:bold">do</span>
-  switch_item <span style="color:#036;font-weight:bold">MySwitch</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">My Switch</span><span style="color:#710">&quot;</span></span>
-  switch_item <span style="color:#036;font-weight:bold">NotAutoupdating</span>, <span style="color:#606">autoupdate</span>: <span style="color:#069">false</span>, <span style="color:#606">channel</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">mqtt:topic:1#light</span><span style="color:#710">&quot;</span></span>
-  group_item <span style="color:#036;font-weight:bold">MyGroup</span> <span style="color:#080;font-weight:bold">do</span>
-    contact_item <span style="color:#036;font-weight:bold">ItemInGroup</span>, <span style="color:#606">channel</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">binding:thing#channel</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#777"># passing `thing` to a group item will automatically use it as the base</span>
-  <span style="color:#777"># for item channels</span>
-  group_item <span style="color:#036;font-weight:bold">Equipment</span>, <span style="color:#606">tags</span>: <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">HVAC</span>, <span style="color:#606">thing</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">binding:thing</span><span style="color:#710">&quot;</span></span>
-    string_item <span style="color:#036;font-weight:bold">Mode</span>, <span style="color:#606">tags</span>: <span style="color:#036;font-weight:bold">Semantics</span>::<span style="color:#036;font-weight:bold">Control</span>, <span style="color:#606">channel</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">mode</span><span style="color:#710">&quot;</span></span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code>items.build <span class="keyword">do</span>
+  switch_item <span class="constant">MySwitch</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">My Switch</span><span class="delimiter">&quot;</span></span>
+  switch_item <span class="constant">NotAutoupdating</span>, <span class="key">autoupdate</span>: <span class="predefined-constant">false</span>, <span class="key">channel</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">mqtt:topic:1#light</span><span class="delimiter">&quot;</span></span>
+  group_item <span class="constant">MyGroup</span> <span class="keyword">do</span>
+    contact_item <span class="constant">ItemInGroup</span>, <span class="key">channel</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">binding:thing#channel</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
+  <span class="comment"># passing `thing` to a group item will automatically use it as the base</span>
+  <span class="comment"># for item channels</span>
+  group_item <span class="constant">Equipment</span>, <span class="key">tags</span>: <span class="constant">Semantics</span>::<span class="constant">HVAC</span>, <span class="key">thing</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">binding:thing</span><span class="delimiter">&quot;</span></span>
+    string_item <span class="constant">Mode</span>, <span class="key">tags</span>: <span class="constant">Semantics</span>::<span class="constant">Control</span>, <span class="key">channel</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">mode</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
   </div>
 
@@ -2876,7 +2878,7 @@ Note that you can use a string, a symbol, or even a literal constant name</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 53</span>
 
-def_item_method(<span style="color:#A60">:color</span>)</pre>
+def_item_method(<span class="symbol">:color</span>)</pre>
     </td>
   </tr>
 </table>
@@ -2988,7 +2990,7 @@ Note that you can use a string, a symbol, or even a literal constant name</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 55</span>
 
-def_item_method(<span style="color:#A60">:contact</span>)</pre>
+def_item_method(<span class="symbol">:contact</span>)</pre>
     </td>
   </tr>
 </table>
@@ -3100,7 +3102,7 @@ Note that you can use a string, a symbol, or even a literal constant name</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 57</span>
 
-def_item_method(<span style="color:#A60">:date_time</span>)</pre>
+def_item_method(<span class="symbol">:date_time</span>)</pre>
     </td>
   </tr>
 </table>
@@ -3212,7 +3214,7 @@ Note that you can use a string, a symbol, or even a literal constant name</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 59</span>
 
-def_item_method(<span style="color:#A60">:dimmer</span>)</pre>
+def_item_method(<span class="symbol">:dimmer</span>)</pre>
     </td>
   </tr>
 </table>
@@ -3594,15 +3596,15 @@ def_item_method(<span style="color:#A60">:dimmer</span>)</pre>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 83</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">group_item</span>(*args, **kwargs, &amp;block)
-  item = <span style="color:#036;font-weight:bold">GroupItemBuilder</span>.new(*args, <span style="color:#606">provider</span>: provider, **kwargs)
-  item.instance_eval(&amp;block) <span style="color:#080;font-weight:bold">if</span> block
+<span class="keyword">def</span> <span class="function">group_item</span>(*args, **kwargs, &amp;block)
+  item = <span class="constant">GroupItemBuilder</span>.new(*args, <span class="key">provider</span>: provider, **kwargs)
+  item.instance_eval(&amp;block) <span class="keyword">if</span> block
   result = provider.add(item)
-  item.members.each <span style="color:#080;font-weight:bold">do</span> |i|
+  item.members.each <span class="keyword">do</span> |i|
     provider.add(i)
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="keyword">end</span>
   result
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3714,7 +3716,7 @@ Note that you can use a string, a symbol, or even a literal constant name</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 61</span>
 
-def_item_method(<span style="color:#A60">:image</span>)</pre>
+def_item_method(<span class="symbol">:image</span>)</pre>
     </td>
   </tr>
 </table>
@@ -3826,7 +3828,7 @@ Note that you can use a string, a symbol, or even a literal constant name</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 63</span>
 
-def_item_method(<span style="color:#A60">:location</span>)</pre>
+def_item_method(<span class="symbol">:location</span>)</pre>
     </td>
   </tr>
 </table>
@@ -3938,7 +3940,7 @@ Note that you can use a string, a symbol, or even a literal constant name</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 65</span>
 
-def_item_method(<span style="color:#A60">:number</span>)</pre>
+def_item_method(<span class="symbol">:number</span>)</pre>
     </td>
   </tr>
 </table>
@@ -4050,7 +4052,7 @@ Note that you can use a string, a symbol, or even a literal constant name</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 67</span>
 
-def_item_method(<span style="color:#A60">:player</span>)</pre>
+def_item_method(<span class="symbol">:player</span>)</pre>
     </td>
   </tr>
 </table>
@@ -4162,7 +4164,7 @@ Note that you can use a string, a symbol, or even a literal constant name</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 69</span>
 
-def_item_method(<span style="color:#A60">:rollershutter</span>)</pre>
+def_item_method(<span class="symbol">:rollershutter</span>)</pre>
     </td>
   </tr>
 </table>
@@ -4274,7 +4276,7 @@ Note that you can use a string, a symbol, or even a literal constant name</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 71</span>
 
-def_item_method(<span style="color:#A60">:string</span>)</pre>
+def_item_method(<span class="symbol">:string</span>)</pre>
     </td>
   </tr>
 </table>
@@ -4386,7 +4388,7 @@ Note that you can use a string, a symbol, or even a literal constant name</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 73</span>
 
-def_item_method(<span style="color:#A60">:switch</span>)</pre>
+def_item_method(<span class="symbol">:switch</span>)</pre>
     </td>
   </tr>
 </table>
@@ -4397,7 +4399,7 @@ def_item_method(<span style="color:#A60">:switch</span>)</pre>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:31 2022 by
+  Generated on Fri Dec  9 22:46:45 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

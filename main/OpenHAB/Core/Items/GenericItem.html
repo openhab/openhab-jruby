@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Items::GenericItem";
   relpath = '../../../';
@@ -2829,7 +2831,7 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 52</span>
 
-alias_method <span style="color:#A60">:hash</span>, <span style="color:#A60">:hash_code</span></pre>
+alias_method <span class="symbol">:hash</span>, <span class="symbol">:hash_code</span></pre>
     </td>
   </tr>
 </table>
@@ -2932,7 +2934,7 @@ alias_method <span style="color:#A60">:hash</span>, <span style="color:#A60">:ha
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 62</span>
 
-alias_method <span style="color:#A60">:raw_state</span>, <span style="color:#A60">:state</span></pre>
+alias_method <span class="symbol">:raw_state</span>, <span class="symbol">:state</span></pre>
     </td>
   </tr>
 </table>
@@ -2995,9 +2997,9 @@ Use <span class='object_link'><a href="#undef%3F-instance_method" title="OpenHAB
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 81</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">state</span>
-  raw_state <span style="color:#080;font-weight:bold">if</span> state?
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">state</span>
+  raw_state <span class="keyword">if</span> state?
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3100,12 +3102,12 @@ otherwise the item.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 108</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">command</span>(command)
+<span class="keyword">def</span> <span class="function">command</span>(command)
   command = format_command(command)
-  logger.trace <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Sending Command </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>command<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> to </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-  <span style="color:#d70">$events</span>.send_command(<span style="color:#069">self</span>, command)
-  <span style="color:#036;font-weight:bold">Proxy</span>.new(<span style="color:#069">self</span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+  logger.trace <span class="string"><span class="delimiter">&quot;</span><span class="content">Sending Command </span><span class="inline"><span class="inline-delimiter">#{</span>command<span class="inline-delimiter">}</span></span><span class="content"> to </span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+  <span class="global-variable">$events</span>.send_command(<span class="predefined-constant">self</span>, command)
+  <span class="constant">Proxy</span>.new(<span class="predefined-constant">self</span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3258,9 +3260,9 @@ otherwise the item.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 69</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">state?</span>
-  !raw_state.is_a?(<span style="color:#036;font-weight:bold">Types</span>::<span style="color:#036;font-weight:bold">UnDefType</span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">state?</span>
+  !raw_state.is_a?(<span class="constant">Types</span>::<span class="constant">UnDefType</span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3383,12 +3385,12 @@ otherwise the item.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 133</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">update</span>(state)
+<span class="keyword">def</span> <span class="function">update</span>(state)
   state = format_update(state)
-  logger.trace <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Sending Update </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>state<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> to </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-  <span style="color:#d70">$events</span>.post_update(<span style="color:#069">self</span>, state)
-  <span style="color:#036;font-weight:bold">Proxy</span>.new(<span style="color:#069">self</span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+  logger.trace <span class="string"><span class="delimiter">&quot;</span><span class="content">Sending Update </span><span class="inline"><span class="inline-delimiter">#{</span>state<span class="inline-delimiter">}</span></span><span class="content"> to </span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+  <span class="global-variable">$events</span>.post_update(<span class="predefined-constant">self</span>, state)
+  <span class="constant">Proxy</span>.new(<span class="predefined-constant">self</span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3399,7 +3401,7 @@ otherwise the item.</p>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:36 2022 by
+  Generated on Fri Dec  9 22:46:50 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

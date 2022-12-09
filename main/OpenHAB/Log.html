@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Log";
   relpath = '../';
@@ -2412,30 +2414,30 @@ appended to the logger name.</p>
         <p class="example_title"><div class='inline'><p>The following entries are in a file named 'log_test.rb'</p>
 </div></p>
       
-      <pre class="example code"><code>logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Test logging at trace</span><span style="color:#710">'</span></span>) <span style="color:#777"># 2020-12-03 18:05:20.903 [TRACE] [org.openhab.automation.jrubyscripting.log_test] - Test logging at trace</span>
-logger.debug(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Test logging at debug</span><span style="color:#710">'</span></span>) <span style="color:#777"># 2020-12-03 18:05:32.020 [DEBUG] [org.openhab.automation.jrubyscripting.log_test] - Test logging at debug</span>
-logger.warn(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Test logging at warn</span><span style="color:#710">'</span></span>)   <span style="color:#777"># 2020-12-03 18:05:41.817 [WARN ] [org.openhab.automation.jrubyscripting.log_test] - Test logging at warn</span>
-logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Test logging at info</span><span style="color:#710">'</span></span>)   <span style="color:#777"># 2020-12-03 18:05:41.817 [INFO ] [org.openhab.automation.jrubyscripting.log_test] - Test logging at info</span>
-logger.error(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Test logging at error</span><span style="color:#710">'</span></span>) <span style="color:#777"># 2020-12-03 18:06:02.021 [ERROR] [org.openhab.automation.jrubyscripting.log_test] - Test logging at error</span></code></pre>
+      <pre class="example code"><code>logger.trace(<span class="string"><span class="delimiter">'</span><span class="content">Test logging at trace</span><span class="delimiter">'</span></span>) <span class="comment"># 2020-12-03 18:05:20.903 [TRACE] [org.openhab.automation.jrubyscripting.log_test] - Test logging at trace</span>
+logger.debug(<span class="string"><span class="delimiter">'</span><span class="content">Test logging at debug</span><span class="delimiter">'</span></span>) <span class="comment"># 2020-12-03 18:05:32.020 [DEBUG] [org.openhab.automation.jrubyscripting.log_test] - Test logging at debug</span>
+logger.warn(<span class="string"><span class="delimiter">'</span><span class="content">Test logging at warn</span><span class="delimiter">'</span></span>)   <span class="comment"># 2020-12-03 18:05:41.817 [WARN ] [org.openhab.automation.jrubyscripting.log_test] - Test logging at warn</span>
+logger.info(<span class="string"><span class="delimiter">'</span><span class="content">Test logging at info</span><span class="delimiter">'</span></span>)   <span class="comment"># 2020-12-03 18:05:41.817 [INFO ] [org.openhab.automation.jrubyscripting.log_test] - Test logging at info</span>
+logger.error(<span class="string"><span class="delimiter">'</span><span class="content">Test logging at error</span><span class="delimiter">'</span></span>) <span class="comment"># 2020-12-03 18:06:02.021 [ERROR] [org.openhab.automation.jrubyscripting.log_test] - Test logging at error</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>The following entries are in a file named 'log_test.rb'</p>
 </div></p>
       
-      <pre class="example code"><code>rule <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">foo</span><span style="color:#710">'</span></span> <span style="color:#080;font-weight:bold">do</span>
-  run { logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Test logging at trace</span><span style="color:#710">'</span></span>) } <span style="color:#777"># 2020-12-03 18:05:20.903 [TRACE] [org.openhab.automation.jrubyscripting.foo] - Test logging at trace</span>
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  run { logger.trace(<span class="string"><span class="delimiter">'</span><span class="content">Test logging at trace</span><span class="delimiter">'</span></span>) } <span class="comment"># 2020-12-03 18:05:20.903 [TRACE] [org.openhab.automation.jrubyscripting.foo] - Test logging at trace</span>
   on_load
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+<span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>A log entry from inside a class</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">MyClass</span>
-  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">initialize</span>
-    logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">hi!</span><span style="color:#710">&quot;</span></span>) <span style="color:#777"># 2020-12-03 18:05:20.903 [TRACE] [org.openhab.automation.jrubyscripting.MyClass] - hi!</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code><span class="keyword">class</span> <span class="class">MyClass</span>
+  <span class="keyword">def</span> <span class="function">initialize</span>
+    logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">hi!</span><span class="delimiter">&quot;</span></span>) <span class="comment"># 2020-12-03 18:05:20.903 [TRACE] [org.openhab.automation.jrubyscripting.MyClass] - hi!</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
   </div>
 
@@ -2601,22 +2603,22 @@ logger.error(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 77</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">logger</span>(object)
-  <span style="color:#080;font-weight:bold">case</span> object
-  <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Module</span>
-    name = <span style="color:#036;font-weight:bold">Logger</span>::<span style="color:#036;font-weight:bold">PREFIX</span>
+<span class="keyword">def</span> <span class="function">logger</span>(object)
+  <span class="keyword">case</span> object
+  <span class="keyword">when</span> <span class="constant">Module</span>
+    name = <span class="constant">Logger</span>::<span class="constant">PREFIX</span>
     klass = java_klass(object)
-    name += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">.</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>klass.name.gsub(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">::</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">.</span><span style="color:#710">&quot;</span></span>)<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">if</span> klass.name
-  <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">String</span>
+    name += <span class="string"><span class="delimiter">&quot;</span><span class="content">.</span><span class="inline"><span class="inline-delimiter">#{</span>klass.name.gsub(<span class="string"><span class="delimiter">&quot;</span><span class="content">::</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">.</span><span class="delimiter">&quot;</span></span>)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> klass.name
+  <span class="keyword">when</span> <span class="constant">String</span>
     name = object
-  <span style="color:#080;font-weight:bold">when</span> <span style="color:#A60">:main</span>
-    name = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">Logger</span>::<span style="color:#036;font-weight:bold">PREFIX</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">.</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>rules_file.tr_s(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">:</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">_</span><span style="color:#710">&quot;</span></span>)
-                             .gsub(<span style="background-color:hsla(300,100%,50%,0.06)"><span style="color:#404">/</span><span style="color:#808">[^A-Za-z0-9_.-]</span><span style="color:#404">/</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#710">&quot;</span></span>)<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
-    <span style="color:#080;font-weight:bold">return</span> <span style="color:#33B">@loggers</span>[name] ||= <span style="color:#036;font-weight:bold">BiLogger</span>.new(<span style="color:#036;font-weight:bold">Logger</span>.new(name))
-  <span style="color:#080;font-weight:bold">end</span>
+  <span class="keyword">when</span> <span class="symbol">:main</span>
+    name = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Logger</span>::<span class="constant">PREFIX</span><span class="inline-delimiter">}</span></span><span class="content">.</span><span class="inline"><span class="inline-delimiter">#{</span>rules_file.tr_s(<span class="string"><span class="delimiter">&quot;</span><span class="content">:</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">_</span><span class="delimiter">&quot;</span></span>)
+                             .gsub(<span class="regexp"><span class="delimiter">/</span><span class="content">[^A-Za-z0-9_.-]</span><span class="delimiter">/</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">return</span> <span class="instance-variable">@loggers</span>[name] ||= <span class="constant">BiLogger</span>.new(<span class="constant">Logger</span>.new(name))
+  <span class="keyword">end</span>
 
-  <span style="color:#33B">@loggers</span>[name] ||= <span style="color:#036;font-weight:bold">Logger</span>.new(name)
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="instance-variable">@loggers</span>[name] ||= <span class="constant">Logger</span>.new(name)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2681,17 +2683,17 @@ logger.error(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="c
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 57</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">logger</span>
-  <span style="color:#777"># no caching on `main`</span>
-  <span style="color:#080;font-weight:bold">if</span> (instance_of?(<span style="color:#036;font-weight:bold">Object</span>) &amp;&amp; !singleton_methods.empty?) ||
-     <span style="color:#777"># also pretend loggers in example groups are in the top-level</span>
-     (<span style="color:#080;font-weight:bold">defined?</span>(::<span style="color:#036;font-weight:bold">RSpec</span>::<span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">ExampleGroup</span>) &amp;&amp; is_a?(<span style="color:#036;font-weight:bold">Module</span>) &amp;&amp; <span style="color:#069">self</span> &lt; ::<span style="color:#036;font-weight:bold">RSpec</span>::<span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">ExampleGroup</span>)
-    <span style="color:#080;font-weight:bold">return</span> <span style="color:#036;font-weight:bold">Log</span>.logger(<span style="color:#A60">:main</span>)
-  <span style="color:#080;font-weight:bold">end</span>
-  <span style="color:#080;font-weight:bold">return</span> <span style="color:#33B">@logger</span> ||= <span style="color:#036;font-weight:bold">Log</span>.logger(<span style="color:#069">self</span>) <span style="color:#080;font-weight:bold">if</span> equal?(<span style="color:#069">self</span>.class) || is_a?(<span style="color:#036;font-weight:bold">Module</span>)
+<span class="keyword">def</span> <span class="function">logger</span>
+  <span class="comment"># no caching on `main`</span>
+  <span class="keyword">if</span> (instance_of?(<span class="constant">Object</span>) &amp;&amp; !singleton_methods.empty?) ||
+     <span class="comment"># also pretend loggers in example groups are in the top-level</span>
+     (<span class="keyword">defined?</span>(::<span class="constant">RSpec</span>::<span class="constant">Core</span>::<span class="constant">ExampleGroup</span>) &amp;&amp; is_a?(<span class="constant">Module</span>) &amp;&amp; <span class="predefined-constant">self</span> &lt; ::<span class="constant">RSpec</span>::<span class="constant">Core</span>::<span class="constant">ExampleGroup</span>)
+    <span class="keyword">return</span> <span class="constant">Log</span>.logger(<span class="symbol">:main</span>)
+  <span class="keyword">end</span>
+  <span class="keyword">return</span> <span class="instance-variable">@logger</span> ||= <span class="constant">Log</span>.logger(<span class="predefined-constant">self</span>) <span class="keyword">if</span> equal?(<span class="predefined-constant">self</span>.class) || is_a?(<span class="constant">Module</span>)
 
-  <span style="color:#069">self</span>.class.logger
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="predefined-constant">self</span>.class.logger
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2702,7 +2704,7 @@ logger.error(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="c
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:29 2022 by
+  Generated on Fri Dec  9 22:46:44 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

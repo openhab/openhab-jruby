@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::CoreExt::Java::LocalDate";
   relpath = '../../../';
@@ -2786,16 +2788,16 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_date.rb', line 44</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">+</span>(other)
-  <span style="color:#080;font-weight:bold">case</span> other
-  <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Duration</span>
+<span class="keyword">def</span> <span class="function">+</span>(other)
+  <span class="keyword">case</span> other
+  <span class="keyword">when</span> <span class="constant">Duration</span>
     plus_days(other.to_days)
-  <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Numeric</span>
+  <span class="keyword">when</span> <span class="constant">Numeric</span>
     plus_days(other.to_i)
-  <span style="color:#080;font-weight:bold">else</span>
+  <span class="keyword">else</span>
     plus(other)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2894,22 +2896,22 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_date.rb', line 24</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">-</span>(other)
-  <span style="color:#080;font-weight:bold">case</span> other
-  <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Date</span>
-    <span style="color:#036;font-weight:bold">Period</span>.of_days(day_of_year - other.yday)
-  <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">MonthDay</span>
-    <span style="color:#069">self</span> - other.at_year(year)
-  <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">LocalDate</span>
-    <span style="color:#036;font-weight:bold">Period</span>.of_days(day_of_year - other.day_of_year)
-  <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Duration</span>
+<span class="keyword">def</span> <span class="function">-</span>(other)
+  <span class="keyword">case</span> other
+  <span class="keyword">when</span> <span class="constant">Date</span>
+    <span class="constant">Period</span>.of_days(day_of_year - other.yday)
+  <span class="keyword">when</span> <span class="constant">MonthDay</span>
+    <span class="predefined-constant">self</span> - other.at_year(year)
+  <span class="keyword">when</span> <span class="constant">LocalDate</span>
+    <span class="constant">Period</span>.of_days(day_of_year - other.day_of_year)
+  <span class="keyword">when</span> <span class="constant">Duration</span>
     minus_days(other.to_days)
-  <span style="color:#080;font-weight:bold">when</span> <span style="color:#036;font-weight:bold">Numeric</span>
+  <span class="keyword">when</span> <span class="constant">Numeric</span>
     minus_days(other.ceil)
-  <span style="color:#080;font-weight:bold">else</span>
+  <span class="keyword">else</span>
     minus(other)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2960,9 +2962,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_date.rb', line 60</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">succ</span>
-  plus_days(<span style="color:#00D">1</span>)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">succ</span>
+  plus_days(<span class="integer">1</span>)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3012,9 +3014,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_date.rb', line 65</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to_date</span>
-  <span style="color:#036;font-weight:bold">Date</span>.new(year, month_value, day_of_month)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">to_date</span>
+  <span class="constant">Date</span>.new(year, month_value, day_of_month)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3064,9 +3066,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_date.rb', line 77</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to_local_date</span>(_context = <span style="color:#069">nil</span>)
-  <span style="color:#069">self</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">to_local_date</span>(_context = <span class="predefined-constant">nil</span>)
+  <span class="predefined-constant">self</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3116,9 +3118,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_date.rb', line 72</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to_month_day</span>
-  <span style="color:#036;font-weight:bold">MonthDay</span>.of(month, day_of_month)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">to_month_day</span>
+  <span class="constant">MonthDay</span>.of(month, day_of_month)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3191,10 +3193,10 @@ during conversion. <span class='object_link'><a href="ZonedDateTime.html#now-ins
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_date.rb', line 85</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">to_zoned_date_time</span>(context = <span style="color:#069">nil</span>)
+<span class="keyword">def</span> <span class="function">to_zoned_date_time</span>(context = <span class="predefined-constant">nil</span>)
   zone = context&amp;.zone || java.time.ZoneId.system_default
   at_start_of_day(zone)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3205,7 +3207,7 @@ during conversion. <span class='object_link'><a href="ZonedDateTime.html#now-ins
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:37 2022 by
+  Generated on Fri Dec  9 22:46:51 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

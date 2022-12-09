@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::Core::Types::DecimalType";
   relpath = '../../../';
@@ -2426,29 +2428,29 @@ used for integers, longs and floating point numbers alike.</p>
         <p class="example_title"><div class='inline'><p>DecimalType can be used in case statements with ranges</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#777"># Check if number item is less than 50</span>
-<span style="color:#080;font-weight:bold">case</span> <span style="color:#036;font-weight:bold">NumberOne</span>.state
-<span style="color:#080;font-weight:bold">when</span> (<span style="color:#00D">0</span>...<span style="color:#00D">50</span>)
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">NumberOne</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is less than 50</span><span style="color:#710">&quot;</span></span>)
-<span style="color:#080;font-weight:bold">when</span> (<span style="color:#00D">50</span>..<span style="color:#00D">100</span>)
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">NumberOne</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is greater than 50</span><span style="color:#710">&quot;</span></span>)
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code><span class="comment"># Check if number item is less than 50</span>
+<span class="keyword">case</span> <span class="constant">NumberOne</span>.state
+<span class="keyword">when</span> (<span class="integer">0</span>...<span class="integer">50</span>)
+  logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">NumberOne</span><span class="inline-delimiter">}</span></span><span class="content"> is less than 50</span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">when</span> (<span class="integer">50</span>..<span class="integer">100</span>)
+  logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">NumberOne</span><span class="inline-delimiter">}</span></span><span class="content"> is greater than 50</span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>DecimalType can be compared directly against Numeric</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#080;font-weight:bold">if</span> <span style="color:#036;font-weight:bold">NumberOne</span>.state &gt; <span style="color:#00D">10</span>
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Item </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">NumberOne</span>.name<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> is greater than 10</span><span style="color:#710">&quot;</span></span>)
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code><span class="keyword">if</span> <span class="constant">NumberOne</span>.state &gt; <span class="integer">10</span>
+  logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Item </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">NumberOne</span>.name<span class="inline-delimiter">}</span></span><span class="content"> is greater than 10</span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>DecimalType can be compared against the value of another DecimalType</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#080;font-weight:bold">if</span> <span style="color:#036;font-weight:bold">NumberOne</span>.state &gt; <span style="color:#036;font-weight:bold">NumberTwo</span>.state
-  logger.info(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Item </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">NumberOne</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> (</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">NumberOne</span>.state<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">) is greater than </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">NumberTwo</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> (</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">NumberTwo</span>.state<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span>)
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+      <pre class="example code"><code><span class="keyword">if</span> <span class="constant">NumberOne</span>.state &gt; <span class="constant">NumberTwo</span>.state
+  logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Item </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">NumberOne</span><span class="inline-delimiter">}</span></span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">NumberOne</span>.state<span class="inline-delimiter">}</span></span><span class="content">) is greater than </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">NumberTwo</span><span class="inline-delimiter">}</span></span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">NumberTwo</span>.state<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">end</span></code></pre>
     
   </div>
 
@@ -2684,27 +2686,27 @@ used for integers, longs and floating point numbers alike.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/decimal_type.rb', line 48</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">initialize</span>(*args)
-  <span style="color:#080;font-weight:bold">unless</span> args.length == <span style="color:#00D">1</span>
-    <span style="color:#080;font-weight:bold">super</span>
-    <span style="color:#080;font-weight:bold">return</span>
-  <span style="color:#080;font-weight:bold">end</span>
+<span class="keyword">def</span> <span class="function">initialize</span>(*args)
+  <span class="keyword">unless</span> args.length == <span class="integer">1</span>
+    <span class="keyword">super</span>
+    <span class="keyword">return</span>
+  <span class="keyword">end</span>
 
   value = args.first
-  <span style="color:#080;font-weight:bold">if</span> value.is_a?(java.math.BigDecimal)
-    <span style="color:#080;font-weight:bold">super</span>
-  <span style="color:#080;font-weight:bold">elsif</span> value.is_a?(<span style="color:#036;font-weight:bold">BigDecimal</span>)
-    <span style="color:#080;font-weight:bold">super</span>(value.to_java.strip_trailing_zeros)
-  <span style="color:#080;font-weight:bold">elsif</span> value.is_a?(<span style="color:#036;font-weight:bold">DecimalType</span>)
-    <span style="color:#080;font-weight:bold">super</span>(value.to_big_decimal)
-  <span style="color:#080;font-weight:bold">elsif</span> value.respond_to?(<span style="color:#A60">:to_d</span>)
-    <span style="color:#080;font-weight:bold">super</span>(value.to_d.to_java.strip_trailing_zeros)
-  <span style="color:#080;font-weight:bold">else</span> <span style="color:#777"># rubocop:disable Lint/DuplicateBranch</span>
-    <span style="color:#777"># duplicates the Java BigDecimal branch, but that needs to go first</span>
-    <span style="color:#777"># in order to avoid unnecessary conversions</span>
-    <span style="color:#080;font-weight:bold">super</span>
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">if</span> value.is_a?(java.math.BigDecimal)
+    <span class="keyword">super</span>
+  <span class="keyword">elsif</span> value.is_a?(<span class="constant">BigDecimal</span>)
+    <span class="keyword">super</span>(value.to_java.strip_trailing_zeros)
+  <span class="keyword">elsif</span> value.is_a?(<span class="constant">DecimalType</span>)
+    <span class="keyword">super</span>(value.to_big_decimal)
+  <span class="keyword">elsif</span> value.respond_to?(<span class="symbol">:to_d</span>)
+    <span class="keyword">super</span>(value.to_d.to_java.strip_trailing_zeros)
+  <span class="keyword">else</span> <span class="comment"># rubocop:disable Lint/DuplicateBranch</span>
+    <span class="comment"># duplicates the Java BigDecimal branch, but that needs to go first</span>
+    <span class="comment"># in order to avoid unnecessary conversions</span>
+    <span class="keyword">super</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2763,9 +2765,9 @@ used for integers, longs and floating point numbers alike.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/decimal_type.rb', line 135</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">-@</span>
-  <span style="color:#069">self</span>.class.new(to_big_decimal.negate)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">-@</span>
+  <span class="predefined-constant">self</span>.class.new(to_big_decimal.negate)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2852,20 +2854,20 @@ less than, equal to, or greater than self</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/decimal_type.rb', line 93</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">&lt;=&gt;</span>(other)
-  logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">(</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#069">self</span>.class<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">) </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#069">self</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> &lt;=&gt; </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>other<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> (</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>other.class<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20">)</span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#080;font-weight:bold">if</span> other.is_a?(<span style="color:#036;font-weight:bold">QuantityType</span>) || other.is_a?(<span style="color:#036;font-weight:bold">HSBType</span>)
-    (other &lt;=&gt; <span style="color:#069">self</span>)&amp;.-<span style="color:#F00;background-color:#FAA">@</span>
-  <span style="color:#080;font-weight:bold">elsif</span> other.is_a?(<span style="color:#069">self</span>.class)
+<span class="keyword">def</span> <span class="function">&lt;=&gt;</span>(other)
+  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span>.class<span class="inline-delimiter">}</span></span><span class="content">) </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> &lt;=&gt; </span><span class="inline"><span class="inline-delimiter">#{</span>other<span class="inline-delimiter">}</span></span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">if</span> other.is_a?(<span class="constant">QuantityType</span>) || other.is_a?(<span class="constant">HSBType</span>)
+    (other &lt;=&gt; <span class="predefined-constant">self</span>)&amp;.-<span class="error">@</span>
+  <span class="keyword">elsif</span> other.is_a?(<span class="predefined-constant">self</span>.class)
     compare_to(other)
-  <span style="color:#080;font-weight:bold">elsif</span> other.respond_to?(<span style="color:#A60">:to_d</span>)
+  <span class="keyword">elsif</span> other.respond_to?(<span class="symbol">:to_d</span>)
     to_d &lt;=&gt; other.to_d
-  <span style="color:#080;font-weight:bold">elsif</span> other.respond_to?(<span style="color:#A60">:coerce</span>)
-    <span style="color:#080;font-weight:bold">return</span> <span style="color:#069">nil</span> <span style="color:#080;font-weight:bold">unless</span> (lhs, rhs = other.coerce(<span style="color:#069">self</span>))
+  <span class="keyword">elsif</span> other.respond_to?(<span class="symbol">:coerce</span>)
+    <span class="keyword">return</span> <span class="predefined-constant">nil</span> <span class="keyword">unless</span> (lhs, rhs = other.coerce(<span class="predefined-constant">self</span>))
 
     lhs &lt;=&gt; rhs
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2943,14 +2945,14 @@ to that type to accomodate comparison with things such as <span class='object_li
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/decimal_type.rb', line 120</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">coerce</span>(other)
-  logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Coercing </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#069">self</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> as a request from </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>other.class<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>)
-  <span style="color:#080;font-weight:bold">if</span> other.is_a?(<span style="color:#036;font-weight:bold">Type</span>)
+<span class="keyword">def</span> <span class="function">coerce</span>(other)
+  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Coercing </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> as a request from </span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">if</span> other.is_a?(<span class="constant">Type</span>)
     [other, as(other.class)]
-  <span style="color:#080;font-weight:bold">elsif</span> other.respond_to?(<span style="color:#A60">:to_d</span>)
-    [<span style="color:#069">self</span>.class.new(other.to_d), <span style="color:#069">self</span>]
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">elsif</span> other.respond_to?(<span class="symbol">:to_d</span>)
+    [<span class="predefined-constant">self</span>.class.new(other.to_d), <span class="predefined-constant">self</span>]
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3021,10 +3023,10 @@ to that type to accomodate comparison with things such as <span class='object_li
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/decimal_type.rb', line 77</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">|</span>(other)
-  other = org.openhab.core.types.util.UnitUtils.parse_unit(other.to_str) <span style="color:#080;font-weight:bold">if</span> other.respond_to?(<span style="color:#A60">:to_str</span>)
-  <span style="color:#036;font-weight:bold">QuantityType</span>.new(to_big_decimal, other)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">|</span>(other)
+  other = org.openhab.core.types.util.UnitUtils.parse_unit(other.to_str) <span class="keyword">if</span> other.respond_to?(<span class="symbol">:to_str</span>)
+  <span class="constant">QuantityType</span>.new(to_big_decimal, other)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3035,7 +3037,7 @@ to that type to accomodate comparison with things such as <span class='object_li
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:36 2022 by
+  Generated on Fri Dec  9 22:46:50 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

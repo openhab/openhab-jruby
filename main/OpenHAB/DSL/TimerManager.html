@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="../../css/sidebar.css" type="text/css" />
 
+  <link rel="stylesheet" href="../../css/coderay.css" type="text/css" />
+
 <script type="text/javascript">
   pathId = "OpenHAB::DSL::TimerManager";
   relpath = '../../';
@@ -2635,16 +2637,16 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/timer_manager.rb', line 70</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">cancel</span>(id)
-  result = <span style="color:#069">false</span>
-  <span style="color:#33B">@timers_by_id</span>.compute_if_present(id) <span style="color:#080;font-weight:bold">do</span> |_key, timer|
+<span class="keyword">def</span> <span class="function">cancel</span>(id)
+  result = <span class="predefined-constant">false</span>
+  <span class="instance-variable">@timers_by_id</span>.compute_if_present(id) <span class="keyword">do</span> |_key, timer|
     result = timer.cancel!
-    <span style="color:#33B">@timers</span>.remove(timer)
+    <span class="instance-variable">@timers</span>.remove(timer)
 
-    <span style="color:#069">nil</span>
-  <span style="color:#080;font-weight:bold">end</span>
+    <span class="predefined-constant">nil</span>
+  <span class="keyword">end</span>
   result
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2690,16 +2692,16 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/timer_manager.rb', line 187</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">cancel_all</span>
-  logged = <span style="color:#069">false</span>
-  <span style="color:#777"># don't use #each, in case timers are scheduling more timers</span>
-  <span style="color:#080;font-weight:bold">until</span> <span style="color:#33B">@timers</span>.empty?
-    logger.trace(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Canceling </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#33B">@timers</span>.length<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> timers</span><span style="color:#710">&quot;</span></span>) <span style="color:#080;font-weight:bold">unless</span> logged
-    logged = <span style="color:#069">true</span>
-    timer = <span style="color:#33B">@timers</span>.keys.first
+<span class="keyword">def</span> <span class="function">cancel_all</span>
+  logged = <span class="predefined-constant">false</span>
+  <span class="comment"># don't use #each, in case timers are scheduling more timers</span>
+  <span class="keyword">until</span> <span class="instance-variable">@timers</span>.empty?
+    logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Canceling </span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@timers</span>.length<span class="inline-delimiter">}</span></span><span class="content"> timers</span><span class="delimiter">&quot;</span></span>) <span class="keyword">unless</span> logged
+    logged = <span class="predefined-constant">true</span>
+    timer = <span class="instance-variable">@timers</span>.keys.first
     timer.cancel
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2782,9 +2784,9 @@ since the state may have changed in the meantime. Instead, use
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/timer_manager.rb', line 174</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">include?</span>(id)
-  <span style="color:#33B">@timers_by_id</span>.key?(id)
-<span style="color:#080;font-weight:bold">end</span></pre>
+<span class="keyword">def</span> <span class="function">include?</span>(id)
+  <span class="instance-variable">@timers_by_id</span>.key?(id)
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2873,11 +2875,11 @@ since the state may have changed in the meantime. Instead, use
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/timer_manager.rb', line 89</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">reschedule</span>(id, duration = <span style="color:#069">nil</span>)
-  <span style="color:#33B">@timers_by_id</span>.compute_if_present(id) <span style="color:#080;font-weight:bold">do</span> |_key, timer|
+<span class="keyword">def</span> <span class="function">reschedule</span>(id, duration = <span class="predefined-constant">nil</span>)
+  <span class="instance-variable">@timers_by_id</span>.compute_if_present(id) <span class="keyword">do</span> |_key, timer|
     timer.reschedule(duration)
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -2911,31 +2913,31 @@ state. The timer is created in a thread-safe manner.</p>
         <p class="example_title"><div class='inline'><p>Extend an existing timer, or schedule a new one</p>
 </div></p>
       
-      <pre class="example code"><code><span style="color:#777"># This is technically the same functionality as just calling `after()` with an `id`,</span>
-<span style="color:#777"># but allows you to performa extra steps if the timer is actually scheduled.</span>
-timers.schedule(item) <span style="color:#080;font-weight:bold">do</span> |timer|
-  <span style="color:#080;font-weight:bold">next</span> timer.tap(&amp;<span style="color:#A60">:reschedule</span>) <span style="color:#080;font-weight:bold">if</span> timer
+      <pre class="example code"><code><span class="comment"># This is technically the same functionality as just calling `after()` with an `id`,</span>
+<span class="comment"># but allows you to performa extra steps if the timer is actually scheduled.</span>
+timers.schedule(item) <span class="keyword">do</span> |timer|
+  <span class="keyword">next</span> timer.tap(&amp;<span class="symbol">:reschedule</span>) <span class="keyword">if</span> timer
 
-  notify(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">The lights were turned on</span><span style="color:#710">&quot;</span></span>)
+  notify(<span class="string"><span class="delimiter">&quot;</span><span class="content">The lights were turned on</span><span class="delimiter">&quot;</span></span>)
 
-  after(<span style="color:#00D">30</span>.seconds) { item.off }
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+  after(<span class="integer">30</span>.seconds) { item.off }
+<span class="keyword">end</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Keep trying to turn something on, up to 5 times</p>
 </div></p>
       
-      <pre class="example code"><code>timers.schedule(item) <span style="color:#080;font-weight:bold">do</span> |timer|
-  <span style="color:#080;font-weight:bold">next</span> <span style="color:#080;font-weight:bold">if</span> timer <span style="color:#777"># don't interrupt a retry cycle if it already exists</span>
+      <pre class="example code"><code>timers.schedule(item) <span class="keyword">do</span> |timer|
+  <span class="keyword">next</span> <span class="keyword">if</span> timer <span class="comment"># don't interrupt a retry cycle if it already exists</span>
 
-  retries = <span style="color:#00D">5</span>
-  after(<span style="color:#00D">2</span>.seconds) <span style="color:#080;font-weight:bold">do</span> |inner_timer|
-    <span style="color:#080;font-weight:bold">next</span> <span style="color:#080;font-weight:bold">if</span> (retries -= <span style="color:#00D">1</span>).zero?
-    <span style="color:#080;font-weight:bold">next</span> inner_timer.reschedule <span style="color:#080;font-weight:bold">unless</span> item.on?
+  retries = <span class="integer">5</span>
+  after(<span class="integer">2</span>.seconds) <span class="keyword">do</span> |inner_timer|
+    <span class="keyword">next</span> <span class="keyword">if</span> (retries -= <span class="integer">1</span>).zero?
+    <span class="keyword">next</span> inner_timer.reschedule <span class="keyword">unless</span> item.on?
 
     item.on
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></code></pre>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -3042,33 +3044,33 @@ timer, or nil. If nil, any existing timer will be cancelled.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/timer_manager.rb', line 132</span>
 
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">schedule</span>(id)
-  <span style="color:#33B">@timers_by_id</span>.compute(id) <span style="color:#080;font-weight:bold">do</span> |_key, timer|
-    new_timer = <span style="color:#080;font-weight:bold">yield</span> timer
-    raise <span style="color:#036;font-weight:bold">ArgumentError</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Block must return a timer or nil</span><span style="color:#710">&quot;</span></span> <span style="color:#080;font-weight:bold">unless</span> new_timer.is_a?(<span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Timer</span>) || new_timer.nil?
+<span class="keyword">def</span> <span class="function">schedule</span>(id)
+  <span class="instance-variable">@timers_by_id</span>.compute(id) <span class="keyword">do</span> |_key, timer|
+    new_timer = <span class="keyword">yield</span> timer
+    raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Block must return a timer or nil</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> new_timer.is_a?(<span class="constant">Core</span>::<span class="constant">Timer</span>) || new_timer.nil?
 
-    <span style="color:#080;font-weight:bold">if</span> !new_timer.equal?(timer) &amp;&amp; new_timer&amp;.id
-      raise <span style="color:#036;font-weight:bold">ArgumentError</span>,
-            <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Do not schedule a new timer with an ID inside a #schedule block</span><span style="color:#710">&quot;</span></span>
-    <span style="color:#080;font-weight:bold">end</span>
+    <span class="keyword">if</span> !new_timer.equal?(timer) &amp;&amp; new_timer&amp;.id
+      raise <span class="constant">ArgumentError</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">Do not schedule a new timer with an ID inside a #schedule block</span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
 
-    <span style="color:#080;font-weight:bold">if</span> timer&amp;.cancelled?
-      new_timer = <span style="color:#069">nil</span>
-    <span style="color:#080;font-weight:bold">elsif</span> new_timer.nil? &amp;&amp; timer &amp;&amp; !timer.cancelled?
+    <span class="keyword">if</span> timer&amp;.cancelled?
+      new_timer = <span class="predefined-constant">nil</span>
+    <span class="keyword">elsif</span> new_timer.nil? &amp;&amp; timer &amp;&amp; !timer.cancelled?
       timer.cancel!
-      <span style="color:#33B">@timers</span>.remove(timer)
-    <span style="color:#080;font-weight:bold">end</span>
-    <span style="color:#080;font-weight:bold">next</span> <span style="color:#080;font-weight:bold">unless</span> new_timer
+      <span class="instance-variable">@timers</span>.remove(timer)
+    <span class="keyword">end</span>
+    <span class="keyword">next</span> <span class="keyword">unless</span> new_timer
 
     new_timer.id ||= id
-    <span style="color:#080;font-weight:bold">if</span> new_timer.id != id
-      raise <span style="color:#036;font-weight:bold">ArgumentError</span>,
-            <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">The new timer cannot have a different ID than what you're attempting to schedule</span><span style="color:#710">&quot;</span></span>
-    <span style="color:#080;font-weight:bold">end</span>
+    <span class="keyword">if</span> new_timer.id != id
+      raise <span class="constant">ArgumentError</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">The new timer cannot have a different ID than what you're attempting to schedule</span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
 
     new_timer
-  <span style="color:#080;font-weight:bold">end</span>
-<span style="color:#080;font-weight:bold">end</span></pre>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3079,7 +3081,7 @@ timer, or nil. If nil, any existing timer will be cancelled.</p>
 </div>
 
         <footer>
-  Generated on Fri Dec  9 16:57:34 2022 by
+  Generated on Fri Dec  9 22:46:48 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
