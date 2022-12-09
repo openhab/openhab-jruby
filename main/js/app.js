@@ -191,6 +191,12 @@ function enableToggles() {
     $(this).toggleClass('down');
     $(this).toggleClass('right');
   });
+
+  $('.sidebar-button').on('click', function(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    $('#app').toggleClass("sidebar-open");
+  });
 }
 
 function enableHovers() {
