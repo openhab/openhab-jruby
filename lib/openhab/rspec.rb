@@ -15,3 +15,10 @@ require_relative "rspec/configuration"
 require_relative "rspec/helpers"
 require_relative "rspec/karaf"
 require_relative "rspec/hooks"
+
+RSpec.configure do |c|
+  c.add_setting :openhab_automation_search_paths, default: [
+    "#{org.openhab.core.OpenHAB.config_folder}/automation/ruby",
+    "#{org.openhab.core.OpenHAB.config_folder}/automation/jsr223/ruby/personal"
+  ]
+end

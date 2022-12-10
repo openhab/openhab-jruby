@@ -265,12 +265,13 @@ module OpenHAB
       # @return [void]
       #
       def load_rules
-        automation_path = "#{org.openhab.core.OpenHAB.config_folder}/automation/ruby"
+        automation_paths = Array(::RSpec.configuration.openhab_automation_search_paths)
+
         lib_dirs = rubylib_dirs.map { |d| File.join(d, "") }
         lib_dirs << File.join(gem_home, "")
 
         SuspendRules.suspend_rules do
-          files = Dir["#{automation_path}/**/*.rb"]
+          files = automation_paths.map { |p| Dir["#{p}/**/*.rb"] }.flatten
           files.reject! do |f|
             lib_dirs.any? { |l| f.start_with?(l) }
           end
