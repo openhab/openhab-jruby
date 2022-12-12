@@ -541,7 +541,7 @@ module OpenHAB
           @rule_triggers = RuleTriggers.new
           @caller = caller_binding.eval "self"
           @ruby_triggers = []
-          @on_load_id = nil
+          @on_load = nil
           enabled(true)
           tags([])
         end
@@ -974,6 +974,8 @@ module OpenHAB
         # and on subsequent reloads on file modifications.
         # This is useful to perform initialization routines, especially when combined with other triggers.
         #
+        # @param [Duration] delay The amount of time to wait before executing the rule.
+        #   When nil, execute immediately.
         # @param [Object] attach Object to be attached to the trigger
         # @return [void]
         #
@@ -991,12 +993,12 @@ module OpenHAB
         #     run { Security_Lights.on }
         #   end
         #
-        def on_load(attach: nil)
-          # prevent overwriting @on_load_id
-          raise ArgumentError, "on_load can only be used once within a rule" if @on_load_id
+        def on_load(delay: nil, attach: nil)
+          # prevent overwriting @on_load
+          raise ArgumentError, "on_load can only be used once within a rule" if @on_load
 
-          @on_load_id = SecureRandom.uuid
-          attachments[@on_load_id] = attach
+          @on_load = { module: SecureRandom.uuid, delay: delay }
+          attachments[@on_load[:module]] = attach
         end
 
         #
@@ -1463,7 +1465,7 @@ module OpenHAB
             #<OpenHAB::DSL::Rules::Builder: #{uid}
             triggers=#{triggers.inspect},
             run blocks=#{run.inspect},
-            on_load=#{!@on_load_id.nil?},
+            on_load=#{!@on_load.nil?},
             Trigger Conditions=#{trigger_conditions.inspect},
             Trigger UIDs=#{triggers.map(&:id).inspect},
             Attachments=#{attachments.inspect}
@@ -1486,11 +1488,25 @@ module OpenHAB
           added_rule.actions.first.configuration.put("type", "application/x-ruby")
           added_rule.actions.first.configuration.put("script", script) if script
 
-          rule.execute(nil, { "module" => @on_load_id }) if @on_load_id
+          process_on_load { |module_id| rule.execute(nil, { "module" => module_id }) }
+
           added_rule
         end
 
         private
+
+        # Calls the on_load block, with a delay if specified
+        # @yield block to execute on load time
+        # @yieldparam [String] module The module ID that identifies this on_load event
+        def process_on_load
+          return unless @on_load
+
+          if @on_load[:delay]
+            after(@on_load[:delay]) { yield @on_load[:module] }
+          else
+            yield @on_load[:module]
+          end
+        end
 
         # delegate to the caller's logger
         def logger
@@ -1523,7 +1539,7 @@ module OpenHAB
         # @return [true,false] True if rule has triggers, false otherwise
         #
         def triggers?
-          @on_load_id || !triggers.empty?
+          !(@on_load.nil? && triggers.empty?)
         end
 
         #

@@ -70,6 +70,28 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       end
     end
 
+    describe "#on_load" do
+      it "works" do
+        executed = false
+        rule do
+          on_load
+          run { executed = true }
+        end
+        expect(executed).to be true
+      end
+
+      it "can use a delay" do
+        executed = false
+        rule do
+          on_load delay: 500.ms
+          run { executed = true }
+        end
+        expect(executed).to be false
+        time_travel_and_execute_timers(800.ms)
+        expect(executed).to be true
+      end
+    end
+
     describe "#on_start" do
       it "works with default level" do
         rule = rule do

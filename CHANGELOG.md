@@ -179,6 +179,7 @@ here is a non-exhaustive list of significant departures from the original gem:
   Note that this only works for {OpenHAB::DSL::Rules::Terse terse rules} if they're created within a {OpenHAB::DSL::Rules::Builder rules.build} block.
 * {OpenHAB::DSL::Rules::BuilderDSL#on_start #on_start} supports creating a `core.SystemStartlevelTrigger`.
   Also see {OpenHAB::DSL::Rules::BuilderDSL#on_load #on_load}.
+* {OpenHAB::DSL::Rules::BuilderDSL#on_load #on_load} supports delay
 * Various Ephemeris methods on {ZonedDateTime}.
 
 ### Bug Fixes
