@@ -2416,7 +2416,7 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>The <span class='object_link'><a href="AbstractEvent.html" title="OpenHAB::Core::Events::AbstractEvent (class)">AbstractEvent</a></span> sent when a <span class='object_link'><a href="../Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Things::Thing</a></span>'s status has changed.</p>
+    <p>The <span class='object_link'><a href="AbstractEvent.html" title="OpenHAB::Core::Events::AbstractEvent (class)">AbstractEvent</a></span> sent when a <span class='object_link'><a href="../Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Thing's</a></span> status has changed.</p>
 
 
   </div>
@@ -2430,6 +2430,34 @@
 
   <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
   <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#status-instance_method" title="#status (instance method)">#<strong>status</strong>  &#x21d2; org.openhab.core.thing.ThingStatusInfo </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The thing's status.</p>
+</div></span>
+  
+</li>
+
     
       <li class="public ">
   <span class="summary_signature">
@@ -2459,6 +2487,62 @@
 </li>
 
     
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#uid-instance_method" title="#uid (instance method)">#<strong>uid</strong>  &#x21d2; Things::ThingUID </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The UID of the <span class='object_link'><a href="../Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Thing</a></span> that triggered this event.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#was-instance_method" title="#was (instance method)">#<strong>was</strong>  &#x21d2; org.openhab.core.thing.ThingStatusInfo </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The thing's prior status.</p>
+</div></span>
+  
+</li>
+
+    
   </ul>
 
 
@@ -2477,13 +2561,73 @@
   
   
   
+  <h2>Method Summary</h2>
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="AbstractEvent.html" title="OpenHAB::Core::Events::AbstractEvent (class)">AbstractEvent</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="AbstractEvent.html#inspect-instance_method" title="OpenHAB::Core::Events::AbstractEvent#inspect (method)">#inspect</a></span></p>
+
   <div id="instance_attr_details" class="attr_details">
     <h2>Instance Attribute Details</h2>
     
       
       <span id=""></span>
       <div class="method_details first">
-  <h3 class="signature first" id="thing-instance_method">
+  <h3 class="signature first" id="status-instance_method">
+  
+    #<strong>status</strong>  &#x21d2; <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/thing/ThingStatusInfo.html" target="_parent" title="org.openhab.core.thing.ThingStatusInfo">org.openhab.core.thing.ThingStatusInfo</a></tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The thing's status.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/thing/ThingStatusInfo.html" target="_parent" title="org.openhab.core.thing.ThingStatusInfo">org.openhab.core.thing.ThingStatusInfo</a></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The thing's status.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+21</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/thing_status_info_event.rb', line 21</span>
+
+alias_method <span class="symbol">:status</span>, <span class="symbol">:status_info</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="thing-instance_method">
   
     #<strong>thing</strong>  &#x21d2; <tt><span class='object_link'><a href="../Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Things::Thing</a></span></tt>  <span class="extras">(readonly)</span>
   
@@ -2524,16 +2668,126 @@
       <pre class="lines">
 
 
-25
-26
-27</pre>
+27
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/thing_status_info_event.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/thing_status_info_event.rb', line 27</span>
 
 <span class="keyword">def</span> <span class="function">thing</span>
   <span class="constant">EntityLookup</span>.lookup_thing(uid)
 <span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="uid-instance_method">
+  
+    #<strong>uid</strong>  &#x21d2; <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/thing/ThingUID.html" target="_parent" title="Things::ThingUID">Things::ThingUID</a></tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The UID of the <span class='object_link'><a href="../Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Thing</a></span> that triggered this event.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/thing/ThingUID.html" target="_parent" title="Things::ThingUID">Things::ThingUID</a></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The UID of the <span class='object_link'><a href="../Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Thing</a></span> that triggered this event.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+15</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/thing_status_info_event.rb', line 15</span>
+
+alias_method <span class="symbol">:uid</span>, <span class="symbol">:get_thing_uid</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="was-instance_method">
+  
+    #<strong>was</strong>  &#x21d2; <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/thing/ThingStatusInfo.html" target="_parent" title="org.openhab.core.thing.ThingStatusInfo">org.openhab.core.thing.ThingStatusInfo</a></tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The thing's prior status.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/thing/ThingStatusInfo.html" target="_parent" title="org.openhab.core.thing.ThingStatusInfo">org.openhab.core.thing.ThingStatusInfo</a></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The thing's prior status.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+18</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/thing_status_info_event.rb', line 18</span>
+
+alias_method <span class="symbol">:was</span>, <span class="symbol">:get_old_status_info</span></pre>
     </td>
   </tr>
 </table>
@@ -2545,7 +2799,7 @@
 </div>
 
         <footer>
-  Generated on Mon Dec 12 19:11:45 2022 by
+  Generated on Mon Dec 12 19:15:27 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

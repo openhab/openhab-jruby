@@ -5,7 +5,7 @@ try { localStorage = window.localStorage; } catch (e) { }
 try { sessionStorage = window.sessionStorage; } catch (e) { }
 
 function createSourceLinks() {
-    $('.method_details_list .source_code').
+    $('.method_details_list .source_code, .attr_details .source_code').
         before("<span class='showSource'>[<a href='#' class='toggleSource'>View source</a>]</span>");
     $('.toggleSource').toggle(function() {
        $(this).parent().nextAll('.source_code').slideDown(100);
