@@ -1464,6 +1464,17 @@
   </li>
 
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="OpenHAB/CoreExt/Ephemeris.html" title="OpenHAB::CoreExt::Ephemeris (module)">Ephemeris</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   <li class="collapsed">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="OpenHAB/CoreExt/Java.html" title="OpenHAB::CoreExt::Java (module)">Java</a></span>
@@ -3030,7 +3041,7 @@ This is available only on file-based rules.</p>
 <span class="keyword">end</span>
 </code></pre>
 <p>Alternatively a timer can be used in either a file-based rule or in a UI based rule using <span class='object_link'><a href="OpenHAB/DSL.html#after-class_method" title="OpenHAB::DSL.after (method)">after</a></span>.
-After takes a <a href="#durations">Duration</a>, e.g. <code>10.minutes</code> instead of using ZonedDateTime.</p>
+After takes a <a href="#durations">Duration</a>, e.g. <code>10.minutes</code> instead of using <span class='object_link'><a href="OpenHAB/CoreExt/Java/ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span>.</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">simple timer</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="constant">Watering_System</span>, <span class="key">to</span>: <span class="constant">ON</span>
   run <span class="keyword">do</span>
@@ -3300,6 +3311,15 @@ between(<span class="string"><span class="delimiter">&quot;</span><span class="c
 
 <span class="comment"># Compare against time of day</span>
 <span class="constant">Time</span>.now.between?(<span class="string"><span class="delimiter">&quot;</span><span class="content">5am</span><span class="delimiter">&quot;</span></span>..<span class="string"><span class="delimiter">&quot;</span><span class="content">11pm</span><span class="delimiter">&quot;</span></span>)
+</code></pre>
+<h4 id="ephemeris"><a href="#ephemeris" class="header-anchor">#</a>Ephemeris</h4>
+<p><span class='object_link'><a href="OpenHAB/CoreExt/Ephemeris.html" title="OpenHAB::CoreExt::Ephemeris (module)">Helper methods</a></span> to easily access <a href="https://www.openhab.org/docs/configuration/actions.html#ephemeris">openHAB's Ephemeris action</a> are provided on all date-like objects:</p>
+<pre class="code ruby"><code class="ruby"><span class="constant">Time</span>.now.holiday? <span class="comment"># =&gt; false</span>
+<span class="constant">LocalDate</span>.parse(<span class="string"><span class="delimiter">&quot;</span><span class="content">12-25</span><span class="delimiter">&quot;</span></span>).holiday <span class="comment"># =&gt; :christmas</span>
+<span class="integer">1</span>.day.from_now.next_holiday <span class="comment"># =&gt; :thanksgiving</span>
+
+<span class="constant">Date</span>.today.weekend? <span class="comment"># =&gt; true</span>
+<span class="constant">Date</span>.today.in_dayset?(<span class="symbol">:school</span>) <span class="comment"># =&gt; false</span>
 </code></pre>
 <h3 id="gems"><a href="#gems" class="header-anchor">#</a>Gems</h3>
 <p><a href="https://bundler.io/">Bundler</a> is integrated, enabling any <a href="https://rubygems.org/">Ruby gem</a> compatible with JRuby to be used within rules. This permits easy access to the vast ecosystem of libraries within the Ruby community.
@@ -3641,7 +3661,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Wed Dec 14 20:17:07 2022 by
+  Generated on Wed Dec 14 20:22:28 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
