@@ -2414,10 +2414,17 @@ creating a distinct timed command.</p>
 <p>Timed commands are initiated by using the 'for:' argument with the
 command. This is available on both the 'command' method and any
 command-specific methods, e.g. <span class='object_link'><a href="../../Core/Items/SwitchItem.html#on-instance_method" title="OpenHAB::Core::Items::SwitchItem#on (method)">Core::Items::SwitchItem#on</a></span>.</p>
-<p>Any update to the timed command state will result in the timer being
-cancelled. For example, if you have a Switch on a timer and another
-rule sends OFF or ON to that item the timer will be automatically
-canceled. Sending a different duration (for:) value for the timed
+<p>The timer will be cancelled, and the item's state will not be changed
+to the on_expire state if:</p>
+<ul>
+<li>The item receives any command within the timed command duration.</li>
+<li>The item is updated to a different state, even if it is then updated
+back to the same state.</li>
+</ul>
+<p>For example, if you have a Switch on a timer and another rule sends
+a command to that item, even when it's commanded to the same state,
+the timer will be automatically canceled.</p>
+<p>Sending a different duration (for:) value for the timed
 command will reschedule the timed command for that new duration.</p>
 
 
@@ -2640,13 +2647,6 @@ other action.</p>
       <pre class="lines">
 
 
-99
-100
-101
-102
-103
-104
-105
 106
 107
 108
@@ -2677,10 +2677,17 @@ other action.</p>
 133
 134
 135
-136</pre>
+136
+137
+138
+139
+140
+141
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/timed_command.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/timed_command.rb', line 106</span>
 
 <span class="keyword">def</span> <span class="function">command</span>(command, <span class="key">for</span>: <span class="predefined-constant">nil</span>, <span class="key">on_expire</span>: <span class="predefined-constant">nil</span>, &amp;block)
   duration = binding.local_variable_get(<span class="symbol">:for</span>)
@@ -2693,7 +2700,7 @@ other action.</p>
       <span class="comment"># no prior timed command</span>
       on_expire ||= default_on_expire(command)
       <span class="keyword">super</span>(command)
-      create_timed_command(<span class="key">duration</span>: duration, <span class="key">on_expire</span>: on_expire)
+      create_timed_command(command, <span class="key">duration</span>: duration, <span class="key">on_expire</span>: on_expire)
     <span class="keyword">else</span>
       timed_command_details.mutex.synchronize <span class="keyword">do</span>
         <span class="keyword">if</span> timed_command_details.resolution
@@ -2702,7 +2709,7 @@ other action.</p>
           <span class="comment"># just create a new one</span>
           on_expire ||= default_on_expire(command)
           <span class="keyword">super</span>(command)
-          create_timed_command(<span class="key">duration</span>: duration, <span class="key">on_expire</span>: on_expire)
+          create_timed_command(command, <span class="key">duration</span>: duration, <span class="key">on_expire</span>: on_expire)
         <span class="keyword">else</span>
           <span class="comment"># timed command still pending; reset it</span>
           logger.trace <span class="string"><span class="delimiter">&quot;</span><span class="content">Outstanding Timed Command </span><span class="inline"><span class="inline-delimiter">#{</span>timed_command_details<span class="inline-delimiter">}</span></span><span class="content"> encountered - rescheduling</span><span class="delimiter">&quot;</span></span>
@@ -2730,7 +2737,7 @@ other action.</p>
 </div>
 
         <footer>
-  Generated on Mon Dec 12 19:15:21 2022 by
+  Generated on Wed Dec 14 20:17:10 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
