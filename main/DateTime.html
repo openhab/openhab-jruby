@@ -1464,17 +1464,6 @@
   </li>
 
   
-  <li class="">
-    <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="OpenHAB/CoreExt/Ephemeris.html" title="OpenHAB::CoreExt::Ephemeris (module)">Ephemeris</a></span>
-      
-      
-    </span>
-    
-    
-  </li>
-
-  
   <li class="collapsed">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="OpenHAB/CoreExt/Java.html" title="OpenHAB::CoreExt::Java (module)">Java</a></span>
@@ -2415,7 +2404,7 @@
   
   <dl>
       <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="OpenHAB/CoreExt/Between.html" title="OpenHAB::CoreExt::Between (module)">OpenHAB::CoreExt::Between</a></span>, <span class='object_link'><a href="OpenHAB/CoreExt/Ephemeris.html" title="OpenHAB::CoreExt::Ephemeris (module)">OpenHAB::CoreExt::Ephemeris</a></span></dd>
+      <dd><span class='object_link'><a href="OpenHAB/CoreExt/Between.html" title="OpenHAB::CoreExt::Between (module)">OpenHAB::CoreExt::Between</a></span></dd>
   </dl>
   
   
@@ -2593,17 +2582,6 @@
   
   
   
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="OpenHAB/CoreExt/Ephemeris.html" title="OpenHAB::CoreExt::Ephemeris (module)">OpenHAB::CoreExt::Ephemeris</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="OpenHAB/CoreExt/Ephemeris.html#days_until-instance_method" title="OpenHAB::CoreExt::Ephemeris#days_until (method)">#days_until</a></span>, <span class='object_link'><a href="OpenHAB/CoreExt/Ephemeris.html#holiday-instance_method" title="OpenHAB::CoreExt::Ephemeris#holiday (method)">#holiday</a></span>, <span class='object_link'><a href="OpenHAB/CoreExt/Ephemeris.html#holiday%3F-instance_method" title="OpenHAB::CoreExt::Ephemeris#holiday? (method)">#holiday?</a></span>, <span class='object_link'><a href="OpenHAB/CoreExt/Ephemeris.html#holiday_description-instance_method" title="OpenHAB::CoreExt::Ephemeris#holiday_description (method)">#holiday_description</a></span>, <span class='object_link'><a href="OpenHAB/CoreExt/Ephemeris.html#in_dayset%3F-instance_method" title="OpenHAB::CoreExt::Ephemeris#in_dayset? (method)">#in_dayset?</a></span>, <span class='object_link'><a href="OpenHAB/CoreExt/Ephemeris.html#next_holiday-instance_method" title="OpenHAB::CoreExt::Ephemeris#next_holiday (method)">#next_holiday</a></span>, <span class='object_link'><a href="OpenHAB/CoreExt/Ephemeris.html#next_holiday_description-instance_method" title="OpenHAB::CoreExt::Ephemeris#next_holiday_description (method)">#next_holiday_description</a></span>, <span class='object_link'><a href="OpenHAB/CoreExt/Ephemeris.html#weekend%3F-instance_method" title="OpenHAB::CoreExt::Ephemeris#weekend? (method)">#weekend?</a></span></p>
-
-  
-  
-  
-  
-  
-  
-  
-  
   <h3 class="inherited">Methods included from <span class='object_link'><a href="OpenHAB/CoreExt/Between.html" title="OpenHAB::CoreExt::Between (module)">OpenHAB::CoreExt::Between</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="OpenHAB/CoreExt/Between.html#between%3F-instance_method" title="OpenHAB::CoreExt::Between#between? (method)">#between?</a></span></p>
 
@@ -2677,15 +2655,15 @@ is also convertible to a ZonedDateTime.</p>
       <pre class="lines">
 
 
+48
 49
 50
 51
 52
-53
-54</pre>
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/date_time.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/date_time.rb', line 48</span>
 
 <span class="keyword">def</span> <span class="function">coerce</span>(other)
   <span class="keyword">return</span> <span class="keyword">unless</span> other.respond_to?(<span class="symbol">:to_zoned_date_time</span>)
@@ -2830,6 +2808,7 @@ remains unchanged from its original behavior.</p>
       <pre class="lines">
 
 
+25
 26
 27
 28
@@ -2838,11 +2817,10 @@ remains unchanged from its original behavior.</p>
 31
 32
 33
-34
-35</pre>
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/date_time.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/date_time.rb', line 25</span>
 
 <span class="keyword">def</span> <span class="function">minus_with_temporal</span>(other)
   <span class="keyword">return</span> to_zoned_date_time - other <span class="keyword">if</span> other.is_a?(java.time.temporal.TemporalAmount)
@@ -2933,14 +2911,14 @@ remains unchanged from its original behavior.</p>
       <pre class="lines">
 
 
+16
 17
 18
 19
-20
-21</pre>
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/date_time.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/date_time.rb', line 16</span>
 
 <span class="keyword">def</span> <span class="function">plus_with_temporal</span>(other)
   <span class="keyword">return</span> to_zoned_date_time + other <span class="keyword">if</span> other.is_a?(java.time.temporal.TemporalAmount)
@@ -2989,10 +2967,10 @@ remains unchanged from its original behavior.</p>
       <pre class="lines">
 
 
-41</pre>
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/date_time.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/date_time.rb', line 40</span>
 
 def_delegator <span class="symbol">:to_zoned_date_time</span>, <span class="symbol">:to_local_time</span></pre>
     </td>
@@ -3059,12 +3037,12 @@ during conversion. Not used in this class.</p>
       <pre class="lines">
 
 
+43
 44
-45
-46</pre>
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/date_time.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/date_time.rb', line 43</span>
 
 <span class="keyword">def</span> <span class="function">to_zoned_date_time</span>(context = <span class="predefined-constant">nil</span>) <span class="comment"># rubocop:disable Lint/UnusedMethodArgument</span>
   to_java(<span class="constant">ZonedDateTime</span>)
@@ -3079,7 +3057,7 @@ during conversion. Not used in this class.</p>
 </div>
 
         <footer>
-  Generated on Wed Dec 14 20:22:36 2022 by
+  Generated on Wed Dec 14 20:23:22 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
