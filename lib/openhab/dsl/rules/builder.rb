@@ -680,8 +680,7 @@ module OpenHAB
         #    end
         def channel_linked(attach: nil)
           @ruby_triggers << [:channel_linked]
-          trigger("core.GenericEventTrigger", eventTopic: "openhab/links/*/added",
-                                              eventTypes: "ItemChannelLinkAddedEvent", attach: attach)
+          event("openhab/links/*/added", types: "ItemChannelLinkAddedEvent", attach: attach)
         end
 
         #
@@ -702,8 +701,7 @@ module OpenHAB
         #    end
         def channel_unlinked(attach: nil)
           @ruby_triggers << [:channel_linked]
-          trigger("core.GenericEventTrigger", eventTopic: "openhab/links/*/removed",
-                                              eventTypes: "ItemChannelLinkRemovedEvent", attach: attach)
+          event(topic: "openhab/links/*/removed", types: "ItemChannelLinkRemovedEvent", attach: attach)
         end
 
         #
@@ -1180,8 +1178,7 @@ module OpenHAB
         #    end
         def thing_added(attach: nil)
           @ruby_triggers << [:thing_added]
-          trigger("core.GenericEventTrigger", eventTopic: "openhab/things/*/added",
-                                              eventTypes: "ThingAddedEvent", attach: attach)
+          event("openhab/things/*/added", types: "ThingAddedEvent", attach: attach)
         end
 
         #
@@ -1199,8 +1196,7 @@ module OpenHAB
         #    end
         def thing_removed(attach: nil)
           @ruby_triggers << [:thing_removed]
-          trigger("core.GenericEventTrigger", eventTopic: "openhab/things/*/removed",
-                                              eventTypes: "ThingRemovedEvent", attach: attach)
+          event("openhab/things/*/removed", types: "ThingRemovedEvent", attach: attach)
         end
 
         #
@@ -1210,17 +1206,39 @@ module OpenHAB
         # @return [void]
         #
         # @example
-        #    rule "thing updated" do
-        #      thing_updated
-        #      run do |event|
-        #        logger.info("#{event.thing.uid} updated.")
-        #      end
-        #    end
+        #   rule "thing updated" do
+        #     thing_updated
+        #     run do |event|
+        #       logger.info("#{event.thing.uid} updated.")
+        #     end
+        #   end
         #
         def thing_updated(attach: nil)
           @ruby_triggers << [:thing_removed]
-          trigger("core.GenericEventTrigger", eventTopic: "openhab/things/*/updated",
-                                              eventTypes: "ThingUpdatedEvent", attach: attach)
+          event("openhab/things/*/updated", types: "ThingUpdatedEvent", attach: attach)
+        end
+
+        #
+        # Creates a trigger on events coming through the event bus
+        #
+        # @param [String] topic The topic to trigger on; can contain the wildcard `*`.
+        # @param [String, nil] source The sender of the event to trigger on.
+        #   Default does not filter on source.
+        # @param [String, Array<String>, nil] types Only subscribe to certain event types.
+        #   Default does not filter on event types.
+        # @return [void]
+        #
+        # @example
+        #   rule "thing updated" do
+        #     event("openhab/things/*/updated", types: "ThingUpdatedEvent")
+        #     run do |event|
+        #       logger.info("#{event.thing.uid} updated")
+        #     end
+        #   end
+        #
+        def event(topic, source: nil, types: nil, attach: nil)
+          types = types.join(",") if types.is_a?(Enumerable)
+          trigger("core.GenericEventTrigger", eventTopic: topic, eventSource: source, eventTypes: types, attach: attach)
         end
 
         #

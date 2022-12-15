@@ -1358,8 +1358,8 @@ See {OpenHAB::DSL::Rules::BuilderDSL#every #every}
 
 #### Other Triggers
 
-There are more triggers supported by this library. See the
-{group::OpenHAB::DSL::Rules::BuilderDSL::Triggers full list of supported triggers}.
+There are more triggers supported by this library.
+See the {group::OpenHAB::DSL::Rules::BuilderDSL::Triggers full list of supported triggers}.
 
 #### Combining Multiple Triggers
 
