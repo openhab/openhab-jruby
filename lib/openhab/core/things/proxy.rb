@@ -12,6 +12,14 @@ module OpenHAB
         extend Forwardable
         def_delegators :__getobj__, :class, :is_a?, :kind_of?
 
+        # @!visibility private
+        EVENTS = [Events::ThingAddedEvent::TYPE, Events::ThingUpdatedEvent::TYPE,
+                  Events::ThingRemovedEvent::TYPE].freeze
+        # @!visibility private
+        UID_METHOD = :uid
+
+        include Core::Proxy
+
         # Returns the list of channels associated with this Thing
         #
         # @note This is defined on this class, and not on {Thing}, because

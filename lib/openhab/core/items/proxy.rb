@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "delegate"
+require_relative "../proxy"
 
 module OpenHAB
   module Core
@@ -11,6 +12,13 @@ module OpenHAB
         # Not really an Item, but pretends to be
         # @!parse include Item
 
+        # @!visibility private
+        EVENTS = [Events::ItemAddedEvent::TYPE, Events::ItemUpdatedEvent::TYPE, Events::ItemRemovedEvent::TYPE].freeze
+        # @!visibility private
+        UID_METHOD = :name
+
+        include Core::Proxy
+
         # @return [String]
         attr_reader :name
 
@@ -18,19 +26,15 @@ module OpenHAB
         # Set the proxy item (called by super)
         #
         def __setobj__(item)
-          @name = item.name
-          # Convert name to Java version for faster lookups
-          @java_name = item.name.to_java
+          @item = item.is_a?(Item) ? item : nil
+          @name ||= item.name if item
         end
 
         #
-        # Lookup item from item registry
+        # @return [Item, nil]
         #
         def __getobj__
-          r = $ir.get(@name)
-          return yield if r.nil? && block_given?
-
-          r
+          @item
         end
 
         # @return [Module]
@@ -88,9 +92,9 @@ module OpenHAB
         # @return [GroupItem::Members]
         # @raise [NoMethodError] if item is not a GroupItem, or a dummy.
         def members
-          return super unless __getobj__.nil?
+          return GroupItem::Members.new(self) if __getobj__.nil?
 
-          GroupItem::Members.new(self)
+          __getobj__.members
         end
 
         # @return [String]
@@ -112,15 +116,17 @@ module OpenHAB
         end
 
         # needs to return `false` if we know we're not a {GroupItem}
-        def respond_to?(method, *)
-          return __getobj__.nil? if method.to_sym == :members
+        def respond_to?(method, *args)
+          obj = __getobj__
+          return obj.respond_to?(method, *args) if method.to_sym == :members && !obj.nil?
 
           super
         end
 
         # needs to return `false` if we know we're not a {GroupItem}
-        def respond_to_missing?(method, *)
-          return __getobj__.nil? if method.to_sym == :members
+        def respond_to_missing?(method, *args)
+          obj = __getobj__
+          return obj.respond_to_missing?(method, *args) if method.to_sym == :members && !obj.nil?
 
           super
         end

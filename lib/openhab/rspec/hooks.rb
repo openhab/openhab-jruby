@@ -91,8 +91,6 @@ module OpenHAB
         end
 
         config.after do
-          Core::Items::Proxy.reset_cache
-          Core::Things::Proxy.reset_cache
           @profile_factory.unregister
           timers.cancel_all
           # timers and rules have already been canceled, so we can safely just

@@ -2,10 +2,8 @@
 
 module OpenHAB
   module Core
-    module Events
+    module DTO
       java_import org.openhab.core.thing.link.dto.ItemChannelLinkDTO
-
-      # Strictly speaking this class isn't an event, but it's accessed from an AbstractItemChannelLinkEvent
 
       # Adds methods to core openHAB ItemChannelLinkDTO to make it more natural in Ruby
       class ItemChannelLinkDTO
@@ -13,7 +11,6 @@ module OpenHAB
         # @!attribute [r] item_name
         # @return [String] The name of the item that was linked or unlinked.
         #
-        alias_method :item_name, :itemName
 
         #
         # @!attribute [r] item

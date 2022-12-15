@@ -2,10 +2,8 @@
 
 module OpenHAB
   module Core
-    module Events
+    module DTO
       java_import org.openhab.core.thing.dto.AbstractThingDTO
-
-      # Strictly speaking this class isn't an event, but it's accessed from an AbstractThingRegistryEvent
 
       # Adds methods to core openHAB AbstractThingDTO to make it more natural in Ruby
       class AbstractThingDTO
@@ -21,7 +19,7 @@ module OpenHAB
 
         # @!attribute [r] bridge_uid
         # The Bridge's UID
-        # @return [String]
+        # @return [String, nil]
         alias_method :bridge_uid, :bridgeUID
       end
     end

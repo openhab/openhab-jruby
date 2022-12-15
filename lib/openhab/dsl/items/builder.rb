@@ -97,8 +97,10 @@ module OpenHAB
         def item(*args, **kwargs, &block)
           item = ItemBuilder.new(*args, provider: provider, **kwargs)
           item.instance_eval(&block) if block
-          provider.add(item)
-          Core::Items::Proxy.new(item)
+          r = provider.add(item)
+          return Core::Items::Proxy.new(r) if r.is_a?(Item)
+
+          item
         end
       end
 
