@@ -1444,4 +1444,27 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       end
     end
   end
+
+  describe "#dependencies" do
+    it "gathers dependencies from all triggers" do
+      items.build do
+        number_item Item1
+        number_item Item2
+        number_item Item3
+        switch_item Item4
+      end
+
+      r = nil
+      rule do |rule|
+        r = rule
+        changed Item1, Item2
+        updated Item3
+        received_command Item4
+      end
+
+      expect(r.dependencies).to eql [Item1, Item2, Item3]
+      expect(r.dependencies(:received_command)).to eql [Item4]
+      expect(r.dependencies(:updated)).to eql [Item3]
+    end
+  end
 end

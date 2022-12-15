@@ -380,6 +380,30 @@ module OpenHAB
         #
         prop :enabled
 
+        #
+        # Return all {Item Items} (or {GroupItem::Members GroupItem::Members}) referenced
+        # by the specified triggers types in this rule.
+        #
+        # @param [Symbol, Array<Symbol>] trigger_types Trigger types to search for dependencies
+        # @return [Array<Item, GroupItem::Members>]
+        #
+        # @example Ensure all dependencies have a state when executing a rule
+        #   rule do |rule|
+        #     changed Item1, Item2, Item3
+        #     only_if { rule.dependencies.all?(&:state?) }
+        #     run { FormulaItem.update(Item3.state - (Item1.state + Item2.state)) }
+        #   end
+        #
+        def dependencies(trigger_types = %i[changed updated])
+          trigger_types = Array.wrap(trigger_types)
+
+          ruby_triggers.flat_map do |t|
+            next [] unless trigger_types.include?(t.first)
+
+            t[1].select { |i| i.is_a?(Item) || i.is_a?(GroupItem::Members) }
+          end
+        end
+
         # @!group Guards
         #   Guards exist to only permit rules to run if certain conditions are
         #   satisfied. Think of these as declarative `if` statements that keep
