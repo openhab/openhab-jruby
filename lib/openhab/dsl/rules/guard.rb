@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "property"
-
 module OpenHAB
   module DSL
     module Rules
@@ -13,8 +11,8 @@ module OpenHAB
         #
         # Create a new Guard
         #
-        # @param [Object] only_if Item or Proc to use as guard
-        # @param [Object] not_if Item or Proc to use as guard
+        # @param [Array<Proc>] only_if Array of Procs to use as guard
+        # @param [Array<Proc>] not_if Array of Procs to use as guard
         #
         def initialize(run_context:, only_if: nil, not_if: nil)
           @run_context = run_context
@@ -40,72 +38,34 @@ module OpenHAB
         #
         def should_run?(event)
           logger.trace("Checking guards #{self}")
-          check(@only_if, check_type: :only_if,
-                          event: event) && check(@not_if, check_type: :not_if, event: event)
+          return false unless check_only_if(event)
+          return false unless check_not_if(event)
+
+          true
         end
 
         private
 
         #
-        # Check if guard is satisfied
-        #
-        # @param [Array] conditions to check
-        # @param [Symbol] check_type type of check to perform (:only_if or :not_if)
-        # @param [Event] event openHAB event to see if it satisfies the guard
-        #
-        # @return [true,false] True if guard is satisfied, false otherwise
-        #
-        def check(conditions, check_type:, event:)
-          return true if conditions.nil? || conditions.empty?
-
-          procs, items = conditions.flatten.partition { |condition| condition.is_a?(Proc) }
-          logger.trace("Procs: #{procs} Items: #{items}")
-
-          process_check(check_type: check_type, event: event, items: items, procs: procs)
-        end
-
-        #
-        # Execute the guard check
-        #
-        # @param [Symbol] check_type :only_if or :not_if to check
-        # @param [Object] event event to check if meets guard
-        # @param [Array<Item>] items to check if satisfy criteria
-        # @param [Array] procs to check if satisfy criteria
-        #
-        # @return [true,false] True if criteria are satisfied, false otherwise
-        #
-        def process_check(check_type:, event:, items:, procs:)
-          case check_type
-          when :only_if then process_only_if(event, items, procs)
-          when :not_if then  process_not_if(event, items, procs)
-          else raise ArgumentError, "Unexpected check type: #{check_type}"
-          end
-        end
-
-        #
-        # Check not_if guard
+        # Check not_if guards
         #
         # @param [Object] event to check if meets guard
-        # @param [Array<Item>] items to check if satisfy criteria
-        # @param [Array] procs to check if satisfy criteria
         #
         # @return [true,false] True if criteria are satisfied, false otherwise
         #
-        def process_not_if(event, _items, procs)
-          procs.none? { |proc| @run_context.instance_exec(event, &proc) }
+        def check_not_if(event)
+          @not_if.nil? || @not_if.none? { |proc| @run_context.instance_exec(event, &proc) }
         end
 
         #
-        # Check only_if guard
+        # Check only_if guards
         #
         # @param [Object] event to check if meets guard
-        # @param [Array<Item>] items to check if satisfy criteria
-        # @param [Array] procs to check if satisfy criteria
         #
         # @return [true,false] True if criteria are satisfied, false otherwise
         #
-        def process_only_if(event, _items, procs)
-          procs.all? { |proc| @run_context.instance_exec(event, &proc) }
+        def check_only_if(event)
+          @only_if.nil? || @only_if.all? { |proc| @run_context.instance_exec(event, &proc) }
         end
       end
     end
