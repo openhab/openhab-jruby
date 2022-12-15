@@ -213,13 +213,50 @@
   </li>
 
   
-  <li class="">
+  <li class="collapsed">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="OpenHAB/Core/Actions.html" title="OpenHAB::Core::Actions (module)">Actions</a></span>
       
       
+        <a class="arrow toggle right"></a>
+      
     </span>
     
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="OpenHAB/Core/Actions/Audio.html" title="OpenHAB::Core::Actions::Audio (class)">Audio</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="OpenHAB/Core/Actions/Voice.html" title="OpenHAB::Core::Actions::Voice (class)">Voice</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+
+        
+      </ul>
     
   </li>
 
@@ -2978,7 +3015,8 @@ thing.enable
 logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">TV enabled: </span><span class="inline"><span class="inline-delimiter">#{</span>thing.enabled?<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
 </code></pre>
 <h3 id="actions"><a href="#actions" class="header-anchor">#</a>Actions</h3>
-<p><a href="https://www.openhab.org/docs/configuration/actions.html">openHAB built-in actions</a> are available via the <span class='object_link'><a href="OpenHAB/Core/Actions.html" title="OpenHAB::Core::Actions (module)">Actions</a></span> module, or they can be called directly.
+<p><a href="https://www.openhab.org/docs/configuration/actions.html">openHAB built-in actions</a> are available as children of the <span class='object_link'><a href="OpenHAB/Core/Actions.html" title="OpenHAB::Core::Actions (module)">Actions</a></span> module.
+Action classes are also imported into the top-level namespace.
 Thing actions can be called directly on the <span class='object_link'><a href="OpenHAB/Core/Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Thing</a></span>.</p>
 <p>Publish an MQTT Message:</p>
 <pre class="code ruby"><code class="ruby">things[<span class="string"><span class="delimiter">'</span><span class="content">mqtt:broker:mybroker</span><span class="delimiter">'</span></span>].publish_mqtt(<span class="string"><span class="delimiter">'</span><span class="content">topic/name</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">payload</span><span class="delimiter">'</span></span>)
@@ -2987,7 +3025,7 @@ Thing actions can be called directly on the <span class='object_link'><a href="O
 <pre class="code ruby"><code class="ruby">things[<span class="string"><span class="delimiter">'</span><span class="content">mail:smtp:mymailthing</span><span class="delimiter">'</span></span>].send_mail(<span class="string"><span class="delimiter">'</span><span class="content">me@example.com</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Subject</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">message body</span><span class="delimiter">'</span></span>)
 </code></pre>
 <p>Play Sound Through the Default Audio Sink:</p>
-<pre class="code ruby"><code class="ruby">play_sound <span class="string"><span class="delimiter">'</span><span class="content">sound_file.mp3</span><span class="delimiter">'</span></span>
+<pre class="code ruby"><code class="ruby"><span class="constant">Audio</span>.play_sound <span class="string"><span class="delimiter">'</span><span class="content">sound_file.mp3</span><span class="delimiter">'</span></span>
 </code></pre>
 <p>Execute a Command:</p>
 <pre class="code ruby"><code class="ruby"><span class="constant">Exec</span>.execute_command_line(<span class="string"><span class="delimiter">'</span><span class="content">/path/to/program</span><span class="delimiter">'</span></span>)
@@ -3641,7 +3679,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Wed Dec 14 20:23:13 2022 by
+  Generated on Thu Dec 15 03:03:38 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

@@ -218,8 +218,45 @@
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="" title="OpenHAB::Core::Actions (module)">Actions</a></span>
       
       
+        <a class="arrow toggle down"></a>
+      
     </span>
     
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Actions/Audio.html" title="OpenHAB::Core::Actions::Audio (class)">Audio</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Actions/Voice.html" title="OpenHAB::Core::Actions::Voice (class)">Voice</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+
+        
+      </ul>
     
   </li>
 
@@ -2391,7 +2428,9 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/openhab/core/actions.rb</dd>
+    <dd>lib/openhab/core/actions.rb<span class="defines">,<br />
+  lib/openhab/core/actions/audio.rb,<br /> lib/openhab/core/actions/voice.rb</span>
+</dd>
   </dl>
   
 </div>
@@ -2402,22 +2441,21 @@
 <p>All openHAB's actions including those provided by add-ons are available, notably:</p>
 <ul>
 <li>Audio</li>
-<li>Voice</li>
-<li>Things</li>
 <li>Ephemeris</li>
 <li>Exec</li>
 <li>HTTP</li>
 <li>Ping</li>
+<li>Semantics (see <span class='object_link'><a href="Items/Semantics.html" title="OpenHAB::Core::Items::Semantics (module)">Items::Semantics</a></span>)</li>
+<li>Voice</li>
 </ul>
 <p>From add-ons, e.g.:</p>
 <ul>
-<li>Transformation</li>
+<li>NotificationAction (from
+<a href="https://www.openhab.org/addons/integrations/openhabcloud/">openHAB Cloud Connector</a>;
+see <span class='object_link'><a href="#notify-class_method" title="OpenHAB::Core::Actions.notify (method)">notify</a></span>)</li>
 <li>PersistenceExtensions (see <span class='object_link'><a href="Items/Persistence.html" title="OpenHAB::Core::Items::Persistence (module)">Items::Persistence</a></span>)</li>
-<li>NotificationAction (from <a href="https://www.openhab.org/addons/integrations/openhabcloud/">openHAB Cloud Connector</a>)</li>
+<li>Transformation</li>
 </ul>
-<p>Global actions are available as "global" methods on <span class='object_link'><a href="../DSL.html" title="OpenHAB::DSL (module)">DSL</a></span>, or
-explicitly from this <span class='object_link'><a href="" title="OpenHAB::Core::Actions (module)">Actions</a></span> module, or you can explicitly reference a
-specific action.</p>
 <p>Thing-specific actions can be accessed from the <span class='object_link'><a href="Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Thing</a></span> object.
 See <span class='object_link'><a href="Things/Thing.html#actions-instance_method" title="OpenHAB::Core::Things::Thing#actions (method)">Thing#actions</a></span>.</p>
 
@@ -2435,15 +2473,15 @@ See <span class='object_link'><a href="Things/Thing.html#actions-instance_method
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Say the time every hour</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   every <span class="symbol">:hour</span>
-  run { say <span class="string"><span class="delimiter">&quot;</span><span class="content">The time is </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">TimeOfDay</span>.now<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
+  run { <span class="constant">Voice</span>.say <span class="string"><span class="delimiter">&quot;</span><span class="content">The time is </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">TimeOfDay</span>.now<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
 <span class="keyword">end</span>
 
 rule <span class="string"><span class="delimiter">'</span><span class="content">Play an audio file</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   every <span class="symbol">:hour</span>
-  run { play_sound <span class="string"><span class="delimiter">&quot;</span><span class="content">beep.mp3</span><span class="delimiter">&quot;</span></span>, <span class="key">volume</span>: <span class="integer">100</span> }
+  run { <span class="constant">Audio</span>.play_sound <span class="string"><span class="delimiter">&quot;</span><span class="content">beep.mp3</span><span class="delimiter">&quot;</span></span>, <span class="key">volume</span>: <span class="integer">100</span> }
 <span class="keyword">end</span>
 
-play_stream <span class="string"><span class="delimiter">'</span><span class="content">example.com</span><span class="delimiter">'</span></span></code></pre>
+<span class="constant">Audio</span>.play_stream <span class="string"><span class="delimiter">'</span><span class="content">example.com</span><span class="delimiter">'</span></span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Send a broadcast notification via the openHAB Cloud</p>
@@ -2461,18 +2499,7 @@ play_stream <span class="string"><span class="delimiter">'</span><span class="co
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Run a command</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   every <span class="symbol">:day</span>
   run <span class="keyword">do</span>
-    execute_command_line(<span class="string"><span class="delimiter">'</span><span class="content">/bin/true</span><span class="delimiter">'</span></span>)
-  <span class="keyword">end</span>
-<span class="keyword">end</span></code></pre>
-    
-      
-        <p class="example_title"><div class='inline'><p>Execute an external command, referencing the Exec module directly</p>
-</div></p>
-      
-      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Run a command</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
-  every <span class="symbol">:day</span>
-  run <span class="keyword">do</span>
-    <span class="constant">OpenHAB</span>::<span class="constant">Core</span>::<span class="constant">Actions</span>::<span class="constant">Exec</span>::execute_command_line(<span class="string"><span class="delimiter">'</span><span class="content">/bin/true</span><span class="delimiter">'</span></span>)
+    <span class="constant">Exec</span>.execute_command_line(<span class="string"><span class="delimiter">'</span><span class="content">/bin/true</span><span class="delimiter">'</span></span>)
   <span class="keyword">end</span>
 <span class="keyword">end</span></code></pre>
     
@@ -2480,12 +2507,22 @@ play_stream <span class="string"><span class="delimiter">'</span><span class="co
         <p class="example_title"><div class='inline'><p>Run a transformation</p>
 </div></p>
       
-      <pre class="example code"><code>transform(<span class="string"><span class="delimiter">&quot;</span><span class="content">MAP</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">myfan.map</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">0</span><span class="delimiter">&quot;</span></span>)</code></pre>
+      <pre class="example code"><code><span class="constant">Transformation</span>.transform(<span class="string"><span class="delimiter">&quot;</span><span class="content">MAP</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">myfan.map</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">0</span><span class="delimiter">&quot;</span></span>)</code></pre>
     
   </div>
 
 
-</div>
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Actions/Audio.html" title="OpenHAB::Core::Actions::Audio (class)">Audio</a></span>, <span class='object_link'><a href="Actions/Voice.html" title="OpenHAB::Core::Actions::Voice (class)">Voice</a></span>
+    
+  
+</p>
+
 
 
 
@@ -2501,29 +2538,6 @@ play_stream <span class="string"><span class="delimiter">'</span><span class="co
     
 
     <ul class="summary">
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#method_missing-class_method" title="method_missing (class method)">.<strong>method_missing</strong>(method, *args, &amp;block)  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Delegate missing methods to any available global actions.</p>
-</div></span>
-  
-</li>
-
       
         <li class="public ">
   <span class="summary_signature">
@@ -2548,137 +2562,10 @@ play_stream <span class="string"><span class="delimiter">'</span><span class="co
 </li>
 
       
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#play_sound-class_method" title="play_sound (class method)">.<strong>play_sound</strong>(filename, sink: nil, volume: nil)  &#x21d2; void </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Play an audio file via openHAB sound service, Audio.playSound().</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#play_stream-class_method" title="play_stream (class method)">.<strong>play_stream</strong>(url, sink: nil)  &#x21d2; void </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Play an audio stream from an URL to the given sink(s).</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#say-class_method" title="say (class method)">.<strong>say</strong>(text, voice: nil, sink: nil, volume: nil)  &#x21d2; void </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Say text via openHAB Text-To-Speech service, Voice.say().</p>
-</div></span>
-  
-</li>
-
-      
     </ul>
   
 
 
-<div id="method_missing_details" class="method_details_list">
-  <h2>Dynamic Method Handling</h2>
-  <p class="notice this">
-    This class handles dynamic methods through the <tt>method_missing</tt> method
-    
-  </p>
-  
-    <div class="method_details first">
-  <h3 class="signature first" id="method_missing-instance_method">
-  
-    #<strong>method_missing</strong>(method, *args, &amp;block)  &#x21d2; <tt><span class='object_link'>Object</span></tt>  <span class="extras">(private)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Delegate missing methods to any available global actions.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-159
-160
-161
-162
-163
-164
-165
-166</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions.rb', line 159</span>
-
-<span class="keyword">def</span> <span class="function">method_missing</span>(method, *args, &amp;block)
-  <span class="constant">Actions</span>.constants.each <span class="keyword">do</span> |constant|
-    mod = <span class="constant">Actions</span>.const_get(constant)
-    <span class="keyword">return</span> mod.public_send(method, *args, &amp;block) <span class="keyword">if</span> mod.respond_to?(method)
-  <span class="keyword">end</span>
-
-  <span class="keyword">super</span>
-<span class="keyword">end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-  
-</div>
 
 
   <div id="class_method_details" class="method_details_list">
@@ -2686,57 +2573,7 @@ play_stream <span class="string"><span class="delimiter">'</span><span class="co
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="method_missing-class_method">
-  
-    .<strong>method_missing</strong>(method, *args, &amp;block)  &#x21d2; <tt><span class='object_link'>Object</span></tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Delegate missing methods to any available global actions.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-159
-160
-161
-162
-163
-164
-165
-166</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions.rb', line 159</span>
-
-<span class="keyword">def</span> <span class="function">method_missing</span>(method, *args, &amp;block)
-  <span class="constant">Actions</span>.constants.each <span class="keyword">do</span> |constant|
-    mod = <span class="constant">Actions</span>.const_get(constant)
-    <span class="keyword">return</span> mod.public_send(method, *args, &amp;block) <span class="keyword">if</span> mod.respond_to?(method)
-  <span class="keyword">end</span>
-
-  <span class="keyword">super</span>
-<span class="keyword">end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="notify-class_method">
+  <h3 class="signature first" id="notify-class_method">
   
     .<strong>notify</strong>(msg, email: nil, icon: nil, severity: nil)  &#x21d2; <tt>void</tt> 
   
@@ -2822,20 +2659,20 @@ play_stream <span class="string"><span class="delimiter">'</span><span class="co
       <pre class="lines">
 
 
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113</pre>
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions.rb', line 93</span>
 
 <span class="keyword">def</span> <span class="function">notify</span>(msg, <span class="key">email</span>: <span class="predefined-constant">nil</span>, <span class="key">icon</span>: <span class="predefined-constant">nil</span>, <span class="key">severity</span>: <span class="predefined-constant">nil</span>)
   <span class="keyword">unless</span> <span class="constant">Actions</span>.const_defined?(<span class="symbol">:NotificationAction</span>)
@@ -2853,295 +2690,12 @@ play_stream <span class="string"><span class="delimiter">'</span><span class="co
 </table>
 </div>
     
-      <div class="method_details ">
-  <h3 class="signature " id="play_sound-class_method">
-  
-    .<strong>play_sound</strong>(filename, sink: nil, volume: nil)  &#x21d2; <tt>void</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Play an audio file via openHAB sound service, Audio.playSound()</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>filename</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>The sound file to play</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>sink</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>Specify a particular sink to output the speech</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>volume</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span></tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>Specify the volume for the speech</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-139
-140
-141
-142</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions.rb', line 139</span>
-
-<span class="keyword">def</span> <span class="function">play_sound</span>(filename, <span class="key">sink</span>: <span class="predefined-constant">nil</span>, <span class="key">volume</span>: <span class="predefined-constant">nil</span>)
-  volume = <span class="constant">PercentType</span>.new(volume) <span class="keyword">unless</span> volume.is_a?(<span class="constant">PercentType</span>) || volume.nil?
-  <span class="constant">Audio</span>.play_sound(sink&amp;.to_s, filename.to_s, volume)
-<span class="keyword">end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="play_stream-class_method">
-  
-    .<strong>play_stream</strong>(url, sink: nil)  &#x21d2; <tt>void</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Play an audio stream from an URL to the given sink(s). Set url to nil if streaming should be stopped</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>url</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>The URL of the audio stream</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>sink</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>The audio sink, or nil to use the default audio sink</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-152
-153
-154</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions.rb', line 152</span>
-
-<span class="keyword">def</span> <span class="function">play_stream</span>(url, <span class="key">sink</span>: <span class="predefined-constant">nil</span>)
-  <span class="constant">Audio</span>.play_stream(sink&amp;.to_s, url)
-<span class="keyword">end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="say-class_method">
-  
-    .<strong>say</strong>(text, voice: nil, sink: nil, volume: nil)  &#x21d2; <tt>void</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Say text via openHAB Text-To-Speech service, Voice.say()</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>text</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>The text to say</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>voice</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>Specify a particular voice to use</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>sink</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>Specify a particular sink to output the speech</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>volume</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span></tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>Specify the volume for the speech</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-125
-126
-127
-128</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions.rb', line 125</span>
-
-<span class="keyword">def</span> <span class="function">say</span>(text, <span class="key">voice</span>: <span class="predefined-constant">nil</span>, <span class="key">sink</span>: <span class="predefined-constant">nil</span>, <span class="key">volume</span>: <span class="predefined-constant">nil</span>)
-  volume = <span class="constant">PercentType</span>.new(volume) <span class="keyword">unless</span> volume.is_a?(<span class="constant">PercentType</span>) || volume.nil?
-  <span class="constant">Voice</span>.say(text.to_s, voice&amp;.to_s, sink&amp;.to_s, volume)
-<span class="keyword">end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
   </div>
 
 </div>
 
         <footer>
-  Generated on Wed Dec 14 20:23:15 2022 by
+  Generated on Thu Dec 15 03:03:39 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
