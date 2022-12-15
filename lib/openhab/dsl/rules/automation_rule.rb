@@ -180,17 +180,18 @@ module OpenHAB
         def check_guards(event:)
           return true if @guard.nil?
 
-          if @guard.should_run? event
-            return true if @between.nil?
-
+          unless @between.nil?
             now = Time.now
-            return true if @between.cover? now
-
-            logger.trace("Skipped execution of rule '#{name}' because the current time #{now} " \
-                         "is not between #{@between.begin} and #{@between.end}")
-          else
-            logger.trace("Skipped execution of rule '#{name}' because of guard #{@guard}")
+            unless @between.cover?(now)
+              logger.trace("Skipped execution of rule '#{name}' because the current time #{now} " \
+                           "is not between #{@between.begin} and #{@between.end}")
+              return false
+            end
           end
+
+          return true if @guard.should_run?(event)
+
+          logger.trace("Skipped execution of rule '#{name}' because of guard #{@guard}")
           false
         end
 
