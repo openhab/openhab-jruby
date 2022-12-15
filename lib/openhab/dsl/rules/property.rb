@@ -9,11 +9,10 @@ module OpenHAB
       # @visibility private
       module Property
         #
-        # Dynamically creates a property that acts and an accessor with no arguments
+        # Dynamically creates a property that acts as an accessor with no arguments
         # and a setter with any number of arguments or a block.
         #
         # @param [String] name of the property
-        #
         #
         def prop(name)
           # rubocop rules are disabled because this method is dynamically defined on the calling
@@ -36,8 +35,8 @@ module OpenHAB
         end
 
         #
-        # Dynamically creates a property array acts and an accessor with no arguments
-        # and a pushes any number of arguments or a block onto they property array
+        # Dynamically creates a property array that acts as an accessor with no arguments
+        # and pushes any number of arguments or a block onto the property array
         # You can provide a block to this method which can be used to check if the provided value is acceptable.
         #
         # @param [String] name of the property
