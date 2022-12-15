@@ -61,8 +61,6 @@ module OpenHAB
           procs, items = conditions.flatten.partition { |condition| condition.is_a?(Proc) }
           logger.trace("Procs: #{procs} Items: #{items}")
 
-          items.each { |item| logger.trace { "#{item} truthy? #{item.truthy?}" } }
-
           process_check(check_type: check_type, event: event, items: items, procs: procs)
         end
 
@@ -93,8 +91,8 @@ module OpenHAB
         #
         # @return [true,false] True if criteria are satisfied, false otherwise
         #
-        def process_not_if(event, items, procs)
-          items.flatten.none?(&:truthy?) && procs.none? { |proc| @run_context.instance_exec(event, &proc) }
+        def process_not_if(event, _items, procs)
+          procs.none? { |proc| @run_context.instance_exec(event, &proc) }
         end
 
         #
@@ -106,8 +104,8 @@ module OpenHAB
         #
         # @return [true,false] True if criteria are satisfied, false otherwise
         #
-        def process_only_if(event, items, procs)
-          items.flatten.all?(&:truthy?) && procs.all? { |proc| @run_context.instance_exec(event, &proc) }
+        def process_only_if(event, _items, procs)
+          procs.all? { |proc| @run_context.instance_exec(event, &proc) }
         end
       end
     end

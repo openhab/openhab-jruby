@@ -517,9 +517,7 @@ module OpenHAB
         #   end
         #
         prop_array(:only_if) do |item|
-          unless item.is_a?(Proc) || [item].flatten.all? { |it| it.respond_to?(:truthy?) }
-            raise ArgumentError, "Object passed to only_if must be a proc"
-          end
+          raise ArgumentError, "Object passed to only_if must be a proc" unless item.is_a?(Proc)
         end
 
         #
@@ -547,9 +545,7 @@ module OpenHAB
         #   end
         #
         prop_array(:not_if) do |item|
-          unless item.is_a?(Proc) || [item].flatten.all? { |it| it.respond_to?(:truthy?) }
-            raise ArgumentError, "Object passed to not_if must be a proc"
-          end
+          raise ArgumentError, "Object passed to not_if must be a proc" unless item.is_a?(Proc)
         end
 
         # @!endgroup
