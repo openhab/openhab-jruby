@@ -2774,7 +2774,7 @@
 
 <span class="keyword">def</span> <span class="function">send_http_delete_request</span>(url, <span class="key">headers</span>: {}, <span class="key">timeout</span>: <span class="predefined-constant">nil</span>)
   timeout ||= <span class="integer">1_000</span>
-  timeout = (timeout.to_f * <span class="integer">1_000</span>).to_i <span class="keyword">if</span> timeout.is_a?(<span class="constant">Duration</span>)
+  timeout = timeout.to_millis <span class="keyword">if</span> timeout.is_a?(<span class="constant">Duration</span>)
 
   sendHttpDeleteRequest(url, headers, timeout)
 <span class="keyword">end</span></pre>
@@ -2895,7 +2895,7 @@
 
 <span class="keyword">def</span> <span class="function">send_http_get_request</span>(url, <span class="key">headers</span>: {}, <span class="key">timeout</span>: <span class="predefined-constant">nil</span>)
   timeout ||= <span class="integer">5_000</span>
-  timeout = (timeout.to_f * <span class="integer">1_000</span>).to_i <span class="keyword">if</span> timeout.is_a?(<span class="constant">Duration</span>)
+  timeout = timeout.to_millis <span class="keyword">if</span> timeout.is_a?(<span class="constant">Duration</span>)
 
   sendHttpGetRequest(url, headers, timeout)
 <span class="keyword">end</span></pre>
@@ -3042,7 +3042,7 @@
 
 <span class="keyword">def</span> <span class="function">send_http_post_request</span>(url, content_type = <span class="predefined-constant">nil</span>, content = <span class="predefined-constant">nil</span>, <span class="key">headers</span>: {}, <span class="key">timeout</span>: <span class="predefined-constant">nil</span>)
   timeout ||= <span class="integer">1_000</span>
-  timeout = (timeout.to_f * <span class="integer">1_000</span>).to_i <span class="keyword">if</span> timeout.is_a?(<span class="constant">Duration</span>)
+  timeout = timeout.to_millis <span class="keyword">if</span> timeout.is_a?(<span class="constant">Duration</span>)
 
   sendHttpPostRequest(url, content_type, content, headers, timeout)
 <span class="keyword">end</span></pre>
@@ -3189,7 +3189,7 @@
 
 <span class="keyword">def</span> <span class="function">send_http_put_request</span>(url, content_type = <span class="predefined-constant">nil</span>, content = <span class="predefined-constant">nil</span>, <span class="key">headers</span>: {}, <span class="key">timeout</span>: <span class="predefined-constant">nil</span>)
   timeout ||= <span class="integer">1_000</span>
-  timeout = (timeout.to_f * <span class="integer">1_000</span>).to_i <span class="keyword">if</span> timeout.is_a?(<span class="constant">Duration</span>)
+  timeout = timeout.to_millis <span class="keyword">if</span> timeout.is_a?(<span class="constant">Duration</span>)
 
   sendHttpPutRequest(url, content_type, content, headers, timeout)
 <span class="keyword">end</span></pre>
@@ -3203,7 +3203,7 @@
 </div>
 
         <footer>
-  Generated on Fri Dec 16 00:32:06 2022 by
+  Generated on Fri Dec 16 00:43:18 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
