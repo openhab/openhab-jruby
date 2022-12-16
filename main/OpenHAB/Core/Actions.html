@@ -256,6 +256,58 @@
   
   <li class="">
     <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Actions/Exec.html" title="OpenHAB::Core::Actions::Exec (class)">Exec</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Actions/HTTP.html" title="OpenHAB::Core::Actions::HTTP (class)">HTTP</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Actions/Ping.html" title="OpenHAB::Core::Actions::Ping (class)">Ping</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Actions/Transformation.html" title="OpenHAB::Core::Actions::Transformation (class)">Transformation</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Actions/Voice.html" title="OpenHAB::Core::Actions::Voice (class)">Voice</a></span>
       
         &lt; Object
@@ -2455,7 +2507,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/openhab/core/actions.rb<span class="defines">,<br />
-  lib/openhab/core/actions/audio.rb,<br /> lib/openhab/core/actions/voice.rb,<br /> lib/openhab/core/actions/ephemeris.rb</span>
+  lib/openhab/core/actions/exec.rb,<br /> lib/openhab/core/actions/http.rb,<br /> lib/openhab/core/actions/ping.rb,<br /> lib/openhab/core/actions/audio.rb,<br /> lib/openhab/core/actions/voice.rb,<br /> lib/openhab/core/actions/ephemeris.rb,<br /> lib/openhab/core/actions/transformation.rb</span>
 </dd>
   </dl>
   
@@ -2466,21 +2518,21 @@
     <p>Access to global actions.</p>
 <p>All openHAB's actions including those provided by add-ons are available, notably:</p>
 <ul>
-<li>Audio</li>
-<li>Ephemeris (see <span class='object_link'><a href="../CoreExt/Ephemeris.html" title="OpenHAB::CoreExt::Ephemeris (module)">OpenHAB::CoreExt::Ephemeris</a></span>)</li>
-<li>Exec</li>
-<li>HTTP</li>
-<li>Ping</li>
-<li>Semantics (see <span class='object_link'><a href="Items/Semantics.html" title="OpenHAB::Core::Items::Semantics (module)">Items::Semantics</a></span>)</li>
-<li>Voice</li>
+<li><span class='object_link'><a href="Actions/Audio.html" title="OpenHAB::Core::Actions::Audio (class)">Audio</a></span></li>
+<li><span class='object_link'><a href="../CoreExt/Ephemeris.html" title="OpenHAB::CoreExt::Ephemeris (module)">Ephemeris</a></span></li>
+<li><span class='object_link'><a href="Actions/Exec.html" title="OpenHAB::Core::Actions::Exec (class)">Exec</a></span></li>
+<li><span class='object_link'><a href="Actions/HTTP.html" title="OpenHAB::Core::Actions::HTTP (class)">HTTP</a></span></li>
+<li><span class='object_link'><a href="Items/Persistence.html" title="OpenHAB::Core::Items::Persistence (module)">PersistenceExtensions</a></span></li>
+<li><span class='object_link'><a href="Actions/Ping.html" title="OpenHAB::Core::Actions::Ping (class)">Ping</a></span></li>
+<li><span class='object_link'><a href="Items/Semantics.html" title="OpenHAB::Core::Items::Semantics (module)">Semantics</a></span></li>
+<li><span class='object_link'><a href="Actions/Transformation.html" title="OpenHAB::Core::Actions::Transformation (class)">Transformation</a></span></li>
+<li><span class='object_link'><a href="Actions/Voice.html" title="OpenHAB::Core::Actions::Voice (class)">Voice</a></span></li>
 </ul>
 <p>From add-ons, e.g.:</p>
 <ul>
 <li>NotificationAction (from
 <a href="https://www.openhab.org/addons/integrations/openhabcloud/">openHAB Cloud Connector</a>;
 see <span class='object_link'><a href="#notify-class_method" title="OpenHAB::Core::Actions.notify (method)">notify</a></span>)</li>
-<li>PersistenceExtensions (see <span class='object_link'><a href="Items/Persistence.html" title="OpenHAB::Core::Items::Persistence (module)">Items::Persistence</a></span>)</li>
-<li>Transformation</li>
 </ul>
 <p>Thing-specific actions can be accessed from the <span class='object_link'><a href="Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Thing</a></span> object.
 See <span class='object_link'><a href="Things/Thing.html#actions-instance_method" title="OpenHAB::Core::Things::Thing#actions (method)">Thing#actions</a></span>.</p>
@@ -2490,53 +2542,6 @@ See <span class='object_link'><a href="Things/Thing.html#actions-instance_method
 </div>
 <div class="tags">
   
-  <div class="examples">
-    <p class="tag_title">Examples:</p>
-    
-      
-        <p class="example_title"><div class='inline'><p>Run the TTS engine and output to the default audio sink. For more information see <a href="https://www.openhab.org/docs/configuration/multimedia.html#voice">Voice</a></p>
-</div></p>
-      
-      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Say the time every hour</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
-  every <span class="symbol">:hour</span>
-  run { <span class="constant">Voice</span>.say <span class="string"><span class="delimiter">&quot;</span><span class="content">The time is </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">TimeOfDay</span>.now<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
-<span class="keyword">end</span>
-
-rule <span class="string"><span class="delimiter">'</span><span class="content">Play an audio file</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
-  every <span class="symbol">:hour</span>
-  run { <span class="constant">Audio</span>.play_sound <span class="string"><span class="delimiter">&quot;</span><span class="content">beep.mp3</span><span class="delimiter">&quot;</span></span>, <span class="key">volume</span>: <span class="integer">100</span> }
-<span class="keyword">end</span>
-
-<span class="constant">Audio</span>.play_stream <span class="string"><span class="delimiter">'</span><span class="content">example.com</span><span class="delimiter">'</span></span></code></pre>
-    
-      
-        <p class="example_title"><div class='inline'><p>Send a broadcast notification via the openHAB Cloud</p>
-</div></p>
-      
-      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Send an alert</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
-  changed <span class="constant">Alarm_Triggered</span>, <span class="key">to</span>: <span class="constant">ON</span>
-  run { notify <span class="string"><span class="delimiter">'</span><span class="content">Red Alert!</span><span class="delimiter">'</span></span> }
-<span class="keyword">end</span></code></pre>
-    
-      
-        <p class="example_title"><div class='inline'><p>Execute an external command</p>
-</div></p>
-      
-      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Run a command</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
-  every <span class="symbol">:day</span>
-  run <span class="keyword">do</span>
-    <span class="constant">Exec</span>.execute_command_line(<span class="string"><span class="delimiter">'</span><span class="content">/bin/true</span><span class="delimiter">'</span></span>)
-  <span class="keyword">end</span>
-<span class="keyword">end</span></code></pre>
-    
-      
-        <p class="example_title"><div class='inline'><p>Run a transformation</p>
-</div></p>
-      
-      <pre class="example code"><code><span class="constant">Transformation</span>.transform(<span class="string"><span class="delimiter">&quot;</span><span class="content">MAP</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">myfan.map</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">0</span><span class="delimiter">&quot;</span></span>)</code></pre>
-    
-  </div>
-
 
 </div><h2>Defined Under Namespace</h2>
 <p class="children">
@@ -2544,7 +2549,7 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Actions/Audio.html" title="OpenHAB::Core::Actions::Audio (class)">Audio</a></span>, <span class='object_link'><a href="Actions/Ephemeris.html" title="OpenHAB::Core::Actions::Ephemeris (class)">Ephemeris</a></span>, <span class='object_link'><a href="Actions/Voice.html" title="OpenHAB::Core::Actions::Voice (class)">Voice</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Actions/Audio.html" title="OpenHAB::Core::Actions::Audio (class)">Audio</a></span>, <span class='object_link'><a href="Actions/Ephemeris.html" title="OpenHAB::Core::Actions::Ephemeris (class)">Ephemeris</a></span>, <span class='object_link'><a href="Actions/Exec.html" title="OpenHAB::Core::Actions::Exec (class)">Exec</a></span>, <span class='object_link'><a href="Actions/HTTP.html" title="OpenHAB::Core::Actions::HTTP (class)">HTTP</a></span>, <span class='object_link'><a href="Actions/Ping.html" title="OpenHAB::Core::Actions::Ping (class)">Ping</a></span>, <span class='object_link'><a href="Actions/Transformation.html" title="OpenHAB::Core::Actions::Transformation (class)">Transformation</a></span>, <span class='object_link'><a href="Actions/Voice.html" title="OpenHAB::Core::Actions::Voice (class)">Voice</a></span>
     
   
 </p>
@@ -2582,7 +2587,7 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Send notification to an email or broadcast.</p>
+    <span class="summary_desc"><div class='inline'><p>Send a notification.</p>
 </div></span>
   
 </li>
@@ -2609,13 +2614,27 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Send notification to an email or broadcast</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Send a notification.</p>
 
 
   </div>
 </div>
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Send a broadcast notification via openHAB Cloud</p>
+</div></p>
+      
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Send an alert</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  changed <span class="constant">Alarm_Triggered</span>, <span class="key">to</span>: <span class="constant">ON</span>
+  run { notify <span class="string"><span class="delimiter">'</span><span class="content">Red Alert!</span><span class="delimiter">'</span></span> }
+<span class="keyword">end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2628,7 +2647,7 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
       
       
         &mdash;
-        <div class='inline'><p>The notification message to send</p>
+        <div class='inline'><p>The message to send.</p>
 </div>
       
     </li>
@@ -2645,7 +2664,8 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
       
       
         &mdash;
-        <div class='inline'><p>The email address to send to. If nil, the message will be broadcast</p>
+        <div class='inline'><p>The email address to send to. If <code>nil</code>,
+the message will be broadcast.</p>
 </div>
       
     </li>
@@ -2685,24 +2705,24 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
       <pre class="lines">
 
 
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103</pre>
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions.rb', line 93</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions.rb', line 69</span>
 
 <span class="keyword">def</span> <span class="function">notify</span>(msg, <span class="key">email</span>: <span class="predefined-constant">nil</span>, <span class="key">icon</span>: <span class="predefined-constant">nil</span>, <span class="key">severity</span>: <span class="predefined-constant">nil</span>)
   <span class="keyword">unless</span> <span class="constant">Actions</span>.const_defined?(<span class="symbol">:NotificationAction</span>)
-    raise <span class="constant">NoMethodError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">NotificationAction is not available. Please install the openHAB cloud addon</span><span class="delimiter">&quot;</span></span>
+    raise <span class="constant">NotImplementedError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">NotificationAction is not available. Please install the openHAB Cloud addon.</span><span class="delimiter">&quot;</span></span>
   <span class="keyword">end</span>
 
   <span class="keyword">if</span> email
@@ -2721,7 +2741,7 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
 </div>
 
         <footer>
-  Generated on Fri Dec 16 00:24:15 2022 by
+  Generated on Fri Dec 16 00:32:03 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

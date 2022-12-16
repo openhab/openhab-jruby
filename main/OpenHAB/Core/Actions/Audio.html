@@ -256,6 +256,58 @@
   
   <li class="">
     <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Exec.html" title="OpenHAB::Core::Actions::Exec (class)">Exec</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="HTTP.html" title="OpenHAB::Core::Actions::HTTP (class)">HTTP</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Ping.html" title="OpenHAB::Core::Actions::Ping (class)">Ping</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Transformation.html" title="OpenHAB::Core::Actions::Transformation (class)">Transformation</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Voice.html" title="OpenHAB::Core::Actions::Voice (class)">Voice</a></span>
       
         &lt; Object
@@ -2581,7 +2633,21 @@
   </div>
 </div>
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Play an audio file</p>
+</div></p>
+      
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Play an audio file</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  every <span class="symbol">:hour</span>
+  run { <span class="constant">Audio</span>.play_sound <span class="string"><span class="delimiter">&quot;</span><span class="content">beep.mp3</span><span class="delimiter">&quot;</span></span>, <span class="key">volume</span>: <span class="integer">100</span> }
+<span class="keyword">end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2642,13 +2708,13 @@
       <pre class="lines">
 
 
-18
-19
-20
-21</pre>
+24
+25
+26
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/audio.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/audio.rb', line 24</span>
 
 <span class="keyword">def</span> <span class="function">play_sound</span>(filename, <span class="key">sink</span>: <span class="predefined-constant">nil</span>, <span class="key">volume</span>: <span class="predefined-constant">nil</span>)
   volume = <span class="constant">PercentType</span>.new(volume) <span class="keyword">unless</span> volume.is_a?(<span class="constant">PercentType</span>) || volume.nil?
@@ -2676,7 +2742,18 @@
   </div>
 </div>
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Play an audio stream</p>
+</div></p>
+      
+      <pre class="example code"><code><span class="constant">Audio</span>.play_stream <span class="string"><span class="delimiter">'</span><span class="content">example.com</span><span class="delimiter">'</span></span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2720,12 +2797,12 @@
       <pre class="lines">
 
 
-31
-32
-33</pre>
+40
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/audio.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/audio.rb', line 40</span>
 
 <span class="keyword">def</span> <span class="function">play_stream</span>(url, <span class="key">sink</span>: <span class="predefined-constant">nil</span>)
   playStream(sink&amp;.to_s, url)
@@ -2740,7 +2817,7 @@
 </div>
 
         <footer>
-  Generated on Fri Dec 16 00:24:20 2022 by
+  Generated on Fri Dec 16 00:32:07 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
