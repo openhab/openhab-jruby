@@ -60,6 +60,8 @@ module OpenHAB
               infer_rule_name_from_item_trigger(trigger, items, kwargs)
             when :channel_linked, :channel_unlinked
               infer_rule_name_from_channel_link_trigger(trigger)
+            when :item_added, :item_removed, :item_updated
+              infer_rule_name_from_item_registry_trigger(trigger)
             when :thing_added, :thing_removed, :thing_updated
               infer_rule_name_from_thing_trigger(trigger)
             when :on_start
@@ -114,6 +116,15 @@ module OpenHAB
           # formulate a readable rule name from a channel link trigger
           def infer_rule_name_from_channel_link_trigger(trigger)
             (trigger == :channel_linked) ? "Channel linked to item" : "Channel unlinked from item"
+          end
+
+          # formulate a readable rule name from an item added/updated/remove trigger
+          def infer_rule_name_from_item_registry_trigger(trigger)
+            {
+              item_added: "Item added",
+              item_updated: "Item updated",
+              item_removed: "Item removed"
+            }[trigger]
           end
 
           # formulate a readable rule name from a thing added/updated/remove trigger

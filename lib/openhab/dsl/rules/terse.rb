@@ -51,12 +51,15 @@ module OpenHAB
         def_terse_rule(:channel_unlinked)
         def_terse_rule(:cron)
         def_terse_rule(:every)
+        def_terse_rule(:item_added)
+        def_terse_rule(:item_updated)
+        def_terse_rule(:item_removed)
+        def_terse_rule(:on_start)
         def_terse_rule(:received_command)
         def_terse_rule(:thing_added)
         def_terse_rule(:thing_updated)
         def_terse_rule(:thing_removed)
         def_terse_rule(:updated)
-        def_terse_rule(:on_start)
       end
     end
   end

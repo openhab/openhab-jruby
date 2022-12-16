@@ -1166,6 +1166,61 @@ module OpenHAB
         end
 
         #
+        # Creates an item added trigger
+        #
+        # @param [Object] attach object to be attached to the trigger
+        # @return [void]
+        #
+        # @example
+        #    rule "item added" do
+        #      item_added
+        #      run do |event|
+        #        logger.info("#{event.item.name} added.")
+        #      end
+        #    end
+        def item_added(attach: nil)
+          @ruby_triggers << [:item_added]
+          event("openhab/items/*/added", types: "ItemAddedEvent", attach: attach)
+        end
+
+        #
+        # Creates an item removed trigger
+        #
+        # @param [Object] attach object to be attached to the trigger
+        # @return [void]
+        #
+        # @example
+        #    rule "item removed" do
+        #      item_removed
+        #      run do |event|
+        #        logger.info("#{event.item.name} removed.")
+        #      end
+        #    end
+        def item_removed(attach: nil)
+          @ruby_triggers << [:item_removed]
+          event("openhab/items/*/removed", types: "ItemRemovedEvent", attach: attach)
+        end
+
+        #
+        # Creates an item updated trigger
+        #
+        # @param [Object] attach object to be attached to the trigger
+        # @return [void]
+        #
+        # @example
+        #   rule "item updated" do
+        #     item_updated
+        #     run do |event|
+        #       logger.info("#{event.item.name} updated.")
+        #     end
+        #   end
+        #
+        def item_updated(attach: nil)
+          @ruby_triggers << [:item_updated]
+          event("openhab/items/*/updated", types: "ItemUpdatedEvent", attach: attach)
+        end
+
+        #
         # Creates a thing added trigger
         #
         # @param [Object] attach object to be attached to the trigger
@@ -1216,7 +1271,7 @@ module OpenHAB
         #   end
         #
         def thing_updated(attach: nil)
-          @ruby_triggers << [:thing_removed]
+          @ruby_triggers << [:thing_updated]
           event("openhab/things/*/updated", types: "ThingUpdatedEvent", attach: attach)
         end
 

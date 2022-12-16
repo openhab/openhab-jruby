@@ -704,6 +704,33 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       end
     end
 
+    describe "#item_added" do
+      it "triggers" do
+        new_item = nil
+        item_added do |event|
+          new_item = event.item
+        end
+
+        items.build { switch_item Item1 }
+
+        expect(new_item.name).to eql "Item1"
+      end
+    end
+
+    describe "#item_removed" do
+      it "triggers" do
+        removed_item = nil
+        item_removed do |event|
+          removed_item = event.item
+        end
+
+        items.build { switch_item Item1 }
+        items.remove(Item1)
+
+        expect(removed_item.name).to eql "Item1"
+      end
+    end
+
     describe "#thing_added" do
       it "triggers" do
         new_thing = nil
@@ -714,6 +741,20 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         things.build { thing "astro:sun:home", config: { "geolocation" => "0,0" } }
 
         expect(new_thing.uid).to eql "astro:sun:home"
+      end
+    end
+
+    describe "#thing_removed" do
+      it "triggers" do
+        removed_thing = nil
+        thing_removed do |event|
+          removed_thing = event.thing
+        end
+
+        things.build { thing "astro:sun:home", config: { "geolocation" => "0,0" } }
+        things.remove("astro:sun:home")
+
+        expect(removed_thing.uid).to eql "astro:sun:home"
       end
     end
 
