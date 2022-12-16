@@ -20,7 +20,7 @@ module OpenHAB
           def check_vitality(host, port = nil, timeout = nil)
             port ||= 0
             timeout ||= 0
-            timeout = (timeout.to_f * 1_000).to_i if timeout.is_a?(Duration)
+            timeout = timeout.to_millis if timeout.is_a?(Duration)
             checkVitality(host, port, timeout)
           end
         end

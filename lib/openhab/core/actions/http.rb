@@ -17,7 +17,7 @@ module OpenHAB
           #
           def send_http_get_request(url, headers: {}, timeout: nil)
             timeout ||= 5_000
-            timeout = (timeout.to_f * 1_000).to_i if timeout.is_a?(Duration)
+            timeout = timeout.to_millis if timeout.is_a?(Duration)
 
             sendHttpGetRequest(url, headers, timeout)
           end
@@ -35,7 +35,7 @@ module OpenHAB
           #
           def send_http_put_request(url, content_type = nil, content = nil, headers: {}, timeout: nil)
             timeout ||= 1_000
-            timeout = (timeout.to_f * 1_000).to_i if timeout.is_a?(Duration)
+            timeout = timeout.to_millis if timeout.is_a?(Duration)
 
             sendHttpPutRequest(url, content_type, content, headers, timeout)
           end
@@ -53,7 +53,7 @@ module OpenHAB
           #
           def send_http_post_request(url, content_type = nil, content = nil, headers: {}, timeout: nil)
             timeout ||= 1_000
-            timeout = (timeout.to_f * 1_000).to_i if timeout.is_a?(Duration)
+            timeout = timeout.to_millis if timeout.is_a?(Duration)
 
             sendHttpPostRequest(url, content_type, content, headers, timeout)
           end
@@ -69,7 +69,7 @@ module OpenHAB
           #
           def send_http_delete_request(url, headers: {}, timeout: nil)
             timeout ||= 1_000
-            timeout = (timeout.to_f * 1_000).to_i if timeout.is_a?(Duration)
+            timeout = timeout.to_millis if timeout.is_a?(Duration)
 
             sendHttpDeleteRequest(url, headers, timeout)
           end
