@@ -44,6 +44,7 @@ module OpenHAB
           #
           #
           def trigger(config:, attach:)
+            WatchHandler::WatchTriggerHandlerFactory.instance # ensure it's registered
             append_trigger(type: WatchHandler::WATCH_TRIGGER_MODULE_ID,
                            config: config,
                            attach: attach)

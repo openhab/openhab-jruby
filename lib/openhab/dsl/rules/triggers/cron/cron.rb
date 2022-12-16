@@ -186,6 +186,7 @@ module OpenHAB
           #
           #
           def trigger(config:, attach:)
+            CronHandler::CronTriggerHandlerFactory.instance # ensure it's registered
             append_trigger(type: CRON_TRIGGER_MODULE_ID, config: config, attach: attach)
           end
         end

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "singleton"
+
 module OpenHAB
   module DSL
     module Rules
@@ -9,21 +11,6 @@ module OpenHAB
         # Module for watching directories/files
         #
         module WatchHandler
-          #
-          # Creates trigger types and trigger type factories for openHAB
-          #
-          private_class_method def self.watch_trigger_type
-            org.openhab.core.automation.type.TriggerType.new(
-              WATCH_TRIGGER_MODULE_ID,
-              nil,
-              "A path change event is detected",
-              "Triggers when a path change event is detected",
-              nil,
-              org.openhab.core.automation.Visibility::VISIBLE,
-              nil
-            )
-          end
-
           # Trigger ID for Watch Triggers
           WATCH_TRIGGER_MODULE_ID = "jsr223.jruby.WatchTrigger"
 
@@ -123,7 +110,26 @@ module OpenHAB
 
           # Implements the ScriptedTriggerHandlerFactory interface to create a new Trigger Handler
           class WatchTriggerHandlerFactory
+            include Singleton
             include org.openhab.core.automation.module.script.rulesupport.shared.factories.ScriptedTriggerHandlerFactory
+
+            def initialize
+              Core.automation_manager.add_trigger_handler(
+                WATCH_TRIGGER_MODULE_ID,
+                self
+              )
+
+              Core.automation_manager.add_trigger_type(org.openhab.core.automation.type.TriggerType.new(
+                                                         WATCH_TRIGGER_MODULE_ID,
+                                                         nil,
+                                                         "A path change event is detected",
+                                                         "Triggers when a path change event is detected",
+                                                         nil,
+                                                         org.openhab.core.automation.Visibility::VISIBLE,
+                                                         nil
+                                                       ))
+              logger.trace("Added watch trigger handler")
+            end
 
             # Invoked by openHAB core to get a trigger handler for the supllied trigger
             # @param [org.openhab.core.automation.Trigger] trigger
@@ -133,20 +139,6 @@ module OpenHAB
               WatchTriggerHandler.new(trigger)
             end
           end
-
-          #
-          # Creates trigger types and trigger type factories for openHAB
-          #
-          def self.add_watch_handler
-            Core.automation_manager.add_trigger_handler(
-              WATCH_TRIGGER_MODULE_ID,
-              WatchTriggerHandlerFactory.new
-            )
-
-            Core.automation_manager.add_trigger_type(watch_trigger_type)
-            logger.trace("Added watch trigger handler")
-          end
-          add_watch_handler
         end
       end
     end

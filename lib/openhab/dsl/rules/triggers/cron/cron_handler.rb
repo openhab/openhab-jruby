@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "singleton"
+
 require_relative "cron"
 
 module OpenHAB
@@ -77,9 +79,28 @@ module OpenHAB
 
           # Implements the ScriptedTriggerHandlerFactory interface to create a new Cron Trigger Handler
           class CronTriggerHandlerFactory
+            include Singleton
             include org.openhab.core.automation.module.script.rulesupport.shared.factories.ScriptedTriggerHandlerFactory
 
-            # Invoked by openHAB core to get a trigger handler for the supllied trigger
+            def initialize
+              Core.automation_manager.add_trigger_handler(
+                Cron::CRON_TRIGGER_MODULE_ID,
+                self
+              )
+
+              Core.automation_manager.add_trigger_type(org.openhab.core.automation.type.TriggerType.new(
+                                                         Cron::CRON_TRIGGER_MODULE_ID,
+                                                         nil,
+                                                         "A specific instant occurs",
+                                                         "Triggers when the specified instant occurs",
+                                                         nil,
+                                                         org.openhab.core.automation.Visibility::VISIBLE,
+                                                         nil
+                                                       ))
+              logger.trace("Added script cron trigger handler")
+            end
+
+            # Invoked by openHAB core to get a trigger handler for the supplied trigger
             # @param [org.openhab.core.automation.Trigger] trigger
             #
             # @return [WatchTriggerHandler] trigger handler for supplied trigger
@@ -87,39 +108,6 @@ module OpenHAB
               CronTriggerHandler.new(trigger)
             end
           end
-
-          class << self
-            private
-
-            #
-            # Creates trigger types and trigger type factories for openHAB
-            #
-            def add_script_cron_handler
-              Core.automation_manager.add_trigger_handler(
-                Cron::CRON_TRIGGER_MODULE_ID,
-                CronTriggerHandlerFactory.new
-              )
-
-              Core.automation_manager.add_trigger_type(cron_trigger_type)
-              logger.trace("Added script cron trigger handler")
-            end
-
-            #
-            # Creates trigger types and trigger type factories for openHAB
-            #
-            def cron_trigger_type
-              org.openhab.core.automation.type.TriggerType.new(
-                Cron::CRON_TRIGGER_MODULE_ID,
-                nil,
-                "A specific instant occurs",
-                "Triggers when the specified instant occurs",
-                nil,
-                org.openhab.core.automation.Visibility::VISIBLE,
-                nil
-              )
-            end
-          end
-          add_script_cron_handler
         end
       end
     end
