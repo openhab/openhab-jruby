@@ -1424,6 +1424,96 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         test_it(10.minutes.ago..5.minutes.ago, false)
         test_it(1.day.ago.to_local_date..1.day.from_now.to_local_date, true)
       end
+
+      describe "Debounce Guards" do
+        before { Timecop.freeze(Time.at(0)) }
+
+        let(:item) { items.build { number_item "Item1" } }
+
+        def test_debouncing(type, arg, triggers, expected)
+          executed = []
+          rule do
+            updated Item1
+            send(type, arg)
+            run { |event| executed << event.state.to_i }
+          end
+
+          last_trigger = nil
+          last_executed = nil
+          triggers.chars.each_with_index do |trigger, i|
+            item.update(last_trigger = i) if trigger == "X"
+            execute_timers
+            if expected[i] == "X"
+              expect(executed.last).to eq last_trigger
+              last_executed = last_trigger
+            else
+              expect(executed.last).to eq last_executed
+            end
+            Timecop.freeze(1)
+          end
+        end
+
+        describe "#debounce_for" do
+          it "works" do
+            #                     1    1    2    2    3    3    4    4
+            #           0    5    0    5    0    5    0    5    0    5
+            triggers = "X.X...X...X..XX.X.X....X.XXXXXXXXXXX....X....."
+            expected = "|......................X.|..............X....."
+            test_debouncing(:debounce_for, 5.seconds, triggers, expected)
+          end
+
+          it "supports ranges" do
+            #                     1    1    2    2    3    3    4    4
+            #           0    5    0    5    0    5    0    5    0    5
+            trigger = "X.X...X...X..XX.X.X....X.XXXXXXXXXXX....X....."
+            tests = {
+              5..5 => "|....X|....X.|....X....|....X|....X|....X....X",
+              5..6 => "|.....X...|.....X.|....X.|.....X|.....X.|....X",
+              5..7 => "|......X..|......X|....X.|......X|......X.....",
+              5..8 => "|.......X.|.......X....|.......X|.......X.....",
+              5..20 => "|...................X..|................X....."
+            }.transform_keys { |k| Range.new(k.begin.seconds, k.end.seconds) }
+
+            tests.each do |arg, expected|
+              test_debouncing(:debounce_for, arg, trigger, expected)
+            end
+          end
+        end
+
+        describe "#throttle_for" do
+          it "works" do
+            #                     1    1    2    2    3    3    4    4
+            #           0    5    0    5    0    5    0    5    0    5
+            triggers = "X.X...X...X..XX.X.X....X.XXXXXXXXXXX....X....."
+            expected = "|....X|....X.|....X....|....X|....X|....X....."
+            test_debouncing(:throttle_for, 5.seconds, triggers, expected)
+          end
+        end
+
+        describe "#only_every" do
+          it "works" do
+            #                     1    1    2    2    3    3    4    4
+            #           0    5    0    5    0    5    0    5    0    5
+            triggers = "X.X...X...X..XX.X.X....X.XXXXXXXXXXX....X....."
+            expected = "X.....X......X....X....X....X....X......X....."
+            test_debouncing(:only_every, 5.seconds, triggers, expected)
+          end
+
+          it "accepts symbolic duration" do
+            def test_symbol(symbol)
+              rule do
+                updated Item1
+                only_every symbol
+                run { nil }
+              end
+            end
+
+            %i[second minute hour day].each do |sym|
+              expect { test_symbol sym }.not_to raise_exception
+            end
+          end
+        end
+      end
     end
     # rubocop:enable RSpec/InstanceVariable
   end

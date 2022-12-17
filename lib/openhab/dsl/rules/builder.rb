@@ -140,6 +140,9 @@ module OpenHAB
         attr_reader :ruby_triggers
 
         # @!visibility private
+        attr_reader :debounce_settings
+
+        # @!visibility private
         Run = Struct.new(:block)
 
         # @!visibility private
@@ -427,7 +430,7 @@ module OpenHAB
         #
         # @!method between(range)
         #
-        # Only execute rule if current time is between supplied time ranges.
+        # Only execute rule if the current time is between the supplied time ranges.
         #
         # If the range is of strings, it will be parsed to an appropriate time class.
         #
@@ -488,7 +491,7 @@ module OpenHAB
         #
         # @!method only_if
         #
-        # {only_if} allows rule execution when the block's is true and prevents it when it's false.
+        # Allows rule execution when the block's result is true and prevents it when it's false.
         #
         # @yieldparam [Core::Events::AbstractEvent] event The event data that is about to trigger the rule.
         # @yieldreturn [Boolean] A value indicating if the rule should run.
@@ -523,7 +526,7 @@ module OpenHAB
         #
         # @!method not_if
         #
-        # {not_if} prevents execution of rules when the block's result is true and allows it when it's true.
+        # Prevents execution of rules when the block's result is true and allows it when it's true.
         #
         # @yieldparam [Core::Events::AbstractEvent] event The event data that is about to trigger the rule.
         # @yieldreturn [Boolean] A value indicating if the rule should _not_ run.
@@ -548,6 +551,186 @@ module OpenHAB
           raise ArgumentError, "Object passed to not_if must be a proc" unless item.is_a?(Proc)
         end
 
+        # rubocop:disable Layout/LineLength
+
+        #
+        # Waits until triggers have stopped firing for a period of time before executing the rule.
+        #
+        # It ignores triggers that are "bouncing around" (rapidly firing) by ignoring
+        # them until they have quiesced (stopped triggering for a while).
+        #
+        # ## Comparison Table
+        # | Guard          | Triggers Immediately | Description                                                                                                                                                                      |
+        # | -------------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        # | {debounce_for} | No                   | Waits until there is a minimum interval between triggers.                                                                                                                        |
+        # | {throttle_for} | No                   | Rate-limits the executions to a minimum interval, regardless of the interval between triggers. Waits until the end of the period before executing, ignores any leading triggers. |
+        # | {only_every}   | Yes                  | Rate-limits the executions to a minimum interval. Immediately executes the first trigger, then ignores subsequent triggers for the period.                                       |
+        #
+        # ## Timing Diagram
+        # The following timing diagram illustrates the difference between {debounce_for},
+        # {throttle_for}, and {only_every} guards:
+        #
+        # ```
+        # TIME INDEX ===>                1    1    2    2    3    3    4    4
+        #                      0    5    0    5    0    5    0    5    0    5
+        # Triggers          : "X.X...X...X..XX.X.X....X.XXXXXXXXXXX....X....."
+        # debounce_for 5    : "|......................X.|..............X....."
+        # debounce_for 5..5 : "|....X|....X.|....X....|....X|....X|....X....X"
+        # debounce_for 5..6 : "|.....X...|.....X.|....X.|.....X|.....X.|....X"
+        # debounce_for 5..7 : "|......X..|......X|....X.|......X|......X....."
+        # debounce_for 5..8 : "|.......X.|.......X....|.......X|.......X....."
+        # debounce_for 5..20: "|...................X..|................X....."
+        # # throttle_for will fire every 5 intervals after the "first" trigger
+        # throttle_for 5    : "|....X|....X.|....X....|....X|....X|....X....."
+        # only_every 5      : "X.....X......X....X....X....X....X......X....."
+        #
+        # Triggers          : "X.X...X...X..XX.X.X..X...XXXXXXXXXXX.X..X.X..."
+        # debounce_for 5..44: "|...........................................X."
+        #
+        # # Notice above, triggers keep firing with intervals less than 5, so
+        # # debouncer keeps waiting, but puts a stop at 44 (the end of range).
+        # ```
+        #
+        # @param [Duration,Range] debounce_time The minimum interval between two consecutive
+        #   triggers before the rules are allowed to run.
+        #
+        #   When specified just as a Duration or an endless range, it sets the minimum interval
+        #   between two consecutive triggers before rules are executed. It will
+        #   wait endlessly unless this condition is met or an end of range was specified.
+        #
+        #   When the end of the range is specified, it sets the maximum amount of time to wait
+        #   from the first trigger before the rule will execute, even when triggers continue
+        #   to occur more frequently than the minimum interval.
+        #
+        #   When an equal beginning and ending values are given, it will behave just like
+        #   {throttle_for}.
+        #
+        # @return [void]
+        #
+        # @see throttle_for
+        # @see only_every
+        #
+        # @example Wait until item stopped changing for at least 1 minute before running the rule
+        #   rule do
+        #     changed Item1
+        #     debounce_for 1.minute
+        #     run { ... }
+        #   end
+        #
+        # @example Alert when door is open for a while
+        #   # Note: When combined with a state check (only_if), this becomes functionally
+        #   # equivalent to the changed duration feature.
+        #   rule "Door alert" do
+        #     changed Door_State
+        #     debounce_for 10.minutes
+        #     only_if { Door_State.open? }
+        #     run { notify("The Door has been open for 10 minutes!") }
+        #   end
+        #
+        def debounce_for(debounce_time)
+          idle_time = debounce_time.is_a?(Range) ? debounce_time.begin : debounce_time
+          debounce(for: debounce_time, idle_time: idle_time)
+        end
+        # rubocop:enable Layout/LineLength
+
+        #
+        # Rate-limits rule executions by delaying triggers and executing the last
+        # trigger within the given duration.
+        #
+        # When a new trigger occurs, it will hold the execution and start a fixed timer for
+        # the given duration. Should more triggers occur during this time, keep holding
+        # and once the wait time is over, execute the latest trigger.
+        #
+        # {throttle_for} will execute rules after it had waited
+        # for the given duration, regardless of how frequently the triggers were occuring.
+        # In contrast, {debounce_for} will wait until there is a minimum interval
+        # between two triggers.
+        #
+        # {throttle_for} is ideal in situations where regular status updates need to be made
+        # for frequently changing values. It is also useful when a rule responds to triggers
+        # from multiple related items that are updated at around the same time. Instead of
+        # executing the rule multiple times, {throttle_for} will wait for a pre-set amount
+        # of time since the first group of triggers occurred before executing the rule.
+        #
+        # @param [Duration] duration The minimum amount of time to wait inbetween rule
+        #   executions.
+        #
+        # @return [void]
+        #
+        # @see debounce_for
+        # @see only_every
+        #
+        # @example Perform calculations from multiple items
+        #   rule "Update Power Summary " do |rule|
+        #     changed Power_From_Solar, Power_Load, Power_From_Grid
+        #     throttle_for 1.second
+        #     only_if { rule.dependencies.all?(&:state?) } # make sure all items have a state
+        #     run do
+        #       msg = []
+        #       msg << Power_Load.state.negate.to_unit("kW").format("Load: %.2f %unit%")
+        #       msg << Power_From_Solar.state.to_unit("kW").format("PV: %.2f %unit%")
+        #       if Power_From_Grid.positive?
+        #         msg << Power_From_Grid.state.to_unit("kW").format("From Grid: %.1f %unit%")
+        #       else
+        #         msg << Power_From_Grid.state.negate.to_unit("kW").format("To Grid: %.1f %unit%")
+        #       end
+        #       Power_Summary.update(msg.join(", "))
+        #     end
+        #   end
+        #
+        def throttle_for(duration)
+          debounce(for: duration)
+        end
+
+        #
+        # Executes the rule then ignores subsequent triggers for a given duration.
+        #
+        # Additional triggers that occur within the given duration after the rule execution
+        # will be ignored. This results in executions happening only at the specified interval or
+        # more.
+        #
+        # Unlike {throttle_for}, this guard will execute the rule as soon as a new trigger
+        # occurs instead of waiting for the specified duration. This is ideal for triggers
+        # such as a door bell where the rule should run as soon as a new trigger is detected
+        # but ignore subsequent triggers if they occur too soon after.
+        #
+        # @param [Duration,:second,:minute,:hour,:day] interval The period during which
+        #   subsequent triggers are ignored.
+        # @return [void]
+        #
+        # @example Only allow executions every 10 minutes or more
+        #   rule "Aircon Vent Control" do
+        #     changed BedRoom_Temperature
+        #     only_every 10.minutes
+        #     run do
+        #       # Adjust BedRoom_Aircon_Vent
+        #     end
+        #   end
+        #
+        # @example Run only on the first update and ignore subsequent triggers for the next minute
+        #   # They can keep pressing the door bell as often as they like,
+        #   # but the bell will only ring at most once every minute
+        #   rule do
+        #     updated DoorBell_Button, to: "single"
+        #     only_every 1.minute
+        #     run { Audio.play_stream "doorbell.mp3" }
+        #   end
+        #
+        # @example Using symbolic duration
+        #   rule "Display update" do
+        #     updated Power_Usage
+        #     only_every :minute
+        #     run { Power_Usage_Display.update "Current power usage: #{Power_Usage.average_since(1.minute.ago)}" }
+        #   end
+        #
+        # @see debounce_for
+        # @see throttle_for
+        #
+        def only_every(interval)
+          interval = 1.send(interval) if %i[second minute hour day].include?(interval)
+          debounce(for: interval, leading: true)
+        end
+
         # @!endgroup
 
         # @!visibility private
@@ -562,6 +745,7 @@ module OpenHAB
           @caller = caller_binding.eval "self"
           @ruby_triggers = []
           @on_load = nil
+          @debounce_settings = nil
           enabled(true)
           tags([])
         end
@@ -1642,6 +1826,33 @@ module OpenHAB
           unmanaged_rule = Core.automation_manager.add_unmanaged_rule(rule)
           provider.add(unmanaged_rule)
           unmanaged_rule
+        end
+
+        #
+        # Prevents or delays executions of rules to within a specified interval.
+        # Debounce handling is done after the from/to/command types are filtered, but before only_if/not_if
+        # guards.
+        #
+        # For a more detailed timing diagram, see {Debouncer}.
+        #
+        # Note the trailing edge debouncer delays the triggers so that they were postponed for the given interval after
+        # the first detection of the trigger.
+        #
+        # @param (see Debouncer#initialize)
+        #
+        # @return [void]
+        #
+        # @see Debouncer Debouncer class
+        # @see OpenHAB::DSL.debounce DSL.debounce method
+        # @see only_every
+        #
+        # @!visibility private
+        def debounce(for: 1.second, leading: false, idle_time: nil)
+          raise ArgumentError, "Debounce guard can only be specified once" if @debounce_settings
+
+          interval = binding.local_variable_get(:for)
+          # This hash structure must match the parameter signature for Debouncer.new
+          @debounce_settings = { for: interval, leading: leading, idle_time: idle_time }
         end
       end
     end

@@ -37,6 +37,13 @@ module OpenHAB
       public_class_method(*mod.private_instance_methods)
     end
 
+    class << self
+      # @!visibility private
+      attr_reader :debouncers
+    end
+
+    @debouncers = java.util.concurrent.ConcurrentHashMap.new
+
     module_function
 
     # @!group Rule Creation
@@ -365,6 +372,133 @@ module OpenHAB
       start = try_parse_time_like(range.begin)
       finish = try_parse_time_like(range.end)
       Range.new(start, finish, range.exclude_end?)
+    end
+
+    #
+    # Limits the frequency of calls to the given block within a given amount of time.
+    #
+    # It can be useful to throttle certain actions even when a rule is triggered too often.
+    # This can be used to debounce triggers in a UI rule.
+    #
+    # @param (see Debouncer#initialize)
+    # @param [Object] id ID to associate with this debouncer.
+    # @param [Block] block The block to be debounced.
+    #
+    # @return [void]
+    #
+    # @example Run at most once per second even when being called more frequently
+    #   (1..100).each do
+    #     debounce for: 1.second do
+    #       logger.info "This will not be logged more frequently than every 1 second"
+    #     end
+    #     sleep 0.1
+    #   end
+    #
+    # @see Debouncer Debouncer class
+    # @see Rules::BuilderDSL#debounce debounce rule guard
+    #
+    # @!visibility private
+    def debounce(for:, leading: false, idle_time: nil, id: nil, &block)
+      interval = binding.local_variable_get(:for)
+      id ||= block.source_location
+      DSL.debouncers.compute(id) do |_key, debouncer|
+        debouncer ||= Debouncer.new(for: interval, leading: leading, idle_time: idle_time)
+        debouncer.call(&block)
+        debouncer
+      end
+    end
+
+    #
+    # Waits until calls to this method have stopped firing for a period of time
+    # before executing the block.
+    #
+    # This method acts as a guard for the given block to ensure that it doesn't get executed
+    # too frequently. The debounce_for method can be called as frequently as possible.
+    # The given block, however, will only be executed once the `debounce_time` has passed
+    # since the last call to debounce_for.
+    #
+    # This method can be used from within a UI rule as well as from a file-based rule.
+    #
+    # @param (see Rules::BuilderDSL#debounce_for)
+    # @param [Object] id ID to associate with this call.
+    # @param [Block] block The block to be debounced.
+    #
+    # @return [void]
+    #
+    # @example Run a block of code only after an item has stopped changing
+    #   # This can be placed inside a UI rule with an Item Change trigger for
+    #   # a Door contact sensor.
+    #   # If the door state has stopped changing state for 10 minutes,
+    #   # execute the block.
+    #   debounce_for(10.minutes) do
+    #     if DoorState.open?
+    #       Voice.say("The door has been left open!")
+    #     end
+    #   end
+    #
+    # @see Rules::BuilderDSL#debounce_for Rule builder's debounce_for for a detailed description
+    #
+    def debounce_for(debounce_time, id: nil, &block)
+      idle_time = debounce_time.is_a?(Range) ? debounce_time.begin : debounce_time
+      debounce(for: debounce_time, idle_time: idle_time, id: id, &block)
+    end
+
+    #
+    # Rate-limits block executions by delaying calls and only executing the last
+    # call within the given duration.
+    #
+    # When throttle_for is called, it will hold from executing the block and start
+    # a fixed timer for the given duration. Should more calls occur during
+    # this time, keep holding and once the wait time is over, execute the block.
+    #
+    # {throttle_for} will execute the block after it had waited for the given duration,
+    # regardless of how frequently `throttle_for` was called.
+    # In contrast, {debounce_for} will wait until there is a minimum interval
+    # between two triggers.
+    #
+    # {throttle_for} is ideal in situations where regular status updates need to be made
+    # for frequently changing values. It is also useful when a rule responds to triggers
+    # from multiple related items that are updated at around the same time. Instead of
+    # executing the rule multiple times, {throttle_for} will wait for a pre-set amount
+    # of time since the first group of triggers occurred before executing the rule.
+    #
+    # @param (see Rules::BuilderDSL#throttle_for)
+    # @param [Object] id ID to associate with this call.
+    # @param [Block] block The block to be throttled.
+    #
+    # @return [void]
+    #
+    # @see Rules::BuilderDSL#debounce_for Rule builder's debounce_for for a detailed description
+    # @see Rules::BuilderDSL#throttle_for
+    #
+    def throttle_for(duration, id: nil, &block)
+      debounce(for: duration, id: id, &block)
+    end
+
+    #
+    # Limit how often the given block executes to the specified interval.
+    #
+    # {only_every} will execute the given block but prevents further executions
+    # until the given interval has passed. In contrast, {throttle_for} will not
+    # execute the block immediately, and will wait until the end of the interval.
+    #
+    # @param (see Rules::BuilderDSL#only_every)
+    # @param [Object] id ID to associate with this call.
+    # @param [Block] block The block to be throttled.
+    #
+    # @return [void]
+    #
+    # @example Prevent door bell from ringing repeatedly
+    #   # This can be called from a UI rule.
+    #   # For file based rule, use the `only_every` rule guard
+    #   only_every(30.seconds) do { Audio.play_sound("doorbell.mp3") }
+    #
+    # @see Rules::BuilderDSL#debounce_for Rule builder's debounce_for for a detailed description
+    # @see Rules::BuilderDSL#only_every
+    #
+    def only_every(interval, id: nil, &block)
+      interval = 1.send(interval) if %i[second minute hour day].include?(interval)
+      debounce(for: interval, leading: true, id: id, &block)
     end
 
     #

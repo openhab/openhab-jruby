@@ -50,6 +50,8 @@ module OpenHAB
           @thread_locals = ThreadLocal.persist
           @cleanup_hooks = Set.new
           @listener = nil
+          debounce_settings = config.debounce_settings || { for: nil }
+          @debouncer = Debouncer.new(**debounce_settings)
         end
 
         #
@@ -77,7 +79,7 @@ module OpenHAB
             logger.trace { "Event details #{inputs["event"].inspect}" } if inputs&.key?("event")
             trigger_conditions(inputs).process(mod: mod, inputs: inputs) do
               event = extract_event(inputs)
-              process_queue(create_queue(event), mod, event)
+              @debouncer.call { process_queue(create_queue(event), mod, event) }
             end
           rescue Exception => e
             raise if defined?(::RSpec) && ::RSpec.current_example.example_group.propagate_exceptions?
