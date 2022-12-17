@@ -30,8 +30,8 @@ module OpenHAB
         # @param [Config] config Rule configuration
         #
         # Constructor sets a number of variables, no further decomposition necessary
+        #
         def initialize(config)
-          # Metrics disabled because only setters are called or defaults set.
           super()
           set_name(config.name)
           set_description(config.description)
@@ -58,20 +58,8 @@ module OpenHAB
         # @param [java.util.Map] mod map provided by openHAB rules engine
         # @param [java.util.Map] inputs map provided by openHAB rules engine containing event and other information
         #
-        #
         def execute(mod = nil, inputs = nil)
-          ThreadLocal.thread_local(**@thread_locals) do
-            logger.trace { "Execute called with mod (#{mod&.to_string}) and inputs (#{inputs.inspect})" }
-            logger.trace { "Event details #{inputs["event"].inspect}" } if inputs&.key?("event")
-            trigger_conditions(inputs).process(mod: mod, inputs: inputs) do
-              event = extract_event(inputs)
-              process_queue(create_queue(event), mod, event)
-            end
-          rescue Exception => e
-            raise if defined?(::RSpec)
-
-            @run_context.send(:logger).log_exception(e)
-          end
+          execute!(mod, inputs)
         end
 
         # @!visibility private
@@ -81,6 +69,22 @@ module OpenHAB
         end
 
         private
+
+        # This method gets called in rspec's SuspendRules as well
+        def execute!(mod, inputs)
+          ThreadLocal.thread_local(**@thread_locals) do
+            logger.trace { "Execute called with mod (#{mod&.to_string}) and inputs (#{inputs.inspect})" }
+            logger.trace { "Event details #{inputs["event"].inspect}" } if inputs&.key?("event")
+            trigger_conditions(inputs).process(mod: mod, inputs: inputs) do
+              event = extract_event(inputs)
+              process_queue(create_queue(event), mod, event)
+            end
+          rescue Exception => e
+            raise if defined?(::RSpec) && ::RSpec.current_example.example_group.propagate_exceptions?
+
+            @run_context.send(:logger).log_exception(e)
+          end
+        end
 
         def cleanup
           @cleanup_hooks.each(&:cleanup)

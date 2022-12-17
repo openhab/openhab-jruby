@@ -12,20 +12,7 @@ module OpenHAB
             logger.trace("Skipping execution of #{uid} because rules are suspended.")
             return
           end
-
-          # super
-          ::OpenHAB::DSL::ThreadLocal.thread_local(**@thread_locals) do
-            logger.trace { "Execute called with mod (#{mod&.to_string}) and inputs (#{inputs.inspect})" }
-            logger.trace { "Event details #{inputs["event"].inspect}" } if inputs&.key?("event")
-            trigger_conditions(inputs).process(mod: mod, inputs: inputs) do
-              event = extract_event(inputs)
-              process_queue(create_queue(event), mod, event)
-            end
-          rescue Exception => e
-            raise if defined?(::RSpec) && ::RSpec.current_example.example_group.propagate_exceptions?
-
-            @run_context.send(:logger).log_exception(e)
-          end
+          execute!(mod, inputs)
         end
       end
       # private_constant :AutomationRule
