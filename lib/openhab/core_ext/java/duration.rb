@@ -5,7 +5,7 @@ module OpenHAB
     module Java
       Duration = java.time.Duration
 
-      # Extensions to Duration
+      # Extensions to {java.time.Duration Java Duration}
       class Duration
         include Between
         # @!parse include TemporalAmount
@@ -16,6 +16,25 @@ module OpenHAB
         # @return [Integer]
         #
         alias_method :to_i, :seconds
+
+        #
+        # @!method zero?
+        #   @return [true,false] Returns true if the duration is zero length.
+        #
+
+        #
+        # @!method negative?
+        #   @return [true,false] Returns true if the duration is less than zero.
+        #
+
+        unless instance_methods.include?(:positive?)
+          #
+          # @return [true, false] Returns true if the duration is greater than zero.
+          #
+          def positive?
+            self > 0 # rubocop:disable Style/NumericPredicate
+          end
+        end
 
         #
         # Convert to number of seconds
