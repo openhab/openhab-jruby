@@ -96,6 +96,15 @@ jobs:
         env:
           OPENHAB_VERSION: ${{ matrix.openhab_version }}
         run: bin/rake openhab:setup
+      - name: Upload openHAB Logs
+        uses: actions/upload-artifact@v3
+        if: steps.cache.outputs.cache-hit != 'true' && failure()
+        with:
+          name: openHAB-setup-logs-${{ matrix.openhab_version }}
+          path: |
+            tmp/openhab/userdata/logs
+            tmp/karaf.log
+          retention-days: 2
 
   rspec:
     needs: [openhab-matrix, openhab-setup]
@@ -111,6 +120,8 @@ jobs:
             jruby_version: jruby-9.4.0.0
           - openhab_version: 3.3.0
             java_version: 17
+          - openhab_version: 4.0.0-SNAPSHOT
+            java_version: 11
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
