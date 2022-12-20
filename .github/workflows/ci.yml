@@ -91,6 +91,11 @@ jobs:
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
           bundler-cache: true
+      - uses: actions/setup-java@v3
+        with:
+          distribution: zulu
+          java-version: ${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && '17' || '11' }}
+          java-package: jre
       - name: Setup openHAB
         if: steps.cache.outputs.cache-hit != 'true'
         env:
@@ -152,7 +157,7 @@ jobs:
         uses: actions/upload-artifact@v3
         if: success() || failure()
         with:
-          name: RSpec-results-openHAB-${{ matrix.openhab_version }}-jruby-${{ matrix.jruby_version }}-java-#{{matrix.java_version}}
+          name: RSpec-results-openHAB-${{ matrix.openhab_version }}-jruby-${{ matrix.jruby_version }}-java-${{ matrix.java_version }}
           path: rspec.html
 
   cucumber:
@@ -166,6 +171,8 @@ jobs:
         exclude:
           - openhab_version: 3.3.0
             java_version: 17
+          - openhab_version: 4.0.0-SNAPSHOT
+            java_version: 11
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
@@ -175,7 +182,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: zulu
-          java-version: "11"
+          java-version: ${{ matrix.java_version }}
           java-package: jre
       - name: Restore openHAB setup
         uses: actions/cache@v3
@@ -189,7 +196,7 @@ jobs:
         uses: actions/upload-artifact@v3
         if: success() || failure()
         with:
-          name: Cucumber-logs-openHAB-${{ matrix.openhab_version }}-java-#{{matrix.java_version}}
+          name: Cucumber-logs-openHAB-${{ matrix.openhab_version }}-java-${{ matrix.java_version }}
           path: |
             tmp/openhab/userdata/logs
             tmp/karaf.log
