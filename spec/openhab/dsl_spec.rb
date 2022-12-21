@@ -10,13 +10,15 @@ RSpec.describe OpenHAB::DSL do
   end
 
   describe "#profile" do
-    it "works" do
+    before do
       install_addon "binding-astro", ready_markers: "openhab.xmlThingTypes"
 
       things.build do
         thing "astro:sun:home", "Astro Sun Data", config: { "geolocation" => "0,0" }
       end
+    end
 
+    it "works" do
       profile "use_a_different_state" do |_event, callback:, item:|
         callback.send_update("bar")
         expect(item).to eql MyString
@@ -31,6 +33,42 @@ RSpec.describe OpenHAB::DSL do
 
       MyString << "foo"
       expect(MyString.state).to eq "bar"
+    end
+
+    it "defaults missing params to nil" do
+      checked = false
+      # technically we only see a command event, so state isn't provided
+      profile :i_check_state do |_event, state:|
+        expect(state).to be_nil
+        checked = true
+        false
+      end
+
+      items.build do
+        string_item "MyString",
+                    channel: ["astro:sun:home:season#name", { profile: "ruby:i_check_state" }],
+                    autoupdate: false
+      end
+
+      MyString << "foo"
+      expect(checked).to be true
+    end
+
+    it "exposes config" do
+      unit = nil
+      profile :i_check_config do |_event, configuration:|
+        unit = configuration["unit"]
+        false
+      end
+
+      items.build do
+        string_item "MyString",
+                    channel: ["astro:sun:home:season#name", { profile: "ruby:i_check_config", unit: "°F" }],
+                    autoupdate: false
+      end
+
+      MyString << "foo"
+      expect(unit).to eql "°F"
     end
   end
 

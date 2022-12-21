@@ -53,6 +53,8 @@ module OpenHAB
 
     # @!group Rule Support
 
+    # rubocop:disable Layout/LineLength
+
     #
     # Defines a new profile that can be applied to item channel links.
     #
@@ -79,8 +81,8 @@ module OpenHAB
     # @see org.openhab.thing.Profile
     # @see org.openhab.thing.StateProfile
     #
-    # @example
-    #   profile(:veto_closing_shades) do |event, item:, command: nil|
+    # @example Vetoing a command
+    #   profile(:veto_closing_shades) do |event, item:, command:|
     #     next false if command&.down?
     #
     #     true
@@ -94,15 +96,45 @@ module OpenHAB
     #   # can also be referenced from an `.items` file:
     #   # Rollershutter MyShade { channel="thing:rollershutter"[profile="ruby:veto_closing_shades"] }
     #
+    # @example Overriding units from a binding
+    #   profile(:set_uom) do |event, configuration:, state:, command:|
+    #     unless configuration["unit"]
+    #       logger.warn("Unit configuration not provided for set_uom profile")
+    #        next true
+    #     end
+    #
+    #     case event
+    #     when :state_from_handler
+    #       next true unless state.is_a?(DecimalType) || state.is_a?(QuantityType) # what is it then?!
+    #
+    #       state = state.to_d if state.is_a?(QuantityType) # ignore the units if QuantityType was given
+    #       callback.send_update(state | configuration["unit"])
+    #       false
+    #     when :command_from_item
+    #       # strip the unit from the command, as the binding likely can't handle it
+    #       next true unless command.is_a?(QuantityType)
+    #
+    #       callback.send_command(DecimalType.new(command.to_d))
+    #       false
+    #     else
+    #       true # pass other events through as normal
+    #     end
+    #   end
+    #   # can also be referenced from an `.items` file:
+    #   # Number:Temperature MyTempWithNonUnitValueFromBinding "I prefer Celsius [%d °C]" { channel="something_that_returns_F"[profile="ruby:set_uom", unit="°F"] }
+    #
     def profile(id, &block)
       raise ArgumentError, "Block is required" unless block
 
+      id = id.to_s
       uid = org.openhab.core.thing.profiles.ProfileTypeUID.new("ruby", id)
 
       ThreadLocal.thread_local(openhab_rule_type: "profile", openhab_rule_uid: id) do
         Core::ProfileFactory.instance.register(uid, block)
       end
     end
+
+    # rubocop:enable Layout/LineLength
 
     # @!group Object Access
 

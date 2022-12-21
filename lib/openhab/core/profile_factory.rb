@@ -69,10 +69,12 @@ module OpenHAB
 
           params[:callback] = @callback
           params[:context] = @context
-          params[:config] = @context.configuration
+          params[:configuration] = @context.configuration.properties
           params[:link] = @callback.link
           params[:item] = @callback.link.item
           params[:channel_uid] = @callback.link.linked_uid
+          params[:state] ||= nil
+          params[:command] ||= nil
 
           kwargs = {}
           @block.parameters.each do |(param_type, name)|
