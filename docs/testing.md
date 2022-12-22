@@ -80,6 +80,12 @@ and then load rules in, then drop you into IRB.
 
 ### Spec Writing Tips
 
+ * By default ruby files are looked for in `$OPENHAB_CONF/automation/ruby` and in `$OPENHAB_CONF/automation/jsr223`. You can override and/or append to this by setting the `openhab_automation_search_paths` RSpec configuration setting in your `spec_helper.rb`. This can be useful to add staging directory for testing your rules.
+ ```ruby
+RSpec.configure do |config|
+  config.openhab_automation_search_paths += "/my/staging/directory"
+end
+ ```
  * See {OpenHAB::RSpec::Helpers} for all helper methods available in specs.
  * All items are reset to {NULL} before each spec.
  * `on_load` triggers are _not_ honored. Items will be reset to {NULL} before
