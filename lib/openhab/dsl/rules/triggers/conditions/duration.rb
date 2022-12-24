@@ -96,7 +96,7 @@ module OpenHAB
                 yield
               end
               rule.on_removal(self)
-              @tracking_to, = retrieve_states(inputs)
+              _, @tracking_from = retrieve_states(inputs)
             end
 
             #
@@ -106,12 +106,11 @@ module OpenHAB
             # @param [Hash] mod rule trigger mods
             #
             def process_active_timer(inputs, mod, &block)
-              state, = retrieve_states(inputs)
-              if state == @tracking_to
-                logger.trace("Item changed to #{state} for #{self}, rescheduling timer.")
-                @timer.reschedule(@duration)
+              new_state, old_state = retrieve_states(inputs)
+              if new_state != @tracking_from && @conditions.check_to(inputs: {})
+                logger.trace("Item changed from #{old_state} to #{new_state} for #{self}, keep waiting.")
               else
-                logger.trace("Item changed to #{state} for #{self}, canceling timer.")
+                logger.trace("Item changed from #{old_state} to #{new_state} for #{self}, canceling timer.")
                 @timer.cancel
                 # Reprocess trigger delay after canceling to track new state (if guards matched, etc)
                 process(mod: mod, inputs: inputs, &block)

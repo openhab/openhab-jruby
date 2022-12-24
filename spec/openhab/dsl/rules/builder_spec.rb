@@ -404,6 +404,64 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
             expect(triggered_item).to be_nil
           end
 
+          context "without to state" do
+            test_changed_trigger(from: 8) do
+              Alarm_Mode1.update(10)
+              time_travel_and_execute_timers(4.seconds)
+              expect(triggered_item).to be_nil
+              time_travel_and_execute_timers(2.seconds)
+              expect(triggered_item).to eql "Alarm_Mode1"
+            end
+
+            context "when state changes more than once" do # rubocop:disable RSpec/EmptyExampleGroup examples are dynamically generated
+              test_changed_trigger(from: 8) do
+                Alarm_Mode1.update(10)
+                time_travel_and_execute_timers(4.seconds)
+                expect(triggered_item).to be_nil
+                Alarm_Mode1.update(20)
+                execute_timers
+                expect(triggered_item).to be_nil
+                time_travel_and_execute_timers(2.seconds)
+                expect(triggered_item).to eql "Alarm_Mode1"
+              end
+
+              test_changed_trigger(from: [7, 8]) do
+                Alarm_Mode1.update(10)
+                time_travel_and_execute_timers(4.seconds)
+                expect(triggered_item).to be_nil
+                Alarm_Mode1.update(20)
+                execute_timers
+                expect(triggered_item).to be_nil
+                time_travel_and_execute_timers(2.seconds)
+                expect(triggered_item).to eql "Alarm_Mode1"
+              end
+            end
+
+            context "when state changes back to the from state" do # rubocop:disable RSpec/EmptyExampleGroup examples are dynamically generated
+              test_changed_trigger(from: 8) do
+                Alarm_Mode1.update(10)
+                time_travel_and_execute_timers(4.seconds)
+                expect(triggered_item).to be_nil
+                Alarm_Mode1.update(8) # reverts back to from state, it should cancel the trigger
+                execute_timers
+                expect(triggered_item).to be_nil
+                time_travel_and_execute_timers(2.seconds)
+                expect(triggered_item).to be_nil
+              end
+
+              test_changed_trigger(from: [7, 8]) do
+                Alarm_Mode1.update(10)
+                time_travel_and_execute_timers(4.seconds)
+                expect(triggered_item).to be_nil
+                Alarm_Mode1.update(8) # reverts back to from state, it should cancel the trigger
+                execute_timers
+                expect(triggered_item).to be_nil
+                time_travel_and_execute_timers(2.seconds)
+                expect(triggered_item).to be_nil
+              end
+            end
+          end
+
           context "with a numeric group item" do # rubocop:disable RSpec/EmptyExampleGroup examples are dynamically generated
             before do
               items.build do
