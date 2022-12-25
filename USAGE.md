@@ -1152,9 +1152,9 @@ Time.now.between?("5am".."11pm")
 
 ```ruby
 Time.now.holiday? # => false
-LocalDate.parse("12-25").holiday # => :christmas
+MonthDay.parse("12-25").holiday # => :christmas
 1.day.from_now.next_holiday # => :thanksgiving
-notify("It's #{Ephemeris.holiday_name(Date.today.holiday)}!") if Date.today.holiday?
+notify("It's #{Ephemeris.holiday_name(Date.today)}!") if Date.today.holiday?
 
 Date.today.weekend? # => true
 Date.today.in_dayset?(:school) # => false
