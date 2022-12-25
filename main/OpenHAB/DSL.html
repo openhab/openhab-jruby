@@ -1925,6 +1925,19 @@
         
   
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="DSL/Debouncer.html" title="OpenHAB::DSL::Debouncer (class)">Debouncer</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   <li class="collapsed">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="DSL/Events.html" title="OpenHAB::DSL::Events (module)">Events</a></span>
@@ -2241,6 +2254,9 @@
     
   </li>
 
+  
+  
+  
   
   
   
@@ -2642,7 +2658,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/openhab/dsl.rb<span class="defines">,<br />
-  lib/openhab/dsl/rules.rb,<br /> lib/openhab/dsl/events.rb,<br /> lib/openhab/dsl/version.rb,<br /> lib/openhab/dsl/rules/guard.rb,<br /> lib/openhab/dsl/rules/terse.rb,<br /> lib/openhab/dsl/items/ensure.rb,<br /> lib/openhab/dsl/thread_local.rb,<br /> lib/openhab/dsl/items/builder.rb,<br /> lib/openhab/dsl/rules/builder.rb,<br /> lib/openhab/dsl/timer_manager.rb,<br /> lib/openhab/dsl/rules/property.rb,<br /> lib/openhab/dsl/rules/triggers.rb,<br /> lib/openhab/dsl/things/builder.rb,<br /> lib/openhab/dsl/events/watch_event.rb,<br /> lib/openhab/dsl/items/timed_command.rb,<br /> lib/openhab/dsl/rules/rule_triggers.rb,<br /> lib/openhab/dsl/rules/name_inference.rb,<br /> lib/openhab/dsl/rules/automation_rule.rb,<br /> lib/openhab/dsl/rules/triggers/changed.rb,<br /> lib/openhab/dsl/rules/triggers/channel.rb,<br /> lib/openhab/dsl/rules/triggers/command.rb,<br /> lib/openhab/dsl/rules/triggers/trigger.rb,<br /> lib/openhab/dsl/rules/triggers/updated.rb,<br /> lib/openhab/dsl/rules/triggers/cron/cron.rb,<br /> lib/openhab/dsl/rules/triggers/watch/watch.rb,<br /> lib/openhab/dsl/rules/triggers/conditions/proc.rb,<br /> lib/openhab/dsl/rules/triggers/cron/cron_handler.rb,<br /> lib/openhab/dsl/rules/triggers/conditions/duration.rb,<br /> lib/openhab/dsl/rules/triggers/watch/watch_handler.rb</span>
+  lib/openhab/dsl/rules.rb,<br /> lib/openhab/dsl/events.rb,<br /> lib/openhab/dsl/version.rb,<br /> lib/openhab/dsl/debouncer.rb,<br /> lib/openhab/dsl/rules/guard.rb,<br /> lib/openhab/dsl/rules/terse.rb,<br /> lib/openhab/dsl/items/ensure.rb,<br /> lib/openhab/dsl/thread_local.rb,<br /> lib/openhab/dsl/items/builder.rb,<br /> lib/openhab/dsl/rules/builder.rb,<br /> lib/openhab/dsl/timer_manager.rb,<br /> lib/openhab/dsl/rules/property.rb,<br /> lib/openhab/dsl/rules/triggers.rb,<br /> lib/openhab/dsl/things/builder.rb,<br /> lib/openhab/dsl/events/watch_event.rb,<br /> lib/openhab/dsl/items/timed_command.rb,<br /> lib/openhab/dsl/rules/rule_triggers.rb,<br /> lib/openhab/dsl/rules/name_inference.rb,<br /> lib/openhab/dsl/rules/automation_rule.rb,<br /> lib/openhab/dsl/rules/triggers/changed.rb,<br /> lib/openhab/dsl/rules/triggers/channel.rb,<br /> lib/openhab/dsl/rules/triggers/command.rb,<br /> lib/openhab/dsl/rules/triggers/trigger.rb,<br /> lib/openhab/dsl/rules/triggers/updated.rb,<br /> lib/openhab/dsl/rules/triggers/cron/cron.rb,<br /> lib/openhab/dsl/rules/triggers/watch/watch.rb,<br /> lib/openhab/dsl/rules/triggers/conditions/proc.rb,<br /> lib/openhab/dsl/rules/triggers/cron/cron_handler.rb,<br /> lib/openhab/dsl/rules/triggers/conditions/duration.rb,<br /> lib/openhab/dsl/rules/triggers/watch/watch_handler.rb</span>
 </dd>
   </dl>
   
@@ -2669,7 +2685,7 @@ inside of other classes, or include the module.</p>
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="DSL/TimerManager.html" title="OpenHAB::DSL::TimerManager (class)">TimerManager</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="DSL/Debouncer.html" title="OpenHAB::DSL::Debouncer (class)">Debouncer</a></span>, <span class='object_link'><a href="DSL/TimerManager.html" title="OpenHAB::DSL::TimerManager (class)">TimerManager</a></span>
     
   
 </p>
@@ -2995,6 +3011,52 @@ inside of other classes, or include the module.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#debounce_for-class_method" title="debounce_for (class method)">.<strong>debounce_for</strong>(debounce_time, id: nil, &amp;block)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Waits until calls to this method have stopped firing for a period of time before executing the block.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#only_every-class_method" title="only_every (class method)">.<strong>only_every</strong>(interval, id: nil, &amp;block)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Limit how often the given block executes to the specified interval.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#store_states-class_method" title="store_states (class method)">.<strong>store_states</strong>(*items)  &#x21d2; Core::Items::StateStorage </a>
     
 
@@ -3010,6 +3072,29 @@ inside of other classes, or include the module.</p>
 
   
     <span class="summary_desc"><div class='inline'><p>Store states of supplied items.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#throttle_for-class_method" title="throttle_for (class method)">.<strong>throttle_for</strong>(duration, id: nil, &amp;block)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Rate-limits block executions by delaying calls and only executing the last call within the given duration.</p>
 </div></span>
   
 </li>
@@ -3516,16 +3601,16 @@ Otherwise the new timer.</p>
       <pre class="lines">
 
 
-332
-333
-334
-335
-336
-337
-338</pre>
+339
+340
+341
+342
+343
+344
+345</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 332</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 339</span>
 
 <span class="keyword">def</span> <span class="function">after</span>(duration, <span class="key">id</span>: <span class="predefined-constant">nil</span>, <span class="key">reschedule</span>: <span class="predefined-constant">true</span>, &amp;block)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Block is required</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block
@@ -3630,16 +3715,16 @@ depending on the format of the string.</p>
       <pre class="lines">
 
 
-362
-363
-364
-365
-366
-367
-368</pre>
+369
+370
+371
+372
+373
+374
+375</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 362</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 369</span>
 
 <span class="keyword">def</span> <span class="function">between</span>(range)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Supplied object must be a range</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> range.is_a?(<span class="constant">Range</span>)
@@ -3647,6 +3732,140 @@ depending on the format of the string.</p>
   start = try_parse_time_like(range.begin)
   finish = try_parse_time_like(range.end)
   <span class="constant">Range</span>.new(start, finish, range.exclude_end?)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="debounce_for-class_method">
+  
+    .<strong>debounce_for</strong>(debounce_time, id: nil, &amp;block)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Waits until calls to this method have stopped firing for a period of time
+before executing the block.</p>
+<p>This method acts as a guard for the given block to ensure that it doesn't get executed
+too frequently. The debounce_for method can be called as frequently as possible.
+The given block, however, will only be executed once the <code>debounce_time</code> has passed
+since the last call to debounce_for.</p>
+<p>This method can be used from within a UI rule as well as from a file-based rule.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Run a block of code only after an item has stopped changing</p>
+</div></p>
+      
+      <pre class="example code"><code><span class="comment"># This can be placed inside a UI rule with an Item Change trigger for</span>
+<span class="comment"># a Door contact sensor.</span>
+<span class="comment"># If the door state has stopped changing state for 10 minutes,</span>
+<span class="comment"># execute the block.</span>
+debounce_for(<span class="integer">10</span>.minutes) <span class="keyword">do</span>
+  <span class="keyword">if</span> <span class="constant">DoorState</span>.open?
+    <span class="constant">Voice</span>.say(<span class="string"><span class="delimiter">&quot;</span><span class="content">The door has been left open!</span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>id</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'>Object</span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>ID to associate with this call.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>block</span>
+      
+      
+        <span class='type'>(<tt>Block</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The block to be debounced.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>debounce_time</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="CoreExt/Java/Duration.html" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span></tt>, <tt><span class='object_link'><a href="../Range.html" title="Range (class)">Range</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The minimum interval between two consecutive
+triggers before the rules are allowed to run.</p>
+<p>When specified just as a Duration or an endless range, it sets the minimum interval
+between two consecutive triggers before rules are executed. It will
+wait endlessly unless this condition is met or an end of range was specified.</p>
+<p>When the end of the range is specified, it sets the maximum amount of time to wait
+from the first trigger before the rule will execute, even when triggers continue
+to occur more frequently than the minimum interval.</p>
+<p>When an equal beginning and ending values are given, it will behave just like
+<span class='object_link'><a href="#throttle_for-class_method" title="OpenHAB::DSL.throttle_for (method)">throttle_for</a></span>.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="DSL/Rules/BuilderDSL.html#debounce_for-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#debounce_for (method)">Rule builder's debounce_for for a detailed description</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+441
+442
+443
+444</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 441</span>
+
+<span class="keyword">def</span> <span class="function">debounce_for</span>(debounce_time, <span class="key">id</span>: <span class="predefined-constant">nil</span>, &amp;block)
+  idle_time = debounce_time.is_a?(<span class="constant">Range</span>) ? debounce_time.begin : debounce_time
+  debounce(<span class="key">for</span>: debounce_time, <span class="key">idle_time</span>: idle_time, <span class="key">id</span>: id, &amp;block)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3755,16 +3974,16 @@ ensure_states <span class="keyword">do</span>
       <pre class="lines">
 
 
-454
-455
-456
-457
-458
-459
-460</pre>
+588
+589
+590
+591
+592
+593
+594</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 454</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 588</span>
 
 <span class="keyword">def</span> <span class="function">ensure_states</span>
   old = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_ensure_states</span>]
@@ -3942,20 +4161,20 @@ for <span class='object_link'><a href="CoreExt/Ephemeris.html" title="OpenHAB::C
       <pre class="lines">
 
 
-764
-765
-766
-767
-768
-769
-770
-771
-772
-773
-774</pre>
+898
+899
+900
+901
+902
+903
+904
+905
+906
+907
+908</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 764</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 898</span>
 
 <span class="keyword">def</span> <span class="function">holiday_file</span>(*args)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">wrong number of arguments (given </span><span class="inline"><span class="inline-delimiter">#{</span>args.length<span class="inline-delimiter">}</span></span><span class="content">, expected 0..1)</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> args.length &gt; <span class="integer">1</span>
@@ -4053,12 +4272,12 @@ for <span class='object_link'><a href="CoreExt/Ephemeris.html" title="OpenHAB::C
       <pre class="lines">
 
 
-789
-790
-791</pre>
+923
+924
+925</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 789</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 923</span>
 
 <span class="keyword">def</span> <span class="function">holiday_file!</span>(file = <span class="predefined-constant">nil</span>)
   <span class="constant">Thread</span>.current[<span class="symbol">:openhab_holiday_file</span>] = file
@@ -4136,15 +4355,134 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
       <pre class="lines">
 
 
-196
-197
-198</pre>
+203
+204
+205</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 196</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 203</span>
 
 <span class="keyword">def</span> <span class="function">items</span>
   <span class="constant">Core</span>::<span class="constant">Items</span>::<span class="constant">Registry</span>.instance
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="only_every-class_method">
+  
+    .<strong>only_every</strong>(interval, id: nil, &amp;block)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Limit how often the given block executes to the specified interval.</p>
+<p><span class='object_link'><a href="#only_every-class_method" title="OpenHAB::DSL.only_every (method)">only_every</a></span> will execute the given block but prevents further executions
+until the given interval has passed. In contrast, <span class='object_link'><a href="#throttle_for-class_method" title="OpenHAB::DSL.throttle_for (method)">throttle_for</a></span> will not
+execute the block immediately, and will wait until the end of the interval.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Prevent door bell from ringing repeatedly</p>
+</div></p>
+      
+      <pre class="example code"><code><span class="comment"># This can be called from a UI rule.</span>
+<span class="comment"># For file based rule, use the `only_every` rule guard</span>
+only_every(<span class="integer">30</span>.seconds) <span class="keyword">do</span> { <span class="constant">Audio</span>.play_sound(<span class="string"><span class="delimiter">&quot;</span><span class="content">doorbell.mp3</span><span class="delimiter">&quot;</span></span>) }</code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>id</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'>Object</span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>ID to associate with this call.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>block</span>
+      
+      
+        <span class='type'>(<tt>Block</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The block to be throttled.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>interval</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="CoreExt/Java/Duration.html" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span></tt>, <tt>:second</tt>, <tt>:minute</tt>, <tt>:hour</tt>, <tt>:day</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The period during which
+subsequent triggers are ignored.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="DSL/Rules/BuilderDSL.html#debounce_for-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#debounce_for (method)">Rule builder's debounce_for for a detailed description</a></span></li>
+    
+      <li><span class='object_link'><a href="DSL/Rules/BuilderDSL.html#only_every-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#only_every (method)">OpenHAB::DSL::Rules::BuilderDSL#only_every</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+499
+500
+501
+502</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 499</span>
+
+<span class="keyword">def</span> <span class="function">only_every</span>(interval, <span class="key">id</span>: <span class="predefined-constant">nil</span>, &amp;block)
+  interval = <span class="integer">1</span>.send(interval) <span class="keyword">if</span> <span class="symbol"><span class="delimiter">%i[</span><span class="content">second minute hour day</span><span class="delimiter">]</span></span>.include?(interval)
+  debounce(<span class="key">for</span>: interval, <span class="key">leading</span>: <span class="predefined-constant">true</span>, <span class="key">id</span>: id, &amp;block)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4249,16 +4587,16 @@ for method calls inside the block</p>
       <pre class="lines">
 
 
-479
-480
-481
-482
-483
-484
-485</pre>
+613
+614
+615
+616
+617
+618
+619</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 479</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 613</span>
 
 <span class="keyword">def</span> <span class="function">persistence</span>(service)
   old = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_persistence_service</span>]
@@ -4564,19 +4902,19 @@ items.build <span class="keyword">do</span>
       <pre class="lines">
 
 
-126
-127
-128
-129
-130
-131
-132
 133
 134
-135</pre>
+135
+136
+137
+138
+139
+140
+141
+142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 133</span>
 
 <span class="keyword">def</span> <span class="function">profile</span>(id, &amp;block)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Block is required</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block
@@ -4730,19 +5068,19 @@ recommended that you use a Proc, not a Lambda, for permissive argument matching.
       <pre class="lines">
 
 
-635
-636
-637
-638
-639
-640
-641
-642
-643
-644</pre>
+769
+770
+771
+772
+773
+774
+775
+776
+777
+778</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 635</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 769</span>
 
 <span class="keyword">def</span> <span class="function">provider</span>(*args, **kwargs)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">You must give a block to set the provider for the duration of</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block_given?
@@ -4848,69 +5186,69 @@ recommended that you use a Proc, not a Lambda, for permissive argument matching.
       <pre class="lines">
 
 
-677
-678
-679
-680
-681
-682
-683
-684
-685
-686
-687
-688
-689
-690
-691
-692
-693
-694
-695
-696
-697
-698
-699
-700
-701
-702
-703
-704
-705
-706
-707
-708
-709
-710
-711
-712
-713
-714
-715
-716
-717
-718
-719
-720
-721
-722
-723
-724
-725
-726
-727
-728
-729
-730
-731
-732
-733
-734
-735
-736</pre>
+811
+812
+813
+814
+815
+816
+817
+818
+819
+820
+821
+822
+823
+824
+825
+826
+827
+828
+829
+830
+831
+832
+833
+834
+835
+836
+837
+838
+839
+840
+841
+842
+843
+844
+845
+846
+847
+848
+849
+850
+851
+852
+853
+854
+855
+856
+857
+858
+859
+860
+861
+862
+863
+864
+865
+866
+867
+868
+869
+870</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 677</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 811</span>
 
 <span class="keyword">def</span> <span class="function">provider!</span>(*providers, **providers_by_type)
   thread_providers = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_providers</span>] ||= {}
@@ -5101,12 +5439,12 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
       <pre class="lines">
 
 
-45
-46
-47</pre>
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 52</span>
 
 <span class="keyword">def</span> <span class="function">rule</span>(name = <span class="predefined-constant">nil</span>, **kwargs, &amp;block)
   rules.build { rule(name, **kwargs, &amp;block) }
@@ -5154,12 +5492,12 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
       <pre class="lines">
 
 
-159
-160
-161</pre>
+166
+167
+168</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 159</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 166</span>
 
 <span class="keyword">def</span> <span class="function">rules</span>
   <span class="constant">Core</span>::<span class="constant">Rules</span>::<span class="constant">Registry</span>.instance
@@ -5264,12 +5602,12 @@ such as the Run Rules action.</p>
       <pre class="lines">
 
 
-50
-51
-52</pre>
+57
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 57</span>
 
 <span class="keyword">def</span> <span class="function">script</span>(name = <span class="predefined-constant">nil</span>, <span class="key">id</span>: <span class="predefined-constant">nil</span>, **kwargs, &amp;block)
   rules.build { script(name, <span class="key">id</span>: id, **kwargs, &amp;block) }
@@ -5385,12 +5723,12 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-150
-151
-152</pre>
+157
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 150</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 157</span>
 
 <span class="keyword">def</span> <span class="function">shared_cache</span>
   <span class="global-variable">$sharedCache</span>
@@ -5482,20 +5820,20 @@ states.restore</code></pre>
       <pre class="lines">
 
 
-391
-392
-393
-394
-395
-396
-397
-398
-399
-400
-401</pre>
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 391</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 525</span>
 
 <span class="keyword">def</span> <span class="function">store_states</span>(*items)
   items = items.flatten.map <span class="keyword">do</span> |item|
@@ -5569,15 +5907,129 @@ things[<span class="string"><span class="delimiter">'</span><span class="content
       <pre class="lines">
 
 
-214
-215
-216</pre>
+221
+222
+223</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 214</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 221</span>
 
 <span class="keyword">def</span> <span class="function">things</span>
   <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Registry</span>.instance
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="throttle_for-class_method">
+  
+    .<strong>throttle_for</strong>(duration, id: nil, &amp;block)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Rate-limits block executions by delaying calls and only executing the last
+call within the given duration.</p>
+<p>When throttle_for is called, it will hold from executing the block and start
+a fixed timer for the given duration. Should more calls occur during
+this time, keep holding and once the wait time is over, execute the block.</p>
+<p><span class='object_link'><a href="#throttle_for-class_method" title="OpenHAB::DSL.throttle_for (method)">throttle_for</a></span> will execute the block after it had waited for the given duration,
+regardless of how frequently <code>throttle_for</code> was called.
+In contrast, <span class='object_link'><a href="#debounce_for-class_method" title="OpenHAB::DSL.debounce_for (method)">debounce_for</a></span> will wait until there is a minimum interval
+between two triggers.</p>
+<p><span class='object_link'><a href="#throttle_for-class_method" title="OpenHAB::DSL.throttle_for (method)">throttle_for</a></span> is ideal in situations where regular status updates need to be made
+for frequently changing values. It is also useful when a rule responds to triggers
+from multiple related items that are updated at around the same time. Instead of
+executing the rule multiple times, <span class='object_link'><a href="#throttle_for-class_method" title="OpenHAB::DSL.throttle_for (method)">throttle_for</a></span> will wait for a pre-set amount
+of time since the first group of triggers occurred before executing the rule.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>id</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'>Object</span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>ID to associate with this call.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>block</span>
+      
+      
+        <span class='type'>(<tt>Block</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The block to be throttled.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>duration</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="CoreExt/Java/Duration.html" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The minimum amount of time to wait inbetween rule
+executions.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="DSL/Rules/BuilderDSL.html#debounce_for-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#debounce_for (method)">Rule builder's debounce_for for a detailed description</a></span></li>
+    
+      <li><span class='object_link'><a href="DSL/Rules/BuilderDSL.html#throttle_for-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#throttle_for (method)">OpenHAB::DSL::Rules::BuilderDSL#throttle_for</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+474
+475
+476</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 474</span>
+
+<span class="keyword">def</span> <span class="function">throttle_for</span>(duration, <span class="key">id</span>: <span class="predefined-constant">nil</span>, &amp;block)
+  debounce(<span class="key">for</span>: duration, <span class="key">id</span>: id, &amp;block)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -5622,12 +6074,12 @@ things[<span class="string"><span class="delimiter">'</span><span class="content
       <pre class="lines">
 
 
-222
-223
-224</pre>
+229
+230
+231</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 222</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 229</span>
 
 <span class="keyword">def</span> <span class="function">timers</span>
   <span class="constant">TimerManager</span>.instance
@@ -5880,23 +6332,23 @@ unit(<span class="string"><span class="delimiter">'</span><span class="content">
       <pre class="lines">
 
 
-548
-549
-550
-551
-552
-553
-554
-555
-556
-557
-558
-559
-560
-561</pre>
+682
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694
+695</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 548</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 682</span>
 
 <span class="keyword">def</span> <span class="function">unit</span>(*units)
   <span class="keyword">if</span> units.length == <span class="integer">1</span> &amp;&amp; units.first.is_a?(javax.measure.Dimension)
@@ -6072,19 +6524,19 @@ unit!
       <pre class="lines">
 
 
-604
-605
-606
-607
-608
-609
-610
-611
-612
-613</pre>
+738
+739
+740
+741
+742
+743
+744
+745
+746
+747</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 604</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 738</span>
 
 <span class="keyword">def</span> <span class="function">unit!</span>(*units)
   units = units.each_with_object({}) <span class="keyword">do</span> |unit, r|
@@ -6106,7 +6558,7 @@ unit!
 </div>
 
         <footer>
-  Generated on Sun Dec 25 18:41:31 2022 by
+  Generated on Sun Dec 25 19:30:36 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

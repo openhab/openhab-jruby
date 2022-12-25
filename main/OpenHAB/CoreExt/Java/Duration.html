@@ -1925,6 +1925,19 @@
         
   
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../DSL/Debouncer.html" title="OpenHAB::DSL::Debouncer (class)">Debouncer</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   <li class="collapsed">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../DSL/Events.html" title="OpenHAB::DSL::Events (module)">Events</a></span>
@@ -2241,6 +2254,9 @@
     
   </li>
 
+  
+  
+  
   
   
   
@@ -2659,7 +2675,7 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Extensions to Duration</p>
+    <p>Extensions to <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/Duration.html" target="_parent" title="Java Duration">Java Duration</a></p>
 
 
   </div>
@@ -2732,6 +2748,29 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#positive%3F-instance_method" title="#positive? (instance method)">#<strong>positive?</strong>  &#x21d2; true, false </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns true if the duration is greater than zero.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#to_f-instance_method" title="#to_f (instance method)">#<strong>to_f</strong>  &#x21d2; Float </a>
     
 
@@ -2770,6 +2809,29 @@
 
   
     <span class="summary_desc"><div class='inline'><p>Convert to integer number of seconds.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#zero%3F-instance_method" title="#zero? (instance method)">#<strong>zero?</strong>  &#x21d2; true, false </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns true if the duration is zero length.</p>
 </div></span>
   
 </li>
@@ -2844,14 +2906,14 @@
       <pre class="lines">
 
 
-32
-33
-34
-35
-36</pre>
+51
+52
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/duration.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/duration.rb', line 51</span>
 
 <span class="keyword">def</span> <span class="function">&lt;=&gt;</span>(other)
   <span class="keyword">return</span> to_f &lt;=&gt; other <span class="keyword">if</span> other.is_a?(<span class="constant">Numeric</span>)
@@ -2916,17 +2978,74 @@
       <pre class="lines">
 
 
-44
-45
-46
-47</pre>
+63
+64
+65
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/duration.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/duration.rb', line 63</span>
 
 <span class="keyword">def</span> <span class="function">coerce</span>(other)
   <span class="keyword">return</span> [other.seconds, <span class="predefined-constant">self</span>] <span class="keyword">if</span> other.is_a?(<span class="constant">Numeric</span>)
   <span class="keyword">return</span> [other.to_i.seconds, <span class="predefined-constant">self</span>] <span class="keyword">if</span> other.is_a?(<span class="constant">Period</span>)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="positive?-instance_method">
+  
+    #<strong>positive?</strong>  &#x21d2; <tt>true</tt>, <tt>false</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns true if the duration is greater than zero.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Returns true if the duration is greater than zero.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+34
+35
+36</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/duration.rb', line 34</span>
+
+<span class="keyword">def</span> <span class="function">positive?</span>
+  <span class="predefined-constant">self</span> &gt; <span class="integer">0</span> <span class="comment"># rubocop:disable Style/NumericPredicate</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -2971,12 +3090,12 @@
       <pre class="lines">
 
 
-25
-26
-27</pre>
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/duration.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/duration.rb', line 44</span>
 
 <span class="keyword">def</span> <span class="function">to_f</span>
   to_i + (nano / <span class="float">1_000_000_000.0</span>)
@@ -3035,12 +3154,65 @@ alias_method <span class="symbol">:to_i</span>, <span class="symbol">:seconds</s
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="zero?-instance_method">
+  
+    #<strong>zero?</strong>  &#x21d2; <tt>true</tt>, <tt>false</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns true if the duration is zero length.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Returns true if the duration is zero length.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/duration.rb', line 20</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
         <footer>
-  Generated on Sun Dec 25 18:41:38 2022 by
+  Generated on Sun Dec 25 19:30:43 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
