@@ -100,6 +100,7 @@ module OpenHAB
           restore_autoupdate_items
           Mocks::PersistenceService.instance.reset
           Hooks.cache_script_extension.sharedCache.clear if DSL.shared_cache
+          DSL.persistence!(nil)
         end
       end
     end

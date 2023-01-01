@@ -189,6 +189,25 @@ RSpec.describe OpenHAB::DSL do
     end
   end
 
+  describe "#persistence" do
+    before { items.build { switch_item "Item1" } }
+
+    it "works" do
+      expect(OpenHAB::Core::Actions::PersistenceExtensions).to receive(:last_update).with(Item1, nil)
+      Item1.last_update
+      expect(OpenHAB::Core::Actions::PersistenceExtensions).to receive(:last_update).with(Item1, "influxdb")
+      persistence(:influxdb) { Item1.last_update }
+    end
+
+    it "can permanently set persistence service" do
+      expect(OpenHAB::Core::Actions::PersistenceExtensions).to receive(:last_update).with(Item1, nil)
+      Item1.last_update
+      persistence!(:influxdb)
+      expect(OpenHAB::Core::Actions::PersistenceExtensions).to receive(:last_update).with(Item1, "influxdb")
+      Item1.last_update
+    end
+  end
+
   describe "#unit" do
     it "converts all units and numbers to specific unit for all operations" do
       c = 23 | "°C"

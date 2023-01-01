@@ -604,18 +604,39 @@ module OpenHAB
     #     Item1.average_since(12.hours)
     #   end
     #
-    # @see OpenHAB::Core::Items::Persistence
-    #
-    # @param [Object] service service either as a String or a Symbol
+    # @param [Object] service Persistence service either as a String or a Symbol
     # @yield [] Block executed in context of the supplied persistence service
     # @return [Object] The return value from the block.
     #
+    # @see persistence!
+    # @see OpenHAB::Core::Items::Persistence
+    #
     def persistence(service)
-      old = Thread.current[:openhab_persistence_service]
-      Thread.current[:openhab_persistence_service] = service
+      old = persistence!(service)
       yield
     ensure
-      Thread.current[:openhab_persistence_service] = old
+      persistence!(old)
+    end
+
+    #
+    # Permanently sets the default persistence service for the current thread
+    #
+    # @note This method is only intended for use at the top level of rule
+    #   scripts. If it's used within library methods, or hap-hazardly within
+    #   rules, things can get very confusing because the prior state won't be
+    #   properly restored.
+    #
+    # @param [Object] service Persistence service either as a String or a Symbol. When nil, use
+    #   the system's default persistence service.
+    # @return [Object,nil] The previous persistence service settings, or nil when using the system's default.
+    #
+    # @see persistence
+    # @see OpenHAB::Core::Items::Persistence
+    #
+    def persistence!(service = nil)
+      old = Thread.current[:openhab_persistence_service]
+      Thread.current[:openhab_persistence_service] = service
+      old
     end
 
     #
