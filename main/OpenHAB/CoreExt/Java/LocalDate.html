@@ -3194,11 +3194,11 @@
 <span class="keyword">def</span> <span class="function">-</span>(other)
   <span class="keyword">case</span> other
   <span class="keyword">when</span> <span class="constant">Date</span>
-    <span class="constant">Period</span>.of_days(day_of_year - other.yday)
+    <span class="predefined-constant">self</span> - other.to_local_date
   <span class="keyword">when</span> <span class="constant">MonthDay</span>
     <span class="predefined-constant">self</span> - other.at_year(year)
   <span class="keyword">when</span> <span class="constant">LocalDate</span>
-    <span class="constant">Period</span>.of_days(day_of_year - other.day_of_year)
+    <span class="constant">Period</span>.between(other, <span class="predefined-constant">self</span>)
   <span class="keyword">when</span> <span class="constant">Duration</span>
     minus_days(other.to_days)
   <span class="keyword">when</span> <span class="constant">Numeric</span>
@@ -3550,7 +3550,7 @@ during conversion. <span class='object_link'><a href="ZonedDateTime.html#now-ins
 </div>
 
         <footer>
-  Generated on Sun Jan  1 00:16:32 2023 by
+  Generated on Sun Jan  1 18:47:25 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
