@@ -39,12 +39,22 @@ module OpenHAB
 
         # @return [MonthDay]
         def +(other)
-          (LocalDate.of(1900, month, day_of_month) + other).to_month_day
+          case other
+          when java.time.temporal.TemporalAmount, Numeric
+            (LocalDate.of(1900, month, day_of_month) + other).to_month_day
+          else
+            (to_local_date(other.to_local_date) + other).to_month_day
+          end
         end
 
         # @return [MonthDay, Period]
         def -(other)
-          d = (LocalDate.of(1900, month, day_of_month) - other)
+          d = case other
+              when java.time.temporal.TemporalAmount, Numeric
+                LocalDate.of(1900, month, day_of_month) - other
+              else
+                to_local_date(other.to_local_date) - other
+              end
           return d if d.is_a?(java.time.Period)
 
           d.to_month_day

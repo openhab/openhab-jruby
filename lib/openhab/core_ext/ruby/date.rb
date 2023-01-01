@@ -85,9 +85,9 @@ class Date
   #
   def coerce(other)
     return nil unless other.respond_to?(:to_date)
-    return [other.to_date(self), self] if other.method(:to_date).arity == 1
+    return [other.to_date, self] if other.method(:to_date).arity.zero?
 
-    [other.to_date, self]
+    [other.to_date(self), self]
   end
 
   remove_method :inspect

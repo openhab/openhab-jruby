@@ -18,7 +18,9 @@ module OpenHAB
         end
 
         # @return [LocalTime]
-        alias_method :to_local_time, :toLocalTime
+        def to_local_time(_context = nil)
+          toLocalTime
+        end
 
         # @return [Month]
         alias_method :to_month, :month

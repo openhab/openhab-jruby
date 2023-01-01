@@ -34,10 +34,12 @@ RSpec.describe java.time.LocalDate do
 
     it "returns a Period for another LocalDate instance" do
       expect(date - (date - 1)).to eql 1.day
+      expect(date - java.time.LocalDate.of(2021, 11, 9)).to eql 1.year
     end
 
     it "returns a Period for a Date instance" do
       expect(date - Date.new(2022, 11, 8)).to eql 1.day
+      expect(date - Date.new(2021, 11, 9)).to eql 1.year
     end
   end
 

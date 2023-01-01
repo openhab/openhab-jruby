@@ -50,7 +50,11 @@ module OpenHAB
         # Convert `other` to this class, if possible
         # @return [Array, nil]
         def coerce(other)
-          [other.send(self.class.coercion_method), self] if other.respond_to?(self.class.coercion_method)
+          coercion_method = self.class.coercion_method
+          return unless other.respond_to?(coercion_method)
+          return [other.send(coercion_method), self] if other.method(coercion_method).arity.zero?
+
+          [other.send(coercion_method, self), self]
         end
       end
     end

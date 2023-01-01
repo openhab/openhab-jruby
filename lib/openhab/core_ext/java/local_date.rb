@@ -25,11 +25,11 @@ module OpenHAB
         def -(other)
           case other
           when Date
-            Period.of_days(day_of_year - other.yday)
+            self - other.to_local_date
           when MonthDay
             self - other.at_year(year)
           when LocalDate
-            Period.of_days(day_of_year - other.day_of_year)
+            Period.between(other, self)
           when Duration
             minus_days(other.to_days)
           when Numeric
