@@ -2707,6 +2707,13 @@ run <code>Bundler.require(:test)</code>. It will first load up the openHAB depen
 and then load rules in, then drop you into IRB.</p>
 <h3 id="spec-writing-tips"><a href="#spec-writing-tips" class="header-anchor">#</a>Spec Writing Tips</h3>
 <ul>
+<li>By default ruby files are looked for in <code>$OPENHAB_CONF/automation/ruby</code> and in <code>$OPENHAB_CONF/automation/jsr223</code>. You can override and/or append to this by setting the <code>openhab_automation_search_paths</code> RSpec configuration setting in your <code>spec_helper.rb</code>. This can be useful to add staging directory for testing your rules.</li>
+</ul>
+<pre class="code ruby"><code class="ruby"><span class="constant">RSpec</span>.configure <span class="keyword">do</span> |config|
+ config.openhab_automation_search_paths += <span class="string"><span class="delimiter">&quot;</span><span class="content">/my/staging/directory</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span>
+</code></pre>
+<ul>
 <li>See <span class='object_link'><a href="OpenHAB/RSpec/Helpers.html" title="OpenHAB::RSpec::Helpers (module)">OpenHAB::RSpec::Helpers</a></span> for all helper methods available in specs.</li>
 <li>All items are reset to <span class='object_link'><a href="OpenHAB/Core/Types/UnDefType.html#NULL-constant" title="OpenHAB::Core::Types::UnDefType::NULL (constant)">NULL</a></span> before each spec.</li>
 <li><code>on_load</code> triggers are <em>not</em> honored. Items will be reset to <span class='object_link'><a href="OpenHAB/Core/Types/UnDefType.html#NULL-constant" title="OpenHAB::Core::Types::UnDefType::NULL (constant)">NULL</a></span> before
@@ -2809,7 +2816,7 @@ load_transforms
 </div></div>
 
         <footer>
-  Generated on Mon Dec 26 15:38:35 2022 by
+  Generated on Sun Jan  1 00:16:23 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

@@ -3263,7 +3263,6 @@ The addon's bundle id is used as the identifier.</p>
       <pre class="lines">
 
 
-322
 323
 324
 325
@@ -3295,10 +3294,11 @@ The addon's bundle id is used as the identifier.</p>
 351
 352
 353
-354</pre>
+354
+355</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 322</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 323</span>
 
 <span class="keyword">def</span> <span class="function">install_addon</span>(addon_id, <span class="key">wait</span>: <span class="predefined-constant">true</span>, <span class="key">ready_markers</span>: <span class="predefined-constant">nil</span>)
   addon_service = <span class="constant">OSGi</span>.service(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.addon.AddonService</span><span class="delimiter">&quot;</span></span>)
@@ -3521,18 +3521,20 @@ The addon's bundle id is used as the identifier.</p>
 281
 282
 283
-284</pre>
+284
+285</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 267</span>
 
 <span class="keyword">def</span> <span class="function">load_rules</span>
-  automation_path = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>org.openhab.core.OpenHAB.config_folder<span class="inline-delimiter">}</span></span><span class="content">/automation/ruby</span><span class="delimiter">&quot;</span></span>
+  automation_paths = Array(::<span class="constant">RSpec</span>.configuration.openhab_automation_search_paths)
+
   lib_dirs = rubylib_dirs.map { |d| <span class="constant">File</span>.join(d, <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>) }
   lib_dirs &lt;&lt; <span class="constant">File</span>.join(gem_home, <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>)
 
   <span class="constant">SuspendRules</span>.suspend_rules <span class="keyword">do</span>
-    files = <span class="constant">Dir</span>[<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>automation_path<span class="inline-delimiter">}</span></span><span class="content">/**/*.rb</span><span class="delimiter">&quot;</span></span>]
+    files = automation_paths.map { |p| <span class="constant">Dir</span>[<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>p<span class="inline-delimiter">}</span></span><span class="content">/**/*.rb</span><span class="delimiter">&quot;</span></span>] }.flatten
     files.reject! <span class="keyword">do</span> |f|
       lib_dirs.any? { |l| f.start_with?(l) }
     <span class="keyword">end</span>
@@ -3578,7 +3580,6 @@ recognized.</p>
       <pre class="lines">
 
 
-297
 298
 299
 300
@@ -3592,10 +3593,11 @@ recognized.</p>
 308
 309
 310
-311</pre>
+311
+312</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 297</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 298</span>
 
 <span class="keyword">def</span> <span class="function">load_transforms</span>
   transform_path = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>org.openhab.core.OpenHAB.config_folder<span class="inline-delimiter">}</span></span><span class="content">/transform</span><span class="delimiter">&quot;</span></span>
@@ -3659,12 +3661,12 @@ recognized.</p>
       <pre class="lines">
 
 
-357
 358
-359</pre>
+359
+360</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 357</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 358</span>
 
 <span class="keyword">def</span> <span class="function">log_file</span>
   <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>java.lang.System.get_property(<span class="string"><span class="delimiter">&quot;</span><span class="content">openhab.logdir</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">nil</span>)<span class="inline-delimiter">}</span></span><span class="content">/openhab.log</span><span class="delimiter">&quot;</span></span>
@@ -3727,15 +3729,15 @@ recognized.</p>
       <pre class="lines">
 
 
-370
 371
 372
 373
 374
-375</pre>
+375
+376</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 370</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 371</span>
 
 <span class="keyword">def</span> <span class="function">spec_log_lines</span>
   <span class="constant">File</span>.open(log_file, <span class="string"><span class="delimiter">&quot;</span><span class="content">rb</span><span class="delimiter">&quot;</span></span>) <span class="keyword">do</span> |f|
@@ -4038,7 +4040,7 @@ will just sleep for <code>duration</code></p>
 </div>
 
         <footer>
-  Generated on Mon Dec 26 15:38:36 2022 by
+  Generated on Sun Jan  1 00:16:24 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
