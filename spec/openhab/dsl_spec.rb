@@ -112,11 +112,13 @@ RSpec.describe OpenHAB::DSL do
   describe "#debounce" do
     it "works" do
       counter = 0
-      20.times do
-        debounce(for: 100.ms) { counter += 1 }
-        time_travel_and_execute_timers(10.ms)
+      Timecop.freeze do
+        20.times do
+          debounce(for: 100.ms) { counter += 1 }
+          time_travel_and_execute_timers(10.ms)
+        end
+        expect(counter).to eq 2
       end
-      expect(counter).to eq 2
     end
 
     it "returns the debouncer object" do
@@ -128,48 +130,56 @@ RSpec.describe OpenHAB::DSL do
   describe "#debounce_for" do
     it "works" do
       exec_counter = 0
-      20.times do
-        debounce_for(100.ms) { exec_counter += 1 }
-        time_travel_and_execute_timers(10.ms)
-        expect(exec_counter).to eq 0
+      Timecop.freeze do
+        20.times do
+          debounce_for(100.ms) { exec_counter += 1 }
+          time_travel_and_execute_timers(10.ms)
+          expect(exec_counter).to eq 0
+        end
+        time_travel_and_execute_timers(90.ms)
+        expect(exec_counter).to eq 1
       end
-      time_travel_and_execute_timers(90.ms)
-      expect(exec_counter).to eq 1
     end
 
     it "supports a range of period" do
       exec_counter = 0
       call_counter = 0
-      20.times do
-        debounce_for((100.ms)..(150.ms)) { exec_counter += 1 }
-        call_counter += 1
-        time_travel_and_execute_timers(10.ms)
-        expect(exec_counter).to eq (call_counter / 15).floor
+      Timecop.freeze do
+        20.times do
+          debounce_for((100.ms)..(150.ms)) { exec_counter += 1 }
+          call_counter += 1
+          time_travel_and_execute_timers(10.ms)
+          expect(exec_counter).to eq (call_counter / 15).floor
+        end
+        time_travel_and_execute_timers(90.ms)
+        expect(exec_counter).to eq 2
       end
-      time_travel_and_execute_timers(90.ms)
-      expect(exec_counter).to eq 2
     end
   end
 
   describe "#throttle_for" do
     it "works" do
       counter = 0
-      20.times do
-        throttle_for(100.ms) { counter += 1 }
-        time_travel_and_execute_timers(10.ms)
+      Timecop.freeze do
+        20.times do
+          throttle_for(100.ms) { counter += 1 }
+          time_travel_and_execute_timers(10.ms)
+        end
+        expect(counter).to eq 2
       end
-      expect(counter).to eq 2
     end
   end
 
   describe "#only_every" do
     it "works" do
       counter = 0
-      20.times do
-        only_every(100.ms) { counter += 1 }
-        time_travel_and_execute_timers(10.ms)
+      Timecop.freeze do
+        20.times do
+          only_every(100.ms) { counter += 1 }
+          time_travel_and_execute_timers(10.ms)
+        end
+        expect(counter).to eq 2
       end
-      expect(counter).to eq 2
     end
 
     it "accepts symbolic duration" do
