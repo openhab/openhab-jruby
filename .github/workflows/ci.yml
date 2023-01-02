@@ -125,6 +125,8 @@ jobs:
             jruby_version: jruby-9.4.0.0
           - openhab_version: 3.3.0
             java_version: 17
+          - openhab_version: 3.4.0
+            java_version: 17
           - openhab_version: 4.0.0-SNAPSHOT
             java_version: 11
     steps:
@@ -170,6 +172,8 @@ jobs:
         java_version:  ${{ fromJson(needs.openhab-matrix.outputs.java_matrix) }}
         exclude:
           - openhab_version: 3.3.0
+            java_version: 17
+          - openhab_version: 3.4.0
             java_version: 17
           - openhab_version: 4.0.0-SNAPSHOT
             java_version: 11
