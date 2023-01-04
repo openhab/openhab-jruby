@@ -13,10 +13,18 @@ module OpenHAB
         include Between
         include Ephemeris
 
-        class << self # rubocop:disable Lint/EmptyClass
-          # @!attribute [r] now
-          #   @return [ZonedDateTime]
-        end
+        # @!scope class
+
+        # @!attribute [r] now
+        #   @return [LocalDate]
+
+        # @!method parse(text, formatter=nil)
+        #   Converts the given text into a LocalDate.
+        #   @param [String] text The text to parse
+        #   @param [java.time.format.DateTimeFormatter] formatter The formatter to use
+        #   @return [LocalDate]
+
+        # @!scope instance
 
         # @param [TemporalAmount, LocalDate, Numeric] other
         #   If other is a Numeric, it's interpreted as days.

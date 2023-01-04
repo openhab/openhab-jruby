@@ -13,7 +13,7 @@ module OpenHAB
 
       class << self
         #
-        # @!attribute [r] rule_manager
+        # @!attribute [r] manager
         # @return [org.openhab.core.automation.RuleManager] The openHAB rule manager/engine
         #
         def manager

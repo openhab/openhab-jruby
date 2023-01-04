@@ -12,10 +12,17 @@ module OpenHAB
         include Time
         include Between
 
-        class << self # rubocop:disable Lint/EmptyClass
-          # @!attribute [r] now
-          #   @return [ZonedDateTime]
-        end
+        # @!scope class
+
+        # @!attribute [r] now
+        #   @return [ZonedDateTime]
+
+        # @!method parse(text, formatter = nil)
+        #   Parses a string into a ZonedDateTime object.
+        #
+        #   @param [String] text The text to parse.
+        #   @param [java.time.format.DateTimeFormatter] formatter The formatter to use.
+        #   @return [ZonedDateTime]
 
         # @return [LocalTime]
         def to_local_time(_context = nil)
