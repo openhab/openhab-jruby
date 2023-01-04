@@ -46,7 +46,7 @@ module OpenHAB
           rescue java.lang.StringIndexOutOfBoundsException, java.lang.IllegalArgumentException => e
             # Try Ruby's Time.parse if DateTimeType parser fails
             begin
-              ::Time.parse(time_string).to_zoned_date_time
+              DateTimeType.new(::Time.parse(time_string).to_zoned_date_time)
             rescue ArgumentError
               raise ArgumentError, e.message
             end
