@@ -218,8 +218,12 @@ module OpenHAB
             return @hash.each_key(&block) unless attached?
             return to_enum(:each_key) unless block
 
-            Provider.registry.all.each do |meta|
-              yield meta.uid.namespace if meta.uid.item_name == @item_name
+            if Provider.registry.respond_to?(:get_all_namespaces)
+              keys.each(&block)
+            else
+              Provider.registry.all.each do |meta|
+                yield meta.uid.namespace if meta.uid.item_name == @item_name
+              end
             end
             self
           end
@@ -313,6 +317,10 @@ module OpenHAB
 
           # @!visibility private
           def keys
+            if Provider.registry.respond_to?(:get_all_namespaces)
+              return Provider.registry.get_all_namespaces(@item_name)
+            end
+
             each_key.to_a
           end
 
