@@ -45,9 +45,9 @@ module OpenHAB
         # Time types need formatted as ISO8601
         # @!visibility private
         def format_type(command)
-          return Types::DateTimeType.new(command) if command.is_a?(java.time.ZonedDateTime)
+          return command if command.is_a?(Types::DateTimeType)
+          return Types::DateTimeType.new(command.to_zoned_date_time) if command.respond_to?(:to_zoned_date_time)
 
-          command = command.iso8601 if command.respond_to?(:iso8601)
           super
         end
       end
