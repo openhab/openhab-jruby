@@ -170,7 +170,7 @@ module OpenHAB
         #
         # Defers notifying openHAB of modifications to multiple attributes until the block is complete.
         #
-        # @param force [true, false] force allowing modifications to file-based items.
+        # @param [true, false] force When true, allow modifications to file-based items.
         #   Normally a FrozenError is raised when attempting to modify file-based items, since
         #   they will then be out-of-sync with the definition on disk. Advanced users may do this
         #   knowingly and intentionally though, so an escape hatch is provided to allow runtime
@@ -181,7 +181,7 @@ module OpenHAB
         # @example Modify label and tags for an item
         #   MySwitch.modify do
         #     MySwitch.label = "New Label"
-        #     MySwitch.tag = [:labeled]
+        #     MySwitch.tags = :labeled
         #   end
         #
         def modify(force: false)
@@ -191,9 +191,9 @@ module OpenHAB
           begin
             provider = self.provider
             if provider && !provider.is_a?(org.openhab.core.common.registry.ManagedProvider)
-              provider = nil
               raise FrozenError, "Cannot modify item #{name} from provider #{provider.inspect}." unless force
 
+              provider = nil
               logger.debug("Forcing modifications to non-managed item #{name}")
             end
             @modified = false
@@ -230,6 +230,29 @@ module OpenHAB
 
             @modified = true
             set_category(value)
+          end
+        end
+
+        # @!attribute [rw] tags
+        #   The item's tags
+        #   @return [Array<String>]
+        #   @overload tags
+        #     Returns the item's tags.
+        #     @return [Array<String>]
+        #   @overload tags=(values)
+        #     Sets the item's tags.
+        #
+        #     To remove all tags, assign an empty array or nil.
+        #     @param [Array<String,Symbol,Semantics::Tag>] values Tags to set.
+        #     @return [void]
+        def tags=(values)
+          modify do
+            values = DSL::Items::ItemBuilder.normalize_tags(*values)
+            next if values.to_set == tags.to_set
+
+            @modified = true
+            remove_all_tags
+            add_tags(values)
           end
         end
       end

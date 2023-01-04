@@ -183,7 +183,7 @@ here is a non-exhaustive list of significant departures from the original gem:
 * {OpenHAB::DSL::Rules::BuilderDSL#dependencies} Rule dependencies
 * A set of debounce/throttle guards for file-based rules: {OpenHAB::DSL::Rules::BuilderDSL#debounce_for debounce_for}, {OpenHAB::DSL::Rules::BuilderDSL#throttle_for throttle_for}, and {OpenHAB::DSL::Rules::BuilderDSL#only_every only_every} 
 * And for UI rules: {OpenHAB::DSL.debounce_for debounce_for}, {OpenHAB::DSL.throttle_for throttle_for}, {OpenHAB::DSL.only_every only_every}
-* Explicitly document modifying item labels and categories (where possible), and notify openHAB of the change
+* Explicitly document modifying item tags, labels and categories (where possible), and notify openHAB of the change
 
 ### Bug Fixes
 

@@ -384,7 +384,7 @@ module OpenHAB
           alias_method :to_s, :inspect
 
           #
-          # @raise [RuntimeError] if the provider is not a
+          # @raise [FrozenError] if the provider is not a
           #   {org.openhab.core.common.registry.ManagedProvider ManagedProvider} that can be updated.
           # @return [org.openhab.core.common.registry.ManagedProvider]
           #

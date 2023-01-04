@@ -187,6 +187,30 @@ module OpenHAB
           def item_factory
             @item_factory ||= org.openhab.core.library.CoreItemFactory.new
           end
+
+          #
+          # Convert the given array to an array of strings.
+          # Convert Semantics classes to their simple name.
+          #
+          # @param [String,Symbol,Semantics::Tag] tags A list of strings, symbols, or Semantics classes
+          # @return [Array] An array of strings
+          #
+          # @example
+          #   tags = normalize_tags("tag1", Semantics::LivingRoom)
+          #
+          # @!visibility private
+          def normalize_tags(*tags)
+            semantics = proc { |tag| tag.respond_to?(:java_class) && tag < Semantics::Tag }
+
+            tags.compact.map do |tag|
+              case tag
+              when String then tag
+              when Symbol then tag.to_s
+              when semantics then tag.java_class.simple_name
+              else raise ArgumentError, "`#{tag}` must be a subclass of Semantics::Tag, a `Symbol`, or a `String`."
+              end
+            end
+          end
         end
 
         # @param dimension [Symbol, nil] The unit dimension for a {NumberItem} (see {ItemBuilder#dimension})
@@ -294,18 +318,7 @@ module OpenHAB
         # @return [void]
         #
         def tag(*tags)
-          unless tags.all? do |tag|
-                   tag.is_a?(String) ||
-                   tag.is_a?(Symbol) ||
-                   (tag.is_a?(Module) && tag < Semantics::Tag)
-                 end
-            raise ArgumentError, "`tag` must be a subclass of Semantics::Tag, or a `String``."
-          end
-
-          tags.each do |tag|
-            tag = tag.name.split("::").last if tag.is_a?(Module) && tag < Semantics::Tag
-            @tags << tag.to_s
-          end
+          @tags += self.class.normalize_tags(*tags)
         end
 
         #

@@ -358,7 +358,7 @@ module OpenHAB
         #
         # Set the rule's tags.
         #
-        # @param [String, Class, Array<String, Class>] tags
+        # @param [String, Symbol, Semantics::Tag] tags A list of tags to assign to the rule.
         # @return [void]
         #
         # @example

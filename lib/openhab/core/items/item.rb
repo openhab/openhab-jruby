@@ -42,7 +42,7 @@ module OpenHAB
         #
         # @!attribute [r] groups
         #
-        # Return all groups that this item is part of
+        # Returns all groups that this item is part of
         #
         # @return [Array<Group>] All groups that this item is part of
         #
@@ -77,7 +77,7 @@ module OpenHAB
         # @example Access namespace1's configuration
         #   Item1.metadata["namespace1"]["config1"]
         #
-        # @example Safely search for the specified value - no errors are raised, only nil returned if a key in the chain doesn"t exist
+        # @example Safely search for the specified value - no errors are raised, only nil returned if a key in the chain doesn't exist
         #   Item1.metadata.dig("namespace1", "config1") # => "foo"
         #   Item1.metadata.dig("namespace2", "config1") # => nil
         #

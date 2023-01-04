@@ -4,7 +4,7 @@ RSpec.describe OpenHAB::Core::Items::Item do
   before do
     items.build do
       group_item "House" do
-        switch_item "LightSwitch", group: "NonExistent"
+        switch_item "LightSwitch", group: "NonExistent", tags: "Switch"
       end
     end
   end
@@ -18,6 +18,42 @@ RSpec.describe OpenHAB::Core::Items::Item do
   describe "#group_names" do
     it "works" do
       expect(LightSwitch.group_names.to_a).to match_array %w[House NonExistent]
+    end
+  end
+
+  describe "#tags" do
+    it "works" do
+      expect(LightSwitch.tags).to match_array %w[Switch]
+    end
+
+    it "can be set" do
+      LightSwitch.tags = "Control", "Switch"
+      expect(LightSwitch.tags).to match_array %w[Control Switch]
+    end
+
+    it "can be set to an array" do
+      LightSwitch.tags = %w[foo baz]
+      expect(LightSwitch.tags).to match_array %w[foo baz]
+    end
+
+    it "can be set using symbols" do
+      LightSwitch.tags = :Control, :Test
+      expect(LightSwitch.tags).to match_array %w[Control Test]
+    end
+
+    it "can be set with Semantics::Tag" do
+      LightSwitch.tags = Semantics::Control, Semantics::Light
+      expect(LightSwitch.tags).to match_array %w[Control Light]
+    end
+
+    it "can remove all tags with an empty array" do
+      LightSwitch.tags = []
+      expect(LightSwitch.tags).to be_empty
+    end
+
+    it "can remove all tags with nil" do
+      LightSwitch.tags = nil
+      expect(LightSwitch.tags).to be_empty
     end
   end
 
