@@ -5,7 +5,7 @@ module OpenHAB
     module Java
       java_import java.time.Period
 
-      # Extensions to Period
+      # Extensions to {java.time.Period}
       class Period
         # @!parse include TemporalAmount
 

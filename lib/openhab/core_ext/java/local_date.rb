@@ -7,7 +7,7 @@ module OpenHAB
     module Java
       java_import java.time.LocalDate
 
-      # Extensions to LocalDate
+      # Extensions to {java.time.LocalDate}
       class LocalDate
         include Time
         include Between

@@ -8,6 +8,8 @@ module OpenHAB
       java_import java.time.LocalTime
 
       #
+      # Extensions to {java.time.LocalTime}
+      #
       # @example
       #   break_time = LocalTime::NOON
       #

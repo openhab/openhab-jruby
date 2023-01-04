@@ -5,7 +5,7 @@ module OpenHAB
     module Java
       java_import java.time.temporal.TemporalAmount
 
-      # Extensions to TemporalAmount
+      # Extensions to {java.time.temporal.TemporalAmount}
       module TemporalAmount
         # Subtract `self` to {ZonedDateTime.now}
         # @return [ZonedDateTime]

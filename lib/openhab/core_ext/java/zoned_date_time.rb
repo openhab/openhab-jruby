@@ -7,7 +7,7 @@ module OpenHAB
     module Java
       ZonedDateTime = java.time.ZonedDateTime
 
-      # Extensions to ZonedDateTime
+      # Extensions to {java.time.ZonedDateTime}
       class ZonedDateTime
         include Time
         include Between

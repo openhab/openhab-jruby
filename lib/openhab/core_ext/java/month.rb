@@ -7,7 +7,7 @@ module OpenHAB
     module Java
       Month = java.time.Month
 
-      # Extensions to Month
+      # Extensions to {java.time.Month}
       class Month
         include Between
         # @!parse include Time

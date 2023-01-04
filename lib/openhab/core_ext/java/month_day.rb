@@ -7,7 +7,7 @@ module OpenHAB
     module Java
       java_import java.time.MonthDay
 
-      # Extensions to MonthDay
+      # Extensions to {java.time.MonthDay}
       class MonthDay
         include Between
         include Ephemeris
