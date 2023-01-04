@@ -36,15 +36,23 @@ module OpenHAB
         include Between
         # @!parse include Time
 
-        # @!visibility private
         class << self
+          # @!attribute [r] now
+          #   @return [LocalTime]
+
+          # @!visibility private
+          alias_method :raw_parse, :parse
+
           #
-          # Parses strings in the form "h[:mm[:ss]] [am/pm]"
+          # Parses strings in the form "h[:mm[:ss]] [am/pm]" when no formatter is given.
           #
           # @param [String] string
+          # @param [java.time.format.DateTimeFormatter] formatter The formatter to use
           # @return [LocalTime]
           #
-          def parse(string)
+          def parse(string, formatter = nil)
+            return raw_parse(string, formatter) if formatter
+
             format = /(am|pm)$/i.match?(string) ? "h[:mm[:ss][.S]][ ]a" : "H[:mm[:ss][.S]]"
             java_send(:parse, [java.lang.CharSequence, java.time.format.DateTimeFormatter],
                       string, java.time.format.DateTimeFormatterBuilder.new

@@ -17,6 +17,11 @@ RSpec.describe java.time.LocalTime do
     specify { expect { described_class.parse("17:00am") }.to raise_error ArgumentError }
     specify { expect(described_class.parse("7:30:20.12").to_s).to eql "07:30:20.120" }
     specify { expect(described_class.parse("7:30:20.12345").to_s).to eql "07:30:20.123450" }
+
+    it "can accept a formatter" do
+      formatter = java.time.format.DateTimeFormatter::ISO_OFFSET_TIME
+      expect(described_class.parse("10:15:30+00:00", formatter).to_s).to eql "10:15:30"
+    end
   end
 
   describe "#+" do
