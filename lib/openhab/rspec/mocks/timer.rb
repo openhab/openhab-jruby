@@ -17,6 +17,39 @@ module OpenHAB
         end
         ZonedDateTime.singleton_class.prepend(MockedZonedDateTime)
 
+        # @!visibility private
+        module MockedLocalDate
+          def now
+            mocked_time_stack_item = Timecop.top_stack_item
+            return super unless mocked_time_stack_item
+
+            mocked_time_stack_item.time.to_zoned_date_time.to_local_date
+          end
+        end
+        LocalDate.singleton_class.prepend(MockedLocalDate)
+
+        # @!visibility private
+        module MockedLocalTime
+          def now
+            mocked_time_stack_item = Timecop.top_stack_item
+            return super unless mocked_time_stack_item
+
+            mocked_time_stack_item.time.to_zoned_date_time.to_local_time
+          end
+        end
+        LocalTime.singleton_class.prepend(MockedLocalTime)
+
+        # @!visibility private
+        module MockedMonthDay
+          def now
+            mocked_time_stack_item = Timecop.top_stack_item
+            return super unless mocked_time_stack_item
+
+            mocked_time_stack_item.time.to_zoned_date_time.to_month_day
+          end
+        end
+        MonthDay.singleton_class.prepend(MockedMonthDay)
+
         # extend Timecop to support Java time classes
         # @!visibility private
         module TimeCopStackItem
