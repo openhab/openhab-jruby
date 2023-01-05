@@ -318,7 +318,7 @@ module OpenHAB
           # @!visibility private
           def keys
             if Provider.registry.respond_to?(:get_all_namespaces)
-              return Provider.registry.get_all_namespaces(@item_name)
+              return Provider.registry.get_all_namespaces(@item_name).to_a
             end
 
             each_key.to_a
