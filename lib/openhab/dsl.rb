@@ -523,9 +523,6 @@ module OpenHAB
     #   end # the states will be restored here
     #
     def store_states(*items)
-      items = items.flatten.map do |item|
-        item.respond_to?(:__getobj__) ? item.__getobj__ : item
-      end
       states = Core::Items::StateStorage.from_items(*items)
       if block_given?
         yield

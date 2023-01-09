@@ -12,13 +12,13 @@ module OpenHAB
         #
         # Create a StateStorage object that stores the states of the given items
         #
-        # @param [Array<Item>] items A list of items
+        # @param [Item] items A list of items
         #
         # @return [StateStorage] A state storage object
         #
         # @!visibility private
         def self.from_items(*items)
-          StateStorage.new($events.store_states(*items).to_h)
+          StateStorage.new($events.store_states(*items.map(&:to_java)).to_h)
         end
 
         #

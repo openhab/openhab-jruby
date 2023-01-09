@@ -120,6 +120,11 @@ module OpenHAB
         # define a sub-class of EventSubscriber as a child class of the including class
         klass.const_set(:EventSubscriber, Class.new(EventSubscriber))
       end
+
+      # @!visibility private
+      def to_java
+        __getobj__
+      end
     end
   end
 end
