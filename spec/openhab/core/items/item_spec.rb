@@ -164,6 +164,50 @@ RSpec.describe OpenHAB::Core::Items::Item do
     expect(Switch1).not_to eq Switch3
   end
 
+  describe "#label=" do
+    it "calls update on the provider" do
+      expect(LightSwitch.provider).to receive(:update)
+      LightSwitch.label = "Light Switch"
+    end
+
+    it "doesn't call update if no change was made" do
+      LightSwitch.label = "Light Switch"
+      expect(LightSwitch.provider).not_to receive(:update)
+      LightSwitch.label = "Light Switch"
+    end
+
+    it "raises an error if the item's provider doesn't support update" do
+      expect(LightSwitch.provider).not_to receive(:update)
+      allow(LightSwitch).to receive(:provider).and_return(Object.new)
+      expect { LightSwitch.label = "Light Switch" }.to raise_error(FrozenError)
+    end
+
+    it "ignores provider check if the item doesn't yet have a provider" do
+      expect(LightSwitch.provider).not_to receive(:update)
+      allow(LightSwitch).to receive(:provider).and_return(nil)
+      LightSwitch.label = "Light Switch"
+      expect(LightSwitch.label).to eql "Light Switch"
+    end
+  end
+
+  describe "#modify" do
+    it "batches multiple provider update calls" do
+      expect(LightSwitch.provider).to receive(:update).once
+      LightSwitch.modify do
+        LightSwitch.label = "Light Switch 1"
+        LightSwitch.label = "Light Switch 2"
+      end
+    end
+
+    it "doesn't call update if the item's provider doesn't support it and we're forced" do
+      expect(LightSwitch.provider).not_to receive(:update)
+      allow(LightSwitch).to receive(:provider).and_return(nil)
+      LightSwitch.modify(force: true) do
+        LightSwitch.label = "Light Switch"
+      end
+    end
+  end
+
   describe "entity lookup" do
     it "doesn't confuse a method call with an item" do
       items.build { group_item "gGroup" }

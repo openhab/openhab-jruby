@@ -23,4 +23,10 @@ RSpec.describe OpenHAB::Core::Items::Registry do
     expect(items).not_to include("SimmerTest")
     expect(items["SimmerTest"]).to be_nil
   end
+
+  describe "#provider" do
+    it "works" do
+      expect(SwitchTwo.provider).to be_a OpenHAB::Core::Items::Provider
+    end
+  end
 end

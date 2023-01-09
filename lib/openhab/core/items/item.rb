@@ -24,10 +24,6 @@ module OpenHAB
         #   The item's name.
         #   @return [String]
 
-        # @!attribute [r] label
-        #   The item's descriptive label.
-        #   @return [String, nil]
-
         # @!attribute [r] accepted_command_types
         #   @return [Array<Class>] An array of {Command}s that can be sent as commands to this item
 
@@ -35,7 +31,7 @@ module OpenHAB
         #   @return [Array<Class>] An array of {State}s that can be sent as commands to this item
 
         #
-        # The item's {#label} if one is defined, otherwise it's {#name}.
+        # The item's {GenericItem#label label} if one is defined, otherwise its {#name}.
         #
         # @return [String]
         #
@@ -204,6 +200,11 @@ module OpenHAB
           meta = metadata.to_h
           s += " metadata=#{meta.inspect}" unless meta.empty?
           "#{s}>"
+        end
+
+        # @return [org.openhab.core.common.registry.Provider]
+        def provider
+          Provider.registry.provider_for(self)
         end
 
         private

@@ -166,6 +166,72 @@ module OpenHAB
 
           type.to_s
         end
+
+        #
+        # Defers notifying openHAB of modifications to multiple attributes until the block is complete.
+        #
+        # @param force [true, false] force allowing modifications to file-based items.
+        #   Normally a FrozenError is raised when attempting to modify file-based items, since
+        #   they will then be out-of-sync with the definition on disk. Advanced users may do this
+        #   knowingly and intentionally though, so an escape hatch is provided to allow runtime
+        #   modifications.
+        # @yield
+        # @return [Object] the block's return value
+        #
+        # @example Modify label and tags for an item
+        #   MySwitch.modify do
+        #     MySwitch.label = "New Label"
+        #     MySwitch.tag = [:labeled]
+        #   end
+        #
+        def modify(force: false)
+          raise ArgumentError, "you must pass a block to modify" unless block_given?
+          return yield if instance_variable_defined?(:@modifying) && @modifying
+
+          begin
+            provider = self.provider
+            if provider && !provider.is_a?(org.openhab.core.common.registry.ManagedProvider)
+              provider = nil
+              raise FrozenError, "Cannot modify item #{name} from provider #{provider.inspect}." unless force
+
+              logger.debug("Forcing modifications to non-managed item #{name}")
+            end
+            @modified = false
+            @modifying = true
+
+            r = yield
+
+            provider&.update(self) if @modified
+            r
+          ensure
+            @modifying = false
+          end
+        end
+
+        # @!attribute [rw] label
+        # The item's descriptive label.
+        # @return [String]
+        def label=(value)
+          modify do
+            next if label == value
+
+            @modified = true
+            set_label(value)
+          end
+        end
+
+        # @!attribute [rw] category
+        # The item's category.
+        # @return [String]
+        def category=(value)
+          modify do
+            value = value&.to_s
+            next if category == value
+
+            @modified = true
+            set_category(value)
+          end
+        end
       end
     end
   end

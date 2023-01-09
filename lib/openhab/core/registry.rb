@@ -19,7 +19,11 @@ module OpenHAB
       #
       def provider_for(key)
         elementReadLock.lock
-        return nil unless (element = identifierToElement[key])
+        if key.is_a?(org.openhab.core.common.registry.Identifiable)
+          element = key
+        else
+          return nil unless (element = identifierToElement[key])
+        end
 
         elementToProvider[element]
       ensure
