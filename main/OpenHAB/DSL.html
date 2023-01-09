@@ -3997,16 +3997,16 @@ ensure_states <span class="keyword">do</span>
       <pre class="lines">
 
 
+585
+586
+587
 588
 589
 590
-591
-592
-593
-594</pre>
+591</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 588</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 585</span>
 
 <span class="keyword">def</span> <span class="function">ensure_states</span>
   old = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_ensure_states</span>]
@@ -4184,6 +4184,9 @@ for <span class='object_link'><a href="CoreExt/Ephemeris.html" title="OpenHAB::C
       <pre class="lines">
 
 
+916
+917
+918
 919
 920
 921
@@ -4191,13 +4194,10 @@ for <span class='object_link'><a href="CoreExt/Ephemeris.html" title="OpenHAB::C
 923
 924
 925
-926
-927
-928
-929</pre>
+926</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 919</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 916</span>
 
 <span class="keyword">def</span> <span class="function">holiday_file</span>(*args)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">wrong number of arguments (given </span><span class="inline"><span class="inline-delimiter">#{</span>args.length<span class="inline-delimiter">}</span></span><span class="content">, expected 0..1)</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> args.length &gt; <span class="integer">1</span>
@@ -4295,12 +4295,12 @@ for <span class='object_link'><a href="CoreExt/Ephemeris.html" title="OpenHAB::C
       <pre class="lines">
 
 
-944
-945
-946</pre>
+941
+942
+943</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 944</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 941</span>
 
 <span class="keyword">def</span> <span class="function">holiday_file!</span>(file = <span class="predefined-constant">nil</span>)
   <span class="constant">Thread</span>.current[<span class="symbol">:openhab_holiday_file</span>] = file
@@ -4612,15 +4612,15 @@ for method calls inside the block</p>
       <pre class="lines">
 
 
+611
+612
+613
 614
 615
-616
-617
-618
-619</pre>
+616</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 614</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 611</span>
 
 <span class="keyword">def</span> <span class="function">persistence</span>(service)
   old = persistence!(service)
@@ -4716,14 +4716,14 @@ the system's default persistence service.</p>
       <pre class="lines">
 
 
+633
+634
+635
 636
-637
-638
-639
-640</pre>
+637</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 636</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 633</span>
 
 <span class="keyword">def</span> <span class="function">persistence!</span>(service = <span class="predefined-constant">nil</span>)
   old = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_persistence_service</span>]
@@ -5193,19 +5193,19 @@ recommended that you use a Proc, not a Lambda, for permissive argument matching.
       <pre class="lines">
 
 
+787
+788
+789
 790
 791
 792
 793
 794
 795
-796
-797
-798
-799</pre>
+796</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 790</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 787</span>
 
 <span class="keyword">def</span> <span class="function">provider</span>(*args, **kwargs)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">You must give a block to set the provider for the duration of</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block_given?
@@ -5311,6 +5311,9 @@ recommended that you use a Proc, not a Lambda, for permissive argument matching.
       <pre class="lines">
 
 
+829
+830
+831
 832
 833
 834
@@ -5367,13 +5370,10 @@ recommended that you use a Proc, not a Lambda, for permissive argument matching.
 885
 886
 887
-888
-889
-890
-891</pre>
+888</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 832</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 829</span>
 
 <span class="keyword">def</span> <span class="function">provider!</span>(*providers, **providers_by_type)
   thread_providers = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_providers</span>] ||= {}
@@ -5952,18 +5952,12 @@ states.restore</code></pre>
 529
 530
 531
-532
-533
-534
-535</pre>
+532</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 525</span>
 
 <span class="keyword">def</span> <span class="function">store_states</span>(*items)
-  items = items.flatten.map <span class="keyword">do</span> |item|
-    item.respond_to?(<span class="symbol">:__getobj__</span>) ? item.__getobj__ : item
-  <span class="keyword">end</span>
   states = <span class="constant">Core</span>::<span class="constant">Items</span>::<span class="constant">StateStorage</span>.from_items(*items)
   <span class="keyword">if</span> block_given?
     <span class="keyword">yield</span>
@@ -6457,6 +6451,9 @@ unit(<span class="string"><span class="delimiter">'</span><span class="content">
       <pre class="lines">
 
 
+700
+701
+702
 703
 704
 705
@@ -6467,13 +6464,10 @@ unit(<span class="string"><span class="delimiter">'</span><span class="content">
 710
 711
 712
-713
-714
-715
-716</pre>
+713</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 703</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 700</span>
 
 <span class="keyword">def</span> <span class="function">unit</span>(*units)
   <span class="keyword">if</span> units.length == <span class="integer">1</span> &amp;&amp; units.first.is_a?(javax.measure.Dimension)
@@ -6649,19 +6643,19 @@ unit!
       <pre class="lines">
 
 
+756
+757
+758
 759
 760
 761
 762
 763
 764
-765
-766
-767
-768</pre>
+765</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 759</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 756</span>
 
 <span class="keyword">def</span> <span class="function">unit!</span>(*units)
   units = units.each_with_object({}) <span class="keyword">do</span> |unit, r|
@@ -6683,7 +6677,7 @@ unit!
 </div>
 
         <footer>
-  Generated on Mon Jan  9 23:03:35 2023 by
+  Generated on Mon Jan  9 23:17:52 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
