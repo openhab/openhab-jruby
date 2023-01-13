@@ -151,8 +151,9 @@ here is a non-exhaustive list of significant departures from the original gem:
   See https://github.com/openhab/openhab-core/issues/3169 for more details.
 * `#on_start` trigger was renamed to {OpenHAB::DSL::Rules::BuilderDSL#on_load #on_load} and its 'run_on_start' parameter removed. 
   {OpenHAB::DSL::Rules::BuilderDSL#on_start #on_start} is now a trigger for `core.SystemStartlevelTrigger`.
-* {OpenHAB::Core::Actions::Voice.say Voice.say}, {OpenHAB::Core::Actions::Audio.play_sound Audio.play_sound}, and {OpenHAB::Core::Actions::Audio.play_stream Audio.play_stream} are no longer available at the top level.
-  You must access them from their Action class.
+* `say`, `play_sound`, and `play_stream` are no longer available at the top level.
+  You must access them from their Action class: {OpenHAB::Core::Actions::Voice.say Voice.say}, 
+  {OpenHAB::Core::Actions::Audio.play_sound Audio.play_sound}, and {OpenHAB::Core::Actions::Audio.play_stream Audio.play_stream}
 
 ### Features
 
