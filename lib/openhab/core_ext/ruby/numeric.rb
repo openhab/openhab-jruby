@@ -151,7 +151,12 @@ module OpenHAB
         # @return [QuantityType] `self` as a {QuantityType} of the supplied Unit
         #
         def |(unit) # rubocop:disable Naming/BinaryOperatorParameterName
-          unit = org.openhab.core.types.util.UnitUtils.parse_unit(unit.to_str) if unit.respond_to?(:to_str)
+          if unit.respond_to?(:to_str)
+            parsed_unit = org.openhab.core.types.util.UnitUtils.parse_unit(unit.to_str)
+            raise ArgumentError, "Unknown unit #{unit}" unless parsed_unit
+
+            unit = parsed_unit
+          end
 
           return super unless unit.is_a?(javax.measure.Unit)
 
