@@ -47,6 +47,7 @@ module OpenHAB
         def format_type(command)
           return command if command.is_a?(Types::DateTimeType)
           return Types::DateTimeType.new(command.to_zoned_date_time) if command.respond_to?(:to_zoned_date_time)
+          return Types::DateTimeType.new(DSL.try_parse_time_like(command.to_str)) if command.respond_to?(:to_str)
 
           super
         end
