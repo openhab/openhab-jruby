@@ -1101,7 +1101,10 @@ module OpenHAB
         #   :saturday,
         #   :sunday] value
         #   When to execute rule.
-        # @param [LocalTime, String, nil] at What time of day to execute rule
+        # @param [LocalTime, String, Core::Items::DateTimeItem, nil] at What time of day to execute rule
+        #   If `value` is `:day`, `at` can be a {Core::Items::DateTimeItem DateTimeItem}, and
+        #   the trigger will run every day at the (time only portion of) current state of the
+        #   item. If the item is {NULL} or {UNDEF}, the trigger will not run.
         # @param [Object] attach Object to be attached to the trigger
         # @return [void]
         #
@@ -1157,10 +1160,22 @@ module OpenHAB
         #     run { logger.info "Happy Valentine's Day!" }
         #   end
         #
+        # @example
+        #   rule "Every day at sunset" do
+        #     every :day, at: Sunset_Time
+        #     run { logger.info "It's getting dark" }
+        #   end
+        #
         def every(value, at: nil, attach: nil)
           return every(java.time.MonthDay.parse(value), at: at, attach: attach) if value.is_a?(String)
 
           @ruby_triggers << [:every, value, { at: at }]
+
+          if value == :day && at.is_a?(Item)
+            raise ArgumentError, "Attachments are not supported with dynamic datetime triggers" unless attach.nil?
+
+            return trigger("timer.DateTimeTrigger", itemName: at.name, timeOnly: true)
+          end
 
           cron_expression = case value
                             when Symbol then Cron.from_symbol(value, at)
@@ -1500,6 +1515,36 @@ module OpenHAB
         def event(topic, source: nil, types: nil, attach: nil)
           types = types.join(",") if types.is_a?(Enumerable)
           trigger("core.GenericEventTrigger", eventTopic: topic, eventSource: source, eventTypes: types, attach: attach)
+        end
+
+        #
+        # Creates a trigger based on the time stored in a {DateTimeItem}
+        #
+        # The trigger will dynamically update any time the state of the item
+        # changes. If the item is {NULL} or {UNDEF}, the trigger will not run.
+        #
+        # @param [Item, String, Symbol] item The item (or it's name)
+        # @return [void]
+        #
+        # @example
+        #   rule "say hello when the kids get home from school" do
+        #     at HomeFromSchool_Time
+        #     run do
+        #       KitchenEcho_TTS << "hi kids! how was school?"
+        #     end
+        #   end
+        #
+        #   rule "set home from school time" do
+        #     on_load
+        #     every :day, at: "5:00am" do
+        #     run do
+        #       HomeFromSchool_Time.ensure.update(school_day? ? LocalTime.parse("3:30pm") : NULL)
+        #     end
+        #   end
+        #
+        def at(item)
+          item = item.name if item.is_a?(Item)
+          trigger("timer.DateTimeTrigger", itemName: item.to_s)
         end
 
         #

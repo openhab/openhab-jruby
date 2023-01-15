@@ -998,7 +998,23 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       end
     end
 
-    describe "#every" do # rubocop:disable RSpec/EmptyExampleGroup
+    describe "#at" do
+      it "works" do
+        items.build { date_time_item MyDateTimeItem }
+
+        triggered = false
+        rule do
+          at MyDateTimeItem
+          run { triggered = true }
+        end
+        MyDateTimeItem.update(Time.now + 2)
+        wait(4.seconds) do
+          expect(triggered).to be true
+        end
+      end
+    end
+
+    describe "#every" do
       def self.generate(name, cron_expression, *every_args, attach: nil, **kwargs)
         it name, caller: caller do
           rspec = self
@@ -1019,6 +1035,24 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
                at: LocalTime.parse("12:00"))
       generate("can use MonthDay as a string", "0 0 12 17 11 ? *", "11-17", at: LocalTime.parse("12:00"))
       generate("can use LocalTime a string", "0 0 12 17 11 ? *", MonthDay.parse("11-17"), at: "12:00")
+
+      it "supports dynamic `at`" do
+        items.build { date_time_item MyDateTimeItem }
+
+        triggered = false
+        every(:day, at: MyDateTimeItem) { triggered = true }
+
+        MyDateTimeItem.update(Time.now + 2 - 2.days)
+        wait(4.seconds) do
+          expect(triggered).to be true
+        end
+      end
+
+      it "complains about dynamic at that's not daily" do
+        items.build { date_time_item MyDateTimeItem }
+
+        expect { every :month, at: MyDateTimeItem }.to raise_error(ArgumentError)
+      end
     end
 
     # rubocop:disable RSpec/InstanceVariable

@@ -52,6 +52,8 @@ module OpenHAB
           return to_f <=> other if other.is_a?(Numeric)
 
           super
+        rescue TypeError
+          nil
         end
 
         #
