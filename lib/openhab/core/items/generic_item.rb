@@ -163,6 +163,7 @@ module OpenHAB
           # make sure to use Type, because this method is used for both
           # #update and #command
           return type if type.is_a?(Types::Type)
+          return NULL if type.nil?
 
           type.to_s
         end

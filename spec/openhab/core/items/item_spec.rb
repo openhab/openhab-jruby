@@ -88,6 +88,12 @@ RSpec.describe OpenHAB::Core::Items::Item do
     it "returns `self` (wrapped in a proxy)" do
       expect(LightSwitch.update(ON)).to be LightSwitch
     end
+
+    it "interprets `nil` as `NULL`" do
+      LightSwitch.on
+      LightSwitch.update(nil)
+      expect(LightSwitch).to be_null
+    end
   end
 
   describe "#undef?" do

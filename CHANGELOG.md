@@ -205,6 +205,7 @@ here is a non-exhaustive list of significant departures from the original gem:
 * Avoid stack overflow issues when all of ActiveSupport is required.
 * Don't swallow exceptions inside of `rule` blocks - just let them propagate up.
 * Fix changed duration when only the `from` state is given
+* Updating an item with `nil` sets it to `NULL`, not an empty string (which will be ignored by other item types).
 
 ## [4.45.2](https://github.com/boc-tothefuture/openhab-jruby/compare/4.45.1...4.45.2) (2022-10-02)
 
