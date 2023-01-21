@@ -19,6 +19,7 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
         variance_since
       ].each do |method|
         item.__send__(method, 1.minute.ago)
+        item.__send__(method, 1.minute.ago, :influxdb)
       end
 
       %i[
@@ -26,6 +27,7 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
         changed_between?
         delta_between
         deviation_between
+        evolution_rate
         maximum_between
         minimum_between
         sum_between
@@ -33,6 +35,7 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
         variance_between
       ].each do |method|
         item.__send__(method, 2.minutes.ago, 1.minute.ago)
+        item.__send__(method, 2.minutes.ago, 1.minute.ago, :influxdb)
       end
     end.not_to raise_error
   end

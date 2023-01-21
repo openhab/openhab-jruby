@@ -77,7 +77,6 @@ module OpenHAB
                               %i[changed_since?
                                  count_since
                                  count_state_changes_since
-                                 evolution_rate
                                  historic_state
                                  maximum_since
                                  minimum_since
@@ -183,11 +182,22 @@ module OpenHAB
         #   @return [true,false] True if the item's state changed between `start` and `finish`, False otherwise.
 
         # @!method evolution_rate(timestamp, service = nil)
-        #   Returns the evolution rate of the item's state since the given time
-        #   @param [#to_zoned_date_time] timestamp The point in time from which to search
-        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   Returns the evolution rate of the item's state
         #   @return [DecimalType, QuantityType, nil] The evolution rate since `timestamp`,
         #     or nil if no previous state could be found.
+        #   @overload evolution_rate(timestamp, service = nil)
+        #     Returns the evolution rate of the item's state since the given time
+        #     @param [#to_zoned_date_time] timestamp The point in time from which to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #     @return [DecimalType, QuantityType, nil] The evolution rate since `timestamp`,
+        #       or nil if no previous state could be found.
+        #   @overload evolution_rate(start, finish, service = nil)
+        #     Returns the evolution rate of the item's state between two points in time
+        #     @param [#to_zoned_date_time] start The point in time from which to search
+        #     @param [#to_zoned_date_time] finish The point in time to which to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #     @return [DecimalType, QuantityType, nil] The evolution rate between `start` and `finish`,
+        #       or nil if no previous state could be found.
 
         # @!method historic_state(timestamp, service = nil)
         #   Returns the the item's state at the given time
@@ -315,6 +325,40 @@ module OpenHAB
             )
             wrap_result(result, method)
           end
+        end
+
+        # evolution_rate's "between" method is overloaded with the same name
+        method = :evolution_rate
+        define_method(method) do |start, finish_or_service = nil, service = nil|
+          if service.nil?
+            if finish_or_service.respond_to?(:to_zoned_date_time)
+              service = persistence_service
+              finish = finish_or_service
+            else
+              service = finish_or_service || persistence_service
+              finish = nil
+            end
+          else
+            finish = finish_or_service
+          end
+
+          result = if finish
+                     Actions::PersistenceExtensions.public_send(
+                       method,
+                       self,
+                       start.to_zoned_date_time,
+                       finish.to_zoned_date_time,
+                       service&.to_s
+                     )
+                   else
+                     Actions::PersistenceExtensions.public_send(
+                       method,
+                       self,
+                       start.to_zoned_date_time,
+                       service&.to_s
+                     )
+                   end
+          wrap_result(result, method)
         end
 
         alias_method :state_changes_since, :count_state_changes_since
