@@ -185,7 +185,7 @@ module OpenHAB
         #
         # @return [Array<Thing>] An array of things or an empty array
         def things
-          registry = OSGi.service("org.openhab.core.thing.link.ItemChannelLinkRegistry")
+          registry = Things::Links::Provider.registry
           channels = registry.get_bound_channels(name).to_a
           channels.map(&:thing_uid).uniq.map { |tuid| EntityLookup.lookup_thing(tuid) }.compact
         end

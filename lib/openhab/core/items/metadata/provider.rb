@@ -32,8 +32,8 @@ module OpenHAB
           # @return [void]
           #
           def remove_item_metadata(item_name)
-            @elements.delete_if do |k, v|
-              next unless k.item_name == item_name
+            @elements.delete_if do |_k, v|
+              next unless v.uid.item_name == item_name
 
               notify_listeners_about_removed_element(v)
               true

@@ -17,9 +17,12 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
   end
 
   it "can remove an item" do
-    items.build { switch_item "MySwitchItem" }
+    items.build { switch_item "MySwitchItem", autoupdate: false, channel: "binding:type:thing:channel" }
     items.remove(MySwitchItem)
     expect(items["MySwitchItem"]).to be_nil
+    # make sure metadata and channel links also got cleaned up
+    expect(OpenHAB::Core::Items::Metadata::Provider.instance.all).to be_empty
+    expect(OpenHAB::Core::Things::Links::Provider.instance.all).to be_empty
   end
 
   it "can create items in a group" do

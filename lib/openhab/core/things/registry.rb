@@ -61,6 +61,10 @@ module OpenHAB
             raise "Cannot remove thing #{thing_uid} from non-managed provider #{provider.inspect}"
           end
 
+          Links::Provider.registry.providers.grep(ManagedProvider).each do |managed_provider|
+            managed_provider.remove_links_for_thing(thing_uid)
+          end
+
           provider.remove(thing_uid)
         end
       end

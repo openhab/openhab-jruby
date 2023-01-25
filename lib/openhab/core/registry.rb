@@ -4,7 +4,7 @@ module OpenHAB
   module Core
     Registry = org.openhab.core.common.registry.AbstractRegistry
 
-    Registry.field_reader :elementToProvider, :elementReadLock, :identifierToElement
+    Registry.field_reader :elementToProvider, :elementReadLock, :identifierToElement, :providerToElements
 
     # @abstract
     #
@@ -28,6 +28,12 @@ module OpenHAB
         elementToProvider[element]
       ensure
         elementReadLock.unlock
+      end
+
+      # @!attribute [r] providers
+      # @return [Enumerable<org.openhab.core.common.registry.Provider>]
+      def providers
+        providerToElements.keys
       end
     end
   end

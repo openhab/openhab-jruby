@@ -33,6 +33,44 @@ module OpenHAB
               current.add(link)
             end
           end
+
+          #
+          # Removes all links to a given item.
+          #
+          # @param [String] item_name
+          # @return [Integer] how many links were removed
+          #
+          def remove_links_for_item(item_name)
+            count = 0
+            @elements.delete_if do |_k, v|
+              next unless v.item_name == item_name
+
+              count += 1
+              notify_listeners_about_removed_element(v)
+              true
+            end
+            count
+          end
+          alias_method :removeLinksForItem, :remove_links_for_item
+
+          #
+          # Removes all links to a given thing.
+          #
+          # @param [ThingUID] thing_uid
+          # @return [Integer] how many links were removed
+          #
+          def remove_links_for_thing(thing_uid)
+            count = 0
+            @elements.delete_if do |_k, v|
+              next unless v.linked_uid.thing_uid == thing_uid
+
+              count += 1
+              notify_listeners_about_removed_element(v)
+              true
+            end
+            count
+          end
+          alias_method :removeLinksForThing, :remove_links_for_thing
         end
       end
     end
