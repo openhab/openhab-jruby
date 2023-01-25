@@ -60,7 +60,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'ci skip')"
     outputs:
       openhab_matrix: |
-        ["3.4.0"]
+        ["3.4.1"]
       java_matrix: |
         ["11", "17"]
       snapshot_date: |
@@ -167,7 +167,7 @@ jobs:
         openhab_version: ${{ fromJson(needs.openhab-matrix.outputs.openhab_matrix) }}
         java_version:  ${{ fromJson(needs.openhab-matrix.outputs.java_matrix) }}
         exclude:
-          - openhab_version: 3.4.0
+          - openhab_version: 3.4.1
             java_version: 17
           - openhab_version: 4.0.0-SNAPSHOT
             java_version: 11
