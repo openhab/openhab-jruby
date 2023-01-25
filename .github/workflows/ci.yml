@@ -60,7 +60,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'ci skip')"
     outputs:
       openhab_matrix: |
-        ["3.3.0", "3.4.0"]
+        ["3.4.0"]
       java_matrix: |
         ["11", "17"]
       snapshot_date: |
@@ -121,10 +121,6 @@ jobs:
         java_version:  ${{ fromJson(needs.openhab-matrix.outputs.java_matrix) }}
         jruby_version: ["jruby-9.3.9.0", "jruby-9.4.0.0"]
         exclude:
-          - openhab_version: 3.3.0
-            jruby_version: jruby-9.4.0.0
-          - openhab_version: 3.3.0
-            java_version: 17
           - openhab_version: 3.4.0
             java_version: 17
           - openhab_version: 4.0.0-SNAPSHOT
@@ -171,8 +167,6 @@ jobs:
         openhab_version: ${{ fromJson(needs.openhab-matrix.outputs.openhab_matrix) }}
         java_version:  ${{ fromJson(needs.openhab-matrix.outputs.java_matrix) }}
         exclude:
-          - openhab_version: 3.3.0
-            java_version: 17
           - openhab_version: 3.4.0
             java_version: 17
           - openhab_version: 4.0.0-SNAPSHOT

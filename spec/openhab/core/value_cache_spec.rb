@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe "OpenHAB::Core::ValueCache" do
-  before do
-    skip "Requires openHAB 3.4.0" if shared_cache.nil?
-  end
-
   describe "#key?" do
     it "returns false for missing keys" do
       expect(shared_cache).not_to have_key(:key)

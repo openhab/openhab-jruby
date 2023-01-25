@@ -59,7 +59,7 @@ here is a non-exhaustive list of significant departures from the original gem:
 
 ### Breaking Changes
 
-* Dropping support for openHAB < 3.3.
+* Dropping support for openHAB < 3.4.
 * The main require is now `require "openhab/dsl"` instead of just
   `require "openhab"`. The reason being to avoid conflicts if a gem gets
   written to access openHAB via REST API. It's probably preferred that you

@@ -152,8 +152,6 @@ module OpenHAB
     #
     # @see Core::ValueCache ValueCache
     #
-    # @since openHAB 3.4.0
-    #
     def shared_cache
       $sharedCache
     end

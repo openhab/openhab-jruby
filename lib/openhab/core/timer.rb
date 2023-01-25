@@ -28,7 +28,7 @@ module OpenHAB
       #   @return [true,false]
 
       def_delegator :@timer, :has_terminated, :terminated?
-      def_delegators :@timer, :active?, :cancelled?, :running?
+      def_delegators :@timer, :active?, :cancelled?, :running?, :execution_time
 
       # @return [Object, nil]
       attr_accessor :id
@@ -49,19 +49,7 @@ module OpenHAB
         @id = id
         @thread_locals = thread_locals
         @block = block
-        @timer = if defined?(ScriptExecution)
-                   ScriptExecution.create_timer(1.minute.from_now) { execute }
-                 else # DEPRECATED: openHAB 3.4.0
-                   org.openhab.core.model.script.actions.ScriptExecution.create_timer(
-                     # create it far enough in the future so it won't execute until we finish setting it up
-                     1.minute.from_now,
-                     # when running in rspec, it may have troubles finding this class
-                     # for auto-conversion of block to interface, so use .impl
-                     org.eclipse.xtext.xbase.lib.Procedures::Procedure0.impl { execute }
-                   )
-                 end
-        # DEPRECATED: openHAB 3.4.0.M6
-        @timer.class.field_reader :future unless @timer.respond_to?(:future)
+        @timer = ScriptExecution.create_timer(1.minute.from_now) { execute }
         reschedule(@time)
       end
 
@@ -79,11 +67,7 @@ module OpenHAB
       alias_method :to_s, :inspect
 
       # @!attribute [r] execution_time
-      # @return [ZonedDateTime, nil] the scheduled execution time, or `nil` if the timer was cancelled
-      def execution_time
-        # DEPRECATED: openHAB 3.4.0.M6 (just remove the entire method)
-        @timer.future.scheduled_time
-      end
+      #   @return [ZonedDateTime, nil] the scheduled execution time, or `nil` if the timer was cancelled
 
       #
       # Reschedule timer
