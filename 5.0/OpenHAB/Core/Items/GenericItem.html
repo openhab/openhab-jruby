@@ -1130,7 +1130,6 @@
   
   
   
-  
 
         
       </ul>
@@ -2278,6 +2277,7 @@
   
   
   
+  
 
         
       </ul>
@@ -2710,7 +2710,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#label-instance_method" title="#label (instance method)">#<strong>label</strong>  &#x21d2; String<sup>?</sup> </a>
+      <a href="#category-instance_method" title="#category (instance method)">#<strong>category</strong>  &#x21d2; String </a>
     
 
     
@@ -2719,7 +2719,31 @@
   
   
     
-      <span class="note title readonly">readonly</span>
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The item's category.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#label-instance_method" title="#label (instance method)">#<strong>label</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
     
     
   
@@ -2819,6 +2843,32 @@
 </li>
 
     
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tags-instance_method" title="#tags (instance method)">#<strong>tags</strong>  &#x21d2; Array&lt;String&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The item's tags.</p>
+</div></span>
+  
+</li>
+
+    
   </ul>
 
 
@@ -2864,6 +2914,29 @@
 
   
     <span class="summary_desc"><div class='inline'><p>Send a command to this item.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#modify-instance_method" title="#modify (instance method)">#<strong>modify</strong>(force: false) { ... } &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Defers notifying openHAB of modifications to multiple attributes until the block is complete.</p>
 </div></span>
   
 </li>
@@ -3009,7 +3082,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Item.html#inspect-instance_method" title="OpenHAB::Core::Items::Item#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="Item.html#thing-instance_method" title="OpenHAB::Core::Items::Item#thing (method)">#thing</a></span>, <span class='object_link'><a href="Item.html#things-instance_method" title="OpenHAB::Core::Items::Item#things (method)">#things</a></span>, <span class='object_link'><a href="Item.html#to_s-instance_method" title="OpenHAB::Core::Items::Item#to_s (method)">#to_s</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Item.html#inspect-instance_method" title="OpenHAB::Core::Items::Item#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="Item.html#provider-instance_method" title="OpenHAB::Core::Items::Item#provider (method)">#provider</a></span>, <span class='object_link'><a href="Item.html#thing-instance_method" title="OpenHAB::Core::Items::Item#thing (method)">#thing</a></span>, <span class='object_link'><a href="Item.html#things-instance_method" title="OpenHAB::Core::Items::Item#things (method)">#things</a></span>, <span class='object_link'><a href="Item.html#to_s-instance_method" title="OpenHAB::Core::Items::Item#to_s (method)">#to_s</a></span></p>
 
   
   
@@ -3049,11 +3122,78 @@
     <h2>Instance Attribute Details</h2>
     
       
-      <span id=""></span>
+      <span id="category=-instance_method"></span>
       <div class="method_details first">
-  <h3 class="signature first" id="label-instance_method">
+  <h3 class="signature first" id="category-instance_method">
   
-    #<strong>label</strong>  &#x21d2; <tt>String</tt><sup>?</sup>  <span class="extras">(readonly)</span>
+    #<strong>category</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The item's category.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+227
+228
+229
+230
+231
+232
+233
+234
+235</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 227</span>
+
+<span class="keyword">def</span> <span class="function">category=</span>(value)
+  modify <span class="keyword">do</span>
+    value = value&amp;.to_s
+    <span class="keyword">next</span> <span class="keyword">if</span> category == value
+
+    <span class="instance-variable">@modified</span> = <span class="predefined-constant">true</span>
+    set_category(value)
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="label=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="label-instance_method">
+  
+    #<strong>label</strong>  &#x21d2; <tt>String</tt> 
   
 
   
@@ -3074,7 +3214,7 @@
     <li>
       
       
-        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt>String</tt>)</span>
       
       
       
@@ -3267,6 +3407,149 @@ Use <span class='object_link'><a href="#undef%3F-instance_method" title="OpenHAB
 </table>
 </div>
     
+      
+      <span id="tags=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="tags-instance_method">
+  
+    
+      <span class="overload">#<strong>tags</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String&gt;</tt> </span>
+    
+      <span class="overload">#<strong>tags=</strong>(values)  &#x21d2; <tt>void</tt> </span>
+    
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The item's tags</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <p class="tag_title">Overloads:</p>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">#<strong>tags</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String&gt;</tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    <p>Returns the item's tags.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">#<strong>tags=</strong>(values)  &#x21d2; <tt>void</tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Sets the item's tags.</p>
+<p>To remove all tags, assign an empty array or nil.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>values</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String,<span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span>,<a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Tags to set.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div>
+      </li>
+    
+  </ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 249</span>
+
+<span class="keyword">def</span> <span class="function">tags=</span>(values)
+  modify <span class="keyword">do</span>
+    values = <span class="constant">DSL</span>::<span class="constant">Items</span>::<span class="constant">ItemBuilder</span>.normalize_tags(*values)
+    <span class="keyword">next</span> <span class="keyword">if</span> values.to_set == tags.to_set
+
+    <span class="instance-variable">@modified</span> = <span class="predefined-constant">true</span>
+    remove_all_tags
+    add_tags(values)
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 
@@ -3369,6 +3652,168 @@ otherwise the item.</p>
   logger.trace <span class="string"><span class="delimiter">&quot;</span><span class="content">Sending Command </span><span class="inline"><span class="inline-delimiter">#{</span>command<span class="inline-delimiter">}</span></span><span class="content"> to </span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
   <span class="global-variable">$events</span>.send_command(<span class="predefined-constant">self</span>, command)
   <span class="constant">Proxy</span>.new(<span class="predefined-constant">self</span>)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="modify-instance_method">
+  
+    #<strong>modify</strong>(force: false) { ... } &#x21d2; <tt><span class='object_link'>Object</span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Defers notifying openHAB of modifications to multiple attributes until the block is complete.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Modify label and tags for an item</p>
+</div></p>
+      
+      <pre class="example code"><code><span class="constant">MySwitch</span>.modify <span class="keyword">do</span>
+  <span class="constant">MySwitch</span>.label = <span class="string"><span class="delimiter">&quot;</span><span class="content">New Label</span><span class="delimiter">&quot;</span></span>
+  <span class="constant">MySwitch</span>.tags = <span class="symbol">:labeled</span>
+<span class="keyword">end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>force</span>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>When true, allow modifications to file-based items.
+Normally a FrozenError is raised when attempting to modify file-based items, since
+they will then be out-of-sync with the definition on disk. Advanced users may do this
+knowingly and intentionally though, so an escape hatch is provided to allow runtime
+modifications.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'>Object</span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the block's return value</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 188</span>
+
+<span class="keyword">def</span> <span class="function">modify</span>(<span class="key">force</span>: <span class="predefined-constant">false</span>)
+  raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">you must pass a block to modify</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block_given?
+  <span class="keyword">return</span> <span class="keyword">yield</span> <span class="keyword">if</span> instance_variable_defined?(<span class="symbol">:@modifying</span>) &amp;&amp; <span class="instance-variable">@modifying</span>
+
+  <span class="keyword">begin</span>
+    provider = <span class="predefined-constant">self</span>.provider
+    <span class="keyword">if</span> provider &amp;&amp; !provider.is_a?(org.openhab.core.common.registry.ManagedProvider)
+      raise <span class="constant">FrozenError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot modify item </span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="content"> from provider </span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="content">.</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> force
+
+      provider = <span class="predefined-constant">nil</span>
+      logger.debug(<span class="string"><span class="delimiter">&quot;</span><span class="content">Forcing modifications to non-managed item </span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+    <span class="keyword">end</span>
+    <span class="instance-variable">@modified</span> = <span class="predefined-constant">false</span>
+    <span class="instance-variable">@modifying</span> = <span class="predefined-constant">true</span>
+
+    r = <span class="keyword">yield</span>
+
+    provider&amp;.update(<span class="predefined-constant">self</span>) <span class="keyword">if</span> <span class="instance-variable">@modified</span>
+    r
+  <span class="keyword">ensure</span>
+    <span class="instance-variable">@modifying</span> = <span class="predefined-constant">false</span>
+  <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3663,7 +4108,7 @@ otherwise the item.</p>
 </div>
 
         <footer>
-  Generated on Sun Dec 25 19:33:25 2022 by
+  Generated on Thu Jan 26 21:35:13 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

@@ -1130,7 +1130,6 @@
   
   
   
-  
 
         
       </ul>
@@ -2278,6 +2277,7 @@
   
   
   
+  
 
         
       </ul>
@@ -2675,7 +2675,7 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Extensions to MonthDay</p>
+    <p>Extensions to <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/MonthDay.html" target="_parent" title="java.time.MonthDay">java.time.MonthDay</a></p>
 
 
   </div>
@@ -3103,13 +3103,23 @@
 
 41
 42
-43</pre>
+43
+44
+45
+46
+47
+48</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/month_day.rb', line 41</span>
 
 <span class="keyword">def</span> <span class="function">+</span>(other)
-  (<span class="constant">LocalDate</span>.of(<span class="integer">1900</span>, month, day_of_month) + other).to_month_day
+  <span class="keyword">case</span> other
+  <span class="keyword">when</span> java.time.temporal.TemporalAmount, <span class="constant">Numeric</span>
+    (<span class="constant">LocalDate</span>.of(<span class="integer">1900</span>, month, day_of_month) + other).to_month_day
+  <span class="keyword">else</span>
+    (to_local_date(other.to_local_date) + other).to_month_day
+  <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3153,18 +3163,28 @@
       <pre class="lines">
 
 
-46
-47
-48
-49
-50
-51</pre>
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/month_day.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/month_day.rb', line 51</span>
 
 <span class="keyword">def</span> <span class="function">-</span>(other)
-  d = (<span class="constant">LocalDate</span>.of(<span class="integer">1900</span>, month, day_of_month) - other)
+  d = <span class="keyword">case</span> other
+      <span class="keyword">when</span> java.time.temporal.TemporalAmount, <span class="constant">Numeric</span>
+        <span class="constant">LocalDate</span>.of(<span class="integer">1900</span>, month, day_of_month) - other
+      <span class="keyword">else</span>
+        to_local_date(other.to_local_date) - other
+      <span class="keyword">end</span>
   <span class="keyword">return</span> d <span class="keyword">if</span> d.is_a?(java.time.Period)
 
   d.to_month_day
@@ -3213,18 +3233,18 @@
       <pre class="lines">
 
 
-60
-61
-62
-63
-64
-65
-66
-67
-68</pre>
+70
+71
+72
+73
+74
+75
+76
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/month_day.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/month_day.rb', line 70</span>
 
 <span class="keyword">def</span> <span class="function">succ</span>
   <span class="keyword">if</span> day_of_month == month.max_length
@@ -3299,13 +3319,13 @@ during conversion. <code>Date.today</code> is assumed if not given.</p>
       <pre class="lines">
 
 
-87
-88
-89
-90</pre>
+97
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/month_day.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/month_day.rb', line 97</span>
 
 <span class="keyword">def</span> <span class="function">to_date</span>(context = <span class="predefined-constant">nil</span>)
   context ||= <span class="constant">Date</span>.today
@@ -3348,7 +3368,7 @@ during conversion. <code>Date.today</code> is assumed if not given.</p>
       
         &mdash;
         <div class='inline'><p>A <span class='object_link'><a href="TemporalAmount.html" title="OpenHAB::CoreExt::Java::TemporalAmount (module)">TemporalAmount</a></span> used to fill in missing
-fields during conversion. <span class='object_link'><a href="LocalDate.html#now-instance_method" title="OpenHAB::CoreExt::Java::LocalDate#now (method)">LocalDate#now</a></span> is assumed if not given.</p>
+fields during conversion. <span class='object_link'><a href="LocalDate.html#now-class_method" title="OpenHAB::CoreExt::Java::LocalDate.now (method)">LocalDate.now</a></span> is assumed if not given.</p>
 </div>
       
     </li>
@@ -3375,14 +3395,14 @@ fields during conversion. <span class='object_link'><a href="LocalDate.html#now-
       <pre class="lines">
 
 
-74
-75
-76
-77
-78</pre>
+84
+85
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/month_day.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/month_day.rb', line 84</span>
 
 <span class="keyword">def</span> <span class="function">to_local_date</span>(context = <span class="predefined-constant">nil</span>)
   context ||= java.time.Year.now
@@ -3431,10 +3451,10 @@ fields during conversion. <span class='object_link'><a href="LocalDate.html#now-
       <pre class="lines">
 
 
-81</pre>
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/month_day.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/month_day.rb', line 91</span>
 
 alias_method <span class="symbol">:to_month</span>, <span class="symbol">:month</span></pre>
     </td>
@@ -3479,12 +3499,12 @@ alias_method <span class="symbol">:to_month</span>, <span class="symbol">:month<
       <pre class="lines">
 
 
-93
-94
-95</pre>
+103
+104
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/month_day.rb', line 93</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/month_day.rb', line 103</span>
 
 <span class="keyword">def</span> <span class="function">to_month_day</span>
   <span class="predefined-constant">self</span>
@@ -3584,7 +3604,7 @@ alias_method <span class="symbol">:to_month</span>, <span class="symbol">:month<
       
         &mdash;
         <div class='inline'><p>A <span class='object_link'><a href="ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span> used to fill in missing fields
-during conversion. <span class='object_link'><a href="ZonedDateTime.html#now-instance_method" title="OpenHAB::CoreExt::Java::ZonedDateTime#now (method)">ZonedDateTime#now</a></span> is assumed if not given.</p>
+during conversion. <span class='object_link'><a href="ZonedDateTime.html#now-class_method" title="OpenHAB::CoreExt::Java::ZonedDateTime.now (method)">ZonedDateTime.now</a></span> is assumed if not given.</p>
 </div>
       
     </li>
@@ -3611,12 +3631,12 @@ during conversion. <span class='object_link'><a href="ZonedDateTime.html#now-ins
       <pre class="lines">
 
 
-101
-102
-103</pre>
+111
+112
+113</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/month_day.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/month_day.rb', line 111</span>
 
 <span class="keyword">def</span> <span class="function">to_zoned_date_time</span>(context = <span class="predefined-constant">nil</span>)
   to_local_date(context).to_zoned_date_time(context)
@@ -3631,7 +3651,7 @@ during conversion. <span class='object_link'><a href="ZonedDateTime.html#now-ins
 </div>
 
         <footer>
-  Generated on Sun Dec 25 19:33:25 2022 by
+  Generated on Thu Jan 26 21:35:13 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

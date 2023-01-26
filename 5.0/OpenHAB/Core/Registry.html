@@ -1130,7 +1130,6 @@
   
   
   
-  
 
         
       </ul>
@@ -2278,6 +2277,7 @@
   
   
   
+  
 
         
       </ul>
@@ -2686,6 +2686,38 @@
 
 
 
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#providers-instance_method" title="#providers (instance method)">#<strong>providers</strong>  &#x21d2; Enumerable&lt;org.openhab.core.common.registry.Provider&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+  </ul>
+
 
 
 
@@ -2726,6 +2758,65 @@
   
 
 
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="providers-instance_method">
+  
+    #<strong>providers</strong>  &#x21d2; <tt><span class='object_link'><a href="../../Enumerable.html" title="Enumerable (module)">Enumerable</a></span>&lt;<a href="https://www.openhab.org/javadoc/latest/org/openhab/core/common/registry/Provider.html" target="_parent" title="org.openhab.core.common.registry.Provider">org.openhab.core.common.registry.Provider</a>&gt;</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Enumerable.html" title="Enumerable (module)">Enumerable</a></span>&lt;<a href="https://www.openhab.org/javadoc/latest/org/openhab/core/common/registry/Provider.html" target="_parent" title="org.openhab.core.common.registry.Provider">org.openhab.core.common.registry.Provider</a>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+35
+36
+37</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/registry.rb', line 35</span>
+
+<span class="keyword">def</span> <span class="function">providers</span>
+  providerToElements.keys
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
 
   <div id="instance_method_details" class="method_details_list">
@@ -2792,14 +2883,22 @@
 24
 25
 26
-27</pre>
+27
+28
+29
+30
+31</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/registry.rb', line 20</span>
 
 <span class="keyword">def</span> <span class="function">provider_for</span>(key)
   elementReadLock.lock
-  <span class="keyword">return</span> <span class="predefined-constant">nil</span> <span class="keyword">unless</span> (element = identifierToElement[key])
+  <span class="keyword">if</span> key.is_a?(org.openhab.core.common.registry.Identifiable)
+    element = key
+  <span class="keyword">else</span>
+    <span class="keyword">return</span> <span class="predefined-constant">nil</span> <span class="keyword">unless</span> (element = identifierToElement[key])
+  <span class="keyword">end</span>
 
   elementToProvider[element]
 <span class="keyword">ensure</span>
@@ -2815,7 +2914,7 @@
 </div>
 
         <footer>
-  Generated on Sun Dec 25 19:33:20 2022 by
+  Generated on Thu Jan 26 21:35:08 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

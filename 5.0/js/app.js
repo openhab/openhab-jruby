@@ -264,6 +264,7 @@ function populateSearchCache() {
 
     enableSearch();
     escapeShortcut();
+    clickToHideSearch();
   });
 }
 
@@ -298,6 +299,14 @@ function escapeShortcut() {
   });
 }
 
+function clickToHideSearch() {
+  $(document).on("click", function (event) {
+    var $trigger = $(".search-box");
+    if ($trigger !== event.target && !$trigger.has(event.target).length) {
+      clearSearch();
+    }
+  });
+}
 
 function clearSearchTimeout() {
   clearTimeout(searchTimeout);

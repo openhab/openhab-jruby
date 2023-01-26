@@ -1130,7 +1130,6 @@
   
   
   
-  
 
         
       </ul>
@@ -2278,6 +2277,7 @@
   
   
   
+  
 
         
       </ul>
@@ -2752,35 +2752,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Return all groups that this item is part of.</p>
-</div></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#label-instance_method" title="#label (instance method)">#<strong>label</strong>  &#x21d2; String<sup>?</sup> </a>
-    
-
-    
-  </span>
-  
-  
-  
-    
-      <span class="note title readonly">readonly</span>
-    
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>The item's descriptive label.</p>
+    <span class="summary_desc"><div class='inline'><p>Returns all groups that this item is part of.</p>
 </div></span>
   
 </li>
@@ -2882,6 +2854,28 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#provider-instance_method" title="#provider (instance method)">#<strong>provider</strong>  &#x21d2; org.openhab.core.common.registry.Provider </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#thing-instance_method" title="#thing (instance method)">#<strong>thing</strong>  &#x21d2; Thing </a>
     
 
@@ -2946,7 +2940,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>The item's <span class='object_link'><a href="#label-instance_method" title="OpenHAB::Core::Items::Item#label (method)">#label</a></span> if one is defined, otherwise it's <span class='object_link'><a href="#name-instance_method" title="OpenHAB::Core::Items::Item#name (method)">#name</a></span>.</p>
+    <span class="summary_desc"><div class='inline'><p>The item's <span class='object_link'><a href="GenericItem.html#label-instance_method" title="OpenHAB::Core::Items::GenericItem#label (method)">label</a></span> if one is defined, otherwise its <span class='object_link'><a href="#name-instance_method" title="OpenHAB::Core::Items::Item#name (method)">#name</a></span>.</p>
 </div></span>
   
 </li>
@@ -3007,7 +3001,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 27</span>
 
 </pre>
     </td>
@@ -3062,7 +3056,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 30</span>
 
 </pre>
     </td>
@@ -3083,7 +3077,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Return all groups that this item is part of</p>
+    <p>Returns all groups that this item is part of</p>
 
 
   </div>
@@ -3114,67 +3108,16 @@
       <pre class="lines">
 
 
-53
-54
-55</pre>
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 49</span>
 
 <span class="keyword">def</span> <span class="function">groups</span>
   group_names.map { |name| <span class="constant">EntityLookup</span>.lookup_item(name) }.compact
 <span class="keyword">end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
-      <span id=""></span>
-      <div class="method_details ">
-  <h3 class="signature " id="label-instance_method">
-  
-    #<strong>label</strong>  &#x21d2; <tt>String</tt><sup>?</sup>  <span class="extras">(readonly)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>The item's descriptive label.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 27</span>
-
-</pre>
     </td>
   </tr>
 </table>
@@ -3229,7 +3172,7 @@ String StringItem1
       <pre class="example code"><code><span class="constant">Item1</span>.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace1</span><span class="delimiter">&quot;</span></span>][<span class="string"><span class="delimiter">&quot;</span><span class="content">config1</span><span class="delimiter">&quot;</span></span>]</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Safely search for the specified value - no errors are raised, only nil returned if a key in the chain doesn"t exist</p>
+        <p class="example_title"><div class='inline'><p>Safely search for the specified value - no errors are raised, only nil returned if a key in the chain doesn't exist</p>
 </div></p>
       
       <pre class="example code"><code><span class="constant">Item1</span>.metadata.dig(<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace1</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">config1</span><span class="delimiter">&quot;</span></span>) <span class="comment"># =&gt; &quot;foo&quot;</span>
@@ -3403,12 +3346,12 @@ String StringItem1
       <pre class="lines">
 
 
-174
-175
-176</pre>
+170
+171
+172</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 174</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 170</span>
 
 <span class="keyword">def</span> <span class="function">metadata</span>
   <span class="instance-variable">@metadata</span> ||= <span class="constant">Metadata</span>::<span class="constant">NamespaceHash</span>.new(name)
@@ -3513,18 +3456,18 @@ String StringItem1
       <pre class="lines">
 
 
+195
+196
+197
+198
 199
 200
 201
 202
-203
-204
-205
-206
-207</pre>
+203</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 199</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 195</span>
 
 <span class="keyword">def</span> <span class="function">inspect</span>
   s = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Items::</span><span class="inline"><span class="inline-delimiter">#{</span>type<span class="inline-delimiter">}</span></span><span class="content">Item</span><span class="inline"><span class="inline-delimiter">#{</span>type_details<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>label.inspect<span class="inline-delimiter">}</span></span><span class="content"> state=</span><span class="inline"><span class="inline-delimiter">#{</span>raw_state.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
@@ -3534,6 +3477,58 @@ String StringItem1
   meta = metadata.to_h
   s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> metadata=</span><span class="inline"><span class="inline-delimiter">#{</span>meta.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> meta.empty?
   <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>s<span class="inline-delimiter">}</span></span><span class="content">&gt;</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="provider-instance_method">
+  
+    #<strong>provider</strong>  &#x21d2; <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/common/registry/Provider.html" target="_parent" title="org.openhab.core.common.registry.Provider">org.openhab.core.common.registry.Provider</a></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/common/registry/Provider.html" target="_parent" title="org.openhab.core.common.registry.Provider">org.openhab.core.common.registry.Provider</a></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+206
+207
+208</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 206</span>
+
+<span class="keyword">def</span> <span class="function">provider</span>
+  <span class="constant">Provider</span>.registry.provider_for(<span class="predefined-constant">self</span>)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3587,12 +3582,12 @@ this method only returns the first thing.</p>
       <pre class="lines">
 
 
-183
-184
-185</pre>
+179
+180
+181</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 183</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 179</span>
 
 <span class="keyword">def</span> <span class="function">thing</span>
   all_linked_things.first
@@ -3648,17 +3643,17 @@ this method only returns the first thing.</p>
       <pre class="lines">
 
 
-191
-192
-193
-194
-195</pre>
+187
+188
+189
+190
+191</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 191</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 187</span>
 
 <span class="keyword">def</span> <span class="function">things</span>
-  registry = <span class="constant">OSGi</span>.service(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.thing.link.ItemChannelLinkRegistry</span><span class="delimiter">&quot;</span></span>)
+  registry = <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry
   channels = registry.get_bound_channels(name).to_a
   channels.map(&amp;<span class="symbol">:thing_uid</span>).uniq.map { |tuid| <span class="constant">EntityLookup</span>.lookup_thing(tuid) }.compact
 <span class="keyword">end</span></pre>
@@ -3678,7 +3673,7 @@ this method only returns the first thing.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>The item's <span class='object_link'><a href="#label-instance_method" title="OpenHAB::Core::Items::Item#label (method)">#label</a></span> if one is defined, otherwise it's <span class='object_link'><a href="#name-instance_method" title="OpenHAB::Core::Items::Item#name (method)">#name</a></span>.</p>
+    <p>The item's <span class='object_link'><a href="GenericItem.html#label-instance_method" title="OpenHAB::Core::Items::GenericItem#label (method)">label</a></span> if one is defined, otherwise its <span class='object_link'><a href="#name-instance_method" title="OpenHAB::Core::Items::Item#name (method)">#name</a></span>.</p>
 
 
   </div>
@@ -3705,12 +3700,12 @@ this method only returns the first thing.</p>
       <pre class="lines">
 
 
-42
-43
-44</pre>
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 38</span>
 
 <span class="keyword">def</span> <span class="function">to_s</span>
   label || name
@@ -3725,7 +3720,7 @@ this method only returns the first thing.</p>
 </div>
 
         <footer>
-  Generated on Sun Dec 25 19:33:16 2022 by
+  Generated on Thu Jan 26 21:35:06 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

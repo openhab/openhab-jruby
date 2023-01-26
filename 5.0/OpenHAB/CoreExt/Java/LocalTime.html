@@ -1130,7 +1130,6 @@
   
   
   
-  
 
         
       </ul>
@@ -2278,6 +2277,7 @@
   
   
   
+  
 
         
       </ul>
@@ -2658,7 +2658,7 @@
   
   <dl>
       <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="../Between.html" title="OpenHAB::CoreExt::Between (module)">Between</a></span>, <span class='object_link'><a href="Time.html" title="OpenHAB::CoreExt::Java::Time (module)">Time</a></span></dd>
+      <dd><span class='object_link'><a href="../Between.html" title="OpenHAB::CoreExt::Between (module)">Between</a></span></dd>
   </dl>
   
   
@@ -2675,7 +2675,8 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
+    <p>Extensions to <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/LocalTime.html" target="_parent" title="java.time.LocalTime">java.time.LocalTime</a></p>
+
 
   </div>
 </div>
@@ -2715,6 +2716,38 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
 
 
 
+  <h2>Class Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#now-class_method" title="now (class method)">.<strong>now</strong>  &#x21d2; LocalTime </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+  </ul>
+
 
 
 
@@ -2731,7 +2764,7 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#parse-class_method" title="parse (class method)">.<strong>parse</strong>(string)  &#x21d2; LocalTime </a>
+      <a href="#parse-class_method" title="parse (class method)">.<strong>parse</strong>(string, formatter = nil)  &#x21d2; LocalTime </a>
     
 
     
@@ -2745,7 +2778,7 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parses strings in the form "h[:mm[:ss]] [am/pm]".</p>
+    <span class="summary_desc"><div class='inline'><p>Parses strings in the form "h[:mm[:ss]] [am/pm]" when no formatter is given.</p>
 </div></span>
   
 </li>
@@ -2886,25 +2919,63 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
   
   
   
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="Time.html" title="OpenHAB::CoreExt::Java::Time (module)">Time</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Time.html#<=>-instance_method" title="OpenHAB::CoreExt::Java::Time#&lt;=&gt; (method)">#<=></a></span>, <span class='object_link'><a href="Time.html#coerce-instance_method" title="OpenHAB::CoreExt::Java::Time#coerce (method)">#coerce</a></span></p>
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../Between.html" title="OpenHAB::CoreExt::Between (module)">Between</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Between.html#between%3F-instance_method" title="OpenHAB::CoreExt::Between#between? (method)">#between?</a></span></p>
+
+  <div id="class_attr_details" class="attr_details">
+    <h2>Class Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="now-class_method">
+  
+    .<strong>now</strong>  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::CoreExt::Java::LocalTime (class)">LocalTime</a></span></tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="OpenHAB::CoreExt::Java::LocalTime (class)">LocalTime</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 42</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
 
   <div id="class_method_details" class="method_details_list">
@@ -2914,7 +2985,7 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
       <div class="method_details first">
   <h3 class="signature first" id="parse-class_method">
   
-    .<strong>parse</strong>(string)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::CoreExt::Java::LocalTime (class)">LocalTime</a></span></tt> 
+    .<strong>parse</strong>(string, formatter = nil)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::CoreExt::Java::LocalTime (class)">LocalTime</a></span></tt> 
   
 
   
@@ -2922,7 +2993,7 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parses strings in the form "h[:mm[:ss]] [am/pm]"</p>
+    <p>Parses strings in the form "h[:mm[:ss]] [am/pm]" when no formatter is given.</p>
 
 
   </div>
@@ -2939,6 +3010,23 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
         <span class='type'>(<tt>String</tt>)</span>
       
       
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>formatter</span>
+      
+      
+        <span class='type'>(<tt><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/format/DateTimeFormatter.html" target="_parent" title="java.time.format.DateTimeFormatter">java.time.format.DateTimeFormatter</a></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The formatter to use</p>
+</div>
       
     </li>
   
@@ -2964,20 +3052,24 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
       <pre class="lines">
 
 
-47
-48
-49
-50
-51
-52
-53
-54
-55</pre>
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 55</span>
 
-<span class="keyword">def</span> <span class="function">parse</span>(string)
+<span class="keyword">def</span> <span class="function">parse</span>(string, formatter = <span class="predefined-constant">nil</span>)
+  <span class="keyword">return</span> raw_parse(string, formatter) <span class="keyword">if</span> formatter
+
   format = <span class="regexp"><span class="delimiter">/</span><span class="content">(am|pm)$</span><span class="delimiter">/</span><span class="modifier">i</span></span>.match?(string) ? <span class="string"><span class="delimiter">&quot;</span><span class="content">h[:mm[:ss][.S]][ ]a</span><span class="delimiter">&quot;</span></span> : <span class="string"><span class="delimiter">&quot;</span><span class="content">H[:mm[:ss][.S]]</span><span class="delimiter">&quot;</span></span>
   java_send(<span class="symbol">:parse</span>, [java.lang.CharSequence, java.time.format.DateTimeFormatter],
             string, java.time.format.DateTimeFormatterBuilder.new
@@ -3053,15 +3145,15 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
       <pre class="lines">
 
 
-71
-72
-73
-74
-75
-76</pre>
+81
+82
+83
+84
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 81</span>
 
 <span class="keyword">def</span> <span class="function">+</span>(other)
   <span class="keyword">return</span> plus(other.seconds) <span class="keyword">if</span> other.is_a?(<span class="constant">Numeric</span>)
@@ -3130,15 +3222,15 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
       <pre class="lines">
 
 
-61
-62
-63
-64
-65
-66</pre>
+71
+72
+73
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 71</span>
 
 <span class="keyword">def</span> <span class="function">-</span>(other)
   <span class="keyword">return</span> minus(other.seconds) <span class="keyword">if</span> other.is_a?(<span class="constant">Numeric</span>)
@@ -3190,12 +3282,12 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
       <pre class="lines">
 
 
-85
-86
-87</pre>
+95
+96
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 95</span>
 
 <span class="keyword">def</span> <span class="function">succ</span>
   plus_seconds(<span class="integer">1</span>)
@@ -3242,12 +3334,12 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
       <pre class="lines">
 
 
-90
-91
-92</pre>
+100
+101
+102</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 100</span>
 
 <span class="keyword">def</span> <span class="function">to_local_time</span>
   <span class="predefined-constant">self</span>
@@ -3289,7 +3381,7 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
       
         &mdash;
         <div class='inline'><p>A <span class='object_link'><a href="ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span> used to fill in missing fields
-during conversion. <span class='object_link'><a href="ZonedDateTime.html#now-instance_method" title="OpenHAB::CoreExt::Java::ZonedDateTime#now (method)">ZonedDateTime#now</a></span> is assumed if not given.</p>
+during conversion. <span class='object_link'><a href="ZonedDateTime.html#now-class_method" title="OpenHAB::CoreExt::Java::ZonedDateTime.now (method)">ZonedDateTime.now</a></span> is assumed if not given.</p>
 </div>
       
     </li>
@@ -3316,13 +3408,13 @@ during conversion. <span class='object_link'><a href="ZonedDateTime.html#now-ins
       <pre class="lines">
 
 
-98
-99
-100
-101</pre>
+108
+109
+110
+111</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 98</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 108</span>
 
 <span class="keyword">def</span> <span class="function">to_zoned_date_time</span>(context = <span class="predefined-constant">nil</span>)
   context ||= <span class="constant">ZonedDateTime</span>.now
@@ -3338,7 +3430,7 @@ during conversion. <span class='object_link'><a href="ZonedDateTime.html#now-ins
 </div>
 
         <footer>
-  Generated on Sun Dec 25 19:33:26 2022 by
+  Generated on Thu Jan 26 21:35:14 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

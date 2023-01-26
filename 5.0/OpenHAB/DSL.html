@@ -1130,7 +1130,6 @@
   
   
   
-  
 
         
       </ul>
@@ -2278,6 +2277,7 @@
   
   
   
+  
 
         
       </ul>
@@ -2724,7 +2724,7 @@ inside of other classes, or include the module.</p>
 
 </div>
         </dt>
-        <dd><pre class="code"><span class="string"><span class="delimiter">&quot;</span><span class="content">5.0.0.rc11</span><span class="delimiter">&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class="string"><span class="delimiter">&quot;</span><span class="content">5.0.0.rc12</span><span class="delimiter">&quot;</span></span></pre></dd>
       
     </dl>
   
@@ -3216,6 +3216,29 @@ to reduce repetitions</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#persistence!-class_method" title="persistence! (class method)">.<strong>persistence!</strong>(service = nil)  &#x21d2; Object<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Permanently sets the default persistence service for the current thread.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#provider-class_method" title="provider (class method)">.<strong>provider</strong>(*args, **kwargs) { ... } &#x21d2; Object </a>
     
 
@@ -3601,16 +3624,16 @@ Otherwise the new timer.</p>
       <pre class="lines">
 
 
+337
+338
 339
 340
 341
 342
-343
-344
-345</pre>
+343</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 339</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 337</span>
 
 <span class="keyword">def</span> <span class="function">after</span>(duration, <span class="key">id</span>: <span class="predefined-constant">nil</span>, <span class="key">reschedule</span>: <span class="predefined-constant">true</span>, &amp;block)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Block is required</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block
@@ -3715,16 +3738,16 @@ depending on the format of the string.</p>
       <pre class="lines">
 
 
+367
+368
 369
 370
 371
 372
-373
-374
-375</pre>
+373</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 369</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 367</span>
 
 <span class="keyword">def</span> <span class="function">between</span>(range)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Supplied object must be a range</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> range.is_a?(<span class="constant">Range</span>)
@@ -3855,13 +3878,13 @@ to occur more frequently than the minimum interval.</p>
       <pre class="lines">
 
 
+439
+440
 441
-442
-443
-444</pre>
+442</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 441</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 439</span>
 
 <span class="keyword">def</span> <span class="function">debounce_for</span>(debounce_time, <span class="key">id</span>: <span class="predefined-constant">nil</span>, &amp;block)
   idle_time = debounce_time.is_a?(<span class="constant">Range</span>) ? debounce_time.begin : debounce_time
@@ -3974,16 +3997,16 @@ ensure_states <span class="keyword">do</span>
       <pre class="lines">
 
 
+583
+584
+585
+586
+587
 588
-589
-590
-591
-592
-593
-594</pre>
+589</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 588</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 583</span>
 
 <span class="keyword">def</span> <span class="function">ensure_states</span>
   old = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_ensure_states</span>]
@@ -4161,20 +4184,20 @@ for <span class='object_link'><a href="CoreExt/Ephemeris.html" title="OpenHAB::C
       <pre class="lines">
 
 
-898
-899
-900
-901
-902
-903
-904
-905
-906
-907
-908</pre>
+914
+915
+916
+917
+918
+919
+920
+921
+922
+923
+924</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 898</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 914</span>
 
 <span class="keyword">def</span> <span class="function">holiday_file</span>(*args)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">wrong number of arguments (given </span><span class="inline"><span class="inline-delimiter">#{</span>args.length<span class="inline-delimiter">}</span></span><span class="content">, expected 0..1)</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> args.length &gt; <span class="integer">1</span>
@@ -4272,12 +4295,12 @@ for <span class='object_link'><a href="CoreExt/Ephemeris.html" title="OpenHAB::C
       <pre class="lines">
 
 
-923
-924
-925</pre>
+939
+940
+941</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 923</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 939</span>
 
 <span class="keyword">def</span> <span class="function">holiday_file!</span>(file = <span class="predefined-constant">nil</span>)
   <span class="constant">Thread</span>.current[<span class="symbol">:openhab_holiday_file</span>] = file
@@ -4355,12 +4378,12 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
       <pre class="lines">
 
 
-203
-204
-205</pre>
+201
+202
+203</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 203</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 201</span>
 
 <span class="keyword">def</span> <span class="function">items</span>
   <span class="constant">Core</span>::<span class="constant">Items</span>::<span class="constant">Registry</span>.instance
@@ -4472,13 +4495,13 @@ subsequent triggers are ignored.</p>
       <pre class="lines">
 
 
+497
+498
 499
-500
-501
-502</pre>
+500</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 499</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 497</span>
 
 <span class="keyword">def</span> <span class="function">only_every</span>(interval, <span class="key">id</span>: <span class="predefined-constant">nil</span>, &amp;block)
   interval = <span class="integer">1</span>.send(interval) <span class="keyword">if</span> <span class="symbol"><span class="delimiter">%i[</span><span class="content">second minute hour day</span><span class="delimiter">]</span></span>.include?(interval)
@@ -4532,7 +4555,7 @@ for method calls inside the block</p>
       
       
         &mdash;
-        <div class='inline'><p>service either as a String or a Symbol</p>
+        <div class='inline'><p>Persistence service either as a String or a Symbol</p>
 </div>
       
     </li>
@@ -4577,6 +4600,8 @@ for method calls inside the block</p>
   <p class="tag_title">See Also:</p>
   <ul class="see">
     
+      <li><span class='object_link'><a href="#persistence!-class_method" title="OpenHAB::DSL.persistence! (method)">persistence!</a></span></li>
+    
       <li><span class='object_link'><a href="Core/Items/Persistence.html" title="OpenHAB::Core::Items::Persistence (module)">Core::Items::Persistence</a></span></li>
     
   </ul>
@@ -4587,23 +4612,123 @@ for method calls inside the block</p>
       <pre class="lines">
 
 
+609
+610
+611
+612
 613
-614
-615
-616
-617
-618
-619</pre>
+614</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 613</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 609</span>
 
 <span class="keyword">def</span> <span class="function">persistence</span>(service)
-  old = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_persistence_service</span>]
-  <span class="constant">Thread</span>.current[<span class="symbol">:openhab_persistence_service</span>] = service
+  old = persistence!(service)
   <span class="keyword">yield</span>
 <span class="keyword">ensure</span>
-  <span class="constant">Thread</span>.current[<span class="symbol">:openhab_persistence_service</span>] = old
+  persistence!(old)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="persistence!-class_method">
+  
+    .<strong>persistence!</strong>(service = nil)  &#x21d2; <tt><span class='object_link'>Object</span></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>This method is only intended for use at the top level of rule
+scripts. If it's used within library methods, or hap-hazardly within
+rules, things can get very confusing because the prior state won't be
+properly restored.</p>
+</div>
+  </div>
+
+<p>Permanently sets the default persistence service for the current thread</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'>Object</span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Persistence service either as a String or a Symbol. When nil, use
+the system's default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'>Object</span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The previous persistence service settings, or nil when using the system's default.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#persistence-class_method" title="OpenHAB::DSL.persistence (method)">persistence</a></span></li>
+    
+      <li><span class='object_link'><a href="Core/Items/Persistence.html" title="OpenHAB::Core::Items::Persistence (module)">Core::Items::Persistence</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+631
+632
+633
+634
+635</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 631</span>
+
+<span class="keyword">def</span> <span class="function">persistence!</span>(service = <span class="predefined-constant">nil</span>)
+  old = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_persistence_service</span>]
+  <span class="constant">Thread</span>.current[<span class="symbol">:openhab_persistence_service</span>] = service
+  old
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -5068,19 +5193,19 @@ recommended that you use a Proc, not a Lambda, for permissive argument matching.
       <pre class="lines">
 
 
-769
-770
-771
-772
-773
-774
-775
-776
-777
-778</pre>
+785
+786
+787
+788
+789
+790
+791
+792
+793
+794</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 769</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 785</span>
 
 <span class="keyword">def</span> <span class="function">provider</span>(*args, **kwargs)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">You must give a block to set the provider for the duration of</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block_given?
@@ -5186,22 +5311,6 @@ recommended that you use a Proc, not a Lambda, for permissive argument matching.
       <pre class="lines">
 
 
-811
-812
-813
-814
-815
-816
-817
-818
-819
-820
-821
-822
-823
-824
-825
-826
 827
 828
 829
@@ -5245,10 +5354,26 @@ recommended that you use a Proc, not a Lambda, for permissive argument matching.
 867
 868
 869
-870</pre>
+870
+871
+872
+873
+874
+875
+876
+877
+878
+879
+880
+881
+882
+883
+884
+885
+886</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 811</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 827</span>
 
 <span class="keyword">def</span> <span class="function">provider!</span>(*providers, **providers_by_type)
   thread_providers = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_providers</span>] ||= {}
@@ -5492,12 +5617,12 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
       <pre class="lines">
 
 
-166
-167
-168</pre>
+164
+165
+166</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 164</span>
 
 <span class="keyword">def</span> <span class="function">rules</span>
   <span class="constant">Core</span>::<span class="constant">Rules</span>::<span class="constant">Registry</span>.instance
@@ -5701,21 +5826,6 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <li><span class='object_link'><a href="Core/ValueCache.html" title="OpenHAB::Core::ValueCache (module)">ValueCache</a></span></li>
     
   </ul>
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>openHAB 3.4.0</p>
-</div>
-      
-    </li>
-  
-</ul>
 
 </div><table class="source_code">
   <tr>
@@ -5723,12 +5833,12 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-157
-158
-159</pre>
+155
+156
+157</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 157</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 155</span>
 
 <span class="keyword">def</span> <span class="function">shared_cache</span>
   <span class="global-variable">$sharedCache</span>
@@ -5820,25 +5930,19 @@ states.restore</code></pre>
       <pre class="lines">
 
 
+523
+524
 525
 526
 527
 528
 529
-530
-531
-532
-533
-534
-535</pre>
+530</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 525</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 523</span>
 
 <span class="keyword">def</span> <span class="function">store_states</span>(*items)
-  items = items.flatten.map <span class="keyword">do</span> |item|
-    item.respond_to?(<span class="symbol">:__getobj__</span>) ? item.__getobj__ : item
-  <span class="keyword">end</span>
   states = <span class="constant">Core</span>::<span class="constant">Items</span>::<span class="constant">StateStorage</span>.from_items(*items)
   <span class="keyword">if</span> block_given?
     <span class="keyword">yield</span>
@@ -5907,12 +6011,12 @@ things[<span class="string"><span class="delimiter">'</span><span class="content
       <pre class="lines">
 
 
-221
-222
-223</pre>
+219
+220
+221</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 219</span>
 
 <span class="keyword">def</span> <span class="function">things</span>
   <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Registry</span>.instance
@@ -6021,12 +6125,12 @@ executions.</p>
       <pre class="lines">
 
 
-474
-475
-476</pre>
+472
+473
+474</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 474</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 472</span>
 
 <span class="keyword">def</span> <span class="function">throttle_for</span>(duration, <span class="key">id</span>: <span class="predefined-constant">nil</span>, &amp;block)
   debounce(<span class="key">for</span>: duration, <span class="key">id</span>: id, &amp;block)
@@ -6074,12 +6178,12 @@ executions.</p>
       <pre class="lines">
 
 
-229
-230
-231</pre>
+227
+228
+229</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 229</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 227</span>
 
 <span class="keyword">def</span> <span class="function">timers</span>
   <span class="constant">TimerManager</span>.instance
@@ -6332,23 +6436,23 @@ unit(<span class="string"><span class="delimiter">'</span><span class="content">
       <pre class="lines">
 
 
-682
-683
-684
-685
-686
-687
-688
-689
-690
-691
-692
-693
-694
-695</pre>
+698
+699
+700
+701
+702
+703
+704
+705
+706
+707
+708
+709
+710
+711</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 682</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 698</span>
 
 <span class="keyword">def</span> <span class="function">unit</span>(*units)
   <span class="keyword">if</span> units.length == <span class="integer">1</span> &amp;&amp; units.first.is_a?(javax.measure.Dimension)
@@ -6524,19 +6628,19 @@ unit!
       <pre class="lines">
 
 
-738
-739
-740
-741
-742
-743
-744
-745
-746
-747</pre>
+754
+755
+756
+757
+758
+759
+760
+761
+762
+763</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 738</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 754</span>
 
 <span class="keyword">def</span> <span class="function">unit!</span>(*units)
   units = units.each_with_object({}) <span class="keyword">do</span> |unit, r|
@@ -6558,7 +6662,7 @@ unit!
 </div>
 
         <footer>
-  Generated on Sun Dec 25 19:33:15 2022 by
+  Generated on Thu Jan 26 21:35:05 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

@@ -1130,7 +1130,6 @@
   
   
   
-  
 
         
       </ul>
@@ -2278,6 +2277,7 @@
   
   
   
+  
 
         
       </ul>
@@ -2730,6 +2730,67 @@
       
     </ul>
   
+    <h2 id="Instance Method Summary">
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#remove_links_for_item-instance_method" title="#remove_links_for_item (instance method)">#<strong>remove_links_for_item</strong>(item_name)  &#x21d2; Integer </a>
+    
+
+    
+      (also: #removeLinksForItem)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Removes all links to a given item.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#remove_links_for_thing-instance_method" title="#remove_links_for_thing (instance method)">#<strong>remove_links_for_thing</strong>(thing_uid)  &#x21d2; Integer </a>
+    
+
+    
+      (also: #removeLinksForThing)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Removes all links to a given thing.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
 
 
 
@@ -2839,10 +2900,200 @@
     
   </div>
 
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="remove_links_for_item-instance_method">
+  
+    #<strong>remove_links_for_item</strong>(item_name)  &#x21d2; <tt><span class='object_link'><a href="../../../../Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='removeLinksForItem-instance_method'>removeLinksForItem</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Removes all links to a given item.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>item_name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../../Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>how many links were removed</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/links/provider.rb', line 43</span>
+
+<span class="keyword">def</span> <span class="function">remove_links_for_item</span>(item_name)
+  count = <span class="integer">0</span>
+  <span class="instance-variable">@elements</span>.delete_if <span class="keyword">do</span> |_k, v|
+    <span class="keyword">next</span> <span class="keyword">unless</span> v.item_name == item_name
+
+    count += <span class="integer">1</span>
+    notify_listeners_about_removed_element(v)
+    <span class="predefined-constant">true</span>
+  <span class="keyword">end</span>
+  count
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="remove_links_for_thing-instance_method">
+  
+    #<strong>remove_links_for_thing</strong>(thing_uid)  &#x21d2; <tt><span class='object_link'><a href="../../../../Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='removeLinksForThing-instance_method'>removeLinksForThing</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Removes all links to a given thing.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>thing_uid</span>
+      
+      
+        <span class='type'>(<tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/thing/ThingUID.html" target="_parent" title="ThingUID">ThingUID</a></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../../Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>how many links were removed</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/links/provider.rb', line 62</span>
+
+<span class="keyword">def</span> <span class="function">remove_links_for_thing</span>(thing_uid)
+  count = <span class="integer">0</span>
+  <span class="instance-variable">@elements</span>.delete_if <span class="keyword">do</span> |_k, v|
+    <span class="keyword">next</span> <span class="keyword">unless</span> v.linked_uid.thing_uid == thing_uid
+
+    count += <span class="integer">1</span>
+    notify_listeners_about_removed_element(v)
+    <span class="predefined-constant">true</span>
+  <span class="keyword">end</span>
+  count
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
 </div>
 
         <footer>
-  Generated on Sun Dec 25 19:33:26 2022 by
+  Generated on Thu Jan 26 21:35:14 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
