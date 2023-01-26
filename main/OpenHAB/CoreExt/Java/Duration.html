@@ -2910,7 +2910,9 @@
 52
 53
 54
-55</pre>
+55
+56
+57</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/duration.rb', line 51</span>
@@ -2919,6 +2921,8 @@
   <span class="keyword">return</span> to_f &lt;=&gt; other <span class="keyword">if</span> other.is_a?(<span class="constant">Numeric</span>)
 
   <span class="keyword">super</span>
+<span class="keyword">rescue</span> <span class="constant">TypeError</span>
+  <span class="predefined-constant">nil</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -2978,13 +2982,13 @@
       <pre class="lines">
 
 
-63
-64
 65
-66</pre>
+66
+67
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/duration.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/duration.rb', line 65</span>
 
 <span class="keyword">def</span> <span class="function">coerce</span>(other)
   <span class="keyword">return</span> [other.seconds, <span class="predefined-constant">self</span>] <span class="keyword">if</span> other.is_a?(<span class="constant">Numeric</span>)
@@ -3212,7 +3216,7 @@ alias_method <span class="symbol">:to_i</span>, <span class="symbol">:seconds</s
 </div>
 
         <footer>
-  Generated on Thu Jan 26 00:02:02 2023 by
+  Generated on Thu Jan 26 01:20:04 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
