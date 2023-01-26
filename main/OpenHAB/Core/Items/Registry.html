@@ -3149,6 +3149,7 @@ it defaults to <code>:transient</code>.</li>
   <div class="discussion">
     <p>Remove an item.</p>
 <p>The item must be a managed item (typically created by Ruby or in the UI).</p>
+<p>Any associated metadata or channel links are also removed.</p>
 
 
   </div>
@@ -3211,26 +3212,40 @@ it defaults to <code>:transient</code>.</li>
       <pre class="lines">
 
 
-65
-66
 67
 68
 69
 70
 71
 72
-73</pre>
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 67</span>
 
 <span class="keyword">def</span> <span class="function">remove</span>(item_name, <span class="key">recursive</span>: <span class="predefined-constant">false</span>)
   item_name = item_name.name <span class="keyword">if</span> item_name.is_a?(<span class="constant">Item</span>)
   provider = <span class="constant">Provider</span>.registry.provider_for(item_name)
-  <span class="keyword">unless</span> provider.is_a?(org.openhab.core.common.registry.ManagedProvider)
+  <span class="keyword">unless</span> provider.is_a?(<span class="constant">ManagedProvider</span>)
     raise <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot remove item </span><span class="inline"><span class="inline-delimiter">#{</span>item_name<span class="inline-delimiter">}</span></span><span class="content"> from non-managed provider </span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
   <span class="keyword">end</span>
 
+  <span class="constant">Metadata</span>::<span class="constant">Provider</span>.registry.providers.grep(<span class="constant">ManagedProvider</span>).each <span class="keyword">do</span> |managed_provider|
+    managed_provider.remove_item_metadata(item_name)
+  <span class="keyword">end</span>
+
+  <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.providers.grep(<span class="constant">ManagedProvider</span>).each <span class="keyword">do</span> |managed_provider|
+    managed_provider.remove_links_for_item(item_name)
+  <span class="keyword">end</span>
   provider.remove(item_name, recursive)
 <span class="keyword">end</span></pre>
     </td>
@@ -3296,7 +3311,7 @@ it defaults to <code>:transient</code>.</li>
 </div>
 
         <footer>
-  Generated on Sat Jan 21 14:47:26 2023 by
+  Generated on Thu Jan 26 00:01:59 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

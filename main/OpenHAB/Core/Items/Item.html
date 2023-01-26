@@ -3653,7 +3653,7 @@ this method only returns the first thing.</p>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 187</span>
 
 <span class="keyword">def</span> <span class="function">things</span>
-  registry = <span class="constant">OSGi</span>.service(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.thing.link.ItemChannelLinkRegistry</span><span class="delimiter">&quot;</span></span>)
+  registry = <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry
   channels = registry.get_bound_channels(name).to_a
   channels.map(&amp;<span class="symbol">:thing_uid</span>).uniq.map { |tuid| <span class="constant">EntityLookup</span>.lookup_thing(tuid) }.compact
 <span class="keyword">end</span></pre>
@@ -3720,7 +3720,7 @@ this method only returns the first thing.</p>
 </div>
 
         <footer>
-  Generated on Sat Jan 21 14:47:21 2023 by
+  Generated on Thu Jan 26 00:01:52 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
