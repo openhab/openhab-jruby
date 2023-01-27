@@ -128,6 +128,18 @@ RSpec.describe OpenHAB::DSL::Items::Ensure do
       expect(item).to be_undef
     end
 
+    it "doesn't send the update for UNDEF if it's already in UNDEF" do
+      item.update(UNDEF)
+      expect($events).not_to receive(:post_update)
+      item.ensure.update(UNDEF)
+    end
+
+    it "doesn't send the update for nil if it's already in NULL" do
+      item.update(NULL)
+      expect($events).not_to receive(:post_update)
+      item.ensure.update(nil)
+    end
+
     it "is available on Enumerable" do
       items = group.members.to_a
       check_group_command(50, 50) { items.ensure.command(50) }

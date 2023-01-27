@@ -38,23 +38,25 @@ module OpenHAB
             # def command(state)
             #   return super(state) unless Thread.current[:openhab_ensure_states]
             #
+            #   formatted_state = format_command(state)
             #   logger.trace do
-            #     "#{name} ensure #{state}, format_command: #{format_command(state)}, current state: #{self.state}"
+            #     "#{name} ensure #{state}, format_command: #{formatted_state}, current state: #{raw_state}"
             #   end
-            #   return if self.state == format_command(state)
+            #   return if raw_state == formatted_state
             #
-            #   super(state)
+            #   super(formatted_state)
             # end
             class_eval <<~RUBY, __FILE__, __LINE__ + 1 # rubocop:disable Style/DocumentDynamicEvalDefinition
               def #{ensured_method}(state)
                 return super(state) unless Thread.current[:openhab_ensure_states]
 
+                formatted_state = format_#{ensured_method}(state)
                 logger.trace do
-                  "\#{name} ensure \#{state}, format_#{ensured_method}: \#{format_#{ensured_method}(state)}, current state: \#{self.state}"
+                  "\#{name} ensure \#{state}, format_#{ensured_method}: \#{formatted_state}, current state: \#{raw_state}"
                 end
-                return if self.state == format_#{ensured_method}(state)
+                return if raw_state == formatted_state
 
-                super(state)
+                super(formatted_state)
               end
             RUBY
           end
