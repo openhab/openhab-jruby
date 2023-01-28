@@ -3099,23 +3099,22 @@ items[<span class="string"><span class="delimiter">'</span><span class="content"
 <h5 id="loose-type-comparisons"><a href="#loose-type-comparisons" class="header-anchor">#</a>Loose Type Comparisons <!-- raw HTML omitted --></h5>
 <p>Some openHAB item types can accept different command types.
 For example, a <span class='object_link'><a href="OpenHAB/Core/Items/DimmerItem.html" title="OpenHAB::Core::Items::DimmerItem (class)">DimmerItem</a></span> can accept a command with an <span class='object_link'><a href="OpenHAB/Core/Types/OnOffType.html" title="OpenHAB::Core::Types::OnOffType (class)">OnOffType</a></span>, <span class='object_link'><a href="OpenHAB/Core/Types/IncreaseDecreaseType.html" title="OpenHAB::Core::Types::IncreaseDecreaseType (class)">IncreaseDecreaseType</a></span> or a <span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span>.
-However, ultimately an item only stores its state in its native type, e.g. a <span class='object_link'><a href="OpenHAB/Core/Items/DimmerItem.html" title="OpenHAB::Core::Items::DimmerItem (class)">DimmerItems</a></span>'s native type is <span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span>.</p>
-<p>Comparisons between two compatible types will return true when applicable, for example:</p>
-<ul>
-<li><code>0</code> (<span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span>) equals <span class='object_link'><a href="OpenHAB/Core/Types/OnOffType.html#OFF-constant" title="OpenHAB::Core::Types::OnOffType::OFF (constant)">OFF</a></span> and the <code>off?</code> predicate will return true</li>
-<li>A positive <span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span> equals <span class='object_link'><a href="OpenHAB/Core/Types/OnOffType.html#ON-constant" title="OpenHAB::Core::Types::OnOffType::ON (constant)">ON</a></span> and the <code>on?</code> predicate will return true</li>
-</ul>
+However, ultimately an item only stores its state in its native type, e.g. a <span class='object_link'><a href="OpenHAB/Core/Items/DimmerItem.html" title="OpenHAB::Core::Items::DimmerItem (class)">DimmerItems</a></span>'s native type is <span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span>.
+In some contexts, you don't care about the precise value of a particular state, and just want to know if it fits the general definition of <span class='object_link'><a href="OpenHAB/Core/Types/OnOffType.html#ON-constant" title="OpenHAB::Core::Types::OnOffType::ON (constant)">ON</a></span>, etc.
+You can either explicitly convert to the general type, <em>or</em> all of the state predicate methods available on <span class='object_link'><a href="OpenHAB/Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span>, <span class='object_link'><a href="OpenHAB/Core/Events/ItemStateEvent.html" title="OpenHAB::Core::Events::ItemStateEvent (class)">ItemStateEvent</a></span>, <span class='object_link'><a href="OpenHAB/Core/Events/ItemStateChangedEvent.html" title="OpenHAB::Core::Events::ItemStateChangedEvent (class)">ItemStateChangedEvent</a></span>, <span class='object_link'><a href="OpenHAB/Core/Events/ItemCommandEvent.html" title="OpenHAB::Core::Events::ItemCommandEvent (class)">ItemCommandEvent</a></span>, as well as specific types such as <span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span> and <span class='object_link'><a href="OpenHAB/Core/Types/HSBType.html" title="OpenHAB::Core::Types::HSBType (class)">HSBType</a></span>, will do the conversion internally.</p>
 <pre class="code ruby"><code class="ruby"><span class="constant">DimmerItem1</span>.update(<span class="integer">10</span>)
 sleep <span class="integer">1</span>
 <span class="constant">DimmerItem1</span>.state == <span class="integer">10</span> <span class="comment"># =&gt; true</span>
-<span class="constant">DimmerItem1</span>.state == <span class="constant">ON</span> <span class="comment"># =&gt; true</span>
+<span class="constant">DimmerItem1</span>.state == <span class="constant">ON</span> <span class="comment"># =&gt; false</span>
+<span class="constant">DimmerItem1</span>.state.as(<span class="constant">OnOffType</span>) == <span class="constant">ON</span> <span class="comment"># =&gt; true</span>
+<span class="constant">DimmerItem1</span>.state.on? <span class="comment"># =&gt; true</span>
 <span class="constant">DimmerItem1</span>.on? <span class="comment"># =&gt; true</span>
 <span class="constant">DimmerItem1</span>.off? <span class="comment"># =&gt; false</span>
-</code></pre>
-<pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">command</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+
+rule <span class="string"><span class="delimiter">'</span><span class="content">command</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   received_command <span class="constant">DimmerItem1</span>
   run <span class="keyword">do</span> |event|
-    <span class="keyword">if</span> event.command.on?
+    <span class="keyword">if</span> event.on?
       <span class="comment"># This will be executed even when the command is a positive PercentType</span>
       <span class="comment"># instead of an actual ON command</span>
       logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">DimmerItem1 is being turned on</span><span class="delimiter">&quot;</span></span>)
@@ -3124,52 +3123,6 @@ sleep <span class="integer">1</span>
 <span class="keyword">end</span>
 
 <span class="constant">DimmerItem1</span> &lt;&lt; <span class="integer">100</span> <span class="comment"># =&gt; This will trigger the logger.info above</span>
-</code></pre>
-<h5 id="bypassing-loose-type-comparisons"><a href="#bypassing-loose-type-comparisons" class="header-anchor">#</a>Bypassing Loose Type-Comparisons <!-- raw HTML omitted --></h5>
-<p>If at any point you want to bypass loose type conversions, use <code>eql?</code>.</p>
-<pre class="code ruby"><code class="ruby"><span class="constant">DimmerItem1</span>.update(<span class="integer">10</span>)
-sleep <span class="integer">1</span>
-logger.error <span class="constant">DimmerItem1</span>.eql?(<span class="integer">10</span>) <span class="comment"># =&gt; false. It compares the _item_ object not its state</span>
-logger.error <span class="constant">DimmerItem1</span>.eql?(items[<span class="string"><span class="delimiter">'</span><span class="content">DimmerItem1</span><span class="delimiter">'</span></span>]) <span class="comment"># =&gt; true. It compares the _item_ object</span>
-logger.error <span class="constant">DimmerItem1</span>.state.eql?(<span class="constant">ON</span>) <span class="comment"># =&gt; false</span>
-logger.error <span class="constant">DimmerItem1</span>.state.eql?(<span class="integer">10</span>) <span class="comment"># =&gt; false</span>
-logger.error <span class="constant">DimmerItem1</span>.state.eql?(<span class="constant">PercentType</span>.new(<span class="integer">10</span>)) <span class="comment"># =&gt; true</span>
-</code></pre>
-<h5 id="strict-type-comparisons"><a href="#strict-type-comparisons" class="header-anchor">#</a>Strict Type-Comparisons <!-- raw HTML omitted --></h5>
-<p>Sometimes it is critical to know the exact command being sent.
-For example, a rule may need to distinguish between <span class='object_link'><a href="OpenHAB/Core/Types/OnOffType.html#ON-constant" title="OpenHAB::Core::Types::OnOffType::ON (constant)">ON</a></span> vs. a <span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span> command.
-In this instance, Ruby's case equality operator <code>===</code> can be used.
-It will only evaluate to true if the two operands have the same type.
-The strict type comparison applies to Ruby's <code>case</code> statement because it is implemented using the case equality operator <code>===</code>.</p>
-<pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">command</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
-  received_command <span class="constant">DimmerItem1</span>
-  run <span class="keyword">do</span> |event|
-    <span class="keyword">case</span> event.command
-    <span class="keyword">when</span> <span class="constant">ON</span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">DimmerItem1 received an ON command</span><span class="delimiter">&quot;</span></span>)
-    <span class="keyword">when</span> <span class="constant">OFF</span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">DimmerItem1 received an OFF command</span><span class="delimiter">&quot;</span></span>)
-    <span class="keyword">when</span> <span class="integer">0</span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">DimmerItem1 received 0 percent</span><span class="delimiter">&quot;</span></span>)
-    <span class="keyword">when</span> <span class="integer">1</span>..<span class="integer">99</span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">DimmerItem1 received between 1 and 99 percent</span><span class="delimiter">&quot;</span></span>)
-    <span class="keyword">when</span> <span class="integer">100</span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">DimmerItem1 received 100 percent</span><span class="delimiter">&quot;</span></span>)
-    <span class="keyword">when</span> <span class="constant">INCREASE</span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Increase</span><span class="delimiter">&quot;</span></span>)
-    <span class="keyword">when</span> <span class="constant">DECREASE</span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Decrease</span><span class="delimiter">&quot;</span></span>)
-    <span class="keyword">when</span> <span class="constant">REFRESH</span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Refresh</span><span class="delimiter">&quot;</span></span>)
-    <span class="keyword">end</span>
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
-
-</code></pre>
-<p>Regular expressions can still be used on a <span class='object_link'><a href="OpenHAB/Core/Types/StringType.html" title="OpenHAB::Core::Types::StringType (class)">StringType</a></span> command.</p>
-<pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">command</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
-  received_command <span class="constant">StringItem1</span>
-  run <span class="keyword">do</span> |event|
-    <span class="keyword">case</span> event.command
-    <span class="keyword">when</span> <span class="regexp"><span class="delimiter">/</span><span class="content">abc</span><span class="delimiter">/</span></span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">'</span><span class="content">Command contains &quot;abc&quot;</span><span class="delimiter">'</span></span>)
-    <span class="keyword">else</span> logger.info(<span class="string"><span class="delimiter">'</span><span class="content">Received something else</span><span class="delimiter">'</span></span>)
-    <span class="keyword">end</span>
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
-
-<span class="constant">StringItem1</span> &lt;&lt; <span class="string"><span class="delimiter">'</span><span class="content">123 abc 456</span><span class="delimiter">'</span></span> <span class="comment"># This will log 'Command contains &quot;abc&quot;'</span>
 </code></pre>
 <h4 id="metadata"><a href="#metadata" class="header-anchor">#</a>Metadata</h4>
 <p>Metadata is accessed through <span class='object_link'><a href="OpenHAB/Core/Items/Item.html#metadata-instance_method" title="OpenHAB::Core::Items::Item#metadata (method)">Item#metadata</a></span>.</p>
@@ -3909,7 +3862,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Sat Jan 28 03:24:26 2023 by
+  Generated on Sat Jan 28 03:55:24 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

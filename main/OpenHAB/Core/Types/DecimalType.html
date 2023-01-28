@@ -3020,12 +3020,12 @@ used for integers, longs and floating point numbers alike.</p>
       <pre class="lines">
 
 
-135
-136
-137</pre>
+130
+131
+132</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/decimal_type.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/decimal_type.rb', line 130</span>
 
 <span class="keyword">def</span> <span class="function">-@</span>
   <span class="predefined-constant">self</span>.class.new(to_big_decimal.negate)
@@ -3161,14 +3161,12 @@ less than, equal to, or greater than self</p>
         <span class='name'>other</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../Numeric.html" title="Numeric (class)">Numeric</a></span></tt>, <tt><span class='object_link'><a href="Type.html" title="OpenHAB::Core::Types::Type (module)">Type</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Numeric.html" title="Numeric (class)">Numeric</a></span></tt>)</span>
       
       
       
         &mdash;
         <div class='inline'><p>object to coerce to a <span class='object_link'><a href="" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></p>
-<p>If <code>other</code> is a <span class='object_link'><a href="Type.html" title="OpenHAB::Core::Types::Type (module)">Type</a></span>, <code>self</code> will instead be coerced
-to that type to accomodate comparison with things such as <span class='object_link'><a href="OnOffType.html" title="OpenHAB::Core::Types::OnOffType (class)">OnOffType</a></span>.</p>
 </div>
       
     </li>
@@ -3195,25 +3193,21 @@ to that type to accomodate comparison with things such as <span class='object_li
       <pre class="lines">
 
 
+117
+118
+119
 120
 121
-122
-123
-124
-125
-126
-127</pre>
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/decimal_type.rb', line 120</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/decimal_type.rb', line 117</span>
 
 <span class="keyword">def</span> <span class="function">coerce</span>(other)
   logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Coercing </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> as a request from </span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
-  <span class="keyword">if</span> other.is_a?(<span class="constant">Type</span>)
-    [other, as(other.class)]
-  <span class="keyword">elsif</span> other.respond_to?(<span class="symbol">:to_d</span>)
-    [<span class="predefined-constant">self</span>.class.new(other.to_d), <span class="predefined-constant">self</span>]
-  <span class="keyword">end</span>
+  <span class="keyword">return</span> <span class="keyword">unless</span> other.respond_to?(<span class="symbol">:to_d</span>)
+
+  [<span class="predefined-constant">self</span>.class.new(other.to_d), <span class="predefined-constant">self</span>]
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3299,7 +3293,7 @@ to that type to accomodate comparison with things such as <span class='object_li
 </div>
 
         <footer>
-  Generated on Sat Jan 28 03:24:35 2023 by
+  Generated on Sat Jan 28 03:55:33 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
