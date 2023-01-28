@@ -26,21 +26,6 @@ module OpenHAB
         end
 
         #
-        # Type Coercion
-        #
-        # Coerce object to the same Type
-        #
-        # @param [Type] other object to coerce to the same
-        #   Type as this one
-        #
-        # @return [[Type, Type], nil]
-        #
-        def coerce(other)
-          logger.trace("Coercing #{self} (#{self.class}) as a request from #{other.class}")
-          return [other.as(self.class), self] if other.is_a?(Type) && other.respond_to?(:as)
-        end
-
-        #
         # Check equality without type conversion
         #
         # @return [true,false] if the same value is represented, without type
@@ -49,19 +34,6 @@ module OpenHAB
           return false unless other.instance_of?(self.class)
 
           equals(other)
-        end
-
-        #
-        # Case equality
-        #
-        # @return [true,false] if the values are of the same Type
-        #                   or item state of the same type
-        #
-        def ===(other)
-          logger.trace { "Type (#{self.class}) #{self} === #{other} (#{other.class})" }
-          return false unless instance_of?(other.class)
-
-          eql?(other)
         end
 
         #
@@ -94,6 +66,14 @@ module OpenHAB
           end
 
           super
+        end
+
+        # @!visibility private
+        #
+        # some openHAB Types don't implement as; do it for them
+        #
+        def as(klass)
+          self if klass == self.class
         end
       end
 

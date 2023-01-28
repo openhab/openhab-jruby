@@ -54,7 +54,7 @@ module OpenHAB
                 logger.trace do
                   "\#{name} ensure \#{state}, format_#{ensured_method}: \#{formatted_state}, current state: \#{raw_state}"
                 end
-                return if raw_state == formatted_state
+                return if raw_state.as(formatted_state.class) == formatted_state
 
                 super(formatted_state)
               end

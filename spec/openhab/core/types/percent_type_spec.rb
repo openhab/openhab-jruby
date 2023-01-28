@@ -128,9 +128,9 @@ RSpec.describe OpenHAB::Core::Types::PercentType do
 
     # PercentType vs OnOffType
     specify { expect(ten).not_to eql ON }
-    specify { expect(ten).to eq ON }
+    specify { expect(ten).not_to eq ON }
     specify { expect(ten).not_to eq OFF }
-    specify { expect(ten != ON).to be false }
+    specify { expect(ten != ON).to be true }
     specify { expect(ten != OFF).to be true }
 
     # Numeric vs PercentType

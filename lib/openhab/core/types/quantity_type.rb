@@ -157,19 +157,14 @@ module OpenHAB
         #
         # Coerce object to a {QuantityType}
         #
-        # @param [Numeric, Type] other object to coerce to a {QuantityType}
-        #
-        #   if `other` is a {Type}, `self` will instead be coerced
-        #   to that type to accomodate comparison with things such as {OnOffType}
+        # @param [Numeric] other object to coerce to a {QuantityType}
         #
         # @return [Array<(QuantityType, QuantityType)>, nil]
         def coerce(other)
           logger.trace("Coercing #{self} as a request from #{other.class}")
-          if other.is_a?(Type)
-            [other, as(other.class)]
-          elsif other.respond_to?(:to_d)
-            [QuantityType.new(other.to_d.to_java, Units::ONE), self]
-          end
+          return unless other.respond_to?(:to_d)
+
+          [QuantityType.new(other.to_d.to_java, Units::ONE), self]
         end
 
         # arithmetic operators

@@ -46,9 +46,9 @@ module OpenHAB
 
             logger.trace("Defining #{klass}##{state_predicate} for #{state}")
             klass.class_eval <<~RUBY, __FILE__, __LINE__ + 1
-              def #{state_predicate}   # def on?
-                raw_state == #{state}  #   raw_state == ON
-              end                      # end
+              def #{state_predicate}                                                  # def on?
+                raw_state.as(#{state.class.java_class.simple_name}).equal?(#{state})  #   raw_state.as(OnOffType) == ON
+              end                                                                     # end
             RUBY
           end
         end
@@ -83,9 +83,9 @@ module OpenHAB
 
             logger.trace("Defining ItemCommandEvent##{command}? for #{value}")
             Events::ItemCommandEvent.class_eval <<~RUBY, __FILE__, __LINE__ + 1
-              def #{command}?        # def refresh?
-                command == #{value}  #   command == REFRESH
-              end                    # end
+              def #{command}?                                                       # def refresh?
+                command.as(#{value.class.java_class.simple_name}).equal?(#{value})  #   command.as(RefreshType).equal?(REFRESH)
+              end                                                                   # end
             RUBY
           end
         end

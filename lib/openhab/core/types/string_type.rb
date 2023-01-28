@@ -63,7 +63,7 @@ module OpenHAB
         #
         def coerce(other)
           logger.trace("Coercing #{self} as a request from #{other.class}")
-          return [String.new(other.to_str), self] if other.respond_to?(:to_str)
+          return [other.to_str, self] if other.respond_to?(:to_str)
         end
 
         # any method that exists on String gets forwarded to to_s

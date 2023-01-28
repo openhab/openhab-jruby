@@ -153,7 +153,7 @@ module OpenHAB
           return state if state.is_a?(Types::State)
 
           state = state.to_s
-          org.openhab.core.types.TypeParser.parse_state(getAcceptedDataTypes, state) || state
+          org.openhab.core.types.TypeParser.parse_state(getAcceptedDataTypes, state) || StringType.new(state)
         end
 
         # formats a {Types::Type} to send to the event bus

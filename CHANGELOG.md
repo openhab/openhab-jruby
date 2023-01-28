@@ -68,12 +68,14 @@ here is a non-exhaustive list of significant departures from the original gem:
   While convenient at times, it introduces many ambiguities on if the intention
   is to interact with the item or its state, and contortionist code attempting
   to support both use cases.
-* Semi-related to the above, the `#truthy?` method has been removed from any
-  items the previously implemented it. Instead, be more explicit on what you
-  mean - for example `Item.on?`. If you would like to use a similar structure
-  with {StringItem}s, just [include the ActiveSupport gem](USAGE.md#gems)
-  in your rules to get `#blank?` and `#present?` methods, and then you can
-  use `Item.state.present?`.
+* {OpenHAB::Core::Types::Type Enum types} no longer have implicit conversions for comparisons.
+  This means you can no longer do `DimmerItem.state == ON`.
+  Predicate methods retain the implicit conversion semantics, so you _can_ do `DimmerItem.on?`.
+  `ensure.on`, etc. also still retain their internal implicit comparisons, so you can also still do `DimmerItem.ensure.on` and it will _not_ send {ON} if the item is anything but `0`.
+  {OpenHAB::Core::Events::ItemStateEvent} and {OpenHAB::Core::Events::ItemStateChangedEvent} both now have a full set of predicate methods to ease use from within rule execution blocks.
+* Semi-related to the above two points, the `#truthy?` method has been removed from any items the previously implemented it.
+  Instead, be more explicit on what you mean - for example `Item.on?`.
+  If you would like to use a similar structure with {StringItem StringItems}, just [include the ActiveSupport gem](USAGE.md#gems) in your rules to get `#blank?` and `#present?` methods, and then you can use `Item.state.present?`.
 * Semi-related to the above, the
   {OpenHAB::DSL::Rules::BuilderDSL#only_if only_if} and
   {OpenHAB::DSL::Rules::BuilderDSL#not_if not_if} guards now _only_ take blocks.
@@ -185,6 +187,7 @@ here is a non-exhaustive list of significant departures from the original gem:
 * A set of debounce/throttle guards for file-based rules: {OpenHAB::DSL::Rules::BuilderDSL#debounce_for debounce_for}, {OpenHAB::DSL::Rules::BuilderDSL#throttle_for throttle_for}, and {OpenHAB::DSL::Rules::BuilderDSL#only_every only_every} 
 * And for UI rules: {OpenHAB::DSL.debounce_for debounce_for}, {OpenHAB::DSL.throttle_for throttle_for}, {OpenHAB::DSL.only_every only_every}
 * Explicitly document modifying item tags, labels and categories (where possible), and notify openHAB of the change
+* {OpenHAB::Core::Events::ItemStateEvent} and {OpenHAB::Core::Events::ItemStateChangedEvent} now have full sets of predicate methods.
 
 ### Bug Fixes
 

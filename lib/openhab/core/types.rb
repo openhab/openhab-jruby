@@ -57,11 +57,24 @@ module OpenHAB
           ([command] | states).each do |method|
             logger.trace("Defining #{klass}##{method} for #{value}")
             klass.class_eval <<~RUBY, __FILE__, __LINE__ + 1
-              def #{method}       # def on?
-                self == #{value}  #   self == ON
-              end                 # end
+              def #{method}                                                 # def on?
+                as(#{value.class.java_class.simple_name}).equal?(#{value})  #   as(OnOffType).equal?(ON)
+              end                                                           # end
             RUBY
           end
+
+          method = states.last
+          Events::ItemState.class_eval <<~RUBY, __FILE__, __LINE__ + 1
+            def #{method}                                                            # def on?
+              item_state.as(#{value.class.java_class.simple_name}).equal?(#{value})  #   item_state.as(OnOffType).equal?(ON)
+            end                                                                      # end
+          RUBY
+
+          Events::ItemStateChangedEvent.class_eval <<~RUBY, __FILE__, __LINE__ + 1
+            def was_#{method}                                                            # def was_on?
+              old_item_state.as(#{value.class.java_class.simple_name}).equal?(#{value})  #   old_item_state.as(OnOffType).equal?(ON)
+            end                                                                          # end
+          RUBY
         end
       end
     end

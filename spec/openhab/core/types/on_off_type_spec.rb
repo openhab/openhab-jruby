@@ -35,13 +35,13 @@ RSpec.describe OpenHAB::Core::Types::OnOffType do
     let(:fifty) { PercentType.new(50) }
     let(:zero) { PercentType::ZERO }
 
-    specify { expect(fifty).to eq ON }
-    specify { expect(zero).to eq OFF }
+    specify { expect(fifty).not_to eq ON }
+    specify { expect(zero).not_to eq OFF }
     specify { expect(fifty).not_to eq OFF }
     specify { expect(zero).not_to eq ON }
-    specify { expect(ON).to eq fifty }
+    specify { expect(ON).not_to eq fifty }
     specify { expect(ON).not_to eq zero }
-    specify { expect(OFF).to eq zero }
+    specify { expect(OFF).not_to eq zero }
     specify { expect(OFF).not_to eq fifty }
 
     specify { expect(ON).not_to eq NULL }
