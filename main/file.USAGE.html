@@ -3387,7 +3387,7 @@ When comparing with a type that's missing more generic data, it will be filled i
 I.e. comparing a time to a month, the month will be assumed to be in the same year as the time.</p>
 <pre class="code ruby"><code class="ruby"><span class="comment"># Get current date/time</span>
 now = <span class="constant">ZonedDateTime</span>.now
-one_hour_from_now = <span class="constant">ZonedDateTime</span>.now + <span class="integer">30</span>.minutes
+one_hour_from_now = <span class="constant">ZonedDateTime</span>.now + <span class="integer">60</span>.minutes
 one_hour_from_now = <span class="integer">1</span>.hour.from_now <span class="comment"># or use the simpler helper method that also returns a ZonedDateTime</span>
 <span class="comment"># Or use Ruby time</span>
 ruby_now = <span class="constant">Time</span>.now
@@ -3418,8 +3418,8 @@ ruby_now = <span class="constant">Time</span>.now
 <span class="comment"># Explicit conversions</span>
 <span class="constant">ZonedDateTime</span>.now.to_time
 <span class="constant">Time</span>.now.to_zoned_date_time
-</code></pre>
-<pre class="code ruby"><code class="ruby"><span class="comment"># You can parse string as time</span>
+
+<span class="comment"># You can parse string as time</span>
 wake_up_time = <span class="constant">LocalTime</span>.parse(<span class="string"><span class="delimiter">&quot;</span><span class="content">6:00 am</span><span class="delimiter">&quot;</span></span>)
 
 <span class="comment"># Compare now against LocalTime</span>
@@ -3431,13 +3431,13 @@ wake_up_time = <span class="constant">LocalTime</span>.parse(<span class="string
 <span class="keyword">if</span> <span class="constant">Time</span>.now &gt;= wake_up_time
   <span class="constant">Wake_Up_Alarm</span>.on
 <span class="keyword">end</span>
-</code></pre>
-<pre class="code ruby"><code class="ruby"><span class="comment"># Get today's start of the day (midnight)</span>
+
+<span class="comment"># Get today's start of the day (midnight)</span>
 start_of_day = <span class="constant">ZonedDateTime</span>.now.with(<span class="constant">LocalTime</span>::<span class="constant">MIDNIGHT</span>)
 <span class="comment"># or</span>
 start_of_day = <span class="constant">LocalTime</span>::<span class="constant">MIDNIGHT</span>.to_zoned_date_time
-</code></pre>
-<pre class="code ruby"><code class="ruby"><span class="comment"># Comparing ZonedDateTime against LocalTime with `&lt;`</span>
+
+<span class="comment"># Comparing ZonedDateTime against LocalTime with `&lt;`</span>
 max = <span class="constant">Solar_Power</span>.maximum_since(<span class="integer">24</span>.hours.ago)
 <span class="keyword">if</span> max.timestamp &lt; <span class="constant">LocalTime</span>::<span class="constant">NOON</span>
   logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">Max solar power </span><span class="inline"><span class="inline-delimiter">#{</span>max<span class="inline-delimiter">}</span></span><span class="content"> happened before noon, at: </span><span class="inline"><span class="inline-delimiter">#{</span>max.timestamp<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
@@ -3464,8 +3464,8 @@ elapsed_time = <span class="constant">ZonedDateTime</span>.now - <span class="co
 <span class="constant">Motion_Sensor</span>.last_update &lt; <span class="constant">Light_Item</span>.last_update - <span class="integer">10</span>.minutes
 <span class="comment"># is the same as:</span>
 <span class="constant">Motion_Sensor</span>.last_update.before?(<span class="constant">Light_Item</span>.last_update.minus_minutes(<span class="integer">10</span>))
-</code></pre>
-<pre class="code ruby"><code class="ruby"><span class="comment"># Getting Epoch Second</span>
+
+<span class="comment"># Getting Epoch Second</span>
 <span class="constant">Time</span>.now.to_i
 <span class="constant">ZonedDateTime</span>.now.to_i
 <span class="constant">ZonedDateTime</span>.now.to_epoch_second
@@ -3780,7 +3780,7 @@ play_sound <span class="string"><span class="delimiter">&quot;</span><span class
 <p>The rule definition itself is just Ruby code, which means you can use code to generate your rules.
 Take care when doing this as the the items/groups are processed when the rules file is processed, meaning that new items/groups will not automatically generate new rules.</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Log whenever a Virtual Switch Changes</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
-  items.select { |item| item.is_a?(<span class="constant">Switch</span>) }
+  items.grep(<span class="constant">SwitchItem</span>)
        .select { |item| item.label&amp;.include?(<span class="string"><span class="delimiter">&quot;</span><span class="content">Virtual</span><span class="delimiter">&quot;</span></span>) }
        .each <span class="keyword">do</span> |item|
          changed item
@@ -3790,7 +3790,7 @@ Take care when doing this as the the items/groups are processed when the rules f
 <span class="keyword">end</span>
 </code></pre>
 <p>This rule is effectively the same:</p>
-<pre class="code ruby"><code class="ruby">virtual_switches = items.select { |item| item.is_a?(<span class="constant">Switch</span>) }
+<pre class="code ruby"><code class="ruby">virtual_switches = items.grep(<span class="constant">SwitchItem</span>)
                         .select { |item| item.label&amp;.include?(<span class="string"><span class="delimiter">&quot;</span><span class="content">Virtual</span><span class="delimiter">&quot;</span></span>) }
 
 rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Log whenever a Virtual Switch Changes 2</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -3799,7 +3799,7 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
 <span class="keyword">end</span>
 </code></pre>
 <p>This will accomplish the same thing, but create a new rule for each virtual switch:</p>
-<pre class="code ruby"><code class="ruby">virtual_switches = items.select { |item| item.is_a?(<span class="constant">Switch</span>) }
+<pre class="code ruby"><code class="ruby">virtual_switches = items.grep(<span class="constant">SwitchItem</span>)
                         .select { |item| item.label&amp;.include?(<span class="string"><span class="delimiter">&quot;</span><span class="content">Virtual</span><span class="delimiter">&quot;</span></span>) }
 
 virtual_switches.each <span class="keyword">do</span> |switch|
@@ -3862,7 +3862,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Sat Jan 28 04:03:01 2023 by
+  Generated on Mon Jan 30 22:44:02 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
