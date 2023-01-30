@@ -12,9 +12,6 @@ module OpenHAB
   # @example Corresponds to `transform/compass.script`
   #   OpenHAB::Transform.compass("30", param: "7")
   #
-  # @example Corresponds to `transform/ruby/compass.script`
-  #   OpenHAB::Transform::Ruby.compass("59 °")
-
   module Transform
     class << self
       # @!visibility private

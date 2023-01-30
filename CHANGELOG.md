@@ -101,7 +101,7 @@ here is a non-exhaustive list of significant departures from the original gem:
 * The top-level `groups` method providing access to only {GroupItem}s has been
   removed. Use `items.grep(GroupItem)` if you would like to filter to only
   groups.
-* `GemericItem#id` no longer exists; just use
+* `GenericItem#id` no longer exists; just use
   {Item#to_s Item#to_s} which does what `#id` used to do.
 * `states?(*items)` helper is gone. Just use `items.all?(:state?)`, or in
   the rare cased you used `states?(*items, things: true)`, use

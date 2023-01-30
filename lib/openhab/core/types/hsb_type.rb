@@ -142,7 +142,7 @@ module OpenHAB
         end
 
         # Convert to an HTML-style string of 6 hex characters in the default sRGB color model.
-        # @return [String] +'#xxxxxx'+
+        # @return [String] `"#xxxxxx"`
         def to_hex
           Kernel.format("#%06x", rgb)
         end
@@ -174,7 +174,7 @@ module OpenHAB
 
         # @!method to_xy
         #   Convert to the xyY values representing this object's color in CIE XY color model
-        #   @return [[PercentType, PercentType]]
+        #   @return [[PercentType, PercentType, PercentType]]
       end
     end
   end
