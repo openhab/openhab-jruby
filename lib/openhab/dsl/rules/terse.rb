@@ -20,27 +20,29 @@ module OpenHAB
         class << self
           # @!visibility private
           # @!macro def_terse_rule
-          #   @!method $1(*args, name :nil, id: nil, **kwargs, &block)
+          #   @!method $1(*args, name :nil, id: nil, on_load: false, **kwargs, &block)
           #   Create a new rule with a $1 trigger.
           #   @param name [String] The name for the rule.
           #   @param id [String] The ID for the rule.
+          #   @param on_load [true, false] If the rule should _also_ trigger immediately when the script loads.
           #   @yield The execution block for the rule.
           #   @return [void]
           #   @see BuilderDSL#$1
           def def_terse_rule(trigger)
             class_eval(<<~RUBY, __FILE__, __LINE__ + 1)
-              def #{trigger}(*args, name: nil, id: nil, **kwargs, &block)     # def changed(*args, name: nil, id: nil, **kwargs, &block)
-                raise ArgumentError, "Block is required" unless block         #   raise ArgumentError, "Block is required" unless block
-                                                                              #
-                id ||= NameInference.infer_rule_id_from_block(block)          #   id ||= NameInference.infer_rule_id_from_block(block)
-                script = block.source rescue nil                              #   script = block.source rescue nil
-                caller_binding = block.binding                                #   caller_binding = block.binding
-                rule name, id: id, script: script, binding: caller_binding do #   rule name, id: id, script: script, binding: caller_binding do
-                  #{trigger}(*args, **kwargs)                                 #     changed(*args, **kwargs)
-                  run(&block)                                                 #     run(&block)
-                end                                                           #   end
-              end                                                             # end
-              module_function #{trigger.inspect}                              # module_function :changed
+              def #{trigger}(*args, name: nil, id: nil, on_load: false, **kwargs, &block)     # def changed(*args, name: nil, id: nil, on_load: false, **kwargs, &block)
+                raise ArgumentError, "Block is required" unless block                         #   raise ArgumentError, "Block is required" unless block
+                                                                                              #
+                id ||= NameInference.infer_rule_id_from_block(block)                          #   id ||= NameInference.infer_rule_id_from_block(block)
+                script = block.source rescue nil                                              #   script = block.source rescue nil
+                caller_binding = block.binding                                                #   caller_binding = block.binding
+                rule name, id: id, script: script, binding: caller_binding do                 #   rule name, id: id, script: script, binding: caller_binding do
+                  self.on_load if on_load                                                     #     self.on_load if on_load
+                  #{trigger}(*args, **kwargs)                                                 #     changed(*args, **kwargs)
+                  run(&block)                                                                 #     run(&block)
+                end                                                                           #   end
+              end                                                                             # end
+              module_function #{trigger.inspect}                                              # module_function :changed
             RUBY
           end
         end

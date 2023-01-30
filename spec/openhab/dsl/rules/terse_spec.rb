@@ -17,4 +17,15 @@ RSpec.describe OpenHAB::DSL::Rules::Terse do
     items.build { switch_item "TestSwitch" }
     expect { changed(TestSwitch) }.to raise_error(ArgumentError)
   end
+
+  it "can also run on_load" do
+    this = self
+    items.build { switch_item "TestSwitch" }
+    ran = false
+    changed TestSwitch, on_load: true do
+      ran = true
+      expect(self).to be this
+    end
+    expect(ran).to be true
+  end
 end
