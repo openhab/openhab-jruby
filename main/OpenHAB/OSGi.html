@@ -2278,6 +2278,7 @@
   
   
   
+  
 
         
       </ul>
@@ -2666,6 +2667,67 @@
 
 
 
+  <h2>Class Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#bundle-class_method" title="bundle (class method)">.<strong>bundle</strong>  &#x21d2; org.osgi.framework.Bundle </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The OSGi Bundle for ScriptExtension Class.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#bundle_context-class_method" title="bundle_context (class method)">.<strong>bundle_context</strong>  &#x21d2; org.osgi.framework.BundleContext </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>OSGi bundle context for ScriptExtension Class.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
 
 
 
@@ -2751,6 +2813,129 @@
   
 
 
+
+  <div id="class_attr_details" class="attr_details">
+    <h2>Class Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="bundle-class_method">
+  
+    .<strong>bundle</strong>  &#x21d2; <tt>org.osgi.framework.Bundle</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The OSGi Bundle for ScriptExtension Class.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>org.osgi.framework.Bundle</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The OSGi Bundle for ScriptExtension Class</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+63
+64
+65</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/osgi.rb', line 63</span>
+
+<span class="keyword">def</span> <span class="function">bundle</span>
+  <span class="instance-variable">@bundle</span> ||= org.osgi.framework.FrameworkUtil.getBundle(<span class="global-variable">$scriptExtension</span>.class)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="bundle_context-class_method">
+  
+    .<strong>bundle_context</strong>  &#x21d2; <tt>org.osgi.framework.BundleContext</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns OSGi bundle context for ScriptExtension Class.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>org.osgi.framework.BundleContext</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>OSGi bundle context for ScriptExtension Class</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+57
+58
+59</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/osgi.rb', line 57</span>
+
+<span class="keyword">def</span> <span class="function">bundle_context</span>
+  <span class="instance-variable">@bundle_context</span> ||= bundle.bundle_context
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
 
   <div id="class_method_details" class="method_details_list">
@@ -3071,7 +3256,7 @@ implements.</p>
 </div>
 
         <footer>
-  Generated on Tue Feb 14 00:49:58 2023 by
+  Generated on Tue Feb 14 03:35:24 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
