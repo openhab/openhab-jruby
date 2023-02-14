@@ -52,10 +52,8 @@ module OpenHAB
         )
       end
 
-      private
-
       # @!attribute [r] bundle_context
-      # @return [org.osgi.framework.BundleContext] OSGi bundle context
+      # @return [org.osgi.framework.BundleContext] OSGi bundle context for ScriptExtension Class
       def bundle_context
         @bundle_context ||= bundle.bundle_context
       end

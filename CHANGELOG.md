@@ -190,6 +190,7 @@ here is a non-exhaustive list of significant departures from the original gem:
 * {OpenHAB::Core::Events::ItemStateEvent} and {OpenHAB::Core::Events::ItemStateChangedEvent} now have full sets of predicate methods.
 * {OpenHAB::DSL::Rules::Terse terse rules} now have an `on_load` parameter.
 * {Item#all_groups Item#all_groups}, {Enumerable#all_members}, {Enumerable#groups}, {Enumerable#all_groups}.
+* {GenericItem#formatted_state GenericItem#formatted_state}.
 
 ### Bug Fixes
 

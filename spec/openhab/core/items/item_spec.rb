@@ -153,6 +153,24 @@ RSpec.describe OpenHAB::Core::Items::Item do
     end
   end
 
+  describe "#formatted_state" do
+    it "just returns the state if it has no format" do
+      items.build { number_item MyTemp, state: 5.556 }
+      expect(MyTemp.formatted_state[0...5]).to eql "5.556"
+    end
+
+    it "handles format strings" do
+      items.build { number_item MyTemp, format: "%.1f custom unit", state: 5.556 }
+      expect(MyTemp.formatted_state).to eql "5.6 custom unit"
+    end
+
+    it "handles transforms" do
+      items.build { number_item MyTemp, format: "MAP(mymap.map):%s", state: 5.556 }
+      allow(org.openhab.core.transform.TransformationHelper).to receive(:transform).and_return("transformed state")
+      expect(MyTemp.formatted_state).to eql "transformed state"
+    end
+  end
+
   describe "#thing" do
     before do
       install_addon "binding-astro", ready_markers: "openhab.xmlThingTypes"

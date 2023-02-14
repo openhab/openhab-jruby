@@ -71,6 +71,34 @@ module OpenHAB
           !raw_state.is_a?(Types::UnDefType)
         end
 
+        # @!attribute [r] formatted_state
+        #
+        # Format the item's state according to its state description
+        #
+        # This may include running a transformation.
+        #
+        # @return [String]
+        #
+        # @example
+        #   logger.info(Exterior_WindDirection.formatted_state) # => "NE (36°)"
+        #
+        def formatted_state
+          # use to_string, not to_s, to get the original openHAB toString(), instead of any overrides
+          # the JRuby library has defined
+          raw_state_string = raw_state.to_string
+
+          return raw_state_string unless (pattern = state_description&.pattern)
+
+          transformed_state_string = org.openhab.core.transform.TransformationHelper.transform(OSGi.bundle_context,
+                                                                                               pattern,
+                                                                                               raw_state_string)
+          return state.format(pattern) if transformed_state_string.nil? || transformed_state_string == raw_state_string
+
+          transformed_state_string
+        rescue org.openhab.core.transform.TransformationException
+          raw_state_string
+        end
+
         #
         # @!attribute [r] state
         # @return [State, nil]
