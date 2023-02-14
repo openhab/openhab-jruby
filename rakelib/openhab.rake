@@ -333,13 +333,13 @@ namespace :openhab do
   desc "Deploy to local Openhab"
   task deploy: %i[download build] do |_task|
     mkdir_p gem_home
-    gem_file = File.join(PACKAGE_DIR, "openhab-jrubyscripting-#{OpenHAB::DSL::VERSION}.gem")
+    gem_file = File.join(PACKAGE_DIR, "openhab-scripting-#{OpenHAB::DSL::VERSION}.gem")
     fail_on_error("gem install #{gem_file} -i #{gem_home} --no-document")
   end
 
   desc "Clean up local gems"
   task :cleanupgems do
-    fail_on_error("gem uninstall openhab-jrubyscripting -a", ruby_env)
+    fail_on_error("gem uninstall openhab-scripting -a", ruby_env)
   end
 
   desc "Deploy adhoc test Openhab"

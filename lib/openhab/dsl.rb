@@ -846,7 +846,7 @@ module OpenHAB
         when org.openhab.core.common.registry.ManagedProvider
           type = provider.type
           unless type
-            raise ArgumentError, "#{provider.inspect} is for objects which are not supported by openhab-jrubyscripting"
+            raise ArgumentError, "#{provider.inspect} is for objects which are not supported by openhab-scripting"
           end
 
           thread_providers[type] = provider

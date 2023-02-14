@@ -134,7 +134,7 @@ module OpenHAB
     #
     # Regex for matching internal calls in a stack trace
     #
-    INTERNAL_CALL_REGEX = %r{(openhab-jrubyscripting-.*/lib)|org[./]jruby}.freeze
+    INTERNAL_CALL_REGEX = %r{(openhab-scripting-.*/lib)|org[./]jruby}.freeze
     private_constant :INTERNAL_CALL_REGEX
 
     #

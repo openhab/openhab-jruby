@@ -142,9 +142,9 @@ require 'rubygems/commands/uninstall_command'
 
 cmd = Gem::Commands::UninstallCommand.new
 
-# uninstall all the older versions of the openhab-jrubyscripting gems
+# uninstall all the older versions of the openhab-scripting gems
 Gem::Specification.find_all
-                  .select { |gem| gem.name == 'openhab-jrubyscripting' }
+                  .select { |gem| gem.name == 'openhab-scripting' }
                   .sort_by(&:version)
                   .tap(&:pop) # don't include the latest version
                   .each do |gem|

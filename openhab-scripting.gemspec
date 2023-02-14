@@ -3,11 +3,11 @@
 require_relative "lib/openhab/dsl/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "openhab-jrubyscripting"
+  spec.name          = "openhab-scripting"
   spec.version       = OpenHAB::DSL::VERSION
   spec.licenses      = ["EPL-2.0"]
-  spec.authors       = ["Cody Cutrer"]
-  spec.email         = ["cody@cutrer.us"]
+  spec.authors       = ["Brian O'Connell", "Cody Cutrer", "Jimmy Tanagra"]
+  spec.email         = ["broconne+github@gmail.com", "cody@cutrer.us", "jcode@tanagra.id.au"]
 
   spec.summary       = "JRuby Helper Libraries for openHAB Scripting"
   spec.homepage      = "https://openhab.github.io/openhab-jruby/"
