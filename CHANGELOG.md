@@ -1,6 +1,6 @@
 # JRuby openHAB Scripting Change Log
 
-## [5.0.0](https://github.com/ccutrer/openhab-jrubyscripting/compare/4.45.2...main)
+## [5.0.0](https://github.com/openhab/openhab-jruby/compare/4.45.2...main)
 
 5.0 is the first release of `openhab-jrubyscripting` as a fork of
 `openhab-scripting`. Many thanks to

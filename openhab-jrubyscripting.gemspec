@@ -10,14 +10,14 @@ Gem::Specification.new do |spec|
   spec.email         = ["cody@cutrer.us"]
 
   spec.summary       = "JRuby Helper Libraries for openHAB Scripting"
-  spec.homepage      = "https://ccutrer.github.io/openhab-jrubyscripting/"
+  spec.homepage      = "https://openhab.github.io/openhab-jruby/"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.6.0")
 
   spec.metadata = {
     "homepage_uri" => spec.homepage,
-    "source_code_uri" => "https://github.com/ccutrer/openhab-jrubyscripting",
-    "documentation_uri" => "https://ccutrer.github.io/openhab-jrubyscripting/",
-    "changelog_uri" => "https://ccutrer.github.io/openhab-jrubyscripting/file.CHANGELOG.html",
+    "source_code_uri" => "https://github.com/openhab/openhab-jruby",
+    "documentation_uri" => "https://openhab.github.io/openhab-jruby/",
+    "changelog_uri" => "https://openhab.github.io/openhab-jruby/file.CHANGELOG.html",
     "rubygems_mfa_required" => "true"
   }
 
