@@ -43,7 +43,7 @@ module OpenHAB
       end
 
       # Import common actions
-      %w[Exec HTTP Ping].each do |action|
+      %w[Exec HTTP Ping Transformation].each do |action|
         klass = (java_import "org.openhab.core.model.script.actions.#{action}").first
         Object.const_set(action, klass)
       end

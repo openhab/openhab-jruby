@@ -7,7 +7,7 @@ module OpenHAB
       class Transformation
         class << self
           # @!visibility private
-          alias_method :transform_raw, :transform if instance_methods.include?(:say)
+          alias_method :raw_transform, :transform if instance_methods.include?(:transform)
 
           #
           # Applies a transformation of a given type with some function to a value.
@@ -20,10 +20,10 @@ module OpenHAB
           # @return [String] the transformed value, or the original value if an error occurred
           #
           # @example Run a transformation
-          #   Transformation.transform(:map, "myfan.map", 0)
+          #   transform(:map, "myfan.map", 0)
           #
           def transform(type, function, value)
-            transform_raw(type.to_s.upcase, function.to_s, value.to_s)
+            raw_transform(type.to_s.upcase, function.to_s, value.to_s)
           end
         end
       end

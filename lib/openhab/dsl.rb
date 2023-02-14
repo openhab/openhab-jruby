@@ -479,6 +479,11 @@ module OpenHAB
       debounce(for: duration, id: id, &block)
     end
 
+    # (see Core::Actions::Transformation.transform)
+    def transform(type, function, value)
+      Transformation.transform(type, function, value)
+    end
+
     #
     # Limit how often the given block executes to the specified interval.
     #
