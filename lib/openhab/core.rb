@@ -7,9 +7,7 @@ module OpenHAB
     # @return [String]
     VERSION = org.openhab.core.OpenHAB.version.freeze
 
-    unless Gem::Version.new(VERSION) >= Gem::Version.new("3.4.0")
-      raise "`openhab-jrubyscripting` requires openHAB >= 3.4.0"
-    end
+    raise "`openhab-scripting` requires openHAB >= 3.4.0" unless Gem::Version.new(VERSION) >= Gem::Version.new("3.4.0")
 
     # @return [Integer] Number of seconds to wait between checks for automation manager
     CHECK_DELAY = 10

@@ -2,7 +2,7 @@
 
 unless RUBY_ENGINE == "jruby" &&
        Gem::Version.new(RUBY_ENGINE_VERSION) >= Gem::Version.new("9.3.8.0")
-  raise Gem::RubyVersionMismatch, "openhab-jrubyscripting requires JRuby 9.3.8.0 or newer"
+  raise Gem::RubyVersionMismatch, "openhab-scripting requires JRuby 9.3.8.0 or newer"
 end
 
 require "jruby"

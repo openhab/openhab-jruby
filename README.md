@@ -1,6 +1,6 @@
 # openHAB JRuby Library
 
-[![Gem Version](https://img.shields.io/gem/v/openhab-jrubyscripting)](https://rubygems.org/gems/openhab-jrubyscripting)
+[![Gem Version](https://img.shields.io/gem/v/openhab-scripting)](https://rubygems.org/gems/openhab-scripting)
 [![Continous Integration](https://github.com/openhab/openhab-jruby/workflows/Continuous%20Integration/badge.svg)](https://github.com/openhab/openhab-jruby/actions/workflows/ci.yml)
 [![GitHub contributors](https://img.shields.io/github/contributors/openhab/openhab-jruby)](https://github.com/openhab/openhab-jruby/graphs/contributors)
 [![EPLv2 License](https://img.shields.io/badge/License-EPLv2-blue.svg)](https://www.eclipse.org/legal/epl-2.0/)

@@ -2,7 +2,7 @@
 
 # Testing
 
-`openhab-jrubyscripting` includes framework classes to allow you to write unit tests
+`openhab-scripting` includes framework classes to allow you to write unit tests
 for your openHAB rules written in JRuby. It loads up a limited actual openHAB runtime
 environment. Because it is a limited environment, with no actual bindings or things,
 you may need to stub out those actions in your tests. The autoupdate manager is
@@ -23,7 +23,7 @@ source "https://rubygems.org"
 
 group(:test) do
   gem "rspec", "~> 3.11"
-  gem "openhab-jrubyscripting", "~> 0.1"
+  gem "openhab-scripting", "~> 0.1"
   gem "timecop"
 end
 

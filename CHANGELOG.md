@@ -2,7 +2,7 @@
 
 ## [5.0.0](https://github.com/openhab/openhab-jruby/compare/4.45.2...main)
 
-5.0 is the first release of `openhab-jrubyscripting` as the officially supported gem of the openHAB organization.
+5.0 is the first release as the officially supported gem of the openHAB organization.
 Many thanks to [@boc-tothefuture](https://github.com/boc-tothefuture), [@jimtng](https://github.com/jimtng), and [@pacive](https://github.com/pacive) for their work on the latter.
 This major release contains significant restructuring by [@ccutrer](https://github.com/ccutrer), with additional contributions by [@jimtng](https://github.com/jimtng).
 Here is a non-exhaustive list of significant departures from the original gem:

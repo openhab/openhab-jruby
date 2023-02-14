@@ -4,7 +4,7 @@
 # JRuby Scripting <!-- omit from toc -->
 
 This add-on provides [JRuby](https://www.jruby.org/) scripting language for automation rules.
-Also included is [openhab-jrubyscripting](https://openhab.github.io/openhab-jruby/), a fairly high-level Ruby gem to support automation in openHAB.
+Also included is [openhab-scripting](https://openhab.github.io/openhab-jruby/), a fairly high-level Ruby gem to support automation in openHAB.
 It provides native Ruby access to common openHAB functionality within rules including items, things, actions, logging and more.
 If you're new to Ruby, you may want to check out [Ruby Basics](docs/ruby-basics.md).
 
@@ -96,7 +96,7 @@ Additional [example rules are available](docs/examples.md), as well as examples 
 
 1. Go to `Settings -> Add-ons -> Automation` and install the jrubyscripting automation addon following the [openHAB instructions](https://www.openhab.org/docs/configuration/addons.html)
 2. Go to `Settings -> Other Services -> JRuby Scripting`:
-   * **Ruby Gems**: `openhab-jrubyscripting=~>5.0`
+   * **Ruby Gems**: `openhab-scripting=~>5.0`
    * **Require Scripts**: `openhab/dsl` (not required, but recommended)
 
 ### Using Files <!-- omit from toc -->
@@ -107,19 +107,19 @@ Additional [example rules are available](docs/examples.md), as well as examples 
    Create a file called `jruby.cfg` in `<OPENHAB_CONF>/services/` with the following content:
 
    ```
-   org.openhab.automation.jrubyscripting:gems=openhab-jrubyscripting=~>5.0
+   org.openhab.automation.jrubyscripting:gems=openhab-scripting=~>5.0
    org.openhab.automation.jrubyscripting:require=openhab/dsl
    ```
 
-   This configuration with the openhab-jrubyscripting gem specified with [pessimistic versioning](https://thoughtbot.com/blog/rubys-pessimistic-operator) will install any version of openhab-jrubyscripting greater than or equal to 5.0 but less than 6.0.
+   This configuration with the openhab-scripting gem specified with [pessimistic versioning](https://thoughtbot.com/blog/rubys-pessimistic-operator) will install any version of openhab-scripting greater than or equal to 5.0 but less than 6.0.
    On system restart if any (non-breaking) new versions of the library are available they will automatically be installed.
 
 ### Upgrading <!-- omit from toc -->
 
 Depending on the versioning selected in the `jruby.cfg` or the gems list in the user interface, upgrading will either be automatic after an openHAB restart or manual.
-For manual upgrades select the exact version of the gem. For example, `org.openhab.automation.jrubyscripting:gems=openhab-jrubyscripting=5.0.0` will install and stay at version 5.0.0.
-To upgrade to version 5.0.1, change the configuration to `org.openhab.automation.jrubyscripting:gems=openhab-jrubyscripting=5.0.1`.
-To automatically upgrade the gem, it is recommended to use pessimistic versioning: `org.openhab.automation.jrubyscripting:gems=openhab-jrubyscripting=~>5.0`.
+For manual upgrades select the exact version of the gem. For example, `org.openhab.automation.jrubyscripting:gems=openhab-scripting=5.0.0` will install and stay at version 5.0.0.
+To upgrade to version 5.0.1, change the configuration to `org.openhab.automation.jrubyscripting:gems=openhab-scripting=5.0.1`.
+To automatically upgrade the gem, it is recommended to use pessimistic versioning: `org.openhab.automation.jrubyscripting:gems=openhab-scripting=~>5.0`.
 This will install at least version 5.0 and on every restart automatically install any version that is less than 6.0.
 This ensures that fixes and new features are available without introducing any breaking changes.
 
@@ -128,7 +128,7 @@ This ensures that fixes and new features are available without introducing any b
 After installing this add-on, you will find configuration options in the openHAB portal under _Settings -> Other Services -> JRuby Scripting_.
 Alternatively, JRuby configuration parameters may be set by creating a `jruby.cfg` file in `conf/services/`.
 
-By default this add-on includes the [openhab-jrubyscripting](https://github.com/openhab/openhab-jruby) Ruby gem and automatically `require`s it.
+By default this add-on includes the [openhab-scripting](https://github.com/openhab/openhab-jruby) Ruby gem and automatically `require`s it.
 This allows the use of {OpenHAB::DSL.items items}, {OpenHAB::DSL.rules rules}, {OpenHAB::DSL.shared_cache shared_cache} and other objects in your scripts.
 This functionality can be disabled for users who prefer to manage their own gems and `require`s via the add-on configuration options.
 Simply change the `gems` and `require` configuration settings.
@@ -136,7 +136,7 @@ Simply change the `gems` and `require` configuration settings.
 | Parameter         | Description                                                                                                   |
 | ----------------- | ------------------------------------------------------------------------------------------------------------- |
 | `gem_home`        | The path to store Ruby Gems. <br/><br/>Default: `$OPENHAB_CONF/automation/ruby/.gem/{RUBY_ENGINE_VERSION}`    |
-| `gems`            | A list of gems to install on start up or settings change. <br/><br/>Default: `openhab-jrubyscripting=~>5.0.0` |
+| `gems`            | A list of gems to install on start up or settings change. <br/><br/>Default: `openhab-scripting=~>5.0.0` |
 | `check_update`    | Check for updated version of `gems` on start up or settings change. <br/><br/>Default: `true`                 |
 | `require`         | List of scripts to be required automatically. <br/><br/>Default: `openhab/dsl`                                |
 | `rubylib`         | Search path for user libraries. <br/><br/>Default: `$OPENHAB_CONF/automation/ruby/lib`                        |
@@ -146,7 +146,7 @@ Simply change the `gems` and `require` configuration settings.
 When using file-based configuration, these parameters must be prefixed with `org.openhab.automation.jrubyscripting:`, for example:
 
 ```text
-org.openhab.automation.jrubyscripting:gems=openhab-jrubyscripting=~>5.0
+org.openhab.automation.jrubyscripting:gems=openhab-scripting=~>5.0
 org.openhab.automation.jrubyscripting:require=openhab/dsl
 ```
 
