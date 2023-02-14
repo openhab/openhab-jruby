@@ -63,10 +63,28 @@ module Enumerable
     select { |i| (groups.map(&:name) & i.group_names).empty? }
   end
 
-  # Returns the group members the elements
+  # Returns the group members of all group elements
   # @return [Array<Item>]
   def members
-    grep(OpenHAB::Core::Items::GroupItem).flat_map(&:members)
+    grep(OpenHAB::Core::Items::GroupItem).flat_map(&:members).uniq
+  end
+
+  # Returns all non-group members of all group elements, recursively
+  # @return [Array<Item>]
+  def all_members
+    grep(OpenHAB::Core::Items::GroupItem).flat_map(&:all_members).uniq
+  end
+
+  # Returns the groups of all elements
+  # @return [Array<GroupItem>]
+  def groups
+    flat_map(&:groups).uniq
+  end
+
+  # Returns all groups all elements are a part of, recursively
+  # @return [Array<GroupItem>]
+  def all_groups
+    flat_map(&:all_groups).uniq
   end
 
   # @!group Items State and Command Methods

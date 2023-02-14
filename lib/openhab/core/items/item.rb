@@ -44,10 +44,31 @@ module OpenHAB
         #
         # Returns all groups that this item is part of
         #
-        # @return [Array<Group>] All groups that this item is part of
+        # @return [Array<GroupItem>] All groups that this item is part of
         #
         def groups
           group_names.map { |name| EntityLookup.lookup_item(name) }.compact
+        end
+
+        #
+        # @!attribute [r] all_groups
+        #
+        # Returns all groups that this item is a part of, as well as those groups' groups, recursively
+        #
+        # @return [Array<GroupItem>]
+        #
+        def all_groups
+          result = []
+          new_groups = Set.new(groups)
+
+          until new_groups.empty?
+            result.concat(new_groups.to_a)
+            new_groups.replace(new_groups.flat_map(&:groups))
+            # remove any groups we already have in the result to avoid loops
+            new_groups.subtract(result)
+          end
+
+          result
         end
 
         # rubocop:disable Layout/LineLength

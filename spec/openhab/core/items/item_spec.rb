@@ -15,6 +15,31 @@ RSpec.describe OpenHAB::Core::Items::Item do
     end
   end
 
+  describe "#all_groups" do
+    it "includes all ancestor groups" do
+      items.build do
+        group_item "MainFloor", groups: [House] do
+          switch_item LightSwitch2
+        end
+      end
+
+      expect(LightSwitch2.all_groups).to eql [MainFloor, House]
+    end
+
+    it "doesn't get tripped up by cyclical groups" do
+      items.build do
+        group_item gGroup1, group: "gGroup2"
+        group_item gGroup2, group: gGroup1 do
+          switch_item LightSwitch2
+        end
+      end
+
+      expect(gGroup1.groups).to eql [gGroup2]
+      expect(gGroup2.groups).to eql [gGroup1]
+      expect(LightSwitch2.all_groups).to eql [gGroup2, gGroup1]
+    end
+  end
+
   describe "#group_names" do
     it "works" do
       expect(LightSwitch.group_names.to_a).to match_array %w[House NonExistent]

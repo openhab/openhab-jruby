@@ -203,6 +203,61 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
         expect(gPatio.equipments(Semantics::Lightbulb).members.equipments).to eql [SubEquipment]
       end
     end
+
+    describe "#members" do
+      it "doesn't include duplicate members from multiple groups" do
+        expect([gMyGroup, gLivingRoom, NoSemantic].members).to match_array(
+          [
+            LivingRoom_Light1_Bulb,
+            LivingRoom_Light2_Bulb,
+            LivingRoom_Motion,
+            LivingRoom_Light1_Custom
+          ]
+        )
+      end
+    end
+
+    describe "#all_members" do
+      it "includes all recursive members, uniquely" do
+        expect([gMyGroup, gLivingRoom, NoSemantic].all_members).to match_array(
+          [
+            LivingRoom_Light1_Brightness,
+            LivingRoom_Light1_Color,
+            LivingRoom_Light1_Custom,
+            LivingRoom_Light2_Brightness,
+            LivingRoom_LIght2_Color,
+            LivingRoom_Motion
+          ]
+        )
+      end
+    end
+
+    describe "#groups" do
+      it "gets all groups" do
+        expect([LivingRoom_Light1_Custom,
+                LivingRoom_LIght2_Color,
+                LivingRoom_Light1_Bulb].groups).to match_array([
+                                                                 gMyGroup,
+                                                                 gLivingRoom,
+                                                                 LivingRoom_Light1_Bulb,
+                                                                 LivingRoom_Light2_Bulb
+                                                               ])
+      end
+    end
+
+    describe "#all_groups" do
+      it "gets all groups recursively" do
+        expect([LivingRoom_Light1_Custom,
+                LivingRoom_LIght2_Color,
+                LivingRoom_Light1_Bulb].all_groups).to match_array([
+                                                                     gMyGroup,
+                                                                     LivingRoom_Light1_Bulb,
+                                                                     gLivingRoom,
+                                                                     gIndoor,
+                                                                     LivingRoom_Light2_Bulb
+                                                                   ])
+      end
+    end
   end
 
   describe "#equipments" do
