@@ -2,16 +2,10 @@
 
 ## [5.0.0](https://github.com/openhab/openhab-jruby/compare/4.45.2...main)
 
-5.0 is the first release of `openhab-jrubyscripting` as a fork of
-`openhab-scripting`. Many thanks to
-[@boc-tothefuture](https://github.com/boc-tothefuture),
-[@jimtng](https://github.com/jimtng), and [@pacive](https://github.com/pacive)
-for their work on the latter. The purpose of this fork is because I
-([@ccutrer](https://github.com/ccutrer)) felt that I wanted to significantly
-re-work some of the core structure of the gem to shed some of the technical
-debt that had accumulated from organic growth, and to do so speedily without
-waiting for full review from other contributors with limited time. That said,
-here is a non-exhaustive list of significant departures from the original gem:
+5.0 is the first release of `openhab-jrubyscripting` as the officially supported gem of the openHAB organization.
+Many thanks to [@boc-tothefuture](https://github.com/boc-tothefuture), [@jimtng](https://github.com/jimtng), and [@pacive](https://github.com/pacive) for their work on the latter.
+This major release contains significant restructuring by [@ccutrer](https://github.com/ccutrer), with additional contributions by [@jimtng](https://github.com/jimtng).
+Here is a non-exhaustive list of significant departures from the original gem:
 
 * Logging has been reworked. There's generally no need to
   `include OpenHAB::Log` in your classes. {OpenHAB::Log.logger} method now
@@ -36,8 +30,8 @@ here is a non-exhaustive list of significant departures from the original gem:
   docs, instead of being a separate site that then links to the YARD docs.
 * The testing philosophy has also changed. The
   [rspec-openhab-scripting gem](https://rubygems.org/gems/rspec-openhab-scripting),
-  previously written as an independent project by me
-  ([@ccutrer](https://github.com/ccutrer)), has now been merged into this gem.
+  previously written as an independent project by
+  [@ccutrer](https://github.com/ccutrer), has now been merged into this gem.
   There is a tight interdependence between the two, and especially during the
   large refactoring it's much easier to have them in the same repository. This
   means that that gem is now the endorsed method to write tests for end-user
