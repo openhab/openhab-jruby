@@ -2705,7 +2705,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#script_unloaded-class_method" title="script_unloaded (class method)">.<strong>script_unloaded</strong>(&amp;block)  &#x21d2; void </a>
+      <a href="#script_unloaded-class_method" title="script_unloaded (class method)">.<strong>script_unloaded</strong>(priority: nil, &amp;block)  &#x21d2; void </a>
     
 
     
@@ -2796,7 +2796,7 @@ They can be used to perform final initializations.</p>
       <div class="method_details ">
   <h3 class="signature " id="script_unloaded-class_method">
   
-    .<strong>script_unloaded</strong>(&amp;block)  &#x21d2; <tt>void</tt> 
+    .<strong>script_unloaded</strong>(priority: nil, &amp;block)  &#x21d2; <tt>void</tt> 
   
 
   
@@ -2823,6 +2823,30 @@ They can be used to perform final cleanup.</p>
 <span class="keyword">end</span></code></pre>
     
   </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>priority</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Integer.html" title="Integer (class)">Integer</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The order at which the the given hook will be executed.
+The higher the number, the lower the priority. Higher priority hooks will be executed
+first, before the lower priority hooks. When nil, the default priority of zero will
+be used.</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 
 </div><table class="source_code">
@@ -2831,19 +2855,15 @@ They can be used to perform final cleanup.</p>
       <pre class="lines">
 
 
-52
-53
 54
 55
 56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/script_handling.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/script_handling.rb', line 54</span>
 
-<span class="keyword">def</span> <span class="function">script_unloaded</span>(<span class="key">before</span>: <span class="predefined-constant">nil</span>, &amp;block)
-  <span class="comment"># `before` is as yet undocumented, because I'm not set on its interface</span>
-  index = before.call(<span class="constant">ScriptHandlingCallbacks</span>.script_unloaded_hooks) <span class="keyword">if</span> before
-  <span class="constant">ScriptHandlingCallbacks</span>.script_unloaded_hooks.insert(index || <span class="integer">-1</span>, block)
+<span class="keyword">def</span> <span class="function">script_unloaded</span>(<span class="key">priority</span>: <span class="predefined-constant">nil</span>, &amp;block)
+  <span class="constant">ScriptHandlingCallbacks</span>.script_unloaded_hooks[priority || <span class="integer">0</span>] &lt;&lt; block
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -2855,7 +2875,7 @@ They can be used to perform final cleanup.</p>
 </div>
 
         <footer>
-  Generated on Mon Feb 13 22:24:47 2023 by
+  Generated on Tue Feb 14 00:10:33 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
