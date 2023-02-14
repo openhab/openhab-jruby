@@ -19,6 +19,10 @@ module OpenHAB
             $things
           end
         end
+
+        def initialize
+          super(unload_priority: 60)
+        end
       end
     end
   end

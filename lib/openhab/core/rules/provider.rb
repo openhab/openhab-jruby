@@ -19,21 +19,6 @@ module OpenHAB
             $rules
           end
         end
-
-        def initialize
-          super(script_unloaded_before: lambda do |callbacks|
-            callbacks.index do |cb|
-              case cb.binding.receiver
-              when Items::Provider,
-                Things::Provider,
-                DSL::TimerManager
-                true
-              else
-                false
-              end
-            end
-          end)
-        end
       end
     end
   end

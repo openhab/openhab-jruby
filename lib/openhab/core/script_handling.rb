@@ -33,8 +33,6 @@ module OpenHAB
       end
 
       #
-      # @!method script_unloaded(&block)
-      #
       # Add a block of code to be executed when the script is unloaded.
       #
       # This can occur when openHAB shuts down, or when the script is being reloaded.
@@ -42,6 +40,10 @@ module OpenHAB
       # Multiple hooks can be added by calling {#script_unloaded} multiple times.
       # They can be used to perform final cleanup.
       #
+      # @param [Integer, nil] priority The order at which the the given hook will be executed.
+      #   The higher the number, the lower the priority. Higher priority hooks will be executed
+      #   first, before the lower priority hooks. When nil, the default priority of zero will
+      #   be used.
       # @return [void]
       #
       # @example
@@ -49,10 +51,8 @@ module OpenHAB
       #     logger.info 'Hi, this script has been unloaded'
       #   end
       #
-      def script_unloaded(before: nil, &block)
-        # `before` is as yet undocumented, because I'm not set on its interface
-        index = before.call(ScriptHandlingCallbacks.script_unloaded_hooks) if before
-        ScriptHandlingCallbacks.script_unloaded_hooks.insert(index || -1, block)
+      def script_unloaded(priority: nil, &block)
+        ScriptHandlingCallbacks.script_unloaded_hooks[priority || 0] << block
       end
     end
 
@@ -82,7 +82,7 @@ module OpenHAB
         #
         # @!visibility private
         def script_unloaded_hooks
-          @script_unloaded_hooks ||= []
+          @script_unloaded_hooks ||= Hash.new { |hash, key| hash[key] = [] }
         end
       end
       self.script_loaded = false
@@ -92,7 +92,7 @@ module OpenHAB
       #
       def scriptUnloaded # rubocop:disable Naming/MethodName method name dictated by openHAB
         logger.trace("Script unloaded")
-        ScriptHandlingCallbacks.script_unloaded_hooks.each do |hook|
+        ScriptHandlingCallbacks.script_unloaded_hooks.sort_by(&:first).flat_map(&:last).each do |hook|
           hook.call
         rescue => e
           logger.error("Failed to call script_unloaded hook #{hook}: #{e}")

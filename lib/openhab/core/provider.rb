@@ -219,11 +219,11 @@ module OpenHAB
 
       private
 
-      def initialize(script_unloaded_before: nil)
+      def initialize(unload_priority: nil)
         super()
         @elements = java.util.concurrent.ConcurrentHashMap.new
         self.class.registry.add_provider(self)
-        ScriptHandling.script_unloaded(before: script_unloaded_before) { unregister }
+        ScriptHandling.script_unloaded(priority: unload_priority) { unregister }
       end
     end
   end

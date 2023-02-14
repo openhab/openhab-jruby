@@ -34,6 +34,10 @@ module OpenHAB
           item.members.each { |member| remove(member.name, true) } if recursive && item.is_a?(GroupItem)
           item
         end
+
+        def initialize
+          super(unload_priority: 50)
+        end
       end
     end
   end

@@ -11,7 +11,7 @@ module OpenHAB
     class TimerManager
       include Singleton
 
-      Core::ScriptHandling.script_unloaded { instance.cancel_all }
+      Core::ScriptHandling.script_unloaded(priority: 40) { instance.cancel_all }
 
       # @!visibility private
       def initialize
