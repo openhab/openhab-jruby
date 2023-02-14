@@ -30,6 +30,12 @@ module OpenHAB
     # include this before Core::Actions so that Core::Action's method_missing
     # takes priority
     include Core::EntityLookup
+    #
+    # @!parse
+    #   include Core::Actions
+    #   include Core::ScriptHandling
+    #   include Rules::Terse
+    #
     [Core::Actions, Core::ScriptHandling, Rules::Terse].each do |mod|
       # make these available both as regular and class methods
       include mod
