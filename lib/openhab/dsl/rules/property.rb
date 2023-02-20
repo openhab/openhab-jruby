@@ -19,7 +19,7 @@ module OpenHAB
           #   object making calls to other methods in this module impossible, or if done on methods
           #   in this module than instance variable belong to the module not the calling class
           define_method(name) do |*args, &block|
-            if args.length.zero? && block.nil? == true
+            if args.empty? && block.nil? == true
               instance_variable_get("@#{name}")
             else
               logger.trace("Property '#{name}' called with args(#{args}) and block(#{block})")
@@ -46,7 +46,7 @@ module OpenHAB
         def prop_array(name, array_name: nil, wrapper: nil)
           define_method(name) do |*args, &block|
             array_name ||= name
-            if args.length.zero? && block.nil? == true
+            if args.empty? && block.nil? == true
               instance_variable_get("@#{array_name}")
             else
               logger.trace("Property '#{name}' called with args(#{args}) and block(#{block})")

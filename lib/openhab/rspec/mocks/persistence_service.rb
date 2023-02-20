@@ -89,9 +89,9 @@ module OpenHAB
         end
 
         def get_item_info # rubocop:disable Naming/AccessorMethodName must match Java interface
-          @data.map do |(n, entries)|
+          @data.to_set do |(n, entries)|
             [n, entries.length, entries.first.timestamp, entries.last.timestamp]
-          end.to_set
+          end
         end
 
         def get_default_strategies # rubocop:disable Naming/AccessorMethodName must match Java interface
