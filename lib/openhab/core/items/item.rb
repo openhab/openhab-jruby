@@ -51,6 +51,22 @@ module OpenHAB
         end
 
         #
+        # Checks if this item is a member of at least one of the given groups.
+        #
+        # @param groups [String, GroupItem] the group to check membership in
+        # @return [true, false]
+        #
+        # @example
+        #   event.item.member_of?(gFullOn)
+        #
+        def member_of?(*groups)
+          groups = groups.map! do |group|
+            group.is_a?(GroupItem) ? group.name : group
+          end
+          !(group_names & groups).empty?
+        end
+
+        #
         # @!attribute [r] all_groups
         #
         # Returns all groups that this item is a part of, as well as those groups' groups, recursively
@@ -192,6 +208,22 @@ module OpenHAB
           @metadata ||= Metadata::NamespaceHash.new(name)
         end
         # rubocop:enable Layout/LineLength
+
+        #
+        # Checks if this item has at least one of the given tags.
+        #
+        # @param tags [String, Module] the tag(s) to check
+        # @return [true, false]
+        #
+        # @example
+        #   event.item.tagged?("Setpoint")
+        #
+        def tagged?(*tags)
+          tags = tags.map! do |tag|
+            tag.is_a?(Module) ? tag.simple_name : tag
+          end
+          !(self.tags.to_a & tags).empty?
+        end
 
         # Return the item's thing if this item is linked with a thing. If an item is linked to more than one thing,
         # this method only returns the first thing.

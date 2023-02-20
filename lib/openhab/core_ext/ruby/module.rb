@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-# Extensions to Class
-class Class
+# Extensions to Module
+class Module
   #
-  # Returns the name of the class, without any containing module or package.
+  # Returns the name of the class or module, without any containing module or package.
   #
   # @return [String, nil]
   #
