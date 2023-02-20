@@ -14,12 +14,13 @@ Full documentation is available on [GitHub Pages](https://openhab.github.io/open
 * [Changelog](CHANGELOG.md)
 * [Contributing](CONTRIBUTING.md)
 
-## Thanks
+## Credits
 
- [openhab-scripting](https://github.com/boc-tothefuture/openhab-jruby)
+* [@boc-tothefuture](https://github.com/boc-tothefuture) created and maintained this library up to version 4.x prior to its inclusion into the official openHAB repository.
+* [@ccutrer](https://github.com/ccutrer) performed major restructuring and added significant new features in version 5.0. 
+* [@jimtng](https://github.com/jimtng), [@pacive](https://github.com/pacive), and others who have made contributions to this library.
 
-This gem is the officially supported helper library for JRuby by openHAB, drawing deeply from work on prior iterations by [@boc-tothefuture](https://github.com/boc-tothefuture), [@ccutrer](https://github.com/ccutrer), [@jimtng](https://github.com/jimtng), and [@pacive](https://github.com/pacive).
-See [Changes from openhab-scripting](CHANGELOG.md#500) for more detail significant breaking changes from the last published release of @boc-tothefuture's gem.
+See [changes in 5.0](CHANGELOG.md#500) for more detail significant breaking changes from the last published release prior to the inclusion into openHAB's repository.
 
 ## Discussion
 
