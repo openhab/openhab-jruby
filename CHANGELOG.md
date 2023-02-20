@@ -192,6 +192,7 @@ here is a non-exhaustive list of significant departures from the original gem:
 * {Item#all_groups Item#all_groups}, {Enumerable#all_members}, {Enumerable#groups}, {Enumerable#all_groups}.
 * {GenericItem#formatted_state GenericItem#formatted_state}.
 * {OpenHAB::DSL.transform} now available at top-level, like Rules DSL.
+* {Item#member_of? Item#member_of}, {Item#tagged? Item#tagged?}.
 
 ### Bug Fixes
 

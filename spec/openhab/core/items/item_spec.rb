@@ -46,6 +46,24 @@ RSpec.describe OpenHAB::Core::Items::Item do
     end
   end
 
+  describe "#member_of?" do
+    it "accepts strings" do
+      expect(LightSwitch).to be_member_of("House")
+    end
+
+    it "accepts group items" do
+      expect(LightSwitch).to be_member_of(House)
+    end
+
+    it "ignores other types" do
+      expect(LightSwitch).not_to be_member_of(LightSwitch)
+    end
+
+    it "returns false" do
+      expect(LightSwitch).not_to be_member_of("House2")
+    end
+  end
+
   describe "#tags" do
     it "works" do
       expect(LightSwitch.tags).to match_array %w[Switch]
@@ -79,6 +97,17 @@ RSpec.describe OpenHAB::Core::Items::Item do
     it "can remove all tags with nil" do
       LightSwitch.tags = nil
       expect(LightSwitch.tags).to be_empty
+    end
+  end
+
+  describe "#tagged?" do
+    it "works" do
+      expect(LightSwitch).to be_tagged("Switch")
+      expect(LightSwitch).not_to be_tagged("Setpoint")
+    end
+
+    it "works with semantic classes" do
+      expect(LightSwitch).to be_tagged(Semantics::Switch)
     end
   end
 

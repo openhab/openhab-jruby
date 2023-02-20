@@ -40,27 +40,32 @@ module Enumerable
   #
 
   # Returns a new array of items that have at least one of the given tags
+  #
+  # @param tags [String, Module]
   # @return [Array<Item>]
   def tagged(*tags)
-    reject { |i| (tags & i.tags.to_a).empty? }
+    select { |i| i.tagged?(*tags) }
   end
 
   # Returns a new array of items that do not have any of the given tags
+  # @param tags [String, Module]
   # @return [Array<Item>]
   def not_tagged(*tags)
-    select { |i| (tags & i.tags.to_a).empty? }
+    reject { |i| i.tagged?(*tags) }
   end
 
   # Returns a new array of items that are a member of at least one of the given groups
+  # @param groups [String, GroupItem]
   # @return [Array<Item>]
   def member_of(*groups)
-    reject { |i| (groups.map(&:name) & i.group_names).empty? }
+    select { |i| i.member_of?(*groups) }
   end
 
   # Returns a new array of items that are not a member of any of the given groups
+  # @param groups [String, GroupItem]
   # @return [Array<Item>]
   def not_member_of(*groups)
-    select { |i| (groups.map(&:name) & i.group_names).empty? }
+    reject { |i| i.member_of?(*groups) }
   end
 
   # Returns the group members of all group elements
