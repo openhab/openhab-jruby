@@ -60,7 +60,7 @@ module OpenHAB
         #   event.item.member_of?(gFullOn)
         #
         def member_of?(*groups)
-          groups = groups.map! do |group|
+          groups.map! do |group|
             group.is_a?(GroupItem) ? group.name : group
           end
           !(group_names & groups).empty?
@@ -219,7 +219,7 @@ module OpenHAB
         #   event.item.tagged?("Setpoint")
         #
         def tagged?(*tags)
-          tags = tags.map! do |tag|
+          tags.map! do |tag|
             tag.is_a?(Module) ? tag.simple_name : tag
           end
           !(self.tags.to_a & tags).empty?
