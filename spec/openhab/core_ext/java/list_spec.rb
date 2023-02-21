@@ -35,7 +35,7 @@ RSpec.describe java.util.List do
   end
 
   it "implements #concat" do
-    expect(list.concat([1, 2], [3, 4])).to be list
+    expect(list.concat([1, 2], [3, 4])).to be list # rubocop:disable Style/ConcatArrayLiterals
     expect(list).to eq [1, 2, 3, 1, 2, 3, 4]
   end
 

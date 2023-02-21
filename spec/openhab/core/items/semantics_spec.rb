@@ -106,7 +106,7 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
     end
   end
 
-  describe ::Enumerable do
+  describe Enumerable do
     describe "provides semantic methods" do
       specify { expect(gPatio.equipments).to match_array([Patio_Light_Bulb, Patio_Motion]) }
       specify { expect(gIndoor.locations).to eql [gLivingRoom] }

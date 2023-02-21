@@ -157,7 +157,7 @@ def delete_rules
   end
   return unless deleted
 
-  wait_until(seconds: 10, msg: "Rules not empty") { Rest.rules.length.zero? }
+  wait_until(seconds: 10, msg: "Rules not empty") { Rest.rules.empty? }
 end
 
 def delete_shared_libraries
@@ -174,7 +174,7 @@ def delete_items
   FileUtils.rm Dir.glob(File.join(items_dir, "*.items"))
   return unless deleted
 
-  wait_until(seconds: 30, msg: "Items not empty") { Rest.items.length.zero? }
+  wait_until(seconds: 30, msg: "Items not empty") { Rest.items.empty? }
 end
 
 def enable_basic_auth
