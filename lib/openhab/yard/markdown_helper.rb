@@ -14,7 +14,7 @@ module OpenHAB
       # mostly copied from HTMLHelper
       def resolve_links(text)
         blockquotes = false
-        text.gsub(%r{(```)|(\\|!)?\{(?!\})(\S+?)(?:\s([^\}]*?\S))?\}(?=[\W<]|.+</|$)}m) do |str|
+        result = text.gsub(%r{(```)|(\\|!)?\{(?!\})(\S+?)(?:\s([^\}]*?\S))?\}(?=[\W<]|.+</|$)}m) do |str|
           blockquote = $1
           escape = $2
           name = $3
@@ -51,6 +51,19 @@ module OpenHAB
             link
           end
         end
+
+        # re-link files in docs/*.md. They're written so they work on github without any
+        # processing
+        result.gsub!(%r{\[([A-Za-z0-9,. ]+)\]\(([A-Za-z0-9./-]+)\)}) do |str|
+          title = $1
+          target = $2
+          next str unless File.dirname(target) == "docs" && File.extname(target) == ".md"
+
+          basename = File.basename(target, ".md")
+          "[#{title}](#{serializer.basepath}/file.#{basename}.html)"
+        end
+
+        result
       end
 
       # mostly copied from HTMLHelper
