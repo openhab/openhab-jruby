@@ -2633,7 +2633,7 @@
 <!-- raw HTML omitted -->
 <h1 id="jruby-scripting"><a href="#jruby-scripting" class="header-anchor">#</a>JRuby Scripting <!-- raw HTML omitted --></h1>
 <p>This add-on provides <a href="https://www.jruby.org/">JRuby</a> scripting language for automation rules.
-Also included is <a href="https://openhab.github.io/openhab-jruby/">openhab-jrubyscripting</a>, a fairly high-level Ruby gem to support automation in openHAB.
+Also included is <a href="https://openhab.github.io/openhab-jruby/">openhab-scripting</a>, a fairly high-level Ruby gem to support automation in openHAB.
 It provides native Ruby access to common openHAB functionality within rules including items, things, actions, logging and more.
 If you're new to Ruby, you may want to check out <a href="file.ruby-basics.html">Ruby Basics</a>.</p>
 <ul>
@@ -2751,7 +2751,7 @@ If you're new to Ruby, you may want to check out <a href="file.ruby-basics.html"
 <li>Go to <code>Settings -&gt; Add-ons -&gt; Automation</code> and install the jrubyscripting automation addon following the <a href="https://www.openhab.org/docs/configuration/addons.html">openHAB instructions</a></li>
 <li>Go to <code>Settings -&gt; Other Services -&gt; JRuby Scripting</code>:
 <ul>
-<li><strong>Ruby Gems</strong>: <code>openhab-jrubyscripting=~&gt;5.0</code></li>
+<li><strong>Ruby Gems</strong>: <code>openhab-scripting=~&gt;5.0</code></li>
 <li><strong>Require Scripts</strong>: <code>openhab/dsl</code> (not required, but recommended)</li>
 </ul>
 </li>
@@ -2764,24 +2764,24 @@ If you're new to Ruby, you may want to check out <a href="file.ruby-basics.html"
 <li>
 <p>Optionally configure JRuby openHAB services</p>
 <p>Create a file called <code>jruby.cfg</code> in <code>&lt;OPENHAB_CONF&gt;/services/</code> with the following content:</p>
-<pre class="code ruby"><code class="ruby">org.openhab.automation.jrubyscripting<span class="symbol">:gems=</span>openhab-jrubyscripting=~&gt;<span class="float">5.0</span>
+<pre class="code ruby"><code class="ruby">org.openhab.automation.jrubyscripting<span class="symbol">:gems=</span>openhab-scripting=~&gt;<span class="float">5.0</span>
 org.openhab.automation.jrubyscripting<span class="symbol">:require=</span>openhab/dsl
 </code></pre>
-<p>This configuration with the openhab-jrubyscripting gem specified with <a href="https://thoughtbot.com/blog/rubys-pessimistic-operator">pessimistic versioning</a> will install any version of openhab-jrubyscripting greater than or equal to 5.0 but less than 6.0.
+<p>This configuration with the openhab-scripting gem specified with <a href="https://thoughtbot.com/blog/rubys-pessimistic-operator">pessimistic versioning</a> will install any version of openhab-scripting greater than or equal to 5.0 but less than 6.0.
 On system restart if any (non-breaking) new versions of the library are available they will automatically be installed.</p>
 </li>
 </ol>
 <h3 id="upgrading"><a href="#upgrading" class="header-anchor">#</a>Upgrading <!-- raw HTML omitted --></h3>
 <p>Depending on the versioning selected in the <code>jruby.cfg</code> or the gems list in the user interface, upgrading will either be automatic after an openHAB restart or manual.
-For manual upgrades select the exact version of the gem. For example, <code>org.openhab.automation.jrubyscripting:gems=openhab-jrubyscripting=5.0.0</code> will install and stay at version 5.0.0.
-To upgrade to version 5.0.1, change the configuration to <code>org.openhab.automation.jrubyscripting:gems=openhab-jrubyscripting=5.0.1</code>.
-To automatically upgrade the gem, it is recommended to use pessimistic versioning: <code>org.openhab.automation.jrubyscripting:gems=openhab-jrubyscripting=~&gt;5.0</code>.
+For manual upgrades select the exact version of the gem. For example, <code>org.openhab.automation.jrubyscripting:gems=openhab-scripting=5.0.0</code> will install and stay at version 5.0.0.
+To upgrade to version 5.0.1, change the configuration to <code>org.openhab.automation.jrubyscripting:gems=openhab-scripting=5.0.1</code>.
+To automatically upgrade the gem, it is recommended to use pessimistic versioning: <code>org.openhab.automation.jrubyscripting:gems=openhab-scripting=~&gt;5.0</code>.
 This will install at least version 5.0 and on every restart automatically install any version that is less than 6.0.
 This ensures that fixes and new features are available without introducing any breaking changes.</p>
 <h2 id="configuration"><a href="#configuration" class="header-anchor">#</a>Configuration</h2>
 <p>After installing this add-on, you will find configuration options in the openHAB portal under <em>Settings -&gt; Other Services -&gt; JRuby Scripting</em>.
 Alternatively, JRuby configuration parameters may be set by creating a <code>jruby.cfg</code> file in <code>conf/services/</code>.</p>
-<p>By default this add-on includes the <a href="https://github.com/openhab/openhab-jruby">openhab-jrubyscripting</a> Ruby gem and automatically <code>require</code>s it.
+<p>By default this add-on includes the <a href="https://github.com/openhab/openhab-jruby">openhab-scripting</a> Ruby gem and automatically <code>require</code>s it.
 This allows the use of <span class='object_link'><a href="OpenHAB/DSL.html#items-class_method" title="OpenHAB::DSL.items (method)">items</a></span>, <span class='object_link'><a href="OpenHAB/DSL.html#rules-class_method" title="OpenHAB::DSL.rules (method)">rules</a></span>, <span class='object_link'><a href="OpenHAB/DSL.html#shared_cache-class_method" title="OpenHAB::DSL.shared_cache (method)">shared_cache</a></span> and other objects in your scripts.
 This functionality can be disabled for users who prefer to manage their own gems and <code>require</code>s via the add-on configuration options.
 Simply change the <code>gems</code> and <code>require</code> configuration settings.</p>
@@ -2799,7 +2799,7 @@ Simply change the <code>gems</code> and <code>require</code> configuration setti
 </tr>
 <tr>
 <td><code>gems</code></td>
-<td>A list of gems to install on start up or settings change. <!-- raw HTML omitted --><!-- raw HTML omitted -->Default: <code>openhab-jrubyscripting=~&gt;5.0.0</code></td>
+<td>A list of gems to install on start up or settings change. <!-- raw HTML omitted --><!-- raw HTML omitted -->Default: <code>openhab-scripting=~&gt;5.0.0</code></td>
 </tr>
 <tr>
 <td><code>check_update</code></td>
@@ -2824,7 +2824,7 @@ Simply change the <code>gems</code> and <code>require</code> configuration setti
 </tbody>
 </table>
 <p>When using file-based configuration, these parameters must be prefixed with <code>org.openhab.automation.jrubyscripting:</code>, for example:</p>
-<pre class="code text"><code class="text">org.openhab.automation.jrubyscripting:gems=openhab-jrubyscripting=~&gt;5.0
+<pre class="code text"><code class="text">org.openhab.automation.jrubyscripting:gems=openhab-scripting=~&gt;5.0
 org.openhab.automation.jrubyscripting:require=openhab/dsl
 </code></pre>
 <h3 id="gem_home"><a href="#gem_home" class="header-anchor">#</a>gem_home <!-- raw HTML omitted --></h3>
@@ -3863,7 +3863,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Tue Feb 21 21:12:30 2023 by
+  Generated on Thu Feb 23 02:30:22 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
