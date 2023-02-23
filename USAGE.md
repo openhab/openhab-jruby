@@ -133,15 +133,16 @@ This allows the use of {OpenHAB::DSL.items items}, {OpenHAB::DSL.rules rules}, {
 This functionality can be disabled for users who prefer to manage their own gems and `require`s via the add-on configuration options.
 Simply change the `gems` and `require` configuration settings.
 
-| Parameter         | Description                                                                                                   |
-| ----------------- | ------------------------------------------------------------------------------------------------------------- |
-| `gem_home`        | The path to store Ruby Gems. <br/><br/>Default: `$OPENHAB_CONF/automation/ruby/.gem/{RUBY_ENGINE_VERSION}`    |
-| `gems`            | A list of gems to install on start up or settings change. <br/><br/>Default: `openhab-scripting=~>5.0.0` |
-| `check_update`    | Check for updated version of `gems` on start up or settings change. <br/><br/>Default: `true`                 |
-| `require`         | List of scripts to be required automatically. <br/><br/>Default: `openhab/dsl`                                |
-| `rubylib`         | Search path for user libraries. <br/><br/>Default: `$OPENHAB_CONF/automation/ruby/lib`                        |
-| `local_context`   | See notes below. <br/><br/>Default: `singlethread`                                                            |
-| `local_variables` | See notes below. <br/><br/>Default: `transient`                                                               |
+| Parameter             | Description                                                                                                |
+| --------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `gem_home`            | The path to store Ruby Gems. <br/><br/>Default: `$OPENHAB_CONF/automation/ruby/.gem/{RUBY_ENGINE_VERSION}` |
+| `gems`                | A list of gems to install on start up or settings change. <br/><br/>Default: `openhab-scripting=~>5.0.0`   |
+| `check_update`        | Check for updated version of `gems` on start up or settings change. <br/><br/>Default: `true`              |
+| `require`             | List of scripts to be required automatically. <br/><br/>Default: `openhab/dsl`                             |
+| `rubylib`             | Search path for user libraries. <br/><br/>Default: `$OPENHAB_CONF/automation/ruby/lib`                     |
+| `dependency_tracking` | Enable dependency tracking. <br/><br/>Default: `true`                              |
+| `local_context`       | See notes below. <br/><br/>Default: `singlethread`                                                         |
+| `local_variables`     | See notes below. <br/><br/>Default: `transient`                                                            |
 
 When using file-based configuration, these parameters must be prefixed with `org.openhab.automation.jrubyscripting:`, for example:
 
@@ -183,6 +184,12 @@ The default is to require the helper library.
 ### rubylib <!-- omit from toc -->
 
 Search path for user libraries. Separate each path with a colon (semicolon in Windows).
+
+### dependency_tracking <!-- omit from toc -->
+
+Dependency tracking allows your scripts to automatically reload when one of its dependencies is updated. 
+You may want to disable dependency tracking if you plan on editing or updating a shared library, 
+but don't want all your scripts to reload until you can test it.
 
 ### local_context <!-- omit from toc -->
 
