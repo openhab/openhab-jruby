@@ -138,18 +138,29 @@ Over time, the older versions of the library will accumulate in the gem_home dir
 The following code saved as `gem_cleanup.rb` or another name of your choice can be placed in the `automation/ruby` directory to perform uninstallation of the older gem versions every time openHAB starts up.
 
 ```ruby
-require 'rubygems/commands/uninstall_command'
+require "rubygems/commands/uninstall_command"
+require "pathname"
 
-cmd = Gem::Commands::UninstallCommand.new
+after(3.minutes) do
+  cmd = Gem::Commands::UninstallCommand.new
 
-# uninstall all the older versions of the openhab-scripting gems
-Gem::Specification.find_all
-                  .select { |gem| gem.name == 'openhab-scripting' }
-                  .sort_by(&:version)
-                  .tap(&:pop) # don't include the latest version
-                  .each do |gem|
-  cmd.handle_options ['-x', '-I', gem.name, '--version', gem.version.to_s]
-  cmd.execute
+  # uninstall all the older versions of the openhab-scripting gems
+  Gem::Specification.find_all
+                    .select { |gem| gem.name == "openhab-scripting" }
+                    .sort_by(&:version)
+                    .tap(&:pop) # don't include the latest version
+                    .each do |gem|
+    cmd.handle_options ["-x", "-I", gem.name, "--version", gem.version.to_s]
+    cmd.execute
+  end
+
+  # Delete gems in other ruby versions
+  next unless (gem_home = ENV.fetch("GEM_HOME", nil))
+
+  gem_home = Pathname.new(gem_home)
+  next unless gem_home.parent.basename.to_s == ".gem"
+
+  gem_home.parent.children.reject { |p| p == gem_home }.each(&:rmtree)
 end
 ```
 
