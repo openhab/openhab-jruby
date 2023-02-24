@@ -2732,18 +2732,29 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
 <p>The openHAB JRuby add-on will automatically download and install the latest version of the library according to the <a href="file.USAGE.html#configuration">settings in jruby.cfg</a>.
 Over time, the older versions of the library will accumulate in the gem_home directory.
 The following code saved as <code>gem_cleanup.rb</code> or another name of your choice can be placed in the <code>automation/ruby</code> directory to perform uninstallation of the older gem versions every time openHAB starts up.</p>
-<pre class="code ruby"><code class="ruby">require <span class="string"><span class="delimiter">'</span><span class="content">rubygems/commands/uninstall_command</span><span class="delimiter">'</span></span>
+<pre class="code ruby"><code class="ruby">require <span class="string"><span class="delimiter">&quot;</span><span class="content">rubygems/commands/uninstall_command</span><span class="delimiter">&quot;</span></span>
+require <span class="string"><span class="delimiter">&quot;</span><span class="content">pathname</span><span class="delimiter">&quot;</span></span>
 
-cmd = <span class="constant">Gem</span>::<span class="constant">Commands</span>::<span class="constant">UninstallCommand</span>.new
+after(<span class="integer">3</span>.minutes) <span class="keyword">do</span>
+  cmd = <span class="constant">Gem</span>::<span class="constant">Commands</span>::<span class="constant">UninstallCommand</span>.new
 
-<span class="comment"># uninstall all the older versions of the openhab-scripting gems</span>
-<span class="constant">Gem</span>::<span class="constant">Specification</span>.find_all
-                  .select { |gem| gem.name == <span class="string"><span class="delimiter">'</span><span class="content">openhab-scripting</span><span class="delimiter">'</span></span> }
-                  .sort_by(&amp;<span class="symbol">:version</span>)
-                  .tap(&amp;<span class="symbol">:pop</span>) <span class="comment"># don't include the latest version</span>
-                  .each <span class="keyword">do</span> |gem|
-  cmd.handle_options [<span class="string"><span class="delimiter">'</span><span class="content">-x</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">-I</span><span class="delimiter">'</span></span>, gem.name, <span class="string"><span class="delimiter">'</span><span class="content">--version</span><span class="delimiter">'</span></span>, gem.version.to_s]
-  cmd.execute
+  <span class="comment"># uninstall all the older versions of the openhab-scripting gems</span>
+  <span class="constant">Gem</span>::<span class="constant">Specification</span>.find_all
+                    .select { |gem| gem.name == <span class="string"><span class="delimiter">&quot;</span><span class="content">openhab-scripting</span><span class="delimiter">&quot;</span></span> }
+                    .sort_by(&amp;<span class="symbol">:version</span>)
+                    .tap(&amp;<span class="symbol">:pop</span>) <span class="comment"># don't include the latest version</span>
+                    .each <span class="keyword">do</span> |gem|
+    cmd.handle_options [<span class="string"><span class="delimiter">&quot;</span><span class="content">-x</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">-I</span><span class="delimiter">&quot;</span></span>, gem.name, <span class="string"><span class="delimiter">&quot;</span><span class="content">--version</span><span class="delimiter">&quot;</span></span>, gem.version.to_s]
+    cmd.execute
+  <span class="keyword">end</span>
+
+  <span class="comment"># Delete gems in other ruby versions</span>
+  <span class="keyword">next</span> <span class="keyword">unless</span> (gem_home = <span class="predefined-constant">ENV</span>.fetch(<span class="string"><span class="delimiter">&quot;</span><span class="content">GEM_HOME</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">nil</span>))
+
+  gem_home = <span class="constant">Pathname</span>.new(gem_home)
+  <span class="keyword">next</span> <span class="keyword">unless</span> gem_home.parent.basename.to_s == <span class="string"><span class="delimiter">&quot;</span><span class="content">.gem</span><span class="delimiter">&quot;</span></span>
+
+  gem_home.parent.children.reject { |p| p == gem_home }.each(&amp;<span class="symbol">:rmtree</span>)
 <span class="keyword">end</span>
 </code></pre>
 <h2 id="ui-rules"><a href="#ui-rules" class="header-anchor">#</a>UI rules</h2>
@@ -2780,7 +2791,7 @@ items[<span class="string"><span class="delimiter">&quot;</span><span class="inl
 </div></div>
 
         <footer>
-  Generated on Fri Feb 24 04:58:09 2023 by
+  Generated on Fri Feb 24 20:48:16 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
