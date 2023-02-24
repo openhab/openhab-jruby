@@ -3006,7 +3006,7 @@ gTest.members
 <span class="comment"># direct members and all their descendents</span>
 gTest.all_members
 </code></pre>
-<p>Group members work like a <a href="https://ruby-doc.org/core-2.6/Array.html">Ruby array</a>
+<p>Group members work like a <a href="https://docs.ruby-lang.org/en/master/Array.html">Ruby array</a>
 so you can use <code>&amp;</code> for intersection, <code>|</code> for union, and <code>-</code> for difference.</p>
 <pre class="code ruby"><code class="ruby">curtains_in_family_room = gFamilyRoom.members &amp; gCurtains.members
 </code></pre>
@@ -3020,7 +3020,7 @@ gTest.all_members.each <span class="keyword">do</span> |item|
   <span class="comment"># process item</span>
 <span class="keyword">end</span>
 </code></pre>
-<p>Group members are also <a href="https://ruby-doc.org/core-3.1.2/Enumerable.html">Enumerable</a>, so can use any of tthose included methods:</p>
+<p>Group members are also <a href="https://docs.ruby-lang.org/en/master/Enumerable.html">Enumerable</a>, so can use any of tthose included methods:</p>
 <pre class="code ruby"><code class="ruby">members_that_are_on = gTest.members.select(&amp;<span class="symbol">:on?</span>)
 
 <span class="comment"># exclude state</span>
@@ -3029,7 +3029,7 @@ members_that_are_not_on = gTest.members.reject(&amp;<span class="symbol">:on?</s
 <span class="comment"># Filter with code:</span>
 high_temperatures = gTemperatures.members.select(&amp;<span class="symbol">:state?</span>).select { |item| item.state &gt; <span class="integer">30</span> | <span class="string"><span class="delimiter">'</span><span class="content">°C</span><span class="delimiter">'</span></span> }
 </code></pre>
-<p>See also <a href="https://ruby-doc.org/core-2.6/Array.html#class-Array-label-Accessing+Elements">Accessing elements in a Ruby array</a>.</p>
+<p>See also <a href="https://docs.ruby-lang.org/en/master/Array.html#class-Array-label-Accessing+Elements">Accessing elements in a Ruby array</a>.</p>
 <p>Get a sorted list of Group members matching a condition:</p>
 <pre class="code ruby"><code class="ruby">sorted_items_by_battery_level = gBattery.members
                                         .select(&amp;<span class="symbol">:state?</span>) <span class="comment"># only include non NULL / UNDEF members</span>
@@ -3107,8 +3107,8 @@ items[<span class="string"><span class="delimiter">'</span><span class="content"
 <p>See <span class='object_link'><a href="OpenHAB/DSL.html#unit-class_method" title="OpenHAB::DSL.unit (method)">unit block</a></span></p>
 <h5 id="range-checking"><a href="#range-checking" class="header-anchor">#</a>Range checking <!-- raw HTML omitted --></h5>
 <p>Types that are comparable, such as <span class='object_link'><a href="OpenHAB/Core/Types/StringType.html" title="OpenHAB::Core::Types::StringType (class)">StringType</a></span>, <span class='object_link'><a href="OpenHAB/Core/Types/DateTimeType.html" title="OpenHAB::Core::Types::DateTimeType (class)">DateTimeType</a></span>, <span class='object_link'><a href="OpenHAB/Core/Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span>, <span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span>,
-include Ruby's <a href="https://ruby-doc.org/core/Comparable.html">Comparable</a> module which provides
-the handy <a href="https://ruby-doc.org/core/Comparable.html#method-i-between-3F">between?</a> method.</p>
+include Ruby's <a href="https://docs.ruby-lang.org/en/master/Comparable.html">Comparable</a> module which provides
+the handy <a href="https://docs.ruby-lang.org/en/master/Comparable.html#method-i-between-3F">between?</a> method.</p>
 <pre class="code ruby"><code class="ruby"><span class="constant">String_Item</span>.update(<span class="string"><span class="delimiter">&quot;</span><span class="content">Freddy</span><span class="delimiter">&quot;</span></span>)
 <span class="constant">String_Item</span>.state.between?(<span class="string"><span class="delimiter">&quot;</span><span class="content">E</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">G</span><span class="delimiter">&quot;</span></span>) <span class="comment"># =&gt; true</span>
 
@@ -3120,7 +3120,7 @@ the handy <a href="https://ruby-doc.org/core/Comparable.html#method-i-between-3F
 <span class="constant">Temperature_Item</span>.update(<span class="integer">16</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)
 <span class="constant">Temperature_Item</span>.state.between?(<span class="integer">20</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>, <span class="integer">24</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>) <span class="comment"># =&gt; false</span>
 </code></pre>
-<p>Alternatively, a Ruby <a href="https://ruby-doc.org/core/Range.html">range</a> can be used. This can be
+<p>Alternatively, a Ruby <a href="https://docs.ruby-lang.org/en/master/Range.html">range</a> can be used. This can be
 handy for excluding the end of the range with the <code>...</code> operator.</p>
 <pre class="code ruby"><code class="ruby"><span class="keyword">if</span> (<span class="integer">5</span>..<span class="integer">10</span>).cover?(<span class="constant">Number_Item</span>.state)
   logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">Number_Item is in the expected range</span><span class="delimiter">&quot;</span></span>
@@ -3246,7 +3246,7 @@ This can be changed by assigning a new logger locally.</p>
 This behaviour is due to <a href="https://logging.apache.org/log4j/2.x/">log4j2</a> requiring definition for each logger prefix.</p>
 <pre class="code ruby"><code class="ruby">logger = <span class="constant">OpenHAB</span>::<span class="constant">Log</span>.logger(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.custom</span><span class="delimiter">&quot;</span></span>)
 </code></pre>
-<p>The <span class='object_link'><a href="OpenHAB/Logger.html" title="OpenHAB::Logger (class)">logger</a></span> is similar to a standard <a href="https://ruby-doc.org/stdlib-3.1.2/libdoc/logger/rdoc/Logger.html">Ruby Logger</a>.
+<p>The <span class='object_link'><a href="OpenHAB/Logger.html" title="OpenHAB::Logger (class)">logger</a></span> is similar to a standard <a href="https://docs.ruby-lang.org/en/master/Logger.html">Ruby Logger</a>.
 Supported logging functions include:</p>
 <ul>
 <li><code>logger.log(severity, obj)</code></li>
@@ -3262,7 +3262,7 @@ Additionally, all of these methods can take a <a href="https://ruby-doc.com/docs
 <h3 id="timers"><a href="#timers" class="header-anchor">#</a>Timers</h3>
 <pre class="code ruby"><code class="ruby">sleep <span class="float">1.5</span> <span class="comment"># sleep for 1.5 seconds</span>
 </code></pre>
-<p>See Ruby docs on <a href="https://ruby-doc.org/core-2.6/Kernel.html#method-i-sleep">sleep</a>.</p>
+<p>See Ruby docs on <a href="https://docs.ruby-lang.org/en/master/Kernel.html#method-i-sleep">sleep</a>.</p>
 <p><code>sleep</code> should be avoided if possible. A <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#delay-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#delay (method)">delay</a></span> can be inserted in between two execution blocks to achieve the same result. This delay is implemented with a timer.
 This is available only on file-based rules.</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">delay something</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -3387,12 +3387,12 @@ shared_count[<span class="symbol">:counter</span>] = count + <span class="intege
 <li>Java <span class='object_link'><a href="OpenHAB/CoreExt/Java/ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span> - represents a specific instance with a date and time</li>
 <li>Java <span class='object_link'><a href="OpenHAB/CoreExt/Java/Duration.html" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span></li>
 <li>Java <span class='object_link'><a href="OpenHAB/CoreExt/Java/Period.html" title="OpenHAB::CoreExt::Java::Period (class)">Period</a></span></li>
-<li>Ruby <a href="https://ruby-doc.org/stdlib-2.6.8/libdoc/date/rdoc/Date.html">Date</a> - represents a date with no time</li>
-<li>Ruby <a href="https://ruby-doc.org/core/Time.html">Time</a> - represents a specific instant with a date and time</li>
-<li>Ruby <a href="https://ruby-doc.org/stdlib-2.6.8/libdoc/date/rdoc/DateTime.html">DateTime</a> - represents a specific instant with a date and time</li>
+<li>Ruby <a href="https://docs.ruby-lang.org/en/master/Date.html">Date</a> - represents a date with no time</li>
+<li>Ruby <a href="https://docs.ruby-lang.org/en/master/Time.html">Time</a> - represents a specific instant with a date and time</li>
+<li>Ruby <a href="https://docs.ruby-lang.org/en/master/DateTime.html">DateTime</a> - represents a specific instant with a date and time</li>
 </ul>
 <h4 id="durations"><a href="#durations" class="header-anchor">#</a>Durations <!-- raw HTML omitted --></h4>
-<p>Ruby <a href="https://ruby-doc.org/core-2.6.8/Integer.html">integers</a> and <a href="https://ruby-doc.org/core-2.6.8/Float.html">floats</a> are extended with several methods to support durations.
+<p>Ruby <a href="https://docs.ruby-lang.org/en/master/Integer.html">integers</a> and <a href="https://docs.ruby-lang.org/en/master/Float.html">floats</a> are extended with several methods to support durations.
 These methods create a new <span class='object_link'><a href="OpenHAB/CoreExt/Java/Duration.html" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span> or <span class='object_link'><a href="OpenHAB/CoreExt/Java/Period.html" title="OpenHAB::CoreExt::Java::Period (class)">Period</a></span> object that is used by the <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#every-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#every (method)">every</a></span> trigger, <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#delay-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#delay (method)">delay</a></span> block, the for option of <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#changed-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#changed (method)">changed</a></span> triggers, and <span class='object_link'><a href="OpenHAB/Core/Timer.html" title="OpenHAB::Core::Timer (class)">timers</a></span>.</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">run every 30 seconds</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   every <span class="integer">30</span>.seconds
@@ -3894,7 +3894,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Fri Feb 24 02:11:43 2023 by
+  Generated on Fri Feb 24 04:58:09 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
