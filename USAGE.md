@@ -522,7 +522,7 @@ if My_Item.state?
 end
 ```
 
-##### Compare Item's State <!-- omit from toc -->
+##### Comparing Item's State <!-- omit from toc -->
 
 ```ruby
 String_Item.state == 'test string'
@@ -537,6 +537,36 @@ Indoor_Temperature.state - Outdoor_Temperature.state > 5 | '°C'
 ```
 
 See {OpenHAB::DSL.unit unit block}
+
+##### Range checking <!-- omit from toc -->
+
+Types that are comparable, such as {StringType}, {DateTimeType}, {DecimalType}, {PercentType}, 
+include Ruby's [Comparable](https://ruby-doc.org/core/Comparable.html) module which provides 
+the handy [between?](https://ruby-doc.org/core/Comparable.html#method-i-between-3F) method.
+
+```ruby
+String_Item.update("Freddy")
+String_Item.state.between?("E", "G") # => true
+
+Number_Item.update(10)
+if Number_Item.state.between?(5, 20) 
+  logger.info "Number_Item falls within the expected range"
+end
+
+Temperature_Item.update(16 | "°C")
+Temperature_Item.state.between?(20 | "°C", 24 | "°C") # => false
+```
+
+Alternatively, a Ruby [range](https://ruby-doc.org/core/Range.html) can be used. This can be
+handy for excluding the end of the range with the `...` operator.
+
+```ruby
+if (5..10).cover?(Number_Item.state)
+  logger.info "Number_Item is in the expected range"
+end
+
+((20|"°C")..(24|"°C")).cover?(Temperature_Item.state)
+```
 
 ##### Loose Type Comparisons <!-- omit from toc -->
 
