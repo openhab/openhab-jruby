@@ -2814,6 +2814,10 @@ Simply change the <code>gems</code> and <code>require</code> configuration setti
 <td>Search path for user libraries. <!-- raw HTML omitted --><!-- raw HTML omitted -->Default: <code>$OPENHAB_CONF/automation/ruby/lib</code></td>
 </tr>
 <tr>
+<td><code>dependency_tracking</code></td>
+<td>Enable dependency tracking. <!-- raw HTML omitted --><!-- raw HTML omitted -->Default: <code>true</code></td>
+</tr>
+<tr>
 <td><code>local_context</code></td>
 <td>See notes below. <!-- raw HTML omitted --><!-- raw HTML omitted -->Default: <code>singlethread</code></td>
 </tr>
@@ -2847,6 +2851,10 @@ with an external Ruby by setting the same GEM_HOME.</p>
 The default is to require the helper library.</p>
 <h3 id="rubylib"><a href="#rubylib" class="header-anchor">#</a>rubylib <!-- raw HTML omitted --></h3>
 <p>Search path for user libraries. Separate each path with a colon (semicolon in Windows).</p>
+<h3 id="dependency_tracking"><a href="#dependency_tracking" class="header-anchor">#</a>dependency_tracking <!-- raw HTML omitted --></h3>
+<p>Dependency tracking allows your scripts to automatically reload when one of its dependencies is updated.
+You may want to disable dependency tracking if you plan on editing or updating a shared library,
+but don't want all your scripts to reload until you can test it.</p>
 <h3 id="local_context"><a href="#local_context" class="header-anchor">#</a>local_context <!-- raw HTML omitted --></h3>
 <p>The local context holds Ruby runtime, name-value pairs for sharing variables between Java and Ruby.
 Valid values are: <code>singleton</code>, <code>threadsafe</code>, <code>singlethread</code>, or <code>concurrent</code>.
@@ -3863,7 +3871,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Thu Feb 23 21:59:04 2023 by
+  Generated on Fri Feb 24 01:57:50 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
