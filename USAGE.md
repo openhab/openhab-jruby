@@ -67,9 +67,9 @@ Additional [example rules are available](docs/examples.md), as well as examples 
 
 * Ruby is designed for programmers' productivity with the idea that programming should be fun for programmers.
 * Ruby emphasizes the necessity for software to be understood by humans first and computers second.
-* For me, automation is a hobby, I want to enjoy writing automation not fight compilers and interpreters .
+* Ruby makes writing automation enjoyable without having to fight with compilers and interpreters.
 * Rich ecosystem of tools, including things like Rubocop to help developers write clean code and RSpec to test the libraries.
-* Ruby is really good at letting one express intent and creating a DSL within Ruby to make that expression easier.
+* Ruby is really good at letting one express intent and create a DSL to make that expression easier.
 
 ### Design points <!-- omit from toc -->
 
