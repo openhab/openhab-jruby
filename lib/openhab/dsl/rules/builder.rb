@@ -1713,7 +1713,7 @@ module OpenHAB
         # @param [String] path Path to watch. Can be a directory of a file.
         # @param [String] glob
         #   Limit events to paths matching this glob. Globs are matched using
-        #   [File.fnmatch?](https://ruby-doc.org/core-2.6/File.html#method-c-fnmatch-3F)
+        #   [File.fnmatch?](https://docs.ruby-lang.org/en/master/File.html#method-c-fnmatch-3F)
         #   rules.
         # @param [Array<:created, :deleted, :modified>, :created, :deleted, :modified] for
         #   Types of changes to watch for.

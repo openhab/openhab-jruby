@@ -45,7 +45,7 @@ module OpenHAB
     #   shared_cache[:execution_count] += 1
     #
     module ValueCache
-      # @see https://ruby-doc.org/core-3.1.2/Hash.html#method-i-5B-5D Hash#[]
+      # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-5B-5D Hash#[]
       def [](key)
         get(key.to_s)
       end
@@ -61,13 +61,13 @@ module OpenHAB
         get(key.to_s, &block)
       end
 
-      # @see https://ruby-doc.org/core-3.1.2/Hash.html#method-i-5B-5D-3D Hash#[]=
+      # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-5B-5D-3D Hash#[]=
       def []=(key, value)
         put(key.to_s, value)
       end
       alias_method :store, :[]
 
-      # @see https://ruby-doc.org/core-3.1.2/Hash.html#method-i-delete Hash#delete
+      # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-delete Hash#delete
       def delete(key)
         key = key.to_s
         if block_given?
@@ -78,7 +78,7 @@ module OpenHAB
         remove(key)
       end
 
-      # @see https://ruby-doc.org/core-3.1.2/Hash.html#method-i-fetch Hash#fetch
+      # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-fetch Hash#fetch
       #
       # @example
       #   shared_cache.fetch(:key_from_another_script) # raises NoKeyError
@@ -105,7 +105,7 @@ module OpenHAB
         end
       end
 
-      # @see https://ruby-doc.org/core-3.1.2/Hash.html#method-i-assoc Hash#assoc
+      # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-assoc Hash#assoc
       def assoc(key)
         [key, fetch(key) do
           # return nil directly, without storing a value to the cache
@@ -113,13 +113,13 @@ module OpenHAB
         end]
       end
 
-      # @see https://ruby-doc.org/core-3.1.2/Hash.html#method-i-dig Hash#dig
+      # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-dig Hash#dig
       def dig(key, *identifiers)
         r = fetch(key) { return nil }
         r&.dig(*identifiers)
       end
 
-      # @see https://ruby-doc.org/core-3.1.2/Hash.html#method-i-fetch_values Hash#fetch_values
+      # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-fetch_values Hash#fetch_values
       def fetch_values(*keys, &block)
         result = []
         keys.each do |key|
@@ -134,7 +134,7 @@ module OpenHAB
         result
       end
 
-      # @see https://ruby-doc.org/core-3.1.2/Hash.html#method-i-key-3F Hash#key?
+      # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-key-3F Hash#key?
       def key?(key)
         !!fetch(key) { return false }
       end
@@ -142,7 +142,7 @@ module OpenHAB
       alias_method :include?, :key?
       alias_method :member?, :key?
 
-      # @see https://ruby-doc.org/core-3.1.2/Hash.html#method-i-merge-21 Hash#merge!
+      # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-merge-21 Hash#merge!
       def merge!(*other_hashes)
         other_hashes.each do |hash|
           hash.each do |(k, v)|
@@ -162,7 +162,7 @@ module OpenHAB
       end
       alias_method :update, :merge!
 
-      # @see https://ruby-doc.org/core-3.1.2/Hash.html#method-i-slice Hash#slice
+      # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-slice Hash#slice
       def slice(*keys)
         result = {}
         keys.each do |k|
@@ -172,12 +172,12 @@ module OpenHAB
         result
       end
 
-      # @see https://ruby-doc.org/core-3.1.2/Hash.html#method-i-to_proc Hash#to_proc
+      # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-to_proc Hash#to_proc
       def to_proc
         @to_proc ||= ->(k) { self[k] }
       end
 
-      # @see https://ruby-doc.org/core-3.1.2/Hash.html#method-i-values_at Hash#values_at
+      # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-values_at Hash#values_at
       def values_at(*keys)
         keys.map do |k|
           self[k]
