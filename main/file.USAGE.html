@@ -3093,7 +3093,7 @@ For example <code>up?</code>, <code>down?</code>, <code>closed?</code>, <code>op
   logger.info <span class="string"><span class="delimiter">'</span><span class="content">My_Item is not NULL nor UNDEF</span><span class="delimiter">'</span></span>
 <span class="keyword">end</span>
 </code></pre>
-<h5 id="compare-items-state"><a href="#compare-items-state" class="header-anchor">#</a>Compare Item's State <!-- raw HTML omitted --></h5>
+<h5 id="comparing-items-state"><a href="#comparing-items-state" class="header-anchor">#</a>Comparing Item's State <!-- raw HTML omitted --></h5>
 <pre class="code ruby"><code class="ruby"><span class="constant">String_Item</span>.state == <span class="string"><span class="delimiter">'</span><span class="content">test string</span><span class="delimiter">'</span></span>
 <span class="constant">Number_Item</span>.state &gt; <span class="float">5.3</span>
 items[<span class="string"><span class="delimiter">'</span><span class="content">Number_Item</span><span class="delimiter">'</span></span>].state == <span class="integer">10</span>
@@ -3105,6 +3105,29 @@ items[<span class="string"><span class="delimiter">'</span><span class="content"
 <span class="constant">Indoor_Temperature</span>.state - <span class="constant">Outdoor_Temperature</span>.state &gt; <span class="integer">5</span> | <span class="string"><span class="delimiter">'</span><span class="content">°C</span><span class="delimiter">'</span></span>
 </code></pre>
 <p>See <span class='object_link'><a href="OpenHAB/DSL.html#unit-class_method" title="OpenHAB::DSL.unit (method)">unit block</a></span></p>
+<h5 id="range-checking"><a href="#range-checking" class="header-anchor">#</a>Range checking <!-- raw HTML omitted --></h5>
+<p>Types that are comparable, such as <span class='object_link'><a href="OpenHAB/Core/Types/StringType.html" title="OpenHAB::Core::Types::StringType (class)">StringType</a></span>, <span class='object_link'><a href="OpenHAB/Core/Types/DateTimeType.html" title="OpenHAB::Core::Types::DateTimeType (class)">DateTimeType</a></span>, <span class='object_link'><a href="OpenHAB/Core/Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span>, <span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span>,
+include Ruby's <a href="https://ruby-doc.org/core/Comparable.html">Comparable</a> module which provides
+the handy <a href="https://ruby-doc.org/core/Comparable.html#method-i-between-3F">between?</a> method.</p>
+<pre class="code ruby"><code class="ruby"><span class="constant">String_Item</span>.update(<span class="string"><span class="delimiter">&quot;</span><span class="content">Freddy</span><span class="delimiter">&quot;</span></span>)
+<span class="constant">String_Item</span>.state.between?(<span class="string"><span class="delimiter">&quot;</span><span class="content">E</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">G</span><span class="delimiter">&quot;</span></span>) <span class="comment"># =&gt; true</span>
+
+<span class="constant">Number_Item</span>.update(<span class="integer">10</span>)
+<span class="keyword">if</span> <span class="constant">Number_Item</span>.state.between?(<span class="integer">5</span>, <span class="integer">20</span>) 
+  logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">Number_Item falls within the expected range</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span>
+
+<span class="constant">Temperature_Item</span>.update(<span class="integer">16</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)
+<span class="constant">Temperature_Item</span>.state.between?(<span class="integer">20</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>, <span class="integer">24</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>) <span class="comment"># =&gt; false</span>
+</code></pre>
+<p>Alternatively, a Ruby <a href="https://ruby-doc.org/core/Range.html">range</a> can be used. This can be
+handy for excluding the end of the range with the <code>...</code> operator.</p>
+<pre class="code ruby"><code class="ruby"><span class="keyword">if</span> (<span class="integer">5</span>..<span class="integer">10</span>).cover?(<span class="constant">Number_Item</span>.state)
+  logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">Number_Item is in the expected range</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span>
+
+((<span class="integer">20</span>|<span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)..(<span class="integer">24</span>|<span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)).cover?(<span class="constant">Temperature_Item</span>.state)
+</code></pre>
 <h5 id="loose-type-comparisons"><a href="#loose-type-comparisons" class="header-anchor">#</a>Loose Type Comparisons <!-- raw HTML omitted --></h5>
 <p>Some openHAB item types can accept different command types.
 For example, a <span class='object_link'><a href="OpenHAB/Core/Items/DimmerItem.html" title="OpenHAB::Core::Items::DimmerItem (class)">DimmerItem</a></span> can accept a command with an <span class='object_link'><a href="OpenHAB/Core/Types/OnOffType.html" title="OpenHAB::Core::Types::OnOffType (class)">OnOffType</a></span>, <span class='object_link'><a href="OpenHAB/Core/Types/IncreaseDecreaseType.html" title="OpenHAB::Core::Types::IncreaseDecreaseType (class)">IncreaseDecreaseType</a></span> or a <span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span>.
@@ -3871,7 +3894,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Fri Feb 24 01:57:51 2023 by
+  Generated on Fri Feb 24 02:11:43 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
