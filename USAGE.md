@@ -392,7 +392,7 @@ gTest.members
 gTest.all_members
 ```
 
-Group members work like a [Ruby array](https://ruby-doc.org/core-2.6/Array.html)
+Group members work like a [Ruby array](https://docs.ruby-lang.org/en/master/Array.html)
 so you can use `&` for intersection, `|` for union, and `-` for difference.
 
 ```ruby
@@ -412,7 +412,7 @@ gTest.all_members.each do |item|
 end
 ```
 
-Group members are also [Enumerable](https://ruby-doc.org/core-3.1.2/Enumerable.html), so can use any of tthose included methods:
+Group members are also [Enumerable](https://docs.ruby-lang.org/en/master/Enumerable.html), so can use any of tthose included methods:
 
 ```ruby
 members_that_are_on = gTest.members.select(&:on?)
@@ -424,7 +424,7 @@ members_that_are_not_on = gTest.members.reject(&:on?)
 high_temperatures = gTemperatures.members.select(&:state?).select { |item| item.state > 30 | '°C' }
 ```
 
-See also [Accessing elements in a Ruby array](https://ruby-doc.org/core-2.6/Array.html#class-Array-label-Accessing+Elements).
+See also [Accessing elements in a Ruby array](https://docs.ruby-lang.org/en/master/Array.html#class-Array-label-Accessing+Elements).
 
 Get a sorted list of Group members matching a condition:
 
@@ -541,8 +541,8 @@ See {OpenHAB::DSL.unit unit block}
 ##### Range checking <!-- omit from toc -->
 
 Types that are comparable, such as {StringType}, {DateTimeType}, {DecimalType}, {PercentType}, 
-include Ruby's [Comparable](https://ruby-doc.org/core/Comparable.html) module which provides 
-the handy [between?](https://ruby-doc.org/core/Comparable.html#method-i-between-3F) method.
+include Ruby's [Comparable](https://docs.ruby-lang.org/en/master/Comparable.html) module which provides 
+the handy [between?](https://docs.ruby-lang.org/en/master/Comparable.html#method-i-between-3F) method.
 
 ```ruby
 String_Item.update("Freddy")
@@ -557,7 +557,7 @@ Temperature_Item.update(16 | "°C")
 Temperature_Item.state.between?(20 | "°C", 24 | "°C") # => false
 ```
 
-Alternatively, a Ruby [range](https://ruby-doc.org/core/Range.html) can be used. This can be
+Alternatively, a Ruby [range](https://docs.ruby-lang.org/en/master/Range.html) can be used. This can be
 handy for excluding the end of the range with the `...` operator.
 
 ```ruby
@@ -749,7 +749,7 @@ This behaviour is due to [log4j2](https://logging.apache.org/log4j/2.x/) requiri
 logger = OpenHAB::Log.logger("org.openhab.custom")
 ```
 
-The {OpenHAB::Logger logger} is similar to a standard [Ruby Logger](https://ruby-doc.org/stdlib-3.1.2/libdoc/logger/rdoc/Logger.html).
+The {OpenHAB::Logger logger} is similar to a standard [Ruby Logger](https://docs.ruby-lang.org/en/master/Logger.html).
 Supported logging functions include:
 
 * `logger.log(severity, obj)`
@@ -769,7 +769,7 @@ Additionally, all of these methods can take a [Ruby block](https://ruby-doc.com/
 sleep 1.5 # sleep for 1.5 seconds
 ```
 
-See Ruby docs on [sleep](https://ruby-doc.org/core-2.6/Kernel.html#method-i-sleep).
+See Ruby docs on [sleep](https://docs.ruby-lang.org/en/master/Kernel.html#method-i-sleep).
 
 `sleep` should be avoided if possible. A {OpenHAB::DSL::Rules::BuilderDSL#delay delay} can be inserted in between two execution blocks to achieve the same result. This delay is implemented with a timer.
 This is available only on file-based rules.
@@ -942,13 +942,13 @@ Several options are available for time related code, including but not limited t
 * Java {ZonedDateTime} - represents a specific instance with a date and time
 * Java {Duration}
 * Java {Period}
-* Ruby [Date](https://ruby-doc.org/stdlib-2.6.8/libdoc/date/rdoc/Date.html) - represents a date with no time
-* Ruby [Time](https://ruby-doc.org/core/Time.html) - represents a specific instant with a date and time
-* Ruby [DateTime](https://ruby-doc.org/stdlib-2.6.8/libdoc/date/rdoc/DateTime.html) - represents a specific instant with a date and time
+* Ruby [Date](https://docs.ruby-lang.org/en/master/Date.html) - represents a date with no time
+* Ruby [Time](https://docs.ruby-lang.org/en/master/Time.html) - represents a specific instant with a date and time
+* Ruby [DateTime](https://docs.ruby-lang.org/en/master/DateTime.html) - represents a specific instant with a date and time
 
 #### Durations <!-- omit from toc -->
 
-Ruby [integers](https://ruby-doc.org/core-2.6.8/Integer.html) and [floats](https://ruby-doc.org/core-2.6.8/Float.html) are extended with several methods to support durations.
+Ruby [integers](https://docs.ruby-lang.org/en/master/Integer.html) and [floats](https://docs.ruby-lang.org/en/master/Float.html) are extended with several methods to support durations.
 These methods create a new {Duration} or {Period} object that is used by the {OpenHAB::DSL::Rules::BuilderDSL#every every} trigger, {OpenHAB::DSL::Rules::BuilderDSL#delay delay} block, the for option of {OpenHAB::DSL::Rules::BuilderDSL#changed changed} triggers, and {OpenHAB::Core::Timer timers}.
 
 ```ruby

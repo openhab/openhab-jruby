@@ -10,19 +10,19 @@ writing rules. However, it is by no means comprehensive. A wealth of information
 ## Data Types
 
 In Ruby, everything is an object, even primitive types such as numbers and strings. For example, `1` as a number is an object
-and has all the methods for the [Integer class](https://ruby-doc.org/core-2.6/Integer.html).
+and has all the methods for the [Integer class](https://docs.ruby-lang.org/en/master/Integer.html).
 
 It is useful to get to know the basic data types that we will often encounter:
 
-* [Integer](https://ruby-doc.org/core-2.6/Integer.html) - e.g. `1`, `-3`, etc.
-* [Floating Point](https://ruby-doc.org/core-2.6/Float.html) - e.g. `3.5`
-* [String](https://ruby-doc.org/core-2.6/String.html) -
+* [Integer](https://docs.ruby-lang.org/en/master/Integer.html) - e.g. `1`, `-3`, etc.
+* [Floating Point](https://docs.ruby-lang.org/en/master/Float.html) - e.g. `3.5`
+* [String](https://docs.ruby-lang.org/en/master/String.html) -
   String literals in Ruby can be enclosed with double quotes, or single quotes. Strings enclosed by double quotes can 
   contain variables and expressions that are enclosed with `#{}`. For example: `"Hi my name is #{name_variable}"`. The String class offers a plethora of useful methods to operate on and manipulate strings.
-* [Array](https://ruby-doc.org/core-2.6/Array.html) - example: `[1, 2, 'foo', AnotherObject]`
-* [Hash](https://ruby-doc.org/core-2.6/Hash.html) - example: `{ 'key1' => 'value', 'key2' => 'value' }`
-* [Symbol](https://ruby-doc.org/core-2.6/Symbol.html) - example: `:iamasymbol`
-* [Range](https://ruby-doc.org/core-2.6/Range.html) - example: `1..5`
+* [Array](https://docs.ruby-lang.org/en/master/Array.html) - example: `[1, 2, 'foo', AnotherObject]`
+* [Hash](https://docs.ruby-lang.org/en/master/Hash.html) - example: `{ 'key1' => 'value', 'key2' => 'value' }`
+* [Symbol](https://docs.ruby-lang.org/en/master/Symbol.html) - example: `:iamasymbol`
+* [Range](https://docs.ruby-lang.org/en/master/Range.html) - example: `1..5`
 
 ## Variables
 
@@ -52,7 +52,7 @@ end
   
 ## Control Expressions
 
-Ruby supports various [control expressions](https://ruby-doc.org/core-2.6.8/doc/syntax/control_expressions_rdoc.html) such as `if/else`, ternary operator, `case`, etc.
+Ruby supports various [control expressions](https://docs.ruby-lang.org/en/master/doc/syntax/control_expressions_rdoc.html) such as `if/else`, ternary operator, `case`, etc.
 
 Example:
 
@@ -161,7 +161,7 @@ end
 
 ## Ruby's Safe Navigation Operator
 
-Ruby has a [safe navigation operator](https://ruby-doc.org/core-2.6/doc/syntax/calling_methods_rdoc.html#label-Safe+navigation+operator)
+Ruby has a [safe navigation operator](https://docs.ruby-lang.org/en/master/syntax/calling_methods_rdoc.html#label-Safe+Navigation+Operator)
 `&.` which is similar to `?.` in C#, Groovy, Kotlin, etc.
 
 ```ruby
