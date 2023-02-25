@@ -89,39 +89,31 @@ Additional [example rules are available](docs/examples.md), as well as examples 
 
 ### Prerequisites <!-- omit from toc -->
 
-1. openHAB 3.3+
+1. openHAB 3.4+
 2. The JRuby Scripting Language Addon
 
 ### From the User Interface <!-- omit from toc -->
 
-1. Go to `Settings -> Add-ons -> Automation` and install the jrubyscripting automation addon following the [openHAB instructions](https://www.openhab.org/docs/configuration/addons.html)
+1. Go to `Settings -> Add-ons -> Automation` and install the jrubyscripting automation addon 
+   following the [openHAB instructions](https://www.openhab.org/docs/configuration/addons.html).
+   In openHAB 4.0+ the defaults are set so the next step can be skipped.
 2. Go to `Settings -> Other Services -> JRuby Scripting`:
-   * **Ruby Gems**: `openhab-scripting=~>5.0`
+   * **Ruby Gems**: `openhab-scripting=~>5.0.0`
    * **Require Scripts**: `openhab/dsl` (not required, but recommended)
 
 ### Using Files <!-- omit from toc -->
 
-1. Edit `<OPENHAB_CONF>/services/addons.cfg` and ensure that `jrubyscripting` is included in an uncommented `automation=` list of automations to install.  
-2. Optionally configure JRuby openHAB services
+1. Edit `<OPENHAB_CONF>/services/addons.cfg` and ensure that `jrubyscripting` is included in 
+   an uncommented `automation=` list of automations to install. 
+   In openHAB 4.0+ the defaults are set so the next step can be skipped.
+2. Configure JRuby openHAB services
 
    Create a file called `jruby.cfg` in `<OPENHAB_CONF>/services/` with the following content:
 
-   ```
-   org.openhab.automation.jrubyscripting:gems=openhab-scripting=~>5.0
+   ```ini
+   org.openhab.automation.jrubyscripting:gems=openhab-scripting=~>5.0.0
    org.openhab.automation.jrubyscripting:require=openhab/dsl
    ```
-
-   This configuration with the openhab-scripting gem specified with [pessimistic versioning](https://thoughtbot.com/blog/rubys-pessimistic-operator) will install any version of openhab-scripting greater than or equal to 5.0 but less than 6.0.
-   On system restart if any (non-breaking) new versions of the library are available they will automatically be installed.
-
-### Upgrading <!-- omit from toc -->
-
-Depending on the versioning selected in the `jruby.cfg` or the gems list in the user interface, upgrading will either be automatic after an openHAB restart or manual.
-For manual upgrades select the exact version of the gem. For example, `org.openhab.automation.jrubyscripting:gems=openhab-scripting=5.0.0` will install and stay at version 5.0.0.
-To upgrade to version 5.0.1, change the configuration to `org.openhab.automation.jrubyscripting:gems=openhab-scripting=5.0.1`.
-To automatically upgrade the gem, it is recommended to use pessimistic versioning: `org.openhab.automation.jrubyscripting:gems=openhab-scripting=~>5.0`.
-This will install at least version 5.0 and on every restart automatically install any version that is less than 6.0.
-This ensures that fixes and new features are available without introducing any breaking changes.
 
 ## Configuration
 
@@ -136,17 +128,17 @@ Simply change the `gems` and `require` configuration settings.
 | Parameter             | Description                                                                                                |
 | --------------------- | ---------------------------------------------------------------------------------------------------------- |
 | `gem_home`            | The path to store Ruby Gems. <br/><br/>Default: `$OPENHAB_CONF/automation/ruby/.gem/{RUBY_ENGINE_VERSION}` |
-| `gems`                | A list of gems to install on start up or settings change. <br/><br/>Default: `openhab-scripting=~>5.0.0`   |
+| `gems`                | A list of gems to install. <br/><br/>Default: `openhab-scripting=~>5.0.0`                                  |
 | `check_update`        | Check for updated version of `gems` on start up or settings change. <br/><br/>Default: `true`              |
 | `require`             | List of scripts to be required automatically. <br/><br/>Default: `openhab/dsl`                             |
 | `rubylib`             | Search path for user libraries. <br/><br/>Default: `$OPENHAB_CONF/automation/ruby/lib`                     |
-| `dependency_tracking` | Enable dependency tracking. <br/><br/>Default: `true`                              |
+| `dependency_tracking` | Enable dependency tracking. <br/><br/>Default: `true`                                                      |
 | `local_context`       | See notes below. <br/><br/>Default: `singlethread`                                                         |
 | `local_variables`     | See notes below. <br/><br/>Default: `transient`                                                            |
 
 When using file-based configuration, these parameters must be prefixed with `org.openhab.automation.jrubyscripting:`, for example:
 
-```text
+```ini
 org.openhab.automation.jrubyscripting:gems=openhab-scripting=~>5.0
 org.openhab.automation.jrubyscripting:require=openhab/dsl
 ```
@@ -160,15 +152,24 @@ to automatically point to a new directory when the addon is updated with a new v
 ### gems <!-- omit from toc -->
 
 A comma separated list of [Ruby Gems](https://rubygems.org/) to install.
-The default installs the version of the helper for this version of openHAB.
 
+The default installs the version of the helper for this version of openHAB. 
+When overriding the default, be sure to still include the `openhab-scripting` gem in the
+list of gems to install.
+
+Each gem can have version specifiers which uses 
+[pessimistic versioning](https://thoughtbot.com/blog/rubys-pessimistic-operator).
 Multiple version specifiers can be added by separating them with a semicolon.
 
-Example with multiple version specifiers:
+Examples:
 
-```text
-org.openhab.automation.jrubyscripting:gems=library= >= 2.2.0; < 3.0, another-gem= > 4.0.0.a; < 5
-```
+| gem setting                                      | Description                                                                                              |
+| ------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| `openhab-scripting`                              | install the latest version of `openhab-scripting` gem                                                    |
+| `openhab-scripting=~>5.0.0`                      | install the latest version 5.0.x but not 5.1.x                                                           |
+| `openhab-scripting=~>5.0`                        | install the latest version 5.x but not 6.x                                                               |
+| `openhab-scripting=~>5.0, faraday=~>2.7;>=2.7.4` | install `openhab-scripting` gem version 5.x and `faraday` gem version 2.7.4 or higher, but less than 3.0 |
+| `gem1= >= 2.2.1; <= 2.2.5`                       | install `gem1` gem version 2.2.1 or above, but less than or equal to version 2.2.5                       |
 
 ### check_update <!-- omit from toc -->
 
