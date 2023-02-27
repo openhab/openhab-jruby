@@ -165,6 +165,44 @@ RSpec.describe OpenHAB::Core::Timer do
         expect(timers).not_to include("id")
       end
 
+      describe "nested inside the execution block of the same id" do
+        it "works" do
+          executed = []
+          2.times do
+            after(0.1.seconds, id: :mytimer) do
+              executed << 1
+
+              after(0.1.seconds, id: :mytimer) do
+                executed << 2
+              end
+            end
+
+            time_travel_and_execute_timers(0.15.seconds)
+          end
+          expect(executed).to match_array([1, 1])
+
+          time_travel_and_execute_timers(0.15.seconds)
+          expect(executed).to match_array([1, 1, 2])
+        end
+
+        it "can be cancelled" do
+          result = 0
+          after(0.1.seconds, id: :mytimer) do
+            result = 1
+            after(0.1.seconds, id: :mytimer) do
+              result = 2
+            end
+          end
+
+          time_travel_and_execute_timers(0.15.seconds)
+          expect(result).to eq 1
+          timers.cancel :mytimer
+          expect(timers).not_to include(:mytimer)
+          time_travel_and_execute_timers(0.3.seconds)
+          expect(result).to eq 1
+        end
+      end
+
       it "removes the timer when finished" do
         executed = false
         after(0.1.seconds, id: "id") { executed = true }
@@ -197,7 +235,7 @@ RSpec.describe OpenHAB::Core::Timer do
       it "can avoid rescheduling timers that already exist" do
         first_executed = second_executed = false
         timer1 = after(5.seconds, id: "id") { first_executed = true }
-        timer2 = after(10.seconds, id: "id", reschedule: false) { second_executed = false }
+        timer2 = after(10.seconds, id: "id", reschedule: false) { second_executed = true }
         expect(timer2).to be timer1
 
         next unless self.class.mock_timers?
