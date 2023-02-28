@@ -50,7 +50,7 @@ module OpenHAB
         @thread_locals = thread_locals
         @block = block
         @timer = ScriptExecution.create_timer(1.minute.from_now) { execute }
-        reschedule(@time)
+        reschedule!(@time)
       end
 
       # @return [String]
@@ -70,7 +70,9 @@ module OpenHAB
       #   @return [ZonedDateTime, nil] the scheduled execution time, or `nil` if the timer was cancelled
 
       #
-      # Reschedule timer
+      # Reschedule timer.
+      #
+      # If the timer had been cancelled or executed, restart the timer.
       #
       # @param [java.time.temporal.TemporalAmount, ZonedDateTime, Proc, nil] time When to reschedule the timer for.
       #   If unspecified, the original time is used.
@@ -78,6 +80,19 @@ module OpenHAB
       # @return [self]
       #
       def reschedule(time = nil)
+        return reschedule!(time) unless id
+
+        # re-add ourself to the TimerManager's @timers_by_id
+        DSL.timers.schedule(id) do |old_timer|
+          old_timer&.cancel unless old_timer.eql?(self)
+          self.id = nil
+          reschedule!(time)
+        end
+      end
+
+      # @return [self]
+      # @!visibility private
+      def reschedule!(time = nil)
         Thread.current[:openhab_rescheduled_timer] = true if Thread.current[:openhab_rescheduled_timer] == self
         DSL.timers.add(self)
         @timer.reschedule(new_execution_time(time || @time))

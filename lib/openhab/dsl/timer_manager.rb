@@ -79,7 +79,13 @@ module OpenHAB
       end
 
       #
-      # Reschedule a single timer by id
+      # Reschedule a single timer by id.
+      #
+      # @note Only timers that are still active can be rescheduled by their id.
+      #   Once a timer is finished executing or cancelled, it is no longer maintained by TimerManager,
+      #   and calling this method will do nothing.
+      #   To reschedule a possibly expired or cancelled timer, either call the {Core::Timer#reschedule}
+      #   method of the timer object, or use {schedule}.
       #
       # @param [Object] id
       # @param [java.time.temporal.TemporalAmount, #to_zoned_date_time, Proc, nil] duration
@@ -139,7 +145,7 @@ module OpenHAB
                   "Do not schedule a new timer with an ID inside a #schedule block"
           end
 
-          if timer&.cancelled?
+          if new_timer&.cancelled?
             new_timer = nil
           elsif new_timer.nil? && timer && !timer.cancelled?
             timer.cancel!
