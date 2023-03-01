@@ -8,105 +8,105 @@ Also included is [openhab-scripting](https://openhab.github.io/openhab-jruby/), 
 It provides native Ruby access to common openHAB functionality within rules including items, things, actions, logging and more.
 If you're new to Ruby, you may want to check out [Ruby Basics](docs/ruby-basics.md).
 
-* [Why Ruby?](#why-ruby)
-* [Installation](#installation)
-* [Configuration](#configuration)
-* [Usage](#usage)
-  * [UI Based Scripts](#ui-based-scripts)
-  * [File Based Scripts](#file-based-scripts)
-  * [Event Object](#event-object)
-* [Library Details](#library-details)
-  * [Items](#items)
-    * [Groups](#groups)
-    * [Commands](#commands)
-    * [Updates](#updates)
-    * [State](#state)
-    * [Metadata](#metadata)
-    * [Persistence](#persistence)
-    * [Semantic Model](#semantic-model)
-    * [Linked Things](#linked-things)
-    * [Item Builder](#item-builder)
-  * [Things](#things)
-  * [Actions](#actions)
-  * [Logging](#logging)
-  * [Timers](#timers)
-  * [Cache](#cache)
-  * [Time](#time)
-  * [Ephemeris](#ephemeris)
-  * [Gems](#gems)
-  * [Shared Code](#shared-code)
-* [File Based Rules](#file-based-rules)
-  * [Basic Rule Structure](#basic-rule-structure)
-  * [Rule Triggers](#rule-triggers)
-    * [Item or Thing Changed](#item-or-thing-changed)
-    * [Item Updated](#item-updated)
-    * [Item Received a Command](#item-received-a-command)
-    * [Member-of-Group Trigger](#member-of-group-trigger)
-    * [Script is Loaded](#script-is-loaded)
-    * [openHAB System Started](#openhab-system-started)
-    * [Cron Trigger](#cron-trigger)
-    * [Other Triggers](#other-triggers)
-    * [Combining Multiple Triggers](#combining-multiple-triggers)
-    * [Combining Multiple Conditions](#combining-multiple-conditions)
-  * [Rule Conditions](#rule-conditions)
-  * [Rule Executions](#rule-executions)
-    * [Run Execution Block](#run-execution-block)
-    * [Triggered Execution Block](#triggered-execution-block)
-    * [Delay Execution Block](#delay-execution-block)
-  * [Terse Rules](#terse-rules)
-  * [Rule Manipulations](#rule-manipulations)
-  * [Early Exit From a Rule](#early-exit-from-a-rule)
-  * [Dynamic Generation of Rules](#dynamic-generation-of-rules)
-  * [Hooks](#hooks)
-  * [Transformations](#transformations)
-* [Calling Java From JRuby](#calling-java-from-jruby)
+- [Why Ruby?](#why-ruby)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+  - [UI Based Scripts](#ui-based-scripts)
+  - [File Based Scripts](#file-based-scripts)
+  - [Event Object](#event-object)
+- [Library Details](#library-details)
+  - [Items](#items)
+    - [Groups](#groups)
+    - [Commands](#commands)
+    - [Updates](#updates)
+    - [State](#state)
+    - [Metadata](#metadata)
+    - [Persistence](#persistence)
+    - [Semantic Model](#semantic-model)
+    - [Linked Things](#linked-things)
+    - [Item Builder](#item-builder)
+  - [Things](#things)
+  - [Actions](#actions)
+  - [Logging](#logging)
+  - [Timers](#timers)
+  - [Cache](#cache)
+  - [Time](#time)
+  - [Ephemeris](#ephemeris)
+  - [Gems](#gems)
+  - [Shared Code](#shared-code)
+- [File Based Rules](#file-based-rules)
+  - [Basic Rule Structure](#basic-rule-structure)
+  - [Rule Triggers](#rule-triggers)
+    - [Item or Thing Changed](#item-or-thing-changed)
+    - [Item Updated](#item-updated)
+    - [Item Received a Command](#item-received-a-command)
+    - [Member-of-Group Trigger](#member-of-group-trigger)
+    - [Script is Loaded](#script-is-loaded)
+    - [openHAB System Started](#openhab-system-started)
+    - [Cron Trigger](#cron-trigger)
+    - [Other Triggers](#other-triggers)
+    - [Combining Multiple Triggers](#combining-multiple-triggers)
+    - [Combining Multiple Conditions](#combining-multiple-conditions)
+  - [Rule Conditions](#rule-conditions)
+  - [Rule Executions](#rule-executions)
+    - [Run Execution Block](#run-execution-block)
+    - [Triggered Execution Block](#triggered-execution-block)
+    - [Delay Execution Block](#delay-execution-block)
+  - [Terse Rules](#terse-rules)
+  - [Rule Manipulations](#rule-manipulations)
+  - [Early Exit From a Rule](#early-exit-from-a-rule)
+  - [Dynamic Generation of Rules](#dynamic-generation-of-rules)
+  - [Hooks](#hooks)
+  - [Transformations](#transformations)
+- [Calling Java From JRuby](#calling-java-from-jruby)
 
 Additional [example rules are available](docs/examples.md), as well as examples of [conversions from DSL and Python rules](docs/conversions.md).
 
 ## Why Ruby?
 
-* Ruby is designed for programmers' productivity with the idea that programming should be fun for programmers.
-* Ruby emphasizes the necessity for software to be understood by humans first and computers second.
-* Ruby makes writing automation enjoyable without having to fight with compilers and interpreters.
-* Rich ecosystem of tools, including things like Rubocop to help developers write clean code and RSpec to test the libraries.
-* Ruby is really good at letting one express intent and create a DSL to make that expression easier.
+- Ruby is designed for programmers' productivity with the idea that programming should be fun for programmers.
+- Ruby emphasizes the necessity for software to be understood by humans first and computers second.
+- Ruby makes writing automation enjoyable without having to fight with compilers and interpreters.
+- Rich ecosystem of tools, including things like Rubocop to help developers write clean code and RSpec to test the libraries.
+- Ruby is really good at letting one express intent and create a DSL to make that expression easier.
 
 ### Design points <!-- omit from toc -->
 
-* Create an intuitive method of defining rules and automation
-  * Rule language should "flow" in a way that you can read the rules out loud
-* Abstract away complexities of openHAB
-* Enable all the power of Ruby and openHAB
-* Create a Frictionless experience for building automation
-* The common, yet tricky tasks are abstracted and made easy. e.g. creating a timer that automatically reschedules itself.
-* Tested
-  * Designed and tested using [Test-Driven Development](https://en.wikipedia.org/wiki/Test-driven_development) with [RSpec](https://rspec.info/)
-* Extensible.
-  * Anyone should be able to customize and add/remove core language features
-* Easy access to the Ruby ecosystem in rules through Ruby gems.
+- Create an intuitive method of defining rules and automation
+  - Rule language should "flow" in a way that you can read the rules out loud
+- Abstract away complexities of openHAB
+- Enable all the power of Ruby and openHAB
+- Create a Frictionless experience for building automation
+- The common, yet tricky tasks are abstracted and made easy. e.g. creating a timer that automatically reschedules itself.
+- Tested
+  - Designed and tested using [Test-Driven Development](https://en.wikipedia.org/wiki/Test-driven_development) with [RSpec](https://rspec.info/)
+- Extensible.
+  - Anyone should be able to customize and add/remove core language features
+- Easy access to the Ruby ecosystem in rules through Ruby gems.
 
 ## Installation
 
 ### Prerequisites <!-- omit from toc -->
 
 1. openHAB 3.4+
-2. The JRuby Scripting Language Addon
+1. The JRuby Scripting Language Addon
 
 ### From the User Interface <!-- omit from toc -->
 
-1. Go to `Settings -> Add-ons -> Automation` and install the jrubyscripting automation addon 
+1. Go to `Settings -> Add-ons -> Automation` and install the jrubyscripting automation addon
    following the [openHAB instructions](https://www.openhab.org/docs/configuration/addons.html).
    In openHAB 4.0+ the defaults are set so the next step can be skipped.
-2. Go to `Settings -> Other Services -> JRuby Scripting`:
-   * **Ruby Gems**: `openhab-scripting=~>5.0.0`
-   * **Require Scripts**: `openhab/dsl` (not required, but recommended)
+1. Go to `Settings -> Other Services -> JRuby Scripting`:
+   - **Ruby Gems**: `openhab-scripting=~>5.0.0`
+   - **Require Scripts**: `openhab/dsl` (not required, but recommended)
 
 ### Using Files <!-- omit from toc -->
 
-1. Edit `<OPENHAB_CONF>/services/addons.cfg` and ensure that `jrubyscripting` is included in 
-   an uncommented `automation=` list of automations to install. 
+1. Edit `<OPENHAB_CONF>/services/addons.cfg` and ensure that `jrubyscripting` is included in
+   an uncommented `automation=` list of automations to install.
    In openHAB 4.0+ the defaults are set so the next step can be skipped.
-2. Configure JRuby openHAB services
+1. Configure JRuby openHAB services
 
    Create a file called `jruby.cfg` in `<OPENHAB_CONF>/services/` with the following content:
 
@@ -153,11 +153,11 @@ to automatically point to a new directory when the addon is updated with a new v
 
 A comma separated list of [Ruby Gems](https://rubygems.org/) to install.
 
-The default installs the version of the helper for this version of openHAB. 
+The default installs the version of the helper for this version of openHAB.
 When overriding the default, be sure to still include the `openhab-scripting` gem in the
 list of gems to install.
 
-Each gem can have version specifiers which uses 
+Each gem can have version specifiers which uses
 [pessimistic versioning](https://thoughtbot.com/blog/rubys-pessimistic-operator).
 Multiple version specifiers can be added by separating them with a semicolon.
 
@@ -188,8 +188,8 @@ Search path for user libraries. Separate each path with a colon (semicolon in Wi
 
 ### dependency_tracking <!-- omit from toc -->
 
-Dependency tracking allows your scripts to automatically reload when one of its dependencies is updated. 
-You may want to disable dependency tracking if you plan on editing or updating a shared library, 
+Dependency tracking allows your scripts to automatically reload when one of its dependencies is updated.
+You may want to disable dependency tracking if you plan on editing or updating a shared library,
 but don't want all your scripts to reload until you can test it.
 
 ### local_context <!-- omit from toc -->
@@ -541,8 +541,8 @@ See {OpenHAB::DSL.unit unit block}
 
 ##### Range checking <!-- omit from toc -->
 
-Types that are comparable, such as {StringType}, {DateTimeType}, {DecimalType}, {PercentType}, 
-include Ruby's [Comparable](https://docs.ruby-lang.org/en/master/Comparable.html) module which provides 
+Types that are comparable, such as {StringType}, {DateTimeType}, {DecimalType}, {PercentType},
+include Ruby's [Comparable](https://docs.ruby-lang.org/en/master/Comparable.html) module which provides
 the handy [between?](https://docs.ruby-lang.org/en/master/Comparable.html#method-i-between-3F) method.
 
 ```ruby
@@ -753,12 +753,12 @@ logger = OpenHAB::Log.logger("org.openhab.custom")
 The {OpenHAB::Logger logger} is similar to a standard [Ruby Logger](https://docs.ruby-lang.org/en/master/Logger.html).
 Supported logging functions include:
 
-* `logger.log(severity, obj)`
-* `logger.info(obj)`
-* `logger.warn(obj)`
-* `logger.error(obj)`
-* `logger.debug(obj)`
-* `logger.trace(obj)`
+- `logger.log(severity, obj)`
+- `logger.info(obj)`
+- `logger.warn(obj)`
+- `logger.error(obj)`
+- `logger.debug(obj)`
+- `logger.trace(obj)`
 
 `obj` is any Ruby (or Java) object.
 `#to_s` (or `toString()` if it's a Java object) is called on `obj`, and the result is output to the openHAB log.
@@ -936,16 +936,16 @@ shared_count[:counter] = count + 1
 
 Several options are available for time related code, including but not limited to:
 
-* Java {LocalDate} - represents a date with no time
-* Java {LocalTime} - represents a time with no date
-* Java {Month}
-* Java {MonthDay} - represents a date with no time or year
-* Java {ZonedDateTime} - represents a specific instance with a date and time
-* Java {Duration}
-* Java {Period}
-* Ruby [Date](https://docs.ruby-lang.org/en/master/Date.html) - represents a date with no time
-* Ruby [Time](https://docs.ruby-lang.org/en/master/Time.html) - represents a specific instant with a date and time
-* Ruby [DateTime](https://docs.ruby-lang.org/en/master/DateTime.html) - represents a specific instant with a date and time
+- Java {LocalDate} - represents a date with no time
+- Java {LocalTime} - represents a time with no date
+- Java {Month}
+- Java {MonthDay} - represents a date with no time or year
+- Java {ZonedDateTime} - represents a specific instance with a date and time
+- Java {Duration}
+- Java {Period}
+- Ruby [Date](https://docs.ruby-lang.org/en/master/Date.html) - represents a date with no time
+- Ruby [Time](https://docs.ruby-lang.org/en/master/Time.html) - represents a specific instant with a date and time
+- Ruby [DateTime](https://docs.ruby-lang.org/en/master/DateTime.html) - represents a specific instant with a date and time
 
 #### Durations <!-- omit from toc -->
 

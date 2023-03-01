@@ -39,6 +39,16 @@ jobs:
       - name: Cucumber Lint
         run: bin/cuke_linter -p features/
 
+  markdown-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run markdownlint-cli
+        uses: nosborn/github-action-markdown-cli@v2.0.0
+        with:
+          files: .
+          config_file: .markdownlint.yaml
+
   yard-coverage:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'ci skip')"

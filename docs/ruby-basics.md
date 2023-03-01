@@ -2,9 +2,9 @@
 
 # Ruby Basics
 
-The openHAB JRuby scripting automation is based on the [JRuby](https://www.jruby.org/) implementation of the 
+The openHAB JRuby scripting automation is based on the [JRuby](https://www.jruby.org/) implementation of the
 [Ruby](https://www.ruby-lang.org/) language. This page offers a quick overview of Ruby to help you get started
-writing rules. However, it is by no means comprehensive. A wealth of information can be found on 
+writing rules. However, it is by no means comprehensive. A wealth of information can be found on
 [Ruby's web site](https://www.ruby-lang.org/en/documentation/).
 
 ## Data Types
@@ -14,24 +14,24 @@ and has all the methods for the [Integer class](https://docs.ruby-lang.org/en/ma
 
 It is useful to get to know the basic data types that we will often encounter:
 
-* [Integer](https://docs.ruby-lang.org/en/master/Integer.html) - e.g. `1`, `-3`, etc.
-* [Floating Point](https://docs.ruby-lang.org/en/master/Float.html) - e.g. `3.5`
-* [String](https://docs.ruby-lang.org/en/master/String.html) -
-  String literals in Ruby can be enclosed with double quotes, or single quotes. Strings enclosed by double quotes can 
+- [Integer](https://docs.ruby-lang.org/en/master/Integer.html) - e.g. `1`, `-3`, etc.
+- [Floating Point](https://docs.ruby-lang.org/en/master/Float.html) - e.g. `3.5`
+- [String](https://docs.ruby-lang.org/en/master/String.html) -
+  String literals in Ruby can be enclosed with double quotes, or single quotes. Strings enclosed by double quotes can
   contain variables and expressions that are enclosed with `#{}`. For example: `"Hi my name is #{name_variable}"`. The String class offers a plethora of useful methods to operate on and manipulate strings.
-* [Array](https://docs.ruby-lang.org/en/master/Array.html) - example: `[1, 2, 'foo', AnotherObject]`
-* [Hash](https://docs.ruby-lang.org/en/master/Hash.html) - example: `{ 'key1' => 'value', 'key2' => 'value' }`
-* [Symbol](https://docs.ruby-lang.org/en/master/Symbol.html) - example: `:iamasymbol`
-* [Range](https://docs.ruby-lang.org/en/master/Range.html) - example: `1..5`
+- [Array](https://docs.ruby-lang.org/en/master/Array.html) - example: `[1, 2, 'foo', AnotherObject]`
+- [Hash](https://docs.ruby-lang.org/en/master/Hash.html) - example: `{ 'key1' => 'value', 'key2' => 'value' }`
+- [Symbol](https://docs.ruby-lang.org/en/master/Symbol.html) - example: `:iamasymbol`
+- [Range](https://docs.ruby-lang.org/en/master/Range.html) - example: `1..5`
 
 ## Variables
 
-* In Ruby, variables start with a lower case and by convention use `snake_case`.
-* Uppercase identifiers are constants, e.g. `NAMES`
-* Variable whose names start with `$` are global variables, e.g. `$i_am_global`.
-* Variable whose names start with `@` are instance variables, e.g. `@instance_variable`.
+- In Ruby, variables start with a lower case and by convention use `snake_case`.
+- Uppercase identifiers are constants, e.g. `NAMES`
+- Variable whose names start with `$` are global variables, e.g. `$i_am_global`.
+- Variable whose names start with `@` are instance variables, e.g. `@instance_variable`.
   Instance variables are similar to member variables or fields in other languages.
-* Local variables are just plain names that starts with a lower case, e.g. `local_var`.
+- Local variables are just plain names that starts with a lower case, e.g. `local_var`.
 
 ### Examples
 
@@ -92,7 +92,7 @@ end
 
 ## Loops
 
-While Ruby supports the traditional `for` and `while` loop, they are rarely used. 
+While Ruby supports the traditional `for` and `while` loop, they are rarely used.
 Ruby objects such as Array, Hash, Set, etc. provide a plethora of methods to
 achieve the same thing in a more "Ruby" way.
 
@@ -174,10 +174,9 @@ end
 items['My_Item']&.on
 ```
 
-
 ## Some Gotchas
 
-### Exiting early 
+### Exiting early
 
 To [exit early from a block](https://stackoverflow.com/questions/1402757/how-to-break-out-from-a-ruby-block), use `next` instead of `return`.
 
@@ -197,7 +196,7 @@ Note: To exit early from a UI rule, use `return`.
 
 ### Parentheses
 
-In Ruby, parentheses are optional when calling a method. However, when calling a method with arguments and a single-line block, 
+In Ruby, parentheses are optional when calling a method. However, when calling a method with arguments and a single-line block,
 the parentheses must be used. Example:
 
 ```ruby
@@ -229,7 +228,7 @@ end
 
 The [ruby style guide](https://rubystyle.guide) offers the generally accepted standards for Ruby source code formatting.
 
-When working with file based rules in a source code editor (e.g. VSCode), it is highly recommended to integrate 
+When working with file based rules in a source code editor (e.g. VSCode), it is highly recommended to integrate
 [Rubocop](https://rubocop.org/) (or [rubocop-daemon](https://github.com/fohte/rubocop-daemon))
 as the source code formatter and linter for Ruby.
 

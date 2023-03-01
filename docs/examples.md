@@ -170,9 +170,9 @@ end
 
 Trigger defined as:
 
-* When: a member of an item group receives a command
-* Group: `Reset_5Seconds`
-* Command: `ON`
+- When: a member of an item group receives a command
+- Group: `Reset_5Seconds`
+- Command: `ON`
 
 ```ruby
 logger.info("#{event.item.name} Triggered the rule")
@@ -185,7 +185,7 @@ end
 
 Given the following group and items:
 
-```
+```java
 Group MotionSensors
 Switch Sensor1 (MotionSensors)
 Switch Sensor2 (MotionSensors)
@@ -196,9 +196,9 @@ DateTime Sensor2_LastMotion
 
 Trigger defined as:
 
-* When: the state of a member of an item group is updated
-* Group: `MotionSensors`
-* State: `ON`
+- When: the state of a member of an item group is updated
+- Group: `MotionSensors`
+- State: `ON`
 
 ```ruby
 logger.info("#{event.item.name} Triggered")
