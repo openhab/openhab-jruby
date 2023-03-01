@@ -231,7 +231,7 @@ module OpenHAB
 
             require_relative "mocks/event_admin"
             ea = Mocks::EventAdmin.new(@bundle_context)
-            bundle = org.osgi.framework.FrameworkUtil.get_bundle(service.class)
+            bundle = org.osgi.framework.FrameworkUtil.get_bundle(service.java_class)
             # we need to register it as if from the regular eventadmin bundle so other bundles
             # can properly find it
             bundle.bundle_context.register_service(
@@ -249,7 +249,7 @@ module OpenHAB
           end
           wait_for_service("org.osgi.service.cm.ConfigurationAdmin") do |ca|
             # register a listener, so that we can know if the Start Level Service is busted
-            bundle = org.osgi.framework.FrameworkUtil.get_bundle(ca.class)
+            bundle = org.osgi.framework.FrameworkUtil.get_bundle(ca.java_class)
             listener = org.osgi.service.cm.ConfigurationListener.impl do |_method, event|
               next unless event.type == org.osgi.service.cm.ConfigurationEvent::CM_UPDATED
               next unless event.pid == "org.openhab.startlevel"
@@ -376,8 +376,14 @@ module OpenHAB
           ttp.class.field_reader :thingTypeTracker
           @thing_type_tracker = ttp.thingTypeTracker
           @thing_type_tracker.class.field_reader :openState
-          org.openhab.core.config.xml.osgi.XmlDocumentBundleTracker::OpenState.field_reader :OPENED
-          opened = org.openhab.core.config.xml.osgi.XmlDocumentBundleTracker::OpenState.OPENED
+          begin
+            org.openhab.core.config.core.xml.osgi.XmlDocumentBundleTracker::OpenState.field_reader :OPENED
+            opened = org.openhab.core.config.core.xml.osgi.XmlDocumentBundleTracker::OpenState.OPENED
+          rescue NameError
+            # @deprecated OH3.4
+            org.openhab.core.config.xml.osgi.XmlDocumentBundleTracker::OpenState.field_reader :OPENED
+            opened = org.openhab.core.config.xml.osgi.XmlDocumentBundleTracker::OpenState.OPENED
+          end
           sleep until @thing_type_tracker.openState == opened
           @bundle_context.bundles.each do |bundle|
             @thing_type_tracker.adding_bundle(bundle, nil)
@@ -388,8 +394,14 @@ module OpenHAB
           cdp.class.field_reader :configDescriptionTracker
           @config_description_tracker = cdp.configDescriptionTracker
           @config_description_tracker.class.field_reader :openState
-          org.openhab.core.config.xml.osgi.XmlDocumentBundleTracker::OpenState.field_reader :OPENED
-          opened = org.openhab.core.config.xml.osgi.XmlDocumentBundleTracker::OpenState.OPENED
+          begin
+            org.openhab.core.config.core.xml.osgi.XmlDocumentBundleTracker::OpenState.field_reader :OPENED
+            opened = org.openhab.core.config.core.xml.osgi.XmlDocumentBundleTracker::OpenState.OPENED
+          rescue NameError
+            # @deprecated OH3.4
+            org.openhab.core.config.xml.osgi.XmlDocumentBundleTracker::OpenState.field_reader :OPENED
+            opened = org.openhab.core.config.xml.osgi.XmlDocumentBundleTracker::OpenState.OPENED
+          end
           sleep until @config_description_tracker.openState == opened
           @bundle_context.bundles.each do |bundle|
             @config_description_tracker.adding_bundle(bundle, nil)
@@ -439,9 +451,15 @@ module OpenHAB
             )
 
             wait_for_service("org.openhab.core.thing.ThingManager") do |tm|
-              tm.class.field_accessor :bundleResolver
-
-              tm.bundleResolver = Mocks::BundleResolver.instance
+              begin
+                # @deprecated OH3.4
+                tm.class.field_accessor :bundleResolver
+                tm.bundleResolver = Mocks::BundleResolver.instance
+              rescue NameError
+                # OH4
+                # I think the mock BundleResolver registration above is sufficient.
+                # It will be injected by OSGi and we don't need to override it again in OH4
+              end
 
               require_relative "mocks/safe_caller"
               field = tm.class.java_class.declared_field :safeCaller
@@ -450,7 +468,7 @@ module OpenHAB
 
               require_relative "mocks/thing_handler"
               thf = Mocks::ThingHandlerFactory.instance
-              bundle = org.osgi.framework.FrameworkUtil.get_bundle(org.openhab.core.thing.Thing)
+              bundle = org.osgi.framework.FrameworkUtil.get_bundle(org.openhab.core.thing.Thing.java_class)
               Mocks::BundleResolver.instance.register_class(thf.class, bundle)
               bundle.bundle_context.register_service(org.openhab.core.thing.binding.ThingHandlerFactory.java_class, thf,
                                                      nil)
@@ -500,7 +518,7 @@ module OpenHAB
               service ||= @bundle_context.get_service(ref)
               break unless service
 
-              bundle = org.osgi.framework.FrameworkUtil.get_bundle(service.class)
+              bundle = org.osgi.framework.FrameworkUtil.get_bundle(service.java_class)
               add_class_loader(bundle) if bundle
               block.call(service)
             end
@@ -736,7 +754,7 @@ module OpenHAB
           scr.class.field_reader :componentRegistry
           cr = scr.componentRegistry
 
-          oh_core_bundle = org.osgi.framework.FrameworkUtil.get_bundle(org.openhab.core.OpenHAB)
+          oh_core_bundle = org.osgi.framework.FrameworkUtil.get_bundle(org.openhab.core.OpenHAB.java_class)
           ch = cr.get_component_holder(oh_core_bundle, "org.openhab.core.service.StartLevelService")
           sls = ch&.components&.first&.component_instance&.instance
         end

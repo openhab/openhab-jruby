@@ -76,9 +76,14 @@ module OpenHAB
         config.before do |example|
           # clear persisted thing status
           tm = Core::Things.manager
-          tm.class.field_reader :storage
-          tm.storage.keys.each { |k| tm.storage.remove(k) } # rubocop:disable Style/HashEachMethods not a hash
-
+          begin
+            tm.class.field_reader :disabledStorage
+            tm.disabledStorage.keys.each { |k| tm.disabledStorage.remove(k) } # rubocop:disable Style/HashEachMethods not a hash
+          rescue NameError
+            # @deprecated OH3.4
+            tm.class.field_reader :storage
+            tm.storage.keys.each { |k| tm.storage.remove(k) } # rubocop:disable Style/HashEachMethods not a hash
+          end
           @profile_factory = Core::ProfileFactory.send(:new)
           allow(Core::ProfileFactory).to receive(:instance).and_return(@profile_factory)
 

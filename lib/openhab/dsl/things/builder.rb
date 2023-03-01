@@ -112,7 +112,7 @@ module OpenHAB
             @thing_factory_helper ||= begin
               # this is an internal class, so OSGi doesn't put it on the main class path,
               # so we have to go find it ourselves manually
-              bundle = org.osgi.framework.FrameworkUtil.get_bundle(org.openhab.core.thing.Thing)
+              bundle = org.osgi.framework.FrameworkUtil.get_bundle(org.openhab.core.thing.Thing.java_class)
               bundle.load_class("org.openhab.core.thing.internal.ThingFactoryHelper").ruby_class
             end
           end
