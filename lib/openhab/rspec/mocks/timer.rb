@@ -79,10 +79,10 @@ module OpenHAB
           @id = id
           @block = block
           @thread_locals = thread_locals
-          reschedule(time)
+          reschedule!(time)
         end
 
-        def reschedule(time = nil)
+        def reschedule!(time = nil)
           Thread.current[:openhab_rescheduled_timer] = true if Thread.current[:openhab_rescheduled_timer] == self
           @execution_time = new_execution_time(time || @time)
           @executed = false

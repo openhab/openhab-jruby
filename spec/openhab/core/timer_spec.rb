@@ -212,19 +212,6 @@ RSpec.describe OpenHAB::Core::Timer do
         expect(timers).not_to include("id")
       end
 
-      it "does not remove the timer if it was rescheduled" do
-        expect(timers).to receive(:delete).once.and_call_original
-        executed = 0
-        after(0.1.seconds, id: "id") do |t|
-          executed += 1
-          t.reschedule if executed == 1
-        end
-
-        time_travel_and_execute_timers(0.4.seconds)
-        time_travel_and_execute_timers(0.2.seconds)
-        expect(executed).to be 2
-      end
-
       it "can reschedule a timer by id" do
         timer1 = after(5.seconds, id: "id") { nil }
         timer2 = timers.reschedule("id", 1.second)
@@ -267,6 +254,78 @@ RSpec.describe OpenHAB::Core::Timer do
 
         time_travel_and_execute_timers(0.2.seconds)
         expect(result).to eq 3
+      end
+
+      describe "#reschedule" do
+        it "works" do
+          executed = 0
+          timer = after(100.ms, id: :mytimer) { executed += 1 }
+          time_travel_and_execute_timers(70.ms)
+          timer.reschedule
+          time_travel_and_execute_timers(80.ms)
+          expect(executed).to eq 0
+          time_travel_and_execute_timers(70.ms)
+          expect(executed).to eq 1
+        end
+
+        it "works inside the execution block" do
+          expect(timers).to receive(:delete).once.and_call_original
+          executed = 0
+          after(100.ms, id: "id") do |t|
+            executed += 1
+            t.reschedule if executed == 1
+          end
+
+          time_travel_and_execute_timers(150.ms)
+          time_travel_and_execute_timers(150.ms)
+          expect(executed).to be 2
+        end
+
+        it "works on a finished timer" do
+          executions = 0
+          timer1 = after(100.ms, id: :mytimer) { executions += 1 }
+
+          expect(timers).to include(:mytimer)
+          time_travel_and_execute_timers(150.ms)
+          expect(executions).to eq 1
+          expect(timers).not_to include(:mytimer)
+
+          timer1.reschedule
+
+          expect(timers).to include(:mytimer)
+          time_travel_and_execute_timers(150.ms)
+          expect(executions).to eq 2
+        end
+
+        it "works on a cancelled timer" do
+          executions = 0
+          timer1 = after(100.ms, id: :mytimer) { executions += 1 }
+
+          expect(timers).to include(:mytimer)
+
+          timer1.cancel
+
+          time_travel_and_execute_timers(150.ms)
+          expect(executions).to eq 0
+          expect(timers).not_to include(:mytimer)
+
+          timer1.reschedule
+
+          expect(timers).to include(:mytimer)
+          time_travel_and_execute_timers(150.ms)
+          expect(executions).to eq 1
+        end
+
+        it "cancels other timers with the same id" do
+          executed = []
+          timer1 = after(100.ms, id: :mytimer) { executed << 1 }
+          after(100.ms, id: :mytimer) { executed << 2 }
+
+          timer1.reschedule
+
+          time_travel_and_execute_timers(150.ms)
+          expect(executed).to match_array([1])
+        end
       end
 
       describe "TimerManager#schedule" do
