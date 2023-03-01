@@ -55,8 +55,7 @@ module OpenHAB
       # @!visibility private
       def delete(timer)
         logger.trace("Removing #{timer} from timers")
-        @timers.remove(timer)
-        return unless timer.id
+        return unless @timers.remove(timer) && timer.id
 
         @timers_by_id.remove(timer.id)
       end
