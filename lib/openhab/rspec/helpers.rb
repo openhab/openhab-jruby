@@ -226,7 +226,7 @@ module OpenHAB
         require_relative "openhab/core/actions"
 
         ps = Mocks::PersistenceService.instance
-        bundle = org.osgi.framework.FrameworkUtil.get_bundle(org.openhab.core.persistence.PersistenceService)
+        bundle = org.osgi.framework.FrameworkUtil.get_bundle(org.openhab.core.persistence.PersistenceService.java_class)
         bundle.bundle_context.register_service(org.openhab.core.persistence.PersistenceService.java_class, ps, nil)
 
         # wait for the rule engine
@@ -318,7 +318,8 @@ module OpenHAB
       # @return [void]
       #
       def install_addon(addon_id, wait: true, ready_markers: nil)
-        addon_service = OSGi.service("org.openhab.core.addon.AddonService")
+        service_filter = "(component.name=org.openhab.core.karafaddons)"
+        addon_service = OSGi.service("org.openhab.core.addon.AddonService", filter: service_filter)
         addon_service.install(addon_id)
         return unless wait
 

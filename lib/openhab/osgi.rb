@@ -44,7 +44,7 @@ module OpenHAB
           interfaces = instance.class.ancestors.select { |k| k.respond_to?(:java_class) && k.java_class&.interface? }
         end
 
-        bundle = org.osgi.framework.FrameworkUtil.get_bundle(interfaces.first)
+        bundle = org.osgi.framework.FrameworkUtil.get_bundle(interfaces.first.java_class)
         bundle.bundle_context.register_service(
           interfaces.map(&:java_class).map(&:name).to_java(java.lang.String),
           instance,
@@ -61,7 +61,7 @@ module OpenHAB
       # @!attribute [r] bundle
       # @return [org.osgi.framework.Bundle] The OSGi Bundle for ScriptExtension Class
       def bundle
-        @bundle ||= org.osgi.framework.FrameworkUtil.getBundle($scriptExtension.class)
+        @bundle ||= org.osgi.framework.FrameworkUtil.getBundle($scriptExtension.java_class)
       end
     end
   end

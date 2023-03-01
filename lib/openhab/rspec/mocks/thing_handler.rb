@@ -52,7 +52,7 @@ module OpenHAB
           include Singleton
 
           def getBundleContext
-            org.osgi.framework.FrameworkUtil.get_bundle(org.openhab.core.thing.Thing).bundle_context
+            org.osgi.framework.FrameworkUtil.get_bundle(org.openhab.core.thing.Thing.java_class).bundle_context
           end
         end
         private_constant :ComponentContext
