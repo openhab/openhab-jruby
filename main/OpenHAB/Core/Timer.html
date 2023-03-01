@@ -3138,13 +3138,13 @@ has been scheduled to run later with <span class='object_link'><a href="../DSL.h
       <pre class="lines">
 
 
-92
-93
-94
-95</pre>
+107
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 107</span>
 
 <span class="keyword">def</span> <span class="function">cancel</span>
   <span class="constant">DSL</span>.timers.delete(<span class="predefined-constant">self</span>)
@@ -3285,7 +3285,8 @@ has been scheduled to run later with <span class='object_link'><a href="../DSL.h
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Reschedule timer</p>
+    <p>Reschedule timer.</p>
+<p>If the timer had been cancelled or executed, restart the timer.</p>
 
 
   </div>
@@ -3334,21 +3335,29 @@ If unspecified, the original time is used.</p>
       <pre class="lines">
 
 
-80
-81
 82
 83
 84
-85</pre>
+85
+86
+87
+88
+89
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 82</span>
 
 <span class="keyword">def</span> <span class="function">reschedule</span>(time = <span class="predefined-constant">nil</span>)
-  <span class="constant">Thread</span>.current[<span class="symbol">:openhab_rescheduled_timer</span>] = <span class="predefined-constant">true</span> <span class="keyword">if</span> <span class="constant">Thread</span>.current[<span class="symbol">:openhab_rescheduled_timer</span>] == <span class="predefined-constant">self</span>
-  <span class="constant">DSL</span>.timers.add(<span class="predefined-constant">self</span>)
-  <span class="instance-variable">@timer</span>.reschedule(new_execution_time(time || <span class="instance-variable">@time</span>))
-  <span class="predefined-constant">self</span>
+  <span class="keyword">return</span> reschedule!(time) <span class="keyword">unless</span> id
+
+  <span class="comment"># re-add ourself to the TimerManager's @timers_by_id</span>
+  <span class="constant">DSL</span>.timers.schedule(id) <span class="keyword">do</span> |old_timer|
+    old_timer&amp;.cancel <span class="keyword">unless</span> old_timer.eql?(<span class="predefined-constant">self</span>)
+    <span class="predefined-constant">self</span>.id = <span class="predefined-constant">nil</span>
+    reschedule!(time)
+  <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3458,7 +3467,7 @@ def_delegator <span class="symbol">:@timer</span>, <span class="symbol">:has_ter
 </div>
 
         <footer>
-  Generated on Wed Mar  1 20:00:29 2023 by
+  Generated on Wed Mar  1 20:01:37 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
