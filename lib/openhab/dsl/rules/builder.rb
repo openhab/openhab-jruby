@@ -1715,7 +1715,7 @@ module OpenHAB
         #
         # The `event` passed to run blocks will be a {Events::WatchEvent}.
         #
-        # @param [String] path Path to watch. Can be a directory of a file.
+        # @param [String] path Path to watch. Can be a directory or a file.
         # @param [String] glob
         #   Limit events to paths matching this glob. Globs are matched using
         #   [File.fnmatch?](https://docs.ruby-lang.org/en/master/File.html#method-c-fnmatch-3F)
