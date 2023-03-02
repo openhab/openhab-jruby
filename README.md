@@ -10,15 +10,15 @@ It provides native Ruby access to common openHAB functionality within rules incl
 
 Full documentation is available on [GitHub Pages](https://openhab.github.io/openhab-jruby/).
 
-* [Usage](USAGE.md)
-* [Changelog](CHANGELOG.md)
-* [Contributing](CONTRIBUTING.md)
+- [Usage](USAGE.md)
+- [Changelog](CHANGELOG.md)
+- [Contributing](CONTRIBUTING.md)
 
 ## Credits
 
-* [@boc-tothefuture](https://github.com/boc-tothefuture) created and maintained this library up to version 4.x prior to its inclusion into the official openHAB repository.
-* [@ccutrer](https://github.com/ccutrer) performed major restructuring and added significant new features in version 5.0. 
-* [@jimtng](https://github.com/jimtng), [@pacive](https://github.com/pacive), and others who have made contributions to this library.
+- [@boc-tothefuture](https://github.com/boc-tothefuture) created and maintained this library up to version 4.x prior to its inclusion into the official openHAB repository.
+- [@ccutrer](https://github.com/ccutrer) performed major restructuring and added significant new features in version 5.0.
+- [@jimtng](https://github.com/jimtng), [@pacive](https://github.com/pacive), and others who have made contributions to this library.
 
 See [changes in 5.0](CHANGELOG.md#500) for more detail significant breaking changes from the last published release prior to the inclusion into openHAB's repository.
 
