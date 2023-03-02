@@ -1057,6 +1057,15 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
 
     # rubocop:disable RSpec/InstanceVariable
     describe "#watch" do
+      before :all do # rubocop:disable RSpec/BeforeAfterAll
+        OpenHAB::Log.logger("org.openhab.core.internal.service.WatchServiceImpl").level = :trace
+        sleep 0.5
+      end
+
+      after :all do # rubocop:disable RSpec/BeforeAfterAll
+        OpenHAB::Log.logger("org.openhab.core.internal.service.WatchServiceImpl").level = :default
+      end
+
       around do |example|
         Dir.mktmpdir("openhab-rspec") do |dir|
           @temp_dir = dir
@@ -1076,8 +1085,10 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           end
         end
 
+        sleep 0.1 # Wait for the watch service to be registered and ready
+
         file = File.join(@temp_dir, filename)
-        logger.debug("Creating file")
+        logger.debug("Creating file #{file}")
         File.open(file, "wb") { nil }
         expected = false unless check.nil?
         if expected || check&.include?(:created)
@@ -1095,7 +1106,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
 
         path = nil
         type = nil
-        logger.debug("Modifying file")
+        logger.debug("Modifying file #{file}")
         File.write(file, "bye")
         if check.include?(:modified)
           wait do
@@ -1110,7 +1121,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
 
         path = nil
         type = nil
-        logger.debug("Deleting file")
+        logger.debug("Deleting file #{file}")
         File.unlink(file)
         if check.include?(:deleted)
           wait do
@@ -1617,6 +1628,8 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           watch temp_dir, attach: 1
           run { |event| attachment = event.attachment }
         end
+
+        sleep 0.1 # Wait for the watch service to be ready
 
         file = File.join(temp_dir, "file")
         File.write(file, "hi")
