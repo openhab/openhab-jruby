@@ -3296,13 +3296,15 @@ The addon's bundle id is used as the identifier.</p>
 349
 350
 351
-352</pre>
+352
+353</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 320</span>
 
 <span class="keyword">def</span> <span class="function">install_addon</span>(addon_id, <span class="key">wait</span>: <span class="predefined-constant">true</span>, <span class="key">ready_markers</span>: <span class="predefined-constant">nil</span>)
-  addon_service = <span class="constant">OSGi</span>.service(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.addon.AddonService</span><span class="delimiter">&quot;</span></span>)
+  service_filter = <span class="string"><span class="delimiter">&quot;</span><span class="content">(component.name=org.openhab.core.karafaddons)</span><span class="delimiter">&quot;</span></span>
+  addon_service = <span class="constant">OSGi</span>.service(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.addon.AddonService</span><span class="delimiter">&quot;</span></span>, <span class="key">filter</span>: service_filter)
   addon_service.install(addon_id)
   <span class="keyword">return</span> <span class="keyword">unless</span> wait
 
@@ -3447,7 +3449,7 @@ The addon's bundle id is used as the identifier.</p>
   require_relative <span class="string"><span class="delimiter">&quot;</span><span class="content">openhab/core/actions</span><span class="delimiter">&quot;</span></span>
 
   ps = <span class="constant">Mocks</span>::<span class="constant">PersistenceService</span>.instance
-  bundle = org.osgi.framework.FrameworkUtil.get_bundle(org.openhab.core.persistence.PersistenceService)
+  bundle = org.osgi.framework.FrameworkUtil.get_bundle(org.openhab.core.persistence.PersistenceService.java_class)
   bundle.bundle_context.register_service(org.openhab.core.persistence.PersistenceService.java_class, ps, <span class="predefined-constant">nil</span>)
 
   <span class="comment"># wait for the rule engine</span>
@@ -3662,12 +3664,12 @@ recognized.</p>
       <pre class="lines">
 
 
-355
 356
-357</pre>
+357
+358</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 355</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 356</span>
 
 <span class="keyword">def</span> <span class="function">log_file</span>
   <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>java.lang.System.get_property(<span class="string"><span class="delimiter">&quot;</span><span class="content">openhab.logdir</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">nil</span>)<span class="inline-delimiter">}</span></span><span class="content">/openhab.log</span><span class="delimiter">&quot;</span></span>
@@ -3730,15 +3732,15 @@ recognized.</p>
       <pre class="lines">
 
 
-368
 369
 370
 371
 372
-373</pre>
+373
+374</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 368</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 369</span>
 
 <span class="keyword">def</span> <span class="function">spec_log_lines</span>
   <span class="constant">File</span>.open(log_file, <span class="string"><span class="delimiter">&quot;</span><span class="content">rb</span><span class="delimiter">&quot;</span></span>) <span class="keyword">do</span> |f|
@@ -4041,7 +4043,7 @@ will just sleep for <code>duration</code></p>
 </div>
 
         <footer>
-  Generated on Thu Mar  2 01:22:37 2023 by
+  Generated on Fri Mar  3 15:11:39 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

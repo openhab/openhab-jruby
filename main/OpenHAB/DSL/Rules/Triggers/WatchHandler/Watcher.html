@@ -2631,7 +2631,7 @@
       <main class="page">
         <div class="content"><h1>Class: OpenHAB::DSL::Rules::Triggers::WatchHandler::Watcher
   
-  
+  <span class="deprecated note title">Deprecated</span>
   
 </h1>
 <div class="box_info">
@@ -2659,6 +2659,11 @@
   
   
   
+  <dl>
+      <dt>Includes:</dt>
+      <dd>org.openhab.core.service.WatchService::WatchEventListener</dd>
+  </dl>
+  
   
 
   
@@ -2666,14 +2671,18 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/openhab/dsl/rules/triggers/watch/watch_handler.rb</dd>
+    <dd>lib/openhab/dsl/rules/triggers/watch/watch_handler.rb<span class="defines">,<br />
+  lib/openhab/dsl/rules/triggers/watch/watch_handler.rb</span>
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Extends the openHAB watch service to watch directories</p>
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>OH3.4</p>
+</div></div>
+<p>Extends the openHAB3 watch service to watch directories</p>
 <p>Must match java method name style
 rubocop:disable Naming/MethodName</p>
 
@@ -2692,10 +2701,10 @@ rubocop:disable Naming/MethodName</p>
 
     <dl class="constants">
       
-        <dt id="StandardWatchEventKinds-constant" class="">StandardWatchEventKinds =
+        <dt id="WatchService-constant" class="">WatchService =
           
         </dt>
-        <dd><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/file/StandardWatchEventKinds.html" target="_parent" title="java.nio.file.StandardWatchEventKinds">java.nio.file.StandardWatchEventKinds</a></dd>
+        <dd><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/service/WatchService.html" target="_parent" title="org.openhab.core.service.WatchService">org.openhab.core.service.WatchService</a></dd>
       
         <dt id="STRING_TO_EVENT-constant" class="">STRING_TO_EVENT =
           <div class="docstring">
@@ -2731,6 +2740,11 @@ rubocop:disable Naming/MethodName</p>
         </dt>
         <dd><pre class="code"><span class="constant">STRING_TO_EVENT</span>.invert.transform_values(&amp;<span class="symbol">:to_sym</span>).freeze</pre></dd>
       
+        <dt id="StandardWatchEventKinds-constant" class="">StandardWatchEventKinds =
+          
+        </dt>
+        <dd><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/file/StandardWatchEventKinds.html" target="_parent" title="java.nio.file.StandardWatchEventKinds">java.nio.file.StandardWatchEventKinds</a></dd>
+      
     </dl>
   
 
@@ -2749,6 +2763,52 @@ rubocop:disable Naming/MethodName</p>
     
 
     <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#activate-instance_method" title="#activate (instance method)">#<strong>activate</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Creates a new Watch Service and registers ourself as a listener This isn't an OSGi service, but it's called by <span class='object_link'><a href="WatchTriggerHandler.html" title="OpenHAB::DSL::Rules::Triggers::WatchHandler::WatchTriggerHandler (class)">WatchTriggerHandler</a></span> below.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#deactivate-instance_method" title="#deactivate (instance method)">#<strong>deactivate</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Unregister ourself as a listener and remove the watch service.</p>
+</div></span>
+  
+</li>
+
       
         <li class="public ">
   <span class="summary_signature">
@@ -2815,7 +2875,7 @@ rubocop:disable Naming/MethodName</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Invoked by java super class when an watch event occurs.</p>
+    <span class="summary_desc"><div class='inline'><p>Invoked by java super class when a watch event occurs.</p>
 </div></span>
   
 </li>
@@ -2854,6 +2914,7 @@ rubocop:disable Naming/MethodName</p>
   
   
   
+  
   <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -2882,19 +2943,25 @@ rubocop:disable Naming/MethodName</p>
       <pre class="lines">
 
 
-35
-36
-37
-38
-39</pre>
+44
+45
+46
+47
+48
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 44</span>
 
 <span class="keyword">def</span> <span class="function">initialize</span>(path, types, &amp;block)
-  <span class="keyword">super</span>(path)
   <span class="instance-variable">@types</span> = types.map { |type| <span class="constant">STRING_TO_EVENT</span>[type] }
   <span class="instance-variable">@block</span> = block
+  <span class="instance-variable">@path</span> = <span class="constant">Pathname</span>.new(path)
+  <span class="keyword">return</span> <span class="keyword">if</span> path.to_s.start_with?(<span class="constant">OpenHAB</span>::<span class="constant">Core</span>.config_folder.to_s)
+
+  <span class="instance-variable">@custom_watcher</span> = <span class="string"><span class="delimiter">&quot;</span><span class="content">jrubyscripting-</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">SecureRandom</span>.uuid<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -2909,7 +2976,138 @@ rubocop:disable Naming/MethodName</p>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="getWatchEventKinds-instance_method">
+  <h3 class="signature first" id="activate-instance_method">
+  
+    #<strong>activate</strong>  &#x21d2; <tt><span class='object_link'>Object</span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Creates a new Watch Service and registers ourself as a listener
+This isn't an OSGi service, but it's called by <span class='object_link'><a href="WatchTriggerHandler.html" title="OpenHAB::DSL::Rules::Triggers::WatchHandler::WatchTriggerHandler (class)">OpenHAB::DSL::Rules::Triggers::WatchHandler::WatchTriggerHandler</a></span> below.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 55</span>
+
+<span class="keyword">def</span> <span class="function">activate</span>
+  java_path = java.nio.file.Path.of(<span class="instance-variable">@path</span>.to_s)
+
+  service_name = <span class="constant">WatchService</span>::<span class="constant">SERVICE_PID</span>
+  filter = <span class="keyword">if</span> <span class="instance-variable">@custom_watcher</span>
+             <span class="constant">WatchHandler</span>.factory.create_watch_service(<span class="instance-variable">@custom_watcher</span>, java_path)
+             logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Created a watch service </span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@custom_watcher</span><span class="inline-delimiter">}</span></span><span class="content"> for </span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@path</span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+             <span class="string"><span class="delimiter">&quot;</span><span class="content">(name=</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@custom_watcher</span><span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>
+           <span class="keyword">else</span>
+             logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Using configWatcher service for </span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@path</span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+             <span class="constant">WatchService</span>::<span class="constant">CONFIG_WATCHER_FILTER</span>
+           <span class="keyword">end</span>
+
+  start = <span class="constant">Time</span>.now
+  sleep <span class="float">0.1</span> <span class="keyword">until</span> (<span class="instance-variable">@watch_service</span> = <span class="constant">OSGi</span>.service(service_name, <span class="key">filter</span>: filter)) || <span class="constant">Time</span>.now - start &gt; <span class="integer">2</span>
+
+  <span class="keyword">unless</span> <span class="instance-variable">@watch_service</span>
+    logger.warn(<span class="string"><span class="delimiter">&quot;</span><span class="content">Watch service is not ready in time. </span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@path</span><span class="inline-delimiter">}</span></span><span class="content"> will not be monitored!</span><span class="delimiter">&quot;</span></span>)
+    <span class="keyword">return</span>
+  <span class="keyword">end</span>
+
+  <span class="instance-variable">@watch_service</span>.register_listener(<span class="predefined-constant">self</span>, java_path, <span class="predefined-constant">false</span>)
+  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Registered watch service listener for </span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@path</span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="deactivate-instance_method">
+  
+    #<strong>deactivate</strong>  &#x21d2; <tt><span class='object_link'>Object</span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Unregister ourself as a listener and remove the watch service</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+81
+82
+83
+84
+85
+86
+87</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 81</span>
+
+<span class="keyword">def</span> <span class="function">deactivate</span>
+  <span class="instance-variable">@watch_service</span>&amp;.unregister_listener(<span class="predefined-constant">self</span>)
+  <span class="keyword">return</span> <span class="keyword">unless</span> <span class="instance-variable">@custom_watcher</span>
+
+  <span class="constant">WatchHandler</span>.factory.remove_watch_service(<span class="instance-variable">@custom_watcher</span>)
+  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Removed watch service </span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@custom_watcher</span><span class="inline-delimiter">}</span></span><span class="content"> for </span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@path</span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="getWatchEventKinds-instance_method">
   
     #<strong>getWatchEventKinds</strong>(_path)  &#x21d2; <tt><span class='object_link'><a href="../../../../../Array.html" title="Array (class)">Array</a></span></tt> 
   
@@ -2969,12 +3167,12 @@ rubocop:disable Naming/MethodName</p>
       <pre class="lines">
 
 
-45
-46
-47</pre>
+133
+134
+135</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 133</span>
 
 <span class="keyword">def</span> <span class="function">getWatchEventKinds</span>(_path)
   <span class="instance-variable">@types</span>
@@ -2995,7 +3193,7 @@ rubocop:disable Naming/MethodName</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Invoked by java super class when an watch event occurs</p>
+    <p>Invoked by java super class when a watch event occurs</p>
 
 
   </div>
@@ -3058,15 +3256,27 @@ rubocop:disable Naming/MethodName</p>
       <pre class="lines">
 
 
-59
-60
-61</pre>
+92
+93
+94
+95
+96
+97
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 92</span>
 
-<span class="keyword">def</span> <span class="function">processWatchEvent</span>(_event, kind, path)
-  <span class="instance-variable">@block</span>.call(<span class="constant">Events</span>::<span class="constant">WatchEvent</span>.new(<span class="constant">EVENT_TO_SYMBOL</span>[kind], <span class="constant">Pathname</span>.new(path.to_s)))
+<span class="keyword">def</span> <span class="function">processWatchEvent</span>(kind, path) <span class="comment"># rubocop:disable Naming/MethodName</span>
+  logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">processWatchEvent triggered </span><span class="inline"><span class="inline-delimiter">#{</span>path<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>kind<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
+  <span class="keyword">return</span> <span class="keyword">unless</span> <span class="instance-variable">@types</span>.include?(kind)
+
+  <span class="comment"># OH4 WatchService feeds us a relative path,</span>
+  <span class="comment"># but just in case its implementation changes in the future</span>
+  path = path.absolute? ? <span class="constant">Pathname</span>.new(path.to_s) : <span class="instance-variable">@path</span> + path.to_s
+  <span class="instance-variable">@block</span>.call(<span class="constant">Events</span>::<span class="constant">WatchEvent</span>.new(<span class="constant">EVENT_TO_SYMBOL</span>[kind], path))
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3115,12 +3325,12 @@ rubocop:disable Naming/MethodName</p>
       <pre class="lines">
 
 
-51
-52
-53</pre>
+139
+140
+141</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 139</span>
 
 <span class="keyword">def</span> <span class="function">watchSubDirectories</span>
   <span class="predefined-constant">false</span>
@@ -3135,7 +3345,7 @@ rubocop:disable Naming/MethodName</p>
 </div>
 
         <footer>
-  Generated on Thu Mar  2 01:22:48 2023 by
+  Generated on Fri Mar  3 15:11:50 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
