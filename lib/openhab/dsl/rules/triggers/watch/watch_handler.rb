@@ -45,46 +45,58 @@ module OpenHAB
                 @types = types.map { |type| STRING_TO_EVENT[type] }
                 @block = block
                 @path = Pathname.new(path)
-                @watcher_name = "jrubyscripting-#{SecureRandom.uuid}"
+                return if path.to_s.start_with?(OpenHAB::Core.config_folder.to_s)
+
+                @custom_watcher = "jrubyscripting-#{SecureRandom.uuid}"
               end
 
               # Creates a new Watch Service and registers ourself as a listener
               # This isn't an OSGi service, but it's called by {WatchTriggerHandler} below.
               def activate
                 java_path = java.nio.file.Path.of(@path.to_s)
-                WatchHandler.factory.create_watch_service(@watcher_name, java_path)
-                logger.trace("Created a watch service #{@watcher_name} for #{@path}")
 
-                until (@watch_service = OSGi.service(WatchService::SERVICE_PID, filter: "(name=#{@watcher_name})"))
-                  sleep 0.1
+                service_name = WatchService::SERVICE_PID
+                filter = if @custom_watcher
+                           WatchHandler.factory.create_watch_service(@custom_watcher, java_path)
+                           logger.trace("Created a watch service #{@custom_watcher} for #{@path}")
+                           "(name=#{@custom_watcher})"
+                         else
+                           logger.trace("Using configWatcher service for #{@path}")
+                           WatchService::CONFIG_WATCHER_FILTER
+                         end
+
+                start = Time.now
+                sleep 0.1 until (@watch_service = OSGi.service(service_name, filter: filter)) || Time.now - start > 2
+
+                unless @watch_service
+                  logger.warn("Watch service is not ready in time. #{@path} will not be monitored!")
+                  return
                 end
-                @watch_service.register_listener(self, java_path)
-                logger.trace("Registered watch service listener for #{@watcher_name} for #{@path}")
+
+                @watch_service.register_listener(self, java_path, false)
+                logger.trace("Registered watch service listener for #{@path}")
               end
 
               # Unregister ourself as a listener and remove the watch service
               def deactivate
-                @watch_service.unregister_listener(self)
-                WatchHandler.factory.remove_watch_service(@watcher_name)
-                logger.trace("Removed watch service #{@watcher_name} for #{@path}")
+                @watch_service&.unregister_listener(self)
+                return unless @custom_watcher
+
+                WatchHandler.factory.remove_watch_service(@custom_watcher)
+                logger.trace("Removed watch service #{@custom_watcher} for #{@path}")
               end
 
               # Invoked by the WatchService when a watch event occurs
               # @param [org.openhab.core.service.WatchService.Kind] kind WatchService event kind
-              # @param [java.nio.file.Path] path that had an event
+              # @param [java.nio.file.Path] path The path that had an event
               def processWatchEvent(kind, path) # rubocop:disable Naming/MethodName
-                logger.trace { "processWatchEvent triggered for #{@watcher_name} kind: #{kind} path: #{path}" }
+                logger.trace { "processWatchEvent triggered #{path} #{kind}" }
                 return unless @types.include?(kind)
 
                 # OH4 WatchService feeds us a relative path,
                 # but just in case its implementation changes in the future
-                path = if path.absolute?
-                         path.to_s
-                       else
-                         @path + path.to_s
-                       end
-
-                @block.call(Events::WatchEvent.new(EVENT_TO_SYMBOL[kind], path, false))
+                path = path.absolute? ? Pathname.new(path.to_s) : @path + path.to_s
+                @block.call(Events::WatchEvent.new(EVENT_TO_SYMBOL[kind], path))
               end
             end
           else
