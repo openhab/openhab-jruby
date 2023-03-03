@@ -1085,7 +1085,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           end
         end
 
-        sleep 0.1 # Wait for the watch service to be registered and ready
+        sleep 0.1 # Sometimes OH4's watch service is not ready right away
 
         file = File.join(@temp_dir, filename)
         logger.debug("Creating file #{file}")
@@ -1181,6 +1181,25 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
 
       it "can filter by event types :modified or :created" do
         test_it("file", check: %i[modified created], watch_args: [@temp_dir, { for: %i[modified created] }])
+      end
+
+      it "uses the built in configWatcher to monitor inside openHAB config folder" do
+        expect(OpenHAB::DSL::Rules::Triggers::WatchHandler.factory).not_to receive(:create_watch_service)
+
+        path = OpenHAB::Core.config_folder / "scripts"
+
+        triggered = false
+        rule do
+          watch path / "*.rspec-test"
+          run { triggered = true }
+        end
+
+        filename = path / "test1.rspec-test"
+        logger.debug "Creating file #{filename}"
+        File.open(filename, "wb") { nil }
+        wait { expect(triggered).to be true }
+      ensure
+        FileUtils.rm_f(filename)
       end
     end
     # rubocop:enable RSpec/InstanceVariable
