@@ -187,6 +187,7 @@ Here is a non-exhaustive list of significant departures from the original gem:
 - {GenericItem#formatted_state GenericItem#formatted_state}.
 - {OpenHAB::DSL.transform} now available at top-level, like Rules DSL.
 - {Item#member_of? Item#member_of?}, {Item#tagged? Item#tagged?}.
+- {OpenHAB::DSL::Rules::BuilderDSL.watch watch} can now be used to monitor subdirectories
 
 ### Bug Fixes
 
