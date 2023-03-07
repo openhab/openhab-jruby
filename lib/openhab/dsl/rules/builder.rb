@@ -1720,7 +1720,7 @@ module OpenHAB
         #   Limit events to paths matching this glob. Globs are matched using
         #   [File.fnmatch?](https://docs.ruby-lang.org/en/master/File.html#method-c-fnmatch-3F)
         #   rules.
-        # @param [Array<:created, :deleted, :modified>, :created, :deleted, :modified] for
+        # @param [Array<:create, :delete, :modify>, :create, :delete, :modify] for
         #   Types of changes to watch for.
         # @param [Object] attach object to be attached to the trigger
         # @return [void]
@@ -1751,11 +1751,11 @@ module OpenHAB
         #
         # @example Watch `items/*.items` for when items files are deleted or created (ignore changes)
         #   rule 'watch directory' do
-        #     watch OpenHAB::Core.config_folder / 'items/*.items', for: [:deleted, :created]
+        #     watch OpenHAB::Core.config_folder / 'items/*.items', for: [:delete, :create]
         #     run { |event| logger.info("#{event.path.basename} - #{event.type}") }
         #   end
         #
-        def watch(path, glob: "*", for: %i[created deleted modified], attach: nil)
+        def watch(path, glob: "*", for: %i[create delete modify], attach: nil)
           glob, path = Watch.glob_for_path(Pathname.new(path), glob)
           types = [binding.local_variable_get(:for)].flatten
           config = { path: path.to_s, types: types.map(&:to_s), glob: glob.to_s }

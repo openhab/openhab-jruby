@@ -1091,10 +1091,10 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         logger.debug("Creating file #{file}")
         File.open(file, "wb") { nil }
         expected = false unless check.nil?
-        if expected || check&.include?(:created)
+        if expected || check&.include?(:create)
           wait do
             expect(path).to eql filename
-            expect(type).to be :created
+            expect(type).to be :create
           end
         else
           sleep 2
@@ -1108,10 +1108,10 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         type = nil
         logger.debug("Modifying file #{file}")
         File.write(file, "bye")
-        if check.include?(:modified)
+        if check.include?(:modify)
           wait do
             expect(path).to eql "file"
-            expect(type).to be :modified
+            expect(type).to be :modify
           end
         else
           sleep 2
@@ -1123,10 +1123,10 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         type = nil
         logger.debug("Deleting file #{file}")
         File.unlink(file)
-        if check.include?(:deleted)
+        if check.include?(:delete)
           wait do
             expect(path).to eql "file"
-            expect(type).to be :deleted
+            expect(type).to be :delete
           end
         else
           sleep 2
@@ -1136,7 +1136,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       end
 
       it "supports directories" do
-        test_it("file", check: %i[created modified deleted], watch_args: [@temp_dir])
+        test_it("file", check: %i[create modify delete], watch_args: [@temp_dir])
       end
 
       it "supports globs" do
@@ -1163,28 +1163,30 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         test_it("file.txt", expected: false, watch_args: ["#{@temp_dir}/file"])
       end
 
-      it "can filter by event type :created" do
-        test_it("file", check: [:created], watch_args: [@temp_dir, { for: :created }])
+      it "can filter by event type :create" do
+        test_it("file", check: [:create], watch_args: [@temp_dir, { for: :create }])
       end
 
-      it "can filter by event type :modified" do
-        test_it("file", check: [:modified], watch_args: [@temp_dir, { for: :modified }])
+      it "can filter by event type :modify" do
+        test_it("file", check: [:modify], watch_args: [@temp_dir, { for: :modify }])
       end
 
-      it "can filter by event type :deleted" do
-        test_it("file", check: [:deleted], watch_args: [@temp_dir, { for: :deleted }])
+      it "can filter by event type :delete" do
+        test_it("file", check: [:delete], watch_args: [@temp_dir, { for: :delete }])
       end
 
-      it "can filter by event types :modified or :deleted" do
-        test_it("file", check: %i[modified deleted], watch_args: [@temp_dir, { for: %i[modified deleted] }])
+      it "can filter by event types :modify or :delete" do
+        test_it("file", check: %i[modify delete], watch_args: [@temp_dir, { for: %i[modify delete] }])
       end
 
-      it "can filter by event types :modified or :created" do
-        test_it("file", check: %i[modified created], watch_args: [@temp_dir, { for: %i[modified created] }])
+      it "can filter by event types :modify or :create" do
+        test_it("file", check: %i[modify create], watch_args: [@temp_dir, { for: %i[modify create] }])
       end
 
       it "uses the built in configWatcher to monitor inside openHAB config folder" do
-        expect(OpenHAB::DSL::Rules::Triggers::WatchHandler.factory).not_to receive(:create_watch_service)
+        if OpenHAB::DSL::Rules::Triggers::WatchHandler.factory
+          expect(OpenHAB::DSL::Rules::Triggers::WatchHandler.factory).not_to receive(:create_watch_service)
+        end
 
         path = OpenHAB::Core.config_folder / "scripts"
 

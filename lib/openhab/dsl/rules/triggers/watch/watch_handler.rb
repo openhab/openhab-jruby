@@ -32,9 +32,9 @@ module OpenHAB
 
               # Hash of event symbols as strings to map to WatchService events
               STRING_TO_EVENT = {
-                created: WatchService::Kind::CREATE,
-                deleted: WatchService::Kind::DELETE,
-                modified: WatchService::Kind::MODIFY
+                create: WatchService::Kind::CREATE,
+                delete: WatchService::Kind::DELETE,
+                modify: WatchService::Kind::MODIFY
               }.transform_keys(&:to_s).freeze
 
               # Hash of WatchService event kinds to ruby symbols
@@ -111,9 +111,9 @@ module OpenHAB
 
               # Hash of event symbols as strings to map to NIO events
               STRING_TO_EVENT = {
-                created: StandardWatchEventKinds::ENTRY_CREATE,
-                deleted: StandardWatchEventKinds::ENTRY_DELETE,
-                modified: StandardWatchEventKinds::ENTRY_MODIFY
+                create: StandardWatchEventKinds::ENTRY_CREATE,
+                delete: StandardWatchEventKinds::ENTRY_DELETE,
+                modify: StandardWatchEventKinds::ENTRY_MODIFY
               }.transform_keys(&:to_s).freeze
 
               # Hash of NIO event kinds to ruby symbols

@@ -150,6 +150,8 @@ Here is a non-exhaustive list of significant departures from the original gem:
 - `say`, `play_sound`, and `play_stream` are no longer available at the top level.
   You must access them from their Action class: {OpenHAB::Core::Actions::Voice.say Voice.say},
   {OpenHAB::Core::Actions::Audio.play_sound Audio.play_sound}, and {OpenHAB::Core::Actions::Audio.play_stream Audio.play_stream}
+- {OpenHAB::DSL::Rules::BuilderDSL.watch watch trigger} types have been renamed i.e.:
+  `:created` -> `:create`, `:modified` -> `:modify`, and `:deleted` -> `:delete`
 
 ### Features
 
