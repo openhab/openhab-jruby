@@ -89,7 +89,7 @@ module OpenHAB
                 item.name
               end
             end
-            name = "#{format_beginning_of_sentence_array(item_names)} #{trigger_name}"
+            name = "#{format_array(item_names)} #{trigger_name}"
 
             name += " from #{format_inspected_array(kwargs[:from])}" if kwargs[:from]
             name += " to #{format_inspected_array(kwargs[:to])}" if kwargs[:to]
@@ -108,7 +108,7 @@ module OpenHAB
           # formulate a readable rule name from a channel trigger
           def infer_rule_name_from_channel_trigger(channels, triggers:)
             triggers = [] if triggers == [nil]
-            name = "#{format_beginning_of_sentence_array(channels)} triggered"
+            name = "#{format_array(channels)} triggered"
             name += " #{format_inspected_array(triggers)}" unless triggers.empty?
             name
           end
@@ -150,17 +150,6 @@ module OpenHAB
                  .select { |field| field.type == start_level_type && field.name.start_with?("STARTLEVEL_") }
                  .find { |field| field.get_int(klass) == level }
                  .name.split("_", 2).last.downcase
-          end
-
-          # format an array of words that will be the beginning of a sentence
-          def format_beginning_of_sentence_array(array)
-            result = format_array(array)
-            if array.length > 2
-              result = result.dup
-              result[0] = "A"
-              result.freeze
-            end
-            result
           end
 
           # format an array of items that need to be inspected individually

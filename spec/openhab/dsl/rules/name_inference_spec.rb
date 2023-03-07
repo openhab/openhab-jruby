@@ -8,6 +8,12 @@ RSpec.describe OpenHAB::DSL::Rules::NameInference do
       expect(r.name).to eql "SwitchItem1 #{trigger}"
     end
 
+    it "generates a useful name for multiple items" do
+      trigger = self.trigger
+      r = rules.build { send(trigger, SwitchItem1, SwitchItem2) { nil } }
+      expect(r.name).to eql "SwitchItem1 or SwitchItem2 #{trigger}"
+    end
+
     it "generates a useful name for a to:" do
       trigger = self.trigger
       r = rules.build { send(trigger, SwitchItem1, to: ON) { nil } }
