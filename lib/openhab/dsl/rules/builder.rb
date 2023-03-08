@@ -1589,7 +1589,7 @@ module OpenHAB
         #   end
         #
         def trigger(type, attach: nil, **configuration)
-          logger.trace("Creating a generic trigger for type(#{type}) with configuration(#{configuration})")
+          logger.trace("Creating trigger (#{type}) with configuration(#{configuration})")
           Triggers::Trigger.new(rule_triggers: @rule_triggers)
                            .append_trigger(type: type, config: configuration, attach: attach)
         end
@@ -1702,7 +1702,7 @@ module OpenHAB
         # If a file or a path that does not exist is supplied as the argument
         # to watch, the parent directory will be watched and the file or
         # non-existent part of the supplied path will become the glob. For
-        # example, if the directory given is `/tmp/foo/bar` and `/tmp/foo`
+        # example, if the path given is `/tmp/foo/bar` and `/tmp/foo`
         # exists but `bar` does not exist inside of of `/tmp/foo` then the
         # directory `/tmp/foo` will be watched for any files that match
         # `*/bar`.
@@ -1713,12 +1713,18 @@ module OpenHAB
         # argument. In other words, `watch '/tmp/foo/*bar'` is equivalent to
         # `watch '/tmp/foo', glob: '*bar'`
         #
+        # ### Watching inside subdirectories
+        #
+        # Subdirectories aren't watched unless:
+        # - One of the glob patterns include the recursive match pattern `**`, or
+        # - The glob patterns include subdirectories, see examples below.
+        #
         # The `event` passed to run blocks will be a {Events::WatchEvent}.
         #
         # @param [String] path Path to watch. Can be a directory or a file.
         # @param [String] glob
-        #   Limit events to paths matching this glob. Globs are matched using
-        #   [File.fnmatch?](https://docs.ruby-lang.org/en/master/File.html#method-c-fnmatch-3F)
+        #   Limit events to paths matching this glob. Globs are matched using `glob`
+        #   [PathMatcher](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/file/FileSystem.html#getPathMatcher(java.lang.String))
         #   rules.
         # @param [Array<:created, :deleted, :modified>, :created, :deleted, :modified] for
         #   Types of changes to watch for.
@@ -1755,13 +1761,32 @@ module OpenHAB
         #     run { |event| logger.info("#{event.path.basename} - #{event.type}") }
         #   end
         #
+        # @example Watch for changes inside all subdirs of `config_folder/automation/ruby/lib`
+        #   rule "Watch recursively" do
+        #     watch OpenHAB::Core.config_folder / "automation/ruby/lib/**"
+        #     run { |event| logger.info("#{event.path} - #{event.type}") }
+        #   end
+        #
+        # @example Recursively watch using subdirectory in glob
+        #   rule "Monitor changes in the list of installed gems" do
+        #     watch ENV['GEM_HOME'], glob: "gems/*"
+        #     run { |event| logger.info("#{event.path} - #{event.type}") }
+        #   end
+        #
+        # @example Recursively watch using glob option
+        #   rule "Watch recursively" do
+        #     watch OpenHAB::Core.config_folder / "automation/ruby/lib", glob: "**"
+        #     run { |event| logger.info("#{event.path} - #{event.type}") }
+        #   end
+        #
         def watch(path, glob: "*", for: %i[created deleted modified], attach: nil)
-          glob, path = Watch.glob_for_path(Pathname.new(path), glob)
           types = [binding.local_variable_get(:for)].flatten
-          config = { path: path.to_s, types: types.map(&:to_s), glob: glob.to_s }
 
-          logger.trace "Creating a watch trigger for #{path} with glob #{glob} on types #{types.inspect}"
-          Watch.new(rule_triggers: @rule_triggers).trigger(config: config, attach: attach)
+          WatchHandler::WatchTriggerHandlerFactory.instance # ensure it's registered
+          trigger(WatchHandler::WATCH_TRIGGER_MODULE_ID, path: path.to_s,
+                                                         types: types.map(&:to_s),
+                                                         glob: glob.to_s,
+                                                         attach: attach)
         end
 
         # @!endgroup
