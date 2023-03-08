@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "tmpdir"
+require "securerandom"
 
 RSpec.describe OpenHAB::DSL::Rules::Builder do
   it "doesn't create a rule if there are no execution blocks" do
@@ -1057,9 +1058,22 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
 
     # rubocop:disable RSpec/InstanceVariable
     describe "#watch" do
+      #
+      # NOTE: OH4's watch service suppresses successive file change events
+      # and change the notification kind. When a DELETE - CREATE sequence of events actually happened,
+      # OH4 will send a MODIFY event instead.
+      #
+      # Because of this, avoid using the same file name in different tests
+      # because when it's deleted at the end of one test and re-created in the next test,
+      # it will result in a MODIFY event instead of CREATE. This may trip up the test if it's
+      # specifically expecting a CREATE event.
+      #
+      # `test_file` returns a random name that should be unique
+      #
+
       before :all do # rubocop:disable RSpec/BeforeAfterAll
         OpenHAB::Log.logger("org.openhab.core.internal.service.WatchServiceImpl").level = :trace
-        sleep 0.5
+        sleep 0.05
       end
 
       after :all do # rubocop:disable RSpec/BeforeAfterAll
@@ -1073,23 +1087,77 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         end
       end
 
+      let(:config_folder) { OpenHAB::Core.config_folder }
+      let(:test_file) { "rspec-test-#{SecureRandom.uuid}" }
+
+      #
+      # Sets up and performs the test for watch trigger
+      #
+      # @param [String] filename The name of the file to create. It can be a plain name without path,
+      #   or an absolute path. When it's a plain name, the file will be created inside @temp_dir
+      #   If an absolute path is provided and the directory doesn't exist, attempt to create
+      #   it non-recursively (i.e. only if the directory's parent already existed), and clean it up
+      #   afterwards.
+      # @param [Array<String, Hash>] watch_args The arguments for the watch trigger. The first
+      #   argument is a string containing the directory to wath. The second argument is a hash
+      #   containing kwargs for `watch`
+      # @param [Boolean] expected Whether we expected the watch trigger to be executed
+      # @param [Array<:created, :modified, :deleted>,nil] check The type of triggers to check
+      #
       def test_it(filename, watch_args:, expected: true, check: nil)
+        filename = Pathname.new(filename) unless filename.is_a?(Pathname)
+        raise "the path in filename must be absolute" if filename.basename != filename && !filename.absolute?
+
+        temp_path = Pathname.new(@temp_dir)
+
+        logger.trace("test_it: #{filename}, watch_args: #{watch_args}, expected: #{expected}, check: #{check}")
+
         path = type = nil
         watch_path, config = *watch_args
         config ||= {}
         rule do
           watch(watch_path, **config)
           run do |event|
-            path = event.path.basename.to_s
+            path = event.path
             type = event.type
           end
         end
 
-        sleep 0.1 # Sometimes OH4's watch service is not ready right away
+        existing_dir = nil
+        created_subdir = filename.absolute? && !filename.dirname.exist? && filename.dirname
+        if created_subdir
+          # after setting up the watch rule, create missing subdirectories so we can create our test file
 
-        file = File.join(@temp_dir, filename)
-        logger.debug("Creating file #{file}")
-        File.open(file, "wb") { nil }
+          filename.dirname.ascend { |dir| break existing_dir = dir if dir.directory? }
+          raise "#{filename} doesn't contain any existing directory" unless existing_dir
+
+          logger.trace("Creating directory: #{created_subdir}")
+
+          # We need to create the dir one by one instead of using FileUtils.mkdir_p.
+          # OH3 will only watch the first level subdir otherwise
+          # see https://github.com/openhab/openhab-core/pull/3435
+          # @deprecated OH3.4 - on OH4 this can be replaced with `FileUtils.mkdir_p(created_subdir)`
+          created_subdir.descend do |dir|
+            next if dir.directory?
+
+            FileUtils.mkdir(dir)
+            sleep 0.1 # @deprecated OH3.4 let OH3's thread run so it can add this directory
+          end
+          expect(filename.dirname).to be_directory
+          logger.trace("Directory created: #{created_subdir}")
+        else
+          filename = temp_path / filename
+        end
+
+        # Sometimes OH's watch service is not ready right away
+        # either after the creation of a subdirectory above (OH3), or right after registration (OH4)
+        sleep 0.1
+
+        expect(filename.exist?).to be false
+
+        logger.debug("Creating file #{filename}")
+        File.open(filename, "wb") { nil }
+        expect(filename.exist?).to be true
         expected = false unless check.nil?
         if expected || check&.include?(:created)
           wait do
@@ -1097,7 +1165,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
             expect(type).to be :created
           end
         else
-          sleep 2
+          sleep 1.2
           expect(path).to be_nil
           expect(type).to be_nil
         end
@@ -1106,100 +1174,153 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
 
         path = nil
         type = nil
-        logger.debug("Modifying file #{file}")
-        File.write(file, "bye")
+        logger.debug("Modifying file #{filename}")
+        File.write(filename, "bye")
         if check.include?(:modified)
           wait do
-            expect(path).to eql "file"
+            expect(path).to eql filename
             expect(type).to be :modified
           end
         else
-          sleep 2
+          sleep 1.2
           expect(path).to be_nil
           expect(type).to be_nil
         end
 
         path = nil
         type = nil
-        logger.debug("Deleting file #{file}")
-        File.unlink(file)
+        logger.debug("Deleting file #{filename}")
+        File.unlink(filename)
         if check.include?(:deleted)
           wait do
-            expect(path).to eql "file"
+            expect(path).to eql filename
             expect(type).to be :deleted
           end
         else
-          sleep 2
+          sleep 1.2
           expect(path).to be_nil
           expect(type).to be_nil
         end
+      ensure
+        FileUtils.rm(filename) if filename.exist?
+        logger.trace("File deleted: #{filename}")
+        if existing_dir
+          created_subdir&.ascend do |dir|
+            break if dir == existing_dir || !dir.directory?
+
+            Dir.rmdir(dir)
+            logger.trace("Directory deleted: '#{dir}'")
+          end
+        end
       end
 
-      it "supports directories" do
-        test_it("file", check: %i[created modified deleted], watch_args: [@temp_dir])
-      end
+      describe "non-recursively" do
+        let(:recursive_watch) { false }
 
-      it "supports globs" do
-        test_it("file.erb", watch_args: [@temp_dir, { glob: "*.erb" }])
-      end
-
-      it "supports globs in path" do
-        test_it("file.erb", watch_args: ["#{@temp_dir}/*.erb"])
-      end
-
-      it "filters files not matching the glob" do
-        test_it("file.txt", expected: false, watch_args: [@temp_dir, { glob: "*.erb" }])
-      end
-
-      it "filters files not matching the glob in the path" do
-        test_it("file.txt", expected: false, watch_args: ["#{@temp_dir}/*.erb"])
-      end
-
-      it "supports a single file" do
-        test_it("file", watch_args: ["#{@temp_dir}/file"])
-      end
-
-      it "ignores a non-matching file" do
-        test_it("file.txt", expected: false, watch_args: ["#{@temp_dir}/file"])
-      end
-
-      it "can filter by event type :created" do
-        test_it("file", check: [:created], watch_args: [@temp_dir, { for: :created }])
-      end
-
-      it "can filter by event type :modified" do
-        test_it("file", check: [:modified], watch_args: [@temp_dir, { for: :modified }])
-      end
-
-      it "can filter by event type :deleted" do
-        test_it("file", check: [:deleted], watch_args: [@temp_dir, { for: :deleted }])
-      end
-
-      it "can filter by event types :modified or :deleted" do
-        test_it("file", check: %i[modified deleted], watch_args: [@temp_dir, { for: %i[modified deleted] }])
-      end
-
-      it "can filter by event types :modified or :created" do
-        test_it("file", check: %i[modified created], watch_args: [@temp_dir, { for: %i[modified created] }])
-      end
-
-      it "uses the built in configWatcher to monitor inside openHAB config folder" do
-        expect(OpenHAB::DSL::Rules::Triggers::WatchHandler.factory).not_to receive(:create_watch_service)
-
-        path = OpenHAB::Core.config_folder / "scripts"
-
-        triggered = false
-        rule do
-          watch path / "*.rspec-test"
-          run { triggered = true }
+        it "works" do
+          test_it(test_file, check: %i[created modified deleted], watch_args: [@temp_dir])
         end
 
-        filename = path / "test1.rspec-test"
-        logger.debug "Creating file #{filename}"
-        File.open(filename, "wb") { nil }
-        wait { expect(triggered).to be true }
-      ensure
-        FileUtils.rm_f(filename)
+        it "supports globs" do
+          test_it("#{test_file}.erb", watch_args: [@temp_dir, { glob: "*.erb", for: :created }])
+        end
+
+        it "supports globs in path" do
+          test_it("#{test_file}.erb", watch_args: ["#{@temp_dir}/*.erb", { for: :created }])
+        end
+
+        it "filters files not matching the glob" do
+          test_it("#{test_file}.txt", expected: false, watch_args: [@temp_dir, { glob: "*.erb" }])
+        end
+
+        it "filters files not matching the glob in the path" do
+          test_it("#{test_file}.txt", expected: false, watch_args: ["#{@temp_dir}/*.erb"])
+        end
+
+        it "supports watching a single file" do
+          test_it(test_file, watch_args: ["#{@temp_dir}/#{test_file}"])
+        end
+
+        it "ignores a non-matching file" do
+          test_it("#{test_file}.txt", expected: false, watch_args: ["#{@temp_dir}/file"])
+        end
+
+        it "can filter by event type :created" do
+          test_it(test_file, check: [:created], watch_args: [@temp_dir, { for: :created }])
+        end
+
+        it "can filter by event type :modified" do
+          test_it(test_file, check: [:modified], watch_args: [@temp_dir, { for: :modified }])
+        end
+
+        it "can filter by event type :deleted" do
+          test_it(test_file, check: [:deleted], watch_args: [@temp_dir, { for: :deleted }])
+        end
+
+        it "can filter by event types :modified or :deleted" do
+          test_it(test_file, check: %i[modified deleted], watch_args: [@temp_dir, { for: %i[modified deleted] }])
+        end
+
+        it "can filter by event types :modified or :created" do
+          test_it(test_file, check: %i[modified created], watch_args: [@temp_dir, { for: %i[modified created] }])
+        end
+
+        if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0") # @deprecated OH3.4 remove this wrapper
+          # do not remove this test in OH4
+          it "uses the built in configWatcher to monitor inside openHAB config folder" do
+            expect(OpenHAB::DSL::Rules::Triggers::WatchHandler.factory).not_to receive(:create_watch_service)
+            test_it(config_folder / "scripts" / test_file, watch_args: [config_folder / "scripts"])
+          end
+        end
+
+        it "doesn't monitor changes inside subdirectories" do
+          test_it(config_folder / "tmp" / test_file, expected: false,
+                                                     watch_args: [config_folder, { glob: test_file, for: :created }])
+        end
+      end
+
+      describe "recursively" do
+        let(:recursive_watch) { true }
+
+        it "can watch for files several levels deep" do
+          file = config_folder / "tmp/a/b/c" / test_file
+          test_it(file, watch_args: [config_folder / "**", { for: :created }])
+        end
+
+        it "can watch for files in the main directory" do
+          test_it(config_folder / test_file, watch_args: [config_folder / "**", { for: :created }])
+        end
+
+        it "can watch the parent directory when given a non existent path" do
+          # ensure this subdirectory doesn't exist
+          subdir = config_folder / "nonexistent"
+          FileUtils.rm_rf(subdir, secure: true)
+          expect(subdir.exist?).to be false
+
+          test_it(subdir / "#{test_file}.x", watch_args: [subdir / "#{test_file}.x", { for: :created }])
+        end
+
+        it "supports complex patterns" do
+          file = config_folder / "tmp/foo/bar/baz/blob.magoo"
+          test_it(file, watch_args: [config_folder / "{tmp,xyz}/[a-g]oo/bar/*/*.magoo"])
+        end
+
+        describe "using glob option" do
+          it "works" do
+            file = config_folder / "tmp" / "#{test_file}.x"
+            test_it(file, watch_args: [config_folder, { glob: "**.x", for: :created }])
+          end
+
+          it "supports relative subdirectory" do
+            file = config_folder / "tmp" / "#{test_file}.x"
+            test_it(file, watch_args: [config_folder, { glob: "tmp/*.x", for: :created }])
+          end
+
+          it "supports absolute path" do
+            file = config_folder / "tmp" / "#{test_file}.x"
+            test_it(file, watch_args: [config_folder, { glob: config_folder / "**/*.x", for: :created }])
+          end
+        end
       end
     end
     # rubocop:enable RSpec/InstanceVariable
