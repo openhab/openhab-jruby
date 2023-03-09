@@ -1212,7 +1212,7 @@ can only be done using a file-based rule.
 ```ruby
 rule "Garage Door Alert" do
   changed GarageDoor, to: OPEN, for: 20.minutes
-  run { say "The garage door has been open for 20 minutes!" }
+  run { Voice.say "The garage door has been open for 20 minutes!" }
 end
 ```
 

@@ -104,7 +104,7 @@ Shutter1.up?   # => true if Shutter1.state == UP
 ```ruby
 rule 'Warn when garage door is open a long time' do
   changed Garage_Door, to: OPEN, for: 15.minutes
-  run { say "Warning, the garage door is open" } # call TTS to the default audio sink
+  run { Voice.say "Warning, the garage door is open" } # call TTS to the default audio sink
 end
 ```
 
