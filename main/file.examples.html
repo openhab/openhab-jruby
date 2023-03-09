@@ -2706,7 +2706,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 <h3 id="detect-change-duration-without-creating-an-explicit-timer"><a href="#detect-change-duration-without-creating-an-explicit-timer" class="header-anchor">#</a>Detect change duration without creating an explicit timer</h3>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">Warn when garage door is open a long time</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   changed <span class="constant">Garage_Door</span>, <span class="key">to</span>: <span class="constant">OPEN</span>, <span class="key">for</span>: <span class="integer">15</span>.minutes
-  run { say <span class="string"><span class="delimiter">&quot;</span><span class="content">Warning, the garage door is open</span><span class="delimiter">&quot;</span></span> } <span class="comment"># call TTS to the default audio sink</span>
+  run { <span class="constant">Voice</span>.say <span class="string"><span class="delimiter">&quot;</span><span class="content">Warning, the garage door is open</span><span class="delimiter">&quot;</span></span> } <span class="comment"># call TTS to the default audio sink</span>
 <span class="keyword">end</span>
 </code></pre>
 <h3 id="automatic-activation-of-exhaust-fan-based-on-humidity-sensor"><a href="#automatic-activation-of-exhaust-fan-based-on-humidity-sensor" class="header-anchor">#</a>Automatic activation of exhaust fan based on humidity sensor</h3>
@@ -2791,7 +2791,7 @@ items[<span class="string"><span class="delimiter">&quot;</span><span class="inl
 </div></div>
 
         <footer>
-  Generated on Wed Mar  8 22:39:20 2023 by
+  Generated on Thu Mar  9 01:00:36 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
