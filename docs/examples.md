@@ -1,4 +1,7 @@
+<!-- 
 # @title Examples
+# @description Some example openHAB automation rules written in JRuby scripting
+ -->
 
 # Examples
 

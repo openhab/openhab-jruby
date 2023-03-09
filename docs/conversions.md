@@ -1,8 +1,11 @@
+<!-- 
 # @title Rule Conversions
+# @description Some examples in converting your openHAB rules from other scripting languages to JRuby Scripting
+ -->
 
-## Conversion Examples
+# Conversion Examples
 
-### DSL
+## DSL
 
 ```java
 rule "Snap Fan to preset percentages"
@@ -51,7 +54,7 @@ rule 'Snap Fan to preset percentages' do
 end
 ```
 
-### Python
+## Python
 
 ```python
 @rule("Use Supplemental Heat In Office")
