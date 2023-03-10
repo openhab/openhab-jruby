@@ -1,4 +1,7 @@
+<!--
 # @title Testing Your Rules
+# @description Instructions on how to write tests for your own openHAB automation rules with JRuby Scripting
+-->
 
 # Testing
 
