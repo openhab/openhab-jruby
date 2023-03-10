@@ -1,4 +1,7 @@
+<!-- 
 # @title Rule Conversions
+# @description Some examples in converting your openHAB rules from other scripting languages to JRuby Scripting
+ -->
 
 # Conversion Examples
 

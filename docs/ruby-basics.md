@@ -1,4 +1,7 @@
+<!--
 # @title Ruby Basics
+# @description A brief introduction to the basics of the Ruby programming language for writing openHAB automation rules
+-->
 
 # Ruby Basics
 
