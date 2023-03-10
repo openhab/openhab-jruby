@@ -2633,6 +2633,113 @@
 
       <main class="page">
         <div class="content"><div id='filecontents'><h1 id="conversion-examples"><a href="#conversion-examples" class="header-anchor">#</a>Conversion Examples</h1>
+<h2 id="jsscripting"><a href="#jsscripting" class="header-anchor">#</a>JSScripting</h2>
+<pre class="code java"><code class="java"><span class="type">var</span> email = <span class="string"><span class="delimiter">&quot;</span><span class="content">juliet@capulet.org</span><span class="delimiter">&quot;</span></span>
+
+rules.JSRule({
+  name: <span class="string"><span class="delimiter">&quot;</span><span class="content">Balcony Lights ON at 5pm</span><span class="delimiter">&quot;</span></span>,
+  description: <span class="string"><span class="delimiter">&quot;</span><span class="content">Light will turn on when it's 5:00pm</span><span class="delimiter">&quot;</span></span>,
+  triggers: [triggers.GenericCronTrigger(<span class="string"><span class="delimiter">&quot;</span><span class="content">0 0 17 * * ?</span><span class="delimiter">&quot;</span></span>)],
+  execute: (event) =&gt; {
+    items.getItem(<span class="string"><span class="delimiter">&quot;</span><span class="content">BalconyLights</span><span class="delimiter">&quot;</span></span>).sendCommand(<span class="string"><span class="delimiter">&quot;</span><span class="content">ON</span><span class="delimiter">&quot;</span></span>);
+    actions.NotificationAction.sendNotification(email, <span class="string"><span class="delimiter">&quot;</span><span class="content">Balcony lights are ON</span><span class="delimiter">&quot;</span></span>);
+  },
+  tags: [<span class="string"><span class="delimiter">&quot;</span><span class="content">Balcony</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Lights</span><span class="delimiter">&quot;</span></span>],
+  id: <span class="string"><span class="delimiter">&quot;</span><span class="content">BalconyLightsOn</span><span class="delimiter">&quot;</span></span>
+});
+</code></pre>
+<p>Ruby</p>
+<pre class="code ruby"><code class="ruby"><span class="constant">EMAIL</span> = <span class="string"><span class="delimiter">&quot;</span><span class="content">juliet@capulet.org</span><span class="delimiter">&quot;</span></span>
+
+rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Balcony Lights ON at 5pm</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+  description <span class="string"><span class="delimiter">&quot;</span><span class="content">Light will turn on when it's 5:00pm</span><span class="delimiter">&quot;</span></span>
+  every <span class="symbol">:day</span>, <span class="key">at</span>: <span class="string"><span class="delimiter">'</span><span class="content">5pm</span><span class="delimiter">'</span></span> <span class="comment"># This can be written as: `cron &quot;0 0 17 * * ?&quot;` if preferred</span>
+  <span class="key">tags</span>: <span class="string"><span class="delimiter">%w[</span><span class="content">Balcony Lights</span><span class="delimiter">]</span></span>
+  <span class="key">uid</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">BalconyLightsOn</span><span class="delimiter">&quot;</span></span>
+  run <span class="keyword">do</span> |event|
+    <span class="constant">BalconyLights</span>.on
+    <span class="constant">NotificationAction</span>.send_notification(<span class="constant">EMAIL</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Balcony lights are ON</span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</code></pre>
+<p>Terse rules</p>
+<p>JRubyScripting supports <span class='object_link'><a href="OpenHAB/DSL/Rules/Terse.html" title="OpenHAB::DSL::Rules::Terse (module)">Terse syntax</a></span> as well as the normal,
+more traditional syntax. Some attributes such as rule description and tags cannot be set
+using the Terse syntax. They can be specified using the full rule syntax.</p>
+<hr>
+<p>JS:</p>
+<pre class="code java"><code class="java"><span class="comment">// Basic rule, when the BedroomLight1 is changed, run a custom function</span>
+rules.when().item(<span class="string"><span class="delimiter">'</span><span class="content">BedroomLight1</span><span class="delimiter">'</span></span>).changed().then(e =&gt; {
+    console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">BedroomLight1 state</span><span class="delimiter">&quot;</span></span>, e.newState)
+}).build();
+</code></pre>
+<p>Ruby:</p>
+<pre class="code ruby"><code class="ruby"><span class="comment"># Basic rule, when the BedroomLight1 is changed, run a custom function</span>
+changed(<span class="constant">BedromLight1</span>) { |event| logger.info <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>event.item.name<span class="inline-delimiter">}</span></span><span class="content"> state </span><span class="inline"><span class="inline-delimiter">#{</span>event.state<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
+</code></pre>
+<hr>
+<p>JS:</p>
+<pre class="code java"><code class="java"><span class="comment">// Turn on the kitchen light at SUNSET</span>
+rules.when().timeOfDay(<span class="string"><span class="delimiter">&quot;</span><span class="content">SUNSET</span><span class="delimiter">&quot;</span></span>).then().sendOn().toItem(<span class="string"><span class="delimiter">&quot;</span><span class="content">KitchenLight</span><span class="delimiter">&quot;</span></span>).build(<span class="string"><span class="delimiter">&quot;</span><span class="content">Sunset Rule</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">turn on the kitchen light at SUNSET</span><span class="delimiter">&quot;</span></span>);
+</code></pre>
+<p>Ruby:</p>
+<pre class="code ruby"><code class="ruby"><span class="comment"># Turn on the kitchen light at SUNSET</span>
+channel(<span class="string"><span class="delimiter">&quot;</span><span class="content">astro:sun:home:set#event</span><span class="delimiter">&quot;</span></span>, <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Sunset Rule</span><span class="delimiter">&quot;</span></span>) { <span class="constant">KitchenLight</span>.on }
+</code></pre>
+<hr>
+<p>JS:</p>
+<pre class="code java"><code class="java"><span class="comment">// Turn off the kitchen light at 9PM and tag rule</span>
+rules.when().cron(<span class="string"><span class="delimiter">&quot;</span><span class="content">0 0 21 * * ?</span><span class="delimiter">&quot;</span></span>).then().sendOff().toItem(<span class="string"><span class="delimiter">&quot;</span><span class="content">KitchenLight</span><span class="delimiter">&quot;</span></span>).build(<span class="string"><span class="delimiter">&quot;</span><span class="content">9PM Rule</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">turn off the kitchen light at 9PM</span><span class="delimiter">&quot;</span></span>, [<span class="string"><span class="delimiter">&quot;</span><span class="content">Tag1</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Tag2</span><span class="delimiter">&quot;</span></span>]);
+</code></pre>
+<p>Ruby:</p>
+<pre class="code ruby"><code class="ruby"><span class="comment"># Turn off the kitchen light at 9PM</span>
+every(<span class="symbol">:day</span>, <span class="key">at</span>: <span class="string"><span class="delimiter">'</span><span class="content">9pm</span><span class="delimiter">'</span></span>, <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">9PM Rule</span><span class="delimiter">&quot;</span></span>) { <span class="constant">KitchenLight</span>.off }
+</code></pre>
+<hr>
+<p>JS:</p>
+<pre class="code java"><code class="java"><span class="comment">// Set the colour of the hall light to pink at 9PM, tag rule and use a custom ID</span>
+rules.when().cron(<span class="string"><span class="delimiter">&quot;</span><span class="content">0 0 21 * * ?</span><span class="delimiter">&quot;</span></span>).then().send(<span class="string"><span class="delimiter">&quot;</span><span class="content">300,100,100</span><span class="delimiter">&quot;</span></span>).toItem(<span class="string"><span class="delimiter">&quot;</span><span class="content">HallLight</span><span class="delimiter">&quot;</span></span>).build(<span class="string"><span class="delimiter">&quot;</span><span class="content">Pink Rule</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">set the colour of the hall light to pink at 9PM</span><span class="delimiter">&quot;</span></span>, [<span class="string"><span class="delimiter">&quot;</span><span class="content">Tag1</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Tag2</span><span class="delimiter">&quot;</span></span>], <span class="string"><span class="delimiter">&quot;</span><span class="content">MyCustomID</span><span class="delimiter">&quot;</span></span>);
+</code></pre>
+<p>Ruby:</p>
+<pre class="code ruby"><code class="ruby"><span class="comment"># Set the colour of the hall light to pink at 9PM and use a custom ID</span>
+every(<span class="symbol">:day</span>, <span class="key">at</span>: <span class="string"><span class="delimiter">'</span><span class="content">9pm</span><span class="delimiter">'</span></span>, <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Pink Rule</span><span class="delimiter">&quot;</span></span>, <span class="key">id</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">MyCustomID</span><span class="delimiter">&quot;</span></span>) { <span class="constant">HallLight</span> &lt;&lt; <span class="string"><span class="delimiter">&quot;</span><span class="content">300,100,100</span><span class="delimiter">&quot;</span></span> }
+</code></pre>
+<hr>
+<p>JS:</p>
+<pre class="code java"><code class="java"><span class="comment">// When the switch S1 status changes to ON, then turn on the HallLight</span>
+rules.when().item(<span class="string"><span class="delimiter">'</span><span class="content">S1</span><span class="delimiter">'</span></span>).changed().toOn().then(sendOn().toItem(<span class="string"><span class="delimiter">'</span><span class="content">HallLight</span><span class="delimiter">'</span></span>)).build(<span class="string"><span class="delimiter">&quot;</span><span class="content">S1 Rule</span><span class="delimiter">&quot;</span></span>);
+</code></pre>
+<p>Ruby:</p>
+<pre class="code ruby"><code class="ruby"><span class="comment"># When the switch S1 status changes to ON, then turn on the HallLight</span>
+changed(<span class="constant">S1</span>, <span class="key">to</span>: <span class="constant">ON</span>, <span class="key">name</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">S1 Rule</span><span class="delimiter">&quot;</span></span>) { <span class="constant">HallLight</span>.on }
+</code></pre>
+<hr>
+<p>JS:</p>
+<pre class="code java"><code class="java"><span class="comment">// When the HallLight colour changes pink, if the function fn returns true, then toggle the state of the OutsideLight</span>
+rules.when().item(<span class="string"><span class="delimiter">'</span><span class="content">HallLight</span><span class="delimiter">'</span></span>).changed().to(<span class="string"><span class="delimiter">&quot;</span><span class="content">300,100,100</span><span class="delimiter">&quot;</span></span>).if(fn).then().sendToggle().toItem(<span class="string"><span class="delimiter">'</span><span class="content">OutsideLight</span><span class="delimiter">'</span></span>).build();
+</code></pre>
+<p>Ruby:</p>
+<pre class="code ruby"><code class="ruby"><span class="comment"># When the HallLight colour changes pink, if the function fn returns true, then toggle the state of the OutsideLight</span>
+changed(<span class="constant">HallLight</span>, <span class="key">to</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">300,100,100</span><span class="delimiter">&quot;</span></span>) { <span class="constant">OutsideLight</span>.toggle <span class="keyword">if</span> fn }
+</code></pre>
+<hr>
+<p>JS:</p>
+<pre class="code java"><code class="java"><span class="comment">// When the HallLight receives a command, send the same command to the KitchenLight</span>
+rules.when().item(<span class="string"><span class="delimiter">'</span><span class="content">HallLight</span><span class="delimiter">'</span></span>).receivedCommand().then().sendIt().toItem(<span class="string"><span class="delimiter">'</span><span class="content">KitchenLight</span><span class="delimiter">'</span></span>).build(<span class="string"><span class="delimiter">&quot;</span><span class="content">Hall Light</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>);
+</code></pre>
+<p>Ruby:</p>
+<pre class="code ruby"><code class="ruby"><span class="comment"># When the HallLight receives a command, send the same command to the KitchenLight</span>
+received_command(<span class="constant">HallLight</span>) { |event| <span class="constant">KitchenLight</span> &lt;&lt; event.command }
+</code></pre>
+<hr>
+<p>JS:</p>
+<pre class="code java"><code class="java"><span class="comment">// When the HallLight is updated to ON, make sure that BedroomLight1 is set to the same state as the BedroomLight2</span>
+rules.when().item(<span class="string"><span class="delimiter">'</span><span class="content">HallLight</span><span class="delimiter">'</span></span>).receivedUpdate().then().copyState().fromItem(<span class="string"><span class="delimiter">'</span><span class="content">BedroomLight1</span><span class="delimiter">'</span></span>).toItem(<span class="string"><span class="delimiter">'</span><span class="content">BedroomLight2</span><span class="delimiter">'</span></span>).build();
+</code></pre>
+<p>Ruby:</p>
+<pre class="code ruby"><code class="ruby"><span class="comment"># When the HallLight is updated to ON, make sure that BedroomLight1 is set to the same state as the BedroomLight2</span>
+updated(<span class="constant">HallLight</span>) { <span class="constant">BedroomLight2</span> &lt;&lt; <span class="constant">BedroomLight1</span>.state }
+</code></pre>
 <h2 id="dsl"><a href="#dsl" class="header-anchor">#</a>DSL</h2>
 <pre class="code java"><code class="java">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Snap Fan to preset percentages</span><span class="delimiter">&quot;</span></span>
 when <span class="predefined-type">Member</span> of CeilingFans changed
@@ -2669,7 +2776,7 @@ end
               <span class="keyword">end</span>
 
     <span class="keyword">if</span> event.item.ensure.command(snapped) <span class="comment"># returns false if already in the same state</span>
-      logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Snapping </span><span class="inline"><span class="inline-delimiter">#{</span>event.item.name<span class="inline-delimiter">}</span></span><span class="content"> to </span><span class="inline"><span class="inline-delimiter">#{</span>snapped<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>) 
+      logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Snapping </span><span class="inline"><span class="inline-delimiter">#{</span>event.item.name<span class="inline-delimiter">}</span></span><span class="content"> to </span><span class="inline"><span class="inline-delimiter">#{</span>snapped<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
     <span class="keyword">else</span>
       logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>event.item.name<span class="inline-delimiter">}</span></span><span class="content"> set to snapped percentage, no action taken.</span><span class="delimiter">&quot;</span></span>)
     <span class="keyword">end</span>
@@ -2691,7 +2798,7 @@ end
   door = items[<span class="string"><span class="delimiter">&quot;</span><span class="content">OfficeDoor</span><span class="delimiter">&quot;</span></span>]
   difference = hall_temp - office_temp
   degree_difference = <span class="float">2.0</span>
-  trigger = occupied == ON &amp;&amp; door == CLOSED &amp;&amp; heat_set &gt; office_temp &amp;&amp; difference &gt; degree_difference 
+  trigger = occupied == ON &amp;&amp; door == CLOSED &amp;&amp; heat_set &gt; office_temp &amp;&amp; difference &gt; degree_difference
 
   <span class="keyword">if</span> trigger:
     events.sendCommand(<span class="string"><span class="delimiter">&quot;</span><span class="content">Lights_Office_Outlet</span><span class="delimiter">&quot;</span></span>,<span class="string"><span class="delimiter">&quot;</span><span class="content">ON</span><span class="delimiter">&quot;</span></span>)
@@ -2713,7 +2820,7 @@ end
 </div></div>
 
         <footer>
-  Generated on Fri Mar 10 15:23:50 2023 by
+  Generated on Fri Mar 10 15:29:03 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
