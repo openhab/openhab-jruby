@@ -7,10 +7,25 @@ module OpenHAB
       java_import org.openhab.core.automation.Rule
 
       #
-      # A {Rule} is a chunk of code that can execute when certain conditions are
-      # met, enabling the core dynamic functionality of openHAB.
+      # A {org.openhab.core.automation.Rule Rule} is a chunk of code that can execute when
+      # certain conditions are met, enabling the core dynamic functionality of openHAB.
+      #
+      # This can be used to execute a [Scene](https://next.openhab.org/docs/tutorial/rules_scenes.html),
+      # a script, or another rule.
+      #
+      # @example Execute a scene
+      #   rules["scene_id"].trigger
       #
       module Rule
+        # @!attribute [r] name
+        #   @return [String,nil] The rule's human-readable name
+
+        # @!attribute [r] description
+        #   @return [String,nil] The rule's description
+
+        # @!attribute [r] tags
+        #   @return [Array<Tag>] The rule's list of tags
+
         #
         # @!method visible?
         #   Check if visibility == `VISIBLE`
@@ -103,8 +118,23 @@ module OpenHAB
         end
 
         #
+        # Checks if this rule has at least one of the given tags.
+        #
+        # (see Items::Item#tagged)
+        #
+        # @example Find all scenes
+        #   rules.to_a.tagged?("Scene")
+        #
+        def tagged?(*tags)
+          tags.map! do |tag|
+            tag.is_a?(Module) ? tag.simple_name : tag
+          end
+          !(self.tags.to_a & tags).empty?
+        end
+
+        #
         # @!attribute [r] status
-        # @return [RuleStatus nil]
+        # @return [RuleStatus, nil]
         #
         def status
           Rules.manager.get_status(uid)
@@ -122,6 +152,7 @@ module OpenHAB
         def inspect
           r = "#<OpenHAB::Core::Rules::Rule #{uid}"
           r += " #{name.inspect}" if name
+          r += " #{description.inspect}" if description
           r += " #{visibility}" unless visible?
           r += " #{status || "<detached>"}"
           r += " (#{status_info.status_detail})" if status_info && status_info.status_detail != RuleStatusDetail::NONE
@@ -144,6 +175,7 @@ module OpenHAB
         def trigger(event = nil)
           Rules.manager.run_now(uid, false, { "event" => event })
         end
+        alias_method :execute, :trigger
       end
     end
   end

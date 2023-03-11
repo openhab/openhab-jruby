@@ -33,6 +33,7 @@ If you're new to Ruby, you may want to check out [Ruby Basics](docs/ruby-basics.
   - [Cache](#cache)
   - [Time](#time)
   - [Ephemeris](#ephemeris)
+  - [Rules, Scripts, and Scenes](#rules-scripts-and-scenes)
   - [Gems](#gems)
   - [Shared Code](#shared-code)
 - [File Based Rules](#file-based-rules)
@@ -54,7 +55,6 @@ If you're new to Ruby, you may want to check out [Ruby Basics](docs/ruby-basics.
     - [Triggered Execution Block](#triggered-execution-block)
     - [Delay Execution Block](#delay-execution-block)
   - [Terse Rules](#terse-rules)
-  - [Rule Manipulations](#rule-manipulations)
   - [Early Exit From a Rule](#early-exit-from-a-rule)
   - [Dynamic Generation of Rules](#dynamic-generation-of-rules)
   - [Hooks](#hooks)
@@ -1130,6 +1130,76 @@ Date.today.weekend? # => true
 Date.today.in_dayset?(:school) # => false
 ```
 
+### Rules, Scripts, and Scenes
+
+Execute a Rule, a Script or a Scene by UID
+
+```ruby
+rules[rule_uid].trigger
+```
+
+Use Scenes in combination with Semantic Model
+
+```ruby
+rule "adjust room scene" do
+  description "Trigger the appropriate scenes for the room on motion detection"
+  changed Motion_Sensors.members
+  run do |event|
+    # the Active_Scene item can be set to the Scene tag 
+    # that we wish to activate when motion is detected
+    # e.g. ACTIVE/RELAXING/MOVIE/READING
+    scene_to_trigger = event.state.on? ? Active_Scene.state.to_s : "OFF"
+
+    # Get the scenes for the room where motion was detected
+    scenes = rules.to_a
+                  .tagged(*event.item.location.tags)
+                  .tagged("Scene")
+                  .tagged(scene_to_trigger)
+    scenes.each(&:trigger)
+  end
+end
+```
+
+Get the UID of a Rule
+
+```ruby
+rule_obj = rule 'my rule name' do
+  received_command My_Item
+  run do
+    # rule code here
+  end
+end
+
+rule_uid = rule_obj.uid
+```
+
+A rule's UID can also be specified at rule creation
+
+```ruby
+rule "my rule name", id: "my_unique_rule_uid" do
+  # ...
+end
+
+# or
+rule "my rule name" do
+  uid "my_unique_rule_uid"
+  # ...
+end
+```
+
+Get the UID of a Rule by Name
+
+```ruby
+rule_uid = rules.find { |rule| rule.name == 'This is the name of my rule' }.uid
+```
+
+Enable or Disable a Rule by UID
+
+```ruby
+rules[rule_uid].enable
+rules[rule_uid].disable
+```
+
 ### Gems
 
 [Bundler](https://bundler.io/) is integrated, enabling any [Ruby gem](https://rubygems.org/) compatible with JRuby to be used within rules. This permits easy access to the vast ecosystem of libraries within the Ruby community.
@@ -1443,48 +1513,6 @@ received_command(My_Switch, to: ON) { My_Light.on }
 ```
 
 See {OpenHAB::DSL::Rules::Terse Terse Rules} for full details.
-
-### Rule Manipulations
-
-Get the UID of a Rule
-
-```ruby
-rule_obj = rule 'my rule name' do
-  received_command My_Item
-  run do
-    # rule code here
-  end
-end
-
-rule_uid = rule_obj.uid
-```
-
-A rule's UID can also be specified at rule creation
-
-```ruby
-rule "my rule name", id: "my_unique_rule_uid" do
-  # ...
-end
-```
-
-Get the UID of a Rule by Name
-
-```ruby
-rule_uid = rules.find { |rule| rule.name == 'This is the name of my rule' }.uid
-```
-
-Enable or Disable a Rule by UID
-
-```ruby
-rules[rule_uid].enable
-rules[rule_uid].disable
-```
-
-Run a Rule by UID
-
-```ruby
-rules[rule_uid].trigger
-```
 
 ### Early Exit From a Rule
 
