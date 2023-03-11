@@ -45,7 +45,7 @@ module OpenHAB
         html.css("h1, h2, h3, h4, h5, h6").each do |header|
           next if header["id"]
 
-          id = header.text.strip.downcase.delete(%(.?"')).tr(" ", "-")
+          id = header.text.strip.downcase.delete(%(.?"')).gsub(/[ ,]+/, "-")
           header["id"] = id
           header.prepend_child(%(<a href="##{id}" class="header-anchor">#</a>))
         end
