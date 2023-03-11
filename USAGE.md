@@ -33,6 +33,7 @@ If you're new to Ruby, you may want to check out [Ruby Basics](docs/ruby-basics.
   - [Cache](#cache)
   - [Time](#time)
   - [Ephemeris](#ephemeris)
+  - [Rules, Scripts, and Scenes](#rules-scripts-and-scenes)
   - [Gems](#gems)
   - [Shared Code](#shared-code)
 - [File Based Rules](#file-based-rules)
@@ -54,7 +55,6 @@ If you're new to Ruby, you may want to check out [Ruby Basics](docs/ruby-basics.
     - [Triggered Execution Block](#triggered-execution-block)
     - [Delay Execution Block](#delay-execution-block)
   - [Terse Rules](#terse-rules)
-  - [Rule Manipulations](#rule-manipulations)
   - [Early Exit From a Rule](#early-exit-from-a-rule)
   - [Dynamic Generation of Rules](#dynamic-generation-of-rules)
   - [Hooks](#hooks)
@@ -433,7 +433,7 @@ Get a sorted list of Group members matching a condition:
 sorted_items_by_battery_level = gBattery.members
                                         .select(&:state?) # only include non NULL / UNDEF members
                                         .select { |item| item.state < 20 } # select only those with low battery
-                                        .sort_by(&:state) 
+                                        .sort_by(&:state)
 ```
 
 Get a list of values mapped from the members of a group:
@@ -532,7 +532,7 @@ items['Number_Item'].state == 10
 
 # Compare Quantity Types
 Temperature_Item.state > 24 | '°C'
-Indoor_Temperature.state > Outdoor_Temperature.state 
+Indoor_Temperature.state > Outdoor_Temperature.state
 Indoor_Temperature.state > Outdoor_Temperature.state + 5 | '°C'
 Indoor_Temperature.state - Outdoor_Temperature.state > 5 | '°C'
 ```
@@ -550,7 +550,7 @@ String_Item.update("Freddy")
 String_Item.state.between?("E", "G") # => true
 
 Number_Item.update(10)
-if Number_Item.state.between?(5, 20) 
+if Number_Item.state.between?(5, 20)
   logger.info "Number_Item falls within the expected range"
 end
 
@@ -863,7 +863,7 @@ Multiple timers can be managed in the traditional way by storing the timer objec
 @timers ||= {}
 
 if @timers[event.item]
-  @timers[event.item].reschedule 
+  @timers[event.item].reschedule
 else
   @timers[event.item] = after 3.minutes do # Use the triggering item as the timer ID
     event.item.off
@@ -1044,7 +1044,7 @@ end
 
 # Comparing Time against ZonedDateTime with `>`
 sunset = things["astro:sun:home"].get_event_time("SUN_SET", nil, nil)
-if Time.now > sunset 
+if Time.now > sunset
   logger.info "it is after sunset"
 end
 
@@ -1059,7 +1059,7 @@ elapsed_time = Time.now - Motion_Sensor.last_update
 elapsed_time = ZonedDateTime.now - Motion_Sensor.last_update
 
 # Using `-` operator with ZonedDateTime
-# Comparing two ZonedDateTime using `<` 
+# Comparing two ZonedDateTime using `<`
 Motion_Sensor.last_update < Light_Item.last_update - 10.minutes
 # is the same as:
 Motion_Sensor.last_update.before?(Light_Item.last_update.minus_minutes(10))
@@ -1128,6 +1128,78 @@ notify("It's #{Ephemeris.holiday_name(Date.today)}!") if Date.today.holiday?
 
 Date.today.weekend? # => true
 Date.today.in_dayset?(:school) # => false
+```
+
+### Rules, Scripts, and Scenes
+
+{OpenHAB::Core::Rules::Rule Rules}, Scenes and Scripts can be accessed using the
+{OpenHAB::Core::Rules::Registry rules} object. For example, to execute/trigger a rule:
+
+```ruby
+rules[rule_uid].trigger
+```
+
+Scenes are rules with a `Scene` tag, and Scripts are rules with a `Script` tag. They can be found
+using their uid just like normal rules, i.e. `rules[uid]`. For convenience, a list of all Scenes are
+available through the enumerable {OpenHAB::Core::Rules::Registry#scenes rules.scenes},
+and a list of all Scripts through {OpenHAB::Core::Rules::Registry#scripts rules.scripts}.
+
+Example: All scenes tagged `sunrise` will be triggered at sunrise, and all scenes tagged
+`sunset` will be triggered at sunset. Note: these use the {OpenHAB::DSL::Rules::Terse Terse Rule} syntax.
+
+```ruby
+channel("astro:sun:home:rise#event") { rules.scenes.tagged("sunrise").each(&:trigger) }
+channel("astro:sun:home:set#event") { rules.scenes.tagged("sunset").each(&:trigger) }
+```
+
+Or it can be written as one rule with the help of {group::OpenHAB::DSL::Rules::BuilderDSL::Triggers trigger attachments}.
+
+```ruby
+rule "Activate scenes at sunset/sunrise" do
+  channel "astro:sun:home:rise#event", attach: "sunrise"
+  channel "astro:sun:home:set#event", attach: "sunset"
+  run { |event| rules.scenes.tagged(event.attachment).each(&:trigger) }
+end
+```
+
+Get the UID of a Rule
+
+```ruby
+rule_obj = rule 'my rule name' do
+  received_command My_Item
+  run do
+    # rule code here
+  end
+end
+
+rule_uid = rule_obj.uid
+```
+
+A rule's UID can also be specified at rule creation
+
+```ruby
+rule "my rule name", id: "my_unique_rule_uid" do
+  # ...
+end
+
+# or
+rule "my rule name" do
+  uid "my_unique_rule_uid"
+  # ...
+end
+```
+
+Get the UID of a Rule by Name
+
+```ruby
+rule_uid = rules.find { |rule| rule.name == 'This is the name of my rule' }.uid
+```
+
+Enable or Disable a Rule by UID
+
+```ruby
+rules[rule_uid].enable
+rules[rule_uid].disable
 ```
 
 ### Gems
@@ -1443,48 +1515,6 @@ received_command(My_Switch, to: ON) { My_Light.on }
 ```
 
 See {OpenHAB::DSL::Rules::Terse Terse Rules} for full details.
-
-### Rule Manipulations
-
-Get the UID of a Rule
-
-```ruby
-rule_obj = rule 'my rule name' do
-  received_command My_Item
-  run do
-    # rule code here
-  end
-end
-
-rule_uid = rule_obj.uid
-```
-
-A rule's UID can also be specified at rule creation
-
-```ruby
-rule "my rule name", id: "my_unique_rule_uid" do
-  # ...
-end
-```
-
-Get the UID of a Rule by Name
-
-```ruby
-rule_uid = rules.find { |rule| rule.name == 'This is the name of my rule' }.uid
-```
-
-Enable or Disable a Rule by UID
-
-```ruby
-rules[rule_uid].enable
-rules[rule_uid].disable
-```
-
-Run a Rule by UID
-
-```ruby
-rules[rule_uid].trigger
-```
 
 ### Early Exit From a Rule
 

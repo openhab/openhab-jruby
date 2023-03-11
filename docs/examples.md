@@ -1,4 +1,4 @@
-<!-- 
+<!--
 # @title Examples
 # @description Some example openHAB automation rules written in JRuby scripting
  -->
@@ -11,7 +11,7 @@ The following examples are for file-based rules but most of them are applicable 
 
 ```ruby
 rule 'Turn on light when sensor changed to open' do
-  changed Door_Sensor, to: OPEN 
+  changed Door_Sensor, to: OPEN
   run { Cupboard_Light.on }
 end
 ```
@@ -50,7 +50,7 @@ rule 'Generic motion rule' do
   changed Motion_Sensors.members, to: ON
   run do |event|
     light = items[event.item.name.sub('_Motion', '_Light')] # Lookup item name from a string
-    light&.on 
+    light&.on
   end
 end
 ```
@@ -63,22 +63,22 @@ See also: {group::OpenHAB::DSL::Rules::BuilderDSL::Triggers Triggers}
 # Using the shovel operator
 Light1 << ON
 DimmerItem1 << 100
-Set_Temperature << '24 °C'     
+Set_Temperature << '24 °C'
 
 # Using command predicates
 Light1.on
-Rollershutter1.up  
+Rollershutter1.up
 Player1.play
 
 # Using .command
 ColorItem1.command '#ffff00'
-ColorItem1.command {r: 255, g: 0xFF, b: 0} 
+ColorItem1.command {r: 255, g: 0xFF, b: 0}
 
 # Send a command to all the array members
 # Note The << operator doesn't send a command here because it's for appending to the array
-[SwitchItem1, SwitchItem2, SwitchItem3].on           
-[RollerItem1, RollerItem2, RollerItem3].down    
-[NumberItem1, NumberItem2, NumberItem3].command 100  
+[SwitchItem1, SwitchItem2, SwitchItem3].on
+[RollerItem1, RollerItem2, RollerItem3].down
+[NumberItem1, NumberItem2, NumberItem3].command 100
 ```
 
 Each item type supports command helpers relevant to the type.
@@ -206,4 +206,31 @@ Trigger defined as:
 ```ruby
 logger.info("#{event.item.name} Triggered")
 items["#{event.item_name}_LastMotion"].update Time.now
+```
+
+### Trigger a Scene with an ON/OFF Switch
+
+Use [Scenes](https://next.openhab.org/docs/tutorial/rules_scenes.html) in combination with
+{OpenHAB::Core::Items::Semantics Semantic Model}
+
+Trigger defined as:
+
+- When: the state of a member of an item group is updated
+- Group: `LightSwitches`
+
+```ruby
+# Find scenes for the specific room by matching the scene's tags against the
+# Location item name of the room, e.g. "BedRoom1", "Downstairs_BedRoom", etc.
+# This is when you have multiple locations/rooms with the same semantic location e.g. (Bedroom)
+scenes = rules.scenes.tagged(event.item.location.name)
+
+# If none were defined, try finding scenes assigned to the same semantic location as the motion sensor
+# You can have scenes for LivingRoom, LaundryRoom, Garage, etc. provided that they are unique
+scenes = rules.scenes.tagged(event.item.location.location_type) if scenes.empty?
+
+# the Active_Scene item can be set to the Scene tag that we wish to activate when motion is detected
+# e.g. ACTIVE/RELAXING/MOVIE/READING
+# To do nothing when motion was detected, just set the Active_Scene to blank so no scenes would match
+active_scene = event.state.on ? Active_Scene.state.to_s : "OFF" # Get the active scene name
+scenes.tagged(active_scene).each(&:trigger) # Execute the scenes
 ```

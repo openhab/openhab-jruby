@@ -70,6 +70,24 @@ module OpenHAB
 
           provider.remove(rule_uid)
         end
+
+        #
+        # Returns all Scenes (rules tagged with "Scene")
+        #
+        # @return [Array<Rule>] A list of all the scenes
+        #
+        def scenes
+          tagged("Scene")
+        end
+
+        #
+        # Returns all Scripts (rules tagged with "Script")
+        #
+        # @return [Array<Rule>] A list of all the scripts
+        #
+        def scripts
+          tagged("Script")
+        end
       end
     end
   end
