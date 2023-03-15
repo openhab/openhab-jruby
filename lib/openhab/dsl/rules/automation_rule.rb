@@ -76,8 +76,10 @@ module OpenHAB
         # This method gets called in rspec's SuspendRules as well
         def execute!(mod, inputs)
           ThreadLocal.thread_local(**@thread_locals) do
-            logger.trace { "Execute called with mod (#{mod&.to_string}) and inputs (#{inputs.inspect})" }
-            logger.trace { "Event details #{inputs["event"].inspect}" } if inputs&.key?("event")
+            if logger.trace?
+              logger.trace("Execute called with mod (#{mod&.to_string}) and inputs (#{inputs.inspect})")
+              logger.trace("Event details #{inputs["event"].inspect}") if inputs&.key?("event")
+            end
             trigger_conditions(inputs).process(mod: mod, inputs: inputs) do
               event = extract_event(inputs)
               @debouncer.call { process_queue(create_queue(event), mod, event) }
