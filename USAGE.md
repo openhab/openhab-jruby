@@ -35,6 +35,7 @@ If you're new to Ruby, you may want to check out [Ruby Basics](docs/ruby-basics.
   - [Ephemeris](#ephemeris)
   - [Gems](#gems)
   - [Shared Code](#shared-code)
+  - [Transformations](#transformations)
 - [File Based Rules](#file-based-rules)
   - [Basic Rule Structure](#basic-rule-structure)
   - [Rule Triggers](#rule-triggers)
@@ -58,7 +59,6 @@ If you're new to Ruby, you may want to check out [Ruby Basics](docs/ruby-basics.
   - [Early Exit From a Rule](#early-exit-from-a-rule)
   - [Dynamic Generation of Rules](#dynamic-generation-of-rules)
   - [Hooks](#hooks)
-  - [Transformations](#transformations)
 - [Calling Java From JRuby](#calling-java-from-jruby)
 
 Additional [example rules are available](docs/examples.md), as well as examples of [conversions from DSL and Python rules](docs/conversions.md).
@@ -433,7 +433,7 @@ Get a sorted list of Group members matching a condition:
 sorted_items_by_battery_level = gBattery.members
                                         .select(&:state?) # only include non NULL / UNDEF members
                                         .select { |item| item.state < 20 } # select only those with low battery
-                                        .sort_by(&:state) 
+                                        .sort_by(&:state)
 ```
 
 Get a list of values mapped from the members of a group:
@@ -532,7 +532,7 @@ items['Number_Item'].state == 10
 
 # Compare Quantity Types
 Temperature_Item.state > 24 | '°C'
-Indoor_Temperature.state > Outdoor_Temperature.state 
+Indoor_Temperature.state > Outdoor_Temperature.state
 Indoor_Temperature.state > Outdoor_Temperature.state + 5 | '°C'
 Indoor_Temperature.state - Outdoor_Temperature.state > 5 | '°C'
 ```
@@ -550,7 +550,7 @@ String_Item.update("Freddy")
 String_Item.state.between?("E", "G") # => true
 
 Number_Item.update(10)
-if Number_Item.state.between?(5, 20) 
+if Number_Item.state.between?(5, 20)
   logger.info "Number_Item falls within the expected range"
 end
 
@@ -863,7 +863,7 @@ Multiple timers can be managed in the traditional way by storing the timer objec
 @timers ||= {}
 
 if @timers[event.item]
-  @timers[event.item].reschedule 
+  @timers[event.item].reschedule
 else
   @timers[event.item] = after 3.minutes do # Use the triggering item as the timer ID
     event.item.off
@@ -1044,7 +1044,7 @@ end
 
 # Comparing Time against ZonedDateTime with `>`
 sunset = things["astro:sun:home"].get_event_time("SUN_SET", nil, nil)
-if Time.now > sunset 
+if Time.now > sunset
   logger.info "it is after sunset"
 end
 
@@ -1059,7 +1059,7 @@ elapsed_time = Time.now - Motion_Sensor.last_update
 elapsed_time = ZonedDateTime.now - Motion_Sensor.last_update
 
 # Using `-` operator with ZonedDateTime
-# Comparing two ZonedDateTime using `<` 
+# Comparing two ZonedDateTime using `<`
 Motion_Sensor.last_update < Light_Item.last_update - 10.minutes
 # is the same as:
 Motion_Sensor.last_update.before?(Light_Item.last_update.minus_minutes(10))
@@ -1167,6 +1167,76 @@ def my_lib_version
   "1.0"
 end
 ```
+
+### Transformations
+
+This add-on also provides the necessary infrastructure to use Ruby for writing [transformations](https://www.openhab.org/docs/configuration/transformations.html).
+
+The main value to be transformed is given to the script in a variable called `input`.
+Note that the values are passed to the transformation as Strings even for numeric items and data types.
+
+**Note**: In openHAB 3.4, due to an [issue](https://github.com/jruby/jruby/issues/5876) in the current version of JRuby,
+you will need to begin your script with `input ||= nil` (and `a ||= nil` etc. for additional query variables) so that
+JRuby will recognize the variables as variables--rather than method calls--when it's parsing the script.
+Otherwise you will get errors like `(NameError) undefined local variable or method 'input' for main:Object`.
+This is not necessary in openHAB 4.0+.
+
+#### File Based Transformations <!-- omit from toc -->
+
+Once the addon is installed, you can create a Ruby file in the `$OPENHAB_CONF/transform` directory, with the extension `.script`.
+It's important that the extension is `.script` so that the core `SCRIPT` transform service will recognize it.
+When referencing the file, you need to specify the `SCRIPT` transform, with `rb` as the script type: `SCRIPT(rb:mytransform.script):%s`.
+
+You can also specify additional variables to be set in the script using a URI-like query syntax: `SCRIPT(rb:mytransform.script?a=1&b=c):%s`
+in order to share a single script with slightly different parameters for different items.
+
+##### Example: Display the wind direction in degrees and cardinal direction <!-- omit from toc -->
+
+`weather.items`
+
+```Xtend
+Number:Angle Exterior_WindDirection "Wind Direction [SCRIPT(rb:compass.script):%s]" <wind>
+```
+
+`compass.script`
+
+```ruby
+DIRECTIONS = %w[N NE E SE S SW W NW N].freeze
+
+if input.nil? || input == "NULL" || input == "UNDEF"
+  "-"
+else
+  cardinal = DIRECTIONS[(input.to_f / 45).round]
+  "#{cardinal} (#{input.to_f.round}°)"
+end
+```
+
+Given a state of `82 °`, this will produce a formatted state of `E (82°)`.
+
+##### Example: Display the number of lights that are on/off within a group <!-- omit from toc -->
+
+```Xtend
+Group gIndoorLights "Indoor Lights [SCRIPT(rb:group_count.script?group=gIndoorLights):%s]"
+Group gOutdoorLights "Outdoor Lights [SCRIPT(rb:group_count.script?group=gOutdoorLights):%s]"
+```
+
+`group_count.script`
+
+```ruby
+items[group].all_members.then { |all| "#{all.select(&:on?).size}/#{all.size}" }
+```
+
+When 3 lights out of 10 lights are on, this will produce a formatted state of `3/10`
+
+#### Inline Transformations <!-- omit from toc -->
+
+Inline transformations are supported too. For example, to display the temperature in both °C and °F:
+
+```Xtend
+Number:Temperature Outside_Temperature "Outside Temperature [SCRIPT(rb:|  input.to_f.|('°C').then { |t| %(#{t.format('%d °C')} / #{t.to_unit('°F').format('%d °F')}) }   ):%s]"
+```
+
+When the item contains `0 °C`, this will produce a formatted state of `0 °C / 32 °F`.
 
 ## File Based Rules
 
@@ -1571,39 +1641,6 @@ script_unloaded do
   logger.info("script unloaded")
 end
 ```
-
-### Transformations
-
-This add-on also provides the necessary infrastructure to use Ruby for writing [transformations](https://www.openhab.org/docs/configuration/transformations.html).
-Once the addon is installed, you can create a Ruby file in the `$OPENHAB_CONF/transform` directory, with the extension `.script`.
-It's important that the extension is `.script` so that the core `SCRIPT` transform service will recognize it.
-When referencing the file, you need to specify the `SCRIPT` transform, with `rb` as the script type: `SCRIPT(rb:mytransform.script):%s`.
-You can also specify additional variables to be set in the script using a URI-like query syntax: `SCRIPT(rb:mytransform.script?a=1b=c):%s` in order to share a single script with slightly different parameters for different items.
-
-**Note**: Due to an [issue](https://github.com/jruby/jruby/issues/5876) in the current version of JRuby, you will need to begin your script with `input ||= nil` (and `a ||= nil` etc. for additional query variables) so that JRuby will recognize the variables as variables--rather than method calls--when it's parsing the script.
-Otherwise you will get errors like `(NameError) undefined local variable or method 'input' for main:Object`.
-
-`compass.script`
-
-```ruby
-input ||= nil
-DIRECTIONS = %w[N NE E SE S SW W NW N].freeze
-
-if input.nil? || input == "NULL" || input == "UNDEF"
-  "-"
-else
-  cardinal = DIRECTIONS[(input.to_f / 45).round]
-  "#{cardinal} (#{input.to_i}°)"
-end
-```
-
-`weather.items`
-
-```Xtend
-Number:Angle Exterior_WindDirection "Wind Direction [SCRIPT(rb:compass.script):%s]" <wind>
-```
-
-Given a state of `82 °`, this will produce a formatted state of `E (82°)`.
 
 ## Calling Java From JRuby
 
