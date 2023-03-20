@@ -104,10 +104,10 @@ module OpenHAB
 
         #
         # @!attribute [r] status
-        # @return [RuleStatus nil]
+        # @return [RuleStatus, nil]
         #
         def status
-          Rules.manager.get_status(uid)
+          Rules.manager&.get_status(uid)
         end
 
         #
@@ -115,7 +115,7 @@ module OpenHAB
         # @return [RuleStatusInfo, nil]
         #
         def status_info
-          Rules.manager.get_status_info(uid)
+          Rules.manager&.get_status_info(uid)
         end
 
         # @return [String]
