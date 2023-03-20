@@ -500,7 +500,7 @@ module OpenHAB
     # @example Prevent door bell from ringing repeatedly
     #   # This can be called from a UI rule.
     #   # For file based rule, use the `only_every` rule guard
-    #   only_every(30.seconds) do { Audio.play_sound("doorbell.mp3") }
+    #   only_every(30.seconds) { Audio.play_sound("doorbell.mp3") }
     #
     # @see Rules::BuilderDSL#debounce_for Rule builder's debounce_for for a detailed description
     # @see Rules::BuilderDSL#only_every
