@@ -2,6 +2,11 @@
 
 ## [5.0.1](https://github.com/openhab/openhab-jruby/compare/v5.0.0...main)
 
+### Features
+
+- {OpenHAB::Core::Rules::Registry#scenes rules.scenes} and {OpenHAB::Core::Rules::Registry#scripts rules.scripts}
+  are available as convenient shortcuts to filter for rules that are scenes or scripts.
+
 ### Bug Fixes
 
 - Fix an error when calling Audio.play_sound specifying the volume but not the sink.

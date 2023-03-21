@@ -11,6 +11,15 @@ module OpenHAB
       # met, enabling the core dynamic functionality of openHAB.
       #
       module Rule
+        # @!attribute [r] name
+        #   @return [String,nil] The rule's human-readable name
+
+        # @!attribute [r] description
+        #   @return [String,nil] The rule's description
+
+        # @!attribute [r] tags
+        #   @return [Array<Tag>] The rule's list of tags
+
         #
         # @!method visible?
         #   Check if visibility == `VISIBLE`
@@ -100,6 +109,21 @@ module OpenHAB
         def disabled?
           info = status_info
           info.nil? || info.status_detail == RuleStatusDetail::DISABLED
+        end
+
+        #
+        # Checks if this rule has at least one of the given tags.
+        #
+        # (see Items::Item#tagged)
+        #
+        # @example Find rules tagged with "Halloween"
+        #   rules.tagged?("Halloweed")
+        #
+        def tagged?(*tags)
+          tags.map! do |tag|
+            tag.is_a?(::Module) ? tag.simple_name : tag # ::Module to distinguish against Rule::Module!
+          end
+          !(self.tags.to_a & tags).empty?
         end
 
         #
