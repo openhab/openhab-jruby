@@ -23,7 +23,14 @@ module OpenHAB
           #
           def play_sound(filename, sink: nil, volume: nil)
             volume = PercentType.new(volume) unless volume.is_a?(PercentType) || volume.nil?
-            playSound(sink&.to_s, filename.to_s, volume)
+            # JRuby calls the wrong overloaded method when volume is given, but sink is nil
+            # will call playSound(String, String, float) instead of playSound(String, String, PercentType)
+            # and end up with argument type mismatched. So we need to give it a bit of help here.
+            if sink
+              playSound(sink.to_s, filename.to_s, volume)
+            else
+              playSound(filename.to_s, volume)
+            end
           end
 
           #
