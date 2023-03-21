@@ -1,5 +1,11 @@
 # JRuby openHAB Scripting Change Log
 
+## [5.0.1](https://github.com/openhab/openhab-jruby/compare/v5.0.0...main)
+
+### Bug Fixes
+
+- Fix an error when calling Audio.play_sound specifying the volume but not the sink.
+
 ## [5.0.0](https://github.com/openhab/openhab-jruby/compare/4.45.2...v5.0.0)
 
 5.0 is the first release as the officially supported gem of the openHAB organization.
