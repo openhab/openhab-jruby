@@ -37,6 +37,7 @@ If you're new to Ruby, you may want to check out [Ruby Basics](docs/ruby-basics.
   - [Gems](#gems)
   - [Shared Code](#shared-code)
   - [Transformations](#transformations)
+  - [Profile](#profile)
 - [File Based Rules](#file-based-rules)
   - [Basic Rule Structure](#basic-rule-structure)
   - [Rule Triggers](#rule-triggers)
@@ -1309,6 +1310,11 @@ Number:Temperature Outside_Temperature "Outside Temperature [SCRIPT(rb:|  input.
 ```
 
 When the item contains `0 °C`, this will produce a formatted state of `0 °C / 32 °F`.
+
+### Profile
+
+You can create an openHAB profile in JRuby that can be applied to item channel links.
+For more details, see {OpenHAB::DSL.profile #profile}.
 
 ## File Based Rules
 
