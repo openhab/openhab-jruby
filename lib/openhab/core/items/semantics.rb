@@ -156,6 +156,13 @@ module OpenHAB
       #   # All items tagged "SmartLightControl"
       #   items.tagged("SmartLightControl")
       #
+      # ## Creating Custom Semantic Tags
+      #
+      # This library provides an experimental support for creating custom semantic tags.
+      # It can be used to augment the standard set of tags from openHAB with additional
+      # tags that will better suit your particular requirements.
+      #
+      # For more information, see {add}
       #
       module Semantics
         GenericItem.include(self)
@@ -188,11 +195,14 @@ module OpenHAB
         #   end
         #
 
+        # @!visibility private
+        TAGS_DB = [org.openhab.core.semantics.model.point.Points,
+                   org.openhab.core.semantics.model.property.Properties,
+                   org.openhab.core.semantics.model.equipment.Equipments,
+                   org.openhab.core.semantics.model.location.Locations].freeze
+
         # import all the semantics constants
-        [org.openhab.core.semantics.model.point.Points,
-         org.openhab.core.semantics.model.property.Properties,
-         org.openhab.core.semantics.model.equipment.Equipments,
-         org.openhab.core.semantics.model.location.Locations].each do |parent_tag|
+        TAGS_DB.each do |parent_tag|
           parent_tag.stream.for_each do |tag|
             const_set(tag.simple_name.to_sym, tag.ruby_class)
           end

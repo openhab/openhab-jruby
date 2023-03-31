@@ -6,6 +6,7 @@
 
 - {OpenHAB::Core::Rules::Registry#scenes rules.scenes} and {OpenHAB::Core::Rules::Registry#scripts rules.scripts}
   are available as convenient shortcuts to filter for rules that are scenes or scripts.
+- Support adding custom semantic tags with {OpenHAB::Core::Items::Semantics.add Semantics.add}
 
 ### Bug Fixes
 

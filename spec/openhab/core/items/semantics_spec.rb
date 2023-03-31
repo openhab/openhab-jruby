@@ -271,4 +271,12 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
       expect(gIndoor.equipments).to match_array([Group_Equipment, NonGroup_Equipment])
     end
   end
+
+  describe "#add" do
+    it "supports creating multiple tags" do
+      allow(Semantics::CustomSemantic).to receive(:add).and_return(true)
+      expect(Semantics::CustomSemantic).to receive(:add).twice
+      Semantics.add(Room1: Semantics::Room, Property2: Semantics::Property)
+    end
+  end
 end
