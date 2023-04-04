@@ -1,6 +1,12 @@
 # JRuby openHAB Scripting Change Log
 
-## [5.0.1](https://github.com/openhab/openhab-jruby/compare/v5.0.0...main)
+## [HEAD](https://github.com/openhab/openhab-jruby/compare/v5.0.1...main)
+
+### Bug Fixes
+
+- Fix {OpenHAB::Core::Items::GenericItem#formatted_state} when state is nil.
+
+## [5.0.1](https://github.com/openhab/openhab-jruby/compare/v5.0.0...v5.0.1)
 
 ### Features
 
