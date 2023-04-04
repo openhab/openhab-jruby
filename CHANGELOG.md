@@ -10,6 +10,7 @@
 ### Bug Fixes
 
 - Fix an error when calling Audio.play_sound specifying the volume but not the sink.
+- Fix `updated` triggers to work with OpenHAB 4.0 due to the [core changes](https://github.com/openhab/openhab-core/pull/3141)
 
 ## [5.0.0](https://github.com/openhab/openhab-jruby/compare/4.45.2...v5.0.0)
 
