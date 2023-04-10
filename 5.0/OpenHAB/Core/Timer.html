@@ -61,7 +61,7 @@
 
           <nav class="nav-links can-hide">
             <div class="nav-item">
-  <a href="https://github.com/ccutrer/openhab-jrubyscripting" target="_blank" rel="noopener noreferrer" class="nav-link external">GitHub
+  <a href="https://github.com/openhab/openhab-jruby" target="_blank" rel="noopener noreferrer" class="nav-link external">GitHub
   <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>
 </div>
 
@@ -73,15 +73,15 @@
       <aside class="sidebar">
         <nav class="nav-links">
           <div class="nav-item">
-  <a href="https://github.com/ccutrer/openhab-jrubyscripting" target="_blank" rel="noopener noreferrer" class="nav-link external">GitHub
+  <a href="https://github.com/openhab/openhab-jruby" target="_blank" rel="noopener noreferrer" class="nav-link external">GitHub
   <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>
 </div>
 
         </nav>
         <div class="page-versions">
   <ul class="version-switcher">
-    <li><a href="/openhab-jrubyscripting/5.0" class="version-button stable">Stable <small>(5.0)</small></a></li>
-    <li><a href="/openhab-jrubyscripting/main" class="version-button main">Latest <small>(main)</small></a></li>
+    <li><a href="/openhab-jruby/5.0" class="version-button stable">Stable <small>(5.0)</small></a></li>
+    <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
   
   
@@ -2278,6 +2278,7 @@
   
   
   
+  
 
         
       </ul>
@@ -2426,19 +2427,6 @@
 
   
   
-  <li class="">
-    <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-0" href="../../Class.html" title="Class (class)">Class</a></span>
-      
-        &lt; Object
-      
-      
-    </span>
-    
-    
-  </li>
-
-  
   
   
   
@@ -2523,6 +2511,19 @@
   
   
   
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-0" href="../../Module.html" title="Module (class)">Module</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
   
   
   
@@ -3137,13 +3138,13 @@ has been scheduled to run later with <span class='object_link'><a href="../DSL.h
       <pre class="lines">
 
 
-92
-93
-94
-95</pre>
+107
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 107</span>
 
 <span class="keyword">def</span> <span class="function">cancel</span>
   <span class="constant">DSL</span>.timers.delete(<span class="predefined-constant">self</span>)
@@ -3284,7 +3285,8 @@ has been scheduled to run later with <span class='object_link'><a href="../DSL.h
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Reschedule timer</p>
+    <p>Reschedule timer.</p>
+<p>If the timer had been cancelled or executed, restart the timer.</p>
 
 
   </div>
@@ -3333,21 +3335,29 @@ If unspecified, the original time is used.</p>
       <pre class="lines">
 
 
-80
-81
 82
 83
 84
-85</pre>
+85
+86
+87
+88
+89
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 82</span>
 
 <span class="keyword">def</span> <span class="function">reschedule</span>(time = <span class="predefined-constant">nil</span>)
-  <span class="constant">Thread</span>.current[<span class="symbol">:openhab_rescheduled_timer</span>] = <span class="predefined-constant">true</span> <span class="keyword">if</span> <span class="constant">Thread</span>.current[<span class="symbol">:openhab_rescheduled_timer</span>] == <span class="predefined-constant">self</span>
-  <span class="constant">DSL</span>.timers.add(<span class="predefined-constant">self</span>)
-  <span class="instance-variable">@timer</span>.reschedule(new_execution_time(time || <span class="instance-variable">@time</span>))
-  <span class="predefined-constant">self</span>
+  <span class="keyword">return</span> reschedule!(time) <span class="keyword">unless</span> id
+
+  <span class="comment"># re-add ourself to the TimerManager's @timers_by_id</span>
+  <span class="constant">DSL</span>.timers.schedule(id) <span class="keyword">do</span> |old_timer|
+    old_timer&amp;.cancel <span class="keyword">unless</span> old_timer.eql?(<span class="predefined-constant">self</span>)
+    <span class="predefined-constant">self</span>.id = <span class="predefined-constant">nil</span>
+    reschedule!(time)
+  <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3457,9 +3467,9 @@ def_delegator <span class="symbol">:@timer</span>, <span class="symbol">:has_ter
 </div>
 
         <footer>
-  Generated on Thu Jan 26 21:35:08 2023 by
+  Generated on Mon Apr 10 22:18:29 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.3).
+  0.9.28 (ruby-2.6.8).
 </footer>
 
       </main>

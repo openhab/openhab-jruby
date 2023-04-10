@@ -61,7 +61,7 @@
 
           <nav class="nav-links can-hide">
             <div class="nav-item">
-  <a href="https://github.com/ccutrer/openhab-jrubyscripting" target="_blank" rel="noopener noreferrer" class="nav-link external">GitHub
+  <a href="https://github.com/openhab/openhab-jruby" target="_blank" rel="noopener noreferrer" class="nav-link external">GitHub
   <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>
 </div>
 
@@ -73,15 +73,15 @@
       <aside class="sidebar">
         <nav class="nav-links">
           <div class="nav-item">
-  <a href="https://github.com/ccutrer/openhab-jrubyscripting" target="_blank" rel="noopener noreferrer" class="nav-link external">GitHub
+  <a href="https://github.com/openhab/openhab-jruby" target="_blank" rel="noopener noreferrer" class="nav-link external">GitHub
   <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>
 </div>
 
         </nav>
         <div class="page-versions">
   <ul class="version-switcher">
-    <li><a href="/openhab-jrubyscripting/5.0" class="version-button stable">Stable <small>(5.0)</small></a></li>
-    <li><a href="/openhab-jrubyscripting/main" class="version-button main">Latest <small>(main)</small></a></li>
+    <li><a href="/openhab-jruby/5.0" class="version-button stable">Stable <small>(5.0)</small></a></li>
+    <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
   
   
@@ -2278,6 +2278,7 @@
   
   
   
+  
 
         
       </ul>
@@ -2426,19 +2427,6 @@
 
   
   
-  <li class="">
-    <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-0" href="Class.html" title="Class (class)">Class</a></span>
-      
-        &lt; Object
-      
-      
-    </span>
-    
-    
-  </li>
-
-  
   
   
   
@@ -2523,6 +2511,19 @@
   
   
   
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-0" href="Module.html" title="Module (class)">Module</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
   
   
   
@@ -2632,7 +2633,7 @@
 <!-- raw HTML omitted -->
 <h1 id="jruby-scripting"><a href="#jruby-scripting" class="header-anchor">#</a>JRuby Scripting <!-- raw HTML omitted --></h1>
 <p>This add-on provides <a href="https://www.jruby.org/">JRuby</a> scripting language for automation rules.
-Also included is <a href="https://ccutrer.github.io/openhab-jrubyscripting/">openhab-jrubyscripting</a>, a fairly high-level Ruby gem to support automation in openHAB.
+Also included is <a href="https://openhab.github.io/openhab-jruby/">openhab-scripting</a>, a fairly high-level Ruby gem to support automation in openHAB.
 It provides native Ruby access to common openHAB functionality within rules including items, things, actions, logging and more.
 If you're new to Ruby, you may want to check out <a href="file.ruby-basics.html">Ruby Basics</a>.</p>
 <ul>
@@ -2712,9 +2713,9 @@ If you're new to Ruby, you may want to check out <a href="file.ruby-basics.html"
 <ul>
 <li>Ruby is designed for programmers' productivity with the idea that programming should be fun for programmers.</li>
 <li>Ruby emphasizes the necessity for software to be understood by humans first and computers second.</li>
-<li>For me, automation is a hobby, I want to enjoy writing automation not fight compilers and interpreters .</li>
+<li>Ruby makes writing automation enjoyable without having to fight with compilers and interpreters.</li>
 <li>Rich ecosystem of tools, including things like Rubocop to help developers write clean code and RSpec to test the libraries.</li>
-<li>Ruby is really good at letting one express intent and creating a DSL within Ruby to make that expression easier.</li>
+<li>Ruby is really good at letting one express intent and create a DSL to make that expression easier.</li>
 </ul>
 <h3 id="design-points"><a href="#design-points" class="header-anchor">#</a>Design points <!-- raw HTML omitted --></h3>
 <ul>
@@ -2742,15 +2743,17 @@ If you're new to Ruby, you may want to check out <a href="file.ruby-basics.html"
 <h2 id="installation"><a href="#installation" class="header-anchor">#</a>Installation</h2>
 <h3 id="prerequisites"><a href="#prerequisites" class="header-anchor">#</a>Prerequisites <!-- raw HTML omitted --></h3>
 <ol>
-<li>openHAB 3.3+</li>
+<li>openHAB 3.4+</li>
 <li>The JRuby Scripting Language Addon</li>
 </ol>
 <h3 id="from-the-user-interface"><a href="#from-the-user-interface" class="header-anchor">#</a>From the User Interface <!-- raw HTML omitted --></h3>
 <ol>
-<li>Go to <code>Settings -&gt; Add-ons -&gt; Automation</code> and install the jrubyscripting automation addon following the <a href="https://www.openhab.org/docs/configuration/addons.html">openHAB instructions</a></li>
+<li>Go to <code>Settings -&gt; Add-ons -&gt; Automation</code> and install the jrubyscripting automation addon
+following the <a href="https://www.openhab.org/docs/configuration/addons.html">openHAB instructions</a>.
+In openHAB 4.0+ the defaults are set so the next step can be skipped.</li>
 <li>Go to <code>Settings -&gt; Other Services -&gt; JRuby Scripting</code>:
 <ul>
-<li><strong>Ruby Gems</strong>: <code>openhab-jrubyscripting=~&gt;5.0</code></li>
+<li><strong>Ruby Gems</strong>: <code>openhab-scripting=~&gt;5.0.0</code></li>
 <li><strong>Require Scripts</strong>: <code>openhab/dsl</code> (not required, but recommended)</li>
 </ul>
 </li>
@@ -2758,29 +2761,22 @@ If you're new to Ruby, you may want to check out <a href="file.ruby-basics.html"
 <h3 id="using-files"><a href="#using-files" class="header-anchor">#</a>Using Files <!-- raw HTML omitted --></h3>
 <ol>
 <li>
-<p>Edit <code>&lt;OPENHAB_CONF&gt;/services/addons.cfg</code> and ensure that <code>jrubyscripting</code> is included in an uncommented <code>automation=</code> list of automations to install.</p>
+<p>Edit <code>&lt;OPENHAB_CONF&gt;/services/addons.cfg</code> and ensure that <code>jrubyscripting</code> is included in
+an uncommented <code>automation=</code> list of automations to install.
+In openHAB 4.0+ the defaults are set so the next step can be skipped.</p>
 </li>
 <li>
-<p>Optionally configure JRuby openHAB services</p>
+<p>Configure JRuby openHAB services</p>
 <p>Create a file called <code>jruby.cfg</code> in <code>&lt;OPENHAB_CONF&gt;/services/</code> with the following content:</p>
-<pre class="code ruby"><code class="ruby">org.openhab.automation.jrubyscripting<span class="symbol">:gems=</span>openhab-jrubyscripting=~&gt;<span class="float">5.0</span>
-org.openhab.automation.jrubyscripting<span class="symbol">:require=</span>openhab/dsl
+<pre class="code ini"><code class="ini">org.openhab.automation.jrubyscripting:gems=openhab-scripting=~&gt;5.0.0
+org.openhab.automation.jrubyscripting:require=openhab/dsl
 </code></pre>
-<p>This configuration with the openhab-jrubyscripting gem specified with <a href="https://thoughtbot.com/blog/rubys-pessimistic-operator">pessimistic versioning</a> will install any version of openhab-jrubyscripting greater than or equal to 5.0 but less than 6.0.
-On system restart if any (non-breaking) new versions of the library are available they will automatically be installed.</p>
 </li>
 </ol>
-<h3 id="upgrading"><a href="#upgrading" class="header-anchor">#</a>Upgrading <!-- raw HTML omitted --></h3>
-<p>Depending on the versioning selected in the <code>jruby.cfg</code> or the gems list in the user interface, upgrading will either be automatic after an openHAB restart or manual.
-For manual upgrades select the exact version of the gem. For example, <code>org.openhab.automation.jrubyscripting:gems=openhab-jrubyscripting=5.0.0</code> will install and stay at version 5.0.0.
-To upgrade to version 5.0.1, change the configuration to <code>org.openhab.automation.jrubyscripting:gems=openhab-jrubyscripting=5.0.1</code>.
-To automatically upgrade the gem, it is recommended to use pessimistic versioning: <code>org.openhab.automation.jrubyscripting:gems=openhab-jrubyscripting=~&gt;5.0</code>.
-This will install at least version 5.0 and on every restart automatically install any version that is less than 6.0.
-This ensures that fixes and new features are available without introducing any breaking changes.</p>
 <h2 id="configuration"><a href="#configuration" class="header-anchor">#</a>Configuration</h2>
 <p>After installing this add-on, you will find configuration options in the openHAB portal under <em>Settings -&gt; Other Services -&gt; JRuby Scripting</em>.
 Alternatively, JRuby configuration parameters may be set by creating a <code>jruby.cfg</code> file in <code>conf/services/</code>.</p>
-<p>By default this add-on includes the <a href="https://github.com/ccutrer/openhab-jrubyscripting/">openhab-jrubyscripting</a> Ruby gem and automatically <code>require</code>s it.
+<p>By default this add-on includes the <a href="https://github.com/openhab/openhab-jruby">openhab-scripting</a> Ruby gem and automatically <code>require</code>s it.
 This allows the use of <span class='object_link'><a href="OpenHAB/DSL.html#items-class_method" title="OpenHAB::DSL.items (method)">items</a></span>, <span class='object_link'><a href="OpenHAB/DSL.html#rules-class_method" title="OpenHAB::DSL.rules (method)">rules</a></span>, <span class='object_link'><a href="OpenHAB/DSL.html#shared_cache-class_method" title="OpenHAB::DSL.shared_cache (method)">shared_cache</a></span> and other objects in your scripts.
 This functionality can be disabled for users who prefer to manage their own gems and <code>require</code>s via the add-on configuration options.
 Simply change the <code>gems</code> and <code>require</code> configuration settings.</p>
@@ -2798,7 +2794,7 @@ Simply change the <code>gems</code> and <code>require</code> configuration setti
 </tr>
 <tr>
 <td><code>gems</code></td>
-<td>A list of gems to install on start up or settings change. <!-- raw HTML omitted --><!-- raw HTML omitted -->Default: <code>openhab-jrubyscripting=~&gt;5.0.0</code></td>
+<td>A list of gems to install. <!-- raw HTML omitted --><!-- raw HTML omitted -->Default: <code>openhab-scripting=~&gt;5.0.0</code></td>
 </tr>
 <tr>
 <td><code>check_update</code></td>
@@ -2813,6 +2809,10 @@ Simply change the <code>gems</code> and <code>require</code> configuration setti
 <td>Search path for user libraries. <!-- raw HTML omitted --><!-- raw HTML omitted -->Default: <code>$OPENHAB_CONF/automation/ruby/lib</code></td>
 </tr>
 <tr>
+<td><code>dependency_tracking</code></td>
+<td>Enable dependency tracking. <!-- raw HTML omitted --><!-- raw HTML omitted -->Default: <code>true</code></td>
+</tr>
+<tr>
 <td><code>local_context</code></td>
 <td>See notes below. <!-- raw HTML omitted --><!-- raw HTML omitted -->Default: <code>singlethread</code></td>
 </tr>
@@ -2823,7 +2823,7 @@ Simply change the <code>gems</code> and <code>require</code> configuration setti
 </tbody>
 </table>
 <p>When using file-based configuration, these parameters must be prefixed with <code>org.openhab.automation.jrubyscripting:</code>, for example:</p>
-<pre class="code text"><code class="text">org.openhab.automation.jrubyscripting:gems=openhab-jrubyscripting=~&gt;5.0
+<pre class="code ini"><code class="ini">org.openhab.automation.jrubyscripting:gems=openhab-scripting=~&gt;5.0
 org.openhab.automation.jrubyscripting:require=openhab/dsl
 </code></pre>
 <h3 id="gem_home"><a href="#gem_home" class="header-anchor">#</a>gem_home <!-- raw HTML omitted --></h3>
@@ -2831,12 +2831,44 @@ org.openhab.automation.jrubyscripting:require=openhab/dsl
 You can use <code>{RUBY_ENGINE_VERSION}</code>, <code>{RUBY_ENGINE}</code> and/or <code>{RUBY_VERSION}</code> replacements in this value
 to automatically point to a new directory when the addon is updated with a new version of JRuby.</p>
 <h3 id="gems"><a href="#gems" class="header-anchor">#</a>gems <!-- raw HTML omitted --></h3>
-<p>A comma separated list of <a href="https://rubygems.org/">Ruby Gems</a> to install.
-The default installs the version of the helper for this version of openHAB.</p>
-<p>Multiple version specifiers can be added by separating them with a semicolon.</p>
-<p>Example with multiple version specifiers:</p>
-<pre class="code text"><code class="text">org.openhab.automation.jrubyscripting:gems=library= &gt;= 2.2.0; &lt; 3.0, another-gem= &gt; 4.0.0.a; &lt; 5
-</code></pre>
+<p>A comma separated list of <a href="https://rubygems.org/">Ruby Gems</a> to install.</p>
+<p>The default installs the version of the helper for this version of openHAB.
+When overriding the default, be sure to still include the <code>openhab-scripting</code> gem in the
+list of gems to install.</p>
+<p>Each gem can have version specifiers which uses
+<a href="https://thoughtbot.com/blog/rubys-pessimistic-operator">pessimistic versioning</a>.
+Multiple version specifiers can be added by separating them with a semicolon.</p>
+<p>Examples:</p>
+<table>
+<thead>
+<tr>
+<th>gem setting</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>openhab-scripting</code></td>
+<td>install the latest version of <code>openhab-scripting</code> gem</td>
+</tr>
+<tr>
+<td><code>openhab-scripting=~&gt;5.0.0</code></td>
+<td>install the latest version 5.0.x but not 5.1.x</td>
+</tr>
+<tr>
+<td><code>openhab-scripting=~&gt;5.0</code></td>
+<td>install the latest version 5.x but not 6.x</td>
+</tr>
+<tr>
+<td><code>openhab-scripting=~&gt;5.0, faraday=~&gt;2.7;&gt;=2.7.4</code></td>
+<td>install <code>openhab-scripting</code> gem version 5.x and <code>faraday</code> gem version 2.7.4 or higher, but less than 3.0</td>
+</tr>
+<tr>
+<td><code>gem1= &gt;= 2.2.1; &lt;= 2.2.5</code></td>
+<td>install <code>gem1</code> gem version 2.2.1 or above, but less than or equal to version 2.2.5</td>
+</tr>
+</tbody>
+</table>
 <h3 id="check_update"><a href="#check_update" class="header-anchor">#</a>check_update <!-- raw HTML omitted --></h3>
 <p>Check RubyGems for updates to the above gems when openHAB starts or JRuby settings are changed.
 Otherwise it will try to fulfil the requirements with locally installed gems, and you can manage them yourself
@@ -2846,6 +2878,10 @@ with an external Ruby by setting the same GEM_HOME.</p>
 The default is to require the helper library.</p>
 <h3 id="rubylib"><a href="#rubylib" class="header-anchor">#</a>rubylib <!-- raw HTML omitted --></h3>
 <p>Search path for user libraries. Separate each path with a colon (semicolon in Windows).</p>
+<h3 id="dependency_tracking"><a href="#dependency_tracking" class="header-anchor">#</a>dependency_tracking <!-- raw HTML omitted --></h3>
+<p>Dependency tracking allows your scripts to automatically reload when one of its dependencies is updated.
+You may want to disable dependency tracking if you plan on editing or updating a shared library,
+but don't want all your scripts to reload until you can test it.</p>
 <h3 id="local_context"><a href="#local_context" class="header-anchor">#</a>local_context <!-- raw HTML omitted --></h3>
 <p>The local context holds Ruby runtime, name-value pairs for sharing variables between Java and Ruby.
 Valid values are: <code>singleton</code>, <code>threadsafe</code>, <code>singlethread</code>, or <code>concurrent</code>.
@@ -2997,7 +3033,7 @@ gTest.members
 <span class="comment"># direct members and all their descendents</span>
 gTest.all_members
 </code></pre>
-<p>Group members work like a <a href="https://ruby-doc.org/core-2.6/Array.html">Ruby array</a>
+<p>Group members work like a <a href="https://docs.ruby-lang.org/en/master/Array.html">Ruby array</a>
 so you can use <code>&amp;</code> for intersection, <code>|</code> for union, and <code>-</code> for difference.</p>
 <pre class="code ruby"><code class="ruby">curtains_in_family_room = gFamilyRoom.members &amp; gCurtains.members
 </code></pre>
@@ -3011,7 +3047,7 @@ gTest.all_members.each <span class="keyword">do</span> |item|
   <span class="comment"># process item</span>
 <span class="keyword">end</span>
 </code></pre>
-<p>Group members are also <a href="https://ruby-doc.org/core-3.1.2/Enumerable.html">Enumerable</a>, so can use any of tthose included methods:</p>
+<p>Group members are also <a href="https://docs.ruby-lang.org/en/master/Enumerable.html">Enumerable</a>, so can use any of tthose included methods:</p>
 <pre class="code ruby"><code class="ruby">members_that_are_on = gTest.members.select(&amp;<span class="symbol">:on?</span>)
 
 <span class="comment"># exclude state</span>
@@ -3020,7 +3056,7 @@ members_that_are_not_on = gTest.members.reject(&amp;<span class="symbol">:on?</s
 <span class="comment"># Filter with code:</span>
 high_temperatures = gTemperatures.members.select(&amp;<span class="symbol">:state?</span>).select { |item| item.state &gt; <span class="integer">30</span> | <span class="string"><span class="delimiter">'</span><span class="content">°C</span><span class="delimiter">'</span></span> }
 </code></pre>
-<p>See also <a href="https://ruby-doc.org/core-2.6/Array.html#class-Array-label-Accessing+Elements">Accessing elements in a Ruby array</a>.</p>
+<p>See also <a href="https://docs.ruby-lang.org/en/master/Array.html#class-Array-label-Accessing+Elements">Accessing elements in a Ruby array</a>.</p>
 <p>Get a sorted list of Group members matching a condition:</p>
 <pre class="code ruby"><code class="ruby">sorted_items_by_battery_level = gBattery.members
                                         .select(&amp;<span class="symbol">:state?</span>) <span class="comment"># only include non NULL / UNDEF members</span>
@@ -3084,7 +3120,7 @@ For example <code>up?</code>, <code>down?</code>, <code>closed?</code>, <code>op
   logger.info <span class="string"><span class="delimiter">'</span><span class="content">My_Item is not NULL nor UNDEF</span><span class="delimiter">'</span></span>
 <span class="keyword">end</span>
 </code></pre>
-<h5 id="compare-items-state"><a href="#compare-items-state" class="header-anchor">#</a>Compare Item's State <!-- raw HTML omitted --></h5>
+<h5 id="comparing-items-state"><a href="#comparing-items-state" class="header-anchor">#</a>Comparing Item's State <!-- raw HTML omitted --></h5>
 <pre class="code ruby"><code class="ruby"><span class="constant">String_Item</span>.state == <span class="string"><span class="delimiter">'</span><span class="content">test string</span><span class="delimiter">'</span></span>
 <span class="constant">Number_Item</span>.state &gt; <span class="float">5.3</span>
 items[<span class="string"><span class="delimiter">'</span><span class="content">Number_Item</span><span class="delimiter">'</span></span>].state == <span class="integer">10</span>
@@ -3096,26 +3132,48 @@ items[<span class="string"><span class="delimiter">'</span><span class="content"
 <span class="constant">Indoor_Temperature</span>.state - <span class="constant">Outdoor_Temperature</span>.state &gt; <span class="integer">5</span> | <span class="string"><span class="delimiter">'</span><span class="content">°C</span><span class="delimiter">'</span></span>
 </code></pre>
 <p>See <span class='object_link'><a href="OpenHAB/DSL.html#unit-class_method" title="OpenHAB::DSL.unit (method)">unit block</a></span></p>
+<h5 id="range-checking"><a href="#range-checking" class="header-anchor">#</a>Range checking <!-- raw HTML omitted --></h5>
+<p>Types that are comparable, such as <span class='object_link'><a href="OpenHAB/Core/Types/StringType.html" title="OpenHAB::Core::Types::StringType (class)">StringType</a></span>, <span class='object_link'><a href="OpenHAB/Core/Types/DateTimeType.html" title="OpenHAB::Core::Types::DateTimeType (class)">DateTimeType</a></span>, <span class='object_link'><a href="OpenHAB/Core/Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span>, <span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span>,
+include Ruby's <a href="https://docs.ruby-lang.org/en/master/Comparable.html">Comparable</a> module which provides
+the handy <a href="https://docs.ruby-lang.org/en/master/Comparable.html#method-i-between-3F">between?</a> method.</p>
+<pre class="code ruby"><code class="ruby"><span class="constant">String_Item</span>.update(<span class="string"><span class="delimiter">&quot;</span><span class="content">Freddy</span><span class="delimiter">&quot;</span></span>)
+<span class="constant">String_Item</span>.state.between?(<span class="string"><span class="delimiter">&quot;</span><span class="content">E</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">G</span><span class="delimiter">&quot;</span></span>) <span class="comment"># =&gt; true</span>
+
+<span class="constant">Number_Item</span>.update(<span class="integer">10</span>)
+<span class="keyword">if</span> <span class="constant">Number_Item</span>.state.between?(<span class="integer">5</span>, <span class="integer">20</span>) 
+  logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">Number_Item falls within the expected range</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span>
+
+<span class="constant">Temperature_Item</span>.update(<span class="integer">16</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)
+<span class="constant">Temperature_Item</span>.state.between?(<span class="integer">20</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>, <span class="integer">24</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>) <span class="comment"># =&gt; false</span>
+</code></pre>
+<p>Alternatively, a Ruby <a href="https://docs.ruby-lang.org/en/master/Range.html">range</a> can be used. This can be
+handy for excluding the end of the range with the <code>...</code> operator.</p>
+<pre class="code ruby"><code class="ruby"><span class="keyword">if</span> (<span class="integer">5</span>..<span class="integer">10</span>).cover?(<span class="constant">Number_Item</span>.state)
+  logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">Number_Item is in the expected range</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span>
+
+((<span class="integer">20</span>|<span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)..(<span class="integer">24</span>|<span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)).cover?(<span class="constant">Temperature_Item</span>.state)
+</code></pre>
 <h5 id="loose-type-comparisons"><a href="#loose-type-comparisons" class="header-anchor">#</a>Loose Type Comparisons <!-- raw HTML omitted --></h5>
 <p>Some openHAB item types can accept different command types.
 For example, a <span class='object_link'><a href="OpenHAB/Core/Items/DimmerItem.html" title="OpenHAB::Core::Items::DimmerItem (class)">DimmerItem</a></span> can accept a command with an <span class='object_link'><a href="OpenHAB/Core/Types/OnOffType.html" title="OpenHAB::Core::Types::OnOffType (class)">OnOffType</a></span>, <span class='object_link'><a href="OpenHAB/Core/Types/IncreaseDecreaseType.html" title="OpenHAB::Core::Types::IncreaseDecreaseType (class)">IncreaseDecreaseType</a></span> or a <span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span>.
-However, ultimately an item only stores its state in its native type, e.g. a <span class='object_link'><a href="OpenHAB/Core/Items/DimmerItem.html" title="OpenHAB::Core::Items::DimmerItem (class)">DimmerItems</a></span>'s native type is <span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span>.</p>
-<p>Comparisons between two compatible types will return true when applicable, for example:</p>
-<ul>
-<li><code>0</code> (<span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span>) equals <span class='object_link'><a href="OpenHAB/Core/Types/OnOffType.html#OFF-constant" title="OpenHAB::Core::Types::OnOffType::OFF (constant)">OFF</a></span> and the <code>off?</code> predicate will return true</li>
-<li>A positive <span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span> equals <span class='object_link'><a href="OpenHAB/Core/Types/OnOffType.html#ON-constant" title="OpenHAB::Core::Types::OnOffType::ON (constant)">ON</a></span> and the <code>on?</code> predicate will return true</li>
-</ul>
+However, ultimately an item only stores its state in its native type, e.g. a <span class='object_link'><a href="OpenHAB/Core/Items/DimmerItem.html" title="OpenHAB::Core::Items::DimmerItem (class)">DimmerItems</a></span>'s native type is <span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span>.
+In some contexts, you don't care about the precise value of a particular state, and just want to know if it fits the general definition of <span class='object_link'><a href="OpenHAB/Core/Types/OnOffType.html#ON-constant" title="OpenHAB::Core::Types::OnOffType::ON (constant)">ON</a></span>, etc.
+You can either explicitly convert to the general type, <em>or</em> all of the state predicate methods available on <span class='object_link'><a href="OpenHAB/Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span>, <span class='object_link'><a href="OpenHAB/Core/Events/ItemStateEvent.html" title="OpenHAB::Core::Events::ItemStateEvent (class)">ItemStateEvent</a></span>, <span class='object_link'><a href="OpenHAB/Core/Events/ItemStateChangedEvent.html" title="OpenHAB::Core::Events::ItemStateChangedEvent (class)">ItemStateChangedEvent</a></span>, <span class='object_link'><a href="OpenHAB/Core/Events/ItemCommandEvent.html" title="OpenHAB::Core::Events::ItemCommandEvent (class)">ItemCommandEvent</a></span>, as well as specific types such as <span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span> and <span class='object_link'><a href="OpenHAB/Core/Types/HSBType.html" title="OpenHAB::Core::Types::HSBType (class)">HSBType</a></span>, will do the conversion internally.</p>
 <pre class="code ruby"><code class="ruby"><span class="constant">DimmerItem1</span>.update(<span class="integer">10</span>)
 sleep <span class="integer">1</span>
 <span class="constant">DimmerItem1</span>.state == <span class="integer">10</span> <span class="comment"># =&gt; true</span>
-<span class="constant">DimmerItem1</span>.state == <span class="constant">ON</span> <span class="comment"># =&gt; true</span>
+<span class="constant">DimmerItem1</span>.state == <span class="constant">ON</span> <span class="comment"># =&gt; false</span>
+<span class="constant">DimmerItem1</span>.state.as(<span class="constant">OnOffType</span>) == <span class="constant">ON</span> <span class="comment"># =&gt; true</span>
+<span class="constant">DimmerItem1</span>.state.on? <span class="comment"># =&gt; true</span>
 <span class="constant">DimmerItem1</span>.on? <span class="comment"># =&gt; true</span>
 <span class="constant">DimmerItem1</span>.off? <span class="comment"># =&gt; false</span>
-</code></pre>
-<pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">command</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+
+rule <span class="string"><span class="delimiter">'</span><span class="content">command</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   received_command <span class="constant">DimmerItem1</span>
   run <span class="keyword">do</span> |event|
-    <span class="keyword">if</span> event.command.on?
+    <span class="keyword">if</span> event.on?
       <span class="comment"># This will be executed even when the command is a positive PercentType</span>
       <span class="comment"># instead of an actual ON command</span>
       logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">DimmerItem1 is being turned on</span><span class="delimiter">&quot;</span></span>)
@@ -3124,52 +3182,6 @@ sleep <span class="integer">1</span>
 <span class="keyword">end</span>
 
 <span class="constant">DimmerItem1</span> &lt;&lt; <span class="integer">100</span> <span class="comment"># =&gt; This will trigger the logger.info above</span>
-</code></pre>
-<h5 id="bypassing-loose-type-comparisons"><a href="#bypassing-loose-type-comparisons" class="header-anchor">#</a>Bypassing Loose Type-Comparisons <!-- raw HTML omitted --></h5>
-<p>If at any point you want to bypass loose type conversions, use <code>eql?</code>.</p>
-<pre class="code ruby"><code class="ruby"><span class="constant">DimmerItem1</span>.update(<span class="integer">10</span>)
-sleep <span class="integer">1</span>
-logger.error <span class="constant">DimmerItem1</span>.eql?(<span class="integer">10</span>) <span class="comment"># =&gt; false. It compares the _item_ object not its state</span>
-logger.error <span class="constant">DimmerItem1</span>.eql?(items[<span class="string"><span class="delimiter">'</span><span class="content">DimmerItem1</span><span class="delimiter">'</span></span>]) <span class="comment"># =&gt; true. It compares the _item_ object</span>
-logger.error <span class="constant">DimmerItem1</span>.state.eql?(<span class="constant">ON</span>) <span class="comment"># =&gt; false</span>
-logger.error <span class="constant">DimmerItem1</span>.state.eql?(<span class="integer">10</span>) <span class="comment"># =&gt; false</span>
-logger.error <span class="constant">DimmerItem1</span>.state.eql?(<span class="constant">PercentType</span>.new(<span class="integer">10</span>)) <span class="comment"># =&gt; true</span>
-</code></pre>
-<h5 id="strict-type-comparisons"><a href="#strict-type-comparisons" class="header-anchor">#</a>Strict Type-Comparisons <!-- raw HTML omitted --></h5>
-<p>Sometimes it is critical to know the exact command being sent.
-For example, a rule may need to distinguish between <span class='object_link'><a href="OpenHAB/Core/Types/OnOffType.html#ON-constant" title="OpenHAB::Core::Types::OnOffType::ON (constant)">ON</a></span> vs. a <span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span> command.
-In this instance, Ruby's case equality operator <code>===</code> can be used.
-It will only evaluate to true if the two operands have the same type.
-The strict type comparison applies to Ruby's <code>case</code> statement because it is implemented using the case equality operator <code>===</code>.</p>
-<pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">command</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
-  received_command <span class="constant">DimmerItem1</span>
-  run <span class="keyword">do</span> |event|
-    <span class="keyword">case</span> event.command
-    <span class="keyword">when</span> <span class="constant">ON</span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">DimmerItem1 received an ON command</span><span class="delimiter">&quot;</span></span>)
-    <span class="keyword">when</span> <span class="constant">OFF</span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">DimmerItem1 received an OFF command</span><span class="delimiter">&quot;</span></span>)
-    <span class="keyword">when</span> <span class="integer">0</span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">DimmerItem1 received 0 percent</span><span class="delimiter">&quot;</span></span>)
-    <span class="keyword">when</span> <span class="integer">1</span>..<span class="integer">99</span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">DimmerItem1 received between 1 and 99 percent</span><span class="delimiter">&quot;</span></span>)
-    <span class="keyword">when</span> <span class="integer">100</span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">DimmerItem1 received 100 percent</span><span class="delimiter">&quot;</span></span>)
-    <span class="keyword">when</span> <span class="constant">INCREASE</span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Increase</span><span class="delimiter">&quot;</span></span>)
-    <span class="keyword">when</span> <span class="constant">DECREASE</span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Decrease</span><span class="delimiter">&quot;</span></span>)
-    <span class="keyword">when</span> <span class="constant">REFRESH</span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Refresh</span><span class="delimiter">&quot;</span></span>)
-    <span class="keyword">end</span>
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
-
-</code></pre>
-<p>Regular expressions can still be used on a <span class='object_link'><a href="OpenHAB/Core/Types/StringType.html" title="OpenHAB::Core::Types::StringType (class)">StringType</a></span> command.</p>
-<pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">command</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
-  received_command <span class="constant">StringItem1</span>
-  run <span class="keyword">do</span> |event|
-    <span class="keyword">case</span> event.command
-    <span class="keyword">when</span> <span class="regexp"><span class="delimiter">/</span><span class="content">abc</span><span class="delimiter">/</span></span> <span class="keyword">then</span> logger.info(<span class="string"><span class="delimiter">'</span><span class="content">Command contains &quot;abc&quot;</span><span class="delimiter">'</span></span>)
-    <span class="keyword">else</span> logger.info(<span class="string"><span class="delimiter">'</span><span class="content">Received something else</span><span class="delimiter">'</span></span>)
-    <span class="keyword">end</span>
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
-
-<span class="constant">StringItem1</span> &lt;&lt; <span class="string"><span class="delimiter">'</span><span class="content">123 abc 456</span><span class="delimiter">'</span></span> <span class="comment"># This will log 'Command contains &quot;abc&quot;'</span>
 </code></pre>
 <h4 id="metadata"><a href="#metadata" class="header-anchor">#</a>Metadata</h4>
 <p>Metadata is accessed through <span class='object_link'><a href="OpenHAB/Core/Items/Item.html#metadata-instance_method" title="OpenHAB::Core::Items::Item#metadata (method)">Item#metadata</a></span>.</p>
@@ -3261,7 +3273,7 @@ This can be changed by assigning a new logger locally.</p>
 This behaviour is due to <a href="https://logging.apache.org/log4j/2.x/">log4j2</a> requiring definition for each logger prefix.</p>
 <pre class="code ruby"><code class="ruby">logger = <span class="constant">OpenHAB</span>::<span class="constant">Log</span>.logger(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.custom</span><span class="delimiter">&quot;</span></span>)
 </code></pre>
-<p>The <span class='object_link'><a href="OpenHAB/Logger.html" title="OpenHAB::Logger (class)">logger</a></span> is similar to a standard <a href="https://ruby-doc.org/stdlib-3.1.2/libdoc/logger/rdoc/Logger.html">Ruby Logger</a>.
+<p>The <span class='object_link'><a href="OpenHAB/Logger.html" title="OpenHAB::Logger (class)">logger</a></span> is similar to a standard <a href="https://docs.ruby-lang.org/en/master/Logger.html">Ruby Logger</a>.
 Supported logging functions include:</p>
 <ul>
 <li><code>logger.log(severity, obj)</code></li>
@@ -3277,7 +3289,7 @@ Additionally, all of these methods can take a <a href="https://ruby-doc.com/docs
 <h3 id="timers"><a href="#timers" class="header-anchor">#</a>Timers</h3>
 <pre class="code ruby"><code class="ruby">sleep <span class="float">1.5</span> <span class="comment"># sleep for 1.5 seconds</span>
 </code></pre>
-<p>See Ruby docs on <a href="https://ruby-doc.org/core-2.6/Kernel.html#method-i-sleep">sleep</a>.</p>
+<p>See Ruby docs on <a href="https://docs.ruby-lang.org/en/master/Kernel.html#method-i-sleep">sleep</a>.</p>
 <p><code>sleep</code> should be avoided if possible. A <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#delay-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#delay (method)">delay</a></span> can be inserted in between two execution blocks to achieve the same result. This delay is implemented with a timer.
 This is available only on file-based rules.</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">delay something</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -3402,12 +3414,12 @@ shared_count[<span class="symbol">:counter</span>] = count + <span class="intege
 <li>Java <span class='object_link'><a href="OpenHAB/CoreExt/Java/ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span> - represents a specific instance with a date and time</li>
 <li>Java <span class='object_link'><a href="OpenHAB/CoreExt/Java/Duration.html" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span></li>
 <li>Java <span class='object_link'><a href="OpenHAB/CoreExt/Java/Period.html" title="OpenHAB::CoreExt::Java::Period (class)">Period</a></span></li>
-<li>Ruby <a href="https://ruby-doc.org/stdlib-2.6.8/libdoc/date/rdoc/Date.html">Date</a> - represents a date with no time</li>
-<li>Ruby <a href="https://ruby-doc.org/core/Time.html">Time</a> - represents a specific instant with a date and time</li>
-<li>Ruby <a href="https://ruby-doc.org/stdlib-2.6.8/libdoc/date/rdoc/DateTime.html">DateTime</a> - represents a specific instant with a date and time</li>
+<li>Ruby <a href="https://docs.ruby-lang.org/en/master/Date.html">Date</a> - represents a date with no time</li>
+<li>Ruby <a href="https://docs.ruby-lang.org/en/master/Time.html">Time</a> - represents a specific instant with a date and time</li>
+<li>Ruby <a href="https://docs.ruby-lang.org/en/master/DateTime.html">DateTime</a> - represents a specific instant with a date and time</li>
 </ul>
 <h4 id="durations"><a href="#durations" class="header-anchor">#</a>Durations <!-- raw HTML omitted --></h4>
-<p>Ruby <a href="https://ruby-doc.org/core-2.6.8/Integer.html">integers</a> and <a href="https://ruby-doc.org/core-2.6.8/Float.html">floats</a> are extended with several methods to support durations.
+<p>Ruby <a href="https://docs.ruby-lang.org/en/master/Integer.html">integers</a> and <a href="https://docs.ruby-lang.org/en/master/Float.html">floats</a> are extended with several methods to support durations.
 These methods create a new <span class='object_link'><a href="OpenHAB/CoreExt/Java/Duration.html" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span> or <span class='object_link'><a href="OpenHAB/CoreExt/Java/Period.html" title="OpenHAB::CoreExt::Java::Period (class)">Period</a></span> object that is used by the <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#every-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#every (method)">every</a></span> trigger, <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#delay-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#delay (method)">delay</a></span> block, the for option of <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#changed-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#changed (method)">changed</a></span> triggers, and <span class='object_link'><a href="OpenHAB/Core/Timer.html" title="OpenHAB::Core::Timer (class)">timers</a></span>.</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">run every 30 seconds</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   every <span class="integer">30</span>.seconds
@@ -3434,7 +3446,7 @@ When comparing with a type that's missing more generic data, it will be filled i
 I.e. comparing a time to a month, the month will be assumed to be in the same year as the time.</p>
 <pre class="code ruby"><code class="ruby"><span class="comment"># Get current date/time</span>
 now = <span class="constant">ZonedDateTime</span>.now
-one_hour_from_now = <span class="constant">ZonedDateTime</span>.now + <span class="integer">30</span>.minutes
+one_hour_from_now = <span class="constant">ZonedDateTime</span>.now + <span class="integer">60</span>.minutes
 one_hour_from_now = <span class="integer">1</span>.hour.from_now <span class="comment"># or use the simpler helper method that also returns a ZonedDateTime</span>
 <span class="comment"># Or use Ruby time</span>
 ruby_now = <span class="constant">Time</span>.now
@@ -3465,8 +3477,8 @@ ruby_now = <span class="constant">Time</span>.now
 <span class="comment"># Explicit conversions</span>
 <span class="constant">ZonedDateTime</span>.now.to_time
 <span class="constant">Time</span>.now.to_zoned_date_time
-</code></pre>
-<pre class="code ruby"><code class="ruby"><span class="comment"># You can parse string as time</span>
+
+<span class="comment"># You can parse string as time</span>
 wake_up_time = <span class="constant">LocalTime</span>.parse(<span class="string"><span class="delimiter">&quot;</span><span class="content">6:00 am</span><span class="delimiter">&quot;</span></span>)
 
 <span class="comment"># Compare now against LocalTime</span>
@@ -3478,13 +3490,13 @@ wake_up_time = <span class="constant">LocalTime</span>.parse(<span class="string
 <span class="keyword">if</span> <span class="constant">Time</span>.now &gt;= wake_up_time
   <span class="constant">Wake_Up_Alarm</span>.on
 <span class="keyword">end</span>
-</code></pre>
-<pre class="code ruby"><code class="ruby"><span class="comment"># Get today's start of the day (midnight)</span>
+
+<span class="comment"># Get today's start of the day (midnight)</span>
 start_of_day = <span class="constant">ZonedDateTime</span>.now.with(<span class="constant">LocalTime</span>::<span class="constant">MIDNIGHT</span>)
 <span class="comment"># or</span>
 start_of_day = <span class="constant">LocalTime</span>::<span class="constant">MIDNIGHT</span>.to_zoned_date_time
-</code></pre>
-<pre class="code ruby"><code class="ruby"><span class="comment"># Comparing ZonedDateTime against LocalTime with `&lt;`</span>
+
+<span class="comment"># Comparing ZonedDateTime against LocalTime with `&lt;`</span>
 max = <span class="constant">Solar_Power</span>.maximum_since(<span class="integer">24</span>.hours.ago)
 <span class="keyword">if</span> max.timestamp &lt; <span class="constant">LocalTime</span>::<span class="constant">NOON</span>
   logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">Max solar power </span><span class="inline"><span class="inline-delimiter">#{</span>max<span class="inline-delimiter">}</span></span><span class="content"> happened before noon, at: </span><span class="inline"><span class="inline-delimiter">#{</span>max.timestamp<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
@@ -3511,8 +3523,8 @@ elapsed_time = <span class="constant">ZonedDateTime</span>.now - <span class="co
 <span class="constant">Motion_Sensor</span>.last_update &lt; <span class="constant">Light_Item</span>.last_update - <span class="integer">10</span>.minutes
 <span class="comment"># is the same as:</span>
 <span class="constant">Motion_Sensor</span>.last_update.before?(<span class="constant">Light_Item</span>.last_update.minus_minutes(<span class="integer">10</span>))
-</code></pre>
-<pre class="code ruby"><code class="ruby"><span class="comment"># Getting Epoch Second</span>
+
+<span class="comment"># Getting Epoch Second</span>
 <span class="constant">Time</span>.now.to_i
 <span class="constant">ZonedDateTime</span>.now.to_i
 <span class="constant">ZonedDateTime</span>.now.to_epoch_second
@@ -3827,7 +3839,7 @@ play_sound <span class="string"><span class="delimiter">&quot;</span><span class
 <p>The rule definition itself is just Ruby code, which means you can use code to generate your rules.
 Take care when doing this as the the items/groups are processed when the rules file is processed, meaning that new items/groups will not automatically generate new rules.</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Log whenever a Virtual Switch Changes</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
-  items.select { |item| item.is_a?(<span class="constant">Switch</span>) }
+  items.grep(<span class="constant">SwitchItem</span>)
        .select { |item| item.label&amp;.include?(<span class="string"><span class="delimiter">&quot;</span><span class="content">Virtual</span><span class="delimiter">&quot;</span></span>) }
        .each <span class="keyword">do</span> |item|
          changed item
@@ -3837,7 +3849,7 @@ Take care when doing this as the the items/groups are processed when the rules f
 <span class="keyword">end</span>
 </code></pre>
 <p>This rule is effectively the same:</p>
-<pre class="code ruby"><code class="ruby">virtual_switches = items.select { |item| item.is_a?(<span class="constant">Switch</span>) }
+<pre class="code ruby"><code class="ruby">virtual_switches = items.grep(<span class="constant">SwitchItem</span>)
                         .select { |item| item.label&amp;.include?(<span class="string"><span class="delimiter">&quot;</span><span class="content">Virtual</span><span class="delimiter">&quot;</span></span>) }
 
 rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Log whenever a Virtual Switch Changes 2</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -3846,7 +3858,7 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
 <span class="keyword">end</span>
 </code></pre>
 <p>This will accomplish the same thing, but create a new rule for each virtual switch:</p>
-<pre class="code ruby"><code class="ruby">virtual_switches = items.select { |item| item.is_a?(<span class="constant">Switch</span>) }
+<pre class="code ruby"><code class="ruby">virtual_switches = items.grep(<span class="constant">SwitchItem</span>)
                         .select { |item| item.label&amp;.include?(<span class="string"><span class="delimiter">&quot;</span><span class="content">Virtual</span><span class="delimiter">&quot;</span></span>) }
 
 virtual_switches.each <span class="keyword">do</span> |switch|
@@ -3909,9 +3921,9 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Thu Jan 26 21:35:04 2023 by
+  Generated on Mon Apr 10 22:18:26 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.3).
+  0.9.28 (ruby-2.6.8).
 </footer>
 
       </main>
