@@ -3193,18 +3193,18 @@
       <pre class="lines">
 
 
-255
-256
 257
 258
 259
 260
 261
 262
-263</pre>
+263
+264
+265</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 255</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 257</span>
 
 <span class="keyword">def</span> <span class="function">category=</span>(value)
   modify <span class="keyword">do</span>
@@ -3259,6 +3259,10 @@
       
       
       
+        &mdash;
+        <div class='inline'><p>The formatted state</p>
+</div>
+      
     </li>
   
 </ul>
@@ -3284,7 +3288,9 @@
 97
 98
 99
-100</pre>
+100
+101
+102</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 85</span>
@@ -3299,7 +3305,9 @@
   transformed_state_string = org.openhab.core.transform.TransformationHelper.transform(<span class="constant">OSGi</span>.bundle_context,
                                                                                        pattern,
                                                                                        raw_state_string)
-  <span class="keyword">return</span> state.format(pattern) <span class="keyword">if</span> transformed_state_string.nil? || transformed_state_string == raw_state_string
+  <span class="keyword">if</span> transformed_state_string.nil? || transformed_state_string == raw_state_string
+    <span class="keyword">return</span> state&amp;.format(pattern) || raw_state_string
+  <span class="keyword">end</span>
 
   transformed_state_string
 <span class="keyword">rescue</span> org.openhab.core.transform.TransformationException
@@ -3514,12 +3522,12 @@ Use <span class='object_link'><a href="#undef%3F-instance_method" title="OpenHAB
       <pre class="lines">
 
 
-110
-111
-112</pre>
+112
+113
+114</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 110</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 112</span>
 
 <span class="keyword">def</span> <span class="function">state</span>
   raw_state <span class="keyword">if</span> state?
@@ -3643,8 +3651,6 @@ Use <span class='object_link'><a href="#undef%3F-instance_method" title="OpenHAB
       <pre class="lines">
 
 
-277
-278
 279
 280
 281
@@ -3652,10 +3658,12 @@ Use <span class='object_link'><a href="#undef%3F-instance_method" title="OpenHAB
 283
 284
 285
-286</pre>
+286
+287
+288</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 277</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 279</span>
 
 <span class="keyword">def</span> <span class="function">tags=</span>(values)
   modify <span class="keyword">do</span>
@@ -3759,15 +3767,15 @@ otherwise the item.</p>
       <pre class="lines">
 
 
-137
-138
 139
 140
 141
-142</pre>
+142
+143
+144</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 137</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 139</span>
 
 <span class="keyword">def</span> <span class="function">command</span>(command)
   command = format_command(command)
@@ -3887,8 +3895,6 @@ modifications.</p>
       <pre class="lines">
 
 
-216
-217
 218
 219
 220
@@ -3909,10 +3915,12 @@ modifications.</p>
 235
 236
 237
-238</pre>
+238
+239
+240</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 216</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 218</span>
 
 <span class="keyword">def</span> <span class="function">modify</span>(<span class="key">force</span>: <span class="predefined-constant">false</span>)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">you must pass a block to modify</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block_given?
@@ -3983,7 +3991,7 @@ modifications.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 116</span>
 
 </pre>
     </td>
@@ -4036,7 +4044,7 @@ modifications.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 151</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 153</span>
 
 </pre>
     </td>
@@ -4138,7 +4146,7 @@ modifications.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 120</span>
 
 </pre>
     </td>
@@ -4204,15 +4212,15 @@ otherwise the item.</p>
       <pre class="lines">
 
 
-162
-163
 164
 165
 166
-167</pre>
+167
+168
+169</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 164</span>
 
 <span class="keyword">def</span> <span class="function">update</span>(state)
   state = format_update(state)
@@ -4230,7 +4238,7 @@ otherwise the item.</p>
 </div>
 
         <footer>
-  Generated on Tue Apr  4 22:00:13 2023 by
+  Generated on Mon Apr 10 15:46:36 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
