@@ -77,7 +77,7 @@ module OpenHAB
         #
         # This may include running a transformation.
         #
-        # @return [String]
+        # @return [String] The formatted state
         #
         # @example
         #   logger.info(Exterior_WindDirection.formatted_state) # => "NE (36°)"
@@ -92,7 +92,9 @@ module OpenHAB
           transformed_state_string = org.openhab.core.transform.TransformationHelper.transform(OSGi.bundle_context,
                                                                                                pattern,
                                                                                                raw_state_string)
-          return state.format(pattern) if transformed_state_string.nil? || transformed_state_string == raw_state_string
+          if transformed_state_string.nil? || transformed_state_string == raw_state_string
+            return state&.format(pattern) || raw_state_string
+          end
 
           transformed_state_string
         rescue org.openhab.core.transform.TransformationException

@@ -198,6 +198,16 @@ RSpec.describe OpenHAB::Core::Items::Item do
       allow(org.openhab.core.transform.TransformationHelper).to receive(:transform).and_return("transformed state")
       expect(MyTemp.formatted_state).to eql "transformed state"
     end
+
+    it "returns NULL when the state is NULL" do
+      items.build { number_item MyTemp, format: "%.1f custom unit" }
+      expect(MyTemp.formatted_state).to eq "NULL"
+    end
+
+    it "returns UNDEF when the state is UNDEF" do
+      items.build { number_item MyTemp, format: "%.1f custom unit", state: UNDEF }
+      expect(MyTemp.formatted_state).to eq "UNDEF"
+    end
   end
 
   describe "#thing" do
