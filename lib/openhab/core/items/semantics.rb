@@ -157,6 +157,13 @@ module OpenHAB
       #   items.tagged("SmartLightControl")
       #
       #
+      # ## Adding Custom Semantic Tags
+      #
+      # openHAB 4 supports adding custom semantic tags to augment the standard set of tags to better suit
+      # your particular requirements.
+      #
+      # For more information, see {add}
+      #
       module Semantics
         GenericItem.include(self)
         GroupItem.extend(Forwardable)
@@ -197,6 +204,7 @@ module OpenHAB
             const_set(tag.simple_name.to_sym, tag.ruby_class)
           end
         end
+
         # This is a marker interface for all semantic tag classes.
         # @interface
         Tag = org.openhab.core.semantics.Tag
@@ -389,6 +397,92 @@ module OpenHAB
           result = (equipment || location)&.points(*point_or_property_types) || []
           result.delete(self)
           result
+        end
+
+        # @deprecated OH3.4 - this check is only needed for OH3.4
+        if org.openhab.core.semantics.SemanticTags.respond_to?(:add)
+
+          #
+          # Adds custom semantic tags.
+          #
+          # @return [Array<Tag>] An array of tags successfully added.
+          #
+          # @overload self.add(**tags)
+          #   Quickly add one or more semantic tags using the default label, empty synonyms and descriptions.
+          #
+          #   @param [kwargs] **tags Exactly one pair of `tag` => `parent` where tag is either a Symbol or a String
+          #     for the tag to be added, and parent is either a {Tag}, a symbol or a string of an existing tag.
+          #   @return [Array<Tag>] An array of tags successfully added.
+          #
+          #   @example Add one semantic tag `Balcony` whose parent is `Semantics::Outdoor` (Location)
+          #     Semantics.add(Balcony: Semantics::Outdoor)
+          #
+          #   @example Add multiple semantic tags
+          #     Semantics.add(Balcony: Semantics::Outdoor,
+          #                   SecretRoom: Semantics::Room,
+          #                   Motion: Semantics::Property)
+          #
+          # @overload self.add(label: nil, synonyms: "", description: "", **tags)
+          #   Add a custom semantic tag with extra details.
+          #
+          #   @example
+          #     Semantics.add(SecretRoom: Semantics::Room, label: "My Secret Room",
+          #       synonyms: "HidingPlace", description: "A room that requires a special trick to enter")
+          #
+          #   @param [String,nil] label Optional label. When nil, infer the label from the tag name,
+          #     converting `CamelCase` to `Camel Case`
+          #   @param [String,Array<String,Symbol>] synonyms An array of synonyms, or a string containing a
+          #     comma separated list of synonyms for this tag.
+          #   @param [String] description A longer description of the tag.
+          #   @param [kwargs] **tags Exactly one pair of `tag` => `parent` where tag is either a Symbol or a String
+          #     for the tag to be added, and parent is either a {Tag}, a symbol or a string of an existing tag.
+          #   @return [Array<Tag>] An array of tags successfully added.
+          #
+          def self.add(label: nil, synonyms: "", description: "", **tags)
+            raise "Tags must be specified" if tags.empty?
+            if (tags.length > 1) && !(label.nil? && synonyms.empty? && description.empty?)
+              raise "Additional options can only be specified when creating one tag"
+            end
+
+            synonyms = synonyms.map(&:to_s).map(&:strip).join(",") if synonyms.is_a?(Array)
+
+            tags.map do |name, parent|
+              parent_is_tag = parent.respond_to?(:java_class) && parent.java_class < Tag.java_class
+              parent = parent_is_tag ? parent.java_class : parent.to_s
+              name = name.to_s
+              org.openhab.core.semantics.SemanticTags.add(name, parent, label, synonyms, description)
+                                                    &.then { const_missing(name) }
+            end.compact
+          end
+        end
+
+        #
+        # Finds the semantic tag using its name, label, or synonyms.
+        #
+        # @param [String,Symbol] id The tag name, label, or synonym to look up
+        # @param [java.util.Locale] locale The locale of the given label or synonym
+        #
+        # @return [Tag,nil] The semantic tag class if found, or nil if not found.
+        #
+        def self.lookup(id, locale = nil)
+          id = id.to_sym
+          return const_get(id) if constants.include?(id)
+
+          id = id.to_s
+          locale = java.util.Locale.default if locale.nil?
+          tag = org.openhab.core.semantics.SemanticTags.get_by_id(id) ||
+                org.openhab.core.semantics.SemanticTags.get_by_label_or_synonym(id, locale).first
+          tag&.ruby_class
+        end
+
+        #
+        # Automatically looks up new semantic classes and adds them as `constants`
+        #
+        # @return [Tag, nil]
+        #
+        def self.const_missing(sym)
+          logger.trace("const missing, performing Semantics Lookup for: #{sym}")
+          org.openhab.core.semantics.SemanticTags.get_by_id(sym.to_s)&.then { |tag| const_set(sym, tag.ruby_class) }
         end
       end
     end
