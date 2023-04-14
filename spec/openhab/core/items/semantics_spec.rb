@@ -271,4 +271,106 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
       expect(gIndoor.equipments).to match_array([Group_Equipment, NonGroup_Equipment])
     end
   end
+
+  if Semantics.respond_to?(:add) # @deprecated OH3.4 - if guard only needed with OH3.4
+    describe "#add" do
+      it "works" do
+        Semantics.add(SecretRoom: Semantics::Room)
+        expect(Semantics::SecretRoom.java_class < Semantics::Room.java_class).to be true
+
+        Semantics.add(SecretEquipment: Semantics::Equipment)
+        expect(Semantics::SecretEquipment.java_class < Semantics::Equipment.java_class).to be true
+
+        Semantics.add(SecretPoint: Semantics::Point)
+        expect(Semantics::SecretPoint.java_class < Semantics::Point.java_class).to be true
+
+        items.build do
+          group_item TestLoc, tag: Semantics::SecretRoom do
+            group_item TestEquip, tag: Semantics::SecretEquipment do
+              number_item TestItem, tag: Semantics::SecretPoint
+            end
+          end
+        end
+
+        expect(TestItem.point?).to be true
+        expect(TestEquip.equipment?).to be true
+        expect(TestLoc.location?).to be true
+        expect(TestItem.location).to be TestLoc
+        expect(TestItem.equipment).to be TestEquip
+        expect(TestEquip.location).to be TestLoc
+      end
+
+      it "supports tag name as string" do
+        Semantics.add("StringTag" => Semantics::Equipment)
+        expect(Semantics::StringTag.java_class < Semantics::Tag.java_class).to be true
+      end
+
+      it "supports parent name as string" do
+        Semantics.add(StringParent: "Equipment")
+        expect(Semantics::StringParent.java_class < Semantics::Tag.java_class).to be true
+      end
+
+      it "supports parent name as symbol" do
+        Semantics.add(SymParent: :Equipment)
+        expect(Semantics::SymParent.java_class < Semantics::Tag.java_class).to be true
+      end
+
+      it "supports creating multiple tags" do
+        to_create = %i[Room1 Room2 Room3]
+        expect(Semantics.add(**to_create.to_h { |tag| [tag, Semantics::Room] }))
+          .to match_array([Semantics::Room1, Semantics::Room2, Semantics::Room3])
+        expect(Semantics.constants).to include(*to_create)
+      end
+
+      it "doesn't create a tag with an invalid parent" do
+        expect(Semantics.add(InvalidParentTag: :Blah)).to be_empty
+        expect(Semantics.constants).not_to include(:InvalidParentTag)
+      end
+
+      it "returns the created tags as an array" do
+        created = Semantics.add(ArrayTag1: :Equipment, ArrayTag2: :Location, ArrayTag3: :Point,
+                                LivingRoom: Semantics::Room)
+        expect(created).to match_array([Semantics::ArrayTag1, Semantics::ArrayTag2, Semantics::ArrayTag3])
+        expect(created).not_to include(Semantics::LivingRoom)
+
+        created = Semantics.add(ArrayTag1: :Equipment, ArrayTag2: :Location, ArrayTag3: :Point)
+        expect(created).to be_empty
+      end
+
+      it "supports specifying label, synonyms, and description for the tag" do
+        Semantics.add(Detailed: Semantics::Equipment, label: "Label 1", synonyms: "Synonym 2",
+                      description: "Description 3")
+        java_import org.openhab.core.semantics.SemanticTags
+        locale = java.util.Locale.default
+        expect(SemanticTags.get_label(Semantics::Detailed, locale)).to eq "Label 1"
+        expect(SemanticTags.get_by_label_or_synonym("Synonym 2", locale).first).to eql Semantics::Detailed.java_class
+        description = Semantics::Detailed.java_class
+                                         .get_annotation(org.openhab.core.semantics.TagInfo.java_class)
+                                         .description
+        expect(description).to eq "Description 3"
+      end
+
+      it "supports synonyms in an array" do
+        Semantics.add(ArraySynonyms: Semantics::Property, synonyms: ["Syn1", :Syn2])
+
+        expect(Semantics.lookup("Syn1")).to be Semantics::ArraySynonyms
+        expect(Semantics.lookup("Syn2")).to be Semantics::ArraySynonyms
+      end
+    end
+  end
+
+  describe "#lookup" do
+    it "can lookup by name" do
+      expect(Semantics.lookup("Kitchen")).to be Semantics::Kitchen
+      expect(Semantics.lookup(:Kitchen)).to be Semantics::Kitchen
+    end
+
+    it "can lookup by label" do
+      expect(Semantics.lookup("Living Room")).to be Semantics::LivingRoom
+    end
+
+    it "can lookup by synonym" do
+      expect(Semantics.lookup("Living Rooms")).to be Semantics::LivingRoom
+    end
+  end
 end
