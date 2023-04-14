@@ -1,22 +1,18 @@
 # JRuby openHAB Scripting Change Log
 
-## [HEAD](https://github.com/openhab/openhab-jruby/compare/v5.0.1...main)
+## [v5.0.1](https://github.com/openhab/openhab-jruby/tree/v5.0.1) (2023-04-05)
 
-### Bug Fixes
-
-- Fix {OpenHAB::Core::Items::GenericItem#formatted_state} when state is nil.
-
-## [5.0.1](https://github.com/openhab/openhab-jruby/compare/v5.0.0...v5.0.1)
+[Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.0.0...v5.0.1)
 
 ### Features
 
-- {OpenHAB::Core::Rules::Registry#scenes rules.scenes} and {OpenHAB::Core::Rules::Registry#scripts rules.scripts}
-  are available as convenient shortcuts to filter for rules that are scenes or scripts.
+- Add `rules.scenes` and `rules.scripts` shortcuts for convenience [\#33](https://github.com/openhab/openhab-jruby/pull/33) ([jimtng](https://github.com/jimtng))
 
 ### Bug Fixes
 
-- Fix an error when calling Audio.play_sound specifying the volume but not the sink.
-- Fix `updated` triggers to work with OpenHAB 4.0 due to the [core changes](https://github.com/openhab/openhab-core/pull/3141)
+- ItemStateUpdatedEvent added in openHAB 4 caused `updated` triggers to fail [\#49](https://github.com/openhab/openhab-jruby/pull/49) ([jimtng](https://github.com/jimtng))
+- Audio.play\_sound with volume calls the wrong java method [\#43](https://github.com/openhab/openhab-jruby/pull/43) ([jimtng](https://github.com/jimtng))
+- Handle Rules.manager being nil [\#40](https://github.com/openhab/openhab-jruby/pull/40) ([ccutrer](https://github.com/ccutrer))
 
 ## [5.0.0](https://github.com/openhab/openhab-jruby/compare/4.45.2...v5.0.0)
 
