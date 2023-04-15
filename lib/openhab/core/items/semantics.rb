@@ -195,16 +195,6 @@ module OpenHAB
         #   end
         #
 
-        # import all the semantics constants
-        [org.openhab.core.semantics.model.point.Points,
-         org.openhab.core.semantics.model.property.Properties,
-         org.openhab.core.semantics.model.equipment.Equipments,
-         org.openhab.core.semantics.model.location.Locations].each do |parent_tag|
-          parent_tag.stream.for_each do |tag|
-            const_set(tag.simple_name.to_sym, tag.ruby_class)
-          end
-        end
-
         # This is a marker interface for all semantic tag classes.
         # @interface
         Tag = org.openhab.core.semantics.Tag
@@ -457,6 +447,20 @@ module OpenHAB
         end
 
         #
+        # Returns all available Semantic tags
+        #
+        # @return [Array<Tag>] an array containing all the Semantic tags
+        #
+        def self.tags
+          java.util.stream.Stream.of(
+            org.openhab.core.semantics.model.point.Points.stream,
+            org.openhab.core.semantics.model.property.Properties.stream,
+            org.openhab.core.semantics.model.equipment.Equipments.stream,
+            org.openhab.core.semantics.model.location.Locations.stream
+          ).flat_map(&:itself).map(&:ruby_class).iterator.to_a
+        end
+
+        #
         # Finds the semantic tag using its name, label, or synonyms.
         #
         # @param [String,Symbol] id The tag name, label, or synonym to look up
@@ -466,13 +470,10 @@ module OpenHAB
         #
         def self.lookup(id, locale = nil)
           id = id.to_sym
-          return const_get(id) if constants.include?(id)
+          return const_get(id) if constants.include?(id) || const_missing(id)
 
-          id = id.to_s
           locale = java.util.Locale.default if locale.nil?
-          tag = org.openhab.core.semantics.SemanticTags.get_by_id(id) ||
-                org.openhab.core.semantics.SemanticTags.get_by_label_or_synonym(id, locale).first
-          tag&.ruby_class
+          org.openhab.core.semantics.SemanticTags.get_by_label_or_synonym(id.to_s, locale).first&.ruby_class
         end
 
         #
@@ -480,9 +481,14 @@ module OpenHAB
         #
         # @return [Tag, nil]
         #
+        # @!visibility private
         def self.const_missing(sym)
           logger.trace("const missing, performing Semantics Lookup for: #{sym}")
-          org.openhab.core.semantics.SemanticTags.get_by_id(sym.to_s)&.then { |tag| const_set(sym, tag.ruby_class) }
+          # @deprecated OH3.4 - the Property tag had an ID of "MeasurementProperty" in OH3.4. This was corrected in OH4.
+          sym = :MeasurementProperty if sym == :Property && Gem::Version.new(Core::VERSION) < "4"
+
+          org.openhab.core.semantics.SemanticTags.get_by_id(sym.to_s)
+            &.then { |tag| const_set(sym, tag.ruby_class) }
         end
       end
     end
@@ -548,7 +554,8 @@ module Enumerable
     end
     unless point_or_property_types.all? do |tag|
              tag.is_a?(Module) &&
-             (tag < Semantics::Point || tag < Semantics::Property)
+             (tag < Semantics::Point ||
+              tag < Semantics::Property)
            end
       raise ArgumentError, "point_or_property_types must all be a subclass of Point or Property"
     end

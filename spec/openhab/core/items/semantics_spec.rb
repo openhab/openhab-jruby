@@ -373,4 +373,20 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
       expect(Semantics.lookup("Living Rooms")).to be Semantics::LivingRoom
     end
   end
+
+  describe "#tags" do
+    it "works" do
+      expect(Semantics.tags).to include(Semantics::LivingRoom)
+      expect(Semantics.tags).to include(Semantics::Lightbulb)
+      expect(Semantics.tags).to include(Semantics::Control)
+      expect(Semantics.tags).to include(Semantics::Light)
+    end
+
+    if Semantics.respond_to?(:add) # @deprecated OH3.4 - if guard only needed with OH3.4
+      it "includes newly added tags" do
+        Semantics.add(TagsTest1: Semantics::Outdoor, TagsTest2: Semantics::Property)
+        expect(Semantics.tags).to include(Semantics::TagsTest2, Semantics::TagsTest2)
+      end
+    end
+  end
 end
