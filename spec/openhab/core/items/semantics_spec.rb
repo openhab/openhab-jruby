@@ -403,7 +403,7 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
 
       it "has a description attribute" do
         Semantics.add(TestDescAttr: Semantics::Room, description: "Test Description Attribute")
-        expect(Semantics::LivingRoom.description).to eq "Test Description Attribute"
+        expect(Semantics::TestDescAttr.description).to eq "Test Description Attribute"
       end
     end
   end

@@ -512,7 +512,7 @@ module OpenHAB
           end
 
           #
-          # REturns the tag's synonyms
+          # Returns the tag's synonyms
           #
           # @param [java.util.Locale] locale The locale that the label should be in, if available.
           #   When nil, the system's default locale is used.
@@ -520,7 +520,10 @@ module OpenHAB
           # @return [Array<String>] The list of synonyms in the requested locale.
           #
           def synonyms(locale = nil)
-            return "" unless SemanticTags.respond_to?(:get_synonyms) # @deprecated OH3.4
+            unless SemanticTags.respond_to?(:get_synonyms) # @deprecated OH3.4
+              return java_class.get_annotation(org.openhab.core.semantics.TagInfo.java_class).synonyms
+                               .split(",").map(&:strip)
+            end
 
             SemanticTags.get_synonyms(java_class, locale || java.util.Locale.default)
           end
@@ -534,7 +537,9 @@ module OpenHAB
           # @return [String] The tag's description
           #
           def description(locale = nil)
-            return "" unless SemanticTags.respond_to?(:get_description) # @deprecated OH3.4
+            unless SemanticTags.respond_to?(:get_description) # @deprecated OH3.4
+              return java_class.get_annotation(org.openhab.core.semantics.TagInfo.java_class).description
+            end
 
             SemanticTags.get_description(java_class, locale || java.util.Locale.default)
           end
