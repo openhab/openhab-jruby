@@ -4,6 +4,12 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
   def test_all_methods(item)
     item.persist
 
+    Timecop.travel(1.second)
+
+    item.persist
+
+    Timecop.travel(1.second)
+
     expect do
       %i[
         average_since
@@ -34,8 +40,8 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
         updated_between?
         variance_between
       ].each do |method|
-        item.__send__(method, 2.minutes.ago, 1.minute.ago)
-        item.__send__(method, 2.minutes.ago, 1.minute.ago, :influxdb)
+        item.__send__(method, 2.minutes.ago, Time.now)
+        item.__send__(method, 2.minutes.ago, Time.now, :influxdb)
       end
     end.not_to raise_error
   end
