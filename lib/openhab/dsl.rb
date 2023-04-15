@@ -127,7 +127,7 @@ module OpenHAB
     #       # strip the unit from the command, as the binding likely can't handle it
     #       next true unless command.is_a?(QuantityType)
     #
-    #       callback.send_command(DecimalType.new(command.to_d))
+    #       callback.handle_command(DecimalType.new(command.to_d))
     #       false
     #     else
     #       true # pass other events through as normal
