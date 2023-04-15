@@ -4859,7 +4859,7 @@ items.build <span class="keyword">do</span>
     <span class="comment"># strip the unit from the command, as the binding likely can't handle it</span>
     <span class="keyword">next</span> <span class="predefined-constant">true</span> <span class="keyword">unless</span> command.is_a?(<span class="constant">QuantityType</span>)
 
-    callback.send_command(<span class="constant">DecimalType</span>.new(command.to_d))
+    callback.handle_command(<span class="constant">DecimalType</span>.new(command.to_d))
     <span class="predefined-constant">false</span>
   <span class="keyword">else</span>
     <span class="predefined-constant">true</span> <span class="comment"># pass other events through as normal</span>
@@ -6845,7 +6845,7 @@ unit!
 </div>
 
         <footer>
-  Generated on Sat Apr 15 13:35:21 2023 by
+  Generated on Sat Apr 15 13:41:32 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
