@@ -488,7 +488,56 @@ module OpenHAB
           sym = :MeasurementProperty if sym == :Property && Gem::Version.new(Core::VERSION) < "4"
 
           org.openhab.core.semantics.SemanticTags.get_by_id(sym.to_s)
-            &.then { |tag| const_set(sym, tag.ruby_class) }
+            &.then do |tag|
+              tag = tag.ruby_class
+              tag.singleton_class.include(TagClassMethods)
+              const_set(sym, tag)
+            end
+        end
+
+        # Adds tag attributes
+        module TagClassMethods
+          java_import org.openhab.core.semantics.SemanticTags
+
+          #
+          # Returns the tag's label
+          #
+          # @param [java.util.Locale] locale The locale that the label should be in, if available.
+          #   When nil, the system's default locale is used.
+          #
+          # @return [String] The tag's label
+          #
+          def label(locale = nil)
+            SemanticTags.get_label(java_class, locale || java.util.Locale.default)
+          end
+
+          #
+          # REturns the tag's synonyms
+          #
+          # @param [java.util.Locale] locale The locale that the label should be in, if available.
+          #   When nil, the system's default locale is used.
+          #
+          # @return [Array<String>] The list of synonyms in the requested locale.
+          #
+          def synonyms(locale = nil)
+            return "" unless SemanticTags.respond_to?(:get_synonyms) # @deprecated OH3.4
+
+            SemanticTags.get_synonyms(java_class, locale || java.util.Locale.default)
+          end
+
+          #
+          # Returns the tag's description
+          #
+          # @param [java.util.Locale] locale The locale that the description should be in, if available.
+          #   When nil, the system's default locale is used.
+          #
+          # @return [String] The tag's description
+          #
+          def description(locale = nil)
+            return "" unless SemanticTags.respond_to?(:get_description) # @deprecated OH3.4
+
+            SemanticTags.get_description(java_class, locale || java.util.Locale.default)
+          end
         end
       end
     end

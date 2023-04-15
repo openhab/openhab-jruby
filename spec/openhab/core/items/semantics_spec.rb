@@ -342,7 +342,7 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
                       description: "Description 3")
         java_import org.openhab.core.semantics.SemanticTags
         locale = java.util.Locale.default
-        expect(SemanticTags.get_label(Semantics::Detailed, locale)).to eq "Label 1"
+        expect(Semantics::Detailed.label).to eq "Label 1"
         expect(SemanticTags.get_by_label_or_synonym("Synonym 2", locale).first).to eql Semantics::Detailed.java_class
         description = Semantics::Detailed.java_class
                                          .get_annotation(org.openhab.core.semantics.TagInfo.java_class)
@@ -386,6 +386,24 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
       it "includes newly added tags" do
         Semantics.add(TagsTest1: Semantics::Outdoor, TagsTest2: Semantics::Property)
         expect(Semantics.tags).to include(Semantics::TagsTest2, Semantics::TagsTest2)
+      end
+    end
+  end
+
+  describe "Tag Info" do
+    it "has a label attribute" do
+      expect(Semantics::LivingRoom.label).to eq "Living Room"
+    end
+
+    # @deprecated OH3.4 -  guard can be removed in OH4
+    if Gem::Version.new(OpenHAB::Core::VERSION) >= "4"
+      it "has a synonyms attribute" do
+        expect(Semantics::LivingRoom.synonyms).to include("Living Rooms")
+      end
+
+      it "has a description attribute" do
+        Semantics.add(TestDescAttr: Semantics::Room, description: "Test Description Attribute")
+        expect(Semantics::LivingRoom.description).to eq "Test Description Attribute"
       end
     end
   end
