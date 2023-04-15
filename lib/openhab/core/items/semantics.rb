@@ -485,7 +485,7 @@ module OpenHAB
         def self.const_missing(sym)
           logger.trace("const missing, performing Semantics Lookup for: #{sym}")
           # @deprecated OH3.4 - the Property tag had an ID of "MeasurementProperty" in OH3.4. This was corrected in OH4.
-          sym = :MeasurementProperty if sym == :Property && Gem::Version.new(Core::VERSION) < "4"
+          sym = :MeasurementProperty if sym == :Property && Gem::Version.new(Core::VERSION) < Gem::Version.new("4.0.0")
 
           org.openhab.core.semantics.SemanticTags.get_by_id(sym.to_s)
             &.then do |tag|
