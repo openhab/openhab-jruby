@@ -127,7 +127,7 @@ module OpenHAB
             last_index = item_history.bsearch_index do |i|
               i.timestamp.compare_to(filter.end_date).positive?
             end
-            return if last_index.zero?
+            return if last_index&.zero?
 
             last_index ||= item_history.length
           end

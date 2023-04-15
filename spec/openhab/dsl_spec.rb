@@ -19,8 +19,8 @@ RSpec.describe OpenHAB::DSL do
     end
 
     it "works" do
-      profile "use_a_different_state" do |_event, callback:, item:|
-        callback.send_update("bar")
+      profile "use_a_different_state" do |event, callback:, item:|
+        callback.send_update("bar") if event == :command_from_item
         expect(item).to eql MyString
         false
       end
