@@ -6,7 +6,7 @@ RSpec.describe OpenHAB::Core::Types::HSBType do
   end
 
   it "can be constructed from a hex string" do
-    expect(HSBType.new("#abcdef").to_hex).to eql "#aacbed"
+    expect(HSBType.new("#424D3D")).to eql HSBType.new(100, 20, 30)
   end
 
   it "responds to on? and off?" do
