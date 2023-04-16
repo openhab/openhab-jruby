@@ -777,7 +777,7 @@ module OpenHAB
     # Sets the implicit provider(s) for operations inside the block.
     #
     # @param (see #provider!)
-    # @yield [] The block will be executed in the context of the specified unit(s).
+    # @yield [] The block will be executed using the specified provider(s).
     # @return [Object] the result of the block
     #
     # @example
@@ -793,11 +793,11 @@ module OpenHAB
     # @see provider!
     # @see OpenHAB::Core::Provider.current Provider.current for how the current provider is calculated
     #
-    def provider(*args, **kwargs)
+    def provider(*providers, **providers_by_type)
       raise ArgumentError, "You must give a block to set the provider for the duration of" unless block_given?
 
       begin
-        old_providers = provider!(*args, **kwargs)
+        old_providers = provider!(*providers, **providers_by_type)
         yield
       ensure
         Thread.current[:openhab_providers] = old_providers
