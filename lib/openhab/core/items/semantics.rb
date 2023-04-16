@@ -60,6 +60,12 @@ module OpenHAB
       # and {#property_type}. They can even be used with
       # {DSL::Items::ItemBuilder#tag}.
       #
+      # The semantic constants in the `Semantics` module are enhanced with {TagClassMethods}
+      # to provide easy access to the tags' additional attributes: {TagClassMethods.label label},
+      # {TagClassMethods.synonyms synonyms}, and {TagClassMethods.description description}.
+      # For example, to get the synonyms for `Semantics::Lightbulb` in German:
+      # `Semantics::Lightbulb.synonyms(java.util.Locale::GERMAN)`
+      #
       # @see https://github.com/openhab/openhab-core/blob/main/bundles/org.openhab.core.semantics/model/SemanticTags.csv Semantic Tags Table
       #
       # @example Working with tags
@@ -155,7 +161,6 @@ module OpenHAB
       #
       #   # All items tagged "SmartLightControl"
       #   items.tagged("SmartLightControl")
-      #
       #
       # ## Adding Custom Semantic Tags
       #
@@ -495,8 +500,11 @@ module OpenHAB
             end
         end
 
-        # Adds tag attributes
+        #
+        # Adds tag attributes to the semantic tag class
+        #
         module TagClassMethods
+          # @!visibility private
           java_import org.openhab.core.semantics.SemanticTags
 
           #
