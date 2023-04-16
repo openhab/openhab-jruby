@@ -3270,7 +3270,7 @@ to reduce repetitions</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#provider-class_method" title="provider (class method)">.<strong>provider</strong>(*args, **kwargs) { ... } &#x21d2; Object </a>
+      <a href="#provider-class_method" title="provider (class method)">.<strong>provider</strong>(*providers, **providers_by_type) { ... } &#x21d2; Object </a>
     
 
     
@@ -5123,7 +5123,7 @@ items.build <span class="keyword">do</span>
       <div class="method_details ">
   <h3 class="signature " id="provider-class_method">
   
-    .<strong>provider</strong>(*args, **kwargs) { ... } &#x21d2; <tt><span class='object_link'>Object</span></tt> 
+    .<strong>provider</strong>(*providers, **providers_by_type) { ... } &#x21d2; <tt><span class='object_link'>Object</span></tt> 
   
 
   
@@ -5205,7 +5205,7 @@ recommended that you use a Proc, not a Lambda, for permissive argument matching.
       
       
         
-        <div class='inline'><p>[] The block will be executed in the context of the specified unit(s).</p>
+        <div class='inline'><p>[] The block will be executed using the specified provider(s).</p>
 </div>
       
     </li>
@@ -5271,11 +5271,11 @@ recommended that you use a Proc, not a Lambda, for permissive argument matching.
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 796</span>
 
-<span class="keyword">def</span> <span class="function">provider</span>(*args, **kwargs)
+<span class="keyword">def</span> <span class="function">provider</span>(*providers, **providers_by_type)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">You must give a block to set the provider for the duration of</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block_given?
 
   <span class="keyword">begin</span>
-    old_providers = provider!(*args, **kwargs)
+    old_providers = provider!(*providers, **providers_by_type)
     <span class="keyword">yield</span>
   <span class="keyword">ensure</span>
     <span class="constant">Thread</span>.current[<span class="symbol">:openhab_providers</span>] = old_providers
@@ -6845,7 +6845,7 @@ unit!
 </div>
 
         <footer>
-  Generated on Sat Apr 15 13:41:32 2023 by
+  Generated on Sun Apr 16 02:31:31 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
