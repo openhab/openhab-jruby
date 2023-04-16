@@ -525,7 +525,7 @@ module OpenHAB
                                .split(",").map(&:strip)
             end
 
-            SemanticTags.get_synonyms(java_class, locale || java.util.Locale.default)
+            SemanticTags.get_synonyms(java_class, locale || java.util.Locale.default).to_a
           end
 
           #
