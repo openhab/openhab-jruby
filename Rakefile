@@ -13,3 +13,22 @@ TMP_DIR = File.expand_path("tmp")
 OPENHAB_DIR = File.join(TMP_DIR, "openhab")
 
 CLEAN << PACKAGE_DIR
+
+DOC_FILES = %w[
+  templates/default/fulldoc/html/js/app.js
+  templates/default/layout/html/versions.erb
+].freeze
+
+desc "Update links in YARD doc navigation to mark the latest minor release as stable"
+task :update_doc_links, [:old_version, :new_version] do |_t, args|
+  old_version = Gem::Version.new(args[:old_version]).segments[0..1].join(".")
+  new_version = Gem::Version.new(args[:new_version]).segments[0..1].join(".")
+
+  next if old_version == new_version
+
+  DOC_FILES.each do |file|
+    contents = File.read(file)
+    contents.gsub!(old_version, new_version)
+    File.write(file, contents)
+  end
+end
