@@ -41,13 +41,12 @@ jobs:
           ruby -Ilib/openhab/dsl -r version -e 'puts "OLD_VERSION=#{OpenHAB::DSL::VERSION}"' >> $GITHUB_ENV
           bundle exec gem bump -v ${{ inputs.version }} -m "v%{version}" --file lib/openhab/dsl/version.rb
           ruby -Ilib/openhab/dsl -r version -e 'puts "NEW_VERSION=#{OpenHAB::DSL::VERSION}"' >> $GITHUB_ENV
-          git add Gemfile.lock
       - name: Generate CHANGELOG
         env:
           CHANGELOG_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           bin/rake changelog[${{ env.OLD_VERSION }},${{ env.NEW_VERSION }},tmp/new_changes.md]
-          git add CHANGELOG.md
+          git add Gemfile.lock CHANGELOG.md
       - name: Release Gem
         env:
           GEM_HOST_API_KEY: ${{ secrets.GEM_HOST_API_KEY }} 
