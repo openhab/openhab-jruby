@@ -1,5 +1,19 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.1.0](https://github.com/openhab/openhab-jruby/tree/v5.1.0) (2023-04-19)
+
+[Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.0.1...v5.1.0)
+
+To use version 5.1 of the library, be sure to update the `gems` setting in the JRubyScripting addon to `>~ 5.1`. The default setting is `~> 5.0.0` which will not upgrade the version to 5.1.
+
+### Features
+
+- Semantic Tag improvements: support tag attributes, tag lookup, and adding tags [\#55](https://github.com/openhab/openhab-jruby/pull/55) ([jimtng](https://github.com/jimtng))
+
+### Bug Fixes
+
+- Fix formatted\_state when state is nil [\#50](https://github.com/openhab/openhab-jruby/pull/50) ([jimtng](https://github.com/jimtng))
+
 ## [v5.0.1](https://github.com/openhab/openhab-jruby/tree/v5.0.1) (2023-04-05)
 
 [Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.0.0...v5.0.1)
