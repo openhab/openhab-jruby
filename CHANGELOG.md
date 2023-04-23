@@ -1,5 +1,14 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.1.1](https://github.com/openhab/openhab-jruby/tree/v5.1.1) (2023-04-23)
+
+[Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.1.0...v5.1.1)
+
+### Bug Fixes
+
+- Avoid having to re-lookup Semantics::Property on every reference in 3.4.x [\#66](https://github.com/openhab/openhab-jruby/pull/66) ([ccutrer](https://github.com/ccutrer))
+- Fix version detection against 4.0.0.M\* [\#64](https://github.com/openhab/openhab-jruby/pull/64) ([ccutrer](https://github.com/ccutrer))
+
 ## [v5.1.0](https://github.com/openhab/openhab-jruby/tree/v5.1.0) (2023-04-19)
 
 [Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.0.1...v5.1.0)
