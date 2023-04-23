@@ -491,6 +491,7 @@ module OpenHAB
           logger.trace("const missing, performing Semantics Lookup for: #{sym}")
           # @deprecated OH3.4 - the Property tag had an ID of "MeasurementProperty" in OH3.4. This was corrected in OH4.
           # make sure we compare against pre-release versions
+          target_sym = sym
           if sym == :Property && Gem::Version.new(Core::VERSION) < Gem::Version.new("4.0.0.M1")
             sym = :MeasurementProperty
           end
@@ -499,7 +500,7 @@ module OpenHAB
             &.then do |tag|
               tag = tag.ruby_class
               tag.singleton_class.include(TagClassMethods)
-              const_set(sym, tag)
+              const_set(target_sym, tag)
             end
         end
 
