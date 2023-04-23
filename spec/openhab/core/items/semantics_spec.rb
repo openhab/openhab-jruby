@@ -396,7 +396,7 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
     end
 
     # @deprecated OH3.4 -  guard can be removed in OH4
-    unless Gem::Version.new(OpenHAB::Core::VERSION) < Gem::Version.new("4.0.0")
+    unless Gem::Version.new(OpenHAB::Core::VERSION) < Gem::Version.new("4.0.0.M1")
       it "has a synonyms attribute" do
         expect(Semantics::LivingRoom.synonyms).to include("Living Rooms")
       end

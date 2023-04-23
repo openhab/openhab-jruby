@@ -1266,7 +1266,8 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           test_it(test_file, check: %i[modified created], watch_args: [@temp_dir, { for: %i[modified created] }])
         end
 
-        if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0") # @deprecated OH3.4 remove this wrapper
+        # @deprecated OH3.4 remove this wrapper
+        if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0.M1")
           # do not remove this test in OH4
           it "uses the built in configWatcher to monitor inside openHAB config folder" do
             expect(OpenHAB::DSL::Rules::Triggers::WatchHandler.factory).not_to receive(:create_watch_service)
