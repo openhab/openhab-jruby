@@ -923,9 +923,9 @@ module OpenHAB
         # triggering element was an item or a thing.
         #
         # @param [Item, GroupItem::Members, Thing] items Objects to create trigger for.
-        # @param [State, Array<State>, Range, Proc] from
+        # @param [State, Array<State>, #===, nil] from
         #   Only execute rule if previous state matches `from` state(s).
-        # @param [State, Array<State>, Range, Proc] to State(s) for
+        # @param [State, Array<State>, #===, nil] to State(s) for
         #   Only execute rule if new state matches `to` state(s).
         # @param [java.time.temporal.TemporalAmount] for
         #   Duration item must remain in the same state before executing the execution blocks.
@@ -980,6 +980,12 @@ module OpenHAB
         #   rule "Execute when item state is changed from an odd number, to an even number, for specified duration" do
         #     changed Alarm_Mode, from: -> from { from.odd? }, to: -> to { to.even? }, for: 12.seconds
         #     run { logger.info("Alarm Mode Updated") }
+        #   end
+        #
+        # @example Works with regexes:
+        #   rule "Execute when item state is changed to something matching a regex" do
+        #     changed Alarm_Mode, to: /armed/
+        #     run { logger.info("Alarm armed") }
         #   end
         #
         # @example Works with Things:
@@ -1299,8 +1305,8 @@ module OpenHAB
         # {Core::Events::ItemCommandEvent}.
         #
         # @param [Item, GroupItem::Members] items Items to create trigger for
-        # @param [Core::TypesCommand, Array<Command>, Range, Proc] command commands to match for trigger
-        # @param [Array<Command>, Range, Proc] commands Fluent alias for `command`
+        # @param [Core::Types::Command, Array<Core::Types::Command>, #===, nil] command commands to match for trigger
+        # @param [Array<Core::Types::Command>, #===, nil] commands Fluent alias for `command`
         # @param [Object] attach object to be attached to the trigger
         # @return [void]
         #
@@ -1355,6 +1361,12 @@ module OpenHAB
         # @example Works with lambdas
         #   rule 'Execute rule when Alarm Mode command is odd' do
         #     received_command Alarm_Mode, command: -> c { c.odd? }
+        #     run { |event| logger.info("Item received command: #{event.command}" ) }
+        #   end
+        #
+        # @example Works with regexes
+        #   rule 'Execute rule when Alarm Mode command matches a substring' do
+        #     received_command Alarm_Mode, command: /arm/
         #     run { |event| logger.info("Item received command: #{event.command}" ) }
         #   end
         #
@@ -1604,7 +1616,7 @@ module OpenHAB
         #
         # @param [Item, GroupItem::Members, Thing] items
         #   Objects to create trigger for.
-        # @param [State, Array<State>, Range, Proc, Symbol, String] to
+        # @param [State, Array<State>, Symbol, String, #===, nil] to
         #   Only execute rule if the state matches `to` state(s). If the
         #   updated element is a {Core::Things::Thing}, the `to` accepts
         #   symbols and strings that match
@@ -1663,6 +1675,12 @@ module OpenHAB
         # @example Works with lambdas:
         #   rule 'Execute rule when member of group is changed to an odd state' do
         #     updated AlarmModes.members, to: -> t { t.odd? }
+        #     triggered { |item| logger.info("Group item #{item.name} updated")}
+        #   end
+        #
+        # @example Works with regexes:
+        #   rule 'Execute rule when member of group is changed to a substring' do
+        #     updated AlarmModes.members, to: /armed/
         #     triggered { |item| logger.info("Group item #{item.name} updated")}
         #   end
         #

@@ -4,7 +4,7 @@ require "forwardable"
 
 require "securerandom"
 
-require_relative "triggers/conditions/proc"
+require_relative "triggers/conditions/generic"
 
 module OpenHAB
   module DSL
@@ -28,7 +28,7 @@ module OpenHAB
         #
         def initialize
           @triggers = []
-          @trigger_conditions = Hash.new(Triggers::Conditions::Proc::ANY)
+          @trigger_conditions = Hash.new(Triggers::Conditions::Generic::ANY)
           @attachments = {}
         end
 
