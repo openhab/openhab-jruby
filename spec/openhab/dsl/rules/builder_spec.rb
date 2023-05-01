@@ -463,7 +463,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
             end
           end
 
-          context "with a numeric group item" do # rubocop:disable RSpec/EmptyExampleGroup examples are dynamically generated
+          context "with a numeric group item" do
             before do
               items.build do
                 group_item "Modes" do
@@ -489,6 +489,27 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
             test_changed_trigger("Modes.members", to: 14, new_state: 10, expect_triggered: nil)
             test_changed_trigger("Modes.members", from: 8, to: 14)
             test_changed_trigger("Modes.members", from: 10, to: 14, new_state: 10, expect_triggered: nil)
+
+            it "handles multiple members changing" do
+              executed_items = []
+
+              rule do
+                changed Modes.members, to: 3, for: 10.seconds
+                run { |event| executed_items << event.item }
+              end
+
+              Alarm_Mode3.update(3)
+              time_travel_and_execute_timers(5.seconds)
+              Alarm_Mode4.update(5)
+              Alarm_Mode4.update(3)
+              # should not reset the timer on the first item
+              time_travel_and_execute_timers(7.seconds)
+
+              expect(executed_items).to eq [Alarm_Mode3]
+
+              time_travel_and_execute_timers(5.seconds)
+              expect(executed_items).to eq [Alarm_Mode3, Alarm_Mode4]
+            end
           end
 
           context "with a switch group item" do # rubocop:disable RSpec/EmptyExampleGroup examples are dynamically generated
