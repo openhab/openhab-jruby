@@ -969,6 +969,27 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           Alarm_Mode.update(10)
           expect(executed).to be 1
         end
+
+        it "triggers when a string item is updated against a regex" do
+          items.build do
+            string_item MyStringItem
+          end
+
+          executed = 0
+          rule do
+            updated MyStringItem, to: /bob/
+            run { executed += 1 }
+          end
+
+          MyStringItem.update("joe")
+          expect(executed).to be 0
+
+          MyStringItem.update("bob")
+          expect(executed).to be 1
+
+          MyStringItem.update("plumbob")
+          expect(executed).to be 2
+        end
       end
     end
 
