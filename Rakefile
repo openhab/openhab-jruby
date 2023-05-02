@@ -19,6 +19,12 @@ DOC_FILES = %w[
   templates/default/layout/html/versions.erb
 ].freeze
 
+def file_sub(file, old, new)
+  contents = File.read(file)
+  contents.gsub!(old, new)
+  File.write(file, contents)
+end
+
 desc "Update links in YARD doc navigation to mark the latest minor release as stable"
 task :update_doc_links, [:old_version, :new_version] do |_t, args|
   old_version = Gem::Version.new(args[:old_version]).segments[0..1].join(".")
@@ -26,9 +32,7 @@ task :update_doc_links, [:old_version, :new_version] do |_t, args|
 
   next if old_version == new_version
 
-  DOC_FILES.each do |file|
-    contents = File.read(file)
-    contents.gsub!(old_version, new_version)
-    File.write(file, contents)
-  end
+  DOC_FILES.each { |file| file_sub(file, old_version, new_version) }
+
+  file_sub("USAGE.md", %r{(https://openhab.github.io/openhab-jruby/)#{Regexp.escape(old_version)}}, "\\1#{new_version}")
 end
