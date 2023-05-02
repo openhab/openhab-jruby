@@ -21,7 +21,7 @@ module OpenHAB
             def initialize(to:, from:, duration:)
               @conditions = Generic.new(to: to, from: from)
               @duration = duration
-              @timer = nil
+              @timers = {}
               logger.trace "Created Duration Condition To(#{to}) From(#{from}) " \
                            "Conditions(#{@conditions}) Duration(#{@duration})"
             end
@@ -30,8 +30,9 @@ module OpenHAB
             # @param [Hash] inputs inputs from trigger
             #
             def process(mod:, inputs:, &block)
-              if @timer&.active?
-                process_active_timer(inputs, mod, &block)
+              timer = @timers[inputs["triggeringItem"]&.name]
+              if timer&.active?
+                process_active_timer(timer, inputs, mod, &block)
               elsif @conditions.process(mod: mod, inputs: inputs)
                 logger.trace("Trigger Guards Matched for #{self}, delaying rule execution")
                 # Add timer and attach timer to delay object, and also state being tracked to so
@@ -47,7 +48,7 @@ module OpenHAB
             #
             # Cancels the timer, if it's active
             def cleanup
-              @timer&.cancel
+              @timers.each_value(&:cancel)
             end
 
             private
@@ -61,9 +62,10 @@ module OpenHAB
             #
             def create_trigger_delay_timer(inputs, _mod)
               logger.trace("Creating timer for trigger delay #{self}")
-              @timer = DSL.after(@duration) do
+              item_name = inputs["triggeringItem"]&.name
+              @timers[item_name] = DSL.after(@duration) do
                 logger.trace("Delay Complete for #{self}, executing rule")
-                @timer = nil
+                @timers.delete(item_name)
                 yield
               end
               rule.on_removal(self)
@@ -76,14 +78,14 @@ module OpenHAB
             # @param [Hash] inputs rule trigger inputs
             # @param [Hash] mod rule trigger mods
             #
-            def process_active_timer(inputs, mod, &block)
+            def process_active_timer(timer, inputs, mod, &block)
               old_state = Conditions.old_state_from(inputs)
               new_state = Conditions.new_state_from(inputs)
               if new_state != @tracking_from && @conditions.process(mod: nil, inputs: { "state" => new_state })
                 logger.trace("Item changed from #{old_state} to #{new_state} for #{self}, keep waiting.")
               else
                 logger.trace("Item changed from #{old_state} to #{new_state} for #{self}, canceling timer.")
-                @timer.cancel
+                timer.cancel
                 # Reprocess trigger delay after canceling to track new state (if guards matched, etc)
                 process(mod: mod, inputs: inputs, &block)
               end
