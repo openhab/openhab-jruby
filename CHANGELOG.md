@@ -1,5 +1,18 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.2.0](https://github.com/openhab/openhab-jruby/tree/v5.2.0) (2023-05-02)
+
+[Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.1.1...v5.2.0)
+
+### Features
+
+- Support regexes for from/to/command filters on triggers [\#68](https://github.com/openhab/openhab-jruby/pull/68) ([ccutrer](https://github.com/ccutrer))
+
+### Bug Fixes
+
+- Fix duration trigger conditions for group member triggers [\#69](https://github.com/openhab/openhab-jruby/pull/69) ([ccutrer](https://github.com/ccutrer))
+- Audio.play\_sound called the wrong Java method [\#67](https://github.com/openhab/openhab-jruby/pull/67) ([jimtng](https://github.com/jimtng))
+
 ## [v5.1.1](https://github.com/openhab/openhab-jruby/tree/v5.1.1) (2023-04-23)
 
 [Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.1.0...v5.1.1)
