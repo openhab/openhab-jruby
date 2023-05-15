@@ -185,7 +185,7 @@ module OpenHAB
         class << self
           # @!visibility private
           def item_factory
-            @item_factory ||= org.openhab.core.library.CoreItemFactory.new
+            @item_factory ||= OpenHAB::OSGi.service("org.openhab.core.items.ItemFactory")
           end
 
           #
