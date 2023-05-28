@@ -35,4 +35,5 @@ task :update_doc_links, [:old_version, :new_version] do |_t, args|
   DOC_FILES.each { |file| file_sub(file, old_version, new_version) }
 
   file_sub("USAGE.md", %r{(https://openhab.github.io/openhab-jruby/)#{Regexp.escape(old_version)}}, "\\1#{new_version}")
+  file_sub(".known_good_references", "/openhab-jruby/#{old_version}", "/openhab-jruby/#{new_version}")
 end
