@@ -22,6 +22,12 @@ module OpenHAB
       #     group_item Equipment, tags: Semantics::HVAC, thing: "binding:thing"
       #       string_item Mode, tags: Semantics::Control, channel: "mode"
       #     end
+      #
+      #     # dimension Temperature inferred
+      #     number_item OutdoorTemp, format: "%.1f %unit%", unit: "°F"
+      #
+      #     # unit lx, dimension Illuminance, format "%s %unit%" inferred
+      #     number_item OutdoorBrightness, state: 10_000 | "lx"
       #   end
       #
       module Builder
@@ -156,9 +162,22 @@ module OpenHAB
         # @return [String, nil]
         attr_accessor :label
         # Unit dimension (for number items only)
+        #
+        # If {unit} is provided, and {dimension} is not, it will be inferred.
+        #
         # @return [String, nil]
         attr_accessor :dimension
+        # Unit (for number items only)
+        #
+        # Due to {format} inference, setting the unit is cross-compatible with
+        # openHAB 3.4 and 4.0.
+        #
+        # @return [String, nil]
+        attr_reader :unit
         # The formatting pattern for the item's state
+        #
+        # If {unit} is provided, and {format} is not, it will be inferred.
+        #
         # @return [String, nil]
         attr_accessor :format
         # The icon to be associated with the item
@@ -179,8 +198,11 @@ module OpenHAB
         # @return [Core::Items::Metadata::NamespaceHash]
         attr_reader :metadata
         # Initial state
+        #
+        # If {state} is set to a {QuantityType}, and {unit} is not set, it will be inferred.
+        #
         # @return [Core::Types::State]
-        attr_accessor :state
+        attr_reader :state
 
         class << self
           # @!visibility private
@@ -214,6 +236,7 @@ module OpenHAB
         end
 
         # @param dimension [Symbol, nil] The unit dimension for a {NumberItem} (see {ItemBuilder#dimension})
+        # @param unit [Symbol, String, nil] The unit for a {NumberItem} (see {ItemBuilder#unit})
         # @param format [String, nil] The formatting pattern for the item's state (see {ItemBuilder#format})
         # @param icon [Symbol, nil] The icon to be associated with the item (see {ItemBuilder#icon})
         # @param group [String,
@@ -246,6 +269,7 @@ module OpenHAB
         def initialize(type, name = nil, label = nil,
                        provider:,
                        dimension: nil,
+                       unit: nil,
                        format: nil,
                        icon: nil,
                        group: nil,
@@ -274,6 +298,7 @@ module OpenHAB
           @label = label
           @dimension = dimension
           @format = format
+          self.unit = unit
           @icon = icon
           @groups = []
           @tags = []
@@ -291,7 +316,7 @@ module OpenHAB
           self.alexa(alexa) if alexa
           self.ga(ga) if ga
           self.homekit(homekit) if homekit
-          @state = state
+          self.state = state
 
           self.group(*group)
           self.group(*groups)
@@ -434,6 +459,39 @@ module OpenHAB
           @expire += ",command=#{command}" if command
         end
 
+        # @!attribute [w] unit
+        #
+        # Unit (for number items only).
+        #
+        # If dimension or format are not yet set, they will be inferred.
+        #
+        # @return [String, nil]
+        def unit=(unit)
+          @unit = unit
+
+          self.dimension ||= unit && org.openhab.core.types.util.UnitUtils.parse_unit(unit)&.then do |u|
+            org.openhab.core.types.util.UnitUtils.get_dimension_name(u)
+          end
+          self.format ||= unit && (if Gem::Version.new(Core::VERSION) >= Gem::Version.new("4.0.0.M3")
+                                     "%s %unit%"
+                                   else
+                                     "%s #{unit.gsub("%", "%%")}"
+                                   end)
+        end
+
+        # @!attribute [w] state
+        #
+        # Initial state
+        #
+        # If {state} is set to a {QuantityType}, and {unit} is not set, it will be inferred.
+        #
+        # @return [Core::Types::State]
+        def state=(state)
+          @state = state
+
+          self.unit ||= state.unit.to_s if state.is_a?(QuantityType)
+        end
+
         # @!visibility private
         def build
           item = create_item
@@ -450,6 +508,7 @@ module OpenHAB
           item.metadata["autoupdate"] = autoupdate.to_s unless autoupdate.nil?
           item.metadata["expire"] = expire if expire
           item.metadata["stateDescription"] = { "pattern" => format } if format
+          item.metadata["unit"] = unit if unit
           item.state = item.format_update(state) unless state.nil?
           item
         end
@@ -487,6 +546,12 @@ module OpenHAB
       # items will automatically be a member of this group.
       class GroupItemBuilder < ItemBuilder
         include Builder
+
+        # This has to be duplicated here, since {Builder} includes DSL, so DSL#unit
+        # will be seen first, but we really want ItemBuilder#unit
+
+        # (see ItemBuilder#unit)
+        attr_reader :unit
 
         Builder.public_instance_methods.each do |m|
           next unless Builder.instance_method(m).owner == Builder

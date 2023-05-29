@@ -25,7 +25,7 @@ RSpec.describe OpenHAB::Core::Items::NumberItem do
 
   it "respects unit block for commands" do
     items.build do
-      number_item "Feet", dimension: "Length", format: "%d ft"
+      number_item "Feet", unit: "ft"
     end
 
     unit("yd") do
