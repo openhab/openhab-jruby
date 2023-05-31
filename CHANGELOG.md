@@ -1,5 +1,18 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.3.0](https://github.com/openhab/openhab-jruby/tree/v5.3.0) (2023-05-31)
+
+[Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.2.0...v5.3.0)
+
+### Features
+
+- Add unit argument to items builder [\#73](https://github.com/openhab/openhab-jruby/pull/73) ([ccutrer](https://github.com/ccutrer))
+
+### Bug Fixes
+
+- DSL methods override user's method on the top level [\#4](https://github.com/openhab/openhab-jruby/issues/4)
+- Workaround unusual inheritance chain of `main` [\#74](https://github.com/openhab/openhab-jruby/pull/74) ([ccutrer](https://github.com/ccutrer))
+
 ## [v5.2.0](https://github.com/openhab/openhab-jruby/tree/v5.2.0) (2023-05-02)
 
 [Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.1.1...v5.2.0)
