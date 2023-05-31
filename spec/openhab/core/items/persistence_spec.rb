@@ -55,7 +55,7 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
   end
 
   it "handles persistence data with units of measurement" do
-    items.build { number_item "Number_Power", dimension: "Power", format: "%.1f kW", state: 3 }
+    items.build { number_item "Number_Power", state: 3 | "kW" }
     Number_Power.persist
     expect(Number_Power.maximum_since(10.seconds.ago)).to eql(3 | "kW")
   end

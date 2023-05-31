@@ -61,12 +61,47 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
     expect(MyNumberItem.dimension.ruby_class).to be javax.measure.quantity.Power
   end
 
+  it "can set a unit on a number item" do
+    items.build do
+      number_item "MyNumberItem", dimension: "Power", unit: "kW"
+    end
+    expect(MyNumberItem.dimension.ruby_class).to be javax.measure.quantity.Power
+    expect(MyNumberItem.metadata["unit"].value).to eql "kW"
+    if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0.M3")
+      expect(MyNumberItem.unit.to_s).to eql "kW"
+    end
+  end
+
+  it "can infer the dimension from the explicit unit for a number item" do
+    items.build do
+      number_item "MyNumberItem", unit: "kW"
+    end
+    expect(MyNumberItem.dimension.ruby_class).to be javax.measure.quantity.Power
+    expect(MyNumberItem.metadata["unit"].value).to eql "kW"
+    if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0.M3")
+      expect(MyNumberItem.unit.to_s).to eql "kW"
+      expect(MyNumberItem.state_description.pattern).to eql "%s %unit%"
+    else
+      expect(MyNumberItem.state_description.pattern).to eql "%s kW"
+    end
+  end
+
   it "can format a number item" do
     items.build do
       number_item "MyNumberItem", format: "something %d else"
     end
 
     MyNumberItem.update(1)
+    expect(MyNumberItem.state_description.pattern).to eql "something %d else"
+  end
+
+  it "does not overwrite an explicit format with the unit" do
+    items.build do
+      number_item "MyNumberItem", format: "something %d else", unit: "W"
+    end
+
+    MyNumberItem.update(1)
+    expect(MyNumberItem.unit.to_s).to eql "W"
     expect(MyNumberItem.state_description.pattern).to eql "something %d else"
   end
 

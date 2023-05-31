@@ -37,11 +37,11 @@ RSpec.describe OpenHAB::Core::Types::QuantityType do
 
   it "responds to positive?, negative?, and zero?" do
     items.build do
-      number_item "NumberF", dimension: "Temperature", format: "%d °F", state: "2 °F"
-      number_item "NumberC", dimension: "Temperature", format: "%d °C", state: "2 °C"
-      number_item "PowerPos", dimension: "Power", state: 100 | "W"
-      number_item "PowerNeg", dimension: "Power", state: -100 | "W"
-      number_item "PowerZero", dimension: "Power", state: 0 | "W"
+      number_item "NumberF", state: "2 °F"
+      number_item "NumberC", state: "2 °C"
+      number_item "PowerPos", state: 100 | "W"
+      number_item "PowerNeg", state: -100 | "W"
+      number_item "PowerZero", state: 0 | "W"
       number_item "Number1", state: 20
     end
 

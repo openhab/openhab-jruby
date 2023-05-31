@@ -147,7 +147,7 @@ RSpec.describe OpenHAB::DSL::Items::Ensure do
     end
 
     it "can send a plain number to a NumberItem with a quantity" do
-      items.build { number_item "Temp", dimension: "Temperature", format: "%d °F", group: AllItems }
+      items.build { number_item "Temp", unit: "°F", group: AllItems }
       Temp.update(80)
       expect(Temp.state).to eq 80 | "°F"
       triggers.clear
