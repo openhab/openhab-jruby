@@ -51,7 +51,7 @@ jobs:
         run: |
           bin/rake update_doc_links[${{ env.OLD_VERSION }},${{ env.NEW_VERSION }}]
           bin/rake changelog[${{ env.OLD_VERSION }},${{ env.NEW_VERSION }},tmp/new_changes.md]
-          git add Gemfile.lock CHANGELOG.md templates .known_good_references
+          git add Gemfile.lock CHANGELOG.md USAGE.md templates .known_good_references
       - name: Release Gem
         env:
           GEM_HOST_API_KEY: ${{ secrets.GEM_HOST_API_KEY }} 
