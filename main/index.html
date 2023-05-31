@@ -3269,6 +3269,12 @@ Note that by default items are not persisted to storage, and will be removed whe
   group_item <span class="constant">Equipment</span>, <span class="key">tags</span>: <span class="constant">Semantics</span>::<span class="constant">HVAC</span>, <span class="key">thing</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">binding:thing</span><span class="delimiter">&quot;</span></span>
     string_item <span class="constant">Mode</span>, <span class="key">tags</span>: <span class="constant">Semantics</span>::<span class="constant">Control</span>, <span class="key">channel</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">mode</span><span class="delimiter">&quot;</span></span>
   <span class="keyword">end</span>
+
+  <span class="comment"># dimension Temperature inferred</span>
+  number_item <span class="constant">OutdoorTemp</span>, <span class="key">format</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">%.1f %unit%</span><span class="delimiter">&quot;</span></span>, <span class="key">unit</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>
+    
+  <span class="comment"># unit lx, dimension Illuminance, format &quot;%s %unit%&quot; inferred</span>
+  number_item <span class="constant">OutdoorBrightness</span>, <span class="key">state</span>: <span class="integer">10_000</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">lx</span><span class="delimiter">&quot;</span></span>
 <span class="keyword">end</span>
 </code></pre>
 <h3 id="things"><a href="#things" class="header-anchor">#</a>Things</h3>
@@ -4012,7 +4018,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Sun May 28 15:00:29 2023 by
+  Generated on Wed May 31 13:11:07 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

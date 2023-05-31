@@ -3053,6 +3053,32 @@
 </li>
 
     
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#unit-instance_method" title="#unit (instance method)">#<strong>unit</strong>  &#x21d2; String<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Unit (for number items only).</p>
+</div></span>
+  
+</li>
+
+    
   </ul>
 
 
@@ -3209,7 +3235,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(type, name = nil, label = nil, provider:, dimension: nil, format: nil, icon: nil, group: nil, groups: nil, tag: nil, tags: nil, autoupdate: nil, channel: nil, expire: nil, alexa: nil, ga: nil, homekit: nil, metadata: nil, state: nil)  &#x21d2; ItemBuilder </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(type, name = nil, label = nil, provider:, dimension: nil, unit: nil, format: nil, icon: nil, group: nil, groups: nil, tag: nil, tags: nil, autoupdate: nil, channel: nil, expire: nil, alexa: nil, ga: nil, homekit: nil, metadata: nil, state: nil)  &#x21d2; ItemBuilder </a>
     
 
     
@@ -3309,7 +3335,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(type, name = nil, label = nil, provider:, dimension: nil, format: nil, icon: nil, group: nil, groups: nil, tag: nil, tags: nil, autoupdate: nil, channel: nil, expire: nil, alexa: nil, ga: nil, homekit: nil, metadata: nil, state: nil)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::DSL::Items::ItemBuilder (class)">ItemBuilder</a></span></tt> 
+    #<strong>initialize</strong>(type, name = nil, label = nil, provider:, dimension: nil, unit: nil, format: nil, icon: nil, group: nil, groups: nil, tag: nil, tags: nil, autoupdate: nil, channel: nil, expire: nil, alexa: nil, ga: nil, homekit: nil, metadata: nil, state: nil)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::DSL::Items::ItemBuilder (class)">ItemBuilder</a></span></tt> 
   
 
   
@@ -3339,6 +3365,23 @@
       
         &mdash;
         <div class='inline'><p>The unit dimension for a <span class='object_link'><a href="../../Core/Items/NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span> (see <span class='object_link'><a href="#dimension-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#dimension (method)">#dimension</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>unit</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The unit for a <span class='object_link'><a href="../../Core/Items/NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span> (see <span class='object_link'><a href="#unit-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#unit (method)">#unit</a></span>)</p>
 </div>
       
     </li>
@@ -3603,29 +3646,6 @@
       <pre class="lines">
 
 
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268
 269
 270
 271
@@ -3660,14 +3680,40 @@
 300
 301
 302
-303</pre>
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 246</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 269</span>
 
 <span class="keyword">def</span> <span class="function">initialize</span>(type, name = <span class="predefined-constant">nil</span>, label = <span class="predefined-constant">nil</span>,
                <span class="key">provider</span>:,
                <span class="key">dimension</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">unit</span>: <span class="predefined-constant">nil</span>,
                <span class="key">format</span>: <span class="predefined-constant">nil</span>,
                <span class="key">icon</span>: <span class="predefined-constant">nil</span>,
                <span class="key">group</span>: <span class="predefined-constant">nil</span>,
@@ -3696,6 +3742,7 @@
   <span class="instance-variable">@label</span> = label
   <span class="instance-variable">@dimension</span> = dimension
   <span class="instance-variable">@format</span> = format
+  <span class="predefined-constant">self</span>.unit = unit
   <span class="instance-variable">@icon</span> = icon
   <span class="instance-variable">@groups</span> = []
   <span class="instance-variable">@tags</span> = []
@@ -3713,7 +3760,7 @@
   <span class="predefined-constant">self</span>.alexa(alexa) <span class="keyword">if</span> alexa
   <span class="predefined-constant">self</span>.ga(ga) <span class="keyword">if</span> ga
   <span class="predefined-constant">self</span>.homekit(homekit) <span class="keyword">if</span> homekit
-  <span class="instance-variable">@state</span> = state
+  <span class="predefined-constant">self</span>.state = state
 
   <span class="predefined-constant">self</span>.group(*group)
   <span class="predefined-constant">self</span>.group(*groups)
@@ -3773,12 +3820,12 @@
       <pre class="lines">
 
 
-175
-176
-177</pre>
+194
+195
+196</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 175</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 194</span>
 
 <span class="keyword">def</span> <span class="function">autoupdate</span>
   <span class="instance-variable">@autoupdate</span>
@@ -3828,12 +3875,12 @@
       <pre class="lines">
 
 
-178
-179
-180</pre>
+197
+198
+199</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 178</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 197</span>
 
 <span class="keyword">def</span> <span class="function">channels</span>
   <span class="instance-variable">@channels</span>
@@ -3857,6 +3904,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p>Unit dimension (for number items only)</p>
+<p>If <span class='object_link'><a href="#unit-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#unit (method)">#unit</a></span> is provided, and <span class='object_link'><a href="#dimension-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#dimension (method)">#dimension</a></span> is not, it will be inferred.</p>
 
 
   </div>
@@ -3883,12 +3931,12 @@
       <pre class="lines">
 
 
-160
-161
-162</pre>
+169
+170
+171</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 169</span>
 
 <span class="keyword">def</span> <span class="function">dimension</span>
   <span class="instance-variable">@dimension</span>
@@ -3912,6 +3960,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p>The formatting pattern for the item's state</p>
+<p>If <span class='object_link'><a href="#unit-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#unit (method)">#unit</a></span> is provided, and <span class='object_link'><a href="#format-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#format (method)">#format</a></span> is not, it will be inferred.</p>
 
 
   </div>
@@ -3938,12 +3987,12 @@
       <pre class="lines">
 
 
-163
-164
-165</pre>
+182
+183
+184</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 163</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 182</span>
 
 <span class="keyword">def</span> <span class="function">format</span>
   <span class="instance-variable">@format</span>
@@ -3993,12 +4042,12 @@
       <pre class="lines">
 
 
-169
-170
-171</pre>
+188
+189
+190</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 169</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 188</span>
 
 <span class="keyword">def</span> <span class="function">groups</span>
   <span class="instance-variable">@groups</span>
@@ -4048,12 +4097,12 @@
       <pre class="lines">
 
 
-166
-167
-168</pre>
+185
+186
+187</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 185</span>
 
 <span class="keyword">def</span> <span class="function">icon</span>
   <span class="instance-variable">@icon</span>
@@ -4103,12 +4152,12 @@
       <pre class="lines">
 
 
-157
-158
-159</pre>
+163
+164
+165</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 157</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 163</span>
 
 <span class="keyword">def</span> <span class="function">label</span>
   <span class="instance-variable">@label</span>
@@ -4157,12 +4206,12 @@
       <pre class="lines">
 
 
-180
-181
-182</pre>
+199
+200
+201</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 180</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 199</span>
 
 <span class="keyword">def</span> <span class="function">metadata</span>
   <span class="instance-variable">@metadata</span>
@@ -4212,12 +4261,12 @@
       <pre class="lines">
 
 
-154
-155
-156</pre>
+160
+161
+162</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 154</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 160</span>
 
 <span class="keyword">def</span> <span class="function">name</span>
   <span class="instance-variable">@name</span>
@@ -4241,6 +4290,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p>Initial state</p>
+<p>If <span class='object_link'><a href="#state-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#state (method)">#state</a></span> is set to a <span class='object_link'><a href="../../Core/Types/QuantityType.html" title="OpenHAB::Core::Types::QuantityType (class)">QuantityType</a></span>, and <span class='object_link'><a href="#unit-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#unit (method)">#unit</a></span> is not set, it will be inferred.</p>
 
 
   </div>
@@ -4267,12 +4317,12 @@
       <pre class="lines">
 
 
-183
-184
-185</pre>
+205
+206
+207</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 183</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 205</span>
 
 <span class="keyword">def</span> <span class="function">state</span>
   <span class="instance-variable">@state</span>
@@ -4322,12 +4372,12 @@
       <pre class="lines">
 
 
-172
-173
-174</pre>
+191
+192
+193</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 172</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 191</span>
 
 <span class="keyword">def</span> <span class="function">tags</span>
   <span class="instance-variable">@tags</span>
@@ -4385,15 +4435,72 @@
       <pre class="lines">
 
 
-151
-152
-153</pre>
+157
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 151</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 157</span>
 
 <span class="keyword">def</span> <span class="function">type</span>
   <span class="instance-variable">@type</span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="unit=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="unit-instance_method">
+  
+    #<strong>unit</strong>  &#x21d2; <tt>String</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Unit (for number items only)</p>
+<p>Due to <span class='object_link'><a href="#format-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#format (method)">#format</a></span> inference, setting the unit is cross-compatible with
+openHAB 3.4 and 4.0.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+176
+177
+178</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 176</span>
+
+<span class="keyword">def</span> <span class="function">unit</span>
+  <span class="instance-variable">@unit</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4478,7 +4585,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 340</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 365</span>
 
 </pre>
     </td>
@@ -4544,12 +4651,12 @@
       <pre class="lines">
 
 
-393
-394
-395</pre>
+418
+419
+420</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 393</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 418</span>
 
 <span class="keyword">def</span> <span class="function">channel</span>(channel, config = {})
   <span class="instance-variable">@channels</span> &lt;&lt; [channel, config]
@@ -4639,28 +4746,28 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
-417
-418
-419
-420
-421
-422
-423
-424
-425
-426
-427
-428
-429
-430
-431
-432
-433
-434
-435</pre>
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 417</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 442</span>
 
 <span class="keyword">def</span> <span class="function">expire</span>(*args, <span class="key">command</span>: <span class="predefined-constant">nil</span>, <span class="key">state</span>: <span class="predefined-constant">nil</span>)
   <span class="keyword">unless</span> (<span class="integer">0</span>..<span class="integer">2</span>).cover?(args.length)
@@ -4757,7 +4864,7 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 351</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 376</span>
 
 </pre>
     </td>
@@ -4805,18 +4912,18 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
-330
-331
-332
-333
-334
-335
-336
-337
-338</pre>
+355
+356
+357
+358
+359
+360
+361
+362
+363</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 330</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 355</span>
 
 <span class="keyword">def</span> <span class="function">group</span>(*groups)
   <span class="keyword">unless</span> groups.all? <span class="keyword">do</span> |group|
@@ -4900,15 +5007,15 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
-373
-374
-375
-376
-377
-378</pre>
+398
+399
+400
+401
+402
+403</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 373</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 398</span>
 
 <span class="symbol"><span class="delimiter">%i[</span><span class="content">alexa ga homekit</span><span class="delimiter">]</span></span>.each <span class="keyword">do</span> |shortcut|
   define_method(shortcut) <span class="keyword">do</span> |value = <span class="predefined-constant">nil</span>, config = <span class="predefined-constant">nil</span>|
@@ -4958,17 +5065,17 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
-458
-459
-460
-461
-462
-463
-464
-465</pre>
+517
+518
+519
+520
+521
+522
+523
+524</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 458</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 517</span>
 
 <span class="keyword">def</span> <span class="function">inspect</span>
   s = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Items::</span><span class="inline"><span class="inline-delimiter">#{</span>inspect_type<span class="inline-delimiter">}</span></span><span class="content">ItemBuilder</span><span class="inline"><span class="inline-delimiter">#{</span>type_details<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>label.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
@@ -5023,12 +5130,12 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
-320
-321
-322</pre>
+345
+346
+347</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 320</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 345</span>
 
 <span class="keyword">def</span> <span class="function">tag</span>(*tags)
   <span class="instance-variable">@tags</span> += <span class="predefined-constant">self</span>.class.normalize_tags(*tags)
@@ -5076,12 +5183,12 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
-310
-311
-312</pre>
+335
+336
+337</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 310</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 335</span>
 
 <span class="keyword">def</span> <span class="function">to_s</span>
   label || name
@@ -5096,7 +5203,7 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
 </div>
 
         <footer>
-  Generated on Sun May 28 15:00:35 2023 by
+  Generated on Wed May 31 13:11:13 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
