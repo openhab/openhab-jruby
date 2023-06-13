@@ -84,6 +84,18 @@ RSpec.describe OpenHAB::DSL do
     end
   end
 
+  describe "#scenes" do
+    it "creates triggerable scene" do
+      triggered = false
+      scene id: "testscene" do
+        triggered = true
+      end
+
+      rules.scenes["testscene"].trigger
+      expect(triggered).to be true
+    end
+  end
+
   describe "#store_states" do
     before do
       items.build do

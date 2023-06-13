@@ -74,19 +74,19 @@ module OpenHAB
         #
         # Returns all Scenes (rules tagged with "Scene")
         #
-        # @return [Array<Rule>] A list of all the scenes
+        # @return [TaggedArray] A list of all the scenes
         #
         def scenes
-          tagged("Scene")
+          @scenes ||= TaggedArray.new("Scene")
         end
 
         #
         # Returns all Scripts (rules tagged with "Script")
         #
-        # @return [Array<Rule>] A list of all the scripts
+        # @return [TaggedArray] A list of all the scripts
         #
         def scripts
-          tagged("Script")
+          @scripts ||= TaggedArray.new("Script")
         end
       end
     end
