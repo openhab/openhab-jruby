@@ -1082,6 +1082,7 @@ module OpenHAB
 
           raise ArgumentError, "Missing cron expression or elements" unless expression
 
+          add_tag("Schedule")
           cron = Cron.new(rule_triggers: @rule_triggers)
           cron.trigger(config: { "cronExpression" => expression }, attach: attach)
         end
@@ -1180,6 +1181,7 @@ module OpenHAB
           if value == :day && at.is_a?(Item)
             raise ArgumentError, "Attachments are not supported with dynamic datetime triggers" unless attach.nil?
 
+            add_tag("Schedule")
             return trigger("timer.DateTimeTrigger", itemName: at.name, timeOnly: true)
           end
 
@@ -1561,6 +1563,7 @@ module OpenHAB
         #
         def at(item)
           item = item.name if item.is_a?(Item)
+          add_tag("Schedule")
           trigger("timer.DateTimeTrigger", itemName: item.to_s)
         end
 
@@ -1846,6 +1849,15 @@ module OpenHAB
         end
 
         private
+
+        # Adds a single tag to this rule
+        # @param [String] tag The tag (it will not be normalized)
+        # @return [void]
+        def add_tag(tag)
+          # have to normalize tags first
+          @tags = DSL::Items::ItemBuilder.normalize_tags(*tags)
+          @tags << tag unless @tags.include?(tag)
+        end
 
         # Calls the on_load block, with a delay if specified
         # @yield block to execute on load time
