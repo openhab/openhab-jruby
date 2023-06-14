@@ -1,0 +1,5050 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: OpenHAB::Core::Items::Metadata::Hash
+  
+    &mdash; openHAB JRuby
+  
+</title>
+
+  <link rel="stylesheet" href="../../../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../../../css/common.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../../../css/fonts.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../../../css/navbar.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../../../css/sidebar.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../../../css/coderay.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "OpenHAB::Core::Items::Metadata::Hash";
+  relpath = '../../../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../../../js/app.js"></script>
+
+
+    <meta property="og:description" name="description" content="Hash represents the configuration for a single metadata namespace.
+
+It implements the entire interface of ::Hash.
+
+All keys are converted to strings. - Documentation for openhab-scripting JRuby helper library.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/jruby/collateral/master/logos/PNGs/circle-fill/full-color/jruby-logo-circle-logo-fill-outline-medium.png">
+    <meta property="og:image:alt" content="The JRuby logo">
+    <script type="text/javascript">
+      indexpath = '../../../../index.json';
+      base_url = '../../../../';
+    </script>
+  </head>
+  <body>
+    <div id="app">
+      <header class="navbar">
+        <div class="sidebar-button">
+          <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon">
+            <path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path>
+          </svg>
+        </div>
+        <a href="../../../../index.html">
+          <img src="../../../../docs/images/openhab-logo.png" alt="openHAB" class="logo can-hide">
+          <img src="../../../../docs/images/jrubyscripting.png" alt="openHAB" class="logo">
+          <span class="site-name can-hide">openHAB</span>
+        </a>
+        <div class="links">
+          <form class="search-box" role="search" style="display: none">
+  <input id="search-input" class="search-query ds-input" placeholder autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-label="search input" style="position: relative, vertical-align: top;">
+  <div class="search-results" role="listbox">
+    <ul></ul>
+  </div>
+</form>
+
+          <nav class="nav-links can-hide">
+            <div class="nav-item">
+  <a href="https://github.com/openhab/openhab-jruby" target="_blank" rel="noopener noreferrer" class="nav-link external">GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>
+</div>
+
+          </nav>
+        </div>
+      </header>
+
+      <div class="sidebar-mask"></div>
+      <aside class="sidebar">
+        <nav class="nav-links">
+          <div class="nav-item">
+  <a href="https://github.com/openhab/openhab-jruby" target="_blank" rel="noopener noreferrer" class="nav-link external">GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>
+</div>
+
+        </nav>
+        <div class="page-versions">
+  <ul class="version-switcher">
+    <li><a href="/openhab-jruby/5.4" class="version-button stable">Stable <small>(5.4)</small></a></li>
+    <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
+  </ul>
+  
+  
+</div>
+
+
+        
+        <ul class="sidebar-links">
+          <li>
+            <section class="sidebar-group collapsed">
+              <p class="sidebar-heading"><span><a href="../../../../index.html">Getting Started</a></span><a class="arrow toggle right"></a></p>
+              <ul class="sidebar-links sidebar-group-items">
+                
+  <li>
+    
+    <span class="sidebar-link">
+      <a class="sidebar-link" href="../../../../index.html" title="USAGE">USAGE</a>
+    </span>
+    
+  </li>
+
+  <li>
+    
+    <span class="sidebar-link">
+      <a class="sidebar-link" href="../../../../file.CHANGELOG.html" title="CHANGELOG">CHANGELOG</a>
+    </span>
+    
+  </li>
+
+  <li>
+    
+    <span class="sidebar-link">
+      <a class="sidebar-link" href="../../../../file.CONTRIBUTING.html" title="Contributing">Contributing</a>
+    </span>
+    
+  </li>
+
+  <li>
+    
+    <span class="sidebar-link">
+      <a class="sidebar-link" href="../../../../file.README.html" title="README">README</a>
+    </span>
+    
+  </li>
+
+  <li>
+    
+    <span class="sidebar-link">
+      <a class="sidebar-link" href="../../../../file.conversions.html" title="Rule Conversions">Rule Conversions</a>
+    </span>
+    
+  </li>
+
+  <li>
+    
+    <span class="sidebar-link">
+      <a class="sidebar-link" href="../../../../file.examples.html" title="Examples">Examples</a>
+    </span>
+    
+  </li>
+
+  <li>
+    
+    <span class="sidebar-link">
+      <a class="sidebar-link" href="../../../../file.ruby-basics.html" title="Ruby Basics">Ruby Basics</a>
+    </span>
+    
+  </li>
+
+  <li>
+    
+    <span class="sidebar-link">
+      <a class="sidebar-link" href="../../../../file.testing.html" title="Testing Your Rules">Testing Your Rules</a>
+    </span>
+    
+  </li>
+
+
+              </ul>
+            </section>
+          </li>
+          
+          <li>
+            <section class="sidebar-group">              
+              <p class="sidebar-heading"><span><span class='object_link'><a href="../../../../top-level-namespace.html" title="Top Level Namespace (root)">Classes</a></span></span><a class="arrow toggle down"></a></p>
+              <ul class="sidebar-links sidebar-group-items class-list">
+                
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-0" href="../../../../OpenHAB.html" title="OpenHAB (module)">OpenHAB</a></span>
+      
+      
+        <a class="arrow toggle down"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-1" href="../../../Core.html" title="OpenHAB::Core (module)">Core</a></span>
+      
+      
+        <a class="arrow toggle down"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../AbstractUID.html" title="OpenHAB::Core::AbstractUID (class)">AbstractUID</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Actions.html" title="OpenHAB::Core::Actions (module)">Actions</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Actions/Audio.html" title="OpenHAB::Core::Actions::Audio (class)">Audio</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Actions/Ephemeris.html" title="OpenHAB::Core::Actions::Ephemeris (class)">Ephemeris</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Actions/Exec.html" title="OpenHAB::Core::Actions::Exec (class)">Exec</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Actions/HTTP.html" title="OpenHAB::Core::Actions::HTTP (class)">HTTP</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Actions/Ping.html" title="OpenHAB::Core::Actions::Ping (class)">Ping</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Actions/Transformation.html" title="OpenHAB::Core::Actions::Transformation (class)">Transformation</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Actions/Voice.html" title="OpenHAB::Core::Actions::Voice (class)">Voice</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../DTO.html" title="OpenHAB::Core::DTO (module)">DTO</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../DTO/AbstractThingDTO.html" title="OpenHAB::Core::DTO::AbstractThingDTO (class)">AbstractThingDTO</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../DTO/ItemChannelLinkDTO.html" title="OpenHAB::Core::DTO::ItemChannelLinkDTO (class)">ItemChannelLinkDTO</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../EntityLookup.html" title="OpenHAB::Core::EntityLookup (module)">EntityLookup</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Events.html" title="OpenHAB::Core::Events (module)">Events</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Events/AbstractEvent.html" title="OpenHAB::Core::Events::AbstractEvent (class)">AbstractEvent</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Events/AbstractItemRegistryEvent.html" title="OpenHAB::Core::Events::AbstractItemRegistryEvent (class)">AbstractItemRegistryEvent</a></span>
+      
+        &lt; AbstractEvent
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Events/AbstractThingRegistryEvent.html" title="OpenHAB::Core::Events::AbstractThingRegistryEvent (class)">AbstractThingRegistryEvent</a></span>
+      
+        &lt; AbstractEvent
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Events/ItemAddedEvent.html" title="OpenHAB::Core::Events::ItemAddedEvent (class)">ItemAddedEvent</a></span>
+      
+        &lt; AbstractItemRegistryEvent
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Events/ItemCommandEvent.html" title="OpenHAB::Core::Events::ItemCommandEvent (class)">ItemCommandEvent</a></span>
+      
+        &lt; ItemEvent
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Events/ItemEvent.html" title="OpenHAB::Core::Events::ItemEvent (class)">ItemEvent</a></span>
+      
+        &lt; AbstractEvent
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Events/ItemRemovedEvent.html" title="OpenHAB::Core::Events::ItemRemovedEvent (class)">ItemRemovedEvent</a></span>
+      
+        &lt; AbstractItemRegistryEvent
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Events/ItemState.html" title="OpenHAB::Core::Events::ItemState (module)">ItemState</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Events/ItemStateChangedEvent.html" title="OpenHAB::Core::Events::ItemStateChangedEvent (class)">ItemStateChangedEvent</a></span>
+      
+        &lt; ItemEvent
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Events/ItemStateEvent.html" title="OpenHAB::Core::Events::ItemStateEvent (class)">ItemStateEvent</a></span>
+      
+        &lt; ItemEvent
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Events/ItemUpdatedEvent.html" title="OpenHAB::Core::Events::ItemUpdatedEvent (class)">ItemUpdatedEvent</a></span>
+      
+        &lt; AbstractItemRegistryEvent
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Events/ThingAddedEvent.html" title="OpenHAB::Core::Events::ThingAddedEvent (class)">ThingAddedEvent</a></span>
+      
+        &lt; AbstractThingRegistryEvent
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Events/ThingRemovedEvent.html" title="OpenHAB::Core::Events::ThingRemovedEvent (class)">ThingRemovedEvent</a></span>
+      
+        &lt; AbstractThingRegistryEvent
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Events/ThingStatusInfoChangedEvent.html" title="OpenHAB::Core::Events::ThingStatusInfoChangedEvent (class)">ThingStatusInfoChangedEvent</a></span>
+      
+        &lt; AbstractEvent
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Events/ThingStatusInfoEvent.html" title="OpenHAB::Core::Events::ThingStatusInfoEvent (class)">ThingStatusInfoEvent</a></span>
+      
+        &lt; AbstractEvent
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Events/ThingUpdatedEvent.html" title="OpenHAB::Core::Events::ThingUpdatedEvent (class)">ThingUpdatedEvent</a></span>
+      
+        &lt; AbstractThingRegistryEvent
+      
+      
+    </span>
+    
+    
+  </li>
+
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Items.html" title="OpenHAB::Core::Items (module)">Items</a></span>
+      
+      
+        <a class="arrow toggle down"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../ColorItem.html" title="OpenHAB::Core::Items::ColorItem (class)">ColorItem</a></span>
+      
+        &lt; DimmerItem
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../ContactItem.html" title="OpenHAB::Core::Items::ContactItem (class)">ContactItem</a></span>
+      
+        &lt; GenericItem
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../DateTimeItem.html" title="OpenHAB::Core::Items::DateTimeItem (class)">DateTimeItem</a></span>
+      
+        &lt; GenericItem
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../DimmerItem.html" title="OpenHAB::Core::Items::DimmerItem (class)">DimmerItem</a></span>
+      
+        &lt; SwitchItem
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../GenericItem.html" title="OpenHAB::Core::Items::GenericItem (class)">GenericItem</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItem</a></span>
+      
+        &lt; GenericItem
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../GroupItem/Members.html" title="OpenHAB::Core::Items::GroupItem::Members (class)">Members</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  
+  
+  
+  
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../ImageItem.html" title="OpenHAB::Core::Items::ImageItem (class)">ImageItem</a></span>
+      
+        &lt; GenericItem
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../LocationItem.html" title="OpenHAB::Core::Items::LocationItem (class)">LocationItem</a></span>
+      
+        &lt; GenericItem
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Metadata.html" title="OpenHAB::Core::Items::Metadata (module)">Metadata</a></span>
+      
+      
+        <a class="arrow toggle down"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link active">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="" title="OpenHAB::Core::Items::Metadata::Hash (class)">Hash</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="NamespaceHash.html" title="OpenHAB::Core::Items::Metadata::NamespaceHash (class)">NamespaceHash</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="Provider.html" title="OpenHAB::Core::Items::Metadata::Provider (class)">Provider</a></span>
+      
+        &lt; Provider
+      
+      
+    </span>
+    
+    
+  </li>
+
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span>
+      
+        &lt; GenericItem
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../NumericItem.html" title="OpenHAB::Core::Items::NumericItem (module)">NumericItem</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Persistence.html" title="OpenHAB::Core::Items::Persistence (module)">Persistence</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span>
+      
+        &lt; SimpleDelegator
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../PlayerItem.html" title="OpenHAB::Core::Items::PlayerItem (class)">PlayerItem</a></span>
+      
+        &lt; GenericItem
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Provider.html" title="OpenHAB::Core::Items::Provider (class)">Provider</a></span>
+      
+        &lt; Provider
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Registry.html" title="OpenHAB::Core::Items::Registry (class)">Registry</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../RollershutterItem.html" title="OpenHAB::Core::Items::RollershutterItem (class)">RollershutterItem</a></span>
+      
+        &lt; GenericItem
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Semantics.html" title="OpenHAB::Core::Items::Semantics (module)">Semantics</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../Semantics/TagClassMethods.html" title="OpenHAB::Core::Items::Semantics::TagClassMethods (module)">TagClassMethods</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../StateStorage.html" title="OpenHAB::Core::Items::StateStorage (class)">StateStorage</a></span>
+      
+        &lt; SimpleDelegator
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../StringItem.html" title="OpenHAB::Core::Items::StringItem (class)">StringItem</a></span>
+      
+        &lt; GenericItem
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../SwitchItem.html" title="OpenHAB::Core::Items::SwitchItem (class)">SwitchItem</a></span>
+      
+        &lt; GenericItem
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../LazyArray.html" title="OpenHAB::Core::LazyArray (module)">LazyArray</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Provider.html" title="OpenHAB::Core::Provider (class)">Provider</a></span>
+      
+        &lt; org.openhab.core.common.registry.AbstractProvider
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Registry.html" title="OpenHAB::Core::Registry (class)">Registry</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Rules.html" title="OpenHAB::Core::Rules (module)">Rules</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Rules/Provider.html" title="OpenHAB::Core::Rules::Provider (class)">Provider</a></span>
+      
+        &lt; Provider
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Rules/Registry.html" title="OpenHAB::Core::Rules::Registry (class)">Registry</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Rules/Rule.html" title="OpenHAB::Core::Rules::Rule (module)">Rule</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  
+  
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Rules/TaggedArray.html" title="OpenHAB::Core::Rules::TaggedArray (class)">TaggedArray</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../ScriptHandling.html" title="OpenHAB::Core::ScriptHandling (module)">ScriptHandling</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Things.html" title="OpenHAB::Core::Things (module)">Things</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Things/Channel.html" title="OpenHAB::Core::Things::Channel (class)">Channel</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Things/ChannelUID.html" title="OpenHAB::Core::Things::ChannelUID (class)">ChannelUID</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Things/ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">ItemChannelLink</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Things/Links.html" title="OpenHAB::Core::Things::Links (module)">Links</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../Things/Links/Provider.html" title="OpenHAB::Core::Things::Links::Provider (class)">Provider</a></span>
+      
+        &lt; Provider
+      
+      
+    </span>
+    
+    
+  </li>
+
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Things/ProfileCallback.html" title="OpenHAB::Core::Things::ProfileCallback (module)">ProfileCallback</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Things/Provider.html" title="OpenHAB::Core::Things::Provider (class)">Provider</a></span>
+      
+        &lt; Provider
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Things/Registry.html" title="OpenHAB::Core::Things::Registry (class)">Registry</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Thing</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../Things/Thing/ChannelsArray.html" title="OpenHAB::Core::Things::Thing::ChannelsArray (class)">ChannelsArray</a></span>
+      
+        &lt; Array
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+        
+      </ul>
+    
+  </li>
+
+  
+  
+  
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Timer.html" title="OpenHAB::Core::Timer (class)">Timer</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Types.html" title="OpenHAB::Core::Types (module)">Types</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/Command.html" title="OpenHAB::Core::Types::Command (module)">Command</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/DateTimeType.html" title="OpenHAB::Core::Types::DateTimeType (class)">DateTimeType</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/HSBType.html" title="OpenHAB::Core::Types::HSBType (class)">HSBType</a></span>
+      
+        &lt; PercentType
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/IncreaseDecreaseType.html" title="OpenHAB::Core::Types::IncreaseDecreaseType (class)">IncreaseDecreaseType</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/NextPreviousType.html" title="OpenHAB::Core::Types::NextPreviousType (class)">NextPreviousType</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/NumericType.html" title="OpenHAB::Core::Types::NumericType (module)">NumericType</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/OnOffType.html" title="OpenHAB::Core::Types::OnOffType (class)">OnOffType</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/OpenClosedType.html" title="OpenHAB::Core::Types::OpenClosedType (class)">OpenClosedType</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span>
+      
+        &lt; DecimalType
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/PlayPauseType.html" title="OpenHAB::Core::Types::PlayPauseType (class)">PlayPauseType</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/PointType.html" title="OpenHAB::Core::Types::PointType (class)">PointType</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/QuantityType.html" title="OpenHAB::Core::Types::QuantityType (class)">QuantityType</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/RawType.html" title="OpenHAB::Core::Types::RawType (class)">RawType</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/RefreshType.html" title="OpenHAB::Core::Types::RefreshType (class)">RefreshType</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/RewindFastforwardType.html" title="OpenHAB::Core::Types::RewindFastforwardType (class)">RewindFastforwardType</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/State.html" title="OpenHAB::Core::Types::State (module)">State</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/StopMoveType.html" title="OpenHAB::Core::Types::StopMoveType (class)">StopMoveType</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/StringType.html" title="OpenHAB::Core::Types::StringType (class)">StringType</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/Type.html" title="OpenHAB::Core::Types::Type (module)">Type</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/UnDefType.html" title="OpenHAB::Core::Types::UnDefType (class)">UnDefType</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Types/UpDownType.html" title="OpenHAB::Core::Types::UpDownType (class)">UpDownType</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+
+        
+      </ul>
+    
+  </li>
+
+  
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../ValueCache.html" title="OpenHAB::Core::ValueCache (module)">ValueCache</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  
+  
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-1" href="../../../CoreExt.html" title="OpenHAB::CoreExt (module)">CoreExt</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../../CoreExt/Between.html" title="OpenHAB::CoreExt::Between (module)">Between</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../../CoreExt/Ephemeris.html" title="OpenHAB::CoreExt::Ephemeris (module)">Ephemeris</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../../CoreExt/Java.html" title="OpenHAB::CoreExt::Java (module)">Java</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../CoreExt/Java/Class.html" title="OpenHAB::CoreExt::Java::Class (class)">Class</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../CoreExt/Java/Duration.html" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../CoreExt/Java/LocalDate.html" title="OpenHAB::CoreExt::Java::LocalDate (class)">LocalDate</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../CoreExt/Java/LocalTime.html" title="OpenHAB::CoreExt::Java::LocalTime (class)">LocalTime</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../CoreExt/Java/Month.html" title="OpenHAB::CoreExt::Java::Month (class)">Month</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../CoreExt/Java/MonthDay.html" title="OpenHAB::CoreExt::Java::MonthDay (class)">MonthDay</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../CoreExt/Java/Period.html" title="OpenHAB::CoreExt::Java::Period (class)">Period</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../CoreExt/Java/TemporalAmount.html" title="OpenHAB::CoreExt::Java::TemporalAmount (module)">TemporalAmount</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../CoreExt/Java/Time.html" title="OpenHAB::CoreExt::Java::Time (module)">Time</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../CoreExt/Java/ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../../CoreExt/Ruby.html" title="OpenHAB::CoreExt::Ruby (module)">Ruby</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../CoreExt/Ruby/Numeric.html" title="OpenHAB::CoreExt::Ruby::Numeric (module)">Numeric</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../CoreExt/Ruby/QuantityTypeConversion.html" title="OpenHAB::CoreExt::Ruby::QuantityTypeConversion (module)">QuantityTypeConversion</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../CoreExt/Ruby/Range.html" title="OpenHAB::CoreExt::Ruby::Range (module)">Range</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+
+        
+      </ul>
+    
+  </li>
+
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-1" href="../../../DSL.html" title="OpenHAB::DSL (module)">DSL</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../../DSL/Debouncer.html" title="OpenHAB::DSL::Debouncer (class)">Debouncer</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../../DSL/Events.html" title="OpenHAB::DSL::Events (module)">Events</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../DSL/Events/WatchEvent.html" title="OpenHAB::DSL::Events::WatchEvent (class)">WatchEvent</a></span>
+      
+        &lt; Struct
+      
+      
+    </span>
+    
+    
+  </li>
+
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../../DSL/Items.html" title="OpenHAB::DSL::Items (module)">Items</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../DSL/Items/Builder.html" title="OpenHAB::DSL::Items::Builder (module)">Builder</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../DSL/Items/Ensure.html" title="OpenHAB::DSL::Items::Ensure (module)">Ensure</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../../DSL/Items/Ensure/Ensurable.html" title="OpenHAB::DSL::Items::Ensure::Ensurable (module)">Ensurable</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../../DSL/Items/Ensure/Item.html" title="OpenHAB::DSL::Items::Ensure::Item (module)">Item</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../DSL/Items/GroupItemBuilder.html" title="OpenHAB::DSL::Items::GroupItemBuilder (class)">GroupItemBuilder</a></span>
+      
+        &lt; ItemBuilder
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../DSL/Items/ItemBuilder.html" title="OpenHAB::DSL::Items::ItemBuilder (class)">ItemBuilder</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../DSL/Items/TimedCommand.html" title="OpenHAB::DSL::Items::TimedCommand (module)">TimedCommand</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../../DSL/Items/TimedCommand/TimedCommandDetails.html" title="OpenHAB::DSL::Items::TimedCommand::TimedCommandDetails (class)">TimedCommandDetails</a></span>
+      
+        &lt; Struct
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+
+        
+      </ul>
+    
+  </li>
+
+
+        
+      </ul>
+    
+  </li>
+
+  
+  
+  
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../../DSL/Rules.html" title="OpenHAB::DSL::Rules (module)">Rules</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../DSL/Rules/Builder.html" title="OpenHAB::DSL::Rules::Builder (class)">Builder</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../DSL/Rules/BuilderDSL.html" title="OpenHAB::DSL::Rules::BuilderDSL (class)">BuilderDSL</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../DSL/Rules/Terse.html" title="OpenHAB::DSL::Rules::Terse (module)">Terse</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../../DSL/Things.html" title="OpenHAB::DSL::Things (module)">Things</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../DSL/Things/BridgeBuilder.html" title="OpenHAB::DSL::Things::BridgeBuilder (class)">BridgeBuilder</a></span>
+      
+        &lt; ThingBuilder
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../DSL/Things/Builder.html" title="OpenHAB::DSL::Things::Builder (class)">Builder</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../DSL/Things/ChannelBuilder.html" title="OpenHAB::DSL::Things::ChannelBuilder (class)">ChannelBuilder</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../DSL/Things/ThingBuilder.html" title="OpenHAB::DSL::Things::ThingBuilder (class)">ThingBuilder</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../../DSL/TimerManager.html" title="OpenHAB::DSL::TimerManager (class)">TimerManager</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-1" href="../../../Log.html" title="OpenHAB::Log (module)">Log</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-1" href="../../../Logger.html" title="OpenHAB::Logger (class)">Logger</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-1" href="../../../OSGi.html" title="OpenHAB::OSGi (module)">OSGi</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-1" href="../../../RSpec.html" title="OpenHAB::RSpec (module)">RSpec</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../../RSpec/Configuration.html" title="OpenHAB::RSpec::Configuration (module)">Configuration</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../../RSpec/ExampleGroup.html" title="OpenHAB::RSpec::ExampleGroup (module)">ExampleGroup</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../RSpec/ExampleGroup/ClassMethods.html" title="OpenHAB::RSpec::ExampleGroup::ClassMethods (module)">ClassMethods</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../../RSpec/Helpers.html" title="OpenHAB::RSpec::Helpers (module)">Helpers</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-1" href="../../../Transform.html" title="OpenHAB::Transform (module)">Transform</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-0" href="../../../../Array.html" title="Array (class)">Array</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-0" href="../../../../Date.html" title="Date (class)">Date</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-0" href="../../../../DateTime.html" title="DateTime (class)">DateTime</a></span>
+      
+        &lt; Date
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-0" href="../../../../Enumerable.html" title="Enumerable (module)">Enumerable</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-0" href="../../../../Float.html" title="Float (class)">Float</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-0" href="../../../../Integer.html" title="Integer (class)">Integer</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-0" href="../../../../Module.html" title="Module (class)">Module</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-0" href="../../../../Numeric.html" title="Numeric (class)">Numeric</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-0" href="../../../../Range.html" title="Range (class)">Range</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-0" href="../../../../Symbol.html" title="Symbol (class)">Symbol</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-0" href="../../../../Time.html" title="Time (class)">Time</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+              </ul>
+            </section>
+          </li>
+        </ul>
+      </aside>
+
+      <main class="page">
+        <div class="content"><h1>Class: OpenHAB::Core::Items::Metadata::Hash
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'>Object</span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'>Object</span></li>
+          
+            <li class="next">OpenHAB::Core::Items::Metadata::Hash</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="../../../../Enumerable.html" title="Enumerable (module)">Enumerable</a></span></dd>
+  </dl>
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/openhab/core/items/metadata/hash.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p><span class='object_link'><a href="" title="OpenHAB::Core::Items::Metadata::Hash (class)">Hash</a></span> represents the configuration for a single metadata namespace.</p>
+<p>It implements the entire interface of Hash.</p>
+<p>All keys are converted to strings.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#item-instance_method" title="#item (instance method)">#<strong>item</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#namespace-instance_method" title="#namespace (instance method)">#<strong>namespace</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#value-instance_method" title="#value (instance method)">#<strong>value</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The main value for the metadata namespace.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2 id="Instance Method Summary">
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#attached%3F-instance_method" title="#attached? (instance method)">#<strong>attached?</strong>  &#x21d2; true, false </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Is this object attached to an actual Item?.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#provider-instance_method" title="#provider (instance method)">#<strong>provider</strong>  &#x21d2; org.openhab.core.common.registry.ManagedProvider </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#replace-instance_method" title="#replace (instance method)">#<strong>replace</strong>(new_config)  &#x21d2; self </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Replace the configuration with a new Hash.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_hash-instance_method" title="#to_hash (instance method)">#<strong>to_hash</strong>  &#x21d2; ::Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Implicit conversion to Hash.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../../../../Enumerable.html" title="Enumerable (module)">Enumerable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../../../../Enumerable.html#all_groups-instance_method" title="Enumerable#all_groups (method)">#all_groups</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#all_members-instance_method" title="Enumerable#all_members (method)">#all_members</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#command-instance_method" title="Enumerable#command (method)">#command</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#decrease-instance_method" title="Enumerable#decrease (method)">#decrease</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#down-instance_method" title="Enumerable#down (method)">#down</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#equipments-instance_method" title="Enumerable#equipments (method)">#equipments</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#fast_forward-instance_method" title="Enumerable#fast_forward (method)">#fast_forward</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#groups-instance_method" title="Enumerable#groups (method)">#groups</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#increase-instance_method" title="Enumerable#increase (method)">#increase</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#locations-instance_method" title="Enumerable#locations (method)">#locations</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#member_of-instance_method" title="Enumerable#member_of (method)">#member_of</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#members-instance_method" title="Enumerable#members (method)">#members</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#move-instance_method" title="Enumerable#move (method)">#move</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#next-instance_method" title="Enumerable#next (method)">#next</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#not_member_of-instance_method" title="Enumerable#not_member_of (method)">#not_member_of</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#not_tagged-instance_method" title="Enumerable#not_tagged (method)">#not_tagged</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#off-instance_method" title="Enumerable#off (method)">#off</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#on-instance_method" title="Enumerable#on (method)">#on</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#pause-instance_method" title="Enumerable#pause (method)">#pause</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#play-instance_method" title="Enumerable#play (method)">#play</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#points-instance_method" title="Enumerable#points (method)">#points</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#previous-instance_method" title="Enumerable#previous (method)">#previous</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#refresh-instance_method" title="Enumerable#refresh (method)">#refresh</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#rewind-instance_method" title="Enumerable#rewind (method)">#rewind</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#stop-instance_method" title="Enumerable#stop (method)">#stop</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#tagged-instance_method" title="Enumerable#tagged (method)">#tagged</a></span>, <span class='object_link'><a href="../../../../Enumerable.html#up-instance_method" title="Enumerable#up (method)">#up</a></span></p>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="item-instance_method">
+  
+    #<strong>item</strong>  &#x21d2; <tt><span class='object_link'>Object</span></tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+115
+116
+117
+118
+119</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/metadata/hash.rb', line 115</span>
+
+<span class="keyword">def</span> <span class="function">item</span>
+  <span class="keyword">return</span> <span class="predefined-constant">nil</span> <span class="keyword">unless</span> attached?
+
+  <span class="constant">DSL</span>.items[uid.item_name]
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="namespace-instance_method">
+  
+    #<strong>namespace</strong>  &#x21d2; <tt>String</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/metadata/hash.rb', line 21</span>
+
+<span class="keyword">class</span> <span class="class">Hash</span>
+  java_import org.openhab.core.items.Metadata
+  private_constant <span class="symbol">:Metadata</span>
+
+  include <span class="constant">Enumerable</span>
+
+  extend <span class="constant">Forwardable</span>
+  def_delegators <span class="symbol">:@metadata</span>, <span class="symbol">:configuration</span>, <span class="symbol">:hash</span>, <span class="symbol">:to_s</span>, <span class="symbol">:uid</span>, <span class="symbol">:value</span>
+  private <span class="symbol">:configuration</span>
+
+  <span class="comment"># @!method to_hash</span>
+  <span class="comment">#   Implicit conversion to {::Hash}.</span>
+  <span class="comment">#   @return [::Hash]</span>
+
+  <span class="comment"># Make it act like a Hash; some methods can be handled by</span>
+  <span class="comment"># java.util.Map, others we have to convert to a Ruby Hash first, and</span>
+  <span class="comment"># still others (mutators) must be manually implemented below.</span>
+  def_delegators <span class="symbol">:configuration</span>,
+                 <span class="symbol">:any?</span>,
+                 <span class="symbol">:compact</span>,
+                 <span class="symbol">:compare_by_identity?</span>,
+                 <span class="symbol">:deconstruct_keys</span>,
+                 <span class="symbol">:default</span>,
+                 <span class="symbol">:default_proc</span>,
+                 <span class="symbol">:each</span>,
+                 <span class="symbol">:each_key</span>,
+                 <span class="symbol">:each_pair</span>,
+                 <span class="symbol">:each_value</span>,
+                 <span class="symbol">:empty?</span>,
+                 <span class="symbol">:filter</span>,
+                 <span class="symbol">:flatten</span>,
+                 <span class="symbol">:has_value?</span>,
+                 <span class="symbol">:invert</span>,
+                 <span class="symbol">:key</span>,
+                 <span class="symbol">:keys</span>,
+                 <span class="symbol">:length</span>,
+                 <span class="symbol">:rassoc</span>,
+                 <span class="symbol">:reject</span>,
+                 <span class="symbol">:select</span>,
+                 <span class="symbol">:shift</span>,
+                 <span class="symbol">:size</span>,
+                 <span class="symbol">:to_a</span>,
+                 <span class="symbol">:to_h</span>,
+                 <span class="symbol">:to_hash</span>,
+                 <span class="symbol">:transform_keys</span>,
+                 <span class="symbol">:transform_values</span>,
+                 <span class="symbol">:values</span>,
+                 <span class="symbol">:value?</span>
+
+  def_delegator <span class="symbol">:uid</span>, <span class="symbol">:namespace</span>
+
+  <span class="keyword">class</span> &lt;&lt; <span class="class">self</span>
+    <span class="comment"># @!visibility private</span>
+    <span class="keyword">def</span> <span class="function">from_item</span>(item_name, namespace, value)
+      namespace = namespace.to_s
+      value = <span class="keyword">case</span> value
+              <span class="keyword">when</span> <span class="constant">Hash</span>
+                <span class="keyword">return</span> value <span class="keyword">if</span> value.uid.item_name == item_name &amp;&amp; value.uid.namespace == namespace
+
+                [value.value, value.send(<span class="symbol">:configuration</span>)]
+              <span class="keyword">when</span> <span class="constant">Array</span>
+                raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Array must contain 2 elements: value, config</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> value.length != <span class="integer">2</span>
+
+                [value.first, (value.last || {}).transform_keys(&amp;<span class="symbol">:to_s</span>)]
+              <span class="keyword">when</span> ::<span class="constant">Hash</span> <span class="keyword">then</span> [<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>, value.transform_keys(&amp;<span class="symbol">:to_s</span>)]
+              <span class="keyword">else</span> [value.to_s, {}]
+              <span class="keyword">end</span>
+      new(<span class="constant">Metadata</span>.new(org.openhab.core.items.MetadataKey.new(namespace.to_s, item_name), *value))
+    <span class="keyword">end</span>
+
+    <span class="comment"># @!visibility private</span>
+    <span class="keyword">def</span> <span class="function">from_value</span>(namespace, value)
+      from_item(<span class="string"><span class="delimiter">&quot;</span><span class="content">-</span><span class="delimiter">&quot;</span></span>, namespace, value)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">initialize</span>(metadata = <span class="predefined-constant">nil</span>)
+    <span class="instance-variable">@metadata</span> = metadata
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">dup</span>
+    new(<span class="constant">Metadata</span>.new(org.openhab.core.items.MetadataKey.new(uid.namespace, <span class="string"><span class="delimiter">&quot;</span><span class="content">-</span><span class="delimiter">&quot;</span></span>), value, configuration))
+  <span class="keyword">end</span>
+
+  <span class="comment"># Is this object attached to an actual Item?</span>
+  <span class="comment"># @return [true,false]</span>
+  <span class="keyword">def</span> <span class="function">attached?</span>
+    uid.item_name != <span class="string"><span class="delimiter">&quot;</span><span class="content">-</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute [r] item</span>
+  <span class="comment">#   @return [Item, nil] The item this namespace is attached to.</span>
+  <span class="keyword">def</span> <span class="function">item</span>
+    <span class="keyword">return</span> <span class="predefined-constant">nil</span> <span class="keyword">unless</span> attached?
+
+    <span class="constant">DSL</span>.items[uid.item_name]
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">commit</span>
+    <span class="keyword">return</span> <span class="keyword">unless</span> attached?
+
+    javaify
+    provider.update(<span class="instance-variable">@metadata</span>)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">create_or_update</span>
+    <span class="keyword">return</span> <span class="keyword">unless</span> attached?
+
+    javaify
+    (p = provider).get(uid) ? p.update(<span class="instance-variable">@metadata</span>) : p.add(<span class="instance-variable">@metadata</span>)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">remove</span>
+    provider.remove(uid)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">eql?</span>(other)
+    <span class="keyword">return</span> <span class="predefined-constant">true</span> <span class="keyword">if</span> equal?(other)
+    <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> other.is_a?(<span class="constant">Hash</span>)
+    <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> value == other.value
+
+    configuration == other.configuration
+  <span class="keyword">end</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># Set the metadata value</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">value=</span>(value)
+    <span class="instance-variable">@metadata</span> = org.openhab.core.items.Metadata.new(uid, value.to_s, configuration)
+    commit
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">&lt;</span>(other)
+    <span class="keyword">if</span> other.is_a?(<span class="constant">Hash</span>)
+      <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">if</span> attached? &amp;&amp; uid == other.uid
+      <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> value == other.value
+    <span class="keyword">end</span>
+
+    configuration &lt; other
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">&lt;=</span>(other)
+    <span class="keyword">if</span> other.is_a?(<span class="constant">Hash</span>)
+      <span class="keyword">return</span> <span class="predefined-constant">true</span> <span class="keyword">if</span> attached? &amp;&amp; uid == other.uid
+      <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> value == other.value
+    <span class="keyword">end</span>
+
+    configuration &lt;= other
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">==</span>(other)
+    <span class="keyword">if</span> other.is_a?(<span class="constant">Hash</span>)
+      <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> value == other.value
+
+      <span class="keyword">return</span> configuration == other.configuration
+    <span class="keyword">elsif</span> value.empty? &amp;&amp; other.respond_to?(<span class="symbol">:to_hash</span>)
+      <span class="keyword">return</span> configuration == other.to_hash
+    <span class="keyword">end</span>
+    <span class="predefined-constant">false</span>
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">&gt;</span>(other)
+    <span class="keyword">if</span> other.is_a?(<span class="constant">Hash</span>)
+      <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">if</span> attached? &amp;&amp; uid == other.uid
+      <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> value == other.value
+    <span class="keyword">end</span>
+
+    configuration &gt; other
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">&gt;=</span>(other)
+    <span class="keyword">if</span> other.is_a?(<span class="constant">Hash</span>)
+      <span class="keyword">return</span> <span class="predefined-constant">true</span> <span class="keyword">if</span> attached? &amp;&amp; uid == other.uid
+      <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> value == other.value
+    <span class="keyword">end</span>
+
+    configuration &gt;= other
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">[]</span>(key)
+    configuration[key.to_s]
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">[]=</span>(key, value)
+    key = key.to_s
+    new_config = to_h
+    new_config[key] = value
+    replace(new_config)
+    value <span class="comment"># rubocop:disable Lint/Void</span>
+  <span class="keyword">end</span>
+  alias_method <span class="symbol">:store</span>, <span class="symbol">:[]=</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">assoc</span>(key)
+    configuration.assoc(key.to_s)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">clear</span>
+    replace({})
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">compact!</span>
+    replace(compact)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">compare_by_identity</span>
+    raise <span class="constant">NotImplementedError</span>
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">default=</span>(*)
+    raise <span class="constant">NotImplementedError</span>
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">default_proc=</span>(*)
+    raise <span class="constant">NotImplementedError</span>
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">delete</span>(key)
+    key = key.to_s
+    new_config = to_h
+    <span class="keyword">return</span> <span class="keyword">yield</span>(key) <span class="keyword">if</span> block_given? &amp;&amp; !new_config.key?(key)
+
+    old_value = new_config.delete(key)
+    replace(new_config)
+    old_value
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">delete_if</span>(&amp;block)
+    raise <span class="constant">NotImplementedError</span> <span class="keyword">unless</span> block
+
+    replace(to_h.delete_if(block))
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">dig</span>(key, *keys)
+    configuration.dig(key.to_s, *keys)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">except</span>(*keys)
+    to_h.except(*keys.map(&amp;<span class="symbol">:to_s</span>))
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">fetch</span>(key, &amp;block)
+    configuration.fetch(key.to_s, &amp;block)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">fetch_values</span>(*keys, &amp;block)
+    configuration.fetch_values(*keys.map(&amp;<span class="symbol">:to_s</span>), &amp;block)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">keep_if</span>(&amp;block)
+    select!(&amp;block)
+    <span class="predefined-constant">self</span>
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">key?</span>(key)
+    configuration.key?(key.to_s)
+  <span class="keyword">end</span>
+  alias_method <span class="symbol">:include?</span>, <span class="symbol">:key?</span>
+  alias_method <span class="symbol">:has_key?</span>, <span class="symbol">:key?</span>
+  alias_method <span class="symbol">:member?</span>, <span class="symbol">:key?</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">merge!</span>(*others, &amp;block)
+    <span class="keyword">return</span> <span class="predefined-constant">self</span> <span class="keyword">if</span> others.empty?
+
+    new_config = to_h
+    others.each <span class="keyword">do</span> |h|
+      new_config.merge!(h.transform_keys(&amp;<span class="symbol">:to_s</span>), &amp;block)
+    <span class="keyword">end</span>
+    replace(new_config)
+  <span class="keyword">end</span>
+  alias_method <span class="symbol">:update</span>, <span class="symbol">:merge!</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">reject!</span>(&amp;block)
+    raise <span class="constant">NotImplementedError</span> <span class="keyword">unless</span> block
+
+    r = to_h.reject!(&amp;block)
+    replace(r) <span class="keyword">if</span> r
+  <span class="keyword">end</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># Replace the configuration with a new {::Hash}.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @param [::Hash] new_config</span>
+  <span class="comment"># @return [self]</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">replace</span>(new_config)
+    <span class="instance-variable">@metadata</span> = org.openhab.core.items.Metadata.new(uid, value, new_config.transform_keys(&amp;<span class="symbol">:to_s</span>))
+    commit
+    <span class="predefined-constant">self</span>
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">select!</span>(&amp;block)
+    raise <span class="constant">NotImplementedError</span> <span class="keyword">unless</span> block?
+
+    r = to_h.select!(&amp;block)
+    replace(r) <span class="keyword">if</span> r
+  <span class="keyword">end</span>
+  alias_method <span class="symbol">:filter!</span>, <span class="symbol">:select!</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">slice</span>(*keys)
+    configuration.slice(*keys.map(&amp;<span class="symbol">:to_s</span>))
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">to_proc</span>
+    -&gt;(k) { <span class="predefined-constant">self</span>[k] }
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">transform_keys!</span>(*args, &amp;block)
+    replace(transform_keys(*args, &amp;block))
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">transform_values!</span>(&amp;block)
+    raise <span class="constant">NotImplementedError</span> <span class="keyword">unless</span> block
+
+    replace(transform_values(&amp;block))
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">values_at</span>(*keys)
+    configuration.values_at(*keys.map(&amp;<span class="symbol">:to_s</span>))
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">inspect</span>
+    <span class="keyword">return</span> to_h.inspect <span class="keyword">if</span> value.empty?
+    <span class="keyword">return</span> value.inspect <span class="keyword">if</span> configuration.empty?
+
+    [value, to_h].inspect
+  <span class="keyword">end</span>
+  remove_method <span class="symbol">:to_s</span>
+  alias_method <span class="symbol">:to_s</span>, <span class="symbol">:inspect</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># @raise [FrozenError] if the provider is not a</span>
+  <span class="comment">#   {org.openhab.core.common.registry.ManagedProvider ManagedProvider} that can be updated.</span>
+  <span class="comment"># @return [org.openhab.core.common.registry.ManagedProvider]</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">provider</span>
+    preferred_provider = <span class="constant">Provider</span>.current(
+      <span class="constant">Thread</span>.current[<span class="symbol">:openhab_providers</span>]&amp;.dig(<span class="symbol">:metadata_items</span>, uid.item_name) ||
+        <span class="constant">Thread</span>.current[<span class="symbol">:openhab_providers</span>]&amp;.dig(<span class="symbol">:metadata_namespaces</span>, uid.namespace),
+      <span class="predefined-constant">self</span>
+    )
+
+    <span class="keyword">if</span> attached?
+      provider = <span class="constant">Provider</span>.registry.provider_for(uid)
+      <span class="keyword">return</span> preferred_provider <span class="keyword">unless</span> provider
+
+      <span class="keyword">unless</span> provider.is_a?(org.openhab.core.common.registry.ManagedProvider)
+        raise <span class="constant">FrozenError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot modify metadata from provider </span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="content"> for </span><span class="inline"><span class="inline-delimiter">#{</span>uid<span class="inline-delimiter">}</span></span><span class="content">.</span><span class="delimiter">&quot;</span></span>
+      <span class="keyword">end</span>
+
+      <span class="keyword">if</span> preferred_provider != provider
+        logger.warn(<span class="string"><span class="delimiter">&quot;</span><span class="content">Provider </span><span class="inline"><span class="inline-delimiter">#{</span>preferred_provider.inspect<span class="inline-delimiter">}</span></span><span class="content"> cannot be used with </span><span class="inline"><span class="inline-delimiter">#{</span>uid<span class="inline-delimiter">}</span></span><span class="content">; </span><span class="delimiter">&quot;</span></span> \
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">reverting to provider </span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="content">. </span><span class="delimiter">&quot;</span></span> \
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">This may cause unexpected issues, like metadata persisting that you did not expect to.</span><span class="delimiter">&quot;</span></span>)
+        preferred_provider = provider
+      <span class="keyword">end</span>
+
+    <span class="keyword">end</span>
+    preferred_provider
+  <span class="keyword">end</span>
+
+  private
+
+  <span class="comment">#</span>
+  <span class="comment"># @see https://github.com/openhab/openhab-core/issues/3169</span>
+  <span class="comment">#</span>
+  <span class="comment"># in the meantime, force the serialization round-trip right now</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">javaify</span>
+    mapper = <span class="constant">Provider</span>.registry.managed_provider.get.storage.entityMapper
+
+    <span class="instance-variable">@metadata</span> = mapper.from_json(mapper.to_json_tree(<span class="instance-variable">@metadata</span>), <span class="constant">Metadata</span>.java_class)
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="value=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="value-instance_method">
+  
+    #<strong>value</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The main value for the metadata namespace.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The main value for the metadata namespace.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/metadata/hash.rb', line 21</span>
+
+<span class="keyword">class</span> <span class="class">Hash</span>
+  java_import org.openhab.core.items.Metadata
+  private_constant <span class="symbol">:Metadata</span>
+
+  include <span class="constant">Enumerable</span>
+
+  extend <span class="constant">Forwardable</span>
+  def_delegators <span class="symbol">:@metadata</span>, <span class="symbol">:configuration</span>, <span class="symbol">:hash</span>, <span class="symbol">:to_s</span>, <span class="symbol">:uid</span>, <span class="symbol">:value</span>
+  private <span class="symbol">:configuration</span>
+
+  <span class="comment"># @!method to_hash</span>
+  <span class="comment">#   Implicit conversion to {::Hash}.</span>
+  <span class="comment">#   @return [::Hash]</span>
+
+  <span class="comment"># Make it act like a Hash; some methods can be handled by</span>
+  <span class="comment"># java.util.Map, others we have to convert to a Ruby Hash first, and</span>
+  <span class="comment"># still others (mutators) must be manually implemented below.</span>
+  def_delegators <span class="symbol">:configuration</span>,
+                 <span class="symbol">:any?</span>,
+                 <span class="symbol">:compact</span>,
+                 <span class="symbol">:compare_by_identity?</span>,
+                 <span class="symbol">:deconstruct_keys</span>,
+                 <span class="symbol">:default</span>,
+                 <span class="symbol">:default_proc</span>,
+                 <span class="symbol">:each</span>,
+                 <span class="symbol">:each_key</span>,
+                 <span class="symbol">:each_pair</span>,
+                 <span class="symbol">:each_value</span>,
+                 <span class="symbol">:empty?</span>,
+                 <span class="symbol">:filter</span>,
+                 <span class="symbol">:flatten</span>,
+                 <span class="symbol">:has_value?</span>,
+                 <span class="symbol">:invert</span>,
+                 <span class="symbol">:key</span>,
+                 <span class="symbol">:keys</span>,
+                 <span class="symbol">:length</span>,
+                 <span class="symbol">:rassoc</span>,
+                 <span class="symbol">:reject</span>,
+                 <span class="symbol">:select</span>,
+                 <span class="symbol">:shift</span>,
+                 <span class="symbol">:size</span>,
+                 <span class="symbol">:to_a</span>,
+                 <span class="symbol">:to_h</span>,
+                 <span class="symbol">:to_hash</span>,
+                 <span class="symbol">:transform_keys</span>,
+                 <span class="symbol">:transform_values</span>,
+                 <span class="symbol">:values</span>,
+                 <span class="symbol">:value?</span>
+
+  def_delegator <span class="symbol">:uid</span>, <span class="symbol">:namespace</span>
+
+  <span class="keyword">class</span> &lt;&lt; <span class="class">self</span>
+    <span class="comment"># @!visibility private</span>
+    <span class="keyword">def</span> <span class="function">from_item</span>(item_name, namespace, value)
+      namespace = namespace.to_s
+      value = <span class="keyword">case</span> value
+              <span class="keyword">when</span> <span class="constant">Hash</span>
+                <span class="keyword">return</span> value <span class="keyword">if</span> value.uid.item_name == item_name &amp;&amp; value.uid.namespace == namespace
+
+                [value.value, value.send(<span class="symbol">:configuration</span>)]
+              <span class="keyword">when</span> <span class="constant">Array</span>
+                raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Array must contain 2 elements: value, config</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> value.length != <span class="integer">2</span>
+
+                [value.first, (value.last || {}).transform_keys(&amp;<span class="symbol">:to_s</span>)]
+              <span class="keyword">when</span> ::<span class="constant">Hash</span> <span class="keyword">then</span> [<span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>, value.transform_keys(&amp;<span class="symbol">:to_s</span>)]
+              <span class="keyword">else</span> [value.to_s, {}]
+              <span class="keyword">end</span>
+      new(<span class="constant">Metadata</span>.new(org.openhab.core.items.MetadataKey.new(namespace.to_s, item_name), *value))
+    <span class="keyword">end</span>
+
+    <span class="comment"># @!visibility private</span>
+    <span class="keyword">def</span> <span class="function">from_value</span>(namespace, value)
+      from_item(<span class="string"><span class="delimiter">&quot;</span><span class="content">-</span><span class="delimiter">&quot;</span></span>, namespace, value)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">initialize</span>(metadata = <span class="predefined-constant">nil</span>)
+    <span class="instance-variable">@metadata</span> = metadata
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">dup</span>
+    new(<span class="constant">Metadata</span>.new(org.openhab.core.items.MetadataKey.new(uid.namespace, <span class="string"><span class="delimiter">&quot;</span><span class="content">-</span><span class="delimiter">&quot;</span></span>), value, configuration))
+  <span class="keyword">end</span>
+
+  <span class="comment"># Is this object attached to an actual Item?</span>
+  <span class="comment"># @return [true,false]</span>
+  <span class="keyword">def</span> <span class="function">attached?</span>
+    uid.item_name != <span class="string"><span class="delimiter">&quot;</span><span class="content">-</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute [r] item</span>
+  <span class="comment">#   @return [Item, nil] The item this namespace is attached to.</span>
+  <span class="keyword">def</span> <span class="function">item</span>
+    <span class="keyword">return</span> <span class="predefined-constant">nil</span> <span class="keyword">unless</span> attached?
+
+    <span class="constant">DSL</span>.items[uid.item_name]
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">commit</span>
+    <span class="keyword">return</span> <span class="keyword">unless</span> attached?
+
+    javaify
+    provider.update(<span class="instance-variable">@metadata</span>)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">create_or_update</span>
+    <span class="keyword">return</span> <span class="keyword">unless</span> attached?
+
+    javaify
+    (p = provider).get(uid) ? p.update(<span class="instance-variable">@metadata</span>) : p.add(<span class="instance-variable">@metadata</span>)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">remove</span>
+    provider.remove(uid)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">eql?</span>(other)
+    <span class="keyword">return</span> <span class="predefined-constant">true</span> <span class="keyword">if</span> equal?(other)
+    <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> other.is_a?(<span class="constant">Hash</span>)
+    <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> value == other.value
+
+    configuration == other.configuration
+  <span class="keyword">end</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># Set the metadata value</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">value=</span>(value)
+    <span class="instance-variable">@metadata</span> = org.openhab.core.items.Metadata.new(uid, value.to_s, configuration)
+    commit
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">&lt;</span>(other)
+    <span class="keyword">if</span> other.is_a?(<span class="constant">Hash</span>)
+      <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">if</span> attached? &amp;&amp; uid == other.uid
+      <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> value == other.value
+    <span class="keyword">end</span>
+
+    configuration &lt; other
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">&lt;=</span>(other)
+    <span class="keyword">if</span> other.is_a?(<span class="constant">Hash</span>)
+      <span class="keyword">return</span> <span class="predefined-constant">true</span> <span class="keyword">if</span> attached? &amp;&amp; uid == other.uid
+      <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> value == other.value
+    <span class="keyword">end</span>
+
+    configuration &lt;= other
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">==</span>(other)
+    <span class="keyword">if</span> other.is_a?(<span class="constant">Hash</span>)
+      <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> value == other.value
+
+      <span class="keyword">return</span> configuration == other.configuration
+    <span class="keyword">elsif</span> value.empty? &amp;&amp; other.respond_to?(<span class="symbol">:to_hash</span>)
+      <span class="keyword">return</span> configuration == other.to_hash
+    <span class="keyword">end</span>
+    <span class="predefined-constant">false</span>
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">&gt;</span>(other)
+    <span class="keyword">if</span> other.is_a?(<span class="constant">Hash</span>)
+      <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">if</span> attached? &amp;&amp; uid == other.uid
+      <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> value == other.value
+    <span class="keyword">end</span>
+
+    configuration &gt; other
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">&gt;=</span>(other)
+    <span class="keyword">if</span> other.is_a?(<span class="constant">Hash</span>)
+      <span class="keyword">return</span> <span class="predefined-constant">true</span> <span class="keyword">if</span> attached? &amp;&amp; uid == other.uid
+      <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> value == other.value
+    <span class="keyword">end</span>
+
+    configuration &gt;= other
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">[]</span>(key)
+    configuration[key.to_s]
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">[]=</span>(key, value)
+    key = key.to_s
+    new_config = to_h
+    new_config[key] = value
+    replace(new_config)
+    value <span class="comment"># rubocop:disable Lint/Void</span>
+  <span class="keyword">end</span>
+  alias_method <span class="symbol">:store</span>, <span class="symbol">:[]=</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">assoc</span>(key)
+    configuration.assoc(key.to_s)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">clear</span>
+    replace({})
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">compact!</span>
+    replace(compact)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">compare_by_identity</span>
+    raise <span class="constant">NotImplementedError</span>
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">default=</span>(*)
+    raise <span class="constant">NotImplementedError</span>
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">default_proc=</span>(*)
+    raise <span class="constant">NotImplementedError</span>
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">delete</span>(key)
+    key = key.to_s
+    new_config = to_h
+    <span class="keyword">return</span> <span class="keyword">yield</span>(key) <span class="keyword">if</span> block_given? &amp;&amp; !new_config.key?(key)
+
+    old_value = new_config.delete(key)
+    replace(new_config)
+    old_value
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">delete_if</span>(&amp;block)
+    raise <span class="constant">NotImplementedError</span> <span class="keyword">unless</span> block
+
+    replace(to_h.delete_if(block))
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">dig</span>(key, *keys)
+    configuration.dig(key.to_s, *keys)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">except</span>(*keys)
+    to_h.except(*keys.map(&amp;<span class="symbol">:to_s</span>))
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">fetch</span>(key, &amp;block)
+    configuration.fetch(key.to_s, &amp;block)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">fetch_values</span>(*keys, &amp;block)
+    configuration.fetch_values(*keys.map(&amp;<span class="symbol">:to_s</span>), &amp;block)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">keep_if</span>(&amp;block)
+    select!(&amp;block)
+    <span class="predefined-constant">self</span>
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">key?</span>(key)
+    configuration.key?(key.to_s)
+  <span class="keyword">end</span>
+  alias_method <span class="symbol">:include?</span>, <span class="symbol">:key?</span>
+  alias_method <span class="symbol">:has_key?</span>, <span class="symbol">:key?</span>
+  alias_method <span class="symbol">:member?</span>, <span class="symbol">:key?</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">merge!</span>(*others, &amp;block)
+    <span class="keyword">return</span> <span class="predefined-constant">self</span> <span class="keyword">if</span> others.empty?
+
+    new_config = to_h
+    others.each <span class="keyword">do</span> |h|
+      new_config.merge!(h.transform_keys(&amp;<span class="symbol">:to_s</span>), &amp;block)
+    <span class="keyword">end</span>
+    replace(new_config)
+  <span class="keyword">end</span>
+  alias_method <span class="symbol">:update</span>, <span class="symbol">:merge!</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">reject!</span>(&amp;block)
+    raise <span class="constant">NotImplementedError</span> <span class="keyword">unless</span> block
+
+    r = to_h.reject!(&amp;block)
+    replace(r) <span class="keyword">if</span> r
+  <span class="keyword">end</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># Replace the configuration with a new {::Hash}.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @param [::Hash] new_config</span>
+  <span class="comment"># @return [self]</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">replace</span>(new_config)
+    <span class="instance-variable">@metadata</span> = org.openhab.core.items.Metadata.new(uid, value, new_config.transform_keys(&amp;<span class="symbol">:to_s</span>))
+    commit
+    <span class="predefined-constant">self</span>
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">select!</span>(&amp;block)
+    raise <span class="constant">NotImplementedError</span> <span class="keyword">unless</span> block?
+
+    r = to_h.select!(&amp;block)
+    replace(r) <span class="keyword">if</span> r
+  <span class="keyword">end</span>
+  alias_method <span class="symbol">:filter!</span>, <span class="symbol">:select!</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">slice</span>(*keys)
+    configuration.slice(*keys.map(&amp;<span class="symbol">:to_s</span>))
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">to_proc</span>
+    -&gt;(k) { <span class="predefined-constant">self</span>[k] }
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">transform_keys!</span>(*args, &amp;block)
+    replace(transform_keys(*args, &amp;block))
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">transform_values!</span>(&amp;block)
+    raise <span class="constant">NotImplementedError</span> <span class="keyword">unless</span> block
+
+    replace(transform_values(&amp;block))
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">values_at</span>(*keys)
+    configuration.values_at(*keys.map(&amp;<span class="symbol">:to_s</span>))
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!visibility private</span>
+  <span class="keyword">def</span> <span class="function">inspect</span>
+    <span class="keyword">return</span> to_h.inspect <span class="keyword">if</span> value.empty?
+    <span class="keyword">return</span> value.inspect <span class="keyword">if</span> configuration.empty?
+
+    [value, to_h].inspect
+  <span class="keyword">end</span>
+  remove_method <span class="symbol">:to_s</span>
+  alias_method <span class="symbol">:to_s</span>, <span class="symbol">:inspect</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># @raise [FrozenError] if the provider is not a</span>
+  <span class="comment">#   {org.openhab.core.common.registry.ManagedProvider ManagedProvider} that can be updated.</span>
+  <span class="comment"># @return [org.openhab.core.common.registry.ManagedProvider]</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">provider</span>
+    preferred_provider = <span class="constant">Provider</span>.current(
+      <span class="constant">Thread</span>.current[<span class="symbol">:openhab_providers</span>]&amp;.dig(<span class="symbol">:metadata_items</span>, uid.item_name) ||
+        <span class="constant">Thread</span>.current[<span class="symbol">:openhab_providers</span>]&amp;.dig(<span class="symbol">:metadata_namespaces</span>, uid.namespace),
+      <span class="predefined-constant">self</span>
+    )
+
+    <span class="keyword">if</span> attached?
+      provider = <span class="constant">Provider</span>.registry.provider_for(uid)
+      <span class="keyword">return</span> preferred_provider <span class="keyword">unless</span> provider
+
+      <span class="keyword">unless</span> provider.is_a?(org.openhab.core.common.registry.ManagedProvider)
+        raise <span class="constant">FrozenError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot modify metadata from provider </span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="content"> for </span><span class="inline"><span class="inline-delimiter">#{</span>uid<span class="inline-delimiter">}</span></span><span class="content">.</span><span class="delimiter">&quot;</span></span>
+      <span class="keyword">end</span>
+
+      <span class="keyword">if</span> preferred_provider != provider
+        logger.warn(<span class="string"><span class="delimiter">&quot;</span><span class="content">Provider </span><span class="inline"><span class="inline-delimiter">#{</span>preferred_provider.inspect<span class="inline-delimiter">}</span></span><span class="content"> cannot be used with </span><span class="inline"><span class="inline-delimiter">#{</span>uid<span class="inline-delimiter">}</span></span><span class="content">; </span><span class="delimiter">&quot;</span></span> \
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">reverting to provider </span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="content">. </span><span class="delimiter">&quot;</span></span> \
+                    <span class="string"><span class="delimiter">&quot;</span><span class="content">This may cause unexpected issues, like metadata persisting that you did not expect to.</span><span class="delimiter">&quot;</span></span>)
+        preferred_provider = provider
+      <span class="keyword">end</span>
+
+    <span class="keyword">end</span>
+    preferred_provider
+  <span class="keyword">end</span>
+
+  private
+
+  <span class="comment">#</span>
+  <span class="comment"># @see https://github.com/openhab/openhab-core/issues/3169</span>
+  <span class="comment">#</span>
+  <span class="comment"># in the meantime, force the serialization round-trip right now</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">javaify</span>
+    mapper = <span class="constant">Provider</span>.registry.managed_provider.get.storage.entityMapper
+
+    <span class="instance-variable">@metadata</span> = mapper.from_json(mapper.to_json_tree(<span class="instance-variable">@metadata</span>), <span class="constant">Metadata</span>.java_class)
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="attached?-instance_method">
+  
+    #<strong>attached?</strong>  &#x21d2; <tt>true</tt>, <tt>false</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Is this object attached to an actual Item?</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+109
+110
+111</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/metadata/hash.rb', line 109</span>
+
+<span class="keyword">def</span> <span class="function">attached?</span>
+  uid.item_name != <span class="string"><span class="delimiter">&quot;</span><span class="content">-</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="provider-instance_method">
+  
+    #<strong>provider</strong>  &#x21d2; <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/common/registry/ManagedProvider.html" target="_parent" title="org.openhab.core.common.registry.ManagedProvider">org.openhab.core.common.registry.ManagedProvider</a></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/common/registry/ManagedProvider.html" target="_parent" title="org.openhab.core.common.registry.ManagedProvider">org.openhab.core.common.registry.ManagedProvider</a></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>FrozenError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>if the provider is not a
+<a href="https://www.openhab.org/javadoc/latest/org/openhab/core/common/registry/ManagedProvider.html" target="_parent" title="ManagedProvider">ManagedProvider</a> that can be updated.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/metadata/hash.rb', line 391</span>
+
+<span class="keyword">def</span> <span class="function">provider</span>
+  preferred_provider = <span class="constant">Provider</span>.current(
+    <span class="constant">Thread</span>.current[<span class="symbol">:openhab_providers</span>]&amp;.dig(<span class="symbol">:metadata_items</span>, uid.item_name) ||
+      <span class="constant">Thread</span>.current[<span class="symbol">:openhab_providers</span>]&amp;.dig(<span class="symbol">:metadata_namespaces</span>, uid.namespace),
+    <span class="predefined-constant">self</span>
+  )
+
+  <span class="keyword">if</span> attached?
+    provider = <span class="constant">Provider</span>.registry.provider_for(uid)
+    <span class="keyword">return</span> preferred_provider <span class="keyword">unless</span> provider
+
+    <span class="keyword">unless</span> provider.is_a?(org.openhab.core.common.registry.ManagedProvider)
+      raise <span class="constant">FrozenError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot modify metadata from provider </span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="content"> for </span><span class="inline"><span class="inline-delimiter">#{</span>uid<span class="inline-delimiter">}</span></span><span class="content">.</span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
+
+    <span class="keyword">if</span> preferred_provider != provider
+      logger.warn(<span class="string"><span class="delimiter">&quot;</span><span class="content">Provider </span><span class="inline"><span class="inline-delimiter">#{</span>preferred_provider.inspect<span class="inline-delimiter">}</span></span><span class="content"> cannot be used with </span><span class="inline"><span class="inline-delimiter">#{</span>uid<span class="inline-delimiter">}</span></span><span class="content">; </span><span class="delimiter">&quot;</span></span> \
+                  <span class="string"><span class="delimiter">&quot;</span><span class="content">reverting to provider </span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="content">. </span><span class="delimiter">&quot;</span></span> \
+                  <span class="string"><span class="delimiter">&quot;</span><span class="content">This may cause unexpected issues, like metadata persisting that you did not expect to.</span><span class="delimiter">&quot;</span></span>)
+      preferred_provider = provider
+    <span class="keyword">end</span>
+
+  <span class="keyword">end</span>
+  preferred_provider
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="replace-instance_method">
+  
+    #<strong>replace</strong>(new_config)  &#x21d2; <tt>self</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Replace the configuration with a new Hash.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>new_config</span>
+      
+      
+        <span class='type'>(<tt>::Hash</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>self</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+334
+335
+336
+337
+338</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/metadata/hash.rb', line 334</span>
+
+<span class="keyword">def</span> <span class="function">replace</span>(new_config)
+  <span class="instance-variable">@metadata</span> = org.openhab.core.items.Metadata.new(uid, value, new_config.transform_keys(&amp;<span class="symbol">:to_s</span>))
+  commit
+  <span class="predefined-constant">self</span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_hash-instance_method">
+  
+    #<strong>to_hash</strong>  &#x21d2; <tt>::Hash</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Implicit conversion to Hash.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>::Hash</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/metadata/hash.rb', line 31</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+        <footer>
+  Generated on Wed Jun 14 16:00:42 2023 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.28 (ruby-3.1.3).
+</footer>
+
+      </main>
+    </div>
+  </body>
+</html>
