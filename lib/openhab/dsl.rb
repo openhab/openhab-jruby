@@ -59,6 +59,11 @@ module OpenHAB
       rules.build { rule(name, **kwargs, &block) }
     end
 
+    # (see Rules::Builder#scene)
+    def scene(name = nil, id: nil, **kwargs, &block)
+      rules.build { scene(name, id: id, **kwargs, &block) }
+    end
+
     # (see Rules::Builder#script)
     def script(name = nil, id: nil, **kwargs, &block)
       rules.build { script(name, id: id, **kwargs, &block) }

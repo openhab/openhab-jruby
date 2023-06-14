@@ -35,8 +35,7 @@ module OpenHAB
           super()
           set_name(config.name)
           set_description(config.description)
-          tags = DSL::Items::ItemBuilder.normalize_tags(*config.tags)
-          set_tags(tags.to_set)
+          set_tags(config.tags.to_set)
           set_triggers(config.triggers)
           self.uid = config.uid
           @run_context = config.caller

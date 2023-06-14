@@ -1767,6 +1767,24 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       end
       expect($rules.get("test_rule").tags).to match_array(%w[tag1 tag2 LivingRoom])
     end
+
+    it "works with a single tag" do
+      rule id: "test_rule" do
+        tags "tag1"
+        every :day
+        run { nil }
+      end
+      expect($rules.get("test_rule").tags).to match_array(["tag1"])
+    end
+
+    it "creates a scene" do
+      rule id: "test_scene" do
+        tags :Scene
+        run { nil }
+      end
+
+      expect(rules.scenes["test_scene"]).not_to be_nil
+    end
   end
 
   describe "attachments" do

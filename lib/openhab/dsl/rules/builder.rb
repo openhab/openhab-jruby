@@ -104,7 +104,37 @@ module OpenHAB
           ThreadLocal.thread_local(openhab_rule_type: "script", openhab_rule_uid: id) do
             builder = BuilderDSL.new(block.binding)
             builder.uid(id)
-            builder.tags(["Script"])
+            builder.tags("Script")
+            builder.name(name)
+            builder.script(&block)
+            logger.trace { builder.inspect }
+            builder.build(provider, script)
+          end
+        end
+
+        #
+        # Create a new scene
+        #
+        # A scene is a rule with no triggers. It can be called by various other actions,
+        # such as the Run Rules action.
+        #
+        # @param [String] name A descriptive name
+        # @param [String] id The script's ID
+        # @yield [] Block executed when the script is executed.
+        # @return [Core::Rules::Rule]
+        #
+        def scene(name = nil, id: nil, script: nil, &block)
+          raise ArgumentError, "Block is required" unless block
+
+          id ||= NameInference.infer_rule_id_from_block(block)
+          name ||= id
+          script ||= block.source rescue nil # rubocop:disable Style/RescueModifier
+
+          builder = nil
+          ThreadLocal.thread_local(openhab_rule_type: "script", openhab_rule_uid: id) do
+            builder = BuilderDSL.new(block.binding)
+            builder.uid(id)
+            builder.tags("Scene")
             builder.name(name)
             builder.script(&block)
             logger.trace { builder.inspect }
@@ -354,7 +384,7 @@ module OpenHAB
         prop :description
 
         #
-        # @!method tags(tags)
+        # @!method tags(*tags)
         #
         # Set the rule's tags.
         #
@@ -1871,7 +1901,8 @@ module OpenHAB
         # @return [true,false] true if it should be created, false otherwise
         #
         def create_rule?
-          return true if tags.include?("Script")
+          @tags = DSL::Items::ItemBuilder.normalize_tags(*tags)
+          return true unless (tags & %w[Script Scene]).empty?
 
           if !triggers?
             logger.warn "Rule '#{uid}' has no triggers, not creating rule"
