@@ -1806,7 +1806,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         every :day
         run { nil }
       end
-      expect($rules.get("test_rule").tags).to match_array(["tag1"])
+      expect($rules.get("test_rule").tags).to match_array(%w[tag1 Schedule])
     end
 
     it "creates a scene" do
