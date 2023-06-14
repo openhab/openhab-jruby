@@ -51,7 +51,7 @@ module OpenHAB
             # @return [CronAdjuster]
             #
             def getTemporalAdjuster # rubocop:disable Naming/MethodName
-              org.openhab.core.scheduler.CronAdjuster.new(expression)
+              org.openhab.core.scheduler.CronAdjuster.new(@expression)
             end
 
             #
