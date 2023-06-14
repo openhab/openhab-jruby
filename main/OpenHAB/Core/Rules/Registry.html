@@ -1173,6 +1173,19 @@
   
   
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="TaggedArray.html" title="OpenHAB::Core::Rules::TaggedArray (class)">TaggedArray</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   
 
         
@@ -2323,6 +2336,7 @@
   
   
   
+  
 
         
       </ul>
@@ -2819,7 +2833,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#scenes-instance_method" title="#scenes (instance method)">#<strong>scenes</strong>  &#x21d2; Array&lt;Rule&gt; </a>
+      <a href="#scenes-instance_method" title="#scenes (instance method)">#<strong>scenes</strong>  &#x21d2; TaggedArray </a>
     
 
     
@@ -2842,7 +2856,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#scripts-instance_method" title="#scripts (instance method)">#<strong>scripts</strong>  &#x21d2; Array&lt;Rule&gt; </a>
+      <a href="#scripts-instance_method" title="#scripts (instance method)">#<strong>scripts</strong>  &#x21d2; TaggedArray </a>
     
 
     
@@ -3224,7 +3238,7 @@ rules.remove(my_rule)</code></pre>
       <div class="method_details ">
   <h3 class="signature " id="scenes-instance_method">
   
-    #<strong>scenes</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Rule.html" title="OpenHAB::Core::Rules::Rule (module)">Rule</a></span>&gt;</tt> 
+    #<strong>scenes</strong>  &#x21d2; <tt><span class='object_link'><a href="TaggedArray.html" title="OpenHAB::Core::Rules::TaggedArray (class)">TaggedArray</a></span></tt> 
   
 
   
@@ -3245,7 +3259,7 @@ rules.remove(my_rule)</code></pre>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Rule.html" title="OpenHAB::Core::Rules::Rule (module)">Rule</a></span>&gt;</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="TaggedArray.html" title="OpenHAB::Core::Rules::TaggedArray (class)">TaggedArray</a></span></tt>)</span>
       
       
       
@@ -3271,7 +3285,7 @@ rules.remove(my_rule)</code></pre>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/registry.rb', line 79</span>
 
 <span class="keyword">def</span> <span class="function">scenes</span>
-  tagged(<span class="string"><span class="delimiter">&quot;</span><span class="content">Scene</span><span class="delimiter">&quot;</span></span>)
+  <span class="instance-variable">@scenes</span> ||= <span class="constant">TaggedArray</span>.new(<span class="string"><span class="delimiter">&quot;</span><span class="content">Scene</span><span class="delimiter">&quot;</span></span>)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3281,7 +3295,7 @@ rules.remove(my_rule)</code></pre>
       <div class="method_details ">
   <h3 class="signature " id="scripts-instance_method">
   
-    #<strong>scripts</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Rule.html" title="OpenHAB::Core::Rules::Rule (module)">Rule</a></span>&gt;</tt> 
+    #<strong>scripts</strong>  &#x21d2; <tt><span class='object_link'><a href="TaggedArray.html" title="OpenHAB::Core::Rules::TaggedArray (class)">TaggedArray</a></span></tt> 
   
 
   
@@ -3302,7 +3316,7 @@ rules.remove(my_rule)</code></pre>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Rule.html" title="OpenHAB::Core::Rules::Rule (module)">Rule</a></span>&gt;</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="TaggedArray.html" title="OpenHAB::Core::Rules::TaggedArray (class)">TaggedArray</a></span></tt>)</span>
       
       
       
@@ -3328,7 +3342,7 @@ rules.remove(my_rule)</code></pre>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/registry.rb', line 88</span>
 
 <span class="keyword">def</span> <span class="function">scripts</span>
-  tagged(<span class="string"><span class="delimiter">&quot;</span><span class="content">Script</span><span class="delimiter">&quot;</span></span>)
+  <span class="instance-variable">@scripts</span> ||= <span class="constant">TaggedArray</span>.new(<span class="string"><span class="delimiter">&quot;</span><span class="content">Script</span><span class="delimiter">&quot;</span></span>)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3393,7 +3407,7 @@ rules.remove(my_rule)</code></pre>
 </div>
 
         <footer>
-  Generated on Wed May 31 14:22:46 2023 by
+  Generated on Wed Jun 14 13:04:06 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
