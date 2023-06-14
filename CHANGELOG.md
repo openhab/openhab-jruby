@@ -1,5 +1,20 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.4.0](https://github.com/openhab/openhab-jruby/tree/v5.4.0) (2023-06-14)
+
+[Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.3.0...v5.4.0)
+
+### Features
+
+- Access scenes by uid [\#77](https://github.com/openhab/openhab-jruby/issues/77)
+- Tag `cron`, `every`, and `at` triggers with "Schedule" [\#80](https://github.com/openhab/openhab-jruby/pull/80) ([ccutrer](https://github.com/ccutrer))
+- Add `scene` helper method to easily create rules tagged as Scene [\#78](https://github.com/openhab/openhab-jruby/pull/78) ([ccutrer](https://github.com/ccutrer))
+
+### Bug Fixes
+
+- Can't tag a rule with a single tag [\#76](https://github.com/openhab/openhab-jruby/issues/76)
+- Can't create a scene with no triggers [\#75](https://github.com/openhab/openhab-jruby/issues/75)
+
 ## [v5.3.0](https://github.com/openhab/openhab-jruby/tree/v5.3.0) (2023-05-31)
 
 [Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.2.0...v5.3.0)
