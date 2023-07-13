@@ -112,9 +112,9 @@ module OpenHAB
         #   # @example
         #   #   NumberC.state | ImperialUnits::FAHRENHEIT
         #   #
-        #   def to_unit(unit); end
+        #   def to_invertible_unit(unit); end
 
-        alias_method :|, :to_unit
+        alias_method :|, :to_invertible_unit
 
         #
         # Comparison
