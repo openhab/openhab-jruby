@@ -189,14 +189,8 @@ RSpec.describe OpenHAB::Core::Items::Item do
     end
 
     it "handles format strings" do
-      items.build { number_item MyTemp, format: "%.1f custom unit", state: 5.556 }
-      expect(MyTemp.formatted_state).to eql "5.6 custom unit"
-    end
-
-    it "handles transforms" do
-      items.build { number_item MyTemp, format: "MAP(mymap.map):%s", state: 5.556 }
-      allow(org.openhab.core.transform.TransformationHelper).to receive(:transform).and_return("transformed state")
-      expect(MyTemp.formatted_state).to eql "transformed state"
+      items.build { number_item MyTemp, format: "I have %.1f bananas", state: 5.556 }
+      expect(MyTemp.formatted_state).to eql "I have 5.6 bananas"
     end
 
     it "returns NULL when the state is NULL" do
@@ -207,6 +201,18 @@ RSpec.describe OpenHAB::Core::Items::Item do
     it "returns UNDEF when the state is UNDEF" do
       items.build { number_item MyTemp, format: "%.1f custom unit", state: UNDEF }
       expect(MyTemp.formatted_state).to eq "UNDEF"
+    end
+
+    it "formats quantity types" do
+      items.build { number_item MyTemp, format: "%.1f °F", state: 32.1234 }
+      expect(MyTemp.formatted_state).to eq "32.1 °F"
+    end
+
+    if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0.M3")
+      it "does unit transformations if necessary" do
+        items.build { number_item MyTemp, format: "%.1f °F", unit: "°C", state: 1.234 }
+        expect(MyTemp.formatted_state).to eq "34.2 °F"
+      end
     end
   end
 

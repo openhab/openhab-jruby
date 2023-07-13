@@ -38,6 +38,24 @@ module OpenHAB
           def ===(other)
             other.is_a?(self)
           end
+
+          # @!visibility private
+          def item_states_event_builder
+            @item_states_event_builder ||=
+              OpenHAB::OSGi.service("org.openhab.core.io.rest.sse.internal.SseItemStatesEventBuilder")&.tap do |builder|
+                m = builder.class.java_class.get_declared_method("getDisplayState", Item, java.util.Locale)
+                m.accessible = true
+                builder.instance_variable_set(:@getDisplayState, m)
+                # Disable "singleton on non-persistent Java type"
+                original_verbose = $VERBOSE
+                $VERBOSE = nil
+                def builder.get_display_state(item)
+                  @getDisplayState.invoke(self, item, nil)
+                end
+              ensure
+                $VERBOSE = original_verbose
+              end
+          end
         end
         # rubocop:enable Naming/MethodName
 
@@ -83,22 +101,7 @@ module OpenHAB
         #   logger.info(Exterior_WindDirection.formatted_state) # => "NE (36°)"
         #
         def formatted_state
-          # use to_string, not to_s, to get the original openHAB toString(), instead of any overrides
-          # the JRuby library has defined
-          raw_state_string = raw_state.to_string
-
-          return raw_state_string unless (pattern = state_description&.pattern)
-
-          transformed_state_string = org.openhab.core.transform.TransformationHelper.transform(OSGi.bundle_context,
-                                                                                               pattern,
-                                                                                               raw_state_string)
-          if transformed_state_string.nil? || transformed_state_string == raw_state_string
-            return state&.format(pattern) || raw_state_string
-          end
-
-          transformed_state_string
-        rescue org.openhab.core.transform.TransformationException
-          raw_state_string
+          GenericItem.item_states_event_builder.get_display_state(self)
         end
 
         #

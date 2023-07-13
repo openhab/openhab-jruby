@@ -323,6 +323,8 @@ module OpenHAB
 
       ALLOWED_BUNDLES = %w[
         org.openhab.core.io.monitor
+        org.openhab.core.io.rest
+        org.openhab.core.io.rest.sse
       ].freeze
       private_constant :ALLOWED_BUNDLES
 
