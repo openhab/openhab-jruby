@@ -126,7 +126,7 @@ jobs:
     strategy:
       matrix:
         openhab_version: ${{ fromJson(needs.openhab-matrix.outputs.openhab_matrix) }}
-        jruby_version: ["jruby-9.3.10.0", "jruby-9.4.2.0"]
+        jruby_version: ["jruby-9.3.10.0", "jruby-9.4.3.0"]
         exclude:
           - openhab_version: 4.0.0.M3
             jruby_version: jruby-9.3.10.0
@@ -141,13 +141,15 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: zulu
-          java-version: ${{ startsWith(matrix.openhab_version, '4.') && '17' || '11' }}
+          java-version: ${{ startsWith(matrix.openhab_version, '4.') && '17' || '11.0.19+7' }}
           java-package: jre
       - name: Restore openHAB setup
         uses: actions/cache@v3
         with:
           path: tmp/
           key: openHAB-setup-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-matrix.outputs.snapshot_date || '' }}
+      - name: Set Java options
+        run: echo "EXTRA_JAVA_OPTS=-Djdk.util.zip.disableZip64ExtraFieldValidation=true" >> $GITHUB_ENV
       - name: RSpec
         run: bin/rspec --format progress --format html --out rspec.html
         timeout-minutes: 6
