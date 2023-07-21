@@ -255,7 +255,7 @@ namespace :openhab do
       "LANG" => ENV.fetch("LANG", nil),
       "JAVA_HOME" => ENV.fetch("JAVA_HOME", nil),
       "KARAF_REDIRECT" => karaf_log,
-      "EXTRA_JAVA_OPTS" => "-Xmx4g -Djdk.util.zip.disableZip64ExtraFieldValidation=true",
+      "EXTRA_JAVA_OPTS" => "-Xmx4g",
       "OPENHAB_HTTP_PORT" => ENV["OPENHAB_HTTP_PORT"] || "8080",
       "OPENHAB_HTTPS_PORT" => ENV["OPENHAB_HTTPS_PORT"] || "8443"
     }
