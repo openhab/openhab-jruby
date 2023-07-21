@@ -276,13 +276,13 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
     describe "#add" do
       it "works" do
         Semantics.add(SecretRoom: Semantics::Room)
-        expect(Semantics::SecretRoom.java_class < Semantics::Room.java_class).to be true
+        expect(Semantics::SecretRoom < Semantics::Room).to be true
 
         Semantics.add(SecretEquipment: Semantics::Equipment)
-        expect(Semantics::SecretEquipment.java_class < Semantics::Equipment.java_class).to be true
+        expect(Semantics::SecretEquipment < Semantics::Equipment).to be true
 
         Semantics.add(SecretPoint: Semantics::Point)
-        expect(Semantics::SecretPoint.java_class < Semantics::Point.java_class).to be true
+        expect(Semantics::SecretPoint < Semantics::Point).to be true
 
         items.build do
           group_item TestLoc, tag: Semantics::SecretRoom do
@@ -302,17 +302,17 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
 
       it "supports tag name as string" do
         Semantics.add("StringTag" => Semantics::Equipment)
-        expect(Semantics::StringTag.java_class < Semantics::Tag.java_class).to be true
+        expect(Semantics::StringTag < Semantics::Equipment).to be true
       end
 
       it "supports parent name as string" do
         Semantics.add(StringParent: "Equipment")
-        expect(Semantics::StringParent.java_class < Semantics::Tag.java_class).to be true
+        expect(Semantics::StringParent < Semantics::Equipment).to be true
       end
 
       it "supports parent name as symbol" do
         Semantics.add(SymParent: :Equipment)
-        expect(Semantics::SymParent.java_class < Semantics::Tag.java_class).to be true
+        expect(Semantics::SymParent < Semantics::Equipment).to be true
       end
 
       it "supports creating multiple tags" do
@@ -331,7 +331,6 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
         created = Semantics.add(ArrayTag1: :Equipment, ArrayTag2: :Location, ArrayTag3: :Point,
                                 LivingRoom: Semantics::Room)
         expect(created).to match_array([Semantics::ArrayTag1, Semantics::ArrayTag2, Semantics::ArrayTag3])
-        expect(created).not_to include(Semantics::LivingRoom)
 
         created = Semantics.add(ArrayTag1: :Equipment, ArrayTag2: :Location, ArrayTag3: :Point)
         expect(created).to be_empty
@@ -340,14 +339,9 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
       it "supports specifying label, synonyms, and description for the tag" do
         Semantics.add(Detailed: Semantics::Equipment, label: "Label 1", synonyms: "Synonym 2",
                       description: "Description 3")
-        java_import org.openhab.core.semantics.SemanticTags
-        locale = java.util.Locale.default
         expect(Semantics::Detailed.label).to eq "Label 1"
-        expect(SemanticTags.get_by_label_or_synonym("Synonym 2", locale).first).to eql Semantics::Detailed.java_class
-        description = Semantics::Detailed.java_class
-                                         .get_annotation(org.openhab.core.semantics.TagInfo.java_class)
-                                         .description
-        expect(description).to eq "Description 3"
+        expect(Semantics.lookup("Synonym 2")).to eql Semantics::Detailed
+        expect(Semantics::Detailed.description).to eq "Description 3"
       end
 
       it "supports synonyms in an array" do

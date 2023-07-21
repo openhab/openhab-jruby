@@ -222,13 +222,17 @@ module OpenHAB
           #
           # @!visibility private
           def normalize_tags(*tags)
-            semantics = proc { |tag| tag.respond_to?(:java_class) && tag < Semantics::Tag }
+            # @deprecated OH3.4 didn't have SemanticTag
+            old_semantics = proc { |tag| tag.is_a?(Module) && tag < Semantics::Tag }
+            # @deprecated OH3.4 defined? check is unnecessary
+            semantics = proc { |tag| defined?(Semantics::SemanticTag) && tag.is_a?(Semantics::SemanticTag) }
 
             tags.compact.map do |tag|
               case tag
               when String then tag
               when Symbol then tag.to_s
-              when semantics then tag.java_class.simple_name
+              when old_semantics then tag.java_class.simple_name
+              when semantics then tag.name
               else raise ArgumentError, "`#{tag}` must be a subclass of Semantics::Tag, a `Symbol`, or a `String`."
               end
             end

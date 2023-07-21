@@ -214,7 +214,8 @@ module OpenHAB
 
       # @!visibility private
       def unregister
-        self.class.registry.remove_provider(self)
+        # @deprecated OH3.4 safe navigation only required for missing Semantics registry
+        self.class.registry&.remove_provider(self)
       end
 
       private
@@ -222,7 +223,8 @@ module OpenHAB
       def initialize(unload_priority: nil)
         super()
         @elements = java.util.concurrent.ConcurrentHashMap.new
-        self.class.registry.add_provider(self)
+        # @deprecated OH3.4 safe navigation only required for missing Semantics registry
+        self.class.registry&.add_provider(self)
         ScriptHandling.script_unloaded(priority: unload_priority) { unregister }
       end
     end
