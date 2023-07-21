@@ -148,6 +148,8 @@ jobs:
         with:
           path: tmp/
           key: openHAB-setup-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-matrix.outputs.snapshot_date || '' }}
+      - name: Set Java options
+        run: echo "EXTRA_JAVA_OPTS=-Djdk.util.zip.disableZip64ExtraFieldValidation=true" >> $GITHUB_ENV
       - name: RSpec
         run: bin/rspec --format progress --format html --out rspec.html
         timeout-minutes: 6
