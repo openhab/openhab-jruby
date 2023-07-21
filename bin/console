@@ -1,15 +1,17 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'bundler/setup'
-require 'openhab/scripting'
+require "bundler/setup"
 
-# You can add fixtures and/or initialization code here to make experimenting
-# with your gem easier. You can also use a different console, if you like.
+Bundler.require
 
-# (If you use this, don't forget to add pry to your Gemfile!)
-# require "pry"
-# Pry.start
+# clean any external OPENHAB or KARAF references; we want to use our private install
+ENV.delete_if { |k| k.match?(/^(?:OPENHAB|KARAF)_/) }
+ENV["OPENHAB_HOME"] = "#{Dir.pwd}/tmp/openhab"
+
+require "openhab/rspec/configuration"
+OpenHAB::RSpec::Configuration.use_root_instance = true
+require "openhab/rspec"
 
 require 'irb'
 IRB.start(__FILE__)
