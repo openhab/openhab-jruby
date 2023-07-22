@@ -1262,11 +1262,10 @@ This is not necessary in openHAB 4.0+.
 
 #### File Based Transformations <!-- omit from toc -->
 
-Once the addon is installed, you can create a Ruby file in the `$OPENHAB_CONF/transform` directory, with the extension `.script`.
-It's important that the extension is `.script` so that the core `SCRIPT` transform service will recognize it.
-When referencing the file, you need to specify the `SCRIPT` transform, with `rb` as the script type: `SCRIPT(rb:mytransform.script):%s`.
+Once the addon is installed, you can create a Ruby file in the `$OPENHAB_CONF/transform` directory, with the extension `.rb`.
+When referencing the file, you need to specify the `RB` transform: `RB(mytransform.rb):%s`.
 
-You can also specify additional variables to be set in the script using a URI-like query syntax: `SCRIPT(rb:mytransform.script?a=1&b=c):%s`
+You can also specify additional variables to be set in the script using a URI-like query syntax: `RB(mytransform.rb?a=1&b=c):%s`
 in order to share a single script with slightly different parameters for different items.
 
 ##### Example: Display the wind direction in degrees and cardinal direction <!-- omit from toc -->
@@ -1274,10 +1273,10 @@ in order to share a single script with slightly different parameters for differe
 `weather.items`
 
 ```Xtend
-Number:Angle Exterior_WindDirection "Wind Direction [SCRIPT(rb:compass.script):%s]" <wind>
+Number:Angle Exterior_WindDirection "Wind Direction [RB(compass.rb):%s]" <wind>
 ```
 
-`compass.script`
+`compass.rb`
 
 ```ruby
 DIRECTIONS = %w[N NE E SE S SW W NW N].freeze
@@ -1295,11 +1294,11 @@ Given a state of `82 °`, this will produce a formatted state of `E (82°)`.
 ##### Example: Display the number of lights that are on/off within a group <!-- omit from toc -->
 
 ```Xtend
-Group gIndoorLights "Indoor Lights [SCRIPT(rb:group_count.script?group=gIndoorLights):%s]"
-Group gOutdoorLights "Outdoor Lights [SCRIPT(rb:group_count.script?group=gOutdoorLights):%s]"
+Group gIndoorLights "Indoor Lights [RB(group_count.rb?group=gIndoorLights):%s]"
+Group gOutdoorLights "Outdoor Lights [RB(group_count.rb?group=gOutdoorLights):%s]"
 ```
 
-`group_count.script`
+`group_count.rb`
 
 ```ruby
 items[group].all_members.then { |all| "#{all.select(&:on?).size}/#{all.size}" }
@@ -1312,7 +1311,7 @@ When 3 lights out of 10 lights are on, this will produce a formatted state of `3
 Inline transformations are supported too. For example, to display the temperature in both °C and °F:
 
 ```Xtend
-Number:Temperature Outside_Temperature "Outside Temperature [SCRIPT(rb:|  input.to_f.|('°C').then { |t| %(#{t.format('%d °C')} / #{t.to_unit('°F').format('%d °F')}) }   ):%s]"
+Number:Temperature Outside_Temperature "Outside Temperature [RB(|  input.to_f.|('°C').then { |t| %(#{t.format('%d °C')} / #{t.to_unit('°F').format('%d °F')}) }   ):%s]"
 ```
 
 When the item contains `0 °C`, this will produce a formatted state of `0 °C / 32 °F`.
