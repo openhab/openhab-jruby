@@ -241,6 +241,13 @@ module OpenHAB
     #
     # @return [:error,:warn,:info,:debug,:trace] The current log level
     #
+    # @example Retrieve the current log level
+    #   level = OpenHAB::Log.logger("openhab.event.ItemStateChangedEvent").level
+    #   logger.info "The log level for 'openhab.event.ItemStateChangedEvent' is #{level}"
+    #
+    # @example Set the log level
+    #   OpenHAB::Log.logger("openhab.event.ItemStateChangedEvent").level = :warn
+    #
     def level
       Logger.log_service.get_level(name)[name]&.downcase&.to_sym
     end
