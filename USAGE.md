@@ -810,7 +810,7 @@ When a script is unloaded, all created timers are automatically cancelled.
 You can access all variables of the current context in the created timers.
 
 Note: Variables can be mutated (changed) after the timer has been created.
-Be aware that this can lead to unattended side effects, e.g. when you change the variable after timer creation, which can make debugging quite difficult!
+Be aware that this can lead to unintentional side effects, e.g. when you change the variable after timer creation, which can make debugging quite difficult!
 
 ```ruby
 my_var = "Hello world!";
