@@ -740,22 +740,23 @@ Exec.execute_command_line('/path/to/program')
 
 ### Logging
 
-The JRuby Scripting addon has a global `logger` object for logging.
+The JRuby Scripting addon has a global `logger` object for logging. To log a message on `INFO` log level:
 
-```text
-log:set DEBUG org.openhab.automation.jrubyscripting.script
+```ruby
+logger.info("The current time is #{Time.now}")
 ```
 
 The default logger name for UI rules is `org.openhab.automation.jrubyscripting.script`.
 For file-based rules, it's based on the rule's ID, such as `org.openhab.automation.jrubyscripting.rule.myrule.rb:15`
-This can be changed by assigning a new logger locally.
 
-Please be aware that messages might not appear in the logs if the logger name does not start with `org.openhab`.
-This behaviour is due to [log4j2](https://logging.apache.org/log4j/2.x/) requiring definition for each logger prefix.
+To use a custom logger name:
 
 ```ruby
 logger = OpenHAB::Log.logger("org.openhab.custom")
 ```
+
+Please be aware that messages might not appear in the logs if the logger name does not start with `org.openhab`.
+This behaviour is due to [log4j2](https://logging.apache.org/log4j/2.x/) requiring definition for each logger prefix.
 
 The {OpenHAB::Logger logger} is similar to a standard [Ruby Logger](https://docs.ruby-lang.org/en/master/Logger.html).
 Supported logging functions include:
