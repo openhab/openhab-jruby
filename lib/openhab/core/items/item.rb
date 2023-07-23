@@ -218,9 +218,19 @@ module OpenHAB
         # @example
         #   event.item.tagged?("Setpoint")
         #
+        # @example
+        #   event.item.tagged?(Semantics::Switch)
+        #
         def tagged?(*tags)
           tags.map! do |tag|
-            tag.is_a?(Module) ? tag.simple_name : tag
+            # @deprecated OH3.4
+            if tag.is_a?(Module)
+              tag.simple_name
+            elsif defined?(Semantics::SemanticTag) && tag.is_a?(Semantics::SemanticTag)
+              tag.name
+            else
+              tag
+            end
           end
           !(self.tags.to_a & tags).empty?
         end

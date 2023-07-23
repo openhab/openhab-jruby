@@ -5,6 +5,7 @@ require "forwardable"
 require_relative "generic_item"
 require_relative "group_item"
 require_relative "semantics/enumerable"
+require_relative "semantics/provider"
 
 module OpenHAB
   module Core
@@ -60,9 +61,11 @@ module OpenHAB
       # and {#property_type}. They can even be used with
       # {DSL::Items::ItemBuilder#tag}.
       #
-      # The semantic constants in the `Semantics` module are enhanced with {TagClassMethods}
-      # to provide easy access to the tags' additional attributes: {TagClassMethods.label label},
-      # {TagClassMethods.synonyms synonyms}, and {TagClassMethods.description description}.
+      # In openHAB 4.0, all of the tag objects implement {SemanticTag}.
+      #
+      # In openHAB 3.4, the constants in the {Semantics} module are enhanced with {TagClassMethods}
+      # to provide easy access to the tags' additional attributes: {TagClassMethods#label label},
+      # {TagClassMethods#synonyms synonyms}, and {TagClassMethods#description description}.
       # For example, to get the synonyms for `Semantics::Lightbulb` in German:
       # `Semantics::Lightbulb.synonyms(java.util.Locale::GERMAN)`
       #
@@ -164,7 +167,7 @@ module OpenHAB
       #
       # ## Adding Custom Semantic Tags
       #
-      # openHAB 4 supports adding custom semantic tags to augment the standard set of tags to better suit
+      # openHAB 4.0 supports adding custom semantic tags to augment the standard set of tags to better suit
       # your particular requirements.
       #
       # For more information, see {add}
@@ -173,6 +176,160 @@ module OpenHAB
         GenericItem.include(self)
         GroupItem.extend(Forwardable)
         GroupItem.def_delegators :members, :equipments, :locations
+        # This is a marker interface for all semantic tag classes.
+        # @interface
+        # @deprecated Since openHAB 4.0, {SemanticTag} is the interface that all tags implement.
+        #   Tags are simple instances, instead of another interface in a hierarchical structure.
+        Tag = org.openhab.core.semantics.Tag
+
+        class << self
+          # @!visibility private
+          def service
+            unless instance_variable_defined?(:@service)
+              @service = OSGi.service("org.openhab.core.semantics.SemanticsService")
+            end
+            @service
+          end
+
+          #
+          # Returns all available Semantic tags
+          #
+          # @return [Array<SemanticTag>] an array containing all the Semantic tags
+          #
+          def tags
+            if Provider.registry
+              Provider.registry.all.to_a
+            else
+              java.util.stream.Stream.of(
+                org.openhab.core.semantics.model.point.Points.stream,
+                org.openhab.core.semantics.model.property.Properties.stream,
+                org.openhab.core.semantics.model.equipment.Equipments.stream,
+                org.openhab.core.semantics.model.location.Locations.stream
+              ).flat_map(&:itself).map(&:ruby_class).iterator.to_a
+            end
+          end
+
+          #
+          # Finds a semantic tag using its name, label, or synonyms.
+          #
+          # @param [String,Symbol] id The tag name, label, or synonym to look up
+          # @param [java.util.Locale] locale The locale of the given label or synonym
+          #
+          # @return [SemanticTag, Module, nil] The semantic tag class if found, or nil if not found.
+          #   In openHAB 4.0, a SemanticTag instance will be returned. In openHAB 3.4, it will be
+          #   a Module.
+          #
+          def lookup(id, locale = java.util.Locale.default)
+            id = id.to_s
+
+            # @deprecated OH3.4 - the Property tag had an ID of "MeasurementProperty" in OH3.4.
+            # This was corrected in OH4.
+            # Make sure we compare against pre-release versions
+            if id == "Property" && Gem::Version.new(Core::VERSION) < Gem::Version.new("4.0.0.M1")
+              id = "MeasurementProperty"
+            end
+
+            # @deprecated OH3.4 missing registry
+            if Provider.registry
+              tag_class = service.get_by_label_or_synonym(id, locale).first ||
+                          Provider.registry.get_tag_class_by_id(id)
+              return unless tag_class
+
+              Provider.registry.get(Provider.registry.class.build_id(tag_class))
+            else
+              tag = org.openhab.core.semantics.SemanticTags.get_by_label_or_synonym(id, locale).first ||
+                    org.openhab.core.semantics.SemanticTags.get_by_id(id)
+              return unless tag
+
+              tag = tag.ruby_class
+              tag.singleton_class.include(TagClassMethods)
+              tag
+            end
+          end
+
+          #
+          # Automatically looks up new semantic classes and adds them as constants
+          #
+          # @!visibility private
+          def const_missing(sym)
+            logger.trace("const missing, performing Semantics Lookup for: #{sym}")
+            lookup(sym)&.tap { |tag| const_set(sym, tag) } || super
+          end
+        end
+
+        # @deprecated OH3.4 cannot add a tag
+        # this not in the class << self block above because YARD doesn't figure out
+        # it's a class method with the conditional
+        if Provider.registry || org.openhab.core.semantics.SemanticTags.respond_to?(:add)
+          class << self
+            #
+            # Adds custom semantic tags.
+            #
+            # @since openHAB 4.0
+            # @return [Array<SemanticTag>] An array of tags successfully added.
+            #
+            # @overload add(**tags)
+            #   Quickly add one or more semantic tags using the default label, empty synonyms and descriptions.
+            #
+            #   @param [kwargs] **tags Pairs of `tag` => `parent` where tag is either a `Symbol` or a `String`
+            #     for the tag to be added, and parent is either a {SemanticTag}, a `Symbol` or a `String` of an
+            #     existing tag.
+            #   @return [Array<SemanticTag>] An array of tags successfully added.
+            #
+            #   @example Add one semantic tag `Balcony` whose parent is `Semantics::Outdoor` (Location)
+            #     Semantics.add(Balcony: Semantics::Outdoor)
+            #
+            #   @example Add multiple semantic tags
+            #     Semantics.add(Balcony: Semantics::Outdoor,
+            #                   SecretRoom: Semantics::Room,
+            #                   Motion: Semantics::Property)
+            #
+            # @overload add(label: nil, synonyms: "", description: "", **tags)
+            #   Add a custom semantic tag with extra details.
+            #
+            #   @example
+            #     Semantics.add(SecretRoom: Semantics::Room, label: "My Secret Room",
+            #       synonyms: "HidingPlace", description: "A room that requires a special trick to enter")
+            #
+            #   @param [String,nil] label Optional label. When `nil`, infer the label from the tag name,
+            #     converting `CamelCase` to `Camel Case`
+            #   @param [String,Symbol,Array<String,Symbol>] synonyms Additional synonyms to refer to this tag.
+            #   @param [String] description A longer description of the tag.
+            #   @param [kwargs] **tags Exactly one pair of `tag` => `parent` where tag is either a `Symbol` or a
+            #     `String` for the tag to be added, and parent is either a {SemanticTag}, a `Symbol` or a
+            #     `String` of an existing tag.
+            #   @return [Array<SemanticTag>] An array of tags successfully added.
+            #
+            def add(label: nil, synonyms: "", description: "", **tags)
+              raise ArgumentError, "Tags must be specified" if tags.empty?
+              if (tags.length > 1) && !(label.nil? && synonyms.empty? && description.empty?)
+                raise ArgumentError, "Additional options can only be specified when creating one tag"
+              end
+
+              synonyms = Array.wrap(synonyms).map(&:to_s).map(&:strip)
+
+              tags.map do |name, parent|
+                # @deprecated OH4.0.0.M4 missing registry
+                if Provider.registry
+                  parent = lookup(parent) unless parent.is_a?(SemanticTag)
+                  next if lookup(name)
+                  next unless parent
+
+                  new_tag = org.openhab.core.semantics.SemanticTagImpl.new("#{parent.uid}_#{name}", label, description,
+                                                                           synonyms)
+                  Provider.instance.add(new_tag)
+                  lookup(name)
+                else
+                  parent_is_tag = parent.respond_to?(:java_class) && parent.java_class < Tag.java_class
+                  parent = parent_is_tag ? parent.java_class : parent.to_s
+                  org.openhab.core.semantics.SemanticTags
+                     .add(name.to_s, parent, label, synonyms.join(","), description)
+                    &.then { lookup(name) }
+                end
+              end.compact
+            end
+        end
+        end
 
         # @!parse
         #   class Items::GroupItem
@@ -200,26 +357,29 @@ module OpenHAB
         #   end
         #
 
-        # This is a marker interface for all semantic tag classes.
-        # @interface
-        Tag = org.openhab.core.semantics.Tag
+        # @!visibility private
+        def translate_tag(tag)
+          return unless tag
+
+          if Provider.registry
+            Provider.registry.get(Provider.registry.class.build_id(tag))
+          else
+            tag.ruby_class
+          end
+        end
 
         # @!parse
-        #   # This is the super interface for all types that represent a Location.
-        #   # @interface
-        #   Location = org.openhab.core.semantics.Location
+        #   # This is the parent tag for all tags that represent a Location.
+        #   Location = SemanticTag
         #
-        #   # This is the super interface for all types that represent an Equipment.
-        #   # @interface
-        #   Equipment = org.openhab.core.semantics.Equipment
+        #   # This is the parent tag for all tags that represent an Equipment.
+        #   Equipment = SemanticTag
         #
-        #   # This is the super interface for all types that represent a Point.
-        #   # @interface
-        #   Point = org.openhab.core.semantics.Point
+        #   # This is the parent tag for all tags that represent a Point.
+        #   Point = SemanticTag
         #
-        #   # This is the super interface for all property tags.
-        #   # @interface
-        #   Property = org.openhab.core.semantics.Property
+        #   # This is the parent tag for all property tags.
+        #   Property = SemanticTag
 
         # put ourself into the global namespace, replacing the action
         Object.send(:remove_const, :Semantics)
@@ -286,14 +446,14 @@ module OpenHAB
         #
         # @!attribute [r] location_type
         #
-        # Returns the sub-class of {Location} related to this Item.
+        # Returns the sub-tag of {Location} related to this Item.
         #
         # In other words, the {#semantic_type} of this Item's {Location}.
         #
-        # @return [Class, nil]
+        # @return [SemanticTag, nil]
         #
         def location_type
-          Actions::Semantics.get_location_type(self)&.ruby_class
+          translate_tag(Actions::Semantics.get_location_type(self))
         end
 
         #
@@ -312,50 +472,50 @@ module OpenHAB
         #
         # @!attribute [r] equipment_type
         #
-        # Returns the sub-class of {Equipment} related to this Item.
+        # Returns the sub-tag of {Equipment} related to this Item.
         #
         # In other words, the {#semantic_type} of this Item's {Equipment}.
         #
-        # @return [Class, nil]
+        # @return [SemanticTag, nil]
         #
         def equipment_type
-          Actions::Semantics.get_equipment_type(self)&.ruby_class
+          translate_tag(Actions::Semantics.get_equipment_type(self))
         end
 
         #
         # @!attribute [r] point_type
         #
-        # Returns the sub-class of {Point} this Item is tagged with.
+        # Returns the sub-tag of {Point} this Item is tagged with.
         #
-        # @return [Class, nil]
+        # @return [SemanticTag, nil]
         #
         def point_type
-          Actions::Semantics.get_point_type(self)&.ruby_class
+          translate_tag(Actions::Semantics.get_point_type(self))
         end
 
         #
         # @!attribute [r] property_type
         #
-        # Returns the sub-class of {Property} this Item is tagged with.
+        # Returns the sub-tag of {Property} this Item is tagged with.
         #
-        # @return [Class, nil]
+        # @return [SemanticTag, nil]
         #
         def property_type
-          Actions::Semantics.get_property_type(self)&.ruby_class
+          translate_tag(Actions::Semantics.get_property_type(self))
         end
 
         # @!attribute [r] semantic_type
         #
-        # Returns the sub-class of {Tag} this Item is tagged with.
+        # Returns the {SemanticTag} this Item is tagged with.
         #
         # It will only return the first applicable Tag, preferring
-        # a sub-class of {Location}, {Equipment}, or {Point} first,
+        # a sub-tag of {Location}, {Equipment}, or {Point} first,
         # and if none of those are found, looks for a {Property}.
         #
-        # @return [Class, nil]
+        # @return [SemanticTag, nil]
         #
         def semantic_type
-          Actions::Semantics.get_semantic_type(self)&.ruby_class
+          translate_tag(Actions::Semantics.get_semantic_type(self))
         end
 
         #
@@ -379,7 +539,7 @@ module OpenHAB
         # @example Given a A/V receiver's input item, search for its power item
         #   FamilyReceiver_Input.points(Semantics::Switch) # => [FamilyReceiver_Switch]
         #
-        # @param [Class] point_or_property_types
+        # @param [SemanticTag] point_or_property_types
         #   Pass 1 or 2 classes that are sub-classes of {Point} or {Property}.
         #   Note that when comparing against semantic tags, it does a sub-class check.
         #   So if you search for [Control], you'll get items tagged with [Switch].
@@ -392,169 +552,6 @@ module OpenHAB
           result = (equipment || location)&.points(*point_or_property_types) || []
           result.delete(self)
           result
-        end
-
-        # @deprecated OH3.4 - this check is only needed for OH3.4
-        if org.openhab.core.semantics.SemanticTags.respond_to?(:add)
-
-          #
-          # Adds custom semantic tags.
-          #
-          # @return [Array<Tag>] An array of tags successfully added.
-          #
-          # @overload self.add(**tags)
-          #   Quickly add one or more semantic tags using the default label, empty synonyms and descriptions.
-          #
-          #   @param [kwargs] **tags Exactly one pair of `tag` => `parent` where tag is either a Symbol or a String
-          #     for the tag to be added, and parent is either a {Tag}, a symbol or a string of an existing tag.
-          #   @return [Array<Tag>] An array of tags successfully added.
-          #
-          #   @example Add one semantic tag `Balcony` whose parent is `Semantics::Outdoor` (Location)
-          #     Semantics.add(Balcony: Semantics::Outdoor)
-          #
-          #   @example Add multiple semantic tags
-          #     Semantics.add(Balcony: Semantics::Outdoor,
-          #                   SecretRoom: Semantics::Room,
-          #                   Motion: Semantics::Property)
-          #
-          # @overload self.add(label: nil, synonyms: "", description: "", **tags)
-          #   Add a custom semantic tag with extra details.
-          #
-          #   @example
-          #     Semantics.add(SecretRoom: Semantics::Room, label: "My Secret Room",
-          #       synonyms: "HidingPlace", description: "A room that requires a special trick to enter")
-          #
-          #   @param [String,nil] label Optional label. When nil, infer the label from the tag name,
-          #     converting `CamelCase` to `Camel Case`
-          #   @param [String,Array<String,Symbol>] synonyms An array of synonyms, or a string containing a
-          #     comma separated list of synonyms for this tag.
-          #   @param [String] description A longer description of the tag.
-          #   @param [kwargs] **tags Exactly one pair of `tag` => `parent` where tag is either a Symbol or a String
-          #     for the tag to be added, and parent is either a {Tag}, a symbol or a string of an existing tag.
-          #   @return [Array<Tag>] An array of tags successfully added.
-          #
-          def self.add(label: nil, synonyms: "", description: "", **tags)
-            raise "Tags must be specified" if tags.empty?
-            if (tags.length > 1) && !(label.nil? && synonyms.empty? && description.empty?)
-              raise "Additional options can only be specified when creating one tag"
-            end
-
-            synonyms = synonyms.map(&:to_s).map(&:strip).join(",") if synonyms.is_a?(Array)
-
-            tags.map do |name, parent|
-              parent_is_tag = parent.respond_to?(:java_class) && parent.java_class < Tag.java_class
-              parent = parent_is_tag ? parent.java_class : parent.to_s
-              name = name.to_s
-              org.openhab.core.semantics.SemanticTags.add(name, parent, label, synonyms, description)
-                                                    &.then { const_missing(name) }
-            end.compact
-          end
-        end
-
-        #
-        # Returns all available Semantic tags
-        #
-        # @return [Array<Tag>] an array containing all the Semantic tags
-        #
-        def self.tags
-          java.util.stream.Stream.of(
-            org.openhab.core.semantics.model.point.Points.stream,
-            org.openhab.core.semantics.model.property.Properties.stream,
-            org.openhab.core.semantics.model.equipment.Equipments.stream,
-            org.openhab.core.semantics.model.location.Locations.stream
-          ).flat_map(&:itself).map(&:ruby_class).iterator.to_a
-        end
-
-        #
-        # Finds the semantic tag using its name, label, or synonyms.
-        #
-        # @param [String,Symbol] id The tag name, label, or synonym to look up
-        # @param [java.util.Locale] locale The locale of the given label or synonym
-        #
-        # @return [Tag,nil] The semantic tag class if found, or nil if not found.
-        #
-        def self.lookup(id, locale = nil)
-          id = id.to_sym
-          return const_get(id) if constants.include?(id) || const_missing(id)
-
-          locale = java.util.Locale.default if locale.nil?
-          org.openhab.core.semantics.SemanticTags.get_by_label_or_synonym(id.to_s, locale).first&.ruby_class
-        end
-
-        #
-        # Automatically looks up new semantic classes and adds them as `constants`
-        #
-        # @return [Tag, nil]
-        #
-        # @!visibility private
-        def self.const_missing(sym)
-          logger.trace("const missing, performing Semantics Lookup for: #{sym}")
-          # @deprecated OH3.4 - the Property tag had an ID of "MeasurementProperty" in OH3.4. This was corrected in OH4.
-          # make sure we compare against pre-release versions
-          target_sym = sym
-          if sym == :Property && Gem::Version.new(Core::VERSION) < Gem::Version.new("4.0.0.M1")
-            sym = :MeasurementProperty
-          end
-
-          org.openhab.core.semantics.SemanticTags.get_by_id(sym.to_s)
-            &.then do |tag|
-              tag = tag.ruby_class
-              tag.singleton_class.include(TagClassMethods)
-              const_set(target_sym, tag)
-            end
-        end
-
-        #
-        # Adds tag attributes to the semantic tag class
-        #
-        module TagClassMethods
-          # @!visibility private
-          java_import org.openhab.core.semantics.SemanticTags
-
-          #
-          # Returns the tag's label
-          #
-          # @param [java.util.Locale] locale The locale that the label should be in, if available.
-          #   When nil, the system's default locale is used.
-          #
-          # @return [String] The tag's label
-          #
-          def label(locale = nil)
-            SemanticTags.get_label(java_class, locale || java.util.Locale.default)
-          end
-
-          #
-          # Returns the tag's synonyms
-          #
-          # @param [java.util.Locale] locale The locale that the label should be in, if available.
-          #   When nil, the system's default locale is used.
-          #
-          # @return [Array<String>] The list of synonyms in the requested locale.
-          #
-          def synonyms(locale = nil)
-            unless SemanticTags.respond_to?(:get_synonyms) # @deprecated OH3.4
-              return java_class.get_annotation(org.openhab.core.semantics.TagInfo.java_class).synonyms
-                               .split(",").map(&:strip)
-            end
-
-            SemanticTags.get_synonyms(java_class, locale || java.util.Locale.default).to_a
-          end
-
-          #
-          # Returns the tag's description
-          #
-          # @param [java.util.Locale] locale The locale that the description should be in, if available.
-          #   When nil, the system's default locale is used.
-          #
-          # @return [String] The tag's description
-          #
-          def description(locale = nil)
-            unless SemanticTags.respond_to?(:get_description) # @deprecated OH3.4
-              return java_class.get_annotation(org.openhab.core.semantics.TagInfo.java_class).description
-            end
-
-            SemanticTags.get_description(java_class, locale || java.util.Locale.default)
-          end
         end
       end
     end
@@ -572,7 +569,9 @@ module Enumerable
   # Returns a new array of items that are a semantics Location (optionally of the given type)
   # @return [Array<Item>]
   def locations(type = nil)
-    if type && (!type.is_a?(Module) || !(type < Semantics::Location))
+    begin
+      raise ArgumentError if type && !(type < Semantics::Location)
+    rescue ArgumentError, TypeError
       raise ArgumentError, "type must be a subclass of Location"
     end
 
@@ -595,7 +594,9 @@ module Enumerable
   # @example Get all TVs in a room
   #   lGreatRoom.equipments(Semantics::Screen)
   def equipments(type = nil)
-    if type && (!type.is_a?(Module) || !(type < Semantics::Equipment))
+    begin
+      raise ArgumentError if type && !(type < Semantics::Equipment)
+    rescue ArgumentError, TypeError
       raise ArgumentError, "type must be a subclass of Equipment"
     end
 
@@ -618,11 +619,13 @@ module Enumerable
     unless (0..2).cover?(point_or_property_types.length)
       raise ArgumentError, "wrong number of arguments (given #{point_or_property_types.length}, expected 0..2)"
     end
-    unless point_or_property_types.all? do |tag|
-             tag.is_a?(Module) &&
-             (tag < Semantics::Point ||
-              tag < Semantics::Property)
-           end
+
+    begin
+      raise ArgumentError unless point_or_property_types.all? do |tag|
+                                   (tag < Semantics::Point ||
+                                    tag < Semantics::Property)
+                                 end
+    rescue ArgumentError, TypeError
       raise ArgumentError, "point_or_property_types must all be a subclass of Point or Property"
     end
     if point_or_property_types.count { |tag| tag < Semantics::Point } > 1 ||
@@ -632,7 +635,7 @@ module Enumerable
 
     select do |point|
       point.point? && point_or_property_types.all? do |tag|
-        (tag < Semantics::Point && point.point_type <= tag) ||
+        (tag < Semantics::Point && point.point_type&.<=(tag)) ||
           (tag < Semantics::Property && point.property_type&.<=(tag))
       end
     end

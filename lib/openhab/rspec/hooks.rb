@@ -65,6 +65,7 @@ module OpenHAB
         # Each spec gets temporary providers
         [Core::Items::Provider,
          Core::Items::Metadata::Provider,
+         Core::Items::Semantics::Provider,
          Core::Rules::Provider,
          Core::Things::Provider,
          Core::Things::Links::Provider].each do |klass|
