@@ -990,6 +990,30 @@
   
   
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="OpenHAB/Core/Items/Semantics/Provider.html" title="OpenHAB::Core::Items::Semantics::Provider (class)">Provider</a></span>
+      
+        &lt; Provider
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="OpenHAB/Core/Items/Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   
   <li class="">
     <span class="sidebar-link">
@@ -3686,10 +3710,10 @@ otherwise self</p>
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>As <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Equipment.html" target="_parent" title="equipments">equipments</a> are usually
+    <div class='inline'><p>As <span class='object_link'><a href="OpenHAB/Core/Items/Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">equipments</a></span> are usually
 <span class='object_link'><a href="OpenHAB/Core/Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItems</a></span>, this method therefore returns an array of
-<span class='object_link'><a href="OpenHAB/Core/Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItems</a></span>. In order to get the <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Point.html" target="_parent" title="points">points</a>
-that belong to the <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Equipment.html" target="_parent" title="equipments">equipments</a>, use <span class='object_link'><a href="#members-instance_method" title="Enumerable#members (method)">#members</a></span>
+<span class='object_link'><a href="OpenHAB/Core/Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItems</a></span>. In order to get the <span class='object_link'><a href="OpenHAB/Core/Items/Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">points</a></span>
+that belong to the <span class='object_link'><a href="OpenHAB/Core/Items/Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">equipments</a></span>, use <span class='object_link'><a href="#members-instance_method" title="Enumerable#members (method)">#members</a></span>
 before calling <span class='object_link'><a href="#points-instance_method" title="Enumerable#points (method)">#points</a></span>. See the example with <span class='object_link'><a href="#points-instance_method" title="Enumerable#points (method)">#points</a></span>.</p>
 </div>
   </div>
@@ -3732,6 +3756,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
       <pre class="lines">
 
 
+596
 597
 598
 599
@@ -3741,13 +3766,16 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 603
 604
 605
-606</pre>
+606
+607</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 597</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 596</span>
 
 <span class="keyword">def</span> <span class="function">equipments</span>(type = <span class="predefined-constant">nil</span>)
-  <span class="keyword">if</span> type &amp;&amp; (!type.is_a?(<span class="constant">Module</span>) || !(type &lt; <span class="constant">Semantics</span>::<span class="constant">Equipment</span>))
+  <span class="keyword">begin</span>
+    raise <span class="constant">ArgumentError</span> <span class="keyword">if</span> type &amp;&amp; !(type &lt; <span class="constant">Semantics</span>::<span class="constant">Equipment</span>)
+  <span class="keyword">rescue</span> <span class="constant">ArgumentError</span>, <span class="constant">TypeError</span>
     raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">type must be a subclass of Equipment</span><span class="delimiter">&quot;</span></span>
   <span class="keyword">end</span>
 
@@ -3950,6 +3978,9 @@ before calling <span class='object_link'><a href="#points-instance_method" title
       <pre class="lines">
 
 
+571
+572
+573
 574
 575
 576
@@ -3958,14 +3989,15 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 579
 580
 581
-582
-583</pre>
+582</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 574</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 571</span>
 
 <span class="keyword">def</span> <span class="function">locations</span>(type = <span class="predefined-constant">nil</span>)
-  <span class="keyword">if</span> type &amp;&amp; (!type.is_a?(<span class="constant">Module</span>) || !(type &lt; <span class="constant">Semantics</span>::<span class="constant">Location</span>))
+  <span class="keyword">begin</span>
+    raise <span class="constant">ArgumentError</span> <span class="keyword">if</span> type &amp;&amp; !(type &lt; <span class="constant">Semantics</span>::<span class="constant">Location</span>)
+  <span class="keyword">rescue</span> <span class="constant">ArgumentError</span>, <span class="constant">TypeError</span>
     raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">type must be a subclass of Location</span><span class="delimiter">&quot;</span></span>
   <span class="keyword">end</span>
 
@@ -4586,7 +4618,6 @@ before calling <span class='object_link'><a href="#points-instance_method" title
       <pre class="lines">
 
 
-617
 618
 619
 620
@@ -4608,20 +4639,25 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 636
 637
 638
-639</pre>
+639
+640
+641
+642</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 617</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 618</span>
 
 <span class="keyword">def</span> <span class="function">points</span>(*point_or_property_types)
   <span class="keyword">unless</span> (<span class="integer">0</span>..<span class="integer">2</span>).cover?(point_or_property_types.length)
     raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">wrong number of arguments (given </span><span class="inline"><span class="inline-delimiter">#{</span>point_or_property_types.length<span class="inline-delimiter">}</span></span><span class="content">, expected 0..2)</span><span class="delimiter">&quot;</span></span>
   <span class="keyword">end</span>
-  <span class="keyword">unless</span> point_or_property_types.all? <span class="keyword">do</span> |tag|
-           tag.is_a?(<span class="constant">Module</span>) &amp;&amp;
-           (tag &lt; <span class="constant">Semantics</span>::<span class="constant">Point</span> ||
-            tag &lt; <span class="constant">Semantics</span>::<span class="constant">Property</span>)
-         <span class="keyword">end</span>
+
+  <span class="keyword">begin</span>
+    raise <span class="constant">ArgumentError</span> <span class="keyword">unless</span> point_or_property_types.all? <span class="keyword">do</span> |tag|
+                                 (tag &lt; <span class="constant">Semantics</span>::<span class="constant">Point</span> ||
+                                  tag &lt; <span class="constant">Semantics</span>::<span class="constant">Property</span>)
+                               <span class="keyword">end</span>
+  <span class="keyword">rescue</span> <span class="constant">ArgumentError</span>, <span class="constant">TypeError</span>
     raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">point_or_property_types must all be a subclass of Point or Property</span><span class="delimiter">&quot;</span></span>
   <span class="keyword">end</span>
   <span class="keyword">if</span> point_or_property_types.count { |tag| tag &lt; <span class="constant">Semantics</span>::<span class="constant">Point</span> } &gt; <span class="integer">1</span> ||
@@ -4631,7 +4667,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 
   select <span class="keyword">do</span> |point|
     point.point? &amp;&amp; point_or_property_types.all? <span class="keyword">do</span> |tag|
-      (tag &lt; <span class="constant">Semantics</span>::<span class="constant">Point</span> &amp;&amp; point.point_type &lt;= tag) ||
+      (tag &lt; <span class="constant">Semantics</span>::<span class="constant">Point</span> &amp;&amp; point.point_type&amp;.&lt;=(tag)) ||
         (tag &lt; <span class="constant">Semantics</span>::<span class="constant">Property</span> &amp;&amp; point.property_type&amp;.&lt;=(tag))
     <span class="keyword">end</span>
   <span class="keyword">end</span>
@@ -5017,7 +5053,7 @@ otherwise self</p>
 </div>
 
         <footer>
-  Generated on Sat Jul 22 14:10:35 2023 by
+  Generated on Sun Jul 23 01:21:32 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

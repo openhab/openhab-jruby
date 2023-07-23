@@ -990,6 +990,30 @@
   
   
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="Semantics/Provider.html" title="OpenHAB::Core::Items::Semantics::Provider (class)">Provider</a></span>
+      
+        &lt; Provider
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   
   <li class="">
     <span class="sidebar-link">
@@ -3664,18 +3688,18 @@ String StringItem1
       <pre class="lines">
 
 
-248
-249
-250
-251
-252
-253
-254
-255
-256</pre>
+258
+259
+260
+261
+262
+263
+264
+265
+266</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 248</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 258</span>
 
 <span class="keyword">def</span> <span class="function">inspect</span>
   s = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Items::</span><span class="inline"><span class="inline-delimiter">#{</span>type<span class="inline-delimiter">}</span></span><span class="content">Item</span><span class="inline"><span class="inline-delimiter">#{</span>type_details<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>label.inspect<span class="inline-delimiter">}</span></span><span class="content"> state=</span><span class="inline"><span class="inline-delimiter">#{</span>raw_state.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
@@ -3814,12 +3838,12 @@ String StringItem1
       <pre class="lines">
 
 
-259
-260
-261</pre>
+269
+270
+271</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 259</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 269</span>
 
 <span class="keyword">def</span> <span class="function">provider</span>
   <span class="constant">Provider</span>.registry.provider_for(<span class="predefined-constant">self</span>)
@@ -3852,6 +3876,9 @@ String StringItem1
     
       
       <pre class="example code"><code>event.item.tagged?(<span class="string"><span class="delimiter">&quot;</span><span class="content">Setpoint</span><span class="delimiter">&quot;</span></span>)</code></pre>
+    
+      
+      <pre class="example code"><code>event.item.tagged?(<span class="constant">Semantics</span>::<span class="constant">Switch</span>)</code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -3894,19 +3921,33 @@ String StringItem1
       <pre class="lines">
 
 
-221
-222
-223
 224
 225
-226</pre>
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 224</span>
 
 <span class="keyword">def</span> <span class="function">tagged?</span>(*tags)
   tags.map! <span class="keyword">do</span> |tag|
-    tag.is_a?(<span class="constant">Module</span>) ? tag.simple_name : tag
+    <span class="comment"># @deprecated OH3.4</span>
+    <span class="keyword">if</span> tag.is_a?(<span class="constant">Module</span>)
+      tag.simple_name
+    <span class="keyword">elsif</span> <span class="keyword">defined?</span>(<span class="constant">Semantics</span>::<span class="constant">SemanticTag</span>) &amp;&amp; tag.is_a?(<span class="constant">Semantics</span>::<span class="constant">SemanticTag</span>)
+      tag.name
+    <span class="keyword">else</span>
+      tag
+    <span class="keyword">end</span>
   <span class="keyword">end</span>
   !(<span class="predefined-constant">self</span>.tags.to_a &amp; tags).empty?
 <span class="keyword">end</span></pre>
@@ -3962,12 +4003,12 @@ this method only returns the first thing.</p>
       <pre class="lines">
 
 
-232
-233
-234</pre>
+242
+243
+244</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 232</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 242</span>
 
 <span class="keyword">def</span> <span class="function">thing</span>
   all_linked_things.first
@@ -4023,14 +4064,14 @@ this method only returns the first thing.</p>
       <pre class="lines">
 
 
-240
-241
-242
-243
-244</pre>
+250
+251
+252
+253
+254</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 240</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 250</span>
 
 <span class="keyword">def</span> <span class="function">things</span>
   registry = <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry
@@ -4100,7 +4141,7 @@ this method only returns the first thing.</p>
 </div>
 
         <footer>
-  Generated on Sat Jul 22 14:10:33 2023 by
+  Generated on Sun Jul 23 01:21:29 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
