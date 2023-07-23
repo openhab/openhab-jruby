@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.4.2](https://github.com/openhab/openhab-jruby/tree/v5.4.2) (2023-07-23)
+
+[Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.4.1...v5.4.2)
+
+### Bug Fixes
+
+- Rework semantics for openHAB 4.0.0.M5 [\#88](https://github.com/openhab/openhab-jruby/pull/88) ([ccutrer](https://github.com/ccutrer))
+
 ## [v5.4.0](https://github.com/openhab/openhab-jruby/tree/v5.4.0) (2023-06-14)
 
 [Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.3.0...v5.4.0)
