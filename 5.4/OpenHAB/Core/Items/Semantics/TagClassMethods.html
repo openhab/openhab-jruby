@@ -990,6 +990,30 @@
   
   
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="Provider.html" title="OpenHAB::Core::Items::Semantics::Provider (class)">Provider</a></span>
+      
+        &lt; Provider
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   
   <li class="">
     <span class="sidebar-link active">
@@ -2706,7 +2730,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/openhab/core/items/semantics.rb</dd>
+    <dd>lib/openhab/core/items/semantics/tag_class_methods.rb</dd>
   </dl>
   
 </div>
@@ -2881,19 +2905,19 @@ When nil, the system's default locale is used.</p>
       <pre class="lines">
 
 
-551
-552
-553
-554
-555
-556
-557</pre>
+53
+54
+55
+56
+57
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 551</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/tag_class_methods.rb', line 53</span>
 
 <span class="keyword">def</span> <span class="function">description</span>(locale = <span class="predefined-constant">nil</span>)
-  <span class="keyword">unless</span> <span class="constant">SemanticTags</span>.respond_to?(<span class="symbol">:get_description</span>) <span class="comment"># @deprecated OH3.4</span>
+  <span class="keyword">unless</span> <span class="constant">SemanticTags</span>.respond_to?(<span class="symbol">:get_description</span>)
     <span class="keyword">return</span> java_class.get_annotation(org.openhab.core.semantics.TagInfo.java_class).description
   <span class="keyword">end</span>
 
@@ -2968,12 +2992,12 @@ When nil, the system's default locale is used.</p>
       <pre class="lines">
 
 
-522
-523
-524</pre>
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 522</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/tag_class_methods.rb', line 24</span>
 
 <span class="keyword">def</span> <span class="function">label</span>(locale = <span class="predefined-constant">nil</span>)
   <span class="constant">SemanticTags</span>.get_label(java_class, locale || java.util.Locale.default)
@@ -3047,20 +3071,20 @@ When nil, the system's default locale is used.</p>
       <pre class="lines">
 
 
-534
-535
-536
-537
-538
-539
-540
-541</pre>
+36
+37
+38
+39
+40
+41
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 534</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/tag_class_methods.rb', line 36</span>
 
 <span class="keyword">def</span> <span class="function">synonyms</span>(locale = <span class="predefined-constant">nil</span>)
-  <span class="keyword">unless</span> <span class="constant">SemanticTags</span>.respond_to?(<span class="symbol">:get_synonyms</span>) <span class="comment"># @deprecated OH3.4</span>
+  <span class="keyword">unless</span> <span class="constant">SemanticTags</span>.respond_to?(<span class="symbol">:get_synonyms</span>)
     <span class="keyword">return</span> java_class.get_annotation(org.openhab.core.semantics.TagInfo.java_class).synonyms
                      .split(<span class="string"><span class="delimiter">&quot;</span><span class="content">,</span><span class="delimiter">&quot;</span></span>).map(&amp;<span class="symbol">:strip</span>)
   <span class="keyword">end</span>
@@ -3077,7 +3101,7 @@ When nil, the system's default locale is used.</p>
 </div>
 
         <footer>
-  Generated on Mon Jul 17 23:27:24 2023 by
+  Generated on Sun Jul 23 01:24:15 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

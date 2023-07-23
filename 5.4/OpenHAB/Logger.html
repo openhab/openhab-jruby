@@ -990,6 +990,30 @@
   
   
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="Core/Items/Semantics/Provider.html" title="OpenHAB::Core::Items::Semantics::Provider (class)">Provider</a></span>
+      
+        &lt; Provider
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="Core/Items/Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   
   <li class="">
     <span class="sidebar-link">
@@ -3259,6 +3283,24 @@ to reload, and logging may be completely unavailable for a short time.</p>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Retrieve the current log level</p>
+</div></p>
+      
+      <pre class="example code"><code>level = <span class="constant">OpenHAB</span>::<span class="constant">Log</span>.logger(<span class="string"><span class="delimiter">&quot;</span><span class="content">openhab.event.ItemStateChangedEvent</span><span class="delimiter">&quot;</span></span>).level
+logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">The log level for 'openhab.event.ItemStateChangedEvent' is </span><span class="inline"><span class="inline-delimiter">#{</span>level<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Set the log level</p>
+</div></p>
+      
+      <pre class="example code"><code><span class="constant">OpenHAB</span>::<span class="constant">Log</span>.logger(<span class="string"><span class="delimiter">&quot;</span><span class="content">openhab.event.ItemStateChangedEvent</span><span class="delimiter">&quot;</span></span>).level = <span class="symbol">:warn</span></code></pre>
+    
+  </div>
+
 <p class="tag_title">Returns:</p>
 <ul class="return">
   
@@ -3283,12 +3325,12 @@ to reload, and logging may be completely unavailable for a short time.</p>
       <pre class="lines">
 
 
-244
-245
-246</pre>
+251
+252
+253</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 244</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 251</span>
 
 <span class="keyword">def</span> <span class="function">level</span>
   <span class="constant">Logger</span>.log_service.get_level(name)[name]&amp;.downcase&amp;.to_sym
@@ -3563,10 +3605,10 @@ confirmed that logging is enabled at debug level.</p>
       <pre class="lines">
 
 
-260</pre>
+267</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 260</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 267</span>
 
 def_level_method(<span class="symbol">:debug</span>)</pre>
     </td>
@@ -3612,10 +3654,10 @@ def_level_method(<span class="symbol">:debug</span>)</pre>
       <pre class="lines">
 
 
-261</pre>
+268</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 261</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 268</span>
 
 def_level_predicate(<span class="symbol">:debug</span>)</pre>
     </td>
@@ -3716,10 +3758,10 @@ confirmed that logging is enabled at error level.</p>
       <pre class="lines">
 
 
-254</pre>
+261</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 254</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 261</span>
 
 def_level_method(<span class="symbol">:error</span>)</pre>
     </td>
@@ -3765,10 +3807,10 @@ def_level_method(<span class="symbol">:error</span>)</pre>
       <pre class="lines">
 
 
-255</pre>
+262</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 255</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 262</span>
 
 def_level_predicate(<span class="symbol">:error</span>)</pre>
     </td>
@@ -3869,10 +3911,10 @@ confirmed that logging is enabled at info level.</p>
       <pre class="lines">
 
 
-258</pre>
+265</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 258</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 265</span>
 
 def_level_method(<span class="symbol">:info</span>)</pre>
     </td>
@@ -3918,10 +3960,10 @@ def_level_method(<span class="symbol">:info</span>)</pre>
       <pre class="lines">
 
 
-259</pre>
+266</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 259</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 266</span>
 
 def_level_predicate(<span class="symbol">:info</span>)</pre>
     </td>
@@ -4029,15 +4071,15 @@ def_level_predicate(<span class="symbol">:info</span>)</pre>
       <pre class="lines">
 
 
-271
-272
-273
-274
-275
-276</pre>
+278
+279
+280
+281
+282
+283</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 271</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 278</span>
 
 <span class="keyword">def</span> <span class="function">log_exception</span>(exception)
   exception = clean_backtrace(exception)
@@ -4196,10 +4238,10 @@ confirmed that logging is enabled at trace level.</p>
       <pre class="lines">
 
 
-262</pre>
+269</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 262</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 269</span>
 
 def_level_method(<span class="symbol">:trace</span>)</pre>
     </td>
@@ -4245,10 +4287,10 @@ def_level_method(<span class="symbol">:trace</span>)</pre>
       <pre class="lines">
 
 
-263</pre>
+270</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 263</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 270</span>
 
 def_level_predicate(<span class="symbol">:trace</span>)</pre>
     </td>
@@ -4349,10 +4391,10 @@ confirmed that logging is enabled at warn level.</p>
       <pre class="lines">
 
 
-256</pre>
+263</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 256</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 263</span>
 
 def_level_method(<span class="symbol">:warn</span>)</pre>
     </td>
@@ -4398,10 +4440,10 @@ def_level_method(<span class="symbol">:warn</span>)</pre>
       <pre class="lines">
 
 
-257</pre>
+264</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 257</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/log.rb', line 264</span>
 
 def_level_predicate(<span class="symbol">:warn</span>)</pre>
     </td>
@@ -4414,7 +4456,7 @@ def_level_predicate(<span class="symbol">:warn</span>)</pre>
 </div>
 
         <footer>
-  Generated on Mon Jul 17 23:27:24 2023 by
+  Generated on Sun Jul 23 01:24:15 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

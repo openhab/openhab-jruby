@@ -990,6 +990,30 @@
   
   
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="OpenHAB/Core/Items/Semantics/Provider.html" title="OpenHAB::Core::Items::Semantics::Provider (class)">Provider</a></span>
+      
+        &lt; Provider
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="OpenHAB/Core/Items/Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   
   <li class="">
     <span class="sidebar-link">
@@ -3328,16 +3352,16 @@ Thing actions can be called directly on the <span class='object_link'><a href="O
 <pre class="code ruby"><code class="ruby"><span class="constant">Exec</span>.execute_command_line(<span class="string"><span class="delimiter">'</span><span class="content">/path/to/program</span><span class="delimiter">'</span></span>)
 </code></pre>
 <h3 id="logging"><a href="#logging" class="header-anchor">#</a>Logging</h3>
-<p>The JRuby Scripting addon has a global <code>logger</code> object for logging.</p>
-<pre class="code text"><code class="text">log:set DEBUG org.openhab.automation.jrubyscripting.script
+<p>The JRuby Scripting addon has a global <code>logger</code> object for logging. To log a message on <code>INFO</code> log level:</p>
+<pre class="code ruby"><code class="ruby">logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">The current time is </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Time</span>.now<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
 </code></pre>
 <p>The default logger name for UI rules is <code>org.openhab.automation.jrubyscripting.script</code>.
-For file-based rules, it's based on the rule's ID, such as <code>org.openhab.automation.jrubyscripting.rule.myrule.rb:15</code>
-This can be changed by assigning a new logger locally.</p>
-<p>Please be aware that messages might not appear in the logs if the logger name does not start with <code>org.openhab</code>.
-This behaviour is due to <a href="https://logging.apache.org/log4j/2.x/">log4j2</a> requiring definition for each logger prefix.</p>
+For file-based rules, it's based on the rule's ID, such as <code>org.openhab.automation.jrubyscripting.rule.myrule.rb:15</code></p>
+<p>To use a custom logger name:</p>
 <pre class="code ruby"><code class="ruby">logger = <span class="constant">OpenHAB</span>::<span class="constant">Log</span>.logger(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.custom</span><span class="delimiter">&quot;</span></span>)
 </code></pre>
+<p>Please be aware that messages might not appear in the logs if the logger name does not start with <code>org.openhab</code>.
+This behaviour is due to <a href="https://logging.apache.org/log4j/2.x/">log4j2</a> requiring definition for each logger prefix.</p>
 <p>The <span class='object_link'><a href="OpenHAB/Logger.html" title="OpenHAB::Logger (class)">logger</a></span> is similar to a standard <a href="https://docs.ruby-lang.org/en/master/Logger.html">Ruby Logger</a>.
 Supported logging functions include:</p>
 <ul>
@@ -3377,7 +3401,7 @@ After takes a <a href="#durations">Duration</a>, e.g. <code>10.minutes</code> in
 <h4 id="accessing-variables"><a href="#accessing-variables" class="header-anchor">#</a>Accessing Variables <!-- raw HTML omitted --></h4>
 <p>You can access all variables of the current context in the created timers.</p>
 <p>Note: Variables can be mutated (changed) after the timer has been created.
-Be aware that this can lead to unattended side effects, e.g. when you change the variable after timer creation, which can make debugging quite difficult!</p>
+Be aware that this can lead to unintentional side effects, e.g. when you change the variable after timer creation, which can make debugging quite difficult!</p>
 <pre class="code ruby"><code class="ruby">my_var = <span class="string"><span class="delimiter">&quot;</span><span class="content">Hello world!</span><span class="delimiter">&quot;</span></span>;
 
 <span class="comment"># Schedule a timer that expires in ten seconds</span>
@@ -3731,16 +3755,15 @@ JRuby will recognize the variables as variables--rather than method calls--when 
 Otherwise you will get errors like <code>(NameError) undefined local variable or method 'input' for main:Object</code>.
 This is not necessary in openHAB 4.0+.</p>
 <h4 id="file-based-transformations"><a href="#file-based-transformations" class="header-anchor">#</a>File Based Transformations <!-- raw HTML omitted --></h4>
-<p>Once the addon is installed, you can create a Ruby file in the <code>$OPENHAB_CONF/transform</code> directory, with the extension <code>.script</code>.
-It's important that the extension is <code>.script</code> so that the core <code>SCRIPT</code> transform service will recognize it.
-When referencing the file, you need to specify the <code>SCRIPT</code> transform, with <code>rb</code> as the script type: <code>SCRIPT(rb:mytransform.script):%s</code>.</p>
-<p>You can also specify additional variables to be set in the script using a URI-like query syntax: <code>SCRIPT(rb:mytransform.script?a=1&amp;b=c):%s</code>
+<p>Once the addon is installed, you can create a Ruby file in the <code>$OPENHAB_CONF/transform</code> directory, with the extension <code>.rb</code>.
+When referencing the file, you need to specify the <code>RB</code> transform: <code>RB(mytransform.rb):%s</code>.</p>
+<p>You can also specify additional variables to be set in the script using a URI-like query syntax: <code>RB(mytransform.rb?a=1&amp;b=c):%s</code>
 in order to share a single script with slightly different parameters for different items.</p>
 <h5 id="example:-display-the-wind-direction-in-degrees-and-cardinal-direction"><a href="#example:-display-the-wind-direction-in-degrees-and-cardinal-direction" class="header-anchor">#</a>Example: Display the wind direction in degrees and cardinal direction <!-- raw HTML omitted --></h5>
 <p><code>weather.items</code></p>
-<pre class="code Xtend"><code class="Xtend">Number:Angle Exterior_WindDirection &quot;Wind Direction [SCRIPT(rb:compass.script):%s]&quot; &lt;wind&gt;
+<pre class="code Xtend"><code class="Xtend">Number:Angle Exterior_WindDirection &quot;Wind Direction [RB(compass.rb):%s]&quot; &lt;wind&gt;
 </code></pre>
-<p><code>compass.script</code></p>
+<p><code>compass.rb</code></p>
 <pre class="code ruby"><code class="ruby"><span class="constant">DIRECTIONS</span> = <span class="string"><span class="delimiter">%w[</span><span class="content">N NE E SE S SW W NW N</span><span class="delimiter">]</span></span>.freeze
 
 <span class="keyword">if</span> input.nil? || input == <span class="string"><span class="delimiter">&quot;</span><span class="content">NULL</span><span class="delimiter">&quot;</span></span> || input == <span class="string"><span class="delimiter">&quot;</span><span class="content">UNDEF</span><span class="delimiter">&quot;</span></span>
@@ -3752,16 +3775,16 @@ in order to share a single script with slightly different parameters for differe
 </code></pre>
 <p>Given a state of <code>82 °</code>, this will produce a formatted state of <code>E (82°)</code>.</p>
 <h5 id="example:-display-the-number-of-lights-that-are-on/off-within-a-group"><a href="#example:-display-the-number-of-lights-that-are-on/off-within-a-group" class="header-anchor">#</a>Example: Display the number of lights that are on/off within a group <!-- raw HTML omitted --></h5>
-<pre class="code Xtend"><code class="Xtend">Group gIndoorLights &quot;Indoor Lights [SCRIPT(rb:group_count.script?group=gIndoorLights):%s]&quot;
-Group gOutdoorLights &quot;Outdoor Lights [SCRIPT(rb:group_count.script?group=gOutdoorLights):%s]&quot;
+<pre class="code Xtend"><code class="Xtend">Group gIndoorLights &quot;Indoor Lights [RB(group_count.rb?group=gIndoorLights):%s]&quot;
+Group gOutdoorLights &quot;Outdoor Lights [RB(group_count.rb?group=gOutdoorLights):%s]&quot;
 </code></pre>
-<p><code>group_count.script</code></p>
+<p><code>group_count.rb</code></p>
 <pre class="code ruby"><code class="ruby">items[group].all_members.then { |all| <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>all.select(&amp;<span class="symbol">:on?</span>).size<span class="inline-delimiter">}</span></span><span class="content">/</span><span class="inline"><span class="inline-delimiter">#{</span>all.size<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
 </code></pre>
 <p>When 3 lights out of 10 lights are on, this will produce a formatted state of <code>3/10</code></p>
 <h4 id="inline-transformations"><a href="#inline-transformations" class="header-anchor">#</a>Inline Transformations <!-- raw HTML omitted --></h4>
 <p>Inline transformations are supported too. For example, to display the temperature in both °C and °F:</p>
-<pre class="code Xtend"><code class="Xtend">Number:Temperature Outside_Temperature &quot;Outside Temperature [SCRIPT(rb:|  input.to_f.|(&#39;°C&#39;).then { |t| %(#{t.format(&#39;%d °C&#39;)} / #{t.to_unit(&#39;°F&#39;).format(&#39;%d °F&#39;)}) }   ):%s]&quot;
+<pre class="code Xtend"><code class="Xtend">Number:Temperature Outside_Temperature &quot;Outside Temperature [RB(|  input.to_f.|(&#39;°C&#39;).then { |t| %(#{t.format(&#39;%d °C&#39;)} / #{t.to_unit(&#39;°F&#39;).format(&#39;%d °F&#39;)}) }   ):%s]&quot;
 </code></pre>
 <p>When the item contains <code>0 °C</code>, this will produce a formatted state of <code>0 °C / 32 °F</code>.</p>
 <h3 id="profile"><a href="#profile" class="header-anchor">#</a>Profile</h3>
@@ -4032,7 +4055,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Mon Jul 17 23:27:20 2023 by
+  Generated on Sun Jul 23 01:24:11 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

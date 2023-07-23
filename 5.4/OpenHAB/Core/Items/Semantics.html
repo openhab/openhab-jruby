@@ -84,7 +84,9 @@ their results. They can also be compared against the return value of
 and #property_type. They can even be used with
 DSL::Items::ItemBuilder#tag.
 
-The semantic constants in the `Semantics` module are enhanced with TagClassMethods
+In openHAB 4.0, all of the tag objects implement SemanticTag.
+
+In openHAB 3.4, the constants in the Semantics module are enhanced with TagClassMethods
 to provide easy access to the tags' additional attributes: label,
 synonyms, and description.
 For example, to get the synonyms for `Semantics::Lightbulb` in German:
@@ -92,7 +94,7 @@ For example, to get the synonyms for `Semantics::Lightbulb` in German:
 
 ## Adding Custom Semantic Tags
 
-openHAB 4 supports adding custom semantic tags to augment the standard set of tags to better suit
+openHAB 4.0 supports adding custom semantic tags to augment the standard set of tags to better suit
 your particular requirements.
 
 For more information, see add - Documentation for openhab-scripting JRuby helper library.">
@@ -1051,6 +1053,30 @@ For more information, see add - Documentation for openhab-scripting JRuby helper
   
   
   
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="Semantics/Provider.html" title="OpenHAB::Core::Items::Semantics::Provider (class)">Provider</a></span>
+      
+        &lt; Provider
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
   
   
   <li class="">
@@ -2773,7 +2799,9 @@ For more information, see add - Documentation for openhab-scripting JRuby helper
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/openhab/core/items/semantics.rb</dd>
+    <dd>lib/openhab/core/items/semantics.rb<span class="defines">,<br />
+  lib/openhab/core/items/semantics/provider.rb,<br /> lib/openhab/core/items/semantics/semantic_tag.rb,<br /> lib/openhab/core/items/semantics/tag_class_methods.rb</span>
+</dd>
   </dl>
   
 </div>
@@ -2787,7 +2815,7 @@ This can be extremely useful to find related items in rules that are executed fo
 Also includes classes for each semantic tag.</p>
 <p>Be warned that the Semantic model is stricter than can actually be
 described by tags and groups on an Item. It makes assumptions that any
-given item only belongs to one semantic type (<a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Location.html" target="_parent" title="Location">Location</a>, <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Equipment.html" target="_parent" title="Equipment">Equipment</a>, <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Point.html" target="_parent" title="Point">Point</a>).</p>
+given item only belongs to one semantic type (<span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Location</a></span>, <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Equipment</a></span>, <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Point</a></span>).</p>
 <h2 id="enumerable-helper-methods"><a href="#enumerable-helper-methods" class="header-anchor">#</a>Enumerable helper methods</h2>
 <p><span class='object_link'><a href="../../../Enumerable.html" title="Enumerable (module)">Enumerable helper methods</a></span> are also provided to complement the semantic model. These methods can be
 chained together to find specific item(s) based on custom tags or group memberships that are outside
@@ -2848,13 +2876,14 @@ their results. They can also be compared against the return value of
 <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span>, <span class='object_link'><a href="#location_type-instance_method" title="OpenHAB::Core::Items::Semantics#location_type (method)">#location_type</a></span>, <span class='object_link'><a href="#equipment_type-instance_method" title="OpenHAB::Core::Items::Semantics#equipment_type (method)">#equipment_type</a></span>, <span class='object_link'><a href="#point_type-instance_method" title="OpenHAB::Core::Items::Semantics#point_type (method)">#point_type</a></span>,
 and <span class='object_link'><a href="#property_type-instance_method" title="OpenHAB::Core::Items::Semantics#property_type (method)">#property_type</a></span>. They can even be used with
 <span class='object_link'><a href="../../DSL/Items/ItemBuilder.html#tag-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#tag (method)">DSL::Items::ItemBuilder#tag</a></span>.</p>
-<p>The semantic constants in the <code>Semantics</code> module are enhanced with <span class='object_link'><a href="Semantics/TagClassMethods.html" title="OpenHAB::Core::Items::Semantics::TagClassMethods (module)">TagClassMethods</a></span>
+<p>In openHAB 4.0, all of the tag objects implement <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>.</p>
+<p>In openHAB 3.4, the constants in the <span class='object_link'><a href="" title="OpenHAB::Core::Items::Semantics (module)">Semantics</a></span> module are enhanced with <span class='object_link'><a href="Semantics/TagClassMethods.html" title="OpenHAB::Core::Items::Semantics::TagClassMethods (module)">TagClassMethods</a></span>
 to provide easy access to the tags' additional attributes: <span class='object_link'><a href="Semantics/TagClassMethods.html#label-instance_method" title="OpenHAB::Core::Items::Semantics::TagClassMethods#label (method)">label</a></span>,
 <span class='object_link'><a href="Semantics/TagClassMethods.html#synonyms-instance_method" title="OpenHAB::Core::Items::Semantics::TagClassMethods#synonyms (method)">synonyms</a></span>, and <span class='object_link'><a href="Semantics/TagClassMethods.html#description-instance_method" title="OpenHAB::Core::Items::Semantics::TagClassMethods#description (method)">description</a></span>.
 For example, to get the synonyms for <code>Semantics::Lightbulb</code> in German:
 <code>Semantics::Lightbulb.synonyms(java.util.Locale::GERMAN)</code></p>
 <h2 id="adding-custom-semantic-tags"><a href="#adding-custom-semantic-tags" class="header-anchor">#</a>Adding Custom Semantic Tags</h2>
-<p>openHAB 4 supports adding custom semantic tags to augment the standard set of tags to better suit
+<p>openHAB 4.0 supports adding custom semantic tags to augment the standard set of tags to better suit
 your particular requirements.</p>
 <p>For more information, see <span class='object_link'><a href="#add-class_method" title="OpenHAB::Core::Items::Semantics.add (method)">Semantics.add</a></span></p>
 
@@ -2992,9 +3021,11 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Semantics/TagClassMethods.html" title="OpenHAB::Core::Items::Semantics::TagClassMethods (module)">TagClassMethods</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>, <span class='object_link'><a href="Semantics/TagClassMethods.html" title="OpenHAB::Core::Items::Semantics::TagClassMethods (module)">TagClassMethods</a></span>
     
   
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Semantics/Provider.html" title="OpenHAB::Core::Items::Semantics::Provider (class)">Provider</a></span>
     
   
 </p>
@@ -3007,10 +3038,13 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
 
     <dl class="constants">
       
-        <dt id="Tag-constant" class="">Tag =
+        <dt id="Tag-constant" class="deprecated">Tag =
           <div class="docstring">
   <div class="discussion">
-    <p>This is a marker interface for all semantic tag classes.</p>
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>Since openHAB 4.0, <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span> is the interface that all tags implement.
+Tags are simple instances, instead of another interface in a hierarchical structure.</p>
+</div></div>
+<p>This is a marker interface for all semantic tag classes.</p>
 
 
   </div>
@@ -3025,7 +3059,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
         <dt id="Location-constant" class="">Location =
           <div class="docstring">
   <div class="discussion">
-    <p>This is the super interface for all types that represent a Location.</p>
+    <p>This is the parent tag for all tags that represent a Location.</p>
 
 
   </div>
@@ -3035,12 +3069,12 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
 
 </div>
         </dt>
-        <dd><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Location.html" target="_parent" title="org.openhab.core.semantics.Location">org.openhab.core.semantics.Location</a></dd>
+        <dd><span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span></dd>
       
         <dt id="Equipment-constant" class="">Equipment =
           <div class="docstring">
   <div class="discussion">
-    <p>This is the super interface for all types that represent an Equipment.</p>
+    <p>This is the parent tag for all tags that represent an Equipment.</p>
 
 
   </div>
@@ -3050,12 +3084,12 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
 
 </div>
         </dt>
-        <dd><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Equipment.html" target="_parent" title="org.openhab.core.semantics.Equipment">org.openhab.core.semantics.Equipment</a></dd>
+        <dd><span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span></dd>
       
         <dt id="Point-constant" class="">Point =
           <div class="docstring">
   <div class="discussion">
-    <p>This is the super interface for all types that represent a Point.</p>
+    <p>This is the parent tag for all tags that represent a Point.</p>
 
 
   </div>
@@ -3065,12 +3099,12 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
 
 </div>
         </dt>
-        <dd><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Point.html" target="_parent" title="org.openhab.core.semantics.Point">org.openhab.core.semantics.Point</a></dd>
+        <dd><span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span></dd>
       
         <dt id="Property-constant" class="">Property =
           <div class="docstring">
   <div class="discussion">
-    <p>This is the super interface for all property tags.</p>
+    <p>This is the parent tag for all property tags.</p>
 
 
   </div>
@@ -3080,7 +3114,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
 
 </div>
         </dt>
-        <dd><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Property.html" target="_parent" title="org.openhab.core.semantics.Property">org.openhab.core.semantics.Property</a></dd>
+        <dd><span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span></dd>
       
     </dl>
   
@@ -3113,7 +3147,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Gets the related <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Equipment.html" target="_parent" title="Equipment">Equipment</a> Item of this Item.</p>
+    <span class="summary_desc"><div class='inline'><p>Gets the related <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Equipment</a></span> Item of this Item.</p>
 </div></span>
   
 </li>
@@ -3122,7 +3156,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#equipment_type-instance_method" title="#equipment_type (instance method)">#<strong>equipment_type</strong>  &#x21d2; Class<sup>?</sup> </a>
+      <a href="#equipment_type-instance_method" title="#equipment_type (instance method)">#<strong>equipment_type</strong>  &#x21d2; SemanticTag<sup>?</sup> </a>
     
 
     
@@ -3141,7 +3175,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns the sub-class of <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Equipment.html" target="_parent" title="Equipment">Equipment</a> related to this Item.</p>
+    <span class="summary_desc"><div class='inline'><p>Returns the sub-tag of <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Equipment</a></span> related to this Item.</p>
 </div></span>
   
 </li>
@@ -3169,7 +3203,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Gets the related <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Location.html" target="_parent" title="Location">Location</a> Item of this Item.</p>
+    <span class="summary_desc"><div class='inline'><p>Gets the related <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Location</a></span> Item of this Item.</p>
 </div></span>
   
 </li>
@@ -3178,7 +3212,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#location_type-instance_method" title="#location_type (instance method)">#<strong>location_type</strong>  &#x21d2; Class<sup>?</sup> </a>
+      <a href="#location_type-instance_method" title="#location_type (instance method)">#<strong>location_type</strong>  &#x21d2; SemanticTag<sup>?</sup> </a>
     
 
     
@@ -3197,7 +3231,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns the sub-class of <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Location.html" target="_parent" title="Location">Location</a> related to this Item.</p>
+    <span class="summary_desc"><div class='inline'><p>Returns the sub-tag of <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Location</a></span> related to this Item.</p>
 </div></span>
   
 </li>
@@ -3206,7 +3240,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#point_type-instance_method" title="#point_type (instance method)">#<strong>point_type</strong>  &#x21d2; Class<sup>?</sup> </a>
+      <a href="#point_type-instance_method" title="#point_type (instance method)">#<strong>point_type</strong>  &#x21d2; SemanticTag<sup>?</sup> </a>
     
 
     
@@ -3225,7 +3259,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns the sub-class of <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Point.html" target="_parent" title="Point">Point</a> this Item is tagged with.</p>
+    <span class="summary_desc"><div class='inline'><p>Returns the sub-tag of <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Point</a></span> this Item is tagged with.</p>
 </div></span>
   
 </li>
@@ -3234,7 +3268,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#property_type-instance_method" title="#property_type (instance method)">#<strong>property_type</strong>  &#x21d2; Class<sup>?</sup> </a>
+      <a href="#property_type-instance_method" title="#property_type (instance method)">#<strong>property_type</strong>  &#x21d2; SemanticTag<sup>?</sup> </a>
     
 
     
@@ -3253,7 +3287,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns the sub-class of <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Property.html" target="_parent" title="Property">Property</a> this Item is tagged with.</p>
+    <span class="summary_desc"><div class='inline'><p>Returns the sub-tag of <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Property</a></span> this Item is tagged with.</p>
 </div></span>
   
 </li>
@@ -3262,7 +3296,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#semantic_type-instance_method" title="#semantic_type (instance method)">#<strong>semantic_type</strong>  &#x21d2; Class<sup>?</sup> </a>
+      <a href="#semantic_type-instance_method" title="#semantic_type (instance method)">#<strong>semantic_type</strong>  &#x21d2; SemanticTag<sup>?</sup> </a>
     
 
     
@@ -3281,7 +3315,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns the sub-class of <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Tag">Tag</a> this Item is tagged with.</p>
+    <span class="summary_desc"><div class='inline'><p>Returns the <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span> this Item is tagged with.</p>
 </div></span>
   
 </li>
@@ -3305,7 +3339,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#add-class_method" title="add (class method)">.<strong>add</strong>(label: nil, synonyms: &quot;&quot;, description: &quot;&quot;, **tags)  &#x21d2; Array&lt;Tag&gt; </a>
+      <a href="#add-class_method" title="add (class method)">.<strong>add</strong>(label: nil, synonyms: &quot;&quot;, description: &quot;&quot;, **tags)  &#x21d2; Array&lt;SemanticTag&gt; </a>
     
 
     
@@ -3328,7 +3362,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#lookup-class_method" title="lookup (class method)">.<strong>lookup</strong>(id, locale = nil)  &#x21d2; Tag<sup>?</sup> </a>
+      <a href="#lookup-class_method" title="lookup (class method)">.<strong>lookup</strong>(id, locale = java.util.Locale.default)  &#x21d2; SemanticTag, ... </a>
     
 
     
@@ -3342,7 +3376,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Finds the semantic tag using its name, label, or synonyms.</p>
+    <span class="summary_desc"><div class='inline'><p>Finds a semantic tag using its name, label, or synonyms.</p>
 </div></span>
   
 </li>
@@ -3351,7 +3385,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#tags-class_method" title="tags (class method)">.<strong>tags</strong>  &#x21d2; Array&lt;Tag&gt; </a>
+      <a href="#tags-class_method" title="tags (class method)">.<strong>tags</strong>  &#x21d2; Array&lt;SemanticTag&gt; </a>
     
 
     
@@ -3399,7 +3433,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Checks if this Item is an <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Equipment.html" target="_parent" title="Equipment">Equipment</a>.</p>
+    <span class="summary_desc"><div class='inline'><p>Checks if this Item is an <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Equipment</a></span>.</p>
 </div></span>
   
 </li>
@@ -3422,7 +3456,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Checks if this Item is a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Location.html" target="_parent" title="Location">Location</a>.</p>
+    <span class="summary_desc"><div class='inline'><p>Checks if this Item is a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Location</a></span>.</p>
 </div></span>
   
 </li>
@@ -3445,7 +3479,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Checks if this Item is a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Point.html" target="_parent" title="Point">Point</a>.</p>
+    <span class="summary_desc"><div class='inline'><p>Checks if this Item is a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Point</a></span>.</p>
 </div></span>
   
 </li>
@@ -3518,8 +3552,8 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Gets the related <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Equipment.html" target="_parent" title="Equipment">Equipment</a> Item of this Item.</p>
-<p>Checks ancestor groups one level at a time, returning the first <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Equipment.html" target="_parent" title="Equipment">Equipment</a> Item found.</p>
+    <p>Gets the related <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Equipment</a></span> Item of this Item.</p>
+<p>Checks ancestor groups one level at a time, returning the first <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Equipment</a></span> Item found.</p>
 
 
   </div>
@@ -3546,12 +3580,12 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
       <pre class="lines">
 
 
-308
-309
-310</pre>
+468
+469
+470</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 308</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 468</span>
 
 <span class="keyword">def</span> <span class="function">equipment</span>
   <span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_equipment(<span class="predefined-constant">self</span>)&amp;.<span class="keyword">then</span>(&amp;<span class="constant">Proxy</span>.method(<span class="symbol">:new</span>))
@@ -3566,7 +3600,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
       <div class="method_details ">
   <h3 class="signature " id="equipment_type-instance_method">
   
-    #<strong>equipment_type</strong>  &#x21d2; <tt>Class</tt><sup>?</sup>  <span class="extras">(readonly)</span>
+    #<strong>equipment_type</strong>  &#x21d2; <tt><span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span></tt><sup>?</sup>  <span class="extras">(readonly)</span>
   
 
   
@@ -3574,8 +3608,8 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns the sub-class of <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Equipment.html" target="_parent" title="Equipment">Equipment</a> related to this Item.</p>
-<p>In other words, the <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span> of this Item's <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Equipment.html" target="_parent" title="Equipment">Equipment</a>.</p>
+    <p>Returns the sub-tag of <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Equipment</a></span> related to this Item.</p>
+<p>In other words, the <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span> of this Item's <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Equipment</a></span>.</p>
 
 
   </div>
@@ -3588,7 +3622,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
     <li>
       
       
-        <span class='type'>(<tt>Class</tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span></tt>, <tt>nil</tt>)</span>
       
       
       
@@ -3602,15 +3636,15 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
       <pre class="lines">
 
 
-321
-322
-323</pre>
+481
+482
+483</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 321</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 481</span>
 
 <span class="keyword">def</span> <span class="function">equipment_type</span>
-  <span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_equipment_type(<span class="predefined-constant">self</span>)&amp;.ruby_class
+  translate_tag(<span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_equipment_type(<span class="predefined-constant">self</span>))
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3630,9 +3664,9 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Gets the related <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Location.html" target="_parent" title="Location">Location</a> Item of this Item.</p>
+    <p>Gets the related <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Location</a></span> Item of this Item.</p>
 <p>Checks ancestor groups one level at a time, returning the first
-<a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Location.html" target="_parent" title="Location">Location</a> Item found.</p>
+<span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Location</a></span> Item found.</p>
 
 
   </div>
@@ -3659,12 +3693,12 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
       <pre class="lines">
 
 
-282
-283
-284</pre>
+442
+443
+444</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 282</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 442</span>
 
 <span class="keyword">def</span> <span class="function">location</span>
   <span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_location(<span class="predefined-constant">self</span>)&amp;.<span class="keyword">then</span>(&amp;<span class="constant">Proxy</span>.method(<span class="symbol">:new</span>))
@@ -3679,7 +3713,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
       <div class="method_details ">
   <h3 class="signature " id="location_type-instance_method">
   
-    #<strong>location_type</strong>  &#x21d2; <tt>Class</tt><sup>?</sup>  <span class="extras">(readonly)</span>
+    #<strong>location_type</strong>  &#x21d2; <tt><span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span></tt><sup>?</sup>  <span class="extras">(readonly)</span>
   
 
   
@@ -3687,8 +3721,8 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns the sub-class of <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Location.html" target="_parent" title="Location">Location</a> related to this Item.</p>
-<p>In other words, the <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span> of this Item's <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Location.html" target="_parent" title="Location">Location</a>.</p>
+    <p>Returns the sub-tag of <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Location</a></span> related to this Item.</p>
+<p>In other words, the <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span> of this Item's <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Location</a></span>.</p>
 
 
   </div>
@@ -3701,7 +3735,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
     <li>
       
       
-        <span class='type'>(<tt>Class</tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span></tt>, <tt>nil</tt>)</span>
       
       
       
@@ -3715,15 +3749,15 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
       <pre class="lines">
 
 
-295
-296
-297</pre>
+455
+456
+457</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 295</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 455</span>
 
 <span class="keyword">def</span> <span class="function">location_type</span>
-  <span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_location_type(<span class="predefined-constant">self</span>)&amp;.ruby_class
+  translate_tag(<span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_location_type(<span class="predefined-constant">self</span>))
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3735,7 +3769,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
       <div class="method_details ">
   <h3 class="signature " id="point_type-instance_method">
   
-    #<strong>point_type</strong>  &#x21d2; <tt>Class</tt><sup>?</sup>  <span class="extras">(readonly)</span>
+    #<strong>point_type</strong>  &#x21d2; <tt><span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span></tt><sup>?</sup>  <span class="extras">(readonly)</span>
   
 
   
@@ -3743,7 +3777,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns the sub-class of <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Point.html" target="_parent" title="Point">Point</a> this Item is tagged with.</p>
+    <p>Returns the sub-tag of <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Point</a></span> this Item is tagged with.</p>
 
 
   </div>
@@ -3756,7 +3790,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
     <li>
       
       
-        <span class='type'>(<tt>Class</tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span></tt>, <tt>nil</tt>)</span>
       
       
       
@@ -3770,15 +3804,15 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
       <pre class="lines">
 
 
-332
-333
-334</pre>
+492
+493
+494</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 332</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 492</span>
 
 <span class="keyword">def</span> <span class="function">point_type</span>
-  <span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_point_type(<span class="predefined-constant">self</span>)&amp;.ruby_class
+  translate_tag(<span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_point_type(<span class="predefined-constant">self</span>))
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3790,7 +3824,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
       <div class="method_details ">
   <h3 class="signature " id="property_type-instance_method">
   
-    #<strong>property_type</strong>  &#x21d2; <tt>Class</tt><sup>?</sup>  <span class="extras">(readonly)</span>
+    #<strong>property_type</strong>  &#x21d2; <tt><span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span></tt><sup>?</sup>  <span class="extras">(readonly)</span>
   
 
   
@@ -3798,7 +3832,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns the sub-class of <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Property.html" target="_parent" title="Property">Property</a> this Item is tagged with.</p>
+    <p>Returns the sub-tag of <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Property</a></span> this Item is tagged with.</p>
 
 
   </div>
@@ -3811,7 +3845,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
     <li>
       
       
-        <span class='type'>(<tt>Class</tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span></tt>, <tt>nil</tt>)</span>
       
       
       
@@ -3825,15 +3859,15 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
       <pre class="lines">
 
 
-343
-344
-345</pre>
+503
+504
+505</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 343</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 503</span>
 
 <span class="keyword">def</span> <span class="function">property_type</span>
-  <span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_property_type(<span class="predefined-constant">self</span>)&amp;.ruby_class
+  translate_tag(<span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_property_type(<span class="predefined-constant">self</span>))
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3845,7 +3879,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
       <div class="method_details ">
   <h3 class="signature " id="semantic_type-instance_method">
   
-    #<strong>semantic_type</strong>  &#x21d2; <tt>Class</tt><sup>?</sup>  <span class="extras">(readonly)</span>
+    #<strong>semantic_type</strong>  &#x21d2; <tt><span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span></tt><sup>?</sup>  <span class="extras">(readonly)</span>
   
 
   
@@ -3853,10 +3887,10 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns the sub-class of <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Tag">Tag</a> this Item is tagged with.</p>
+    <p>Returns the <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span> this Item is tagged with.</p>
 <p>It will only return the first applicable Tag, preferring
-a sub-class of <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Location.html" target="_parent" title="Location">Location</a>, <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Equipment.html" target="_parent" title="Equipment">Equipment</a>, or <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Point.html" target="_parent" title="Point">Point</a> first,
-and if none of those are found, looks for a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Property.html" target="_parent" title="Property">Property</a>.</p>
+a sub-tag of <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Location</a></span>, <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Equipment</a></span>, or <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Point</a></span> first,
+and if none of those are found, looks for a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Property</a></span>.</p>
 
 
   </div>
@@ -3869,7 +3903,7 @@ and if none of those are found, looks for a <a href="https://www.openhab.org/jav
     <li>
       
       
-        <span class='type'>(<tt>Class</tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span></tt>, <tt>nil</tt>)</span>
       
       
       
@@ -3883,15 +3917,15 @@ and if none of those are found, looks for a <a href="https://www.openhab.org/jav
       <pre class="lines">
 
 
-357
-358
-359</pre>
+517
+518
+519</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 357</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 517</span>
 
 <span class="keyword">def</span> <span class="function">semantic_type</span>
-  <span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_semantic_type(<span class="predefined-constant">self</span>)&amp;.ruby_class
+  translate_tag(<span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_semantic_type(<span class="predefined-constant">self</span>))
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3909,9 +3943,9 @@ and if none of those are found, looks for a <a href="https://www.openhab.org/jav
   <h3 class="signature first" id="add-class_method">
   
     
-      <span class="overload">.<strong>self.add</strong>(**tags)  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Tag">Tag</a>&gt;</tt> </span>
+      <span class="overload">.<strong>add</strong>(**tags)  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>&gt;</tt> </span>
     
-      <span class="overload">.<strong>self.add</strong>(label: nil, synonyms: &quot;&quot;, description: &quot;&quot;, **tags)  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Tag">Tag</a>&gt;</tt> </span>
+      <span class="overload">.<strong>add</strong>(label: nil, synonyms: &quot;&quot;, description: &quot;&quot;, **tags)  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>&gt;</tt> </span>
     
   
 
@@ -3932,7 +3966,7 @@ and if none of those are found, looks for a <a href="https://www.openhab.org/jav
     
       
       <li class="overload_item">
-        <span class="signature">.<strong>self.add</strong>(**tags)  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Tag">Tag</a>&gt;</tt> </span>
+        <span class="signature">.<strong>add</strong>(**tags)  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>&gt;</tt> </span>
         <div class="docstring">
   <div class="discussion">
     <p>Quickly add one or more semantic tags using the default label, empty synonyms and descriptions.</p>
@@ -3973,8 +4007,9 @@ and if none of those are found, looks for a <a href="https://www.openhab.org/jav
       
       
         &mdash;
-        <div class='inline'><p>Exactly one pair of <code>tag</code> =&gt; <code>parent</code> where tag is either a Symbol or a String
-for the tag to be added, and parent is either a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Tag">Tag</a>, a symbol or a string of an existing tag.</p>
+        <div class='inline'><p>Pairs of <code>tag</code> =&gt; <code>parent</code> where tag is either a <code>Symbol</code> or a <code>String</code>
+for the tag to be added, and parent is either a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>, a <code>Symbol</code> or a <code>String</code> of an
+existing tag.</p>
 </div>
       
     </li>
@@ -3987,7 +4022,7 @@ for the tag to be added, and parent is either a <a href="https://www.openhab.org
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Tag">Tag</a>&gt;</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>&gt;</tt>)</span>
       
       
       
@@ -4004,7 +4039,7 @@ for the tag to be added, and parent is either a <a href="https://www.openhab.org
     
       
       <li class="overload_item">
-        <span class="signature">.<strong>self.add</strong>(label: nil, synonyms: &quot;&quot;, description: &quot;&quot;, **tags)  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Tag">Tag</a>&gt;</tt> </span>
+        <span class="signature">.<strong>add</strong>(label: nil, synonyms: &quot;&quot;, description: &quot;&quot;, **tags)  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>&gt;</tt> </span>
         <div class="docstring">
   <div class="discussion">
     <p>Add a custom semantic tag with extra details.</p>
@@ -4037,7 +4072,7 @@ for the tag to be added, and parent is either a <a href="https://www.openhab.org
       
       
         &mdash;
-        <div class='inline'><p>Optional label. When nil, infer the label from the tag name,
+        <div class='inline'><p>Optional label. When <code>nil</code>, infer the label from the tag name,
 converting <code>CamelCase</code> to <code>Camel Case</code></p>
 </div>
       
@@ -4048,15 +4083,14 @@ converting <code>CamelCase</code> to <code>Camel Case</code></p>
         <span class='name'>synonyms</span>
       
       
-        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String,<span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt>)</span>
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String,<span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>&quot;&quot;</tt>)</em>
       
       
         &mdash;
-        <div class='inline'><p>An array of synonyms, or a string containing a
-comma separated list of synonyms for this tag.</p>
+        <div class='inline'><p>Additional synonyms to refer to this tag.</p>
 </div>
       
     </li>
@@ -4088,8 +4122,9 @@ comma separated list of synonyms for this tag.</p>
       
       
         &mdash;
-        <div class='inline'><p>Exactly one pair of <code>tag</code> =&gt; <code>parent</code> where tag is either a Symbol or a String
-for the tag to be added, and parent is either a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Tag">Tag</a>, a symbol or a string of an existing tag.</p>
+        <div class='inline'><p>Exactly one pair of <code>tag</code> =&gt; <code>parent</code> where tag is either a <code>Symbol</code> or a
+<code>String</code> for the tag to be added, and parent is either a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>, a <code>Symbol</code> or a
+<code>String</code> of an existing tag.</p>
 </div>
       
     </li>
@@ -4102,7 +4137,7 @@ for the tag to be added, and parent is either a <a href="https://www.openhab.org
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Tag">Tag</a>&gt;</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>&gt;</tt>)</span>
       
       
       
@@ -4125,12 +4160,40 @@ for the tag to be added, and parent is either a <a href="https://www.openhab.org
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Tag">Tag</a>&gt;</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>&gt;</tt>)</span>
       
       
       
         &mdash;
         <div class='inline'><p>An array of tags successfully added.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.0</p>
 </div>
       
     </li>
@@ -4143,40 +4206,64 @@ for the tag to be added, and parent is either a <a href="https://www.openhab.org
       <pre class="lines">
 
 
-436
-437
-438
-439
-440
-441
-442
-443
-444
-445
-446
-447
-448
-449
-450
-451</pre>
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 436</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 303</span>
 
-<span class="keyword">def</span> <span class="predefined-constant">self</span>.<span class="function">add</span>(<span class="key">label</span>: <span class="predefined-constant">nil</span>, <span class="key">synonyms</span>: <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>, <span class="key">description</span>: <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>, **tags)
-  raise <span class="string"><span class="delimiter">&quot;</span><span class="content">Tags must be specified</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> tags.empty?
+<span class="keyword">def</span> <span class="function">add</span>(<span class="key">label</span>: <span class="predefined-constant">nil</span>, <span class="key">synonyms</span>: <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>, <span class="key">description</span>: <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>, **tags)
+  raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Tags must be specified</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> tags.empty?
   <span class="keyword">if</span> (tags.length &gt; <span class="integer">1</span>) &amp;&amp; !(label.nil? &amp;&amp; synonyms.empty? &amp;&amp; description.empty?)
-    raise <span class="string"><span class="delimiter">&quot;</span><span class="content">Additional options can only be specified when creating one tag</span><span class="delimiter">&quot;</span></span>
+    raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Additional options can only be specified when creating one tag</span><span class="delimiter">&quot;</span></span>
   <span class="keyword">end</span>
 
-  synonyms = synonyms.map(&amp;<span class="symbol">:to_s</span>).map(&amp;<span class="symbol">:strip</span>).join(<span class="string"><span class="delimiter">&quot;</span><span class="content">,</span><span class="delimiter">&quot;</span></span>) <span class="keyword">if</span> synonyms.is_a?(<span class="constant">Array</span>)
+  synonyms = <span class="constant">Array</span>.wrap(synonyms).map(&amp;<span class="symbol">:to_s</span>).map(&amp;<span class="symbol">:strip</span>)
 
   tags.map <span class="keyword">do</span> |name, parent|
-    parent_is_tag = parent.respond_to?(<span class="symbol">:java_class</span>) &amp;&amp; parent.java_class &lt; <span class="constant">Tag</span>.java_class
-    parent = parent_is_tag ? parent.java_class : parent.to_s
-    name = name.to_s
-    org.openhab.core.semantics.SemanticTags.add(name, parent, label, synonyms, description)
-                                          &amp;.<span class="keyword">then</span> { const_missing(name) }
+    <span class="comment"># @deprecated OH4.0.0.M4 missing registry</span>
+    <span class="keyword">if</span> <span class="constant">Provider</span>.registry
+      parent = lookup(parent) <span class="keyword">unless</span> parent.is_a?(<span class="constant">SemanticTag</span>)
+      <span class="keyword">next</span> <span class="keyword">if</span> lookup(name)
+      <span class="keyword">next</span> <span class="keyword">unless</span> parent
+
+      new_tag = org.openhab.core.semantics.SemanticTagImpl.new(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>parent.uid<span class="inline-delimiter">}</span></span><span class="content">_</span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>, label, description,
+                                                               synonyms)
+      <span class="constant">Provider</span>.instance.add(new_tag)
+      lookup(name)
+    <span class="keyword">else</span>
+      parent_is_tag = parent.respond_to?(<span class="symbol">:java_class</span>) &amp;&amp; parent.java_class &lt; <span class="constant">Tag</span>.java_class
+      parent = parent_is_tag ? parent.java_class : parent.to_s
+      org.openhab.core.semantics.SemanticTags
+         .add(name.to_s, parent, label, synonyms.join(<span class="string"><span class="delimiter">&quot;</span><span class="content">,</span><span class="delimiter">&quot;</span></span>), description)
+        &amp;.<span class="keyword">then</span> { lookup(name) }
+    <span class="keyword">end</span>
   <span class="keyword">end</span>.compact
 <span class="keyword">end</span></pre>
     </td>
@@ -4187,7 +4274,7 @@ for the tag to be added, and parent is either a <a href="https://www.openhab.org
       <div class="method_details ">
   <h3 class="signature " id="lookup-class_method">
   
-    .<strong>lookup</strong>(id, locale = nil)  &#x21d2; <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Tag">Tag</a></tt><sup>?</sup> 
+    .<strong>lookup</strong>(id, locale = java.util.Locale.default)  &#x21d2; <tt><span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span></tt>, ... 
   
 
   
@@ -4195,7 +4282,7 @@ for the tag to be added, and parent is either a <a href="https://www.openhab.org
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Finds the semantic tag using its name, label, or synonyms.</p>
+    <p>Finds a semantic tag using its name, label, or synonyms.</p>
 
 
   </div>
@@ -4227,7 +4314,7 @@ for the tag to be added, and parent is either a <a href="https://www.openhab.org
         <span class='type'>(<tt><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Locale.html" target="_parent" title="java.util.Locale">java.util.Locale</a></tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
+        <em class="default">(defaults to: <tt>java.util.Locale.default</tt>)</em>
       
       
         &mdash;
@@ -4244,12 +4331,14 @@ for the tag to be added, and parent is either a <a href="https://www.openhab.org
     <li>
       
       
-        <span class='type'>(<tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Tag">Tag</a></tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span></tt>, <tt><span class='object_link'><a href="../../../Module.html" title="Module (class)">Module</a></span></tt>, <tt>nil</tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><p>The semantic tag class if found, or nil if not found.</p>
+        <div class='inline'><p>The semantic tag class if found, or nil if not found.
+In openHAB 4.0, a SemanticTag instance will be returned. In openHAB 3.4, it will be
+a Module.</p>
 </div>
       
     </li>
@@ -4262,23 +4351,63 @@ for the tag to be added, and parent is either a <a href="https://www.openhab.org
       <pre class="lines">
 
 
-476
-477
-478
-479
-480
-481
-482</pre>
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 476</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 222</span>
 
-<span class="keyword">def</span> <span class="predefined-constant">self</span>.<span class="function">lookup</span>(id, locale = <span class="predefined-constant">nil</span>)
-  id = id.to_sym
-  <span class="keyword">return</span> const_get(id) <span class="keyword">if</span> constants.include?(id) || const_missing(id)
+<span class="keyword">def</span> <span class="function">lookup</span>(id, locale = java.util.Locale.default)
+  id = id.to_s
 
-  locale = java.util.Locale.default <span class="keyword">if</span> locale.nil?
-  org.openhab.core.semantics.SemanticTags.get_by_label_or_synonym(id.to_s, locale).first&amp;.ruby_class
+  <span class="comment"># @deprecated OH3.4 - the Property tag had an ID of &quot;MeasurementProperty&quot; in OH3.4.</span>
+  <span class="comment"># This was corrected in OH4.</span>
+  <span class="comment"># Make sure we compare against pre-release versions</span>
+  <span class="keyword">if</span> id == <span class="string"><span class="delimiter">&quot;</span><span class="content">Property</span><span class="delimiter">&quot;</span></span> &amp;&amp; <span class="constant">Gem</span>::<span class="constant">Version</span>.new(<span class="constant">Core</span>::<span class="constant">VERSION</span>) &lt; <span class="constant">Gem</span>::<span class="constant">Version</span>.new(<span class="string"><span class="delimiter">&quot;</span><span class="content">4.0.0.M1</span><span class="delimiter">&quot;</span></span>)
+    id = <span class="string"><span class="delimiter">&quot;</span><span class="content">MeasurementProperty</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
+
+  <span class="comment"># @deprecated OH3.4 missing registry</span>
+  <span class="keyword">if</span> <span class="constant">Provider</span>.registry
+    tag_class = service.get_by_label_or_synonym(id, locale).first ||
+                <span class="constant">Provider</span>.registry.get_tag_class_by_id(id)
+    <span class="keyword">return</span> <span class="keyword">unless</span> tag_class
+
+    <span class="constant">Provider</span>.registry.get(<span class="constant">Provider</span>.registry.class.build_id(tag_class))
+  <span class="keyword">else</span>
+    tag = org.openhab.core.semantics.SemanticTags.get_by_label_or_synonym(id, locale).first ||
+          org.openhab.core.semantics.SemanticTags.get_by_id(id)
+    <span class="keyword">return</span> <span class="keyword">unless</span> tag
+
+    tag = tag.ruby_class
+    tag.singleton_class.include(<span class="constant">TagClassMethods</span>)
+    tag
+  <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4288,7 +4417,7 @@ for the tag to be added, and parent is either a <a href="https://www.openhab.org
       <div class="method_details ">
   <h3 class="signature " id="tags-class_method">
   
-    .<strong>tags</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Tag">Tag</a>&gt;</tt> 
+    .<strong>tags</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>&gt;</tt> 
   
 
   
@@ -4309,7 +4438,7 @@ for the tag to be added, and parent is either a <a href="https://www.openhab.org
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Tag">Tag</a>&gt;</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>&gt;</tt>)</span>
       
       
       
@@ -4327,25 +4456,33 @@ for the tag to be added, and parent is either a <a href="https://www.openhab.org
       <pre class="lines">
 
 
-459
-460
-461
-462
-463
-464
-465
-466</pre>
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 459</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 199</span>
 
-<span class="keyword">def</span> <span class="predefined-constant">self</span>.<span class="function">tags</span>
-  java.util.stream.Stream.of(
-    org.openhab.core.semantics.model.point.Points.stream,
-    org.openhab.core.semantics.model.property.Properties.stream,
-    org.openhab.core.semantics.model.equipment.Equipments.stream,
-    org.openhab.core.semantics.model.location.Locations.stream
-  ).flat_map(&amp;<span class="symbol">:itself</span>).map(&amp;<span class="symbol">:ruby_class</span>).iterator.to_a
+<span class="keyword">def</span> <span class="function">tags</span>
+  <span class="keyword">if</span> <span class="constant">Provider</span>.registry
+    <span class="constant">Provider</span>.registry.all.to_a
+  <span class="keyword">else</span>
+    java.util.stream.Stream.of(
+      org.openhab.core.semantics.model.point.Points.stream,
+      org.openhab.core.semantics.model.property.Properties.stream,
+      org.openhab.core.semantics.model.equipment.Equipments.stream,
+      org.openhab.core.semantics.model.location.Locations.stream
+    ).flat_map(&amp;<span class="symbol">:itself</span>).map(&amp;<span class="symbol">:ruby_class</span>).iterator.to_a
+  <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4369,9 +4506,9 @@ for the tag to be added, and parent is either a <a href="https://www.openhab.org
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Checks if this Item is an <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Equipment.html" target="_parent" title="Equipment">Equipment</a></p>
+    <p>Checks if this Item is an <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Equipment</a></span></p>
 <p>This is implemented as checking if the item's <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span>
-is an <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Equipment.html" target="_parent" title="Equipment">Equipment</a>. I.e. an Item has a single <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span>.</p>
+is an <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Equipment</a></span>. I.e. an Item has a single <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span>.</p>
 
 
   </div>
@@ -4398,12 +4535,12 @@ is an <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics
       <pre class="lines">
 
 
-248
-249
-250</pre>
+408
+409
+410</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 248</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 408</span>
 
 <span class="keyword">def</span> <span class="function">equipment?</span>
   <span class="constant">Actions</span>::<span class="constant">Semantics</span>.equipment?(<span class="predefined-constant">self</span>)
@@ -4424,9 +4561,9 @@ is an <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Checks if this Item is a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Location.html" target="_parent" title="Location">Location</a></p>
+    <p>Checks if this Item is a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Location</a></span></p>
 <p>This is implemented as checking if the item's <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span>
-is a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Location.html" target="_parent" title="Location">Location</a>. I.e. an Item has a single <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span>.</p>
+is a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Location</a></span>. I.e. an Item has a single <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span>.</p>
 
 
   </div>
@@ -4453,12 +4590,12 @@ is a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/
       <pre class="lines">
 
 
-236
-237
-238</pre>
+396
+397
+398</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 236</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 396</span>
 
 <span class="keyword">def</span> <span class="function">location?</span>
   <span class="constant">Actions</span>::<span class="constant">Semantics</span>.location?(<span class="predefined-constant">self</span>)
@@ -4479,9 +4616,9 @@ is a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Checks if this Item is a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Point.html" target="_parent" title="Point">Point</a></p>
+    <p>Checks if this Item is a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Point</a></span></p>
 <p>This is implemented as checking if the item's <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span>
-is a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Point.html" target="_parent" title="Point">Point</a>. I.e. an Item has a single <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span>.</p>
+is a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Point</a></span>. I.e. an Item has a single <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span>.</p>
 
 
   </div>
@@ -4508,12 +4645,12 @@ is a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/
       <pre class="lines">
 
 
-259
-260
-261</pre>
+419
+420
+421</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 259</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 419</span>
 
 <span class="keyword">def</span> <span class="function">point?</span>
   <span class="constant">Actions</span>::<span class="constant">Semantics</span>.point?(<span class="predefined-constant">self</span>)
@@ -4588,12 +4725,12 @@ is a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/
         <span class='name'>point_or_property_types</span>
       
       
-        <span class='type'>(<tt>Class</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span></tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><p>Pass 1 or 2 classes that are sub-classes of <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Point.html" target="_parent" title="Point">Point</a> or <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Property.html" target="_parent" title="Property">Property</a>.
+        <div class='inline'><p>Pass 1 or 2 classes that are sub-classes of <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Point</a></span> or <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Property</a></span>.
 Note that when comparing against semantic tags, it does a sub-class check.
 So if you search for [Control], you'll get items tagged with [Switch].</p>
 </div>
@@ -4622,17 +4759,17 @@ So if you search for [Control], you'll get items tagged with [Switch].</p>
       <pre class="lines">
 
 
-388
-389
-390
-391
-392
-393
-394
-395</pre>
+548
+549
+550
+551
+552
+553
+554
+555</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 388</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 548</span>
 
 <span class="keyword">def</span> <span class="function">points</span>(*point_or_property_types)
   <span class="keyword">return</span> members.points(*point_or_property_types) <span class="keyword">if</span> equipment? || location?
@@ -4685,12 +4822,12 @@ So if you search for [Control], you'll get items tagged with [Switch].</p>
       <pre class="lines">
 
 
-268
-269
-270</pre>
+428
+429
+430</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 268</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 428</span>
 
 <span class="keyword">def</span> <span class="function">semantic?</span>
   !!semantic_type
@@ -4705,7 +4842,7 @@ So if you search for [Control], you'll get items tagged with [Switch].</p>
 </div>
 
         <footer>
-  Generated on Mon Jul 17 23:27:23 2023 by
+  Generated on Sun Jul 23 01:24:14 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
