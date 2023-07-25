@@ -311,25 +311,16 @@ module OpenHAB
               synonyms = Array.wrap(synonyms).map { |s| s.to_s.strip }
 
               tags.map do |name, parent|
-                # @deprecated OH4.0.0.M4 missing registry
-                if Provider.registry
-                  parent = lookup(parent) unless parent.is_a?(SemanticTag)
-                  next if lookup(name)
-                  next unless parent
+                parent = lookup(parent) unless parent.is_a?(SemanticTag)
+                next if lookup(name)
+                next unless parent
 
-                  new_tag = org.openhab.core.semantics.SemanticTagImpl.new("#{parent.uid}_#{name}",
-                                                                           label,
-                                                                           description,
-                                                                           synonyms)
-                  Provider.instance.add(new_tag)
-                  lookup(name)
-                else
-                  parent_is_tag = parent.respond_to?(:java_class) && parent.java_class < Tag.java_class
-                  parent = parent_is_tag ? parent.java_class : parent.to_s
-                  org.openhab.core.semantics.SemanticTags
-                     .add(name.to_s, parent, label, synonyms.join(","), description)
-                    &.then { lookup(name) }
-                end
+                new_tag = org.openhab.core.semantics.SemanticTagImpl.new("#{parent.uid}_#{name}",
+                                                                         label,
+                                                                         description,
+                                                                         synonyms)
+                Provider.instance.add(new_tag)
+                lookup(name)
               end.compact
             end
           end
