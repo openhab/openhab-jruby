@@ -70,7 +70,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'ci skip')"
     outputs:
       openhab_matrix: |
-        ["3.4.3", "4.0.0.RC1", "4.0.0-SNAPSHOT"]
+        ["3.4.3", "4.0.0"]
       snapshot_date: |
         ${{ steps.snapshot-date.outputs.SNAPSHOT_DATE }}
     steps:
@@ -128,9 +128,7 @@ jobs:
         openhab_version: ${{ fromJson(needs.openhab-matrix.outputs.openhab_matrix) }}
         jruby_version: ["jruby-9.3.10.0", "jruby-9.4.3.0"]
         exclude:
-          - openhab_version: 4.0.0.RC1
-            jruby_version: jruby-9.3.10.0
-          - openhab_version: 4.0.0-SNAPSHOT
+          - openhab_version: 4.0.0
             jruby_version: jruby-9.3.10.0
     steps:
       - uses: actions/checkout@v3
