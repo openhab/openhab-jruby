@@ -21,137 +21,82 @@ module OpenHAB
             @factory ||= OSGi.service("org.openhab.core.service.WatchServiceFactory")
           end
 
-          # Due to the refactoring in OH4, we need a different watcher implementation
-          if WatchHandler.factory
-            # A class that implements openHAB4's WatchEventListener
-            # and also creates and removes a unique WatchService for each instance
-            class Watcher
-              # Use full java class name here to satisfy YARD linter
-              include org.openhab.core.service.WatchService::WatchEventListener
-              java_import org.openhab.core.service.WatchService
+          # A class that implements openHAB4's WatchEventListener
+          # and also creates and removes a unique WatchService for each instance
+          class Watcher
+            # Use full java class name here to satisfy YARD linter
+            include org.openhab.core.service.WatchService::WatchEventListener
+            java_import org.openhab.core.service.WatchService
 
-              # Hash of event symbols as strings to map to WatchService events
-              STRING_TO_EVENT = {
-                created: WatchService::Kind::CREATE,
-                deleted: WatchService::Kind::DELETE,
-                modified: WatchService::Kind::MODIFY
-              }.transform_keys(&:to_s).freeze
+            # Hash of event symbols as strings to map to WatchService events
+            STRING_TO_EVENT = {
+              created: WatchService::Kind::CREATE,
+              deleted: WatchService::Kind::DELETE,
+              modified: WatchService::Kind::MODIFY
+            }.transform_keys(&:to_s).freeze
 
-              # Hash of WatchService event kinds to ruby symbols
-              EVENT_TO_SYMBOL = STRING_TO_EVENT.invert.transform_values(&:to_sym).freeze
+            # Hash of WatchService event kinds to ruby symbols
+            EVENT_TO_SYMBOL = STRING_TO_EVENT.invert.transform_values(&:to_sym).freeze
 
-              # constructor
-              def initialize(path, subdirs, types, &block)
-                @types = types.map { |type| STRING_TO_EVENT[type] }
-                @block = block
-                @subdirs = subdirs
-                @path = Pathname.new(path)
-                return if path.to_s.start_with?(OpenHAB::Core.config_folder.to_s)
+            # constructor
+            def initialize(path, subdirs, types, &block)
+              @types = types.map { |type| STRING_TO_EVENT[type] }
+              @block = block
+              @subdirs = subdirs
+              @path = Pathname.new(path)
+              return if path.to_s.start_with?(OpenHAB::Core.config_folder.to_s)
 
-                @custom_watcher = "jrubyscripting-#{SecureRandom.uuid}"
-              end
-
-              # Creates a new Watch Service and registers ourself as a listener
-              # This isn't an OSGi service, but it's called by {WatchTriggerHandler} below.
-              def activate
-                java_path = java.nio.file.Path.of(@path.to_s)
-
-                service_name = WatchService::SERVICE_PID
-                filter = if @custom_watcher
-                           WatchHandler.factory.create_watch_service(@custom_watcher, java_path)
-                           logger.trace { "Created a watch service #{@custom_watcher} for #{@path}" }
-                           "(name=#{@custom_watcher})"
-                         else
-                           logger.trace { "Using configWatcher service for #{@path}" }
-                           WatchService::CONFIG_WATCHER_FILTER
-                         end
-
-                start = Time.now
-                sleep 0.1 until (@watch_service = OSGi.service(service_name, filter: filter)) || Time.now - start > 2
-
-                unless @watch_service
-                  logger.warn("Watch service is not ready in time. #{@path} will not be monitored!")
-                  return
-                end
-
-                @watch_service.register_listener(self, java_path, @subdirs)
-                logger.trace { "Registered watch service listener for #{@path} including subdirs: #{@subdirs}" }
-              end
-
-              # Unregister ourself as a listener and remove the watch service
-              def deactivate
-                @watch_service&.unregister_listener(self)
-                return unless @custom_watcher
-
-                WatchHandler.factory.remove_watch_service(@custom_watcher)
-                logger.trace { "Removed watch service #{@custom_watcher} for #{@path}" }
-              end
-
-              # Invoked by the WatchService when a watch event occurs
-              # @param [org.openhab.core.service.WatchService.Kind] kind WatchService event kind
-              # @param [java.nio.file.Path] path The path that had an event
-              def processWatchEvent(kind, path) # rubocop:disable Naming/MethodName
-                logger.trace { "processWatchEvent triggered #{path} #{kind} #{@types}" }
-                return unless @types.include?(kind)
-
-                # OH4 WatchService feeds us a relative path,
-                # but just in case its implementation changes in the future
-                path = path.absolute? ? Pathname.new(path.to_s) : @path + path.to_s
-                @block.call(Events::WatchEvent.new(EVENT_TO_SYMBOL[kind], path))
-              end
+              @custom_watcher = "jrubyscripting-#{SecureRandom.uuid}"
             end
-          else
-            # @deprecated OH3.4
-            #
-            # Extends the openHAB3 watch service to watch directories
-            #
-            # Must match java method name style
-            # rubocop:disable Naming/MethodName
-            class Watcher < org.openhab.core.service.AbstractWatchService
-              java_import java.nio.file.StandardWatchEventKinds
 
-              # Hash of event symbols as strings to map to NIO events
-              STRING_TO_EVENT = {
-                created: StandardWatchEventKinds::ENTRY_CREATE,
-                deleted: StandardWatchEventKinds::ENTRY_DELETE,
-                modified: StandardWatchEventKinds::ENTRY_MODIFY
-              }.transform_keys(&:to_s).freeze
+            # Creates a new Watch Service and registers ourself as a listener
+            # This isn't an OSGi service, but it's called by {WatchTriggerHandler} below.
+            def activate
+              java_path = java.nio.file.Path.of(@path.to_s)
 
-              # Hash of NIO event kinds to ruby symbols
-              EVENT_TO_SYMBOL = STRING_TO_EVENT.invert.transform_values(&:to_sym).freeze
+              service_name = WatchService::SERVICE_PID
+              filter = if @custom_watcher
+                         WatchHandler.factory.create_watch_service(@custom_watcher, java_path)
+                         logger.trace { "Created a watch service #{@custom_watcher} for #{@path}" }
+                         "(name=#{@custom_watcher})"
+                       else
+                         logger.trace { "Using configWatcher service for #{@path}" }
+                         WatchService::CONFIG_WATCHER_FILTER
+                       end
 
-              # Creates a new Watch Service
-              def initialize(path, subdirs, types, &block)
-                super(path)
-                @types = types.map { |type| STRING_TO_EVENT[type] }
-                @block = block
-                @subdirs = subdirs
+              start = Time.now
+              sleep 0.1 until (@watch_service = OSGi.service(service_name, filter: filter)) || Time.now - start > 2
+
+              unless @watch_service
+                logger.warn("Watch service is not ready in time. #{@path} will not be monitored!")
+                return
               end
 
-              # Invoked by java super class to get type of events to watch for
-              # @param [String] _path ignored
-              #
-              # @return [Array] array of NIO event kinds
-              def getWatchEventKinds(_path)
-                @types
-              end
-
-              # Invoked by java super class to check if sub directories should be watched
-              # @return [false] false
-              def watchSubDirectories
-                logger.trace("watchSubDirectories returning #{@subdirs}")
-                @subdirs
-              end
-
-              # Invoked by java super class when a watch event occurs
-              # @param [String] _event ignored
-              # @param [StandardWatchEventKind] kind NIO watch event kind
-              # @param [java.nio.file.Path] path that had an event
-              def processWatchEvent(_event, kind, path)
-                @block.call(Events::WatchEvent.new(EVENT_TO_SYMBOL[kind], Pathname.new(path.to_s)))
-              end
+              @watch_service.register_listener(self, java_path, @subdirs)
+              logger.trace { "Registered watch service listener for #{@path} including subdirs: #{@subdirs}" }
             end
-            # rubocop:enable Naming/MethodName
+
+            # Unregister ourself as a listener and remove the watch service
+            def deactivate
+              @watch_service&.unregister_listener(self)
+              return unless @custom_watcher
+
+              WatchHandler.factory.remove_watch_service(@custom_watcher)
+              logger.trace { "Removed watch service #{@custom_watcher} for #{@path}" }
+            end
+
+            # Invoked by the WatchService when a watch event occurs
+            # @param [org.openhab.core.service.WatchService.Kind] kind WatchService event kind
+            # @param [java.nio.file.Path] path The path that had an event
+            def processWatchEvent(kind, path) # rubocop:disable Naming/MethodName
+              logger.trace { "processWatchEvent triggered #{path} #{kind} #{@types}" }
+              return unless @types.include?(kind)
+
+              # OH4 WatchService feeds us a relative path,
+              # but just in case its implementation changes in the future
+              path = path.absolute? ? Pathname.new(path.to_s) : @path + path.to_s
+              @block.call(Events::WatchEvent.new(EVENT_TO_SYMBOL[kind], path))
+            end
           end
 
           # Implements the openHAB TriggerHandler interface to process Watch Triggers

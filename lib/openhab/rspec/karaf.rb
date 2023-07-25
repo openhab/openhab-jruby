@@ -378,14 +378,8 @@ module OpenHAB
           ttp.class.field_reader :thingTypeTracker
           @thing_type_tracker = ttp.thingTypeTracker
           @thing_type_tracker.class.field_reader :openState
-          begin
-            org.openhab.core.config.core.xml.osgi.XmlDocumentBundleTracker::OpenState.field_reader :OPENED
-            opened = org.openhab.core.config.core.xml.osgi.XmlDocumentBundleTracker::OpenState.OPENED
-          rescue NameError
-            # @deprecated OH3.4
-            org.openhab.core.config.xml.osgi.XmlDocumentBundleTracker::OpenState.field_reader :OPENED
-            opened = org.openhab.core.config.xml.osgi.XmlDocumentBundleTracker::OpenState.OPENED
-          end
+          org.openhab.core.config.core.xml.osgi.XmlDocumentBundleTracker::OpenState.field_reader :OPENED
+          opened = org.openhab.core.config.core.xml.osgi.XmlDocumentBundleTracker::OpenState.OPENED
           sleep until @thing_type_tracker.openState == opened
           @bundle_context.bundles.each do |bundle|
             @thing_type_tracker.adding_bundle(bundle, nil)
@@ -396,14 +390,8 @@ module OpenHAB
           cdp.class.field_reader :configDescriptionTracker
           @config_description_tracker = cdp.configDescriptionTracker
           @config_description_tracker.class.field_reader :openState
-          begin
-            org.openhab.core.config.core.xml.osgi.XmlDocumentBundleTracker::OpenState.field_reader :OPENED
-            opened = org.openhab.core.config.core.xml.osgi.XmlDocumentBundleTracker::OpenState.OPENED
-          rescue NameError
-            # @deprecated OH3.4
-            org.openhab.core.config.xml.osgi.XmlDocumentBundleTracker::OpenState.field_reader :OPENED
-            opened = org.openhab.core.config.xml.osgi.XmlDocumentBundleTracker::OpenState.OPENED
-          end
+          org.openhab.core.config.core.xml.osgi.XmlDocumentBundleTracker::OpenState.field_reader :OPENED
+          opened = org.openhab.core.config.core.xml.osgi.XmlDocumentBundleTracker::OpenState.OPENED
           sleep until @config_description_tracker.openState == opened
           @bundle_context.bundles.each do |bundle|
             @config_description_tracker.adding_bundle(bundle, nil)
@@ -453,16 +441,6 @@ module OpenHAB
             )
 
             wait_for_service("org.openhab.core.thing.ThingManager") do |tm|
-              begin
-                # @deprecated OH3.4
-                tm.class.field_accessor :bundleResolver
-                tm.bundleResolver = Mocks::BundleResolver.instance
-              rescue NameError
-                # OH4
-                # I think the mock BundleResolver registration above is sufficient.
-                # It will be injected by OSGi and we don't need to override it again in OH4
-              end
-
               require_relative "mocks/safe_caller"
               field = tm.class.java_class.declared_field :safeCaller
               field.accessible = true

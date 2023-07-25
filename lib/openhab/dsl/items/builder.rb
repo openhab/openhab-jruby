@@ -222,17 +222,11 @@ module OpenHAB
           #
           # @!visibility private
           def normalize_tags(*tags)
-            # @deprecated OH3.4 didn't have SemanticTag
-            old_semantics = proc { |tag| tag.is_a?(Module) && tag < Semantics::Tag }
-            # @deprecated OH3.4 defined? check is unnecessary
-            semantics = proc { |tag| defined?(Semantics::SemanticTag) && tag.is_a?(Semantics::SemanticTag) }
-
             tags.compact.map do |tag|
               case tag
               when String then tag
               when Symbol then tag.to_s
-              when old_semantics then tag.java_class.simple_name
-              when semantics then tag.name
+              when Semantics::SemanticTag then tag.name
               else raise ArgumentError, "`#{tag}` must be a subclass of Semantics::Tag, a `Symbol`, or a `String`."
               end
             end
@@ -476,11 +470,7 @@ module OpenHAB
           self.dimension ||= unit && org.openhab.core.types.util.UnitUtils.parse_unit(unit)&.then do |u|
             org.openhab.core.types.util.UnitUtils.get_dimension_name(u)
           end
-          self.format ||= unit && (if Gem::Version.new(Core::VERSION) >= Gem::Version.new("4.0.0.M3")
-                                     "%s %unit%"
-                                   else
-                                     "%s #{unit.gsub("%", "%%")}"
-                                   end)
+          self.format ||= unit && "%s %unit%"
         end
 
         # @!attribute [w] state

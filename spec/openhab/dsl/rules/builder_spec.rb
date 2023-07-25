@@ -1208,16 +1208,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
 
           logger.trace("Creating directory: #{created_subdir}")
 
-          # We need to create the dir one by one instead of using FileUtils.mkdir_p.
-          # OH3 will only watch the first level subdir otherwise
-          # see https://github.com/openhab/openhab-core/pull/3435
-          # @deprecated OH3.4 - on OH4 this can be replaced with `FileUtils.mkdir_p(created_subdir)`
-          created_subdir.descend do |dir|
-            next if dir.directory?
-
-            FileUtils.mkdir(dir)
-            sleep 0.1 # @deprecated OH3.4 let OH3's thread run so it can add this directory
-          end
+          FileUtils.mkdir_p(created_subdir)
           expect(filename.dirname).to be_directory
           logger.trace("Directory created: #{created_subdir}")
         else
@@ -1340,13 +1331,9 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           test_it(test_file, check: %i[modified created], watch_args: [@temp_dir, { for: %i[modified created] }])
         end
 
-        # @deprecated OH3.4 remove this wrapper
-        if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0.M1")
-          # do not remove this test in OH4
-          it "uses the built in configWatcher to monitor inside openHAB config folder" do
-            expect(OpenHAB::DSL::Rules::Triggers::WatchHandler.factory).not_to receive(:create_watch_service)
-            test_it(config_folder / "scripts" / test_file, watch_args: [config_folder / "scripts"])
-          end
+        it "uses the built in configWatcher to monitor inside openHAB config folder" do
+          expect(OpenHAB::DSL::Rules::Triggers::WatchHandler.factory).not_to receive(:create_watch_service)
+          test_it(config_folder / "scripts" / test_file, watch_args: [config_folder / "scripts"])
         end
 
         it "doesn't monitor changes inside subdirectories" do

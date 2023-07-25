@@ -1558,10 +1558,7 @@ module OpenHAB
         #
         def event(topic, source: nil, types: nil, attach: nil)
           types = types.join(",") if types.is_a?(Enumerable)
-          # @deprecated OH3.4 - OH3 config uses eventXXX vs OH4 uses `topic`, `source`, and `types`
-          # See https://github.com/openhab/openhab-core/pull/3299
           trigger("core.GenericEventTrigger",
-                  eventTopic: topic, eventSource: source, eventTypes: types, # @deprecated OH3.4
                   topic: topic, source: source, types: types,
                   attach: attach)
         end

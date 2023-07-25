@@ -272,84 +272,82 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
     end
   end
 
-  if Semantics.respond_to?(:add) # @deprecated OH3.4 - if guard only needed with OH3.4
-    describe "#add" do
-      it "works" do
-        Semantics.add(SecretRoom: Semantics::Room)
-        expect(Semantics::SecretRoom < Semantics::Room).to be true
+  describe "#add" do
+    it "works" do
+      Semantics.add(SecretRoom: Semantics::Room)
+      expect(Semantics::SecretRoom < Semantics::Room).to be true
 
-        Semantics.add(SecretEquipment: Semantics::Equipment)
-        expect(Semantics::SecretEquipment < Semantics::Equipment).to be true
+      Semantics.add(SecretEquipment: Semantics::Equipment)
+      expect(Semantics::SecretEquipment < Semantics::Equipment).to be true
 
-        Semantics.add(SecretPoint: Semantics::Point)
-        expect(Semantics::SecretPoint < Semantics::Point).to be true
+      Semantics.add(SecretPoint: Semantics::Point)
+      expect(Semantics::SecretPoint < Semantics::Point).to be true
 
-        items.build do
-          group_item TestLoc, tag: Semantics::SecretRoom do
-            group_item TestEquip, tag: Semantics::SecretEquipment do
-              number_item TestItem, tag: Semantics::SecretPoint
-            end
+      items.build do
+        group_item TestLoc, tag: Semantics::SecretRoom do
+          group_item TestEquip, tag: Semantics::SecretEquipment do
+            number_item TestItem, tag: Semantics::SecretPoint
           end
         end
-
-        expect(TestItem.point?).to be true
-        expect(TestEquip.equipment?).to be true
-        expect(TestLoc.location?).to be true
-        expect(TestItem.location).to be TestLoc
-        expect(TestItem.equipment).to be TestEquip
-        expect(TestEquip.location).to be TestLoc
       end
 
-      it "supports tag name as string" do
-        Semantics.add("StringTag" => Semantics::Equipment)
-        expect(Semantics::StringTag < Semantics::Equipment).to be true
-      end
+      expect(TestItem.point?).to be true
+      expect(TestEquip.equipment?).to be true
+      expect(TestLoc.location?).to be true
+      expect(TestItem.location).to be TestLoc
+      expect(TestItem.equipment).to be TestEquip
+      expect(TestEquip.location).to be TestLoc
+    end
 
-      it "supports parent name as string" do
-        Semantics.add(StringParent: "Equipment")
-        expect(Semantics::StringParent < Semantics::Equipment).to be true
-      end
+    it "supports tag name as string" do
+      Semantics.add("StringTag" => Semantics::Equipment)
+      expect(Semantics::StringTag < Semantics::Equipment).to be true
+    end
 
-      it "supports parent name as symbol" do
-        Semantics.add(SymParent: :Equipment)
-        expect(Semantics::SymParent < Semantics::Equipment).to be true
-      end
+    it "supports parent name as string" do
+      Semantics.add(StringParent: "Equipment")
+      expect(Semantics::StringParent < Semantics::Equipment).to be true
+    end
 
-      it "supports creating multiple tags" do
-        to_create = %i[Room1 Room2 Room3]
-        expect(Semantics.add(**to_create.to_h { |tag| [tag, Semantics::Room] }))
-          .to match_array([Semantics::Room1, Semantics::Room2, Semantics::Room3])
-        expect(Semantics.constants).to include(*to_create)
-      end
+    it "supports parent name as symbol" do
+      Semantics.add(SymParent: :Equipment)
+      expect(Semantics::SymParent < Semantics::Equipment).to be true
+    end
 
-      it "doesn't create a tag with an invalid parent" do
-        expect(Semantics.add(InvalidParentTag: :Blah)).to be_empty
-        expect(Semantics.constants).not_to include(:InvalidParentTag)
-      end
+    it "supports creating multiple tags" do
+      to_create = %i[Room1 Room2 Room3]
+      expect(Semantics.add(**to_create.to_h { |tag| [tag, Semantics::Room] }))
+        .to match_array([Semantics::Room1, Semantics::Room2, Semantics::Room3])
+      expect(Semantics.constants).to include(*to_create)
+    end
 
-      it "returns the created tags as an array" do
-        created = Semantics.add(ArrayTag1: :Equipment, ArrayTag2: :Location, ArrayTag3: :Point,
-                                LivingRoom: Semantics::Room)
-        expect(created).to match_array([Semantics::ArrayTag1, Semantics::ArrayTag2, Semantics::ArrayTag3])
+    it "doesn't create a tag with an invalid parent" do
+      expect(Semantics.add(InvalidParentTag: :Blah)).to be_empty
+      expect(Semantics.constants).not_to include(:InvalidParentTag)
+    end
 
-        created = Semantics.add(ArrayTag1: :Equipment, ArrayTag2: :Location, ArrayTag3: :Point)
-        expect(created).to be_empty
-      end
+    it "returns the created tags as an array" do
+      created = Semantics.add(ArrayTag1: :Equipment, ArrayTag2: :Location, ArrayTag3: :Point,
+                              LivingRoom: Semantics::Room)
+      expect(created).to match_array([Semantics::ArrayTag1, Semantics::ArrayTag2, Semantics::ArrayTag3])
 
-      it "supports specifying label, synonyms, and description for the tag" do
-        Semantics.add(Detailed: Semantics::Equipment, label: "Label 1", synonyms: "Synonym 2",
-                      description: "Description 3")
-        expect(Semantics::Detailed.label).to eq "Label 1"
-        expect(Semantics.lookup("Synonym 2")).to eql Semantics::Detailed
-        expect(Semantics::Detailed.description).to eq "Description 3"
-      end
+      created = Semantics.add(ArrayTag1: :Equipment, ArrayTag2: :Location, ArrayTag3: :Point)
+      expect(created).to be_empty
+    end
 
-      it "supports synonyms in an array" do
-        Semantics.add(ArraySynonyms: Semantics::Property, synonyms: ["Syn1", :Syn2])
+    it "supports specifying label, synonyms, and description for the tag" do
+      Semantics.add(Detailed: Semantics::Equipment, label: "Label 1", synonyms: "Synonym 2",
+                    description: "Description 3")
+      expect(Semantics::Detailed.label).to eq "Label 1"
+      expect(Semantics.lookup("Synonym 2")).to eql Semantics::Detailed
+      expect(Semantics::Detailed.description).to eq "Description 3"
+    end
 
-        expect(Semantics.lookup("Syn1")).to be Semantics::ArraySynonyms
-        expect(Semantics.lookup("Syn2")).to be Semantics::ArraySynonyms
-      end
+    it "supports synonyms in an array" do
+      Semantics.add(ArraySynonyms: Semantics::Property, synonyms: ["Syn1", :Syn2])
+
+      expect(Semantics.lookup("Syn1")).to be Semantics::ArraySynonyms
+      expect(Semantics.lookup("Syn2")).to be Semantics::ArraySynonyms
     end
   end
 
@@ -376,11 +374,9 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
       expect(Semantics.tags).to include(Semantics::Light)
     end
 
-    if Semantics.respond_to?(:add) # @deprecated OH3.4 - if guard only needed with OH3.4
-      it "includes newly added tags" do
-        Semantics.add(TagsTest1: Semantics::Outdoor, TagsTest2: Semantics::Property)
-        expect(Semantics.tags).to include(Semantics::TagsTest2, Semantics::TagsTest2)
-      end
+    it "includes newly added tags" do
+      Semantics.add(TagsTest1: Semantics::Outdoor, TagsTest2: Semantics::Property)
+      expect(Semantics.tags).to include(Semantics::TagsTest2, Semantics::TagsTest2)
     end
   end
 
@@ -389,16 +385,13 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
       expect(Semantics::LivingRoom.label).to eq "Living Room"
     end
 
-    # @deprecated OH3.4 -  guard can be removed in OH4
-    unless Gem::Version.new(OpenHAB::Core::VERSION) < Gem::Version.new("4.0.0.M1")
-      it "has a synonyms attribute" do
-        expect(Semantics::LivingRoom.synonyms).to include("Living Rooms")
-      end
+    it "has a synonyms attribute" do
+      expect(Semantics::LivingRoom.synonyms).to include("Living Rooms")
+    end
 
-      it "has a description attribute" do
-        Semantics.add(TestDescAttr: Semantics::Room, description: "Test Description Attribute")
-        expect(Semantics::TestDescAttr.description).to eq "Test Description Attribute"
-      end
+    it "has a description attribute" do
+      Semantics.add(TestDescAttr: Semantics::Room, description: "Test Description Attribute")
+      expect(Semantics::TestDescAttr.description).to eq "Test Description Attribute"
     end
   end
 end

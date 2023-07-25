@@ -8,11 +8,7 @@ module OpenHAB
         # Provides {SemanticTag SemanticTags} created in Ruby to openHAB
         #
         class Provider < Core::Provider
-          begin
-            include org.openhab.core.semantics.SemanticTagProvider
-          rescue NameError
-            # @deprecated OH3.4
-          end
+          include org.openhab.core.semantics.SemanticTagProvider
 
           class << self
             #
