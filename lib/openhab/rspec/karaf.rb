@@ -574,7 +574,7 @@ module OpenHAB
           bundle.fragment?
       end
 
-      def wait
+      def wait(timeout: 30)
         mutex = Mutex.new
         cond = ConditionVariable.new
         skip_wait = false
@@ -587,7 +587,7 @@ module OpenHAB
         end
         mutex.synchronize do
           yield continue
-          cond.wait(mutex) unless skip_wait
+          cond.wait(mutex, timeout) unless skip_wait
         end
       end
 
