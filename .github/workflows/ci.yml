@@ -70,7 +70,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'ci skip')"
     outputs:
       openhab_matrix: |
-        ["3.4.3", "4.0.0", "4.1.0-SNAPSHOT"]
+        ["3.4.5", "4.0.1", "4.1.0-SNAPSHOT"]
       snapshot_date: |
         ${{ steps.snapshot-date.outputs.SNAPSHOT_DATE }}
     steps:
@@ -128,7 +128,7 @@ jobs:
         openhab_version: ${{ fromJson(needs.openhab-matrix.outputs.openhab_matrix) }}
         jruby_version: ["jruby-9.3.10.0", "jruby-9.4.3.0"]
         exclude:
-          - openhab_version: 4.0.0
+          - openhab_version: 4.0.1
             jruby_version: jruby-9.3.10.0
           - openhab_version: 4.1.0-SNAPSHOT
             jruby_version: jruby-9.3.10.0
@@ -141,7 +141,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: zulu
-          java-version: ${{ startsWith(matrix.openhab_version, '4.') && '17.0.7' || '11.0.19' }}
+          java-version: ${{ startsWith(matrix.openhab_version, '4.') && '17' || '11' }}
           java-package: jre
       - name: Restore openHAB setup
         uses: actions/cache@v3
@@ -181,7 +181,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: zulu
-          java-version: ${{ startsWith(matrix.openhab_version, '4.') && '17.0.7' || '11.0.9' }}
+          java-version: ${{ startsWith(matrix.openhab_version, '4.') && '17' || '11' }}
           java-package: jre
       - name: Restore openHAB setup
         uses: actions/cache@v3
