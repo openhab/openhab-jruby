@@ -229,8 +229,17 @@ module OpenHAB
         bundle = org.osgi.framework.FrameworkUtil.get_bundle(org.openhab.core.persistence.PersistenceService.java_class)
         bundle.bundle_context.register_service(org.openhab.core.persistence.PersistenceService.java_class, ps, nil)
 
-        # wait for the rule engine
         rs = OSGi.service("org.openhab.core.service.ReadyService")
+
+        # Add a fake automation:scriptEngineFactories to satisfy startlevel 30
+        begin
+          sef_marker = org.openhab.core.automation.module.script.internal.ScriptEngineFactoryBundleTracker::READY_MARKER
+          rs.mark_ready(sef_marker)
+        rescue NameError
+          # @deprecated OH3.4 NOOP - the ScriptEngineFactoryBundleTracker doesn't exist in OH3
+        end
+
+        # wait for the rule engine
         filter = org.openhab.core.service.ReadyMarkerFilter.new
                     .with_type(org.openhab.core.service.StartLevelService::STARTLEVEL_MARKER_TYPE)
                     .with_identifier(org.openhab.core.service.StartLevelService::STARTLEVEL_RULEENGINE.to_s)
