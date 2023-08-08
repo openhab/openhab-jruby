@@ -913,6 +913,8 @@ openHAB's Persistence feature. - Documentation for openhab-scripting JRuby helpe
   
   
   
+  
+  
 
         
       </ul>
@@ -2833,6 +2835,52 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#all_states_between-instance_method" title="#all_states_between (instance method)">#<strong>all_states_between</strong>(start, finish, service = nil)  &#x21d2; Array&lt;HistoricState&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns all the states between two points in time.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#all_states_since-instance_method" title="#all_states_since (instance method)">#<strong>all_states_since</strong>(timestamp, service = nil)  &#x21d2; Array&lt;HistoricState&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns all the states from a point in time until now.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#average_between-instance_method" title="#average_between (instance method)">#<strong>average_between</strong>(start, finish, service = nil)  &#x21d2; DecimalType, ... </a>
     
 
@@ -3466,7 +3514,240 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="average_between-instance_method">
+  <h3 class="signature first" id="all_states_between-instance_method">
+  
+    #<strong>all_states_between</strong>(start, finish, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span>&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns all the states between two points in time.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>start</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time from which to search</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>finish</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time to which to search</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>An array of <span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span> persisted for this item.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+300
+301
+302
+303
+304
+305</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 300</span>
+
+<span class="symbol"><span class="delimiter">%i[</span><span class="content">persist last_update</span><span class="delimiter">]</span></span>.each <span class="keyword">do</span> |method|
+  define_method(method) <span class="keyword">do</span> |service = <span class="predefined-constant">nil</span>|
+    service ||= persistence_service
+    <span class="constant">Actions</span>::<span class="constant">PersistenceExtensions</span>.public_send(method, <span class="predefined-constant">self</span>, service&amp;.to_s)
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="all_states_since-instance_method">
+  
+    #<strong>all_states_since</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span>&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns all the states from a point in time until now.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>timestamp</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time from which to search</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>An array of <span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span> persisted for this item.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 285</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="average_between-instance_method">
   
     #<strong>average_between</strong>(start, finish, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt>, ... 
   
@@ -3562,7 +3843,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 110</span>
 
 </pre>
     </td>
@@ -3652,7 +3933,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 103</span>
 
 </pre>
     </td>
@@ -3756,7 +4037,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 177</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 184</span>
 
 </pre>
     </td>
@@ -3845,7 +4126,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 171</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 178</span>
 
 </pre>
     </td>
@@ -3949,7 +4230,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 258</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 265</span>
 
 </pre>
     </td>
@@ -4038,7 +4319,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 252</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 259</span>
 
 </pre>
     </td>
@@ -4143,22 +4424,12 @@ or nil if no previous state could be found.</p>
       <pre class="lines">
 
 
-278
-279
-280
-281
-282
-283</pre>
+</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 278</span>
 
-<span class="symbol"><span class="delimiter">%i[</span><span class="content">persist last_update</span><span class="delimiter">]</span></span>.each <span class="keyword">do</span> |method|
-  define_method(method) <span class="keyword">do</span> |service = <span class="predefined-constant">nil</span>|
-    service ||= persistence_service
-    <span class="constant">Actions</span>::<span class="constant">PersistenceExtensions</span>.public_send(method, <span class="predefined-constant">self</span>, service&amp;.to_s)
-  <span class="keyword">end</span>
-<span class="keyword">end</span></pre>
+</pre>
     </td>
   </tr>
 </table>
@@ -4249,7 +4520,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 265</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 272</span>
 
 </pre>
     </td>
@@ -4354,7 +4625,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 125</span>
 
 </pre>
     </td>
@@ -4444,7 +4715,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 118</span>
 
 </pre>
     </td>
@@ -4549,7 +4820,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 133</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 140</span>
 
 </pre>
     </td>
@@ -4639,7 +4910,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 133</span>
 
 </pre>
     </td>
@@ -4857,7 +5128,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 184</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 191</span>
 
 </pre>
     </td>
@@ -4947,7 +5218,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 202</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 209</span>
 
 </pre>
     </td>
@@ -5021,7 +5292,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 98</span>
 
 </pre>
     </td>
@@ -5126,7 +5397,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 216</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 223</span>
 
 </pre>
     </td>
@@ -5216,7 +5487,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 209</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 216</span>
 
 </pre>
     </td>
@@ -5321,7 +5592,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 238</span>
 
 </pre>
     </td>
@@ -5411,7 +5682,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 224</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 231</span>
 
 </pre>
     </td>
@@ -5468,7 +5739,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 86</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 93</span>
 
 </pre>
     </td>
@@ -5559,14 +5830,14 @@ does not refer to a valid service</p>
       <pre class="lines">
 
 
-296
-297
-298
-299
-300</pre>
+318
+319
+320
+321
+322</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 296</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 318</span>
 
 <span class="keyword">def</span> <span class="function">previous_state</span>(service = <span class="predefined-constant">nil</span>, <span class="key">skip_equal</span>: <span class="predefined-constant">false</span>)
   service ||= persistence_service
@@ -5675,7 +5946,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 148</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 155</span>
 
 </pre>
     </td>
@@ -5765,7 +6036,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 141</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 148</span>
 
 </pre>
     </td>
@@ -5869,7 +6140,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 245</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 252</span>
 
 </pre>
     </td>
@@ -5958,7 +6229,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 239</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 246</span>
 
 </pre>
     </td>
@@ -6063,7 +6334,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 163</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 170</span>
 
 </pre>
     </td>
@@ -6153,7 +6424,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 156</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 163</span>
 
 </pre>
     </td>
@@ -6166,7 +6437,7 @@ or nil if no previous state could be found.</p>
 </div>
 
         <footer>
-  Generated on Tue Aug  8 17:04:33 2023 by
+  Generated on Tue Aug  8 17:10:14 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
