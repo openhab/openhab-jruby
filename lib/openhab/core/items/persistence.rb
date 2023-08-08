@@ -74,13 +74,20 @@ module OpenHAB
         # All persistence methods that require a timestamp
         # Note the _between methods are automatically created from the _since methods
         PERSISTENCE_METHODS = (QUANTITY_METHODS +
-                              %i[changed_since?
-                                 count_since
-                                 count_state_changes_since
-                                 historic_state
-                                 maximum_since
-                                 minimum_since
-                                 updated_since?]).freeze
+                              %i[ changed_since?
+                                  count_since
+                                  count_state_changes_since
+                                  historic_state
+                                  maximum_since
+                                  minimum_since
+                                  updated_since?])
+
+        # @deprecated OH3.4 - in openHAB 4, just add :get_all_states_since and freeze the list above
+        if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0")
+          PERSISTENCE_METHODS << :get_all_states_since
+        end
+        PERSISTENCE_METHODS.freeze
+
         private_constant :QUANTITY_METHODS, :PERSISTENCE_METHODS
 
         # @!method persist(service = nil)
@@ -275,6 +282,21 @@ module OpenHAB
         #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
         #   @return [Integer] The number of values persisted for this item.
 
+        # @!method all_states_since(timestamp, service = nil)
+        #   @since openHAB 4.0
+        #   Returns all the states from a point in time until now.
+        #   @param [#to_zoned_date_time] timestamp The point in time from which to search
+        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @return [Array<HistoricState>] An array of {HistoricState} persisted for this item.
+
+        # @!method all_states_between(start, finish, service = nil)
+        #   @since openHAB 4.0
+        #   Returns all the states between two points in time.
+        #   @param [#to_zoned_date_time] start The point in time from which to search
+        #   @param [#to_zoned_date_time] finish The point in time to which to search
+        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @return [Array<HistoricState>] An array of {HistoricState} persisted for this item.
+
         %i[persist last_update].each do |method|
           define_method(method) do |service = nil|
             service ||= persistence_service
@@ -363,6 +385,11 @@ module OpenHAB
 
         alias_method :state_changes_since, :count_state_changes_since
         alias_method :state_changes_between, :count_state_changes_between
+        # @deprecated OH 3.4 - if guard is unnecessary in OH4
+        if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0")
+          alias_method :all_states_since, :get_all_states_since
+          alias_method :all_states_between, :get_all_states_between
+        end
 
         private
 
@@ -391,15 +418,21 @@ module OpenHAB
         # @return [HistoricState] a {HistoricState} object if the result was a HistoricItem
         # @return [QuantityType] a `QuantityType` object if the result was an average, delta, deviation,
         #                        sum, or variance.
+        # @return [Array<HistoricState>] an array of {HistoricState} objects if the result was an array
+        #                        of HistoricItem
         # @return [Object] the original result object otherwise.
         #
         def wrap_result(result, method)
-          if result.is_a?(org.openhab.core.persistence.HistoricItem)
-            return HistoricState.new(quantify(result.state), result)
-          end
-          return quantify(result) if QUANTITY_METHODS.include?(method)
+          case result
+          when org.openhab.core.persistence.HistoricItem
+            HistoricState.new(quantify(result.state), result)
+          when java.util.Collection, Array
+            result.to_a.map { |historic_item| wrap_result(historic_item, method) }
+          else
+            return quantify(result) if QUANTITY_METHODS.include?(method)
 
-          result
+            result
+          end
         end
 
         #

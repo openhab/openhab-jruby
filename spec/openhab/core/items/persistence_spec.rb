@@ -11,24 +11,28 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
     Timecop.travel(1.second)
 
     expect do
-      %i[
-        average_since
-        changed_since?
-        delta_since
-        deviation_since
-        evolution_rate
-        historic_state
-        maximum_since
-        minimum_since
-        sum_since
-        updated_since?
-        variance_since
-      ].each do |method|
+      since_methods =
+        %i[
+          average_since
+          changed_since?
+          delta_since
+          deviation_since
+          evolution_rate
+          historic_state
+          maximum_since
+          minimum_since
+          sum_since
+          updated_since?
+          variance_since
+        ]
+      # @deprecated OH3.4
+      since_methods << :all_states_since if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0")
+      since_methods.each do |method|
         item.__send__(method, 1.minute.ago)
         item.__send__(method, 1.minute.ago, :influxdb)
       end
 
-      %i[
+      between_methods = %i[
         average_between
         changed_between?
         delta_between
@@ -39,7 +43,10 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
         sum_between
         updated_between?
         variance_between
-      ].each do |method|
+      ]
+      # @deprecated OH3.4
+      between_methods << :all_states_between if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0")
+      between_methods.each do |method|
         item.__send__(method, 2.minutes.ago, Time.now)
         item.__send__(method, 2.minutes.ago, Time.now, :influxdb)
       end
@@ -73,5 +80,31 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
     max = Number1.maximum_since(10.seconds.ago)
     expect(max.timestamp).to eq Time.now
     expect(max).to eq max.state
+  end
+
+  # @deprecated OH3.4
+  if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0")
+    describe "all_states_since and all_states_between" do
+      before do
+        items.build { number_item Number1, state: 10 }
+        Number1.persist
+        Timecop.travel(1.second)
+        Number1.persist
+      end
+
+      let(:all_result) do
+        [Number1.all_states_since(2.seconds.ago), Number1.all_states_between(5.seconds.ago, 1.ms.ago)]
+      end
+
+      it "return an array" do
+        expect(all_result).to all(be_an(Array))
+      end
+
+      it "return a HistoricState as the array element" do
+        expect(all_result).to all(all(respond_to(:timestamp)))
+        expect(all_result).to all(all(respond_to(:state)))
+        expect(all_result).to all(all(be_an(OpenHAB::Core::Items::Persistence::HistoricState)))
+      end
+    end
   end
 end
