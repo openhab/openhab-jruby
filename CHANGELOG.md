@@ -1,5 +1,19 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.5.0](https://github.com/openhab/openhab-jruby/tree/v5.5.0) (2023-08-08)
+
+[Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.4.2...v5.5.0)
+
+### Features
+
+- Support all\_states\_since and all\_states\_between persistence methods [\#105](https://github.com/openhab/openhab-jruby/pull/105) ([jimtng](https://github.com/jimtng))
+
+### Bug Fixes
+
+- backtrace\_locations returns nil [\#102](https://github.com/openhab/openhab-jruby/issues/102)
+- Fix changed duration without from or to [\#107](https://github.com/openhab/openhab-jruby/pull/107) ([jimtng](https://github.com/jimtng))
+- Fix loading a console session of your own openHAB instance [\#94](https://github.com/openhab/openhab-jruby/pull/94) ([ccutrer](https://github.com/ccutrer))
+
 ## [v5.4.2](https://github.com/openhab/openhab-jruby/tree/v5.4.2) (2023-07-23)
 
 [Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.4.1...v5.4.2)
