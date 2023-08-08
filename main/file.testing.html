@@ -2784,10 +2784,6 @@ require <span class="string"><span class="delimiter">&quot;</span><span class="c
 <ul>
 <li>Run your specs: <code>bundle exec rspec</code></li>
 </ul>
-<p>Bonus, if you want to play in a sandbox to explore what's available (either for
-specs or for writing rules) via a REPL, run <code>bundle console</code>, and inside of that
-run <code>Bundler.require(:test)</code>. It will first load up the openHAB dependencies,
-and then load rules in, then drop you into IRB.</p>
 <h3 id="spec-writing-tips"><a href="#spec-writing-tips" class="header-anchor">#</a>Spec Writing Tips</h3>
 <ul>
 <li>By default ruby files are looked for in <code>$OPENHAB_CONF/automation/ruby</code> and in <code>$OPENHAB_CONF/automation/jsr223</code>. You can override and/or append to this by setting the <code>openhab_automation_search_paths</code> RSpec configuration setting in your <code>spec_helper.rb</code>. This can be useful to add staging directory for testing your rules.</li>
@@ -2879,27 +2875,34 @@ Then they can be accessed as a method on <span class='object_link'><a href="Open
 <p>They're loaded into a sub-JRuby engine, just like they run in openHAB.</p>
 <h2 id="irb"><a href="#irb" class="header-anchor">#</a>IRB</h2>
 <p>If you would like to use a REPL sandbox to play with your items,
-you can run <code>bundle console</code>. You may want to create an <code>.irbrc</code>
-with the following contents to automatically boot things up:</p>
-<pre class="code ruby"><code class="ruby"><span class="comment"># frozen_string_literal: true</span>
+create bin/console with the following contents, and then run it:</p>
+<pre class="code ruby"><code class="ruby"><span class="doctype">#!/usr/bin/env ruby</span>
+<span class="comment"># frozen_string_literal: true</span>
 
-require <span class="string"><span class="delimiter">&quot;</span><span class="content">rubygems</span><span class="delimiter">&quot;</span></span>
-require <span class="string"><span class="delimiter">&quot;</span><span class="content">bundler</span><span class="delimiter">&quot;</span></span>
+require <span class="string"><span class="delimiter">&quot;</span><span class="content">bundler/setup</span><span class="delimiter">&quot;</span></span>
 
-<span class="constant">Bundler</span>.require(<span class="symbol">:default</span>, <span class="symbol">:development</span>, <span class="symbol">:test</span>)
+<span class="constant">Bundler</span>.require
 
-require <span class="string"><span class="delimiter">&quot;</span><span class="content">openhab/rspec</span><span class="delimiter">&quot;</span></span>
+require <span class="string"><span class="delimiter">&quot;</span><span class="content">irb</span><span class="delimiter">&quot;</span></span>
 
-launch_karaf
-autorequires
-set_up_autoupdates
-load_rules
-load_transforms
+<span class="keyword">begin</span>
+  require <span class="string"><span class="delimiter">&quot;</span><span class="content">openhab/rspec</span><span class="delimiter">&quot;</span></span>
+
+  autorequires
+  set_up_autoupdates
+  load_rules
+  load_transforms
+<span class="keyword">rescue</span> =&gt; e
+  puts e.backtrace
+  raise
+<span class="keyword">end</span>
+
+<span class="constant">IRB</span>.start(<span class="predefined-constant">__FILE__</span>)
 </code></pre>
 </div></div>
 
         <footer>
-  Generated on Tue Aug  8 17:03:52 2023 by
+  Generated on Tue Aug  8 17:04:30 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
