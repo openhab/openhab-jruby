@@ -81,7 +81,8 @@ module OpenHAB
             def process_active_timer(timer, inputs, mod, &block)
               old_state = Conditions.old_state_from(inputs)
               new_state = Conditions.new_state_from(inputs)
-              if new_state != @tracking_from && @conditions.process(mod: nil, inputs: { "state" => new_state })
+              if @conditions.from? && new_state != @tracking_from &&
+                 @conditions.process(mod: nil, inputs: { "state" => new_state })
                 logger.trace("Item changed from #{old_state} to #{new_state} for #{self}, keep waiting.")
               else
                 logger.trace("Item changed from #{old_state} to #{new_state} for #{self}, canceling timer.")

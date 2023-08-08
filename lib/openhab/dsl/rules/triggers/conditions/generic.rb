@@ -41,6 +41,13 @@ module OpenHAB
               true
             end
 
+            #
+            # Returns true if a `from` condition was specified
+            #
+            def from?
+              !@from.nil?
+            end
+
             private
 
             def check_value(value, expected_value)

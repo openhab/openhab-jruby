@@ -389,6 +389,11 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
             Alarm_Mode1.update(10)
             execute_timers
             expect(triggered_item).to be_nil
+            time_travel_and_execute_timers(6.seconds)
+            expect(triggered_item).to be_nil
+            Alarm_Mode1.update(11)
+            time_travel_and_execute_timers(9.seconds)
+            expect(triggered_item).to be_nil
             time_travel_and_execute_timers(30.seconds)
             expect(triggered_item).to eql "Alarm_Mode1"
           end
