@@ -16,7 +16,7 @@ require_relative "rspec/helpers"
 require_relative "rspec/karaf"
 require_relative "rspec/hooks"
 
-return unless defined?(RSpec)
+require "rspec/core"
 
 RSpec.configure do |c|
   c.add_setting :openhab_automation_search_paths, default: [

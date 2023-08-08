@@ -82,11 +82,6 @@ end
 
 - Run your specs: `bundle exec rspec`
 
-Bonus, if you want to play in a sandbox to explore what's available (either for
-specs or for writing rules) via a REPL, run `bundle console`, and inside of that
-run `Bundler.require(:test)`. It will first load up the openHAB dependencies,
-and then load rules in, then drop you into IRB.
-
 ### Spec Writing Tips
 
 - By default ruby files are looked for in `$OPENHAB_CONF/automation/ruby` and in `$OPENHAB_CONF/automation/jsr223`. You can override and/or append to this by setting the `openhab_automation_search_paths` RSpec configuration setting in your `spec_helper.rb`. This can be useful to add staging directory for testing your rules.
@@ -172,22 +167,29 @@ They're loaded into a sub-JRuby engine, just like they run in openHAB.
 ## IRB
 
 If you would like to use a REPL sandbox to play with your items,
-you can run `bundle console`. You may want to create an `.irbrc`
-with the following contents to automatically boot things up:
+create bin/console with the following contents, and then run it:
 
 ```ruby
+#!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require "rubygems"
-require "bundler"
+require "bundler/setup"
 
-Bundler.require(:default, :development, :test)
+Bundler.require
 
-require "openhab/rspec"
+require "irb"
 
-launch_karaf
-autorequires
-set_up_autoupdates
-load_rules
-load_transforms
+begin
+  require "openhab/rspec"
+
+  autorequires
+  set_up_autoupdates
+  load_rules
+  load_transforms
+rescue => e
+  puts e.backtrace
+  raise
+end
+
+IRB.start(__FILE__)
 ```
