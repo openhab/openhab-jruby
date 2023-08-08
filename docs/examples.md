@@ -210,7 +210,7 @@ items["#{event.item_name}_LastMotion"].update Time.now
 
 ### Trigger a Scene with an ON/OFF Switch
 
-Use [Scenes](https://next.openhab.org/docs/tutorial/rules_scenes.html) in combination with
+Use [Scenes](https://www.openhab.org/docs/tutorial/rules_scenes.html) in combination with
 {OpenHAB::Core::Items::Semantics Semantic Model}
 
 Trigger defined as:
