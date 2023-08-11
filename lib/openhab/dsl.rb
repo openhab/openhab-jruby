@@ -115,7 +115,7 @@ module OpenHAB
     #   # Rollershutter MyShade { channel="thing:rollershutter"[profile="ruby:veto_closing_shades"] }
     #
     # @example Overriding units from a binding
-    #   profile(:set_uom) do |event, configuration:, state:, command:|
+    #   profile(:set_uom) do |event, callback:, configuration:, state:, command:|
     #     unless configuration["unit"]
     #       logger.warn("Unit configuration not provided for set_uom profile")
     #        next true
