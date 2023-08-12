@@ -52,7 +52,16 @@ rule "light turned on" do
   end
 end
 ```
-  
+
+## String Interpolation
+
+String interpolation is done by enclosing a variable or an expression with `#{` and `}` inside a double quoted string.
+The variable doesn't have to be a string. Ruby will automatically call `#to_s` for you.
+
+Although string concatenation with `+` is possible, using string interpolation is preferred.
+
+An example of string interpolation is included above.
+
 ## Control Expressions
 
 Ruby supports various [control expressions](https://docs.ruby-lang.org/en/master/doc/syntax/control_expressions_rdoc.html) such as `if/else`, ternary operator, `case`, etc.
@@ -126,6 +135,53 @@ end
 ```
 
 Note: `next` is similar to `continue` in C/Java. `break` in Ruby is the same as in C/Java.
+
+## Methods
+
+[Methods](https://docs.ruby-lang.org/en/master/syntax/methods_rdoc.html) are defined like this:
+
+```ruby
+def one_plus_one # It can also be defined as def one_plus_one()
+  1 + 1
+end
+```
+
+With parameters:
+
+```ruby
+def one_plus(arg1) 
+  1 + arg1
+end
+```
+
+With a keyword argument:
+
+```ruby
+def one_minus(another:)
+  1 - another
+end
+```
+
+Note the last value in a method execution becomes its return value, so a `return` keyword is optional.
+
+To call a method:
+
+```ruby
+# Calling a method without passing any arguments, no parentheses needed.
+one_plus_one
+# This works too:
+one_plus_one()
+
+# Calling a method with an argument:
+one_plus(2)
+# The parentheses can also be omitted here:
+one_plus 2
+
+# Calling a method with a keyword argument:
+one_minus(another: 1)
+# Guess what, the parentheses can also be omitted here:
+one_minus another: 1
+```
 
 ## Blocks
 
