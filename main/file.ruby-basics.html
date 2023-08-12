@@ -2755,6 +2755,11 @@ In most simple file-based rules, and in UI based rules, <code>self</code> is sim
   <span class="keyword">end</span>
 <span class="keyword">end</span>
 </code></pre>
+<h2 id="string-interpolation"><a href="#string-interpolation" class="header-anchor">#</a>String Interpolation</h2>
+<p>String interpolation is done by enclosing a variable or an expression with <code>#{</code> and <code>}</code> inside a double quoted string.
+The variable doesn't have to be a string. Ruby will automatically call <code>#to_s</code> for you.</p>
+<p>Although string concatenation with <code>+</code> is possible, using string interpolation is preferred.</p>
+<p>An example of string interpolation is included above.</p>
 <h2 id="control-expressions"><a href="#control-expressions" class="header-anchor">#</a>Control Expressions</h2>
 <p>Ruby supports various <a href="https://docs.ruby-lang.org/en/master/doc/syntax/control_expressions_rdoc.html">control expressions</a> such as <code>if/else</code>, ternary operator, <code>case</code>, etc.</p>
 <p>Example:</p>
@@ -2818,6 +2823,39 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
 <span class="keyword">end</span>
 </code></pre>
 <p>Note: <code>next</code> is similar to <code>continue</code> in C/Java. <code>break</code> in Ruby is the same as in C/Java.</p>
+<h2 id="methods"><a href="#methods" class="header-anchor">#</a>Methods</h2>
+<p><a href="https://docs.ruby-lang.org/en/master/syntax/methods_rdoc.html">Methods</a> are defined like this:</p>
+<pre class="code ruby"><code class="ruby"><span class="keyword">def</span> <span class="function">one_plus_one</span> <span class="comment"># It can also be defined as def one_plus_one()</span>
+  <span class="integer">1</span> + <span class="integer">1</span>
+<span class="keyword">end</span>
+</code></pre>
+<p>With parameters:</p>
+<pre class="code ruby"><code class="ruby"><span class="keyword">def</span> <span class="function">one_plus</span>(arg1) 
+  <span class="integer">1</span> + arg1
+<span class="keyword">end</span>
+</code></pre>
+<p>With a keyword argument:</p>
+<pre class="code ruby"><code class="ruby"><span class="keyword">def</span> <span class="function">one_minus</span>(<span class="key">another</span>:)
+  <span class="integer">1</span> - another
+<span class="keyword">end</span>
+</code></pre>
+<p>Note the last value in a method execution becomes its return value, so a <code>return</code> keyword is optional.</p>
+<p>To call a method:</p>
+<pre class="code ruby"><code class="ruby"><span class="comment"># Calling a method without passing any arguments, no parentheses needed.</span>
+one_plus_one
+<span class="comment"># This works too:</span>
+one_plus_one()
+
+<span class="comment"># Calling a method with an argument:</span>
+one_plus(<span class="integer">2</span>)
+<span class="comment"># The parentheses can also be omitted here:</span>
+one_plus <span class="integer">2</span>
+
+<span class="comment"># Calling a method with a keyword argument:</span>
+one_minus(<span class="key">another</span>: <span class="integer">1</span>)
+<span class="comment"># Guess what, the parentheses can also be omitted here:</span>
+one_minus <span class="key">another</span>: <span class="integer">1</span>
+</code></pre>
 <h2 id="blocks"><a href="#blocks" class="header-anchor">#</a>Blocks</h2>
 <p>Multi-line blocks in Ruby are enclosed in a <code>do</code> .. <code>end</code> pair and single line blocks are enclosed with braces <code>{</code> .. <code>}</code>. You have encountered blocks in the examples above.
 Rules are implemented in a block:</p>
@@ -2899,7 +2937,7 @@ as the source code formatter and linter for Ruby.</p>
 </div></div>
 
         <footer>
-  Generated on Fri Aug 11 13:16:56 2023 by
+  Generated on Sat Aug 12 14:22:34 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
