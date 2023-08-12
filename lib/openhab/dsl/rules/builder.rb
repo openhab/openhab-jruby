@@ -1112,7 +1112,6 @@ module OpenHAB
 
           raise ArgumentError, "Missing cron expression or elements" unless expression
 
-          add_tag("Schedule")
           cron = Cron.new(rule_triggers: @rule_triggers)
           cron.trigger(config: { "cronExpression" => expression }, attach: attach)
         end
@@ -1211,7 +1210,6 @@ module OpenHAB
           if value == :day && at.is_a?(Item)
             raise ArgumentError, "Attachments are not supported with dynamic datetime triggers" unless attach.nil?
 
-            add_tag("Schedule")
             return trigger("timer.DateTimeTrigger", itemName: at.name, timeOnly: true)
           end
 
@@ -1593,7 +1591,6 @@ module OpenHAB
         #
         def at(item)
           item = item.name if item.is_a?(Item)
-          add_tag("Schedule")
           trigger("timer.DateTimeTrigger", itemName: item.to_s)
         end
 

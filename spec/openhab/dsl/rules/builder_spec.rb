@@ -1045,18 +1045,6 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           cron(made_up: 3, stuff: 5) { nil }
         end.to raise_error(ArgumentError, "unknown keywords: :made_up, :stuff")
       end
-
-      it "tags as Schedule" do
-        rule id: "cron_rule" do
-          cron (Time.now + 2).strftime("%S %M %H ? * ?"), attach: 1
-          run { nil }
-        end
-        rule = rules["cron_rule"]
-        expect(rule).to be_tagged("Schedule")
-        trigger = rule.triggers.first
-        handler = OpenHAB::Core::Rules.manager.get_module_handler(trigger, rule.uid)
-        expect(handler.getTemporalAdjuster).not_to be_nil
-      end
     end
 
     describe "#at" do
@@ -1072,20 +1060,6 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         wait(4.seconds) do
           expect(triggered).to be true
         end
-      end
-
-      it "tags as Schedule" do
-        items.build { date_time_item MyDateTimeItem }
-
-        rule id: "at_rule" do
-          at MyDateTimeItem
-          run { nil }
-        end
-        rule = rules["at_rule"]
-        expect(rule).to be_tagged("Schedule")
-        trigger = rule.triggers.first
-        handler = OpenHAB::Core::Rules.manager.get_module_handler(trigger, rule.uid)
-        expect(handler.getTemporalAdjuster).not_to be_nil
       end
     end
 
@@ -1118,7 +1092,6 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         every(:day, id: "dynamic_at_rule", at: MyDateTimeItem) { triggered = true }
 
         rule = rules["dynamic_at_rule"]
-        expect(rule).to be_tagged("Schedule")
         trigger = rule.triggers.first
         handler = OpenHAB::Core::Rules.manager.get_module_handler(trigger, rule.uid)
         expect(handler.getTemporalAdjuster).not_to be_nil
@@ -1802,7 +1775,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         every :day
         run { nil }
       end
-      expect($rules.get("test_rule").tags).to match_array(%w[tag1 tag2 LivingRoom Schedule])
+      expect($rules.get("test_rule").tags).to match_array(%w[tag1 tag2 LivingRoom])
     end
 
     it "works with a single tag" do
@@ -1811,7 +1784,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         every :day
         run { nil }
       end
-      expect($rules.get("test_rule").tags).to match_array(%w[tag1 Schedule])
+      expect($rules.get("test_rule").tags).to match_array(%w[tag1])
     end
 
     it "creates a scene" do
