@@ -77,16 +77,16 @@ module OpenHAB
     # Defines a new profile that can be applied to item channel links.
     #
     # @param [String, Symbol] id The id for the profile.
-    # @yield [event, command: nil, state: nil, link:, item:, channel_uid:, configuration:, context:]
+    # @yield [event, command: nil, state: nil, callback:, link:, item:, channel_uid:, configuration:, context:]
     #   All keyword params are optional. Any that aren't defined won't be passed.
-    # @yieldparam [Core::Things::ProfileCallback] callback
-    #   The callback to be used to customize the action taken.
     # @yieldparam [:command_from_item, :state_from_item, :command_from_handler, :state_from_handler] event
     #   The event that needs to be processed.
     # @yieldparam [Command, nil] command
     #   The command being sent for `:command_from_item` and `:command_from_handler` events.
     # @yieldparam [State, nil] state
     #   The state being sent for `:state_from_item` and `:state_from_handler` events.
+    # @yieldparam [Core::Things::ProfileCallback] callback
+    #   The callback to be used to customize the action taken.
     # @yieldparam [Core::Things::ItemChannelLink] link
     #   The link between the item and the channel, including its configuration.
     # @yieldparam [Item] item The linked item.
