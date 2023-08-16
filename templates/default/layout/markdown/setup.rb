@@ -18,5 +18,5 @@ def init
 end
 
 def diskfile
-  @file.contents
+  @file.contents.gsub(%r{docs/images/}, "doc/")
 end
