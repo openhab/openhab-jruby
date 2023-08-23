@@ -25,7 +25,7 @@ module OpenHAB
 
             # @!visibility private
             def link(item, channel, config = {})
-              config = org.openhab.core.config.core.Configuration.new(config.transform_keys(&:to_s))
+              config = Configuration.new(config.transform_keys(&:to_s))
               channel = ChannelUID.new(channel) if channel.is_a?(String)
               channel = channel.uid if channel.is_a?(Channel)
               link = org.openhab.core.thing.link.ItemChannelLink.new(item.name, channel, config)
