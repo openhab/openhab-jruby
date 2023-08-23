@@ -677,7 +677,7 @@ end
 
 ### Things
 
-The {OpenHAB::DSL.things things} object allows interactions with openHAB things.
+The {OpenHAB::DSL.things things} object allows interactions with openHAB {OpenHAB::Core::Things::Thing thing}s.
 
 Get Thing Status:
 
@@ -707,6 +707,23 @@ logger.info "TV enabled: #{thing.enabled?}"
 
 thing.enable
 logger.info "TV enabled: #{thing.enabled?}"
+```
+
+Get Thing's configurations:
+
+```ruby
+server = things["smtp:mail:local"].configuration["hostname"]
+logger.info "Configured SMTP Server: #{server}"
+
+frontporch_cam_ip = things["ipcamera:dahua:frontporch"].configuration["ipAddress"]
+logger.info "Front Porch Camera's IP Address: #{frontporch_cam_ip}"
+```
+
+Get Thing's property:
+
+```ruby
+model_id = things["fronius:meter:mybridge:mymeter"].properties["modelId"]
+logger.info "Fronius Smart Meter model: #{model_id}"
 ```
 
 ### Actions

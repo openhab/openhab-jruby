@@ -43,7 +43,7 @@ module OpenHAB
       #
       # @!attribute [r] bridge_uid
       #   Return the Bridge UID when available.
-      #   @return [org.openhab.core.thing.ThingUID, nil]
+      #   @return [org.openhab.core.thing.ThingUID]
       #
       # @!attribute [r] configuration
       #   Return the thing's configuration.
