@@ -268,7 +268,7 @@ module OpenHAB
           def delete_if(&block)
             raise NotImplementedError unless block
 
-            replace(to_h.delete_if(block))
+            replace(to_h.delete_if(&block))
           end
 
           # @!visibility private
