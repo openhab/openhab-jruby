@@ -89,7 +89,7 @@ module OpenHAB
       # @param [Object] id
       # @param [java.time.temporal.TemporalAmount, #to_zoned_date_time, Proc, nil] duration
       #   When to reschedule the timer for. `nil` to retain its current interval.
-      # @return [Timer, nil] the timer if it was rescheduled, otherwise `nil`
+      # @return [Core::Timer, nil] the timer if it was rescheduled, otherwise `nil`
       #
       def reschedule(id, duration = nil)
         @timers_by_id.compute_if_present(id) do |_key, timer|
@@ -105,10 +105,10 @@ module OpenHAB
       # state. The timer is created in a thread-safe manner.
       #
       # @param [Object] id
-      # @yieldparam [Timer, nil] timer The existing timer with this id, if one exists.
-      # @yieldreturn [Timer, nil] A new timer to associate with this id, the existing
+      # @yieldparam [Core::Timer, nil] timer The existing timer with this id, if one exists.
+      # @yieldreturn [Core::Timer, nil] A new timer to associate with this id, the existing
       #   timer, or nil. If nil, any existing timer will be cancelled.
-      # @return [Timer, nil]
+      # @return [Core::Timer, nil]
       #
       # @example Extend an existing timer, or schedule a new one
       #   # This is technically the same functionality as just calling `after()` with an `id`,
