@@ -3430,7 +3430,7 @@ my_timer.reschedule <span class="comment"># Use the same initial duration</span>
 <p>It can be rescheduled to a different duration</p>
 <pre class="code ruby"><code class="ruby">after(<span class="integer">3</span>.minutes) <span class="keyword">do</span> |timer|
   <span class="constant">My_Light</span>.on
-  my_timer.reschedule(<span class="integer">1</span>.minute)
+  timer.reschedule(<span class="integer">1</span>.minute)
 <span class="keyword">end</span>
 </code></pre>
 <p>It can also be canceled:</p>
@@ -3484,16 +3484,16 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
 It acts similarly to a regular Ruby Hash.
 Just be wary of Ruby-only data types (such as Symbols) that won't be accessible between different scripts.</p>
 <p>Get a previously set object with a default value:</p>
-<pre class="code ruby"><code class="ruby">counter_object = shared_cache.compute_if_absent(<span class="symbol">:counter</span>) { { <span class="string"><span class="delimiter">&quot;</span><span class="content">times</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">0</span> } }
-logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Count: </span><span class="inline"><span class="inline-delimiter">#{</span>counter_object[<span class="string"><span class="delimiter">&quot;</span><span class="content">times</span><span class="delimiter">&quot;</span></span>] += <span class="integer">1</span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)<span class="string"><span class="delimiter">&quot;</span><span class="content">
-</span></span></code></pre>
+<pre class="code ruby"><code class="ruby">shared_cache.compute_if_absent(<span class="symbol">:counter</span>) { <span class="integer">0</span> } <span class="comment"># Initialize with 0 if it didn't exist</span>
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Count: </span><span class="inline"><span class="inline-delimiter">#{</span>shared_cache[<span class="symbol">:counter</span>] += <span class="integer">1</span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+</code></pre>
 <p>Get a previously set object, or assign it (this version is subject to race conditions with other scripts):</p>
-<pre class="code ruby"><code class="ruby">counter_object = shared_cache[<span class="symbol">:counter</span>] ||= { <span class="string"><span class="delimiter">&quot;</span><span class="content">times</span><span class="delimiter">&quot;</span></span> =&gt; <span class="integer">0</span> }
-logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Count: </span><span class="inline"><span class="inline-delimiter">#{</span>counter_object[<span class="string"><span class="delimiter">&quot;</span><span class="content">times</span><span class="delimiter">&quot;</span></span>] += <span class="integer">1</span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)<span class="string"><span class="delimiter">&quot;</span><span class="content">
-</span></span></code></pre>
-<p>Get a previously set object with a default value, without assigning it (this version has an even longer amount of time between fetchig the value and assigning it):</p>
-<pre class="code ruby"><code class="ruby">count = shared_count.fetch(<span class="symbol">:counter</span>) { <span class="integer">0</span> }
-shared_count[<span class="symbol">:counter</span>] = count + <span class="integer">1</span>
+<pre class="code ruby"><code class="ruby">shared_cache[<span class="symbol">:counter</span>] ||= <span class="integer">0</span>
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Count: </span><span class="inline"><span class="inline-delimiter">#{</span>shared_cache[<span class="symbol">:counter</span>] += <span class="integer">1</span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+</code></pre>
+<p>Get a previously set object with a default value, without assigning it (this version has an even longer amount of time between fetching the value and assigning it):</p>
+<pre class="code ruby"><code class="ruby">count = shared_cache.fetch(<span class="symbol">:counter</span>) { <span class="integer">0</span> }
+shared_cache[<span class="symbol">:counter</span>] = count + <span class="integer">1</span>
 </code></pre>
 <h3 id="time"><a href="#time" class="header-anchor">#</a>Time</h3>
 <p>Several options are available for time related code, including but not limited to:</p>
@@ -4057,7 +4057,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Thu Aug 24 03:03:05 2023 by
+  Generated on Fri Aug 25 12:55:36 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
