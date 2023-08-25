@@ -850,7 +850,7 @@ It can be rescheduled to a different duration
 ```ruby
 after(3.minutes) do |timer|
   My_Light.on
-  my_timer.reschedule(1.minute)
+  timer.reschedule(1.minute)
 end
 ```
 
@@ -922,22 +922,22 @@ Just be wary of Ruby-only data types (such as Symbols) that won't be accessible 
 Get a previously set object with a default value:
 
 ```ruby
-counter_object = shared_cache.compute_if_absent(:counter) { { "times" => 0 } }
-logger.info("Count: #{counter_object["times"] += 1}")"
+shared_cache.compute_if_absent(:counter) { 0 } # Initialize with 0 if it didn't exist
+logger.info("Count: #{shared_cache[:counter] += 1}")
 ```
 
 Get a previously set object, or assign it (this version is subject to race conditions with other scripts):
 
 ```ruby
-counter_object = shared_cache[:counter] ||= { "times" => 0 }
-logger.info("Count: #{counter_object["times"] += 1}")"
+shared_cache[:counter] ||= 0
+logger.info("Count: #{shared_cache[:counter] += 1}")
 ```
 
-Get a previously set object with a default value, without assigning it (this version has an even longer amount of time between fetchig the value and assigning it):
+Get a previously set object with a default value, without assigning it (this version has an even longer amount of time between fetching the value and assigning it):
 
 ```ruby
-count = shared_count.fetch(:counter) { 0 }
-shared_count[:counter] = count + 1
+count = shared_cache.fetch(:counter) { 0 }
+shared_cache[:counter] = count + 1
 ```
 
 ### Time

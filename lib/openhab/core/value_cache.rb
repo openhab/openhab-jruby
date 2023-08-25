@@ -28,7 +28,7 @@ module OpenHAB
     #   For a private cache, simply use an instance variable. See
     #   {file:docs/ruby-basics.md#variables Instance Variables}.
     #
-    # @note Because every script or UI rule gets it own JRuby engine instance,
+    # @note Because every script or UI rule gets its own JRuby engine instance,
     #   you cannot rely on being able to access Ruby objects between them. Only
     #   objects that implement a Java interface that's part of Java or openHAB
     #   Core (such as Hash implements {java.util.Map}, or other basic
