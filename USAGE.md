@@ -850,7 +850,7 @@ It can be rescheduled to a different duration
 ```ruby
 after(3.minutes) do |timer|
   My_Light.on
-  my_timer.reschedule(1.minute)
+  timer.reschedule(1.minute)
 end
 ```
 
