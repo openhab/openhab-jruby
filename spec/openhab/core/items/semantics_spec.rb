@@ -389,6 +389,13 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
       expect(Semantics::LivingRoom.label).to eq "Living Room"
     end
 
+    describe "#to_s" do
+      it "returns its tag name" do
+        expect(Semantics::Equipment.to_s).to eql "Equipment"
+        expect(Semantics::LivingRoom.to_s).to eql "LivingRoom"
+      end
+    end
+
     # @deprecated OH3.4 -  guard can be removed in OH4
     unless Gem::Version.new(OpenHAB::Core::VERSION) < Gem::Version.new("4.0.0.M1")
       it "has a synonyms attribute" do

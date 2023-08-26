@@ -230,9 +230,7 @@ module OpenHAB
             tags.compact.map do |tag|
               case tag
               when String then tag
-              when Symbol then tag.to_s
-              when old_semantics then tag.java_class.simple_name
-              when semantics then tag.name
+              when Symbol, semantics, old_semantics then tag.to_s
               else raise ArgumentError, "`#{tag}` must be a subclass of Semantics::Tag, a `Symbol`, or a `String`."
               end
             end
