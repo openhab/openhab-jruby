@@ -1017,7 +1017,6 @@ items will automatically be a member of this group. - Documentation for openhab-
   </li>
 
   
-  
   <li class="">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../Core/Items/Semantics/TagClassMethods.html" title="OpenHAB::Core::Items::Semantics::TagClassMethods (module)">TagClassMethods</a></span>
@@ -3240,7 +3239,7 @@ items will automatically be a member of this group.</p>
         <span class='name'>tag</span>
       
       
-        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String, <span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span>, <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a>&gt;</tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'>Semantics::Tag</span></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String, <span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span>, <span class='object_link'>Semantics::Tag</span>&gt;</tt>, <tt>nil</tt>)</span>
       
       
       
@@ -3255,7 +3254,7 @@ items will automatically be a member of this group.</p>
         <span class='name'>tags</span>
       
       
-        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String, <span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span>, <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a>&gt;</tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'>Semantics::Tag</span></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String, <span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span>, <span class='object_link'>Semantics::Tag</span>&gt;</tt>, <tt>nil</tt>)</span>
       
       
       
@@ -3407,18 +3406,18 @@ items will automatically be a member of this group.</p>
       <pre class="lines">
 
 
+594
+595
 596
 597
 598
 599
 600
 601
-602
-603
-604</pre>
+602</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 596</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 594</span>
 
 <span class="keyword">def</span> <span class="function">initialize</span>(*args, <span class="key">type</span>: <span class="predefined-constant">nil</span>, <span class="key">function</span>: <span class="predefined-constant">nil</span>, <span class="key">thing</span>: <span class="predefined-constant">nil</span>, **kwargs)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">invalid function </span><span class="inline"><span class="inline-delimiter">#{</span>function<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> function &amp;&amp; !function.match?(<span class="constant">FUNCTION_REGEX</span>)
@@ -3489,12 +3488,12 @@ items will automatically be a member of this group.</p>
       <pre class="lines">
 
 
-577
-578
-579</pre>
+575
+576
+577</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 577</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 575</span>
 
 <span class="keyword">def</span> <span class="function">function</span>
   <span class="instance-variable">@function</span>
@@ -3544,12 +3543,12 @@ items will automatically be a member of this group.</p>
       <pre class="lines">
 
 
-586
-587
-588</pre>
+584
+585
+586</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 586</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 584</span>
 
 <span class="keyword">def</span> <span class="function">label_base</span>
   <span class="instance-variable">@label_base</span>
@@ -3599,12 +3598,12 @@ items will automatically be a member of this group.</p>
       <pre class="lines">
 
 
-589
-590
-591</pre>
+587
+588
+589</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 589</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 587</span>
 
 <span class="keyword">def</span> <span class="function">members</span>
   <span class="instance-variable">@members</span>
@@ -3654,12 +3653,12 @@ items will automatically be a member of this group.</p>
       <pre class="lines">
 
 
-583
-584
-585</pre>
+581
+582
+583</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 583</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 581</span>
 
 <span class="keyword">def</span> <span class="function">name_base</span>
   <span class="instance-variable">@name_base</span>
@@ -3709,12 +3708,12 @@ items will automatically be a member of this group.</p>
       <pre class="lines">
 
 
-580
-581
-582</pre>
+578
+579
+580</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 580</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 578</span>
 
 <span class="keyword">def</span> <span class="function">thing</span>
   <span class="instance-variable">@thing</span>
@@ -3766,12 +3765,12 @@ openHAB 3.4 and 4.0.</p>
       <pre class="lines">
 
 
-558
-559
-560</pre>
+556
+557
+558</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 558</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 556</span>
 
 <span class="keyword">def</span> <span class="function">unit</span>
   <span class="instance-variable">@unit</span>
@@ -3787,7 +3786,7 @@ openHAB 3.4 and 4.0.</p>
 </div>
 
         <footer>
-  Generated on Fri Aug 25 12:56:29 2023 by
+  Generated on Sat Aug 26 12:19:34 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
