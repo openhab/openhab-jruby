@@ -1016,6 +1016,7 @@
   </li>
 
   
+  
   <li class="">
     <span class="sidebar-link active">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="" title="OpenHAB::Core::Items::Semantics::TagClassMethods (module)">TagClassMethods</a></span>
@@ -2832,6 +2833,29 @@
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_s-instance_method" title="#to_s (instance method)">#<strong>to_s</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the tag's string representation.</p>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -2906,16 +2930,16 @@ When nil, the system's default locale is used.</p>
       <pre class="lines">
 
 
-53
-54
-55
-56
-57
-58
-59</pre>
+62
+63
+64
+65
+66
+67
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/tag_class_methods.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/tag_class_methods.rb', line 62</span>
 
 <span class="keyword">def</span> <span class="function">description</span>(locale = <span class="predefined-constant">nil</span>)
   <span class="keyword">unless</span> <span class="constant">SemanticTags</span>.respond_to?(<span class="symbol">:get_description</span>)
@@ -2993,12 +3017,12 @@ When nil, the system's default locale is used.</p>
       <pre class="lines">
 
 
-24
-25
-26</pre>
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/tag_class_methods.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/tag_class_methods.rb', line 33</span>
 
 <span class="keyword">def</span> <span class="function">label</span>(locale = <span class="predefined-constant">nil</span>)
   <span class="constant">SemanticTags</span>.get_label(java_class, locale || java.util.Locale.default)
@@ -3072,17 +3096,17 @@ When nil, the system's default locale is used.</p>
       <pre class="lines">
 
 
-36
-37
-38
-39
-40
-41
-42
-43</pre>
+45
+46
+47
+48
+49
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/tag_class_methods.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/tag_class_methods.rb', line 45</span>
 
 <span class="keyword">def</span> <span class="function">synonyms</span>(locale = <span class="predefined-constant">nil</span>)
   <span class="keyword">unless</span> <span class="constant">SemanticTags</span>.respond_to?(<span class="symbol">:get_synonyms</span>)
@@ -3097,12 +3121,65 @@ When nil, the system's default locale is used.</p>
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="to_s-instance_method">
+  
+    #<strong>to_s</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the tag's string representation</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+21
+22
+23</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/tag_class_methods.rb', line 21</span>
+
+<span class="keyword">def</span> <span class="function">to_s</span>
+  java_class.simple_name
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
         <footer>
-  Generated on Sat Aug 26 12:19:32 2023 by
+  Generated on Sat Aug 26 13:14:04 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
