@@ -14,6 +14,15 @@ module OpenHAB
           java_import org.openhab.core.semantics.SemanticTags
 
           #
+          # Returns the tag's string representation
+          #
+          # @return [String]
+          #
+          def to_s
+            java_class.simple_name
+          end
+
+          #
           # Returns the tag's label
           #
           # @param [java.util.Locale] locale The locale that the label should be in, if available.
