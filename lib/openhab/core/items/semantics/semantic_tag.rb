@@ -93,6 +93,11 @@ module OpenHAB
               "synonyms=#{synonyms.to_a.inspect}>"
           end
 
+          # @return [String]
+          def to_s
+            name
+          end
+
           private
 
           def check_type(other)

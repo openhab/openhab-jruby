@@ -182,6 +182,17 @@ module OpenHAB
         #   Tags are simple instances, instead of another interface in a hierarchical structure.
         Tag = org.openhab.core.semantics.Tag
 
+        unless Provider.registry
+          # @deprecated OH3.4 - remove this module
+          # @!visibility private
+          module Tag
+            # @return [String]
+            def to_s
+              java_class.simple_name
+            end
+          end
+        end
+
         class << self
           # @!visibility private
           def service
@@ -197,6 +208,7 @@ module OpenHAB
           # @return [Array<SemanticTag>] an array containing all the Semantic tags
           #
           def tags
+            # @deprecated OH3.4 missing registry
             if Provider.registry
               Provider.registry.all.to_a
             else
@@ -328,7 +340,7 @@ module OpenHAB
                 end
               end.compact
             end
-        end
+          end
         end
 
         # @!parse
