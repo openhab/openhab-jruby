@@ -22,52 +22,17 @@ module OpenHAB
           java_import org.openhab.core.items.Metadata
           private_constant :Metadata
 
-          include Enumerable
-
+          # Mutators are manually implemented below.
+          include EmulateHash
           extend Forwardable
-          def_delegators :@metadata, :configuration, :hash, :to_s, :uid, :value
+
+          def_delegators :@metadata, :configuration, :hash, :uid, :value
           private :configuration
 
-          # @!method to_hash
-          #   Implicit conversion to {::Hash}.
-          #   @return [::Hash]
-
-          # Make it act like a Hash; some methods can be handled by
-          # java.util.Map, others we have to convert to a Ruby Hash first, and
-          # still others (mutators) must be manually implemented below.
-          def_delegators :configuration,
-                         :any?,
-                         :compact,
-                         :compare_by_identity?,
-                         :deconstruct_keys,
-                         :default,
-                         :default_proc,
-                         :each,
-                         :each_key,
-                         :each_pair,
-                         :each_value,
-                         :empty?,
-                         :filter,
-                         :flatten,
-                         :has_value?,
-                         :invert,
-                         :key,
-                         :keys,
-                         :length,
-                         :rassoc,
-                         :reject,
-                         :select,
-                         :shift,
-                         :size,
-                         :to_a,
-                         :to_h,
-                         :to_hash,
-                         :transform_keys,
-                         :transform_values,
-                         :values,
-                         :value?
-
           def_delegator :uid, :namespace
+
+          alias_method :to_map, :configuration
+          private :to_map
 
           class << self
             # @!visibility private
@@ -209,48 +174,12 @@ module OpenHAB
           end
 
           # @!visibility private
-          def [](key)
-            configuration[key.to_s]
-          end
-
-          # @!visibility private
-          def []=(key, value)
+          def store(key, value)
             key = key.to_s
             new_config = to_h
             new_config[key] = value
             replace(new_config)
-            value # rubocop:disable Lint/Void
-          end
-          alias_method :store, :[]=
-
-          # @!visibility private
-          def assoc(key)
-            configuration.assoc(key.to_s)
-          end
-
-          # @!visibility private
-          def clear
-            replace({})
-          end
-
-          # @!visibility private
-          def compact!
-            replace(compact)
-          end
-
-          # @!visibility private
-          def compare_by_identity
-            raise NotImplementedError
-          end
-
-          # @!visibility private
-          def default=(*)
-            raise NotImplementedError
-          end
-
-          # @!visibility private
-          def default_proc=(*)
-            raise NotImplementedError
+            value
           end
 
           # @!visibility private
@@ -262,67 +191,6 @@ module OpenHAB
             old_value = new_config.delete(key)
             replace(new_config)
             old_value
-          end
-
-          # @!visibility private
-          def delete_if(&block)
-            raise NotImplementedError unless block
-
-            replace(to_h.delete_if(&block))
-          end
-
-          # @!visibility private
-          def dig(key, *keys)
-            configuration.dig(key.to_s, *keys)
-          end
-
-          # @!visibility private
-          def except(*keys)
-            to_h.except(*keys.map(&:to_s))
-          end
-
-          # @!visibility private
-          def fetch(key, &block)
-            configuration.fetch(key.to_s, &block)
-          end
-
-          # @!visibility private
-          def fetch_values(*keys, &block)
-            configuration.fetch_values(*keys.map(&:to_s), &block)
-          end
-
-          # @!visibility private
-          def keep_if(&block)
-            select!(&block)
-            self
-          end
-
-          # @!visibility private
-          def key?(key)
-            configuration.key?(key.to_s)
-          end
-          alias_method :include?, :key?
-          alias_method :has_key?, :key?
-          alias_method :member?, :key?
-
-          # @!visibility private
-          def merge!(*others, &block)
-            return self if others.empty?
-
-            new_config = to_h
-            others.each do |h|
-              new_config.merge!(h.transform_keys(&:to_s), &block)
-            end
-            replace(new_config)
-          end
-          alias_method :update, :merge!
-
-          # @!visibility private
-          def reject!(&block)
-            raise NotImplementedError unless block
-
-            r = to_h.reject!(&block)
-            replace(r) if r
           end
 
           #
@@ -338,50 +206,12 @@ module OpenHAB
           end
 
           # @!visibility private
-          def select!(&block)
-            raise NotImplementedError unless block?
-
-            r = to_h.select!(&block)
-            replace(r) if r
-          end
-          alias_method :filter!, :select!
-
-          # @!visibility private
-          def slice(*keys)
-            configuration.slice(*keys.map(&:to_s))
-          end
-
-          # @!visibility private
-          def to_proc
-            ->(k) { self[k] }
-          end
-
-          # @!visibility private
-          def transform_keys!(*args, &block)
-            replace(transform_keys(*args, &block))
-          end
-
-          # @!visibility private
-          def transform_values!(&block)
-            raise NotImplementedError unless block
-
-            replace(transform_values(&block))
-          end
-
-          # @!visibility private
-          def values_at(*keys)
-            configuration.values_at(*keys.map(&:to_s))
-          end
-
-          # @!visibility private
           def inspect
             return to_h.inspect if value.empty?
             return value.inspect if configuration.empty?
 
             [value, to_h].inspect
           end
-          remove_method :to_s
-          alias_method :to_s, :inspect
 
           #
           # @raise [FrozenError] if the provider is not a

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "forwardable"
+
 module OpenHAB
   module Core
     module Items
@@ -16,6 +18,9 @@ module OpenHAB
         # All keys are converted to strings.
         #
         class NamespaceHash
+          include EmulateHash
+          extend Forwardable
+
           class << self
             #
             # @return [org.openhab.core.items.MetadataRegistry]
@@ -28,27 +33,6 @@ module OpenHAB
 
           java_import org.openhab.core.items.MetadataKey
           private_constant :MetadataKey
-
-          include Enumerable
-          extend Forwardable
-
-          def_delegators :to_hash,
-                         :<,
-                         :<=,
-                         :==,
-                         :>,
-                         :>=,
-                         :filter,
-                         :flatten,
-                         :invert,
-                         :key,
-                         :merge,
-                         :rassoc,
-                         :reject,
-                         :select,
-                         :to_a,
-                         :transform_keys,
-                         :transform_values
 
           def_delegators :keys,
                          :length,
@@ -76,12 +60,29 @@ module OpenHAB
           def to_hash
             each.to_h { |namespace, meta| [namespace, meta] }
           end
+          alias_method :to_h, :to_hash
+          alias_method :to_map, :to_hash
+          private :to_map
 
-          # @return [Hash, nil]
-          #
           # @!visibility private
-          def [](namespace)
-            fetch(namespace, nil)
+          def fetch(key, *default_value, &block)
+            key = key.to_s
+            return @hash.fetch(key, *default_value, &block) unless attached?
+
+            if default_value.length > 1
+              raise ArgumentError, "Wrong number of arguments (given #{default_value.length + 1}, expected 1..2)"
+            end
+
+            logger.trace("Getting metadata for item: #{@item_name}, namespace '#{key}'")
+            if (m = Provider.registry.get(MetadataKey.new(key, @item_name)))
+              Hash.new(m)
+            elsif block
+              yield key
+            elsif !default_value.empty?
+              default_value.first
+            else
+              raise KeyError, "Key not found #{key.inspect}"
+            end
           end
 
           #
@@ -92,18 +93,12 @@ module OpenHAB
           # @return [Hash]
           #
           # @!visibility private
-          def []=(namespace, value)
+          def store(namespace, value)
             metadata = Hash.from_item(@item_name, namespace, value)
-            return @hash[metadata.uid.namespace] = metadata unless attached? # rubocop:disable Lint/ReturnInVoidContext
+            return @hash[metadata.uid.namespace] = metadata unless attached?
 
             metadata.create_or_update
-            metadata # rubocop:disable Lint/Void
-          end
-          alias_method :store, :[]=
-
-          # @!visibility private
-          def assoc(key)
-            to_hash.assoc(key.to_s)
+            metadata
           end
 
           #
@@ -134,38 +129,8 @@ module OpenHAB
           end
 
           # @!visibility private
-          def compare_by_identity
-            raise NotImplementedError
-          end
-
-          # @!visibility private
-          def compare_by_identity?
-            false
-          end
-
-          # @!visibility private
           def deconstruct_keys
             self
-          end
-
-          # @!visibility private
-          def default(*)
-            nil
-          end
-
-          # @!visibility private
-          def default=(*)
-            raise NotImplementedError
-          end
-
-          # @!visibility private
-          def default_proc
-            nil
-          end
-
-          # @!visibility private
-          def default_proc=(*)
-            raise NotImplementedError
           end
 
           # @!visibility private
@@ -250,33 +215,6 @@ module OpenHAB
           end
 
           # @!visibility private
-          def except(*keys)
-            to_hash.except(*keys.map(&:to_s))
-          end
-
-          # @!visibility private
-          def fetch(key, *default_value, &block)
-            key = key.to_s
-            return @hash.fetch(key, *default_value, &block) unless attached?
-
-            if default_value.length > 1
-              raise "wrong number of arguments (given #{default_value.length + 1}, expected 1..2)",
-                    ArgumentError
-            end
-
-            logger.trace("Getting metadata for item: #{@item_name}, namespace '#{key}'")
-            if (m = Provider.registry.get(MetadataKey.new(key, @item_name)))
-              Hash.new(m)
-            elsif block
-              yield key
-            elsif !default_value.empty?
-              default_value.first
-            else
-              raise "key not found #{key.inspect}", KeyError
-            end
-          end
-
-          # @!visibility private
           def fetch_values(*keys)
             return @hash.fetch_values(keys.map(&:to_s)) if attached?
 
@@ -295,12 +233,6 @@ module OpenHAB
             ["metadata_namespace_hash", @item_name.hash]
           end
 
-          # @!visibility private
-          def keep_if(&block)
-            select!(&block)
-            self
-          end
-
           #
           # @return [true,false] True if the given namespace exists, false otherwise
           #
@@ -311,9 +243,7 @@ module OpenHAB
 
             !Provider.registry.get(MetadataKey.new(key, @item_name)).nil?
           end
-          alias_method :has_key?, :key?
           alias_method :member?, :key?
-          alias_method :include?, :key?
 
           # @!visibility private
           def keys
@@ -324,28 +254,16 @@ module OpenHAB
             each_key.to_a
           end
 
-          #
-          # Merge the given hash with the current metadata. Existing namespace that matches the name
-          # of the new namespace will be overwritten. Others will be added.
-          #
           # @!visibility private
-          def merge!(*others)
-            return self if others.empty?
-
-            others.each do |other|
-              case other
-              when ::Hash, NamespaceHash
-                other.each do |namespace, new_meta|
-                  self[namespace] = new_meta
-                  next unless block_given?
-
-                  current_meta = self[namespace]
-                  new_meta = yield key, current_meta, new_meta unless current_meta.nil?
-                  self[namespace] = new_meta unless new_meta.equal?(current_meta)
-                end
-              else
-                raise ArgumentError, "merge only supports Hash, or another item's metadata"
+          def replace(other)
+            clear
+            case other
+            when ::Hash, NamespaceHash
+              other.each do |namespace, new_meta|
+                self[namespace] = new_meta
               end
+            else
+              raise ArgumentError, "Only supports Hash, or another item's metadata. '#{other.class}' was given."
             end
             self
           end
@@ -381,8 +299,7 @@ module OpenHAB
             r = {}
             Provider.registry.all.each do |meta|
               if meta.uid.item_name == @item_name && keys.include?(meta.uid.namespace)
-                r[meta.uid.namespace] =
-                  Hash.new(meta)
+                r[meta.uid.namespace] = Hash.new(meta)
               end
             end
             r
@@ -402,17 +319,6 @@ module OpenHAB
             return nil unless removed
 
             self
-          end
-
-          # @!visibility private
-          def replace(other)
-            clear
-            merge!(other)
-          end
-
-          # @!visibility private
-          def to_proc
-            ->(k) { self[k] }
           end
 
           # @!visibility private
@@ -459,15 +365,6 @@ module OpenHAB
           def values_at(*keys)
             keys.map(&self)
           end
-
-          #
-          # @return [String]
-          #
-          # @!visibility private
-          def inspect
-            to_hash.inspect
-          end
-          alias_method :to_s, :inspect
         end
       end
     end
