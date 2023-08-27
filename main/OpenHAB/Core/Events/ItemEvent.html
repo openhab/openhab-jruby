@@ -2779,6 +2779,34 @@
       <li class="public ">
   <span class="summary_signature">
     
+      <a href="#group-instance_method" title="#group (instance method)">#<strong>group</strong>  &#x21d2; Item<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The group item whose member had triggered this event.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#item-instance_method" title="#item (instance method)">#<strong>item</strong>  &#x21d2; Item </a>
     
 
@@ -2811,7 +2839,7 @@
   
   
   <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="AbstractEvent.html" title="OpenHAB::Core::Events::AbstractEvent (class)">AbstractEvent</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="AbstractEvent.html#attachment-instance_method" title="OpenHAB::Core::Events::AbstractEvent#attachment (method)">#attachment</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="AbstractEvent.html#attachment-instance_method" title="OpenHAB::Core::Events::AbstractEvent#attachment (method)">#attachment</a></span>, <span class='object_link'><a href="AbstractEvent.html#inputs-instance_method" title="OpenHAB::Core::Events::AbstractEvent#inputs (method)">#inputs</a></span></p>
 
 
 
@@ -2833,7 +2861,84 @@
       
       <span id=""></span>
       <div class="method_details first">
-  <h3 class="signature first" id="item-instance_method">
+  <h3 class="signature first" id="group-instance_method">
+  
+    #<strong>group</strong>  &#x21d2; <tt><span class='object_link'><a href="../Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span></tt><sup>?</sup>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The group item whose member had triggered this event.</p>
+<p>This is the equivalent of openHAB's <code>triggeringGroup</code>, and it is only available
+on a member-of-group trigger.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The group item whose member had triggered this event.
+<code>nil</code> when the event wasn't triggered by a member-of-group trigger.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+33
+34
+35</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/item_event.rb', line 33</span>
+
+<span class="keyword">def</span> <span class="function">group</span>
+  inputs[<span class="string"><span class="delimiter">&quot;</span><span class="content">triggeringGroup</span><span class="delimiter">&quot;</span></span>]&amp;.<span class="keyword">then</span> { |triggering_group| <span class="constant">Items</span>::<span class="constant">Proxy</span>.new(triggering_group) }
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="item-instance_method">
   
     #<strong>item</strong>  &#x21d2; <tt><span class='object_link'><a href="../Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span></tt>  <span class="extras">(readonly)</span>
   
@@ -2895,7 +3000,7 @@
 </div>
 
         <footer>
-  Generated on Sat Aug 26 13:24:07 2023 by
+  Generated on Sun Aug 27 15:12:47 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

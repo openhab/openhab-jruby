@@ -3006,7 +3006,7 @@ Local variable state is not persisted among reloads, see using the <a href="#cac
 See <a href="#file-based-rules">File Based Rules</a> for examples of creating rules within your scripts.</p>
 <h3 id="event-object"><a href="#event-object" class="header-anchor">#</a>Event Object</h3>
 <p>When you use "Item event" as trigger (i.e. "[item] received a command", "[item] was updated", "[item] changed"), there is additional context available for the action in a variable called <code>event</code>.</p>
-<p>This tables gives an overview of the <code>event</code> object for most common trigger types. For full details, explore <span class='object_link'><a href="OpenHAB/Core/Events.html" title="OpenHAB::Core::Events (module)">OpenHAB::Core::Events</a></span>.</p>
+<p>This table gives an overview of the <code>event</code> object for the most common trigger types. For full details, explore <span class='object_link'><a href="OpenHAB/Core/Events.html" title="OpenHAB::Core::Events (module)">OpenHAB::Core::Events</a></span>.</p>
 <table>
 <thead>
 <tr>
@@ -3022,29 +3022,36 @@ See <a href="#file-based-rules">File Based Rules</a> for examples of creating ru
 <td><code>state</code></td>
 <td><span class='object_link'><a href="OpenHAB/Core/Types/State.html" title="OpenHAB::Core::Types::State (module)">State</a></span> or <code>nil</code></td>
 <td><code>[item] changed</code>, <code>[item] was updated</code></td>
-<td>State that triggered event</td>
+<td>State that triggered the event</td>
 <td><code>triggeringItem.state</code></td>
 </tr>
 <tr>
 <td><code>was</code></td>
 <td><span class='object_link'><a href="OpenHAB/Core/Types/State.html" title="OpenHAB::Core::Types::State (module)">State</a></span> or <code>nil</code></td>
 <td><code>[item] changed</code></td>
-<td>Previous state of Item or Group that triggered event</td>
+<td>Previous state of Item or Group that triggered the event</td>
 <td><code>previousState</code></td>
 </tr>
 <tr>
 <td><code>command</code></td>
 <td><span class='object_link'><a href="OpenHAB/Core/Types/Command.html" title="OpenHAB::Core::Types::Command (module)">Command</a></span></td>
 <td><code>[item] received a command</code></td>
-<td>Command that triggered event</td>
+<td>Command that triggered the event</td>
 <td><code>receivedCommand</code></td>
 </tr>
 <tr>
 <td><code>item</code></td>
 <td><span class='object_link'><a href="OpenHAB/Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span></td>
 <td>all</td>
-<td>Item that triggered event</td>
+<td>Item that triggered the event</td>
 <td><code>triggeringItem</code></td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td><span class='object_link'><a href="OpenHAB/Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">GroupItem</a></span></td>
+<td><code>Member of [group] changed</code>, <code>Member of [group] was updated</code>, <code>Member of [group] received a command</code></td>
+<td>Group whose member triggered the event</td>
+<td><code>triggeringGroup</code></td>
 </tr>
 </tbody>
 </table>
@@ -4057,7 +4064,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Sat Aug 26 13:23:59 2023 by
+  Generated on Sun Aug 27 15:12:39 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
