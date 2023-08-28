@@ -84,7 +84,7 @@ module OpenHAB
               @debouncer.call { process_queue(create_queue(event), mod, event) }
             end
           rescue Exception => e
-            raise if defined?(::RSpec) && ::RSpec.current_example.example_group.propagate_exceptions?
+            raise if defined?(::RSpec) && ::RSpec.current_example&.example_group&.propagate_exceptions?
 
             @run_context.send(:logger).log_exception(e)
           end
