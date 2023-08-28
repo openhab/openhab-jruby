@@ -19,6 +19,22 @@ RSpec.describe OpenHAB::Core::Items::GroupItem do
     end
   end
 
+  it "is a group" do
+    expect(Sensors).to be_a_group_item
+  end
+
+  context "with a non-typed group item" do
+    it "is not a number" do
+      expect(Sensors).not_to be_a_number_item
+    end
+  end
+
+  context "with a typed group item" do
+    it "is a number" do
+      expect(Temperatures).to be_a_number_item
+    end
+  end
+
   it "does not respond to #to_a" do
     expect(Temperatures.respond_to?(:to_a)).to be false
   end

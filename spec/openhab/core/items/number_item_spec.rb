@@ -13,6 +13,14 @@ RSpec.describe OpenHAB::Core::Items::NumberItem do
     end
   end
 
+  it "is a number" do
+    expect(item).to be_a_number_item
+  end
+
+  it "is not a group" do
+    expect(item).not_to be_a_group_item
+  end
+
   it "works with grep" do
     items.build { switch_item "Switch1" }
     expect(items.grep(NumberItem)).to match_array [NumberOne, NumberTwo, NumberNull]

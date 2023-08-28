@@ -18,6 +18,22 @@ module OpenHAB
           def ===(other)
             other.is_a?(self)
           end
+
+          private
+
+          # @!macro def_type_predicate
+          #   @!method $1_item?
+          #   Check if the item is a $1 item.
+          #   @note If the item is a group item, it will also return true if the base item is a $1 item.
+          #   @return [true,false]
+          def def_type_predicate(type)
+            type_class = type.to_s.gsub(/(^[a-z]|_[a-z])/) { |letter| letter[-1].upcase }
+            class_eval <<~RUBY, __FILE__, __LINE__ + 1
+              def #{type}_item?           # def date_time_item?
+                is_a?(#{type_class}Item)  #   is_a?(DateTimeItem)
+              end                         # end
+            RUBY
+          end
         end
 
         # @!attribute [r] name
@@ -269,6 +285,21 @@ module OpenHAB
         def provider
           Provider.registry.provider_for(self)
         end
+
+        def_type_predicate(:color)
+        def_type_predicate(:contact)
+        def_type_predicate(:date_time)
+        # @note Color items are also considered dimmer items.
+        def_type_predicate(:dimmer)
+        def_type_predicate(:group)
+        def_type_predicate(:image)
+        def_type_predicate(:location)
+        def_type_predicate(:number)
+        def_type_predicate(:player)
+        def_type_predicate(:rollershutter)
+        def_type_predicate(:string)
+        # @note Color and dimmer items are also considered switch items.
+        def_type_predicate(:switch)
 
         private
 

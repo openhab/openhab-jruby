@@ -5,6 +5,22 @@ RSpec.describe OpenHAB::Core::Items::SwitchItem do
 
   before { items.build { switch_item "SwitchOne" } }
 
+  it "is not a color" do
+    expect(item).not_to be_a_color_item
+  end
+
+  it "is not a dimmer" do
+    expect(item).not_to be_a_dimmer_item
+  end
+
+  it "is a switch" do
+    expect(item).to be_a_switch_item
+  end
+
+  it "is not a group" do
+    expect(item).not_to be_a_group_item
+  end
+
   describe "commands" do
     specify { expect(item.on).to be_on }
     specify { expect(item.off).to be_off }

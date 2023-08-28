@@ -12,6 +12,22 @@ RSpec.describe OpenHAB::Core::Items::DimmerItem do
     end
   end
 
+  it "is not a color" do
+    expect(item).not_to be_a_color_item
+  end
+
+  it "is a dimmer" do
+    expect(item).to be_a_dimmer_item
+  end
+
+  it "is a switch" do
+    expect(item).to be_a_switch_item
+  end
+
+  it "is not a group" do
+    expect(item).not_to be_a_group_item
+  end
+
   describe "#accepted_command_types" do
     it "returns Ruby classes" do
       expect(DimmerOne.accepted_data_types).to eql [PercentType, OnOffType, UnDefType]

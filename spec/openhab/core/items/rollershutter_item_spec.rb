@@ -12,6 +12,14 @@ RSpec.describe OpenHAB::Core::Items::RollershutterItem do
     end
   end
 
+  it "is a rollershutter" do
+    expect(item).to be_a_rollershutter_item
+  end
+
+  it "is not a group" do
+    expect(item).not_to be_a_group_item
+  end
+
   describe "#command" do
     specify { expect((item << 70).state).to eq 70 }
     specify { expect((item << PercentType.new(10)).state).to eq 10 }
