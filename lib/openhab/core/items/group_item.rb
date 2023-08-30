@@ -149,7 +149,7 @@ module OpenHAB
         def type_details
           r = ""
           r += ":#{base_item.type}#{base_item.__send__(:type_details)}" if base_item
-          r += ":#{function.inspect}" if function && !function.equality?
+          r += ":#{function.inspect}" if function && function.to_s != "EQUALITY"
           r
         end
 

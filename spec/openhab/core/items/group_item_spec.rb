@@ -72,43 +72,11 @@ RSpec.describe OpenHAB::Core::Items::GroupItem do
     end
 
     describe "#inspect" do
-      it "includes the function" do
+      it "includes the parameters" do
         items.build do
           group_item "Switches", type: :switch, function: "OR(ON,OFF)"
         end
         expect(Switches.function.inspect).to eql "OR(ON,OFF)"
-      end
-    end
-
-    context "with predicates" do
-      it "works" do
-        items.build do
-          group_item Equality, type: :switch
-          group_item Count, type: :number, function: "COUNT(ON)"
-          group_item Min, type: :number, function: "MIN"
-          group_item Max, type: :number, function: "MAX"
-          group_item Sum, type: :number, function: "SUM"
-          group_item Avg, type: :number, function: "AVG"
-          group_item And, type: :switch, function: "AND(ON,OFF)"
-          group_item Or, type: :switch, function: "OR(ON,OFF)"
-          group_item Nor, type: :switch, function: "NOR(ON,OFF)"
-          group_item Nand, type: :switch, function: "NAND(ON,OFF)"
-          group_item Earliest, type: :date_time, function: "EARLIEST"
-          group_item Latest, type: :date_time, function: "LATEST"
-        end
-
-        functions = %i[equality? count? min? max? sum? avg? and? or? nor? nand? earliest? latest?]
-
-        functions.each do |current|
-          item = items[current.to_s.delete_suffix("?").capitalize]
-          logger.info "#{item} #{item.function} -> #{current}: #{item.function.send(current)}"
-          expect(item.function.send(current)).to be true
-
-          (functions - [current]).each do |other_function|
-            logger.info "#{item} #{item.function} -> #{other_function}: #{item.function.send(other_function)}"
-            expect(item.function.send(other_function)).to be false
-          end
-        end
       end
     end
   end
