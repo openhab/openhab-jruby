@@ -24,10 +24,10 @@ module OpenHAB
       #   things.build do
       #     thing("mqtt:topic:my-switch", "My Switch", bridge: "mqtt:bridge:mosquitto", config: thing_config) do
       #       channel("switch1", "switch", config: {
-      #         stateTopic: "stat/my-switch/switch1/state", commandTopic="cmnd/my-switch/switch1/command"
+      #         stateTopic: "stat/my-switch/switch1/state", commandTopic: "cmnd/my-switch/switch1/command"
       #       })
       #       channel("button1", "string", config: {
-      #         stateTopic: "stat/my-switch/button1/state", commandTopic="cmnd/my-switch/button1/command"
+      #         stateTopic: "stat/my-switch/button1/state", commandTopic: "cmnd/my-switch/button1/command"
       #       })
       #     end
       #   end
