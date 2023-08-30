@@ -149,6 +149,8 @@ module OpenHAB
             end
 
             event.attachment = attachment
+            # events that are not from AbstractEvent do not have inputs
+            event.inputs = inputs if event.respond_to?(:inputs=)
             return event
           end
 
