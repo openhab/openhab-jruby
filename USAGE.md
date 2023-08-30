@@ -61,6 +61,7 @@ If you're new to Ruby, you may want to check out [Ruby Basics](docs/ruby-basics.
   - [Dynamic Generation of Rules](#dynamic-generation-of-rules)
   - [Hooks](#hooks)
 - [Calling Java From JRuby](#calling-java-from-jruby)
+- [Full Documentation](#full-documentation)
 
 Additional [example rules are available](docs/examples.md), as well as examples of [conversions from DSL and Python rules](docs/conversions.md).
 
@@ -1687,7 +1688,7 @@ end
 
 ## Calling Java From JRuby
 
-JRuby can access almost any Java object that's available in the current JVM.
+JRuby can [access almost any Java object](https://github.com/jruby/jruby/wiki/CallingJavaFromJRuby) that's available in the current JVM.
 This is how the library is implemented internally.
 
 ```ruby
@@ -1700,4 +1701,6 @@ formatter = DateTimeFormatter.of_pattern("yyyy MM dd")
 formatter = java.time.format.DateTimeFormatter.of_pattern("yyyy MM dd")
 ```
 
-See [full documentation from JRuby](https://github.com/jruby/jruby/wiki/CallingJavaFromJRuby)
+## Full Documentation
+
+Visit <https://openhab.github.io/openhab-jruby/> for the full documentation of the **openHAB JRuby Helper Library**.
