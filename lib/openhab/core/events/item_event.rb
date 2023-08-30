@@ -31,7 +31,11 @@ module OpenHAB
         # @since openHAB 4.0
         #
         def group
-          inputs["triggeringGroup"]&.then { |triggering_group| Items::Proxy.new(triggering_group) }
+          triggering_group = inputs&.[]("triggeringGroup") ||
+                             CoreExt::Ruby::Object.top_self
+                                                  .instance_eval { triggeringGroup if defined?(triggeringGroup) }
+
+          Items::Proxy.new(triggering_group) if triggering_group
         end
       end
     end
