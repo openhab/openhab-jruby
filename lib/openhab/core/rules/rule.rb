@@ -163,11 +163,24 @@ module OpenHAB
         # Manually trigger the rule
         #
         # @param [Object, nil] event The event to pass to the rule's execution blocks.
-        # @return [void]
+        # @param [Boolean] consider_conditions Whether to check the conditions of the called rules.
+        # @param [kwargs] context The context to pass to the conditions and the actions of the rule.
+        # @return [Hash] A copy of the rule context, including possible return values.
         #
-        def trigger(event = nil)
-          Rules.manager.run_now(uid, false, { "event" => event })
+        def trigger(event = nil, consider_conditions: false, **context)
+          begin
+            event ||= org.openhab.core.automation.events.AutomationEventFactory
+                         .createExecutionEvent(uid, nil, "manual")
+          rescue NameError
+            # @deprecated OH3.4 doesn't have AutomationEventFactory
+          end
+          context.transform_keys!(&:to_s)
+          # Unwrap any proxies and pass raw objects (items, things)
+          context.transform_values! { |value| value.is_a?(Delegator) ? value.__getobj__ : value }
+          context["event"] = event if event # @deprecated OH3.4 - remove if guard. In OH4 `event` will never be nil
+          Rules.manager.run_now(uid, consider_conditions, context)
         end
+        alias_method :run, :trigger
       end
     end
   end

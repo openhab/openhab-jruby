@@ -82,6 +82,16 @@ RSpec.describe OpenHAB::DSL do
       rules["testscript"].trigger
       expect(triggered).to be true
     end
+
+    it "can access its context" do
+      received_context = nil
+      script id: "testscript" do
+        received_context = foo
+      end
+
+      rules["testscript"].trigger(nil, foo: "bar")
+      expect(received_context).to eql "bar"
+    end
   end
 
   describe "#scenes" do
@@ -93,6 +103,16 @@ RSpec.describe OpenHAB::DSL do
 
       rules.scenes["testscene"].trigger
       expect(triggered).to be true
+    end
+
+    it "can access its context" do
+      received_context = nil
+      scene id: "testscene" do
+        received_context = foo
+      end
+
+      rules["testscene"].trigger(nil, foo: "bar")
+      expect(received_context).to eql "bar"
     end
   end
 

@@ -1212,6 +1212,29 @@ rules[rule_uid].enable
 rules[rule_uid].disable
 ```
 
+#### Passing Values to Rules <!-- omit from toc -->
+
+A rule/script may be given additional context/data by the caller. This additional data is available
+within the rule by referring to the names of the context variable. This is applicable to both
+UI rules and file-based rules.
+
+Within the script/rule body (either UI or file rule)
+
+```ruby
+script id: "check_temp" do
+  if CPU_Temperature.state > maxTemperature
+    logger.warn "The CPU is overheating!"
+  end
+end
+```
+
+The above script can be executed, passing it the `maxTemperature` argument from any supported
+scripting language, e.g.:
+
+```ruby
+rules["check_temp"].trigger(maxTemperature: 80 | "°C")
+```
+
 ### Gems
 
 [Bundler](https://bundler.io/) is integrated, enabling any [Ruby gem](https://rubygems.org/) compatible with JRuby to be used within rules. This permits easy access to the vast ecosystem of libraries within the Ruby community.
