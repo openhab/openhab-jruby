@@ -7,6 +7,19 @@
 
 The following examples are for file-based rules but most of them are applicable to [UI rules](../USAGE.md#ui-based-scripts) as well.
 
+- [Trigger when an item changed state](#trigger-when-an-item-changed-state)
+- [Trigger when a group member changed state](#trigger-when-a-group-member-changed-state)
+- [Various ways of sending a command to an item](#various-ways-of-sending-a-command-to-an-item)
+- [Dealing with Item States](#dealing-with-item-states)
+  - [Detect change duration without creating an explicit timer](#detect-change-duration-without-creating-an-explicit-timer)
+  - [Automatic activation of exhaust fan based on humidity sensor](#automatic-activation-of-exhaust-fan-based-on-humidity-sensor)
+- [Executing an External Command](#executing-an-external-command)
+- [Gem Cleanup](#gem-cleanup)
+- [UI rules](#ui-rules)
+  - [Reset the switch that triggered the rule after 5 seconds](#reset-the-switch-that-triggered-the-rule-after-5-seconds)
+  - [Update a DateTime Item with the current time when a motion sensor is triggered](#update-a-datetime-item-with-the-current-time-when-a-motion-sensor-is-triggered)
+  - [Trigger a Scene with an ON OFF Switch](#trigger-a-scene-with-an-on-off-switch)
+
 ## Trigger when an item changed state
 
 ```ruby
@@ -134,6 +147,36 @@ rule "Humidity: Control ExhaustFan" do
 end
 ```
 
+## Executing an External Command
+
+OpenHAB offers {OpenHAB::Core::Actions::Exec.execute_command_line execute_command_line} to execute
+an external command. However, in Ruby it is also possible to use, amongst others:
+
+- [system](https://ruby-doc.org/core/Kernel.html#method-i-system): waits for the execution to finish,
+  then returns `true` (zero exit status), `false` (non-zero exit status), or `nil` if the execution fails.
+- [backtick operator](https://ruby-doc.org/core/Kernel.html#method-i-60): waits for the execution to finish,
+  then returns the stdout output of the command as a String.
+- [spawn](https://ruby-doc.org/core/Kernel.html#method-i-spawn): executes the command and immediately
+  returns control to the caller, leaving the command running in the background. This method returns
+  the pid of the spawned process which must be waited out or detached to avoid creating zombie processes.
+- [IO#popen](https://ruby-doc.org/core/IO.html#method-c-popen): a more advanced method of executing an external process.
+
+Unlike {OpenHAB::Core::Actions::Exec.execute_command_line execute_command_line} which expects each command
+argument to be split up, Ruby's execution methods can accept a single string containing the full command which 
+also allows IO redirections / pipe because it spawns a subshell.
+
+```ruby
+system("ls -l #{OpenHAB::Core.config_folder} > #{OpenHAB::Core.config_folder / "misc" / "directory_listing.txt"}")
+
+# Get the remote Raspberry Pi's core temperature
+core_temperature = `ssh pi@192.168.1.20 vcgencmd measure_temp`
+logger.info "Raspberry Pi's core #{core_temperature}"
+
+# Reboot a remote Raspberry Pi
+pid = spawn("ssh pi@192.168.1.20 sudo reboot")
+Process.detach(pid)
+```
+
 ## Gem Cleanup
 
 The openHAB JRuby add-on will automatically download and install the latest version of the library according to the [settings in jruby.cfg](../USAGE.md#configuration).
@@ -208,7 +251,7 @@ logger.info("#{event.item.name} Triggered")
 items["#{event.item_name}_LastMotion"].update Time.now
 ```
 
-### Trigger a Scene with an ON/OFF Switch
+### Trigger a Scene with an ON OFF Switch
 
 Use [Scenes](https://www.openhab.org/docs/tutorial/rules_scenes.html) in combination with
 {OpenHAB::Core::Items::Semantics Semantic Model}
