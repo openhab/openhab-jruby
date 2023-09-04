@@ -1252,6 +1252,21 @@ end
 
 ### Transformations
 
+#### Using openHAB Transformations <!-- omit from toc -->
+
+Although it can often be done better and more easily in native Ruby code, existing openHAB transformations
+such as MAP, JSONPATH, Jinja Transformation, or even Ruby transformation written in the `/transform` folder
+can also be used by calling the {OpenHAB::DSL.transform transform} method.
+
+```ruby
+# Convert OPEN/CLOSED to Online/Offline using availability.map
+# OPEN=Online
+# CLOSED=OFFLINE
+logger.info transform(:map, "availability.map", LivingRoom_Switch_Availability.state)
+```
+
+#### Writing Custom Transformations in Ruby <!-- omit from toc -->
+
 This add-on also provides the necessary infrastructure to use Ruby for writing [transformations](https://www.openhab.org/docs/configuration/transformations.html).
 
 The main value to be transformed is given to the script in a variable called `input`.
