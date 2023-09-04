@@ -162,7 +162,7 @@ an external command. However, in Ruby it is also possible to use, amongst others
 - [IO#popen](https://ruby-doc.org/core/IO.html#method-c-popen): a more advanced method of executing an external process.
 
 Unlike {OpenHAB::Core::Actions::Exec.execute_command_line execute_command_line} which expects each command
-argument to be split up, Ruby's execution methods can accept a single string containing the full command which 
+argument to be split up, Ruby's execution methods can accept a single string containing the full command which
 also allows IO redirections / pipe because it spawns a subshell.
 
 ```ruby
