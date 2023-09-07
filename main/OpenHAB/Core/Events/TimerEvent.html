@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Module: OpenHAB::CoreExt::Java::Time
+  Class: OpenHAB::Core::Events::TimerEvent
   
     &mdash; openHAB JRuby
   
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
 
 <script type="text/javascript">
-  pathId = "OpenHAB::CoreExt::Java::Time";
+  pathId = "OpenHAB::Core::Events::TimerEvent";
   relpath = '../../../';
 </script>
 
@@ -33,7 +33,9 @@
   <script type="text/javascript" charset="utf-8" src="../../../js/app.js"></script>
 
 
-    <meta property="og:description" name="description" content="Common extensions to Java Date/Time classes - Documentation for openhab-scripting JRuby helper library.">
+    <meta property="og:description" name="description" content="Adds methods to core openHAB TimerEvent to make it more natural in Ruby
+
+This event can be triggered by a `DateTimeTrigger`, `cron`, or `TimeOfDay` trigger. - Documentation for openhab-scripting JRuby helper library.">
     <meta property="og:image" content="https://raw.githubusercontent.com/jruby/collateral/master/logos/PNGs/circle-fill/full-color/jruby-logo-circle-logo-fill-outline-medium.png">
     <meta property="og:image:alt" content="The JRuby logo">
     <script type="text/javascript">
@@ -188,12 +190,12 @@
         
         
   
-  <li class="collapsed">
+  <li class="">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-1" href="../../Core.html" title="OpenHAB::Core (module)">Core</a></span>
       
       
-        <a class="arrow toggle right"></a>
+        <a class="arrow toggle down"></a>
       
     </span>
     
@@ -205,7 +207,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Core/AbstractUID.html" title="OpenHAB::Core::AbstractUID (class)">AbstractUID</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../AbstractUID.html" title="OpenHAB::Core::AbstractUID (class)">AbstractUID</a></span>
       
         &lt; Object
       
@@ -218,7 +220,7 @@
   
   <li class="collapsed">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Core/Actions.html" title="OpenHAB::Core::Actions (module)">Actions</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../Actions.html" title="OpenHAB::Core::Actions (module)">Actions</a></span>
       
       
         <a class="arrow toggle right"></a>
@@ -233,7 +235,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Actions/Audio.html" title="OpenHAB::Core::Actions::Audio (class)">Audio</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Actions/Audio.html" title="OpenHAB::Core::Actions::Audio (class)">Audio</a></span>
       
         &lt; Object
       
@@ -246,7 +248,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Actions/Ephemeris.html" title="OpenHAB::Core::Actions::Ephemeris (class)">Ephemeris</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Actions/Ephemeris.html" title="OpenHAB::Core::Actions::Ephemeris (class)">Ephemeris</a></span>
       
         &lt; Object
       
@@ -259,7 +261,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Actions/Exec.html" title="OpenHAB::Core::Actions::Exec (class)">Exec</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Actions/Exec.html" title="OpenHAB::Core::Actions::Exec (class)">Exec</a></span>
       
         &lt; Object
       
@@ -272,7 +274,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Actions/HTTP.html" title="OpenHAB::Core::Actions::HTTP (class)">HTTP</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Actions/HTTP.html" title="OpenHAB::Core::Actions::HTTP (class)">HTTP</a></span>
       
         &lt; Object
       
@@ -285,7 +287,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Actions/Ping.html" title="OpenHAB::Core::Actions::Ping (class)">Ping</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Actions/Ping.html" title="OpenHAB::Core::Actions::Ping (class)">Ping</a></span>
       
         &lt; Object
       
@@ -298,7 +300,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Actions/Transformation.html" title="OpenHAB::Core::Actions::Transformation (class)">Transformation</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Actions/Transformation.html" title="OpenHAB::Core::Actions::Transformation (class)">Transformation</a></span>
       
         &lt; Object
       
@@ -311,7 +313,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Actions/Voice.html" title="OpenHAB::Core::Actions::Voice (class)">Voice</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Actions/Voice.html" title="OpenHAB::Core::Actions::Voice (class)">Voice</a></span>
       
         &lt; Object
       
@@ -331,7 +333,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Core/Configuration.html" title="OpenHAB::Core::Configuration (class)">Configuration</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../Configuration.html" title="OpenHAB::Core::Configuration (class)">Configuration</a></span>
       
         &lt; Object
       
@@ -344,7 +346,7 @@
   
   <li class="collapsed">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Core/DTO.html" title="OpenHAB::Core::DTO (module)">DTO</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../DTO.html" title="OpenHAB::Core::DTO (module)">DTO</a></span>
       
       
         <a class="arrow toggle right"></a>
@@ -359,7 +361,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/DTO/AbstractThingDTO.html" title="OpenHAB::Core::DTO::AbstractThingDTO (class)">AbstractThingDTO</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../DTO/AbstractThingDTO.html" title="OpenHAB::Core::DTO::AbstractThingDTO (class)">AbstractThingDTO</a></span>
       
         &lt; Object
       
@@ -372,7 +374,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/DTO/ItemChannelLinkDTO.html" title="OpenHAB::Core::DTO::ItemChannelLinkDTO (class)">ItemChannelLinkDTO</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../DTO/ItemChannelLinkDTO.html" title="OpenHAB::Core::DTO::ItemChannelLinkDTO (class)">ItemChannelLinkDTO</a></span>
       
         &lt; Object
       
@@ -391,7 +393,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Core/EmulateHash.html" title="OpenHAB::Core::EmulateHash (module)">EmulateHash</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../EmulateHash.html" title="OpenHAB::Core::EmulateHash (module)">EmulateHash</a></span>
       
       
     </span>
@@ -402,7 +404,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Core/EntityLookup.html" title="OpenHAB::Core::EntityLookup (module)">EntityLookup</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../EntityLookup.html" title="OpenHAB::Core::EntityLookup (module)">EntityLookup</a></span>
       
       
     </span>
@@ -411,12 +413,12 @@
   </li>
 
   
-  <li class="collapsed">
+  <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Core/Events.html" title="OpenHAB::Core::Events (module)">Events</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../Events.html" title="OpenHAB::Core::Events (module)">Events</a></span>
       
       
-        <a class="arrow toggle right"></a>
+        <a class="arrow toggle down"></a>
       
     </span>
     
@@ -428,7 +430,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Events/AbstractEvent.html" title="OpenHAB::Core::Events::AbstractEvent (class)">AbstractEvent</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="AbstractEvent.html" title="OpenHAB::Core::Events::AbstractEvent (class)">AbstractEvent</a></span>
       
         &lt; Object
       
@@ -441,7 +443,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Events/AbstractItemRegistryEvent.html" title="OpenHAB::Core::Events::AbstractItemRegistryEvent (class)">AbstractItemRegistryEvent</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="AbstractItemRegistryEvent.html" title="OpenHAB::Core::Events::AbstractItemRegistryEvent (class)">AbstractItemRegistryEvent</a></span>
       
         &lt; AbstractEvent
       
@@ -454,7 +456,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Events/AbstractThingRegistryEvent.html" title="OpenHAB::Core::Events::AbstractThingRegistryEvent (class)">AbstractThingRegistryEvent</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="AbstractThingRegistryEvent.html" title="OpenHAB::Core::Events::AbstractThingRegistryEvent (class)">AbstractThingRegistryEvent</a></span>
       
         &lt; AbstractEvent
       
@@ -467,7 +469,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Events/ItemAddedEvent.html" title="OpenHAB::Core::Events::ItemAddedEvent (class)">ItemAddedEvent</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ItemAddedEvent.html" title="OpenHAB::Core::Events::ItemAddedEvent (class)">ItemAddedEvent</a></span>
       
         &lt; AbstractItemRegistryEvent
       
@@ -480,7 +482,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Events/ItemCommandEvent.html" title="OpenHAB::Core::Events::ItemCommandEvent (class)">ItemCommandEvent</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ItemCommandEvent.html" title="OpenHAB::Core::Events::ItemCommandEvent (class)">ItemCommandEvent</a></span>
       
         &lt; ItemEvent
       
@@ -493,7 +495,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Events/ItemEvent.html" title="OpenHAB::Core::Events::ItemEvent (class)">ItemEvent</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ItemEvent.html" title="OpenHAB::Core::Events::ItemEvent (class)">ItemEvent</a></span>
       
         &lt; AbstractEvent
       
@@ -506,7 +508,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Events/ItemRemovedEvent.html" title="OpenHAB::Core::Events::ItemRemovedEvent (class)">ItemRemovedEvent</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ItemRemovedEvent.html" title="OpenHAB::Core::Events::ItemRemovedEvent (class)">ItemRemovedEvent</a></span>
       
         &lt; AbstractItemRegistryEvent
       
@@ -519,7 +521,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Events/ItemState.html" title="OpenHAB::Core::Events::ItemState (module)">ItemState</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ItemState.html" title="OpenHAB::Core::Events::ItemState (module)">ItemState</a></span>
       
       
     </span>
@@ -530,7 +532,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Events/ItemStateChangedEvent.html" title="OpenHAB::Core::Events::ItemStateChangedEvent (class)">ItemStateChangedEvent</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ItemStateChangedEvent.html" title="OpenHAB::Core::Events::ItemStateChangedEvent (class)">ItemStateChangedEvent</a></span>
       
         &lt; ItemEvent
       
@@ -543,7 +545,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Events/ItemStateEvent.html" title="OpenHAB::Core::Events::ItemStateEvent (class)">ItemStateEvent</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ItemStateEvent.html" title="OpenHAB::Core::Events::ItemStateEvent (class)">ItemStateEvent</a></span>
       
         &lt; ItemEvent
       
@@ -556,7 +558,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Events/ItemUpdatedEvent.html" title="OpenHAB::Core::Events::ItemUpdatedEvent (class)">ItemUpdatedEvent</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ItemUpdatedEvent.html" title="OpenHAB::Core::Events::ItemUpdatedEvent (class)">ItemUpdatedEvent</a></span>
       
         &lt; AbstractItemRegistryEvent
       
@@ -569,7 +571,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Events/ThingAddedEvent.html" title="OpenHAB::Core::Events::ThingAddedEvent (class)">ThingAddedEvent</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ThingAddedEvent.html" title="OpenHAB::Core::Events::ThingAddedEvent (class)">ThingAddedEvent</a></span>
       
         &lt; AbstractThingRegistryEvent
       
@@ -582,7 +584,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Events/ThingRemovedEvent.html" title="OpenHAB::Core::Events::ThingRemovedEvent (class)">ThingRemovedEvent</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ThingRemovedEvent.html" title="OpenHAB::Core::Events::ThingRemovedEvent (class)">ThingRemovedEvent</a></span>
       
         &lt; AbstractThingRegistryEvent
       
@@ -595,7 +597,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Events/ThingStatusInfoChangedEvent.html" title="OpenHAB::Core::Events::ThingStatusInfoChangedEvent (class)">ThingStatusInfoChangedEvent</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ThingStatusInfoChangedEvent.html" title="OpenHAB::Core::Events::ThingStatusInfoChangedEvent (class)">ThingStatusInfoChangedEvent</a></span>
       
         &lt; AbstractEvent
       
@@ -608,7 +610,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Events/ThingStatusInfoEvent.html" title="OpenHAB::Core::Events::ThingStatusInfoEvent (class)">ThingStatusInfoEvent</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ThingStatusInfoEvent.html" title="OpenHAB::Core::Events::ThingStatusInfoEvent (class)">ThingStatusInfoEvent</a></span>
       
         &lt; AbstractEvent
       
@@ -621,7 +623,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Events/ThingUpdatedEvent.html" title="OpenHAB::Core::Events::ThingUpdatedEvent (class)">ThingUpdatedEvent</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ThingUpdatedEvent.html" title="OpenHAB::Core::Events::ThingUpdatedEvent (class)">ThingUpdatedEvent</a></span>
       
         &lt; AbstractThingRegistryEvent
       
@@ -633,8 +635,8 @@
 
   
   <li class="">
-    <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Events/TimerEvent.html" title="OpenHAB::Core::Events::TimerEvent (class)">TimerEvent</a></span>
+    <span class="sidebar-link active">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="" title="OpenHAB::Core::Events::TimerEvent (class)">TimerEvent</a></span>
       
         &lt; AbstractEvent
       
@@ -653,7 +655,7 @@
   
   <li class="collapsed">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Core/Items.html" title="OpenHAB::Core::Items (module)">Items</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../Items.html" title="OpenHAB::Core::Items (module)">Items</a></span>
       
       
         <a class="arrow toggle right"></a>
@@ -668,7 +670,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/ColorItem.html" title="OpenHAB::Core::Items::ColorItem (class)">ColorItem</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/ColorItem.html" title="OpenHAB::Core::Items::ColorItem (class)">ColorItem</a></span>
       
         &lt; DimmerItem
       
@@ -681,7 +683,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/ContactItem.html" title="OpenHAB::Core::Items::ContactItem (class)">ContactItem</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/ContactItem.html" title="OpenHAB::Core::Items::ContactItem (class)">ContactItem</a></span>
       
         &lt; GenericItem
       
@@ -694,7 +696,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/DateTimeItem.html" title="OpenHAB::Core::Items::DateTimeItem (class)">DateTimeItem</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/DateTimeItem.html" title="OpenHAB::Core::Items::DateTimeItem (class)">DateTimeItem</a></span>
       
         &lt; GenericItem
       
@@ -707,7 +709,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/DimmerItem.html" title="OpenHAB::Core::Items::DimmerItem (class)">DimmerItem</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/DimmerItem.html" title="OpenHAB::Core::Items::DimmerItem (class)">DimmerItem</a></span>
       
         &lt; SwitchItem
       
@@ -720,7 +722,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/GenericItem.html" title="OpenHAB::Core::Items::GenericItem (class)">GenericItem</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/GenericItem.html" title="OpenHAB::Core::Items::GenericItem (class)">GenericItem</a></span>
       
         &lt; Object
       
@@ -733,7 +735,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/GroupFunction.html" title="OpenHAB::Core::Items::GroupFunction (module)">GroupFunction</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/GroupFunction.html" title="OpenHAB::Core::Items::GroupFunction (module)">GroupFunction</a></span>
       
       
     </span>
@@ -744,7 +746,7 @@
   
   <li class="collapsed">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItem</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItem</a></span>
       
         &lt; GenericItem
       
@@ -761,7 +763,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../Core/Items/GroupItem/Members.html" title="OpenHAB::Core::Items::GroupItem::Members (class)">Members</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../Items/GroupItem/Members.html" title="OpenHAB::Core::Items::GroupItem::Members (class)">Members</a></span>
       
         &lt; Object
       
@@ -785,7 +787,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/ImageItem.html" title="OpenHAB::Core::Items::ImageItem (class)">ImageItem</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/ImageItem.html" title="OpenHAB::Core::Items::ImageItem (class)">ImageItem</a></span>
       
         &lt; GenericItem
       
@@ -798,7 +800,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span>
       
       
     </span>
@@ -809,7 +811,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/LocationItem.html" title="OpenHAB::Core::Items::LocationItem (class)">LocationItem</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/LocationItem.html" title="OpenHAB::Core::Items::LocationItem (class)">LocationItem</a></span>
       
         &lt; GenericItem
       
@@ -822,7 +824,7 @@
   
   <li class="collapsed">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/Metadata.html" title="OpenHAB::Core::Items::Metadata (module)">Metadata</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/Metadata.html" title="OpenHAB::Core::Items::Metadata (module)">Metadata</a></span>
       
       
         <a class="arrow toggle right"></a>
@@ -837,7 +839,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../Core/Items/Metadata/Hash.html" title="OpenHAB::Core::Items::Metadata::Hash (class)">Hash</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../Items/Metadata/Hash.html" title="OpenHAB::Core::Items::Metadata::Hash (class)">Hash</a></span>
       
         &lt; Object
       
@@ -850,7 +852,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../Core/Items/Metadata/NamespaceHash.html" title="OpenHAB::Core::Items::Metadata::NamespaceHash (class)">NamespaceHash</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../Items/Metadata/NamespaceHash.html" title="OpenHAB::Core::Items::Metadata::NamespaceHash (class)">NamespaceHash</a></span>
       
         &lt; Object
       
@@ -863,7 +865,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../Core/Items/Metadata/Provider.html" title="OpenHAB::Core::Items::Metadata::Provider (class)">Provider</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../Items/Metadata/Provider.html" title="OpenHAB::Core::Items::Metadata::Provider (class)">Provider</a></span>
       
         &lt; Provider
       
@@ -882,7 +884,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span>
       
         &lt; GenericItem
       
@@ -895,7 +897,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/NumericItem.html" title="OpenHAB::Core::Items::NumericItem (module)">NumericItem</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/NumericItem.html" title="OpenHAB::Core::Items::NumericItem (module)">NumericItem</a></span>
       
       
     </span>
@@ -906,7 +908,7 @@
   
   <li class="collapsed">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/Persistence.html" title="OpenHAB::Core::Items::Persistence (module)">Persistence</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/Persistence.html" title="OpenHAB::Core::Items::Persistence (module)">Persistence</a></span>
       
       
         <a class="arrow toggle right"></a>
@@ -921,7 +923,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../Core/Items/Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../Items/Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span>
       
         &lt; SimpleDelegator
       
@@ -971,7 +973,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/PlayerItem.html" title="OpenHAB::Core::Items::PlayerItem (class)">PlayerItem</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/PlayerItem.html" title="OpenHAB::Core::Items::PlayerItem (class)">PlayerItem</a></span>
       
         &lt; GenericItem
       
@@ -984,7 +986,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/Provider.html" title="OpenHAB::Core::Items::Provider (class)">Provider</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/Provider.html" title="OpenHAB::Core::Items::Provider (class)">Provider</a></span>
       
         &lt; Provider
       
@@ -997,7 +999,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/Registry.html" title="OpenHAB::Core::Items::Registry (class)">Registry</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/Registry.html" title="OpenHAB::Core::Items::Registry (class)">Registry</a></span>
       
         &lt; Object
       
@@ -1010,7 +1012,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/RollershutterItem.html" title="OpenHAB::Core::Items::RollershutterItem (class)">RollershutterItem</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/RollershutterItem.html" title="OpenHAB::Core::Items::RollershutterItem (class)">RollershutterItem</a></span>
       
         &lt; GenericItem
       
@@ -1023,7 +1025,7 @@
   
   <li class="collapsed">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/Semantics.html" title="OpenHAB::Core::Items::Semantics (module)">Semantics</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/Semantics.html" title="OpenHAB::Core::Items::Semantics (module)">Semantics</a></span>
       
       
         <a class="arrow toggle right"></a>
@@ -1042,7 +1044,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../Core/Items/Semantics/Provider.html" title="OpenHAB::Core::Items::Semantics::Provider (class)">Provider</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../Items/Semantics/Provider.html" title="OpenHAB::Core::Items::Semantics::Provider (class)">Provider</a></span>
       
         &lt; Provider
       
@@ -1055,7 +1057,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../Core/Items/Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../Items/Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>
       
       
     </span>
@@ -1067,7 +1069,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../Core/Items/Semantics/TagClassMethods.html" title="OpenHAB::Core::Items::Semantics::TagClassMethods (module)">TagClassMethods</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../Items/Semantics/TagClassMethods.html" title="OpenHAB::Core::Items::Semantics::TagClassMethods (module)">TagClassMethods</a></span>
       
       
     </span>
@@ -1099,7 +1101,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/StateStorage.html" title="OpenHAB::Core::Items::StateStorage (class)">StateStorage</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/StateStorage.html" title="OpenHAB::Core::Items::StateStorage (class)">StateStorage</a></span>
       
         &lt; SimpleDelegator
       
@@ -1112,7 +1114,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/StringItem.html" title="OpenHAB::Core::Items::StringItem (class)">StringItem</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/StringItem.html" title="OpenHAB::Core::Items::StringItem (class)">StringItem</a></span>
       
         &lt; GenericItem
       
@@ -1125,7 +1127,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Items/SwitchItem.html" title="OpenHAB::Core::Items::SwitchItem (class)">SwitchItem</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Items/SwitchItem.html" title="OpenHAB::Core::Items::SwitchItem (class)">SwitchItem</a></span>
       
         &lt; GenericItem
       
@@ -1157,7 +1159,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Core/LazyArray.html" title="OpenHAB::Core::LazyArray (module)">LazyArray</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../LazyArray.html" title="OpenHAB::Core::LazyArray (module)">LazyArray</a></span>
       
       
     </span>
@@ -1168,7 +1170,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Core/Provider.html" title="OpenHAB::Core::Provider (class)">Provider</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../Provider.html" title="OpenHAB::Core::Provider (class)">Provider</a></span>
       
         &lt; org.openhab.core.common.registry.AbstractProvider
       
@@ -1181,7 +1183,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Core/Registry.html" title="OpenHAB::Core::Registry (class)">Registry</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../Registry.html" title="OpenHAB::Core::Registry (class)">Registry</a></span>
       
         &lt; Object
       
@@ -1194,7 +1196,7 @@
   
   <li class="collapsed">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Core/Rules.html" title="OpenHAB::Core::Rules (module)">Rules</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../Rules.html" title="OpenHAB::Core::Rules (module)">Rules</a></span>
       
       
         <a class="arrow toggle right"></a>
@@ -1209,7 +1211,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Rules/Provider.html" title="OpenHAB::Core::Rules::Provider (class)">Provider</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Rules/Provider.html" title="OpenHAB::Core::Rules::Provider (class)">Provider</a></span>
       
         &lt; Provider
       
@@ -1222,7 +1224,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Rules/Registry.html" title="OpenHAB::Core::Rules::Registry (class)">Registry</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Rules/Registry.html" title="OpenHAB::Core::Rules::Registry (class)">Registry</a></span>
       
         &lt; Object
       
@@ -1235,7 +1237,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Rules/Rule.html" title="OpenHAB::Core::Rules::Rule (module)">Rule</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Rules/Rule.html" title="OpenHAB::Core::Rules::Rule (module)">Rule</a></span>
       
       
     </span>
@@ -1249,7 +1251,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Rules/TaggedArray.html" title="OpenHAB::Core::Rules::TaggedArray (class)">TaggedArray</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Rules/TaggedArray.html" title="OpenHAB::Core::Rules::TaggedArray (class)">TaggedArray</a></span>
       
         &lt; Object
       
@@ -1270,7 +1272,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Core/ScriptHandling.html" title="OpenHAB::Core::ScriptHandling (module)">ScriptHandling</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../ScriptHandling.html" title="OpenHAB::Core::ScriptHandling (module)">ScriptHandling</a></span>
       
       
     </span>
@@ -1281,7 +1283,7 @@
   
   <li class="collapsed">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Core/Things.html" title="OpenHAB::Core::Things (module)">Things</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../Things.html" title="OpenHAB::Core::Things (module)">Things</a></span>
       
       
         <a class="arrow toggle right"></a>
@@ -1296,7 +1298,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Things/Channel.html" title="OpenHAB::Core::Things::Channel (class)">Channel</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Things/Channel.html" title="OpenHAB::Core::Things::Channel (class)">Channel</a></span>
       
         &lt; Object
       
@@ -1309,7 +1311,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Things/ChannelUID.html" title="OpenHAB::Core::Things::ChannelUID (class)">ChannelUID</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Things/ChannelUID.html" title="OpenHAB::Core::Things::ChannelUID (class)">ChannelUID</a></span>
       
         &lt; Object
       
@@ -1322,7 +1324,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Things/ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">ItemChannelLink</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Things/ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">ItemChannelLink</a></span>
       
         &lt; Object
       
@@ -1335,7 +1337,7 @@
   
   <li class="collapsed">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Things/Links.html" title="OpenHAB::Core::Things::Links (module)">Links</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Things/Links.html" title="OpenHAB::Core::Things::Links (module)">Links</a></span>
       
       
         <a class="arrow toggle right"></a>
@@ -1350,7 +1352,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../Core/Things/Links/Provider.html" title="OpenHAB::Core::Things::Links::Provider (class)">Provider</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../Things/Links/Provider.html" title="OpenHAB::Core::Things::Links::Provider (class)">Provider</a></span>
       
         &lt; Provider
       
@@ -1369,7 +1371,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Things/ProfileCallback.html" title="OpenHAB::Core::Things::ProfileCallback (module)">ProfileCallback</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Things/ProfileCallback.html" title="OpenHAB::Core::Things::ProfileCallback (module)">ProfileCallback</a></span>
       
       
     </span>
@@ -1380,7 +1382,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Things/Provider.html" title="OpenHAB::Core::Things::Provider (class)">Provider</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Things/Provider.html" title="OpenHAB::Core::Things::Provider (class)">Provider</a></span>
       
         &lt; Provider
       
@@ -1393,7 +1395,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Things/Registry.html" title="OpenHAB::Core::Things::Registry (class)">Registry</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Things/Registry.html" title="OpenHAB::Core::Things::Registry (class)">Registry</a></span>
       
         &lt; Object
       
@@ -1406,7 +1408,7 @@
   
   <li class="collapsed">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Thing</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Thing</a></span>
       
       
         <a class="arrow toggle right"></a>
@@ -1421,7 +1423,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../Core/Things/Thing/ChannelsArray.html" title="OpenHAB::Core::Things::Thing::ChannelsArray (class)">ChannelsArray</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../Things/Thing/ChannelsArray.html" title="OpenHAB::Core::Things::Thing::ChannelsArray (class)">ChannelsArray</a></span>
       
         &lt; Array
       
@@ -1468,7 +1470,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Core/Timer.html" title="OpenHAB::Core::Timer (class)">Timer</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../Timer.html" title="OpenHAB::Core::Timer (class)">Timer</a></span>
       
         &lt; Object
       
@@ -1481,7 +1483,7 @@
   
   <li class="collapsed">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Core/Types.html" title="OpenHAB::Core::Types (module)">Types</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../Types.html" title="OpenHAB::Core::Types (module)">Types</a></span>
       
       
         <a class="arrow toggle right"></a>
@@ -1496,7 +1498,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/Command.html" title="OpenHAB::Core::Types::Command (module)">Command</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/Command.html" title="OpenHAB::Core::Types::Command (module)">Command</a></span>
       
       
     </span>
@@ -1507,7 +1509,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/DateTimeType.html" title="OpenHAB::Core::Types::DateTimeType (class)">DateTimeType</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/DateTimeType.html" title="OpenHAB::Core::Types::DateTimeType (class)">DateTimeType</a></span>
       
         &lt; Object
       
@@ -1520,7 +1522,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span>
       
         &lt; Object
       
@@ -1533,7 +1535,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/HSBType.html" title="OpenHAB::Core::Types::HSBType (class)">HSBType</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/HSBType.html" title="OpenHAB::Core::Types::HSBType (class)">HSBType</a></span>
       
         &lt; PercentType
       
@@ -1546,7 +1548,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/IncreaseDecreaseType.html" title="OpenHAB::Core::Types::IncreaseDecreaseType (class)">IncreaseDecreaseType</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/IncreaseDecreaseType.html" title="OpenHAB::Core::Types::IncreaseDecreaseType (class)">IncreaseDecreaseType</a></span>
       
         &lt; Object
       
@@ -1559,7 +1561,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/NextPreviousType.html" title="OpenHAB::Core::Types::NextPreviousType (class)">NextPreviousType</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/NextPreviousType.html" title="OpenHAB::Core::Types::NextPreviousType (class)">NextPreviousType</a></span>
       
         &lt; Object
       
@@ -1572,7 +1574,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/NumericType.html" title="OpenHAB::Core::Types::NumericType (module)">NumericType</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/NumericType.html" title="OpenHAB::Core::Types::NumericType (module)">NumericType</a></span>
       
       
     </span>
@@ -1583,7 +1585,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/OnOffType.html" title="OpenHAB::Core::Types::OnOffType (class)">OnOffType</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/OnOffType.html" title="OpenHAB::Core::Types::OnOffType (class)">OnOffType</a></span>
       
         &lt; Object
       
@@ -1596,7 +1598,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/OpenClosedType.html" title="OpenHAB::Core::Types::OpenClosedType (class)">OpenClosedType</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/OpenClosedType.html" title="OpenHAB::Core::Types::OpenClosedType (class)">OpenClosedType</a></span>
       
         &lt; Object
       
@@ -1609,7 +1611,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span>
       
         &lt; DecimalType
       
@@ -1622,7 +1624,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/PlayPauseType.html" title="OpenHAB::Core::Types::PlayPauseType (class)">PlayPauseType</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/PlayPauseType.html" title="OpenHAB::Core::Types::PlayPauseType (class)">PlayPauseType</a></span>
       
         &lt; Object
       
@@ -1635,7 +1637,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/PointType.html" title="OpenHAB::Core::Types::PointType (class)">PointType</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/PointType.html" title="OpenHAB::Core::Types::PointType (class)">PointType</a></span>
       
         &lt; Object
       
@@ -1648,7 +1650,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/QuantityType.html" title="OpenHAB::Core::Types::QuantityType (class)">QuantityType</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/QuantityType.html" title="OpenHAB::Core::Types::QuantityType (class)">QuantityType</a></span>
       
         &lt; Object
       
@@ -1661,7 +1663,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/RawType.html" title="OpenHAB::Core::Types::RawType (class)">RawType</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/RawType.html" title="OpenHAB::Core::Types::RawType (class)">RawType</a></span>
       
         &lt; Object
       
@@ -1674,7 +1676,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/RefreshType.html" title="OpenHAB::Core::Types::RefreshType (class)">RefreshType</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/RefreshType.html" title="OpenHAB::Core::Types::RefreshType (class)">RefreshType</a></span>
       
         &lt; Object
       
@@ -1687,7 +1689,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/RewindFastforwardType.html" title="OpenHAB::Core::Types::RewindFastforwardType (class)">RewindFastforwardType</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/RewindFastforwardType.html" title="OpenHAB::Core::Types::RewindFastforwardType (class)">RewindFastforwardType</a></span>
       
         &lt; Object
       
@@ -1700,7 +1702,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/State.html" title="OpenHAB::Core::Types::State (module)">State</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/State.html" title="OpenHAB::Core::Types::State (module)">State</a></span>
       
       
     </span>
@@ -1711,7 +1713,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/StopMoveType.html" title="OpenHAB::Core::Types::StopMoveType (class)">StopMoveType</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/StopMoveType.html" title="OpenHAB::Core::Types::StopMoveType (class)">StopMoveType</a></span>
       
         &lt; Object
       
@@ -1724,7 +1726,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/StringType.html" title="OpenHAB::Core::Types::StringType (class)">StringType</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/StringType.html" title="OpenHAB::Core::Types::StringType (class)">StringType</a></span>
       
         &lt; Object
       
@@ -1737,7 +1739,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/Type.html" title="OpenHAB::Core::Types::Type (module)">Type</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/Type.html" title="OpenHAB::Core::Types::Type (module)">Type</a></span>
       
       
     </span>
@@ -1748,7 +1750,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/UnDefType.html" title="OpenHAB::Core::Types::UnDefType (class)">UnDefType</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/UnDefType.html" title="OpenHAB::Core::Types::UnDefType (class)">UnDefType</a></span>
       
         &lt; Object
       
@@ -1761,7 +1763,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Types/UpDownType.html" title="OpenHAB::Core::Types::UpDownType (class)">UpDownType</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/UpDownType.html" title="OpenHAB::Core::Types::UpDownType (class)">UpDownType</a></span>
       
         &lt; Object
       
@@ -1781,7 +1783,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../Core/ValueCache.html" title="OpenHAB::Core::ValueCache (module)">ValueCache</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../ValueCache.html" title="OpenHAB::Core::ValueCache (module)">ValueCache</a></span>
       
       
     </span>
@@ -1799,12 +1801,12 @@
   </li>
 
   
-  <li class="">
+  <li class="collapsed">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-1" href="../../CoreExt.html" title="OpenHAB::CoreExt (module)">CoreExt</a></span>
       
       
-        <a class="arrow toggle down"></a>
+        <a class="arrow toggle right"></a>
       
     </span>
     
@@ -1816,7 +1818,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../Between.html" title="OpenHAB::CoreExt::Between (module)">Between</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../CoreExt/Between.html" title="OpenHAB::CoreExt::Between (module)">Between</a></span>
       
       
     </span>
@@ -1827,7 +1829,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../Ephemeris.html" title="OpenHAB::CoreExt::Ephemeris (module)">Ephemeris</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../CoreExt/Ephemeris.html" title="OpenHAB::CoreExt::Ephemeris (module)">Ephemeris</a></span>
       
       
     </span>
@@ -1836,12 +1838,12 @@
   </li>
 
   
-  <li class="">
+  <li class="collapsed">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../Java.html" title="OpenHAB::CoreExt::Java (module)">Java</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../CoreExt/Java.html" title="OpenHAB::CoreExt::Java (module)">Java</a></span>
       
       
-        <a class="arrow toggle down"></a>
+        <a class="arrow toggle right"></a>
       
     </span>
     
@@ -1853,7 +1855,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Class.html" title="OpenHAB::CoreExt::Java::Class (class)">Class</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../CoreExt/Java/Class.html" title="OpenHAB::CoreExt::Java::Class (class)">Class</a></span>
       
         &lt; Object
       
@@ -1866,7 +1868,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Duration.html" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../CoreExt/Java/Duration.html" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span>
       
         &lt; Object
       
@@ -1879,7 +1881,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="LocalDate.html" title="OpenHAB::CoreExt::Java::LocalDate (class)">LocalDate</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../CoreExt/Java/LocalDate.html" title="OpenHAB::CoreExt::Java::LocalDate (class)">LocalDate</a></span>
       
         &lt; Object
       
@@ -1892,7 +1894,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="LocalTime.html" title="OpenHAB::CoreExt::Java::LocalTime (class)">LocalTime</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../CoreExt/Java/LocalTime.html" title="OpenHAB::CoreExt::Java::LocalTime (class)">LocalTime</a></span>
       
         &lt; Object
       
@@ -1905,7 +1907,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Month.html" title="OpenHAB::CoreExt::Java::Month (class)">Month</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../CoreExt/Java/Month.html" title="OpenHAB::CoreExt::Java::Month (class)">Month</a></span>
       
         &lt; Object
       
@@ -1918,7 +1920,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="MonthDay.html" title="OpenHAB::CoreExt::Java::MonthDay (class)">MonthDay</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../CoreExt/Java/MonthDay.html" title="OpenHAB::CoreExt::Java::MonthDay (class)">MonthDay</a></span>
       
         &lt; Object
       
@@ -1931,7 +1933,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Period.html" title="OpenHAB::CoreExt::Java::Period (class)">Period</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../CoreExt/Java/Period.html" title="OpenHAB::CoreExt::Java::Period (class)">Period</a></span>
       
         &lt; Object
       
@@ -1944,18 +1946,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="TemporalAmount.html" title="OpenHAB::CoreExt::Java::TemporalAmount (module)">TemporalAmount</a></span>
-      
-      
-    </span>
-    
-    
-  </li>
-
-  
-  <li class="">
-    <span class="sidebar-link active">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="" title="OpenHAB::CoreExt::Java::Time (module)">Time</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../CoreExt/Java/TemporalAmount.html" title="OpenHAB::CoreExt::Java::TemporalAmount (module)">TemporalAmount</a></span>
       
       
     </span>
@@ -1966,7 +1957,18 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../CoreExt/Java/Time.html" title="OpenHAB::CoreExt::Java::Time (module)">Time</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../CoreExt/Java/ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span>
       
         &lt; Object
       
@@ -1985,7 +1987,7 @@
   
   <li class="collapsed">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../Ruby.html" title="OpenHAB::CoreExt::Ruby (module)">Ruby</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../CoreExt/Ruby.html" title="OpenHAB::CoreExt::Ruby (module)">Ruby</a></span>
       
       
         <a class="arrow toggle right"></a>
@@ -2000,7 +2002,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Ruby/Numeric.html" title="OpenHAB::CoreExt::Ruby::Numeric (module)">Numeric</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../CoreExt/Ruby/Numeric.html" title="OpenHAB::CoreExt::Ruby::Numeric (module)">Numeric</a></span>
       
       
     </span>
@@ -2011,7 +2013,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Ruby/QuantityTypeConversion.html" title="OpenHAB::CoreExt::Ruby::QuantityTypeConversion (module)">QuantityTypeConversion</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../CoreExt/Ruby/QuantityTypeConversion.html" title="OpenHAB::CoreExt::Ruby::QuantityTypeConversion (module)">QuantityTypeConversion</a></span>
       
       
     </span>
@@ -2022,7 +2024,7 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Ruby/Range.html" title="OpenHAB::CoreExt::Ruby::Range (module)">Range</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../CoreExt/Ruby/Range.html" title="OpenHAB::CoreExt::Ruby::Range (module)">Range</a></span>
       
       
     </span>
@@ -2765,66 +2767,85 @@
       </aside>
 
       <main class="page">
-        <div class="content"><h1>Module: OpenHAB::CoreExt::Java::Time
+        <div class="content"><h1>Class: OpenHAB::Core::Events::TimerEvent
   
   
   
 </h1>
 <div class="box_info">
   
-
-  
-  
-  
-  
-  
-
-  
   <dl>
-    <dt>Included in:</dt>
-    <dd><span class='object_link'><a href="LocalDate.html" title="OpenHAB::CoreExt::Java::LocalDate (class)">LocalDate</a></span>, <span class='object_link'><a href="Month.html" title="OpenHAB::CoreExt::Java::Month (class)">Month</a></span>, <span class='object_link'><a href="MonthDay.html" title="OpenHAB::CoreExt::Java::MonthDay (class)">MonthDay</a></span>, <span class='object_link'><a href="ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span></dd>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="AbstractEvent.html" title="OpenHAB::Core::Events::AbstractEvent (class)">AbstractEvent</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'>Object</span></li>
+          
+            <li class="next"><span class='object_link'><a href="AbstractEvent.html" title="OpenHAB::Core::Events::AbstractEvent (class)">AbstractEvent</a></span></li>
+          
+            <li class="next">OpenHAB::Core::Events::TimerEvent</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
   </dl>
+  
+
+  
+  
+  
+  
+  
+
   
 
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/openhab/core_ext/java/time.rb</dd>
+    <dd>lib/openhab/core/events/timer_event.rb</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Common extensions to Java Date/Time classes</p>
+    <p>Adds methods to core openHAB TimerEvent to make it more natural in Ruby</p>
+<p>This event can be triggered by a <code>DateTimeTrigger</code>, <code>cron</code>, or <code>TimeOfDay</code> trigger.</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
 
 
-
-
-
-  
-    <h2 id="Instance Method Summary">
-      Instance Method Summary
-      <small><a href="#" class="summary_toggle">collapse</a></small>
-    </h2>
-
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
     
-
-    <ul class="summary">
-      
-        <li class="public ">
+      <li class="public ">
   <span class="summary_signature">
     
-      <a href="#<=>-instance_method" title="#&lt;=&gt; (instance method)">#<strong>&lt;=&gt;</strong>(other)  &#x21d2; Integer </a>
+      <a href="#cron_expression-instance_method" title="#cron_expression (instance method)">#<strong>cron_expression</strong>  &#x21d2; String<sup>?</sup> </a>
     
 
     
@@ -2832,22 +2853,27 @@
   
   
   
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
   
   
   
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Compare against another time object.</p>
+    <span class="summary_desc"><div class='inline'><p>The cron expression that triggered this event.</p>
 </div></span>
   
 </li>
 
-      
-        <li class="public ">
+    
+      <li class="public ">
   <span class="summary_signature">
     
-      <a href="#coerce-instance_method" title="#coerce (instance method)">#<strong>coerce</strong>(other)  &#x21d2; Array<sup>?</sup> </a>
+      <a href="#item-instance_method" title="#item (instance method)">#<strong>item</strong>  &#x21d2; Item<sup>?</sup> </a>
     
 
     
@@ -2855,38 +2881,83 @@
   
   
   
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
   
   
   
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Convert <code>other</code> to this class, if possible.</p>
+    <span class="summary_desc"><div class='inline'><p>The DateTime item that triggered this event.</p>
 </div></span>
   
 </li>
 
-      
-    </ul>
-  
-
-
-
-  
-  
-  
-  
-  
-  
-
-  <div id="instance_method_details" class="method_details_list">
-    <h2>Instance Method Details</h2>
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#time-instance_method" title="#time (instance method)">#<strong>time</strong>  &#x21d2; LocalTime<sup>?</sup> </a>
+    
 
     
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The configured time for this TimeOfDay trigger event.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+  
+  
+  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="AbstractEvent.html" title="OpenHAB::Core::Events::AbstractEvent (class)">AbstractEvent</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="AbstractEvent.html#attachment-instance_method" title="OpenHAB::Core::Events::AbstractEvent#attachment (method)">#attachment</a></span>, <span class='object_link'><a href="AbstractEvent.html#inputs-instance_method" title="OpenHAB::Core::Events::AbstractEvent#inputs (method)">#inputs</a></span></p>
+
+
+
+
+  
+  
+  
+  
+  
+  
+  <h2>Method Summary</h2>
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="AbstractEvent.html" title="OpenHAB::Core::Events::AbstractEvent (class)">AbstractEvent</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="AbstractEvent.html#inspect-instance_method" title="OpenHAB::Core::Events::AbstractEvent#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="AbstractEvent.html#payload-instance_method" title="OpenHAB::Core::Events::AbstractEvent#payload (method)">#payload</a></span></p>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
       <div class="method_details first">
-  <h3 class="signature first" id="<=>-instance_method">
+  <h3 class="signature first" id="cron_expression-instance_method">
   
-    #<strong>&lt;=&gt;</strong>(other)  &#x21d2; <tt><span class='object_link'><a href="../../../Integer.html" title="Integer (class)">Integer</a></span></tt> 
+    #<strong>cron_expression</strong>  &#x21d2; <tt>String</tt><sup>?</sup>  <span class="extras">(readonly)</span>
   
 
   
@@ -2894,45 +2965,42 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Compare against another time object</p>
+    <p>Returns The cron expression that triggered this event.
+<code>nil</code> when this event wasn't triggered by a cron trigger.</p>
 
 
   </div>
 </div>
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
   
-    <li>
-      
-        <span class='name'>other</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'>Object</span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>The other time object to compare against.</p>
-</div>
-      
-    </li>
-  
-</ul>
-
 <p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><p>-1, 0, +1 depending on whether <code>other</code> is
-less than, equal to, or greater than self</p>
+        <div class='inline'><p>The cron expression that triggered this event.
+<code>nil</code> when this event wasn't triggered by a cron trigger.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.0</p>
 </div>
       
     </li>
@@ -2945,88 +3013,167 @@ less than, equal to, or greater than self</p>
       <pre class="lines">
 
 
-40
+23
+24
+25</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/timer_event.rb', line 23</span>
+
+<span class="keyword">def</span> <span class="function">cron_expression</span>
+  payload&amp;.[](<span class="symbol">:cronExpression</span>)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="item-instance_method">
+  
+    #<strong>item</strong>  &#x21d2; <tt><span class='object_link'><a href="../Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span></tt><sup>?</sup>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The DateTime item that triggered this event.
+<code>nil</code> when this event wasn't triggered by a DateTimeItem trigger.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The DateTime item that triggered this event.
+<code>nil</code> when this event wasn't triggered by a DateTimeItem trigger.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+32
+33
+34</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/timer_event.rb', line 32</span>
+
+<span class="keyword">def</span> <span class="function">item</span>
+  payload&amp;.[](<span class="symbol">:itemName</span>)&amp;.<span class="keyword">then</span> { |item_name| <span class="constant">EntityLookup</span>.lookup_item(item_name) }
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="time-instance_method">
+  
+    #<strong>time</strong>  &#x21d2; <tt><span class='object_link'><a href="../../CoreExt/Java/LocalTime.html" title="OpenHAB::CoreExt::Java::LocalTime (class)">LocalTime</a></span></tt><sup>?</sup>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The configured time for this TimeOfDay trigger event.
+<code>nil</code> when this event wasn't triggered by a TimeOfDay trigger.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../CoreExt/Java/LocalTime.html" title="OpenHAB::CoreExt::Java::LocalTime (class)">LocalTime</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The configured time for this TimeOfDay trigger event.
+<code>nil</code> when this event wasn't triggered by a TimeOfDay trigger.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
 41
 42
-43
-44
-45
-46
-47
-48</pre>
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/time.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/timer_event.rb', line 41</span>
 
-<span class="keyword">def</span> <span class="function">&lt;=&gt;</span>(other)
-  <span class="keyword">if</span> other.is_a?(<span class="predefined-constant">self</span>.class)
-    compare_to(other)
-  <span class="keyword">elsif</span> other.respond_to?(<span class="symbol">:coerce</span>)
-    <span class="keyword">return</span> <span class="predefined-constant">nil</span> <span class="keyword">unless</span> (lhs, rhs = other.coerce(<span class="predefined-constant">self</span>))
-
-    lhs &lt;=&gt; rhs
-  <span class="keyword">end</span>
-<span class="keyword">end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="coerce-instance_method">
-  
-    #<strong>coerce</strong>(other)  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span></tt><sup>?</sup> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Convert <code>other</code> to this class, if possible</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span></tt>, <tt>nil</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-52
-53
-54
-55
-56
-57
-58</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/time.rb', line 52</span>
-
-<span class="keyword">def</span> <span class="function">coerce</span>(other)
-  coercion_method = <span class="predefined-constant">self</span>.class.coercion_method
-  <span class="keyword">return</span> <span class="keyword">unless</span> other.respond_to?(coercion_method)
-  <span class="keyword">return</span> [other.send(coercion_method), <span class="predefined-constant">self</span>] <span class="keyword">if</span> other.method(coercion_method).arity.zero?
-
-  [other.send(coercion_method, <span class="predefined-constant">self</span>), <span class="predefined-constant">self</span>]
+<span class="keyword">def</span> <span class="function">time</span>
+  payload&amp;.[](<span class="symbol">:time</span>)&amp;.<span class="keyword">then</span> { |time| <span class="constant">LocalTime</span>.parse(time) }
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3034,11 +3181,12 @@ less than, equal to, or greater than self</p>
 </div>
     
   </div>
+
 
 </div>
 
         <footer>
-  Generated on Thu Sep  7 22:15:40 2023 by
+  Generated on Thu Sep  7 22:15:50 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

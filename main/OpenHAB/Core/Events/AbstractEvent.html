@@ -631,6 +631,19 @@
     
   </li>
 
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="TimerEvent.html" title="OpenHAB::Core::Events::TimerEvent (class)">TimerEvent</a></span>
+      
+        &lt; AbstractEvent
+      
+      
+    </span>
+    
+    
+  </li>
+
 
         
       </ul>
@@ -2804,7 +2817,7 @@
 
 </div><div id="subclasses">
   <h2>Direct Known Subclasses</h2>
-  <p class="children"><span class='object_link'><a href="AbstractItemRegistryEvent.html" title="OpenHAB::Core::Events::AbstractItemRegistryEvent (class)">AbstractItemRegistryEvent</a></span>, <span class='object_link'><a href="AbstractThingRegistryEvent.html" title="OpenHAB::Core::Events::AbstractThingRegistryEvent (class)">AbstractThingRegistryEvent</a></span>, <span class='object_link'><a href="ItemEvent.html" title="OpenHAB::Core::Events::ItemEvent (class)">ItemEvent</a></span>, <span class='object_link'><a href="ThingStatusInfoChangedEvent.html" title="OpenHAB::Core::Events::ThingStatusInfoChangedEvent (class)">ThingStatusInfoChangedEvent</a></span>, <span class='object_link'><a href="ThingStatusInfoEvent.html" title="OpenHAB::Core::Events::ThingStatusInfoEvent (class)">ThingStatusInfoEvent</a></span></p>
+  <p class="children"><span class='object_link'><a href="AbstractItemRegistryEvent.html" title="OpenHAB::Core::Events::AbstractItemRegistryEvent (class)">AbstractItemRegistryEvent</a></span>, <span class='object_link'><a href="AbstractThingRegistryEvent.html" title="OpenHAB::Core::Events::AbstractThingRegistryEvent (class)">AbstractThingRegistryEvent</a></span>, <span class='object_link'><a href="ItemEvent.html" title="OpenHAB::Core::Events::ItemEvent (class)">ItemEvent</a></span>, <span class='object_link'><a href="ThingStatusInfoChangedEvent.html" title="OpenHAB::Core::Events::ThingStatusInfoChangedEvent (class)">ThingStatusInfoChangedEvent</a></span>, <span class='object_link'><a href="ThingStatusInfoEvent.html" title="OpenHAB::Core::Events::ThingStatusInfoEvent (class)">ThingStatusInfoEvent</a></span>, <span class='object_link'><a href="TimerEvent.html" title="OpenHAB::Core::Events::TimerEvent (class)">TimerEvent</a></span></p>
 </div>
 
 
@@ -2896,6 +2909,29 @@
 
   
     <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#payload-instance_method" title="#payload (instance method)">#<strong>payload</strong>  &#x21d2; Hash<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the event payload as a Hash.</p>
+</div></span>
   
 </li>
 
@@ -3071,12 +3107,72 @@ alias_method <span class="symbol">:inspect</span>, <span class="symbol">:to_s</s
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="payload-instance_method">
+  
+    #<strong>payload</strong>  &#x21d2; <tt>Hash</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the event payload as a Hash.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The payload object parsed by JSON. The keys are symbolized.
+<code>nil</code> when the payload is empty.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+25
+26
+27
+28</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/abstract_event.rb', line 25</span>
+
+<span class="keyword">def</span> <span class="function">payload</span>
+  require <span class="string"><span class="delimiter">&quot;</span><span class="content">json</span><span class="delimiter">&quot;</span></span>
+  <span class="instance-variable">@payload</span> ||= <span class="constant">JSON</span>.parse(get_payload, <span class="key">symbolize_names</span>: <span class="predefined-constant">true</span>) <span class="keyword">unless</span> get_payload.empty?
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
         <footer>
-  Generated on Thu Sep  7 22:14:57 2023 by
+  Generated on Thu Sep  7 22:15:52 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
