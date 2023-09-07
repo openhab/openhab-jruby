@@ -3819,6 +3819,16 @@ logger.info(my_lib_version)
 <span class="keyword">end</span>
 </code></pre>
 <h3 id="transformations"><a href="#transformations" class="header-anchor">#</a>Transformations</h3>
+<h4 id="using-openhab-transformations"><a href="#using-openhab-transformations" class="header-anchor">#</a>Using openHAB Transformations <!-- raw HTML omitted --></h4>
+<p>Although it can often be done better and more easily in native Ruby code, existing openHAB transformations
+such as MAP, JSONPATH, Jinja Transformation, or even Ruby transformation written in the <code>/transform</code> folder
+can also be used by calling the <span class='object_link'><a href="OpenHAB/DSL.html#transform-class_method" title="OpenHAB::DSL.transform (method)">transform</a></span> method.</p>
+<pre class="code ruby"><code class="ruby"><span class="comment"># Convert OPEN/CLOSED to Online/Offline using availability.map</span>
+<span class="comment"># OPEN=Online</span>
+<span class="comment"># CLOSED=OFFLINE</span>
+logger.info transform(<span class="symbol">:map</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">availability.map</span><span class="delimiter">&quot;</span></span>, <span class="constant">LivingRoom_Switch_Availability</span>.state)
+</code></pre>
+<h4 id="writing-custom-transformations-in-ruby"><a href="#writing-custom-transformations-in-ruby" class="header-anchor">#</a>Writing Custom Transformations in Ruby <!-- raw HTML omitted --></h4>
 <p>This add-on also provides the necessary infrastructure to use Ruby for writing <a href="https://www.openhab.org/docs/configuration/transformations.html">transformations</a>.</p>
 <p>The main value to be transformed is given to the script in a variable called <code>input</code>.
 Note that the values are passed to the transformation as Strings even for numeric items and data types.</p>
@@ -4129,7 +4139,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Thu Sep  7 22:56:06 2023 by
+  Generated on Thu Sep  7 22:57:03 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
