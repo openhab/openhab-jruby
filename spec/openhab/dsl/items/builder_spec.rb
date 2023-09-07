@@ -326,11 +326,57 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
       expect(StringItem1.thing).to be things["astro:sun:home"]
     end
 
+    it "can link an item to multiple channels" do
+      things.build do
+        thing "astro:moon:home", "Astro Moon Data", config: { "geolocation" => "0,0" }
+      end
+      items.build do
+        date_time_item "DateTime1" do
+          channel  "astro:sun:home:rise#start"
+          channel  "astro:moon:home:rise#start"
+        end
+      end
+      expect(DateTime1.things).to match_array([things["astro:sun:home"], things["astro:moon:home"]])
+    end
+
     it "can link to an item channel with a profile" do
       items.build do
         date_time_item "LastUpdated", channel: ["astro:sun:home:season#name", { profile: "system:timestamp-update" }]
       end
       expect(LastUpdated.thing).to be things["astro:sun:home"]
+    end
+
+    it "combines thing (string) and channel" do
+      items.build do
+        string_item "StringItem1", thing: "astro:sun:home", channel: "season#name"
+      end
+      expect(StringItem1.thing).to be things["astro:sun:home"]
+    end
+
+    it "combines thing and channel" do
+      items.build do
+        string_item "StringItem1", thing: things["astro:sun:home"], channel: "season#name"
+      end
+      expect(StringItem1.thing).to be things["astro:sun:home"]
+    end
+
+    it "ignores thing when channel contains multiple segments" do
+      items.build do
+        string_item "StringItem1", thing: "foo:baz:bar", channel: "astro:sun:home:season#name"
+      end
+      expect(StringItem1.thing).to be things["astro:sun:home"]
+    end
+
+    it "allows mixing short and fully qualified channels" do
+      things.build do
+        thing "astro:moon:home", "Astro Moon Data", config: { "geolocation" => "0,0" }
+      end
+      items.build do
+        string_item "StringItem1", thing: "astro:moon:home", channel: "astro:sun:home:rise#start" do
+          channel "rise#start"
+        end
+      end
+      expect(StringItem1.things).to match_array [things["astro:sun:home"], things["astro:moon:home"]]
     end
 
     it "implicitly assumes a group's thing (string) for channels" do
@@ -371,6 +417,18 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
         end
       end
       expect(StringItem1.thing).to be things["astro:sun:home"]
+    end
+
+    it "item's thing overrides group's thing" do
+      things.build do
+        thing "astro:moon:home", "Astro Moon Data", config: { "geolocation" => "0,0" }
+      end
+      items.build do
+        group_item "MyGroup", thing: "astro:sun:home" do
+          string_item "StringItem1", thing: "astro:moon:home", channel: "set#start"
+        end
+      end
+      expect(StringItem1.thing).to be things["astro:moon:home"]
     end
   end
 end
