@@ -567,7 +567,7 @@ module OpenHAB
           RUBY
         end
 
-        FUNCTION_REGEX = /^([a-z]+)(?:\(([a-z]+)(?:,([a-z]+))*\))?/i.freeze
+        FUNCTION_REGEX = /^([a-z]+)(?:\((.*)\))?/i.freeze
         private_constant :FUNCTION_REGEX
 
         # The combiner function for this group
@@ -605,11 +605,13 @@ module OpenHAB
         def create_item
           base_item = super if type
           if function
+            require "csv"
+
             match = function.match(FUNCTION_REGEX)
 
             dto = org.openhab.core.items.dto.GroupFunctionDTO.new
             dto.name = match[1]
-            dto.params = match[2..]
+            dto.params = CSV.parse_line(match[2]) if match[2]
             function = org.openhab.core.items.dto.ItemDTOMapper.map_function(base_item, dto)
             Core::Items::GroupItem.new(name, base_item, function)
           else

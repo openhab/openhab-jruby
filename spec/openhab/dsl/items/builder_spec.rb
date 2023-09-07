@@ -191,22 +191,53 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
     expect(FamilyLamps_Switch.label).to eql "Family Room Lamps"
   end
 
-  it "can create a group with a base type" do
-    items.build do
-      group_item "MyGroup", type: :switch
+  context "with group items" do
+    it "can create a group with a base type" do
+      items.build do
+        group_item "MyGroup", type: :switch
+      end
+
+      expect(MyGroup.base_item).to be_a(SwitchItem)
     end
 
-    expect(MyGroup.base_item).to be_a(SwitchItem)
-  end
+    context "with a function" do
+      it "can create a group with a function and base type and arguments" do
+        items.build do
+          group_item "MyGroup", type: :switch, function: "OR(ON,OFF)"
+        end
 
-  it "can create a group with a function and base type" do
-    items.build do
-      group_item "MyGroup", type: :switch, function: "OR(ON,OFF)"
+        expect(MyGroup.base_item).to be_a(SwitchItem)
+        expect(MyGroup.function).to be_a(org.openhab.core.library.types.ArithmeticGroupFunction::Or)
+        expect(MyGroup.function.parameters.to_a).to eql [ON, OFF]
+      end
+
+      it "can create a group with a function and base type without an argument" do
+        items.build do
+          group_item "MyGroup", type: :number, function: "SUM"
+        end
+
+        expect(MyGroup.function).to be_a(org.openhab.core.library.types.ArithmeticGroupFunction::Sum)
+        expect(MyGroup.function.parameters.to_a).to be_empty
+      end
+
+      it "can create a group with a simple COUNT function without quotes" do
+        items.build do
+          group_item "MyGroup", type: :number, function: "COUNT(ON)"
+        end
+
+        expect(MyGroup.function).to be_a(org.openhab.core.library.types.ArithmeticGroupFunction::Count)
+        expect(MyGroup.function.parameters.to_a).to eq ["ON"]
+      end
+
+      it "can create a group with a complex COUNT function enclosed in double quotes" do
+        items.build do
+          group_item "MyGroup", type: :number, function: 'COUNT("(\w+\,\s\w+|[\d\/]*\,\d+\:\d*|[\w\d\:\s\-]+)")'
+        end
+
+        expect(MyGroup.function).to be_a(org.openhab.core.library.types.ArithmeticGroupFunction::Count)
+        expect(MyGroup.function.parameters.to_a).to eq ['(\w+\,\s\w+|[\d\/]*\,\d+\:\d*|[\w\d\:\s\-]+)']
+      end
     end
-
-    expect(MyGroup.base_item).to be_a(SwitchItem)
-    expect(MyGroup.function).to be_a(org.openhab.core.library.types.ArithmeticGroupFunction::Or)
-    expect(MyGroup.function.parameters.to_a).to eql [ON, OFF]
   end
 
   it "sets initial state" do
