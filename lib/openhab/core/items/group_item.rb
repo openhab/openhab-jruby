@@ -149,10 +149,7 @@ module OpenHAB
         def type_details
           r = ""
           r += ":#{base_item.type}#{base_item.__send__(:type_details)}" if base_item
-          if function && (fn = function.class.java_class.simple_name.upcase) != "EQUALITY"
-            r += ":#{fn}"
-            r += "(#{function.parameters.map(&:inspect).join(",")})" unless function.parameters.empty?
-          end
+          r += ":#{function.inspect}" if function && function.to_s != "EQUALITY"
           r
         end
 

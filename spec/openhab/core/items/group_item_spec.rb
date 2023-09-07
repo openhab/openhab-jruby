@@ -4,7 +4,7 @@ RSpec.describe OpenHAB::Core::Items::GroupItem do
   before do
     items.build do
       group_item "Sensors" do
-        group_item "Temperatures"
+        group_item "Temperatures", type: :number, function: "AVG"
       end
 
       group_item "House" do
@@ -61,6 +61,23 @@ RSpec.describe OpenHAB::Core::Items::GroupItem do
         "Den Temperature",
         "Living Room Temperature"
       ]
+    end
+  end
+
+  describe "#function" do
+    describe "#to_s" do
+      it "returns the function name in uppercase" do
+        expect(Temperatures.function.to_s).to eql "AVG"
+      end
+    end
+
+    describe "#inspect" do
+      it "includes the parameters" do
+        items.build do
+          group_item "Switches", type: :switch, function: "OR(ON,OFF)"
+        end
+        expect(Switches.function.inspect).to eql "OR(ON,OFF)"
+      end
     end
   end
 
