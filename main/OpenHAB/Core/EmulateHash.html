@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Module: OpenHAB::Core::Actions
+  Module: OpenHAB::Core::EmulateHash
   
     &mdash; openHAB JRuby
   
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="../../css/coderay.css" type="text/css" />
 
 <script type="text/javascript">
-  pathId = "OpenHAB::Core::Actions";
+  pathId = "OpenHAB::Core::EmulateHash";
   relpath = '../../';
 </script>
 
@@ -33,26 +33,18 @@
   <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
 
 
-    <meta property="og:description" name="description" content="Access to global actions.
+    <meta property="og:description" name="description" content="Make a class acts like a Ruby Hash that supports indifferent keys.
 
-All openHAB's actions including those provided by add-ons are available, notably:
-* Audio
-* Ephemeris
-* Exec
-* HTTP
-* PersistenceExtensions
-* Ping
-* Semantics
-* Transformation
-* Voice
+Methods that accepts keys will convert symbolic keys to string keys, but only shallowly.
+This key indifference does not extend to Hash return values, however.
+Hash return values will behave like a normal Hash
+which treats symbolic and string keys differently.
 
-From add-ons, e.g.:
-* NotificationAction (from
-  openHAB Cloud Connector;
-  see notify)
-
-Thing-specific actions can be accessed from the Thing object.
-See Thing#actions. - Documentation for openhab-scripting JRuby helper library.">
+The including class must implement at least:
+- `#to_map` to provide the hash-like data
+- `#replace`
+- `#store`
+- Other methods and mutators as applicable to the underlying storage. - Documentation for openhab-scripting JRuby helper library.">
     <meta property="og:image" content="https://raw.githubusercontent.com/jruby/collateral/master/logos/PNGs/circle-fill/full-color/jruby-logo-circle-logo-fill-outline-medium.png">
     <meta property="og:image:alt" content="The JRuby logo">
     <script type="text/javascript">
@@ -235,12 +227,12 @@ See Thing#actions. - Documentation for openhab-scripting JRuby helper library.">
   </li>
 
   
-  <li class="">
-    <span class="sidebar-link active">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="" title="OpenHAB::Core::Actions (module)">Actions</a></span>
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="Actions.html" title="OpenHAB::Core::Actions (module)">Actions</a></span>
       
       
-        <a class="arrow toggle down"></a>
+        <a class="arrow toggle right"></a>
       
     </span>
     
@@ -409,8 +401,8 @@ See Thing#actions. - Documentation for openhab-scripting JRuby helper library.">
 
   
   <li class="">
-    <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="EmulateHash.html" title="OpenHAB::Core::EmulateHash (module)">EmulateHash</a></span>
+    <span class="sidebar-link active">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="" title="OpenHAB::Core::EmulateHash (module)">EmulateHash</a></span>
       
       
     </span>
@@ -2771,7 +2763,7 @@ See Thing#actions. - Documentation for openhab-scripting JRuby helper library.">
       </aside>
 
       <main class="page">
-        <div class="content"><h1>Module: OpenHAB::Core::Actions
+        <div class="content"><h1>Module: OpenHAB::Core::EmulateHash
   
   
   
@@ -2783,48 +2775,42 @@ See Thing#actions. - Documentation for openhab-scripting JRuby helper library.">
   
   
   
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="../../Enumerable.html" title="Enumerable (module)">Enumerable</a></span></dd>
+  </dl>
+  
   
 
   
   <dl>
     <dt>Included in:</dt>
-    <dd><span class='object_link'><a href="../DSL.html" title="OpenHAB::DSL (module)">DSL</a></span></dd>
+    <dd><span class='object_link'><a href="Configuration.html" title="OpenHAB::Core::Configuration (class)">Configuration</a></span>, <span class='object_link'><a href="Items/Metadata/Hash.html" title="OpenHAB::Core::Items::Metadata::Hash (class)">Items::Metadata::Hash</a></span>, <span class='object_link'><a href="Items/Metadata/NamespaceHash.html" title="OpenHAB::Core::Items::Metadata::NamespaceHash (class)">Items::Metadata::NamespaceHash</a></span></dd>
   </dl>
   
 
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/openhab/core/actions.rb<span class="defines">,<br />
-  lib/openhab/core/actions/exec.rb,<br /> lib/openhab/core/actions/http.rb,<br /> lib/openhab/core/actions/ping.rb,<br /> lib/openhab/core/actions/audio.rb,<br /> lib/openhab/core/actions/voice.rb,<br /> lib/openhab/core/actions/ephemeris.rb,<br /> lib/openhab/core/actions/transformation.rb</span>
-</dd>
+    <dd>lib/openhab/core/emulate_hash.rb</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Access to global actions.</p>
-<p>All openHAB's actions including those provided by add-ons are available, notably:</p>
+    <p>Make a class acts like a Ruby Hash that supports indifferent keys.</p>
+<p>Methods that accepts keys will convert symbolic keys to string keys, but only shallowly.
+This key indifference does not extend to Hash return values, however.
+Hash return values will behave like a normal Hash
+which treats symbolic and string keys differently.</p>
+<p>The including class must implement at least:</p>
 <ul>
-<li><span class='object_link'><a href="Actions/Audio.html" title="OpenHAB::Core::Actions::Audio (class)">Audio</a></span></li>
-<li><span class='object_link'><a href="../CoreExt/Ephemeris.html" title="OpenHAB::CoreExt::Ephemeris (module)">Ephemeris</a></span></li>
-<li><span class='object_link'><a href="Actions/Exec.html" title="OpenHAB::Core::Actions::Exec (class)">Exec</a></span></li>
-<li><span class='object_link'><a href="Actions/HTTP.html" title="OpenHAB::Core::Actions::HTTP (class)">HTTP</a></span></li>
-<li><span class='object_link'><a href="Items/Persistence.html" title="OpenHAB::Core::Items::Persistence (module)">PersistenceExtensions</a></span></li>
-<li><span class='object_link'><a href="Actions/Ping.html" title="OpenHAB::Core::Actions::Ping (class)">Ping</a></span></li>
-<li><span class='object_link'><a href="Items/Semantics.html" title="OpenHAB::Core::Items::Semantics (module)">Semantics</a></span></li>
-<li><span class='object_link'><a href="Actions/Transformation.html" title="OpenHAB::Core::Actions::Transformation (class)">Transformation</a></span></li>
-<li><span class='object_link'><a href="Actions/Voice.html" title="OpenHAB::Core::Actions::Voice (class)">Voice</a></span></li>
+<li><code>#to_map</code> to provide the hash-like data</li>
+<li><code>#replace</code></li>
+<li><code>#store</code></li>
+<li>Other methods and mutators as applicable to the underlying storage.</li>
 </ul>
-<p>From add-ons, e.g.:</p>
-<ul>
-<li>NotificationAction (from
-<a href="https://www.openhab.org/addons/integrations/openhabcloud/">openHAB Cloud Connector</a>;
-see <span class='object_link'><a href="#notify-class_method" title="OpenHAB::Core::Actions.notify (method)">notify</a></span>)</li>
-</ul>
-<p>Thing-specific actions can be accessed from the <span class='object_link'><a href="Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Thing</a></span> object.
-See <span class='object_link'><a href="Things/Thing.html#actions-instance_method" title="OpenHAB::Core::Things::Thing#actions (method)">Thing#actions</a></span>.</p>
 
 
   </div>
@@ -2832,205 +2818,37 @@ See <span class='object_link'><a href="Things/Thing.html#actions-instance_method
 <div class="tags">
   
 
-</div><h2>Defined Under Namespace</h2>
-<p class="children">
-  
-    
-  
-    
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Actions/Audio.html" title="OpenHAB::Core::Actions::Audio (class)">Audio</a></span>, <span class='object_link'><a href="Actions/Ephemeris.html" title="OpenHAB::Core::Actions::Ephemeris (class)">Ephemeris</a></span>, <span class='object_link'><a href="Actions/Exec.html" title="OpenHAB::Core::Actions::Exec (class)">Exec</a></span>, <span class='object_link'><a href="Actions/HTTP.html" title="OpenHAB::Core::Actions::HTTP (class)">HTTP</a></span>, <span class='object_link'><a href="Actions/Ping.html" title="OpenHAB::Core::Actions::Ping (class)">Ping</a></span>, <span class='object_link'><a href="Actions/Transformation.html" title="OpenHAB::Core::Actions::Transformation (class)">Transformation</a></span>, <span class='object_link'><a href="Actions/Voice.html" title="OpenHAB::Core::Actions::Voice (class)">Voice</a></span>
-    
-  
-</p>
-
-
-
-
-
-
-
-  
-    <h2 id="Class Method Summary">
-      Class Method Summary
-      <small><a href="#" class="summary_toggle">collapse</a></small>
-    </h2>
-
-    
-
-    <ul class="summary">
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#notify-class_method" title="notify (class method)">.<strong>notify</strong>(msg, email: nil, icon: nil, severity: nil)  &#x21d2; void </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Send a notification.</p>
-</div></span>
-  
-</li>
-
-      
-    </ul>
-  
-
-
-
-
-  <div id="class_method_details" class="method_details_list">
-    <h2>Class Method Details</h2>
-
-    
-      <div class="method_details first">
-  <h3 class="signature first" id="notify-class_method">
-  
-    .<strong>notify</strong>(msg, email: nil, icon: nil, severity: nil)  &#x21d2; <tt>void</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Send a notification.</p>
-
-
-  </div>
 </div>
-<div class="tags">
-  
-  <div class="examples">
-    <p class="tag_title">Examples:</p>
-    
-      
-        <p class="example_title"><div class='inline'><p>Send a broadcast notification via openHAB Cloud</p>
-</div></p>
-      
-      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Send an alert</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
-  changed <span class="constant">Alarm_Triggered</span>, <span class="key">to</span>: <span class="constant">ON</span>
-  run { notify <span class="string"><span class="delimiter">'</span><span class="content">Red Alert!</span><span class="delimiter">'</span></span> }
-<span class="keyword">end</span></code></pre>
-    
-  </div>
-<p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>msg</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>The message to send.</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>email</span>
-      
-      
-        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>The email address to send to. If <code>nil</code>,
-the message will be broadcast.</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>icon</span>
-      
-      
-        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>nil</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
-      
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>severity</span>
-      
-      
-        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>nil</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
-      
-      
-    </li>
-  
-</ul>
 
 
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
 
 
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions.rb', line 69</span>
 
-<span class="keyword">def</span> <span class="function">notify</span>(msg, <span class="key">email</span>: <span class="predefined-constant">nil</span>, <span class="key">icon</span>: <span class="predefined-constant">nil</span>, <span class="key">severity</span>: <span class="predefined-constant">nil</span>)
-  <span class="keyword">unless</span> <span class="constant">Actions</span>.const_defined?(<span class="symbol">:NotificationAction</span>)
-    raise <span class="constant">NotImplementedError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">NotificationAction is not available. Please install the openHAB Cloud addon.</span><span class="delimiter">&quot;</span></span>
-  <span class="keyword">end</span>
 
-  <span class="keyword">if</span> email
-    <span class="constant">NotificationAction</span>.send_notification(email.to_s, msg.to_s, icon&amp;.to_s, severity&amp;.to_s)
-  <span class="keyword">else</span>
-    <span class="constant">NotificationAction</span>.send_broadcast_notification(msg.to_s, icon&amp;.to_s, severity&amp;.to_s)
-  <span class="keyword">end</span>
-<span class="keyword">end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-  </div>
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h2>Method Summary</h2>
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../../Enumerable.html" title="Enumerable (module)">Enumerable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../../Enumerable.html#all_groups-instance_method" title="Enumerable#all_groups (method)">#all_groups</a></span>, <span class='object_link'><a href="../../Enumerable.html#all_members-instance_method" title="Enumerable#all_members (method)">#all_members</a></span>, <span class='object_link'><a href="../../Enumerable.html#command-instance_method" title="Enumerable#command (method)">#command</a></span>, <span class='object_link'><a href="../../Enumerable.html#decrease-instance_method" title="Enumerable#decrease (method)">#decrease</a></span>, <span class='object_link'><a href="../../Enumerable.html#down-instance_method" title="Enumerable#down (method)">#down</a></span>, <span class='object_link'><a href="../../Enumerable.html#equipments-instance_method" title="Enumerable#equipments (method)">#equipments</a></span>, <span class='object_link'><a href="../../Enumerable.html#fast_forward-instance_method" title="Enumerable#fast_forward (method)">#fast_forward</a></span>, <span class='object_link'><a href="../../Enumerable.html#groups-instance_method" title="Enumerable#groups (method)">#groups</a></span>, <span class='object_link'><a href="../../Enumerable.html#increase-instance_method" title="Enumerable#increase (method)">#increase</a></span>, <span class='object_link'><a href="../../Enumerable.html#locations-instance_method" title="Enumerable#locations (method)">#locations</a></span>, <span class='object_link'><a href="../../Enumerable.html#member_of-instance_method" title="Enumerable#member_of (method)">#member_of</a></span>, <span class='object_link'><a href="../../Enumerable.html#members-instance_method" title="Enumerable#members (method)">#members</a></span>, <span class='object_link'><a href="../../Enumerable.html#move-instance_method" title="Enumerable#move (method)">#move</a></span>, <span class='object_link'><a href="../../Enumerable.html#next-instance_method" title="Enumerable#next (method)">#next</a></span>, <span class='object_link'><a href="../../Enumerable.html#not_member_of-instance_method" title="Enumerable#not_member_of (method)">#not_member_of</a></span>, <span class='object_link'><a href="../../Enumerable.html#not_tagged-instance_method" title="Enumerable#not_tagged (method)">#not_tagged</a></span>, <span class='object_link'><a href="../../Enumerable.html#off-instance_method" title="Enumerable#off (method)">#off</a></span>, <span class='object_link'><a href="../../Enumerable.html#on-instance_method" title="Enumerable#on (method)">#on</a></span>, <span class='object_link'><a href="../../Enumerable.html#pause-instance_method" title="Enumerable#pause (method)">#pause</a></span>, <span class='object_link'><a href="../../Enumerable.html#play-instance_method" title="Enumerable#play (method)">#play</a></span>, <span class='object_link'><a href="../../Enumerable.html#points-instance_method" title="Enumerable#points (method)">#points</a></span>, <span class='object_link'><a href="../../Enumerable.html#previous-instance_method" title="Enumerable#previous (method)">#previous</a></span>, <span class='object_link'><a href="../../Enumerable.html#refresh-instance_method" title="Enumerable#refresh (method)">#refresh</a></span>, <span class='object_link'><a href="../../Enumerable.html#rewind-instance_method" title="Enumerable#rewind (method)">#rewind</a></span>, <span class='object_link'><a href="../../Enumerable.html#stop-instance_method" title="Enumerable#stop (method)">#stop</a></span>, <span class='object_link'><a href="../../Enumerable.html#tagged-instance_method" title="Enumerable#tagged (method)">#tagged</a></span>, <span class='object_link'><a href="../../Enumerable.html#up-instance_method" title="Enumerable#up (method)">#up</a></span></p>
+
 
 </div>
 
         <footer>
-  Generated on Thu Sep  7 22:14:47 2023 by
+  Generated on Thu Sep  7 22:14:48 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

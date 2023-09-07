@@ -329,6 +329,19 @@
   </li>
 
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="OpenHAB/Core/Configuration.html" title="OpenHAB::Core::Configuration (class)">Configuration</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   <li class="collapsed">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="OpenHAB/Core/DTO.html" title="OpenHAB::Core::DTO (module)">DTO</a></span>
@@ -372,6 +385,17 @@
 
         
       </ul>
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="OpenHAB/Core/EmulateHash.html" title="OpenHAB::Core::EmulateHash (module)">EmulateHash</a></span>
+      
+      
+    </span>
+    
     
   </li>
 
@@ -1394,6 +1418,10 @@
     
   </li>
 
+  
+  
+  
+  
   
   
   
@@ -3337,7 +3365,7 @@ Note that by default items are not persisted to storage, and will be removed whe
 <span class="keyword">end</span>
 </code></pre>
 <h3 id="things"><a href="#things" class="header-anchor">#</a>Things</h3>
-<p>The <span class='object_link'><a href="OpenHAB/DSL.html#things-class_method" title="OpenHAB::DSL.things (method)">things</a></span> object allows interactions with openHAB things.</p>
+<p>The <span class='object_link'><a href="OpenHAB/DSL.html#things-class_method" title="OpenHAB::DSL.things (method)">things</a></span> object allows interactions with openHAB <span class='object_link'><a href="OpenHAB/Core/Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">thing</a></span>s.</p>
 <p>Get Thing Status:</p>
 <pre class="code ruby"><code class="ruby">things[<span class="string"><span class="delimiter">'</span><span class="content">lgwebos:WebOSTV:main-tv</span><span class="delimiter">'</span></span>].status
 </code></pre>
@@ -3355,6 +3383,17 @@ logger.info <span class="string"><span class="delimiter">&quot;</span><span clas
 
 thing.enable
 logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">TV enabled: </span><span class="inline"><span class="inline-delimiter">#{</span>thing.enabled?<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+</code></pre>
+<p>Get Thing's configurations:</p>
+<pre class="code ruby"><code class="ruby">server = things[<span class="string"><span class="delimiter">&quot;</span><span class="content">smtp:mail:local</span><span class="delimiter">&quot;</span></span>].configuration[<span class="string"><span class="delimiter">&quot;</span><span class="content">hostname</span><span class="delimiter">&quot;</span></span>]
+logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">Configured SMTP Server: </span><span class="inline"><span class="inline-delimiter">#{</span>server<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+
+frontporch_cam_ip = things[<span class="string"><span class="delimiter">&quot;</span><span class="content">ipcamera:dahua:frontporch</span><span class="delimiter">&quot;</span></span>].configuration[<span class="string"><span class="delimiter">&quot;</span><span class="content">ipAddress</span><span class="delimiter">&quot;</span></span>]
+logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">Front Porch Camera's IP Address: </span><span class="inline"><span class="inline-delimiter">#{</span>frontporch_cam_ip<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+</code></pre>
+<p>Get Thing's property:</p>
+<pre class="code ruby"><code class="ruby">model_id = things[<span class="string"><span class="delimiter">&quot;</span><span class="content">fronius:meter:mybridge:mymeter</span><span class="delimiter">&quot;</span></span>].properties[<span class="string"><span class="delimiter">&quot;</span><span class="content">modelId</span><span class="delimiter">&quot;</span></span>]
+logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">Fronius Smart Meter model: </span><span class="inline"><span class="inline-delimiter">#{</span>model_id<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
 </code></pre>
 <h3 id="actions"><a href="#actions" class="header-anchor">#</a>Actions</h3>
 <p><a href="https://www.openhab.org/docs/configuration/actions.html">openHAB built-in actions</a> are available as children of the <span class='object_link'><a href="OpenHAB/Core/Actions.html" title="OpenHAB::Core::Actions (module)">Actions</a></span> module.
@@ -4077,7 +4116,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Thu Sep  7 22:11:35 2023 by
+  Generated on Thu Sep  7 22:14:45 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
