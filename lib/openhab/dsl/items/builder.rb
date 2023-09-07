@@ -258,6 +258,8 @@ module OpenHAB
         # @param tags [String, Symbol, Semantics::Tag, Array<String, Symbol, Semantics::Tag>, nil]
         #        Fluent alias for `tag`.
         # @param autoupdate [true, false, nil] Autoupdate setting (see {ItemBuilder#autoupdate})
+        # @param thing [String, Core::Things::Thing, Core::Things::ThingUID, nil]
+        #   A Thing to be used as the base for the channel
         # @param channel [String, Core::Things::ChannelUID, nil] Channel to link the item to
         # @param expire [String] An expiration specification.
         # @param alexa [String, Symbol, Array<(String, Hash<String, Object>)>, nil]
@@ -279,6 +281,7 @@ module OpenHAB
                        tag: nil,
                        tags: nil,
                        autoupdate: nil,
+                       thing: nil,
                        channel: nil,
                        expire: nil,
                        alexa: nil,
@@ -308,6 +311,7 @@ module OpenHAB
           @metadata.merge!(metadata) if metadata
           @autoupdate = autoupdate
           @channels = []
+          @thing = thing
           @expire = nil
           if expire
             expire = Array(expire)
@@ -418,6 +422,7 @@ module OpenHAB
         #   end
         #
         def channel(channel, config = {})
+          channel = "#{@thing}:#{channel}" if @thing && !channel.include?(":")
           @channels << [channel, config]
         end
 
