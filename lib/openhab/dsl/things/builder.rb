@@ -184,7 +184,7 @@ module OpenHAB
 
         # @!visibility private
         def build
-          configuration = org.openhab.core.config.core.Configuration.new(config)
+          configuration = Core::Configuration.new(config)
           if thing_type
             self.class.thing_factory_helper.apply_default_configuration(
               configuration, thing_type,
@@ -280,7 +280,7 @@ module OpenHAB
           org.openhab.core.thing.binding.builder.ChannelBuilder.create(uid)
              .with_kind(kind)
              .with_type(type)
-             .with_configuration(org.openhab.core.config.core.Configuration.new(config))
+             .with_configuration(Core::Configuration.new(config))
              .build
         end
 

@@ -37,6 +37,29 @@ module OpenHAB
       # @!attribute [r] channels
       #   @return [ChannelArray]
       #
+      # @!attribute [r] uid
+      #   Return the UID.
+      #   @return [org.openhab.core.thing.ThingUID]
+      #
+      # @!attribute [r] bridge_uid
+      #   Return the Bridge UID when available.
+      #   @return [org.openhab.core.thing.ThingUID]
+      #
+      # @!attribute [r] configuration
+      #   Return the thing's configuration.
+      #   @return [OpenHAB::Core::Configuration]
+      #
+      #   @example
+      #     logger.info things["smtp:mail:local"].configuration["hostname"]
+      #     logger.info things["ipcamera:dahua:frontporch"].configuration["ipAddress"]
+      #
+      # @!attribute [r] properties
+      #   Return the properties when available.
+      #   @return [Hash]
+      #
+      #   @example
+      #     logger.info things["fronius:meter:mybridge:mymeter"].properties["modelId"]
+      #
       module Thing
         # Array wrapper class to allow searching a list of channels
         # by channel id

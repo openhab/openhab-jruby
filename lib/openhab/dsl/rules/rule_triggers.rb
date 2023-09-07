@@ -64,7 +64,7 @@ module OpenHAB
           org.openhab.core.automation.util.TriggerBuilder.create
              .with_id(uuid)
              .with_type_uid(type)
-             .with_configuration(org.openhab.core.config.core.Configuration.new(config))
+             .with_configuration(Core::Configuration.new(config))
              .build
         end
 
