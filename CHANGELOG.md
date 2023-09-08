@@ -1,5 +1,27 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.6.0](https://github.com/openhab/openhab-jruby/tree/v5.6.0) (2023-09-08)
+
+[Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.5.0...v5.6.0)
+
+### Features
+
+- Add `thing` parameter for ItemBuilder [\#137](https://github.com/openhab/openhab-jruby/pull/137) ([jimtng](https://github.com/jimtng))
+- Support providing and accessing context in rules [\#133](https://github.com/openhab/openhab-jruby/pull/133) ([jimtng](https://github.com/jimtng))
+- Add event attributes for TimerEvent [\#131](https://github.com/openhab/openhab-jruby/pull/131) ([jimtng](https://github.com/jimtng))
+- Use the default cron handler in openHAB 4 [\#128](https://github.com/openhab/openhab-jruby/pull/128) ([jimtng](https://github.com/jimtng))
+- Add group function \#to\_s and \#inspect [\#127](https://github.com/openhab/openhab-jruby/pull/127) ([jimtng](https://github.com/jimtng))
+- add item type predicates [\#125](https://github.com/openhab/openhab-jruby/pull/125) ([ccutrer](https://github.com/ccutrer))
+- Add SemanticTag\#to\_s [\#120](https://github.com/openhab/openhab-jruby/pull/120) ([jimtng](https://github.com/jimtng))
+- Don't tag `cron`, `every`, and `at` triggers with "Schedule" [\#111](https://github.com/openhab/openhab-jruby/pull/111) ([jimtng](https://github.com/jimtng))
+
+### Bug Fixes
+
+- Fix item builder's group COUNT function [\#126](https://github.com/openhab/openhab-jruby/pull/126) ([jimtng](https://github.com/jimtng))
+- Fix Semantics::Tag\#to\_s [\#121](https://github.com/openhab/openhab-jruby/pull/121) ([jimtng](https://github.com/jimtng))
+- Fix block passing in Hash\#delete\_if [\#116](https://github.com/openhab/openhab-jruby/pull/116) ([jimtng](https://github.com/jimtng))
+- Add timeout during karaf boot process waits [\#95](https://github.com/openhab/openhab-jruby/pull/95) ([ccutrer](https://github.com/ccutrer))
+
 ## [v5.5.0](https://github.com/openhab/openhab-jruby/tree/v5.5.0) (2023-08-08)
 
 [Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.4.2...v5.5.0)
