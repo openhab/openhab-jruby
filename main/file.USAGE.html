@@ -3786,6 +3786,21 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
 <pre class="code ruby"><code class="ruby">rules[rule_uid].enable
 rules[rule_uid].disable
 </code></pre>
+<h4 id="passing-values-to-rules"><a href="#passing-values-to-rules" class="header-anchor">#</a>Passing Values to Rules <!-- raw HTML omitted --></h4>
+<p>A rule/script may be given additional context/data by the caller. This additional data is available
+within the rule by referring to the names of the context variable. This is applicable to both
+UI rules and file-based rules.</p>
+<p>Within the script/rule body (either UI or file rule)</p>
+<pre class="code ruby"><code class="ruby">script <span class="key">id</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">check_temp</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+  <span class="keyword">if</span> <span class="constant">CPU_Temperature</span>.state &gt; maxTemperature
+    logger.warn <span class="string"><span class="delimiter">&quot;</span><span class="content">The CPU is overheating!</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</code></pre>
+<p>The above script can be executed, passing it the <code>maxTemperature</code> argument from any supported
+scripting language, e.g.:</p>
+<pre class="code ruby"><code class="ruby">rules[<span class="string"><span class="delimiter">&quot;</span><span class="content">check_temp</span><span class="delimiter">&quot;</span></span>].trigger(<span class="key">maxTemperature</span>: <span class="integer">80</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)
+</code></pre>
 <h3 id="gems"><a href="#gems" class="header-anchor">#</a>Gems</h3>
 <p><a href="https://bundler.io/">Bundler</a> is integrated, enabling any <a href="https://rubygems.org/">Ruby gem</a> compatible with JRuby to be used within rules. This permits easy access to the vast ecosystem of libraries within the Ruby community.
 Gems are available using the <a href="https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html">inline bundler syntax</a>.
@@ -4133,7 +4148,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Fri Sep  8 01:37:34 2023 by
+  Generated on Fri Sep  8 01:39:19 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

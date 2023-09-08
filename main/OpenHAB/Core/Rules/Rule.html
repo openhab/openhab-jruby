@@ -3216,9 +3216,11 @@ met, enabling the core dynamic functionality of openHAB.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#trigger-instance_method" title="#trigger (instance method)">#<strong>trigger</strong>(event = nil)  &#x21d2; void </a>
+      <a href="#trigger-instance_method" title="#trigger (instance method)">#<strong>trigger</strong>(event = nil, consider_conditions: false, **context)  &#x21d2; Hash </a>
     
 
+    
+      (also: #run)
     
   </span>
   
@@ -4195,15 +4197,19 @@ met, enabling the core dynamic functionality of openHAB.</p>
       <div class="method_details ">
   <h3 class="signature " id="trigger-instance_method">
   
-    #<strong>trigger</strong>(event = nil)  &#x21d2; <tt>void</tt> 
+    #<strong>trigger</strong>(event = nil, consider_conditions: false, **context)  &#x21d2; <tt>Hash</tt> 
   
 
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='run-instance_method'>run</span></span>
+    </span>
   
 
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Manually trigger the rule</p>
+    <p>Manually trigger the rule</p>
 
 
   </div>
@@ -4229,8 +4235,57 @@ met, enabling the core dynamic functionality of openHAB.</p>
       
     </li>
   
+    <li>
+      
+        <span class='name'>consider_conditions</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Whether to check the conditions of the called rules.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>context</span>
+      
+      
+        <span class='type'>(<tt>kwargs</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The context to pass to the conditions and the actions of the rule.</p>
+</div>
+      
+    </li>
+  
 </ul>
 
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A copy of the rule context, including possible return values.</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -4238,15 +4293,35 @@ met, enabling the core dynamic functionality of openHAB.</p>
       <pre class="lines">
 
 
-168
-169
-170</pre>
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 168</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 170</span>
 
-<span class="keyword">def</span> <span class="function">trigger</span>(event = <span class="predefined-constant">nil</span>)
-  <span class="constant">Rules</span>.manager.run_now(uid, <span class="predefined-constant">false</span>, { <span class="string"><span class="delimiter">&quot;</span><span class="content">event</span><span class="delimiter">&quot;</span></span> =&gt; event })
+<span class="keyword">def</span> <span class="function">trigger</span>(event = <span class="predefined-constant">nil</span>, <span class="key">consider_conditions</span>: <span class="predefined-constant">false</span>, **context)
+  <span class="keyword">begin</span>
+    event ||= org.openhab.core.automation.events.AutomationEventFactory
+                 .createExecutionEvent(uid, <span class="predefined-constant">nil</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">manual</span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">rescue</span> <span class="constant">NameError</span>
+    <span class="comment"># @deprecated OH3.4 doesn't have AutomationEventFactory</span>
+  <span class="keyword">end</span>
+  context.transform_keys!(&amp;<span class="symbol">:to_s</span>)
+  <span class="comment"># Unwrap any proxies and pass raw objects (items, things)</span>
+  context.transform_values! { |value| value.is_a?(<span class="constant">Delegator</span>) ? value.__getobj__ : value }
+  context[<span class="string"><span class="delimiter">&quot;</span><span class="content">event</span><span class="delimiter">&quot;</span></span>] = event <span class="keyword">if</span> event <span class="comment"># @deprecated OH3.4 - remove if guard. In OH4 `event` will never be nil</span>
+  <span class="constant">Rules</span>.manager.run_now(uid, consider_conditions, context)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4362,7 +4437,7 @@ met, enabling the core dynamic functionality of openHAB.</p>
 </div>
 
         <footer>
-  Generated on Fri Sep  8 01:37:37 2023 by
+  Generated on Fri Sep  8 01:39:21 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
