@@ -44,6 +44,7 @@ module OpenHAB
 
       # Known supported provider types
       # @return [Array<Symbol>]
+      # @!visibility private
       KNOWN_TYPES = %i[items metadata things links].freeze
 
       class << self
@@ -223,7 +224,6 @@ module OpenHAB
       def initialize(unload_priority: nil)
         super()
         @elements = java.util.concurrent.ConcurrentHashMap.new
-        # @deprecated OH3.4 safe navigation only required for missing Semantics registry
         self.class.registry&.add_provider(self)
         ScriptHandling.script_unloaded(priority: unload_priority) { unregister }
       end

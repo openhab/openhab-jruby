@@ -214,6 +214,11 @@ module OpenHAB
       Core::Items::Registry.instance
     end
 
+    # @return [Core::Sitemaps::Provider]
+    def sitemaps
+      Core::Sitemaps::Provider.instance
+    end
+
     #
     # Get all things known to openHAB
     #
