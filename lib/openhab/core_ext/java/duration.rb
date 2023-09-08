@@ -64,7 +64,8 @@ module OpenHAB
         #
         def coerce(other)
           return [other.seconds, self] if other.is_a?(Numeric)
-          return [other.to_i.seconds, self] if other.is_a?(Period)
+
+          [other.to_i.seconds, self] if other.is_a?(Period)
         end
 
         {

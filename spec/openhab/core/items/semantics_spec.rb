@@ -24,7 +24,7 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
           end
           group_item "LivingRoom_Light2_Bulb", tags: [Semantics::Lightbulb, "CustomTag"] do
             dimmer_item "LivingRoom_Light2_Brightness", tags: [Semantics::Control, Semantics::Level]
-            color_item "LivingRoom_LIght2_Color", tags: [Semantics::Control, Semantics::Light]
+            color_item "LivingRoom_Light2_Color", tags: [Semantics::Control, Semantics::Light]
           end
           switch_item "LivingRoom_Motion", tag: Semantics::MotionDetector
         end
@@ -225,7 +225,7 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
             LivingRoom_Light1_Color,
             LivingRoom_Light1_Custom,
             LivingRoom_Light2_Brightness,
-            LivingRoom_LIght2_Color,
+            LivingRoom_Light2_Color,
             LivingRoom_Motion
           ]
         )
@@ -235,7 +235,7 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
     describe "#groups" do
       it "gets all groups" do
         expect([LivingRoom_Light1_Custom,
-                LivingRoom_LIght2_Color,
+                LivingRoom_Light2_Color,
                 LivingRoom_Light1_Bulb].groups).to match_array([
                                                                  gMyGroup,
                                                                  gLivingRoom,
@@ -248,7 +248,7 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
     describe "#all_groups" do
       it "gets all groups recursively" do
         expect([LivingRoom_Light1_Custom,
-                LivingRoom_LIght2_Color,
+                LivingRoom_Light2_Color,
                 LivingRoom_Light1_Bulb].all_groups).to match_array([
                                                                      gMyGroup,
                                                                      LivingRoom_Light1_Bulb,

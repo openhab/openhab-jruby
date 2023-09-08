@@ -46,7 +46,7 @@ module OpenHAB
 
         bundle = org.osgi.framework.FrameworkUtil.get_bundle(interfaces.first.java_class)
         bundle.bundle_context.register_service(
-          interfaces.map(&:java_class).map(&:name).to_java(java.lang.String),
+          interfaces.map { |i| i.java_class.name }.to_java(java.lang.String),
           instance,
           java.util.Hashtable.new(properties)
         )

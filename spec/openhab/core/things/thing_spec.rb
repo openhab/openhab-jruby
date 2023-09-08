@@ -13,7 +13,7 @@ RSpec.describe OpenHAB::Core::Things::Thing do
 
   describe "things" do
     it "provides access to all things" do
-      expect(things.map(&:uid).map(&:to_s)).to include("astro:sun:home")
+      expect(things.map { |t| t.uid.to_s }).to include("astro:sun:home")
     end
 
     it "supports [] lookup" do

@@ -34,7 +34,7 @@ RSpec.describe OpenHAB::DSL::Things::Builder do
       end
     end
     expect(home = things["astro:sun:home"]).not_to be_nil
-    expect(home.channels.map(&:uid).map(&:to_s)).to include("astro:sun:home:channeltest")
+    expect(home.channels.map { |c| c.uid.to_s }).to include("astro:sun:home:channeltest")
     channel = home.channels.find { |c| c.uid.id == "channeltest" }
     expect(channel.configuration.properties).to have_key("config1")
     expect(channel.configuration.get("config1")).to eq "testconfig"

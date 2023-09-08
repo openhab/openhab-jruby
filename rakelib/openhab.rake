@@ -71,7 +71,7 @@ namespace :openhab do
 
   # There can be a delay between when openHAB is running and ready to process commands
   def ready?(fail_on_error: false)
-    return unless running?
+    return false unless running?
 
     command = "#{@karaf_client} 'system:start-level'"
 
