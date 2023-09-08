@@ -190,6 +190,7 @@ module OpenHAB
       # Integer already has #|, so we have to prepend it here
       ::Integer.prepend(QuantityTypeConversion)
       ::Numeric.include(Numeric)
+      java.math.BigDecimal.include(QuantityTypeConversion)
     end
   end
 end
