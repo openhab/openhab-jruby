@@ -8,7 +8,7 @@ RSpec.describe OpenHAB::Core::Timer do
       fired = false
       t = after(0.1.seconds) do |timer|
         fired = true
-        expect(timer).to be t # rubocop:disable RSpec/ExpectInHook
+        expect(timer).to be t
       end
       expect(t).not_to be_a(OpenHAB::RSpec::Mocks::Timer) unless self.class.mock_timers?
       expect(fired).to be false

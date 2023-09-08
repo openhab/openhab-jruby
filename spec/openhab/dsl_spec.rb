@@ -252,8 +252,8 @@ RSpec.describe OpenHAB::DSL do
 
       unit("°C") do
         expect(f - (20 | "°C") < 2).to be true
-        expect((f - 2).format("%.1f %unit%")).to eq "19.1 °C" # rubocop:disable Style/FormatStringToken
-        expect((c + f).format("%.1f %unit%")).to eq "44.1 °C" # rubocop:disable Style/FormatStringToken
+        expect((f - 2).format("%.1f %unit%")).to eq "19.1 °C"
+        expect((c + f).format("%.1f %unit%")).to eq "44.1 °C"
         expect(f - 2 < 20).to be true
         expect(2 + c == 25).to be true
         expect(2 * c == 46).to be true

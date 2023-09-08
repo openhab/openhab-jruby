@@ -1,5 +1,9 @@
+inherit_gem:
+  rubocop-inst:
+  - rubocop.yml
+  - rubocop-rspec.yml
+
 require:
-  - rubocop-performance
   - rubocop-rake
   - rubocop-rspec
 
@@ -23,9 +27,6 @@ Bundler/GemFilename:
   Exclude:
     - lib/openhab/dsl/gems.rb
 
-Gemspec/DevelopmentDependencies:
-  EnforcedStyle: gemspec
-
 Layout/LineLength:
   AllowedPatterns:
     - "# @example" # YARD example titles can't be broken up onto multiple lines.
@@ -38,18 +39,8 @@ Lint/BinaryOperatorWithIdenticalOperands:
   Exclude:
     - spec/openhab/core/types/*_spec.rb
 
-Metrics:
-  Enabled: false
-
-Performance/Casecmp:
-  AutoCorrect: false
-
 RSpec/DescribeClass:
   Enabled: false
-RSpec/ExampleLength:
-  Enabled: false
-RSpec/ExampleWording:
-  DisallowedExamples: []
 RSpec/ExpectActual:
   Exclude:
     - spec/openhab/core/types/*_spec.rb
@@ -63,8 +54,6 @@ RSpec/IdenticalEqualityAssertion:
     - spec/openhab/core/types/*_spec.rb
 RSpec/IndexedLet:
   Enabled: false
-RSpec/MatchArray:
-  Enabled: false
 RSpec/MessageSpies:
   Enabled: false
 RSpec/MultipleExpectations:
@@ -76,8 +65,6 @@ RSpec/NestedGroups:
 RSpec/NoExpectationExample:
   Enabled: false
 
-Style/Alias:
-  EnforcedStyle: prefer_alias_method
 Style/CaseEquality:
   Exclude: # we're explicitly testing this operator
   - spec/openhab/core/types/*_spec.rb
@@ -97,22 +84,8 @@ Style/GlobalVars:
    - $scriptExtension
    - $sharedCache
    - $things
-Style/HashSyntax:
-  EnforcedStyle: ruby19_no_mixed_keys
-Style/PercentQLiterals:
-  EnforcedStyle: upper_case_q
-Style/PerlBackrefs:
-  Enabled: false
-Style/RescueStandardError:
-  EnforcedStyle: implicit
 Style/SpecialGlobalVars:
   Enabled: false
-Style/StringLiterals:
-  EnforcedStyle: double_quotes
-Style/StringLiteralsInInterpolation:
-  EnforcedStyle: double_quotes
-Style/TernaryParentheses:
-  EnforcedStyle: require_parentheses_when_complex
 Style/YodaCondition:
   Exclude:
     - spec/openhab/core/types/*_spec.rb

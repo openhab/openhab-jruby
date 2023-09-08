@@ -187,7 +187,8 @@ module OpenHAB
           configuration = Core::Configuration.new(config)
           if thing_type
             self.class.thing_factory_helper.apply_default_configuration(
-              configuration, thing_type,
+              configuration,
+              thing_type,
               self.class.config_description_registry
             )
           end
@@ -200,7 +201,8 @@ module OpenHAB
 
           if thing_type
             # can't use with_channels, or it will wipe out custom channels from above
-            self.class.thing_factory_helper.create_channels(thing_type, uid,
+            self.class.thing_factory_helper.create_channels(thing_type,
+                                                            uid,
                                                             self.class.config_description_registry).each do |channel|
               builder.with_channel(channel)
             end

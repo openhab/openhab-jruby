@@ -3,7 +3,6 @@
 module OpenHAB
   module Core
     module Actions
-      # rubocop:disable Lint/UnusedMethodArgument
       # redefine these to do nothing so that rules won't fail
 
       module_function
@@ -31,8 +30,6 @@ module OpenHAB
           end
         end
       end
-
-      # rubocop:enable Lint/UnusedMethodArgument
     end
   end
 end

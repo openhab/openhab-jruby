@@ -21,7 +21,8 @@ module OpenHAB
           #
           def parse(string)
             logger.trace("#{self.class}.parse #{string} (#{string.class})")
-            java_send(:parse, [java.lang.CharSequence, java.time.format.DateTimeFormatter],
+            java_send(:parse,
+                      [java.lang.CharSequence, java.time.format.DateTimeFormatter],
                       string.to_s,
                       java.time.format.DateTimeFormatter.ofPattern("[--]M-d"))
           end

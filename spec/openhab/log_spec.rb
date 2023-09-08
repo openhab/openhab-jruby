@@ -62,7 +62,7 @@ RSpec.describe OpenHAB::Log do
         run do
           after(1.second) do
             executed = true
-            expect(logger.name).to match(/^org\.openhab\.automation\.jrubyscripting\.rule\.log_spec\.rb:(?:\d+)$/) # rubocop:disable RSpec/ExpectInHook
+            expect(logger.name).to match(/^org\.openhab\.automation\.jrubyscripting\.rule\.log_spec\.rb:(?:\d+)$/)
           end
         end
       end
@@ -108,7 +108,7 @@ RSpec.describe OpenHAB::Log do
       executed = false
       after(1.second) do
         executed = true
-        expect(logger.name).to eql file_logger_name # rubocop:disable RSpec/ExpectInHook
+        expect(logger.name).to eql file_logger_name
       end
 
       time_travel_and_execute_timers(5.seconds)

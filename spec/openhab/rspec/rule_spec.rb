@@ -4,7 +4,7 @@ RSpec.describe "rules" do
   context "with in-spec created rules" do
     # Has to be in before/after(:all) so that the top-level after hook has run;
     # this example group explicitly has a single spec
-    # rubocop:disable RSpec/BeforeAfterAll, RSpec/ExpectInHook
+    # rubocop:disable RSpec/BeforeAfterAll
     before(:all) do
       rule id: "out-of-spec-rule" do
         every :day

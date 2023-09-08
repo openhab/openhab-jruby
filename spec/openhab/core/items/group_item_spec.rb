@@ -42,7 +42,8 @@ RSpec.describe OpenHAB::Core::Items::GroupItem do
   describe "#members" do
     it "is enumerable" do
       expect(Temperatures.members.count).to be 3
-      expect(Temperatures.members.map(&:label)).to match_array ["Bedroom Temperature", "Den Temperature",
+      expect(Temperatures.members.map(&:label)).to match_array ["Bedroom Temperature",
+                                                                "Den Temperature",
                                                                 "Living Room Temperature"]
     end
 
@@ -57,14 +58,18 @@ RSpec.describe OpenHAB::Core::Items::GroupItem do
         number_item "Kitchen_Temp", group: Temperatures
         number_item "Basement_Temp"
       end
-      expect(Temperatures.members.map(&:name)).to match_array %w[Bedroom_Temp Den_Temp Kitchen_Temp
+      expect(Temperatures.members.map(&:name)).to match_array %w[Bedroom_Temp
+                                                                 Den_Temp
+                                                                 Kitchen_Temp
                                                                  LivingRoom_Temp]
     end
 
     it "can be added to an array" do
       expect([Temperatures] + LivingRoom.members).to match_array [Temperatures, LivingRoom_Temp]
       expect(LivingRoom.members + [Temperatures]).to match_array [Temperatures, LivingRoom_Temp]
-      expect(LivingRoom.members + GroundFloor.members).to match_array [LivingRoom_Temp, Bedroom_Temp, Den_Temp,
+      expect(LivingRoom.members + GroundFloor.members).to match_array [LivingRoom_Temp,
+                                                                       Bedroom_Temp,
+                                                                       Den_Temp,
                                                                        LivingRoom]
     end
   end

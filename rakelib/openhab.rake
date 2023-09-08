@@ -181,10 +181,10 @@ namespace :openhab do
     state(task.name) do
       mkdir_p gem_home
       mkdir_p ruby_lib_dir
-      services_config = ERB.new <<~SERVICES
+      services_config = ERB.new <<~TEXT
         org.openhab.automation.jrubyscripting:gem_home=<%= gem_home %>
         org.openhab.automation.jrubyscripting:rubylib=<%= ruby_lib_dir %>
-      SERVICES
+      TEXT
       File.write(@services_config_file, services_config.result)
     end
   end
