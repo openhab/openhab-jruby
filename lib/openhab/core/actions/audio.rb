@@ -23,8 +23,11 @@ module OpenHAB
           #
           def play_sound(filename, sink: nil, volume: nil)
             volume = PercentType.new(volume) unless volume.is_a?(PercentType) || volume.nil?
-            java_send :playSound, [java.lang.String, java.lang.String, PercentType.java_class],
-                      sink, filename.to_s, volume
+            java_send :playSound,
+                      [java.lang.String, java.lang.String, PercentType.java_class],
+                      sink,
+                      filename.to_s,
+                      volume
           end
 
           #

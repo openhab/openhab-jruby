@@ -56,12 +56,14 @@ module OpenHAB
             return raw_parse(string, formatter) if formatter
 
             format = /(am|pm)$/i.match?(string) ? "h[:mm[:ss][.S]][ ]a" : "H[:mm[:ss][.S]]"
-            java_send(:parse, [java.lang.CharSequence, java.time.format.DateTimeFormatter],
-                      string, java.time.format.DateTimeFormatterBuilder.new
-                              .parse_case_insensitive
-                              .parse_lenient
-                              .append_pattern(format)
-                              .to_formatter(java.util.Locale::ENGLISH))
+            java_send(:parse,
+                      [java.lang.CharSequence, java.time.format.DateTimeFormatter],
+                      string,
+                      java.time.format.DateTimeFormatterBuilder.new
+                                                               .parse_case_insensitive
+                                                               .parse_lenient
+                                                               .append_pattern(format)
+                                                               .to_formatter(java.util.Locale::ENGLISH))
           end
         end
 

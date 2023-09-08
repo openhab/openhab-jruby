@@ -29,7 +29,7 @@ module OpenHAB
             # @param [Hash] inputs inputs from trigger
             # @return [true, false] if the conditions passed (and therefore the block was run)
             #
-            def process(mod:, inputs:) # rubocop:disable Lint/UnusedMethodArgument - mod is unused here but required
+            def process(mod:, inputs:)
               logger.trace("Checking #{inputs} against condition trigger #{self}")
               unless check_value(Conditions.old_state_from(inputs), @from) &&
                      check_value(Conditions.new_state_from(inputs), @to) &&

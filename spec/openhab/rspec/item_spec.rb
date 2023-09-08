@@ -5,7 +5,7 @@ RSpec.describe "Items" do
     # Has to be in after(:all) so that the top-level after hook has run;
     # this example group explicitly has a single spec
     after(:all) do # rubocop:disable RSpec/BeforeAfterAll
-      expect(items["MyItem"]).to be_nil # rubocop:disable RSpec/ExpectInHook
+      expect(items["MyItem"]).to be_nil
     end
 
     it "cleans up all items created in a spec" do

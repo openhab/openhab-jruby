@@ -70,7 +70,8 @@ module OpenHAB
             builder = BuilderDSL.new(binding || block.binding)
             builder.uid(id)
             builder.instance_exec(builder, &block)
-            builder.guard = Guard.new(run_context: builder.caller, only_if: builder.only_if,
+            builder.guard = Guard.new(run_context: builder.caller,
+                                      only_if: builder.only_if,
                                       not_if: builder.not_if)
 
             name ||= NameInference.infer_rule_name(builder)
@@ -1559,8 +1560,12 @@ module OpenHAB
           # @deprecated OH3.4 - OH3 config uses eventXXX vs OH4 uses `topic`, `source`, and `types`
           # See https://github.com/openhab/openhab-core/pull/3299
           trigger("core.GenericEventTrigger",
-                  eventTopic: topic, eventSource: source, eventTypes: types, # @deprecated OH3.4
-                  topic: topic, source: source, types: types,
+                  eventTopic: topic,
+                  eventSource: source,
+                  eventTypes: types, # @deprecated OH3.4
+                  topic: topic,
+                  source: source,
+                  types: types,
                   attach: attach)
         end
 
@@ -1831,10 +1836,11 @@ module OpenHAB
           types = [binding.local_variable_get(:for)].flatten
 
           WatchHandler::WatchTriggerHandlerFactory.instance # ensure it's registered
-          trigger(WatchHandler::WATCH_TRIGGER_MODULE_ID, path: path.to_s,
-                                                         types: types.map(&:to_s),
-                                                         glob: glob.to_s,
-                                                         attach: attach)
+          trigger(WatchHandler::WATCH_TRIGGER_MODULE_ID,
+                  path: path.to_s,
+                  types: types.map(&:to_s),
+                  glob: glob.to_s,
+                  attach: attach)
         end
 
         # @!endgroup

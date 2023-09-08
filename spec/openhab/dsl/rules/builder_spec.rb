@@ -1080,7 +1080,9 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       generate("uses cron for :seconds", "* * * ? * ? *", :second)
       generate("passes through attachment", "* * * ? * ? *", :second, attach: 1)
       generate("can use durations", "*/5 * * ? * ? *", 5.seconds)
-      generate("can use MonthDay and LocalTime", "0 0 12 17 11 ? *", MonthDay.parse("11-17"),
+      generate("can use MonthDay and LocalTime",
+               "0 0 12 17 11 ? *",
+               MonthDay.parse("11-17"),
                at: LocalTime.parse("12:00"))
       generate("can use MonthDay as a string", "0 0 12 17 11 ? *", "11-17", at: LocalTime.parse("12:00"))
       generate("can use LocalTime a string", "0 0 12 17 11 ? *", MonthDay.parse("11-17"), at: "12:00")
@@ -1328,8 +1330,9 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         end
 
         it "doesn't monitor changes inside subdirectories" do
-          test_it(config_folder / "tmp" / test_file, expected: false,
-                                                     watch_args: [config_folder, { glob: test_file, for: :created }])
+          test_it(config_folder / "tmp" / test_file,
+                  expected: false,
+                  watch_args: [config_folder, { glob: test_file, for: :created }])
         end
       end
 

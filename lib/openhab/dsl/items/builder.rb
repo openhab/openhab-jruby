@@ -270,7 +270,9 @@ module OpenHAB
         #   Homekit metadata (see {ItemBuilder#homekit})
         # @param metadata [Hash<String, Hash>] Generic metadata (see {ItemBuilder#metadata})
         # @param state [State] Initial state
-        def initialize(type, name = nil, label = nil,
+        def initialize(type,
+                       name = nil,
+                       label = nil,
                        provider:,
                        dimension: nil,
                        unit: nil,

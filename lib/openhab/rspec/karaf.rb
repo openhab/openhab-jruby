@@ -154,7 +154,9 @@ module OpenHAB
         klass.field_accessor :classLoader, :activatorManager
         klass.field_writer :framework
         klass.field_reader :LOG
-        org.apache.karaf.main.ConfigProperties.field_reader :props, :defaultBundleStartlevel, :karafEtc,
+        org.apache.karaf.main.ConfigProperties.field_reader :props,
+                                                            :defaultBundleStartlevel,
+                                                            :karafEtc,
                                                             :defaultStartLevel
         klass.class_eval do
           def send_private(method_name, *args)
@@ -472,7 +474,8 @@ module OpenHAB
               thf = Mocks::ThingHandlerFactory.instance
               bundle = org.osgi.framework.FrameworkUtil.get_bundle(org.openhab.core.thing.Thing.java_class)
               Mocks::BundleResolver.instance.register_class(thf.class, bundle)
-              bundle.bundle_context.register_service(org.openhab.core.thing.binding.ThingHandlerFactory.java_class, thf,
+              bundle.bundle_context.register_service(org.openhab.core.thing.binding.ThingHandlerFactory.java_class,
+                                                     thf,
                                                      nil)
             end
           end

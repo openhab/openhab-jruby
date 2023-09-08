@@ -13,7 +13,8 @@ module OpenHAB
         def_delegators :__getobj__, :class, :is_a?, :kind_of?
 
         # @!visibility private
-        EVENTS = [Events::ThingAddedEvent::TYPE, Events::ThingUpdatedEvent::TYPE,
+        EVENTS = [Events::ThingAddedEvent::TYPE,
+                  Events::ThingUpdatedEvent::TYPE,
                   Events::ThingRemovedEvent::TYPE].freeze
         # @!visibility private
         UID_METHOD = :uid

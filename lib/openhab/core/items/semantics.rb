@@ -317,7 +317,9 @@ module OpenHAB
                   next if lookup(name)
                   next unless parent
 
-                  new_tag = org.openhab.core.semantics.SemanticTagImpl.new("#{parent.uid}_#{name}", label, description,
+                  new_tag = org.openhab.core.semantics.SemanticTagImpl.new("#{parent.uid}_#{name}",
+                                                                           label,
+                                                                           description,
                                                                            synonyms)
                   Provider.instance.add(new_tag)
                   lookup(name)

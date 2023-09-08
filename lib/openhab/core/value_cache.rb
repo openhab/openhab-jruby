@@ -107,10 +107,11 @@ module OpenHAB
 
       # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-assoc Hash#assoc
       def assoc(key)
-        [key, fetch(key) do
-          # return nil directly, without storing a value to the cache
-          return nil
-        end]
+        [key,
+         fetch(key) do
+           # return nil directly, without storing a value to the cache
+           return nil
+         end]
       end
 
       # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-dig Hash#dig

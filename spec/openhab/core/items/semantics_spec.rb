@@ -328,7 +328,9 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
       end
 
       it "returns the created tags as an array" do
-        created = Semantics.add(ArrayTag1: :Equipment, ArrayTag2: :Location, ArrayTag3: :Point,
+        created = Semantics.add(ArrayTag1: :Equipment,
+                                ArrayTag2: :Location,
+                                ArrayTag3: :Point,
                                 LivingRoom: Semantics::Room)
         expect(created).to match_array([Semantics::ArrayTag1, Semantics::ArrayTag2, Semantics::ArrayTag3])
 
@@ -337,7 +339,9 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
       end
 
       it "supports specifying label, synonyms, and description for the tag" do
-        Semantics.add(Detailed: Semantics::Equipment, label: "Label 1", synonyms: "Synonym 2",
+        Semantics.add(Detailed: Semantics::Equipment,
+                      label: "Label 1",
+                      synonyms: "Synonym 2",
                       description: "Description 3")
         expect(Semantics::Detailed.label).to eq "Label 1"
         expect(Semantics.lookup("Synonym 2")).to eql Semantics::Detailed
