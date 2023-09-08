@@ -308,7 +308,7 @@ module OpenHAB
                 raise ArgumentError, "Additional options can only be specified when creating one tag"
               end
 
-              synonyms = Array.wrap(synonyms).map(&:to_s).map(&:strip)
+              synonyms = Array.wrap(synonyms).map { |s| s.to_s.strip }
 
               tags.map do |name, parent|
                 # @deprecated OH4.0.0.M4 missing registry

@@ -28,7 +28,8 @@ module OpenHAB
         # @return [OpenClosedType] {OPEN} if {closed?}, {CLOSED} if {open?}
         def !
           return CLOSED if open?
-          return OPEN if closed?
+
+          OPEN if closed?
         end
       end
     end

@@ -47,7 +47,7 @@ module OpenHAB
         # @return [Array, nil]
         #
         def coerce(other)
-          return [other.seconds, to_i.seconds] if other.is_a?(Numeric)
+          [other.seconds, to_i.seconds] if other.is_a?(Numeric)
         end
 
         {

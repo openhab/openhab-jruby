@@ -37,7 +37,8 @@ module OpenHAB
         #
         def !
           return UP if down?
-          return DOWN if up?
+
+          DOWN if up?
         end
       end
     end
