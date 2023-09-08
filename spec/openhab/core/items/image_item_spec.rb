@@ -9,6 +9,14 @@ RSpec.describe OpenHAB::Core::Items::ImageItem do
       "XRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII="
   end
 
+  it "is an image" do
+    expect(item).to be_an_image_item
+  end
+
+  it "is not a group" do
+    expect(item).not_to be_a_group_item
+  end
+
   it "provides access to underlying raw type" do
     item.update(image_base64)
     expect(item.state.mime_type).to eql "image/png"

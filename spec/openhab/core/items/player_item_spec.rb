@@ -3,6 +3,14 @@
 RSpec.describe OpenHAB::Core::Items::PlayerItem do
   subject(:item) { items.build { player_item "PlayerOne" } }
 
+  it "is a player" do
+    expect(item).to be_a_player_item
+  end
+
+  it "is not a group" do
+    expect(item).not_to be_a_group_item
+  end
+
   describe "sending commands" do
     specify { expect((item << PLAY).state).to be PLAY }
     specify { expect((item << PAUSE).state).to be PAUSE }

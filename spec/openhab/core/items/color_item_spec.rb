@@ -7,6 +7,22 @@ RSpec.describe OpenHAB::Core::Items::ColorItem do
     end
   end
 
+  it "is a color" do
+    expect(item).to be_a_color_item
+  end
+
+  it "is a dimmer" do
+    expect(item).to be_a_dimmer_item
+  end
+
+  it "is a switch" do
+    expect(item).to be_a_switch_item
+  end
+
+  it "is not a group" do
+    expect(item).not_to be_a_group_item
+  end
+
   it "can be updated to an HSBType" do
     item << HSBType.new(0, 100, 100)
     expect(item.state).to eq HSBType.new("0,100,100")
