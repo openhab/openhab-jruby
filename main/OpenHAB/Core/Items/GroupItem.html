@@ -2777,6 +2777,7 @@ Number Den_Temp "Den temperature" (GroundFloor, Temperatures)
   
   
   
+  
 
               </ul>
             </section>
@@ -3130,7 +3131,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Item.html#inspect-instance_method" title="OpenHAB::Core::Items::Item#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="Item.html#member_of%3F-instance_method" title="OpenHAB::Core::Items::Item#member_of? (method)">#member_of?</a></span>, <span class='object_link'><a href="Item.html#provider-instance_method" title="OpenHAB::Core::Items::Item#provider (method)">#provider</a></span>, <span class='object_link'><a href="Item.html#tagged%3F-instance_method" title="OpenHAB::Core::Items::Item#tagged? (method)">#tagged?</a></span>, <span class='object_link'><a href="Item.html#thing-instance_method" title="OpenHAB::Core::Items::Item#thing (method)">#thing</a></span>, <span class='object_link'><a href="Item.html#things-instance_method" title="OpenHAB::Core::Items::Item#things (method)">#things</a></span>, <span class='object_link'><a href="Item.html#to_s-instance_method" title="OpenHAB::Core::Items::Item#to_s (method)">#to_s</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Item.html#color_item%3F-instance_method" title="OpenHAB::Core::Items::Item#color_item? (method)">#color_item?</a></span>, <span class='object_link'><a href="Item.html#contact_item%3F-instance_method" title="OpenHAB::Core::Items::Item#contact_item? (method)">#contact_item?</a></span>, <span class='object_link'><a href="Item.html#date_time_item%3F-instance_method" title="OpenHAB::Core::Items::Item#date_time_item? (method)">#date_time_item?</a></span>, <span class='object_link'><a href="Item.html#dimmer_item%3F-instance_method" title="OpenHAB::Core::Items::Item#dimmer_item? (method)">#dimmer_item?</a></span>, <span class='object_link'><a href="Item.html#group_item%3F-instance_method" title="OpenHAB::Core::Items::Item#group_item? (method)">#group_item?</a></span>, <span class='object_link'><a href="Item.html#image_item%3F-instance_method" title="OpenHAB::Core::Items::Item#image_item? (method)">#image_item?</a></span>, <span class='object_link'><a href="Item.html#inspect-instance_method" title="OpenHAB::Core::Items::Item#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="Item.html#location_item%3F-instance_method" title="OpenHAB::Core::Items::Item#location_item? (method)">#location_item?</a></span>, <span class='object_link'><a href="Item.html#member_of%3F-instance_method" title="OpenHAB::Core::Items::Item#member_of? (method)">#member_of?</a></span>, <span class='object_link'><a href="Item.html#number_item%3F-instance_method" title="OpenHAB::Core::Items::Item#number_item? (method)">#number_item?</a></span>, <span class='object_link'><a href="Item.html#player_item%3F-instance_method" title="OpenHAB::Core::Items::Item#player_item? (method)">#player_item?</a></span>, <span class='object_link'><a href="Item.html#provider-instance_method" title="OpenHAB::Core::Items::Item#provider (method)">#provider</a></span>, <span class='object_link'><a href="Item.html#rollershutter_item%3F-instance_method" title="OpenHAB::Core::Items::Item#rollershutter_item? (method)">#rollershutter_item?</a></span>, <span class='object_link'><a href="Item.html#string_item%3F-instance_method" title="OpenHAB::Core::Items::Item#string_item? (method)">#string_item?</a></span>, <span class='object_link'><a href="Item.html#switch_item%3F-instance_method" title="OpenHAB::Core::Items::Item#switch_item? (method)">#switch_item?</a></span>, <span class='object_link'><a href="Item.html#tagged%3F-instance_method" title="OpenHAB::Core::Items::Item#tagged? (method)">#tagged?</a></span>, <span class='object_link'><a href="Item.html#thing-instance_method" title="OpenHAB::Core::Items::Item#thing (method)">#thing</a></span>, <span class='object_link'><a href="Item.html#things-instance_method" title="OpenHAB::Core::Items::Item#things (method)">#things</a></span>, <span class='object_link'><a href="Item.html#to_s-instance_method" title="OpenHAB::Core::Items::Item#to_s (method)">#to_s</a></span></p>
 
   
   
@@ -3202,14 +3203,14 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
       <pre class="lines">
 
 
-157
-158
-159
-160
-161</pre>
+166
+167
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/group_item.rb', line 157</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/group_item.rb', line 166</span>
 
 <span class="keyword">def</span> <span class="function">method_missing</span>(method, *args, &amp;block)
   <span class="keyword">return</span> base_item.__send__(method, *args, &amp;block) <span class="keyword">if</span> base_item&amp;.respond_to?(method) <span class="comment"># rubocop:disable Lint/RedundantSafeNavigation nil responds to :to_a</span>
@@ -3433,7 +3434,16 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 165
 166
 167
-168</pre>
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/group_item.rb', line 71</span>
@@ -3511,6 +3521,15 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
     <span class="keyword">return</span> <span class="keyword">super</span> <span class="keyword">unless</span> base_item
 
     base_item.format_type(command)
+  <span class="keyword">end</span>
+
+  <span class="string"><span class="delimiter">%w[</span><span class="content">color contact date_time dimmer image location number player rollershutter string switch</span><span class="delimiter">]</span></span>.each <span class="keyword">do</span> |type|
+    type_class = type.gsub(<span class="regexp"><span class="delimiter">/</span><span class="content">(^[a-z]|_[a-z])</span><span class="delimiter">/</span></span>) { |letter| letter[<span class="integer">-1</span>].upcase }
+    class_eval <span class="string"><span class="delimiter">&lt;&lt;~RUBY</span></span>, <span class="predefined-constant">__FILE__</span>, <span class="predefined-constant">__LINE__</span> + <span class="integer">1</span><span class="string"><span class="content">
+      def </span><span class="inline"><span class="inline-delimiter">#{</span>type<span class="inline-delimiter">}</span></span><span class="content">_item?                      # def date_time_item?
+        base_item&amp;.is_a?(</span><span class="inline"><span class="inline-delimiter">#{</span>type_class<span class="inline-delimiter">}</span></span><span class="content">Item)  #   base_item&amp;.is_a?(DateTimeItem)
+      end                                    # end</span><span class="delimiter">
+    RUBY</span></span>
   <span class="keyword">end</span>
 
   private
@@ -3729,7 +3748,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 </div>
 
         <footer>
-  Generated on Thu Sep  7 22:57:16 2023 by
+  Generated on Fri Sep  8 01:36:52 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
