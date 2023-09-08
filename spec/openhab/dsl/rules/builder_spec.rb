@@ -1426,6 +1426,17 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           Switch1.on
           expect(item).to be Switch1
         end
+
+        it "has an implicit `event`", caller: caller do
+          items.build { switch_item "Switch1" }
+          item = nil
+          rule do
+            send(trigger, Switch1)
+            run { item = event.item }
+          end
+          Switch1.on
+          expect(item).to be Switch1
+        end
       end
 
       test_event(:changed)
@@ -1441,6 +1452,57 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         end
         expect(ran).to be 3
       end
+
+      context "with context variables" do
+        it "works" do
+          items.build { switch_item TestSwitch }
+          received_context = nil
+          rule do
+            received_command TestSwitch
+            run do
+              # `command` was injected by ItemCommandTriggerHandler
+              received_context = command
+            end
+          end
+
+          TestSwitch.on
+          expect(received_context).to be ON
+        end
+
+        it "local variables hide context variables" do
+          items.build { switch_item TestSwitch }
+          local_var = nil
+          command = :foo
+          rule do
+            received_command TestSwitch
+            run do
+              # `command` was injected by ItemCommandTriggerHandler
+              local_var = command
+            end
+          end
+
+          TestSwitch.on
+          expect(local_var).to be :foo
+        end
+
+        it "methods hide context variables" do
+          items.build { switch_item TestSwitch }
+          method_result = nil
+          def command
+            :foo
+          end
+          rule do
+            received_command TestSwitch
+            run do
+              # `command` was injected by ItemCommandTriggerHandler
+              method_result = command
+            end
+          end
+
+          TestSwitch.on
+          expect(method_result).to be :foo
+        end
+      end
     end
 
     describe "#delay" do
@@ -1455,6 +1517,25 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         expect(executed).to be 1
         time_travel_and_execute_timers(10.seconds)
         expect(executed).to be 2
+      end
+
+      it "has access to its context in subsequent run blocks" do
+        items.build { switch_item TestSwitch }
+        received_context = nil
+        rule do
+          received_command TestSwitch
+          run {} # rubocop:disable Lint/EmptyBlock
+          delay 0.1.seconds
+          run do
+            # `command` was injected by ItemCommandTriggerHandler
+            received_context = command
+          end
+        end
+
+        TestSwitch.on
+        expect(received_context).to be_nil
+        time_travel_and_execute_timers(0.2.seconds)
+        expect(received_context).to be ON
       end
     end
 
@@ -1643,6 +1724,19 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         Switch1.on
         expect(item).to be Switch1
         expect(this).to be self
+      end
+
+      it "has access to its context variables" do
+        items.build { switch_item Switch1 }
+        received_context = nil
+        rule do
+          received_command Switch1
+          # `command` was injected by ItemCommandTriggerHandler
+          only_if { received_context = command }
+          run {} # rubocop:disable Lint/EmptyBlock
+        end
+        Switch1.on
+        expect(received_context).to be ON
       end
 
       describe "#between" do # rubocop:disable RSpec/EmptyExampleGroup

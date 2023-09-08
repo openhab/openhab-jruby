@@ -74,6 +74,10 @@ module OpenHAB
 
         # This method gets called in rspec's SuspendRules as well
         def execute!(mod, inputs)
+          # Store the context in a thread variable. It is accessed through DSL#method_missing
+          # which is triggered when the context variable is referenced inside the run block.
+          # It is added to @thread_locals so it is also available in #process_task below.
+          @thread_locals[:openhab_context] = extract_context(inputs)
           ThreadLocal.thread_local(**@thread_locals) do
             if logger.trace?
               logger.trace("Execute called with mod (#{mod&.to_string}) and inputs (#{inputs.inspect})")
@@ -88,6 +92,8 @@ module OpenHAB
 
             @run_context.send(:logger).log_exception(e)
           end
+        ensure
+          @thread_locals.delete(:openhab_context)
         end
 
         def cleanup
@@ -155,6 +161,24 @@ module OpenHAB
             Struct.new(*keys, keyword_init: true)
           end
           struct_class.new(**inputs)
+        end
+
+        #
+        # Converts inputs into context hash
+        # @return [Hash] Context hash.
+        #
+        def extract_context(inputs)
+          return unless inputs
+
+          inputs.reject { |key, _| key.include?(".") }
+                .to_h do |key, value|
+                  [key.to_sym,
+                   if value.is_a?(Item) && !value.is_a?(Core::Items::Proxy)
+                     Core::Items::Proxy.new(value)
+                   else
+                     value
+                   end]
+                end
         end
 
         #
@@ -230,7 +254,7 @@ module OpenHAB
           ThreadLocal.thread_local(**@thread_locals) do
             case task
             when BuilderDSL::Run then process_run_task(event, task)
-            when BuilderDSL::Script then process_script_task(task)
+            when BuilderDSL::Script then process_script_task(event, task)
             when BuilderDSL::Trigger then process_trigger_task(event, task)
             when BuilderDSL::Otherwise then process_otherwise_task(event, task)
             end
@@ -294,9 +318,9 @@ module OpenHAB
         #
         # @param [Script] task to execute
         #
-        def process_script_task(task)
-          logger.trace { "Executing script '#{name}' run block" }
-          @run_context.instance_exec(&task.block)
+        def process_script_task(event, task)
+          logger.trace { "Executing script '#{name}' run block with event(#{event})" }
+          @run_context.instance_exec(event, &task.block)
         end
 
         #

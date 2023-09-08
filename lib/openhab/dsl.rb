@@ -2,6 +2,7 @@
 
 require "java"
 require "method_source"
+require "ruby2_keywords"
 
 require "bundler/inline"
 
@@ -969,6 +970,24 @@ module OpenHAB
       end
 
       raise exception
+    end
+
+    #
+    # Provide access to the script context / variables
+    # see OpenHAB::DSL::Rules::AutomationRule#execute!
+    #
+    # @!visibility private
+    ruby2_keywords def method_missing(method, *args)
+      return super unless args.empty? && !block_given?
+      return super unless (context = Thread.current[:openhab_context]) && context.key?(method)
+
+      logger.trace("DSL#method_missing found context variable: '#{method}'")
+      context[method]
+    end
+
+    # @!visibility private
+    def respond_to_missing?(method, include_private = false)
+      Thread.current[:openhab_context]&.key?(method) || super
     end
   end
 end
