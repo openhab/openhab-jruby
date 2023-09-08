@@ -263,15 +263,14 @@ See [File Based Rules](#file-based-rules) for examples of creating rules within 
 
 When you use "Item event" as trigger (i.e. "[item] received a command", "[item] was updated", "[item] changed"), there is additional context available for the action in a variable called `event`.
 
-This table gives an overview of the `event` object for the most common trigger types. For full details, explore {OpenHAB::Core::Events}.
+This tables gives an overview of the `event` object for most common trigger types. For full details, explore {OpenHAB::Core::Events}.
 
-| Property Name | Type                                         | Trigger Types                                                                                        | Description                                              | Rules DSL Equivalent   |
-| ------------- | -------------------------------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------- | ---------------------- |
-| `state`       | {OpenHAB::Core::Types::State State} or `nil` | `[item] changed`, `[item] was updated`                                                               | State that triggered the event                           | `triggeringItem.state` |
-| `was`         | {OpenHAB::Core::Types::State State} or `nil` | `[item] changed`                                                                                     | Previous state of Item or Group that triggered the event | `previousState`        |
-| `command`     | {OpenHAB::Core::Types::Command Command}      | `[item] received a command`                                                                          | Command that triggered the event                         | `receivedCommand`      |
-| `item`        | {OpenHAB::Core::Items::Item Item}            | all                                                                                                  | Item that triggered the event                            | `triggeringItem`       |
-| `group`       | {OpenHAB::Core::Items::Item GroupItem}       | `Member of [group] changed`, `Member of [group] was updated`, `Member of [group] received a command` | Group whose member triggered the event                   | `triggeringGroup`      |
+| Property Name | Type                                         | Trigger Types                          | Description                                          | Rules DSL Equivalent   |
+| ------------- | -------------------------------------------- | -------------------------------------- | ---------------------------------------------------- | ---------------------- |
+| `state`       | {OpenHAB::Core::Types::State State} or `nil` | `[item] changed`, `[item] was updated` | State that triggered event                           | `triggeringItem.state` |
+| `was`         | {OpenHAB::Core::Types::State State} or `nil` | `[item] changed`                       | Previous state of Item or Group that triggered event | `previousState`        |
+| `command`     | {OpenHAB::Core::Types::Command Command}      | `[item] received a command`            | Command that triggered event                         | `receivedCommand`      |
+| `item`        | {OpenHAB::Core::Items::Item Item}            | all                                    | Item that triggered event                            | `triggeringItem`       |
 
 ```ruby
 logger.info(event.state == ON)

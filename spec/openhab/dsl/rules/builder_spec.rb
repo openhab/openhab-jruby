@@ -346,22 +346,6 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
                              from: 4,
                              to: proc { true })
 
-        # @deprecated OH3.4 the if guard for OH3
-        if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0")
-          it "reports the triggering group" do
-            triggering_group = nil
-            Switch1.update(ON)
-
-            rule do
-              changed Switches.members
-              run { |event| triggering_group = event.group }
-            end
-
-            Switch1.update(OFF)
-            expect(triggering_group).to eql Switches
-          end
-        end
-
         describe "duration" do
           before do
             items.build { number_item "Alarm_Delay", state: 5 }
@@ -424,23 +408,6 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
             expect(triggered_item).to be_nil
             time_travel_and_execute_timers(20.seconds)
             expect(triggered_item).to be_nil
-          end
-
-          # @deprecated OH3.4 the if guard for OH3
-          if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0")
-            it "reports the triggering group" do
-              triggering_group = nil
-              Switch1.update(ON)
-
-              rule do
-                changed Switches.members, for: 0.5.seconds
-                run { |event| triggering_group = event.group }
-              end
-
-              Switch1.update(OFF)
-              time_travel_and_execute_timers(1.second)
-              expect(triggering_group).to eql Switches
-            end
           end
 
           context "without to state" do
@@ -807,20 +774,6 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       test_command_trigger("AlarmModes", members: true, command: [7, 14], expect_triggered: false) do
         Alarm_Mode << 10
       end
-
-      # @deprecated OH3.4 the if guard for OH3
-      if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0")
-        it "reports the triggering group" do
-          triggering_group = nil
-          rule do
-            received_command AlarmModes.members
-            run { |event| triggering_group = event.group }
-          end
-
-          Alarm_Mode.command(1)
-          expect(triggering_group).to eql AlarmModes
-        end
-      end
     end
 
     describe "#trigger" do
@@ -996,20 +949,6 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
 
           Alarm_Mode.update(7)
           expect(items).to eql [Alarm_Mode]
-        end
-
-        # @deprecated OH3.4 the if guard for OH3
-        if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0")
-          it "reports the triggering group" do
-            triggering_group = nil
-            rule do
-              updated AlarmModes.members
-              run { |event| triggering_group = event.group }
-            end
-
-            Alarm_Mode.update(1)
-            expect(triggering_group).to eql AlarmModes
-          end
         end
 
         it "works with group members to specific states" do

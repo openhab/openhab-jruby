@@ -143,8 +143,6 @@ module OpenHAB
             end
 
             event.attachment = attachment
-            # WatchEvent and future custom events may not need/support inputs
-            event.inputs = inputs if event.respond_to?(:inputs=)
             return event
           end
 
