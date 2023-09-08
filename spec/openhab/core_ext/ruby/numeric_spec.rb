@@ -15,5 +15,9 @@ RSpec.describe Numeric do
     it "falls back to the default behavior on non unit" do
       expect(1 | 2).to eq 3
     end
+
+    it "works with Java BigDecimal" do
+      expect(java.math.BigDecimal::ZERO | "W").to eq QuantityType.new("0 W")
+    end
   end
 end
