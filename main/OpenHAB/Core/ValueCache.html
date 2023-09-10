@@ -3309,16 +3309,18 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
 111
 112
 113
-114</pre>
+114
+115</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 109</span>
 
 <span class="keyword">def</span> <span class="function">assoc</span>(key)
-  [key, fetch(key) <span class="keyword">do</span>
-    <span class="comment"># return nil directly, without storing a value to the cache</span>
-    <span class="keyword">return</span> <span class="predefined-constant">nil</span>
-  <span class="keyword">end</span>]
+  [key,
+   fetch(key) <span class="keyword">do</span>
+     <span class="comment"># return nil directly, without storing a value to the cache</span>
+     <span class="keyword">return</span> <span class="predefined-constant">nil</span>
+   <span class="keyword">end</span>]
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3503,13 +3505,13 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-117
 118
 119
-120</pre>
+120
+121</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 118</span>
 
 <span class="keyword">def</span> <span class="function">dig</span>(key, *identifiers)
   r = fetch(key) { <span class="keyword">return</span> <span class="predefined-constant">nil</span> }
@@ -3641,7 +3643,6 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-123
 124
 125
 126
@@ -3653,10 +3654,11 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
 132
 133
 134
-135</pre>
+135
+136</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 124</span>
 
 <span class="keyword">def</span> <span class="function">fetch_values</span>(*keys, &amp;block)
   result = []
@@ -3724,12 +3726,12 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-138
 139
-140</pre>
+140
+141</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 138</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 139</span>
 
 <span class="keyword">def</span> <span class="function">key?</span>(key)
   !!fetch(key) { <span class="keyword">return</span> <span class="predefined-constant">false</span> }
@@ -3774,7 +3776,6 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-146
 147
 148
 149
@@ -3790,10 +3791,11 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
 159
 160
 161
-162</pre>
+162
+163</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 146</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 147</span>
 
 <span class="keyword">def</span> <span class="function">merge!</span>(*other_hashes)
   other_hashes.each <span class="keyword">do</span> |hash|
@@ -3848,17 +3850,17 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-166
 167
 168
 169
 170
 171
 172
-173</pre>
+173
+174</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 167</span>
 
 <span class="keyword">def</span> <span class="function">slice</span>(*keys)
   result = {}
@@ -3904,12 +3906,12 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-176
 177
-178</pre>
+178
+179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 177</span>
 
 <span class="keyword">def</span> <span class="function">to_proc</span>
   <span class="instance-variable">@to_proc</span> ||= -&gt;(k) { <span class="predefined-constant">self</span>[k] }
@@ -3950,14 +3952,14 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-181
 182
 183
 184
-185</pre>
+185
+186</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 181</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 182</span>
 
 <span class="keyword">def</span> <span class="function">values_at</span>(*keys)
   keys.map <span class="keyword">do</span> |k|
@@ -3974,7 +3976,7 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
 </div>
 
         <footer>
-  Generated on Fri Sep  8 20:27:32 2023 by
+  Generated on Sun Sep 10 13:01:52 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

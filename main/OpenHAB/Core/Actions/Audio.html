@@ -2991,15 +2991,21 @@
 25
 26
 27
-28</pre>
+28
+29
+30
+31</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/audio.rb', line 24</span>
 
 <span class="keyword">def</span> <span class="function">play_sound</span>(filename, <span class="key">sink</span>: <span class="predefined-constant">nil</span>, <span class="key">volume</span>: <span class="predefined-constant">nil</span>)
   volume = <span class="constant">PercentType</span>.new(volume) <span class="keyword">unless</span> volume.is_a?(<span class="constant">PercentType</span>) || volume.nil?
-  java_send <span class="symbol">:playSound</span>, [java.lang.String, java.lang.String, <span class="constant">PercentType</span>.java_class],
-            sink, filename.to_s, volume
+  java_send <span class="symbol">:playSound</span>,
+            [java.lang.String, java.lang.String, <span class="constant">PercentType</span>.java_class],
+            sink,
+            filename.to_s,
+            volume
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3078,12 +3084,12 @@
       <pre class="lines">
 
 
-41
-42
-43</pre>
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/audio.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/audio.rb', line 44</span>
 
 <span class="keyword">def</span> <span class="function">play_stream</span>(url, <span class="key">sink</span>: <span class="predefined-constant">nil</span>)
   playStream(sink&amp;.to_s, url)
@@ -3098,7 +3104,7 @@
 </div>
 
         <footer>
-  Generated on Fri Sep  8 20:27:37 2023 by
+  Generated on Sun Sep 10 13:01:56 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
