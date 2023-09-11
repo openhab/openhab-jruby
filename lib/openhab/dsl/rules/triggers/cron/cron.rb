@@ -26,16 +26,15 @@ module OpenHAB
           # @return [Hash] Map with symbols for :seconds, :minute, :hour, :dom, :month, :dow
           #   configured to fire every second
           #
-          CRON_EXPRESSION_MAP =
-            {
-              second: "*",
-              minute: "*",
-              hour: "*",
-              dom: "?",
-              month: "*",
-              dow: "?",
-              year: "*"
-            }.freeze
+          CRON_EXPRESSION_MAP = {
+            second: "*",
+            minute: "*",
+            hour: "*",
+            dom: "?",
+            month: "*",
+            dow: "?",
+            year: "*"
+          }.freeze
           private_constant :CRON_EXPRESSION_MAP
 
           # @return [Hash] Map of days of the week from symbols to to openHAB cron strings
@@ -52,7 +51,6 @@ module OpenHAB
 
           # @return [Hash] Converts the DAY_OF_WEEK_MAP to map used by Cron Expression
           DAY_OF_WEEK_EXPRESSION_MAP = DAY_OF_WEEK_MAP.transform_values { |v| CRON_EXPRESSION_MAP.merge(dow: v) }
-
           private_constant :DAY_OF_WEEK_EXPRESSION_MAP
 
           # @return [Hash] Create a set of cron expressions based on different time intervals
@@ -65,8 +63,11 @@ module OpenHAB
             month: CRON_EXPRESSION_MAP.merge(second: "0", minute: "0", hour: "0", dom: "1"),
             year: CRON_EXPRESSION_MAP.merge(second: "0", minute: "0", hour: "0", dom: "1", month: "1")
           }.merge(DAY_OF_WEEK_EXPRESSION_MAP).freeze
-
           private_constant :EXPRESSION_MAP
+
+          # @return [Hash] Translate cron field names to expression keys
+          FIELD_TO_EXPRESSION_KEY = Hash.new { |_, key| key }.merge({ dow: :week, dom: :day })
+          private_constant :FIELD_TO_EXPRESSION_KEY
 
           #
           # Create a cron map from a duration
@@ -125,9 +126,11 @@ module OpenHAB
             end
 
             fields = fields.transform_values { |value| value.to_s.delete(" ") }
+            # convert fields' key dow->week, dom->day to look into EXPRESSION_MAP
+            fields_expression = fields.transform_keys { |key| FIELD_TO_EXPRESSION_KEY[key] }
             # find the first expression map that has a field from fields.
             # this ensure more-specific fields get set to 0, not *
-            base_key = EXPRESSION_MAP.keys.find { |field, _| fields.key?(field) }
+            base_key = EXPRESSION_MAP.keys.find { |field, _| fields_expression.key?(field) }
             base_expression = EXPRESSION_MAP[base_key]
             expression_map = base_expression.merge(fields)
 

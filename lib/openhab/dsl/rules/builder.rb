@@ -1076,7 +1076,11 @@ module OpenHAB
         #
         # @overload cron(second: nil, minute: nil, hour: nil, dom: nil, month: nil, dow: nil, year: nil, attach: nil)
         #   The trigger can be created by specifying each field as keyword arguments.
-        #   Omitted fields will default to `*` or `?` as appropriate.
+        #
+        #   When certain fields were omitted:
+        #     - The more specific fields will default to `0` for `hour`, `minute`, and `second`,
+        #       to `MON` for `dow`, and to `1` for `dom` and `month`.
+        #     - The less specific fields will default to `*` or `?` as appropriate.
         #
         #   Each field is optional, but at least one must be specified.
         #
@@ -1097,7 +1101,15 @@ module OpenHAB
         #     # Run every 3 minutes on Monday to Friday
         #     # equivalent to the cron expression "0 */3 * ? * MON-FRI *"
         #     rule "Using cron fields" do
-        #       cron second: 0, minute: "*/3", dow: "MON-FRI"
+        #       cron minute: "*/3", dow: "MON-FRI"
+        #       run { logger.info "Cron rule executed" }
+        #     end
+        #
+        #   @example
+        #     # Run at midnight on the first day of January, February, and March
+        #     # equivalent to the cron expression "0 0 0 1 JAN-MAR ? *"
+        #     rule "Using cron fields" do
+        #       cron month: "JAN-MAR"
         #       run { logger.info "Cron rule executed" }
         #     end
         #
