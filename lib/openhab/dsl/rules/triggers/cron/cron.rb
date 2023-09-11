@@ -125,7 +125,23 @@ module OpenHAB
                     "unknown keyword#{"s" if extra_fields.size > 1}: #{extra_fields.map(&:inspect).join(", ")}"
             end
 
-            fields = fields.transform_values { |value| value.to_s.delete(" ") }
+            fields = fields.to_h do |key, value|
+              if value.is_a?(Range)
+                if value.exclude_end?
+                  raise ArgumentError,
+                        "Range must be inclusive for '#{key}'. Try '#{value.begin}..#{value.end}' instead"
+                end
+
+                unless value.begin && value.end
+                  raise ArgumentError,
+                        "Range must have a beginning and ending for '#{key}'"
+                end
+
+                [key, "#{value.begin.to_s.upcase}-#{value.end.to_s.upcase}".delete(" ")]
+              else
+                [key, value.to_s.delete(" ").upcase]
+              end
+            end
             # convert fields' key dow->week, dom->day to look into EXPRESSION_MAP
             fields_expression = fields.transform_keys { |key| FIELD_TO_EXPRESSION_KEY[key] }
             # find the first expression map that has a field from fields.
