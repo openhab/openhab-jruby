@@ -1031,19 +1031,35 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         end
       end
 
-      it "can use specifiers" do
-        cron_trigger = instance_double(OpenHAB::DSL::Rules::Triggers::Cron)
-        allow(OpenHAB::DSL::Rules::Triggers::Cron).to receive(:new).and_return(cron_trigger)
-        expect(cron_trigger).to receive(:trigger).with(config: { "cronExpression" => "0 5 12 ? * ? *" }, attach: nil)
-        rule do
-          cron minute: 5, hour: 12
+      context "with field specifiers" do
+        def self.test_cron_fields(expected, description: nil, caller: Kernel.caller, **kwargs)
+          description ||= "works with '#{kwargs.inspect}'"
+          it description, caller: caller do
+            cron_trigger = instance_double(OpenHAB::DSL::Rules::Triggers::Cron)
+            allow(OpenHAB::DSL::Rules::Triggers::Cron).to receive(:new).and_return(cron_trigger)
+            expect(cron_trigger).to receive(:trigger).with(config: { "cronExpression" => expected }, attach: nil)
+            rule do
+              cron(**kwargs)
+            end
+          end
         end
-      end
 
-      it "raises ArgumentError about incorrect specifiers" do
-        expect do
-          cron(made_up: 3, stuff: 5) { nil }
-        end.to raise_error(ArgumentError, "unknown keywords: :made_up, :stuff")
+        test_cron_fields("0 5 12 ? * ? *", description: "works", minute: 5, hour: 12)
+
+        it "raises ArgumentError about incorrect specifiers" do
+          expect do
+            cron(made_up: 3, stuff: 5) { nil }
+          end.to raise_error(ArgumentError, "unknown keywords: :made_up, :stuff")
+        end
+
+        context "when fields are omitted" do # rubocop:disable RSpec/EmptyExampleGroup examples are dynamically generated
+          test_cron_fields("0 12 * ? * ? *", minute: 12)
+          test_cron_fields("0 0 12 ? * ? *", hour: 12)
+          test_cron_fields("0 0 0 ? * MON-THU *", dow: "MON-THU")
+          test_cron_fields("0 0 0 10 * ? *", dom: 10)
+          test_cron_fields("0 0 0 1 2 ? *", month: 2)
+          test_cron_fields("0 0 0 1 1 ? 2023-2025", year: "2023-2025")
+        end
       end
     end
 
