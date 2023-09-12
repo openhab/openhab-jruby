@@ -1,5 +1,18 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.6.1](https://github.com/openhab/openhab-jruby/tree/v5.6.1) (2023-09-12)
+
+[Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.6.0...v5.6.1)
+
+### Features
+
+- Support Ruby Range in cron fields [\#143](https://github.com/openhab/openhab-jruby/pull/143) ([jimtng](https://github.com/jimtng))
+
+### Bug Fixes
+
+- Fix defaults with cron fields `dow` and `dom` [\#142](https://github.com/openhab/openhab-jruby/pull/142) ([jimtng](https://github.com/jimtng))
+- Add unit conversion operator \(|\) to java.math.BigDecimal [\#140](https://github.com/openhab/openhab-jruby/pull/140) ([ccutrer](https://github.com/ccutrer))
+
 ## [v5.6.0](https://github.com/openhab/openhab-jruby/tree/v5.6.0) (2023-09-08)
 
 [Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.5.0...v5.6.0)
