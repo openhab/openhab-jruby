@@ -1087,17 +1087,19 @@ module OpenHAB
         #   The same rules for the standard
         #   [cron expression](https://www.quartz-scheduler.org/documentation/quartz-2.2.2/tutorials/tutorial-lesson-06.html)
         #   apply for each field. For example, multiple values can be separated
-        #   with a comma within a string.
+        #   with a comma within a string, and ranges can be specified with a dash or with
+        #   a Ruby Range.
         #
-        #   @param [Integer, String, nil] second
-        #   @param [Integer, String, nil] minute
-        #   @param [Integer, String, nil] hour
-        #   @param [Integer, String, nil] dom
-        #   @param [Integer, String, nil] month
-        #   @param [Integer, String, nil] dow
-        #   @param [Integer, String, nil] year
+        #   @param [Integer, String, Range, nil] second
+        #   @param [Integer, String, Range, nil] minute
+        #   @param [Integer, String, Range, nil] hour
+        #   @param [Integer, String, Symbol, Range, nil] dom
+        #   @param [Integer, String, Symbol, Range, nil] month
+        #   @param [Integer, String, Symbol, Range, nil] dow
+        #   @param [Integer, String, Range, nil] year
         #   @param [Object] attach object to be attached to the trigger
-        #   @example
+        #
+        #   @example Using String values
         #     # Run every 3 minutes on Monday to Friday
         #     # equivalent to the cron expression "0 */3 * ? * MON-FRI *"
         #     rule "Using cron fields" do
@@ -1105,11 +1107,19 @@ module OpenHAB
         #       run { logger.info "Cron rule executed" }
         #     end
         #
-        #   @example
+        #   @example Defaults for unspecified fields
         #     # Run at midnight on the first day of January, February, and March
         #     # equivalent to the cron expression "0 0 0 1 JAN-MAR ? *"
         #     rule "Using cron fields" do
         #       cron month: "JAN-MAR"
+        #       run { logger.info "Cron rule executed" }
+        #     end
+        #
+        #   @example Using Ruby Range values
+        #     # Run on the hour, every hour between 1pm and 5pm
+        #     # equivalent to the cron expression "0 0 13-17 ? * ? *"
+        #     rule "Using cron fields" do
+        #       cron hour: 13..17
         #       run { logger.info "Cron rule executed" }
         #     end
         #

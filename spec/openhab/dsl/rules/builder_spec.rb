@@ -1060,6 +1060,22 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           test_cron_fields("0 0 0 1 2 ? *", month: 2)
           test_cron_fields("0 0 0 1 1 ? 2023-2025", year: "2023-2025")
         end
+
+        context "with ranges" do # examples are dynamically generated
+          test_cron_fields("12-14 * * ? * ? *", second: 12..14)
+          test_cron_fields("0 12-14 * ? * ? *", minute: 12..14)
+          test_cron_fields("0 0 12-14 ? * ? *", hour: 12..14)
+          test_cron_fields("0 0 0 12-14 * ? *", dom: 12..14)
+          test_cron_fields("0 0 0 1 2-5 ? *", month: 2..5)
+          test_cron_fields("0 0 0 1 FEB-MAY ? *", month: :FEB..:MAY)
+          test_cron_fields("0 0 0 ? * TUE-WED *", dow: :TUE..:WED)
+          test_cron_fields("0 0 0 1 1 ? 2023-2025", year: 2023..2025)
+
+          it "raises ArgumentError about unsupported ranges" do
+            expect { cron second: 12.. }.to raise_error(ArgumentError)
+            expect { cron second: 12...14 }.to raise_error(ArgumentError)
+          end
+        end
       end
     end
 
