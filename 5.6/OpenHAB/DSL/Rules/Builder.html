@@ -3271,7 +3271,8 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
 80
 81
 82
-83</pre>
+83
+84</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 61</span>
@@ -3288,7 +3289,8 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
     builder = <span class="constant">BuilderDSL</span>.new(binding || block.binding)
     builder.uid(id)
     builder.instance_exec(builder, &amp;block)
-    builder.guard = <span class="constant">Guard</span>.new(<span class="key">run_context</span>: builder.caller, <span class="key">only_if</span>: builder.only_if,
+    builder.guard = <span class="constant">Guard</span>.new(<span class="key">run_context</span>: builder.caller,
+                              <span class="key">only_if</span>: builder.only_if,
                               <span class="key">not_if</span>: builder.not_if)
 
     name ||= <span class="constant">NameInference</span>.infer_rule_name(builder)
@@ -3412,7 +3414,6 @@ such as the Run Rules action.</p>
       <pre class="lines">
 
 
-126
 127
 128
 129
@@ -3429,10 +3430,11 @@ such as the Run Rules action.</p>
 140
 141
 142
-143</pre>
+143
+144</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 127</span>
 
 <span class="keyword">def</span> <span class="function">scene</span>(name = <span class="predefined-constant">nil</span>, <span class="key">id</span>: <span class="predefined-constant">nil</span>, <span class="key">script</span>: <span class="predefined-constant">nil</span>, &amp;block)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Block is required</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block
@@ -3565,7 +3567,6 @@ such as the Run Rules action.</p>
       <pre class="lines">
 
 
-96
 97
 98
 99
@@ -3582,10 +3583,11 @@ such as the Run Rules action.</p>
 110
 111
 112
-113</pre>
+113
+114</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 97</span>
 
 <span class="keyword">def</span> <span class="function">script</span>(name = <span class="predefined-constant">nil</span>, <span class="key">id</span>: <span class="predefined-constant">nil</span>, <span class="key">script</span>: <span class="predefined-constant">nil</span>, &amp;block)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Block is required</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block
@@ -3615,7 +3617,7 @@ such as the Run Rules action.</p>
 </div>
 
         <footer>
-  Generated on Fri Sep  8 01:48:48 2023 by
+  Generated on Tue Sep 12 00:15:41 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

@@ -3191,7 +3191,7 @@ implements.</p>
 
   bundle = org.osgi.framework.FrameworkUtil.get_bundle(interfaces.first.java_class)
   bundle.bundle_context.register_service(
-    interfaces.map(&amp;<span class="symbol">:java_class</span>).map(&amp;<span class="symbol">:name</span>).to_java(java.lang.String),
+    interfaces.map { |i| i.java_class.name }.to_java(java.lang.String),
     instance,
     java.util.Hashtable.new(properties)
   )
@@ -3393,7 +3393,7 @@ implements.</p>
 </div>
 
         <footer>
-  Generated on Fri Sep  8 01:48:41 2023 by
+  Generated on Tue Sep 12 00:15:36 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

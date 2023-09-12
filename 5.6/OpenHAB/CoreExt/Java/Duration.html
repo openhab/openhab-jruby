@@ -3123,14 +3123,16 @@
 65
 66
 67
-68</pre>
+68
+69</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/duration.rb', line 65</span>
 
 <span class="keyword">def</span> <span class="function">coerce</span>(other)
   <span class="keyword">return</span> [other.seconds, <span class="predefined-constant">self</span>] <span class="keyword">if</span> other.is_a?(<span class="constant">Numeric</span>)
-  <span class="keyword">return</span> [other.to_i.seconds, <span class="predefined-constant">self</span>] <span class="keyword">if</span> other.is_a?(<span class="constant">Period</span>)
+
+  [other.to_i.seconds, <span class="predefined-constant">self</span>] <span class="keyword">if</span> other.is_a?(<span class="constant">Period</span>)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3354,7 +3356,7 @@ alias_method <span class="symbol">:to_i</span>, <span class="symbol">:seconds</s
 </div>
 
         <footer>
-  Generated on Fri Sep  8 01:48:53 2023 by
+  Generated on Tue Sep 12 00:15:44 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
