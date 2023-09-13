@@ -11,20 +11,20 @@ RSpec.describe OpenHAB::Core::Types::QuantityType do
     # quantity type operand
     expect(QuantityType.new("50 °F") + QuantityType.new("50 °F")).to eql QuantityType.new("100.0 °F")
     expect(QuantityType.new("50 °F") - QuantityType.new("25 °F")).to eql QuantityType.new("25.0 °F")
-    expect((QuantityType.new("100 °F") / QuantityType.new("2 °F")).to_i).to be 50
+    expect((QuantityType.new("100 W") / QuantityType.new("2 W")).to_i).to be 50
     expect(QuantityType.new("50 °F") + -QuantityType.new("25 °F")).to eql QuantityType.new("25.0 °F")
 
     # numeric operand
-    expect(QuantityType.new("50 °F") * 2).to eql QuantityType.new("100.0 °F")
-    expect(QuantityType.new("100 °F") / 2).to eql QuantityType.new("50.0 °F")
-    expect(QuantityType.new("50 °F") * 2.0).to eql QuantityType.new("100.0 °F")
-    expect(QuantityType.new("100 °F") / 2.0).to eql QuantityType.new("50.0 °F")
+    expect(QuantityType.new("50 W") * 2).to eql QuantityType.new("100.0 W")
+    expect(QuantityType.new("100 W") / 2).to eql QuantityType.new("50.0 W")
+    expect(QuantityType.new("50 W") * 2.0).to eql QuantityType.new("100.0 W")
+    expect(QuantityType.new("100 W") / 2.0).to eql QuantityType.new("50.0 W")
 
     # DecimalType operand
-    expect(QuantityType.new("50 °F") * DecimalType.new(2)).to eql QuantityType.new("100.0 °F")
-    expect(QuantityType.new("100 °F") / DecimalType.new(2)).to eql QuantityType.new("50.0 °F")
-    expect(QuantityType.new("50 °F") * DecimalType.new(2.0)).to eql QuantityType.new("100.0 °F")
-    expect(QuantityType.new("100 °F") / DecimalType.new(2.0)).to eql QuantityType.new("50.0 °F")
+    expect(QuantityType.new("50 W") * DecimalType.new(2)).to eql QuantityType.new("100.0 W")
+    expect(QuantityType.new("100 W") / DecimalType.new(2)).to eql QuantityType.new("50.0 W")
+    expect(QuantityType.new("50 W") * DecimalType.new(2.0)).to eql QuantityType.new("100.0 W")
+    expect(QuantityType.new("100 W") / DecimalType.new(2.0)).to eql QuantityType.new("50.0 W")
   end
 
   it "can be compared" do

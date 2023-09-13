@@ -256,9 +256,17 @@ RSpec.describe OpenHAB::DSL do
         expect((c + f).format("%.1f %unit%")).to eq "44.1 °C"
         expect(f - 2 < 20).to be true
         expect(2 + c == 25).to be true
-        expect(2 * c == 46).to be true
         expect((2 * (f + c) / 2) < 45).to be true
         expect([c, f, 2].min).to be 2
+      end
+
+      # The behavior of Multiplications and Divisions with non zero-based units such as °C and °F
+      # (as opposed to Kelvin) is different between OH 4.1 and previous versions.
+      # See https://github.com/openhab/openhab-core/pull/3792
+      # Use a zero-based unit to have a consistent result across OH versions.
+      w = 5 | "W"
+      unit("W") do
+        expect(2 * w == 10).to be true
       end
     end
 
