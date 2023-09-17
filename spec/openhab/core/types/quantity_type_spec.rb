@@ -7,24 +7,65 @@ RSpec.describe OpenHAB::Core::Types::QuantityType do
     expect(50.to_d | "°F").to eql QuantityType.new("50.0 °F") # rubocop:disable Performance/BigDecimalWithNumericArgument
   end
 
-  it "responds to math operations" do
-    # quantity type operand
-    expect(QuantityType.new("50 °F") + QuantityType.new("50 °F")).to eql QuantityType.new("100.0 °F")
-    expect(QuantityType.new("50 °F") - QuantityType.new("25 °F")).to eql QuantityType.new("25.0 °F")
-    expect((QuantityType.new("100 °F") / QuantityType.new("2 °F")).to_i).to be 50
-    expect(QuantityType.new("50 °F") + -QuantityType.new("25 °F")).to eql QuantityType.new("25.0 °F")
+  describe "math operations" do
+    describe "additions and subtractions" do
+      it "support quantity type operand" do
+        expect(QuantityType.new("50 °F") + QuantityType.new("50 °F")).to eql QuantityType.new("100.0 °F")
+        expect(QuantityType.new("50 °F") - QuantityType.new("25 °F")).to eql QuantityType.new("25.0 °F")
+        expect(QuantityType.new("50 °F") + -QuantityType.new("25 °F")).to eql QuantityType.new("25.0 °F")
+      end
 
-    # numeric operand
-    expect(QuantityType.new("50 °F") * 2).to eql QuantityType.new("100.0 °F")
-    expect(QuantityType.new("100 °F") / 2).to eql QuantityType.new("50.0 °F")
-    expect(QuantityType.new("50 °F") * 2.0).to eql QuantityType.new("100.0 °F")
-    expect(QuantityType.new("100 °F") / 2.0).to eql QuantityType.new("50.0 °F")
+      it "raise exception with non QuantityType operand" do
+        expect { QuantityType.new("50 °F") + 50 }.to raise_exception(TypeError)
+        expect { QuantityType.new("50 °F") - 50 }.to raise_exception(TypeError)
+        expect { 50 + QuantityType.new("50 °F") }.to raise_exception(javax.measure.UnconvertibleException)
+        expect { 50 - QuantityType.new("50 °F") }.to raise_exception(javax.measure.UnconvertibleException)
+      end
+    end
 
-    # DecimalType operand
-    expect(QuantityType.new("50 °F") * DecimalType.new(2)).to eql QuantityType.new("100.0 °F")
-    expect(QuantityType.new("100 °F") / DecimalType.new(2)).to eql QuantityType.new("50.0 °F")
-    expect(QuantityType.new("50 °F") * DecimalType.new(2.0)).to eql QuantityType.new("100.0 °F")
-    expect(QuantityType.new("100 °F") / DecimalType.new(2.0)).to eql QuantityType.new("50.0 °F")
+    describe "multiplications and divisions" do
+      it "support quantity type operand" do
+        expect(QuantityType.new("100 W") * QuantityType.new("2 W")).to eql QuantityType.new("200 W²")
+        expect(QuantityType.new("100 W") / QuantityType.new("2 W")).to eql QuantityType.new("50")
+      end
+
+      it "support numeric operand" do
+        expect(QuantityType.new("50 W") * 2).to eql QuantityType.new("100.0 W")
+        expect(QuantityType.new("50 kW") * 2).to eql QuantityType.new("100.0 kW")
+        expect(2 * QuantityType.new("50 W")).to eql QuantityType.new("100.0 W")
+        expect(2 * QuantityType.new("50 kW")).to eql QuantityType.new("100.0 kW")
+        expect(QuantityType.new("100 W") / 2).to eql QuantityType.new("50.0 W")
+        expect(QuantityType.new("50 W") * 2.0).to eql QuantityType.new("100.0 W")
+        expect(2.0 * QuantityType.new("50 W")).to eql QuantityType.new("100.0 W")
+        expect(2.0 * QuantityType.new("50 kW")).to eql QuantityType.new("100.0 kW")
+        expect(QuantityType.new("100 W") / 2.0).to eql QuantityType.new("50.0 W")
+      end
+
+      it "support DecimalType operand" do
+        expect(QuantityType.new("50 W") * DecimalType.new(2)).to eql QuantityType.new("100.0 W")
+        expect(QuantityType.new("100 W") / DecimalType.new(2)).to eql QuantityType.new("50.0 W")
+        expect(QuantityType.new("50 W") * DecimalType.new(2.0)).to eql QuantityType.new("100.0 W")
+        expect(QuantityType.new("100 W") / DecimalType.new(2.0)).to eql QuantityType.new("50.0 W")
+      end
+    end
+
+    describe "with mixed units" do
+      it "normalizes units in complex expression" do
+        expect(((23 | "°C") | "°F") - (70 | "°F")).to be < 4 | "°F"
+      end
+
+      it "supports arithmetic" do
+        expect((20 | "°C") + (9 | "°F")).to eql 25 | "°C"
+        expect((25 | "°C") - (9 | "°F")).to eql 20 | "°C"
+      end
+
+      it "works in a unit block" do
+        unit("°C") do
+          expect((20 | "°C") + (9 | "°F")).to eql 25 | "°C"
+          expect((25 | "°C") - (9 | "°F")).to eql 20 | "°C"
+        end
+      end
+    end
   end
 
   it "can be compared" do
@@ -69,10 +110,6 @@ RSpec.describe OpenHAB::Core::Types::QuantityType do
     expect((0 | "W")..(10 | "W")).to cover(0 | "W")
     expect((0 | "W")..(10 | "W")).not_to cover(14 | "W")
     expect((0 | "W")..(10 | "W")).to cover(10 | "W")
-  end
-
-  it "normalizes units in complex expression" do
-    expect(((23 | "°C") | "°F") - (70 | "°F")).to be < 4 | "°F"
   end
 
   describe "comparisons" do
