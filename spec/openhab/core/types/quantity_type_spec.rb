@@ -8,26 +8,45 @@ RSpec.describe OpenHAB::Core::Types::QuantityType do
   end
 
   describe "math operations" do
-    it "supports quantity type operand" do
-      expect(QuantityType.new("50 °F") + QuantityType.new("50 °F")).to eql QuantityType.new("100.0 °F")
-      expect(QuantityType.new("50 °F") - QuantityType.new("25 °F")).to eql QuantityType.new("25.0 °F")
-      expect((QuantityType.new("100 W") / QuantityType.new("2 W")).to_i).to be 50
-      expect(QuantityType.new("50 °F") + -QuantityType.new("25 °F")).to eql QuantityType.new("25.0 °F")
+    describe "additions and subtractions" do
+      it "support quantity type operand" do
+        expect(QuantityType.new("50 °F") + QuantityType.new("50 °F")).to eql QuantityType.new("100.0 °F")
+        expect(QuantityType.new("50 °F") - QuantityType.new("25 °F")).to eql QuantityType.new("25.0 °F")
+        expect(QuantityType.new("50 °F") + -QuantityType.new("25 °F")).to eql QuantityType.new("25.0 °F")
+      end
+
+      it "raise exception with non QuantityType operand" do
+        expect { QuantityType.new("50 °F") + 50 }.to raise_exception(TypeError)
+        expect { QuantityType.new("50 °F") - 50 }.to raise_exception(TypeError)
+        expect { 50 + QuantityType.new("50 °F") }.to raise_exception(javax.measure.UnconvertibleException)
+        expect { 50 - QuantityType.new("50 °F") }.to raise_exception(javax.measure.UnconvertibleException)
+      end
     end
 
-    it "supports numeric operand" do
-      expect(QuantityType.new("50 W") * 2).to eql QuantityType.new("100.0 W")
-      expect(2 * QuantityType.new("50 W")).to eql QuantityType.new("100.0 W")
-      expect(QuantityType.new("100 W") / 2).to eql QuantityType.new("50.0 W")
-      expect(QuantityType.new("50 W") * 2.0).to eql QuantityType.new("100.0 W")
-      expect(QuantityType.new("100 W") / 2.0).to eql QuantityType.new("50.0 W")
-    end
+    describe "multiplications and divisions" do
+      it "support quantity type operand" do
+        expect(QuantityType.new("100 W") * QuantityType.new("2 W")).to eql QuantityType.new("200 W²")
+        expect(QuantityType.new("100 W") / QuantityType.new("2 W")).to eql QuantityType.new("50")
+      end
 
-    it "supports DecimalType operand" do
-      expect(QuantityType.new("50 W") * DecimalType.new(2)).to eql QuantityType.new("100.0 W")
-      expect(QuantityType.new("100 W") / DecimalType.new(2)).to eql QuantityType.new("50.0 W")
-      expect(QuantityType.new("50 W") * DecimalType.new(2.0)).to eql QuantityType.new("100.0 W")
-      expect(QuantityType.new("100 W") / DecimalType.new(2.0)).to eql QuantityType.new("50.0 W")
+      it "support numeric operand" do
+        expect(QuantityType.new("50 W") * 2).to eql QuantityType.new("100.0 W")
+        expect(QuantityType.new("50 kW") * 2).to eql QuantityType.new("100.0 kW")
+        expect(2 * QuantityType.new("50 W")).to eql QuantityType.new("100.0 W")
+        expect(2 * QuantityType.new("50 kW")).to eql QuantityType.new("100.0 kW")
+        expect(QuantityType.new("100 W") / 2).to eql QuantityType.new("50.0 W")
+        expect(QuantityType.new("50 W") * 2.0).to eql QuantityType.new("100.0 W")
+        expect(2.0 * QuantityType.new("50 W")).to eql QuantityType.new("100.0 W")
+        expect(2.0 * QuantityType.new("50 kW")).to eql QuantityType.new("100.0 kW")
+        expect(QuantityType.new("100 W") / 2.0).to eql QuantityType.new("50.0 W")
+      end
+
+      it "support DecimalType operand" do
+        expect(QuantityType.new("50 W") * DecimalType.new(2)).to eql QuantityType.new("100.0 W")
+        expect(QuantityType.new("100 W") / DecimalType.new(2)).to eql QuantityType.new("50.0 W")
+        expect(QuantityType.new("50 W") * DecimalType.new(2.0)).to eql QuantityType.new("100.0 W")
+        expect(QuantityType.new("100 W") / DecimalType.new(2.0)).to eql QuantityType.new("50.0 W")
+      end
     end
 
     describe "with mixed units" do

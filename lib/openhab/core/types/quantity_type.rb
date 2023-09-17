@@ -164,7 +164,7 @@ module OpenHAB
           logger.trace("Coercing #{self} as a request from #{other.class}")
           return unless other.respond_to?(:to_d)
 
-          [QuantityType.new(other.to_d.to_java, DSL.unit(dimension) || Units::ONE), self]
+          [QuantityType.new(other.to_d.to_java, Units::ONE), self]
         end
 
         # arithmetic operators
@@ -174,25 +174,30 @@ module OpenHAB
           add: :+,
           subtract: :-
         }.each do |java_op, ruby_op|
-          convert = "self.class.new(other, DSL.unit(dimension) || unit)"
+          convert = "self.class.new(other, thread_unit)"
 
           class_eval( # rubocop:disable Style/DocumentDynamicEvalDefinition https://github.com/rubocop/rubocop/issues/10179
             # def +(other)
             #   logger.trace("#{self} + #{other} (#{other.class})")
             #   if other.is_a?(QuantityType)
             #     add_quantity(other)
-            #   elsif other.is_a?(DecimalType)
-            #     other = other.to_big_decimal
-            #     add_quantity(self.class.new(other, DSL.unit(dimension) || unit))
-            #   elsif other.is_a?(java.math.BigDecimal)
-            #     add_quantity(self.class.new(other, DSL.unit(dimension) || unit))
-            #   elsif other.respond_to?(:to_d)
-            #     other = other.to_d.to_java
-            #     add_quantity(self.class.new(other, DSL.unit(dimension) || unit))
-            #   elsif other.respond_to?(:coerce) && (lhs, rhs = other.coerce(to_d))
-            #     lhs + rhs
+            #   elsif (thread_unit = DSL.unit(dimension))
+            #     if other.is_a?(DecimalType)
+            #       other = other.to_big_decimal
+            #       add_quantity(self.class.new(other, thread_unit))
+            #     elsif other.is_a?(java.math.BigDecimal)
+            #       add_quantity(self.class.new(other, thread_unit))
+            #     elsif other.respond_to?(:to_d)
+            #       other = other.to_d.to_java
+            #       add_quantity(self.class.new(other, thread_unit))
+            #     elsif other.respond_to?(:coerce) && (lhs, rhs = other.coerce(to_d))
+            #       lhs + rhs
+            #     else
+            #       raise TypeError, "#{other.class} can't be coerced into #{self.class}"
+            #     end
             #   else
-            #     raise TypeError, "#{other.class} can't be coerced into #{self.class}"
+            #     raise TypeError,
+            #       "#{self.class} can only be added with another #{self.class} outside a unit block"
             #   end
             # end
             <<~RUBY, __FILE__, __LINE__ + 1
@@ -200,18 +205,23 @@ module OpenHAB
                 logger.trace("\#{self} #{ruby_op} \#{other} (\#{other.class})")
                 if other.is_a?(QuantityType)
                   #{java_op}_quantity(other)
-                elsif other.is_a?(DecimalType)
-                  other = other.to_big_decimal
-                  #{java_op}_quantity(#{convert})
-                elsif other.is_a?(java.math.BigDecimal)
-                  #{java_op}_quantity(#{convert})
-                elsif other.respond_to?(:to_d)
-                  other = other.to_d.to_java
-                  #{java_op}_quantity(#{convert})
-                elsif other.respond_to?(:coerce) && (lhs, rhs = other.coerce(to_d))
-                  lhs #{ruby_op} rhs
+                elsif (thread_unit = DSL.unit(dimension))
+                  if other.is_a?(DecimalType)
+                    other = other.to_big_decimal
+                    #{java_op}_quantity(#{convert})
+                  elsif other.is_a?(java.math.BigDecimal)
+                    #{java_op}_quantity(#{convert})
+                  elsif other.respond_to?(:to_d)
+                    other = other.to_d.to_java
+                    #{java_op}_quantity(#{convert})
+                  elsif other.respond_to?(:coerce) && (lhs, rhs = other.coerce(to_d))
+                    lhs #{ruby_op} rhs
+                  else
+                    raise TypeError, "\#{other.class} can't be coerced into \#{self.class}"
+                  end
                 else
-                  raise TypeError, "\#{other.class} can't be coerced into \#{self.class}"
+                  raise TypeError,
+                    "\#{self.class} can only be #{java_op}ed with another \#{self.class} outside a unit block"
                 end
               end
             RUBY
@@ -288,16 +298,16 @@ module OpenHAB
 
         private
 
-        # do addition directly against a QuantityType while ensuring we unitize
-        # both sides
+        # do addition directly against a QuantityType while ensuring we unitize both sides
         def add_quantity(other)
-          unitize.add(other.unitize(relative: true))
+          self_unit = (unit == Units::ONE && DSL.unit(other.dimension)) || unit
+          unitize(self_unit).add(other.unitize(relative: true))
         end
 
-        # do subtraction directly against a QuantityType while ensuring we
-        # unitize both sides
+        # do subtraction directly against a QuantityType while ensuring we unitize both sides
         def subtract_quantity(other)
-          unitize.subtract(other.unitize(relative: true))
+          self_unit = (unit == Units::ONE && DSL.unit(other.dimension)) || unit
+          unitize(self_unit).subtract(other.unitize(relative: true))
         end
 
         # do multiplication directly against a QuantityType while ensuring

@@ -244,6 +244,8 @@ RSpec.describe OpenHAB::DSL do
     it "converts all units and numbers to specific unit for all operations" do
       c = 23 | "°C"
       f = 70 | "°F"
+      # f.to_unit(SIUnits::CELSIUS) = 21.11 °C
+      # f.to_unit_relative(SIUnits::CELSIUS) = 38.89 °C
       unit("°F") do
         expect(c - f < 4).to be true
         expect(c - (24 | "°C") < 32).to be true
@@ -255,7 +257,7 @@ RSpec.describe OpenHAB::DSL do
         expect((f - 2).format("%.1f %unit%")).to eq "19.1 °C"
         expect((c + f).format("%.1f %unit%")).to eq "61.9 °C"
         expect(f - 2 < 20).to be true
-        expect(2 + c).to eq 25
+        expect(40 - f < 2).to be true
         expect(2 + c == 25).to be true
         expect(c + 2 == 25).to be true
         expect([c, f, 2].min).to be 2
@@ -266,15 +268,18 @@ RSpec.describe OpenHAB::DSL do
       # See https://github.com/openhab/openhab-core/pull/3792
       # Use a zero-based unit to have a consistent result across OH versions.
       w = 5 | "W"
+      kw = 5 | "kW"
       unit("W") do
+        # numeric rhs
         expect(w * 2 == 10).to be true
-        expect(((5 | "kW") * 2).format("%.0f %unit%")).to eq "10000 W"
+        expect((kw * 2).format("%.0f %unit%")).to eq "10000 W"
         expect(w / 5).to eql 1 | "W"
-        # TODO: Support scalar lhs
-        # expect(2 * w).to eq 10
-        # expect(2 * w == 10).to be true
-        # expect(5 / w).to eql 1 | "W"
-        # expect((2 * w / 2)).to eql 5 # two_w.multiply(w).divide(two_w)
+        # numeric lhs
+        expect(2 * w).to eql 10 | "W"
+        expect((2 * kw).to_i).to eq 10_000
+        expect(2 * w == 10).to be true
+        expect(5 / w).to eql 1 | "W"
+        expect((2 * w / 2)).to eql w
       end
     end
 
