@@ -1592,12 +1592,15 @@ module OpenHAB
         end
 
         #
-        # Creates a trigger based on the time stored in a {DateTimeItem}
+        # Creates a trigger based on the date and time stored in a {DateTimeItem}
         #
-        # The trigger will dynamically update any time the state of the item
-        # changes. If the item is {NULL} or {UNDEF}, the trigger will not run.
+        # The trigger will dynamically update whenever the state of the item changes.
+        # If the item is {NULL} or {UNDEF}, the trigger will not run.
         #
-        # @param [Item, String, Symbol] item The item (or it's name)
+        # To trigger just on the time portion of the item, use {every} instead, e.g.
+        # `every :day, at: MyDateTimeItem`.
+        #
+        # @param [Item, String, Symbol] item The item (or its name)
         # @return [void]
         #
         # @example
