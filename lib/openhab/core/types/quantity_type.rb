@@ -164,7 +164,7 @@ module OpenHAB
           logger.trace("Coercing #{self} as a request from #{other.class}")
           return unless other.respond_to?(:to_d)
 
-          [QuantityType.new(other.to_d.to_java, Units::ONE), self]
+          [QuantityType.new(other.to_d.to_java, DSL.unit(dimension) || Units::ONE), self]
         end
 
         # arithmetic operators
@@ -243,13 +243,13 @@ module OpenHAB
               def #{ruby_op}(other)
                 logger.trace("\#{self} #{ruby_op} \#{other} (\#{other.class})")
                 if other.is_a?(QuantityType)
-                  #{java_op}_quantity(other)
+                  #{java_op}_quantity(other).unitize
                 elsif other.is_a?(DecimalType)
-                  #{java_op}(other.to_big_decimal)
+                  #{java_op}(other.to_big_decimal).unitize
                 elsif other.is_a?(java.math.BigDecimal)
-                  #{java_op}(other)
+                  #{java_op}(other).unitize
                 elsif other.respond_to?(:to_d)
-                  #{java_op}(other.to_d.to_java)
+                  #{java_op}(other.to_d.to_java).unitize
                 elsif other.respond_to?(:coerce) && (lhs, rhs = other.coerce(to_d))
                   lhs #{ruby_op} rhs
                 else
@@ -262,7 +262,7 @@ module OpenHAB
 
         # if it's a dimensionless quantity, change the unit to match other_unit
         # @!visibility private
-        def unitize(other_unit = unit)
+        def unitize(other_unit = unit, relative: false)
           # prefer converting to the thread-specified unit if there is one
           other_unit = DSL.unit(dimension) || other_unit
           logger.trace("Converting #{self} to #{other_unit}")
@@ -273,7 +273,7 @@ module OpenHAB
           when other_unit
             self
           else
-            to_unit(other_unit)
+            relative ? to_unit_relative(other_unit) : to_unit(other_unit)
           end
         end
 
@@ -291,13 +291,13 @@ module OpenHAB
         # do addition directly against a QuantityType while ensuring we unitize
         # both sides
         def add_quantity(other)
-          unitize(other.unit).add(other.unitize(unit))
+          unitize.add(other.unitize(relative: true))
         end
 
         # do subtraction directly against a QuantityType while ensuring we
         # unitize both sides
         def subtract_quantity(other)
-          unitize(other.unit).subtract(other.unitize(unit))
+          unitize.subtract(other.unitize(relative: true))
         end
 
         # do multiplication directly against a QuantityType while ensuring

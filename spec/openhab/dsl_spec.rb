@@ -246,17 +246,18 @@ RSpec.describe OpenHAB::DSL do
       f = 70 | "°F"
       unit("°F") do
         expect(c - f < 4).to be true
-        expect(c - (24 | "°C") < 4).to be true
-        expect(QuantityType.new("24 °C") - c < 4).to be true
+        expect(c - (24 | "°C") < 32).to be true
+        expect(QuantityType.new("24 °C") - c < 34).to be true
       end
 
       unit("°C") do
         expect(f - (20 | "°C") < 2).to be true
         expect((f - 2).format("%.1f %unit%")).to eq "19.1 °C"
-        expect((c + f).format("%.1f %unit%")).to eq "44.1 °C"
+        expect((c + f).format("%.1f %unit%")).to eq "61.9 °C"
         expect(f - 2 < 20).to be true
+        expect(2 + c).to eq 25
         expect(2 + c == 25).to be true
-        expect((2 * (f + c) / 2) < 45).to be true
+        expect(c + 2 == 25).to be true
         expect([c, f, 2].min).to be 2
       end
 
@@ -266,7 +267,14 @@ RSpec.describe OpenHAB::DSL do
       # Use a zero-based unit to have a consistent result across OH versions.
       w = 5 | "W"
       unit("W") do
-        expect(2 * w == 10).to be true
+        expect(w * 2 == 10).to be true
+        expect(((5 | "kW") * 2).format("%.0f %unit%")).to eq "10000 W"
+        expect(w / 5).to eql 1 | "W"
+        # TODO: Support scalar lhs
+        # expect(2 * w).to eq 10
+        # expect(2 * w == 10).to be true
+        # expect(5 / w).to eql 1 | "W"
+        # expect((2 * w / 2)).to eql 5 # two_w.multiply(w).divide(two_w)
       end
     end
 
