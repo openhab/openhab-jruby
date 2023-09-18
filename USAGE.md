@@ -38,6 +38,7 @@ If you're new to Ruby, you may want to check out [Ruby Basics](docs/ruby-basics.
   - [Shared Code](#shared-code)
   - [Transformations](#transformations)
   - [Profile](#profile)
+  - [Sitemaps](#sitemaps)
 - [File Based Rules](#file-based-rules)
   - [Basic Rule Structure](#basic-rule-structure)
   - [Rule Triggers](#rule-triggers)
@@ -1377,6 +1378,31 @@ When the item contains `0 °C`, this will produce a formatted state of `0 °C / 
 
 You can create an openHAB profile in JRuby that can be applied to item channel links.
 For more details, see {OpenHAB::DSL.profile #profile}.
+
+### Sitemaps
+
+Sitemaps can be created via {OpenHAB::Core::Sitemaps::Provider#build sitemaps.build}.
+
+```ruby
+sitemaps.build do
+  sitemap "default", "My Residence" do
+    frame label: "Control" do
+      text label: "Climate", icon: "if:mdi:home-thermometer-outline" do
+        frame label: "Main Floor" do
+          text item: MainFloor_AmbTemp
+          switch item: MainFloorThermostat_TargetMode, label: "Mode", mappings: %w[off auto cool heat]
+          setpoint item: MainFloorThermostate_SetPoint, label: "Set Point", visibility: "MainFloorThermostat_TargetMode!=off"
+        end
+        frame label: "Basement" do
+          text item: Basement_AmbTemp
+          switch item: BasementThermostat_TargetMode, label: "Mode", mappings: { OFF: "off", COOL: "cool", HEAT: "heat" }
+          setpoint item: BasementThermostate_SetPoint, label: "Set Point", visibility: "BasementThermostat_TargetMode!=off"
+        end
+      end
+    end
+  end
+end
+```
 
 ## File Based Rules
 
