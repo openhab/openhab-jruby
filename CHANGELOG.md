@@ -1,5 +1,17 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.7.0](https://github.com/openhab/openhab-jruby/tree/v5.7.0) (2023-09-18)
+
+[Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.6.1...v5.7.0)
+
+### Features
+
+- Sitemap Builder [\#139](https://github.com/openhab/openhab-jruby/pull/139) ([ccutrer](https://github.com/ccutrer))
+
+### Bug Fixes
+
+- Fix QuantityType arithmetic of mixed units [\#147](https://github.com/openhab/openhab-jruby/pull/147) ([jimtng](https://github.com/jimtng))
+
 ## [v5.6.1](https://github.com/openhab/openhab-jruby/tree/v5.6.1) (2023-09-12)
 
 [Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.6.0...v5.6.1)
