@@ -1,5 +1,14 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.7.1](https://github.com/openhab/openhab-jruby/tree/v5.7.1) (2023-09-18)
+
+[Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.7.0...v5.7.1)
+
+### Features
+
+- Stringify keys in http headers [\#150](https://github.com/openhab/openhab-jruby/pull/150) ([jimtng](https://github.com/jimtng))
+- Use block's source location as timer's log identifier [\#149](https://github.com/openhab/openhab-jruby/pull/149) ([jimtng](https://github.com/jimtng))
+
 ## [v5.7.0](https://github.com/openhab/openhab-jruby/tree/v5.7.0) (2023-09-18)
 
 [Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.6.1...v5.7.0)
