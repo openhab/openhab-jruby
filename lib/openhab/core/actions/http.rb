@@ -3,6 +3,17 @@
 module OpenHAB
   module Core
     module Actions
+      #
+      # The HTTP actions allow you to send HTTP requests and receive the response.
+      #
+      # @example
+      #   # Send a GET request
+      #   headers = {
+      #     "User-Agent": "JRuby/1.2.3", # enclose in quotes if the key contains dashes
+      #     Accept: "application/json",
+      #   }
+      #   response = HTTP.send_http_get_request("http://example.com/list", headers: headers)
+      #
       # @see https://www.openhab.org/docs/configuration/actions.html#http-actions HTTP Actions
       class HTTP
         class << self
@@ -10,7 +21,8 @@ module OpenHAB
           # Sends an HTTP GET request and returns the result as a String.
           #
           # @param [String] url
-          # @param [Hash<String, String>] headers
+          # @param [Hash<String, String>, Hash<Symbol, String>] headers
+          #   A hash of headers to send with the request. Symbolic keys will be converted to strings.
           # @param [Duration, int, nil] timeout Timeout (in milliseconds, if given as an Integer)
           # @return [String] the response body
           # @return [nil] if an error occurred
@@ -19,7 +31,7 @@ module OpenHAB
             timeout ||= 5_000
             timeout = timeout.to_millis if timeout.is_a?(Duration)
 
-            sendHttpGetRequest(url, headers, timeout)
+            sendHttpGetRequest(url, headers.transform_keys(&:to_s), timeout)
           end
 
           #
@@ -28,7 +40,8 @@ module OpenHAB
           # @param [String] url
           # @param [String] content_type
           # @param [String] content
-          # @param [Hash<String, String>] headers
+          # @param [Hash<String, String>, Hash<Symbol, String>] headers
+          #   A hash of headers to send with the request. Symbolic keys will be converted to strings.
           # @param [Duration, int, nil] timeout Timeout (in milliseconds, if given as an Integer)
           # @return [String] the response body
           # @return [nil] if an error occurred
@@ -37,7 +50,7 @@ module OpenHAB
             timeout ||= 1_000
             timeout = timeout.to_millis if timeout.is_a?(Duration)
 
-            sendHttpPutRequest(url, content_type, content, headers, timeout)
+            sendHttpPutRequest(url, content_type, content, headers.transform_keys(&:to_s), timeout)
           end
 
           #
@@ -46,7 +59,8 @@ module OpenHAB
           # @param [String] url
           # @param [String] content_type
           # @param [String] content
-          # @param [Hash<String, String>] headers
+          # @param [Hash<String, String>, Hash<Symbol, String>] headers
+          #   A hash of headers to send with the request. Symbolic keys will be converted to strings.
           # @param [Duration, int, nil] timeout Timeout (in milliseconds, if given as an Integer)
           # @return [String] the response body
           # @return [nil] if an error occurred
@@ -55,14 +69,16 @@ module OpenHAB
             timeout ||= 1_000
             timeout = timeout.to_millis if timeout.is_a?(Duration)
 
-            sendHttpPostRequest(url, content_type, content, headers, timeout)
+            sendHttpPostRequest(url, content_type, content, headers.transform_keys(&:to_s), timeout)
           end
 
           #
           # Sends an HTTP DELETE request and returns the result as a String.
           #
           # @param [String] url
-          # @param [Hash<String, String>] headers
+          # @param [Hash<String, String>, Hash<Symbol, String>] headers
+          #   A hash of headers to send with the request. Keys are strings or symbols, values are strings.
+          #   Underscores in symbolic keys are replaced with dashes.
           # @param [Duration, int, nil] timeout Timeout (in milliseconds, if given as an Integer)
           # @return [String] the response body
           # @return [nil] if an error occurred
@@ -71,7 +87,7 @@ module OpenHAB
             timeout ||= 1_000
             timeout = timeout.to_millis if timeout.is_a?(Duration)
 
-            sendHttpDeleteRequest(url, headers, timeout)
+            sendHttpDeleteRequest(url, headers.transform_keys(&:to_s), timeout)
           end
         end
       end
