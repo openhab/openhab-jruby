@@ -49,7 +49,8 @@ module OpenHAB
         @id = id
         @thread_locals = thread_locals
         @block = block
-        @timer = ScriptExecution.create_timer(1.minute.from_now) { execute }
+        timer_identifier = block.source_location.join(":")
+        @timer = ScriptExecution.create_timer(timer_identifier, 1.minute.from_now) { execute }
         reschedule!(@time)
       end
 
