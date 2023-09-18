@@ -1391,12 +1391,12 @@ sitemaps.build do
         frame label: "Main Floor" do
           text item: MainFloor_AmbTemp
           switch item: MainFloorThermostat_TargetMode, label: "Mode", mappings: %w[off auto cool heat]
-          setpoint item: MainFloorThermostate_SetPoint, label: "Set Point", visibility: "MainFloorThermostat_TargetMode!=off"
+          setpoint item: MainFloorThermostat_SetPoint, label: "Set Point", visibility: "MainFloorThermostat_TargetMode!=off"
         end
         frame label: "Basement" do
           text item: Basement_AmbTemp
           switch item: BasementThermostat_TargetMode, label: "Mode", mappings: { OFF: "off", COOL: "cool", HEAT: "heat" }
-          setpoint item: BasementThermostate_SetPoint, label: "Set Point", visibility: "BasementThermostat_TargetMode!=off"
+          setpoint item: BasementThermostat_SetPoint, label: "Set Point", visibility: "BasementThermostat_TargetMode!=off"
         end
       end
     end

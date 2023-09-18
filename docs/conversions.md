@@ -250,7 +250,7 @@ rule "Use supplemental heat in office" do
   run do
     trigger = Office_Occupied.on? &&
               OfficeDoor.closed? &&
-              Thermostate_Upstairs_Heat_Set.state > Office_Temperature.state &&
+              Thermostat_Upstairs_Heat_Set.state > Office_Temperature.state &&
               Thermostat_Upstairs_Temp.state - Office_Temperature.state > 2 | "°F"
     Lights_Office_Outlet.ensure << trigger # send a boolean command to a SwitchItem, but only if it's different
   end
