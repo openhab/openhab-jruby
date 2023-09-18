@@ -3938,12 +3938,12 @@ Tags are simple instances, instead of another interface in a hierarchical struct
       <pre class="lines">
 
 
-472
-473
-474</pre>
+463
+464
+465</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 472</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 463</span>
 
 <span class="keyword">def</span> <span class="function">equipment</span>
   <span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_equipment(<span class="predefined-constant">self</span>)&amp;.<span class="keyword">then</span>(&amp;<span class="constant">Proxy</span>.method(<span class="symbol">:new</span>))
@@ -3994,12 +3994,12 @@ Tags are simple instances, instead of another interface in a hierarchical struct
       <pre class="lines">
 
 
-485
-486
-487</pre>
+476
+477
+478</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 485</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 476</span>
 
 <span class="keyword">def</span> <span class="function">equipment_type</span>
   translate_tag(<span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_equipment_type(<span class="predefined-constant">self</span>))
@@ -4051,12 +4051,12 @@ Tags are simple instances, instead of another interface in a hierarchical struct
       <pre class="lines">
 
 
-446
-447
-448</pre>
+437
+438
+439</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 446</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 437</span>
 
 <span class="keyword">def</span> <span class="function">location</span>
   <span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_location(<span class="predefined-constant">self</span>)&amp;.<span class="keyword">then</span>(&amp;<span class="constant">Proxy</span>.method(<span class="symbol">:new</span>))
@@ -4107,12 +4107,12 @@ Tags are simple instances, instead of another interface in a hierarchical struct
       <pre class="lines">
 
 
-459
-460
-461</pre>
+450
+451
+452</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 459</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 450</span>
 
 <span class="keyword">def</span> <span class="function">location_type</span>
   translate_tag(<span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_location_type(<span class="predefined-constant">self</span>))
@@ -4162,12 +4162,12 @@ Tags are simple instances, instead of another interface in a hierarchical struct
       <pre class="lines">
 
 
-496
-497
-498</pre>
+487
+488
+489</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 496</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 487</span>
 
 <span class="keyword">def</span> <span class="function">point_type</span>
   translate_tag(<span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_point_type(<span class="predefined-constant">self</span>))
@@ -4217,12 +4217,12 @@ Tags are simple instances, instead of another interface in a hierarchical struct
       <pre class="lines">
 
 
-507
-508
-509</pre>
+498
+499
+500</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 507</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 498</span>
 
 <span class="keyword">def</span> <span class="function">property_type</span>
   translate_tag(<span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_property_type(<span class="predefined-constant">self</span>))
@@ -4275,12 +4275,12 @@ and if none of those are found, looks for a <span class='object_link'><a href="S
       <pre class="lines">
 
 
-521
-522
-523</pre>
+512
+513
+514</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 521</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 512</span>
 
 <span class="keyword">def</span> <span class="function">semantic_type</span>
   translate_tag(<span class="constant">Actions</span>::<span class="constant">Semantics</span>.get_semantic_type(<span class="predefined-constant">self</span>))
@@ -4584,16 +4584,7 @@ converting <code>CamelCase</code> to <code>Camel Case</code></p>
 322
 323
 324
-325
-326
-327
-328
-329
-330
-331
-332
-333
-334</pre>
+325</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 305</span>
@@ -4607,25 +4598,16 @@ converting <code>CamelCase</code> to <code>Camel Case</code></p>
   synonyms = <span class="constant">Array</span>.wrap(synonyms).map { |s| s.to_s.strip }
 
   tags.map <span class="keyword">do</span> |name, parent|
-    <span class="comment"># @deprecated OH4.0.0.M4 missing registry</span>
-    <span class="keyword">if</span> <span class="constant">Provider</span>.registry
-      parent = lookup(parent) <span class="keyword">unless</span> parent.is_a?(<span class="constant">SemanticTag</span>)
-      <span class="keyword">next</span> <span class="keyword">if</span> lookup(name)
-      <span class="keyword">next</span> <span class="keyword">unless</span> parent
+    parent = lookup(parent) <span class="keyword">unless</span> parent.is_a?(<span class="constant">SemanticTag</span>)
+    <span class="keyword">next</span> <span class="keyword">if</span> lookup(name)
+    <span class="keyword">next</span> <span class="keyword">unless</span> parent
 
-      new_tag = org.openhab.core.semantics.SemanticTagImpl.new(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>parent.uid<span class="inline-delimiter">}</span></span><span class="content">_</span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>,
-                                                               label,
-                                                               description,
-                                                               synonyms)
-      <span class="constant">Provider</span>.instance.add(new_tag)
-      lookup(name)
-    <span class="keyword">else</span>
-      parent_is_tag = parent.respond_to?(<span class="symbol">:java_class</span>) &amp;&amp; parent.java_class &lt; <span class="constant">Tag</span>.java_class
-      parent = parent_is_tag ? parent.java_class : parent.to_s
-      org.openhab.core.semantics.SemanticTags
-         .add(name.to_s, parent, label, synonyms.join(<span class="string"><span class="delimiter">&quot;</span><span class="content">,</span><span class="delimiter">&quot;</span></span>), description)
-        &amp;.<span class="keyword">then</span> { lookup(name) }
-    <span class="keyword">end</span>
+    new_tag = org.openhab.core.semantics.SemanticTagImpl.new(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>parent.uid<span class="inline-delimiter">}</span></span><span class="content">_</span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>,
+                                                             label,
+                                                             description,
+                                                             synonyms)
+    <span class="constant">Provider</span>.instance.add(new_tag)
+    lookup(name)
   <span class="keyword">end</span>.compact
 <span class="keyword">end</span></pre>
     </td>
@@ -4899,12 +4881,12 @@ is an <span class='object_link'><a href="Semantics/SemanticTag.html" title="Open
       <pre class="lines">
 
 
-412
-413
-414</pre>
+403
+404
+405</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 412</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 403</span>
 
 <span class="keyword">def</span> <span class="function">equipment?</span>
   <span class="constant">Actions</span>::<span class="constant">Semantics</span>.equipment?(<span class="predefined-constant">self</span>)
@@ -4954,12 +4936,12 @@ is a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenH
       <pre class="lines">
 
 
-400
-401
-402</pre>
+391
+392
+393</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 400</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 391</span>
 
 <span class="keyword">def</span> <span class="function">location?</span>
   <span class="constant">Actions</span>::<span class="constant">Semantics</span>.location?(<span class="predefined-constant">self</span>)
@@ -5009,12 +4991,12 @@ is a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenH
       <pre class="lines">
 
 
-423
-424
-425</pre>
+414
+415
+416</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 423</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 414</span>
 
 <span class="keyword">def</span> <span class="function">point?</span>
   <span class="constant">Actions</span>::<span class="constant">Semantics</span>.point?(<span class="predefined-constant">self</span>)
@@ -5123,17 +5105,17 @@ So if you search for [Control], you'll get items tagged with [Switch].</p>
       <pre class="lines">
 
 
-552
-553
-554
-555
-556
-557
-558
-559</pre>
+543
+544
+545
+546
+547
+548
+549
+550</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 552</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 543</span>
 
 <span class="keyword">def</span> <span class="function">points</span>(*point_or_property_types)
   <span class="keyword">return</span> members.points(*point_or_property_types) <span class="keyword">if</span> equipment? || location?
@@ -5186,12 +5168,12 @@ So if you search for [Control], you'll get items tagged with [Switch].</p>
       <pre class="lines">
 
 
-432
-433
-434</pre>
+423
+424
+425</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 432</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 423</span>
 
 <span class="keyword">def</span> <span class="function">semantic?</span>
   !!semantic_type
@@ -5206,7 +5188,7 @@ So if you search for [Control], you'll get items tagged with [Switch].</p>
 </div>
 
         <footer>
-  Generated on Mon Sep 18 01:47:57 2023 by
+  Generated on Mon Sep 18 01:48:39 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
