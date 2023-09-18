@@ -262,7 +262,7 @@ module OpenHAB
         # @deprecated OH3.4 cannot add a tag
         # this not in the class << self block above because YARD doesn't figure out
         # it's a class method with the conditional
-        if Provider.registry || org.openhab.core.semantics.SemanticTags.respond_to?(:add)
+        if Provider.registry
           class << self
             #
             # Adds custom semantic tags.
