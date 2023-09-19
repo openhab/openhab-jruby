@@ -678,7 +678,7 @@ end
 
 ### Things
 
-The {OpenHAB::DSL.things things} object allows interactions with openHAB {OpenHAB::Core::Things::Thing thing}s.
+The {OpenHAB::DSL.things things} object allows interactions with openHAB things.
 
 Get Thing Status:
 
