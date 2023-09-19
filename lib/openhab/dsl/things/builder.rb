@@ -22,7 +22,7 @@ module OpenHAB
       #     payloadNotAvailable: "offline"
       #   }
       #   things.build do
-      #     thing("mqtt:topic:my-switch", "My Switch", bridge: "mqtt:bridge:mosquitto", config: thing_config) do
+      #     thing("mqtt:topic:my-switch", "My Switch", bridge: "mqtt:broker:mosquitto", config: thing_config) do
       #       channel("switch1", "switch", config: {
       #         stateTopic: "stat/my-switch/switch1/state", commandTopic: "cmnd/my-switch/switch1/command"
       #       })
