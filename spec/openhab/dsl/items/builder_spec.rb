@@ -360,6 +360,15 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
       expect(StringItem1.thing).to be things["astro:sun:home"]
     end
 
+    it "can use symbolic channel" do
+      items.build do
+        string_item "StringItem1", thing: "astro:sun:home" do
+          channel :"season#name"
+        end
+      end
+      expect(StringItem1.thing).to be things["astro:sun:home"]
+    end
+
     it "ignores thing when channel contains multiple segments" do
       items.build do
         string_item "StringItem1", thing: "foo:baz:bar", channel: "astro:sun:home:season#name"
