@@ -176,10 +176,11 @@ module OpenHAB
 
         # Add an explicitly configured channel to this item
         # @see ChannelBuilder#initialize
+        # @return [Core::Things::Channel]
         def channel(*args, **kwargs, &block)
           channel = ChannelBuilder.new(*args, thing: self, **kwargs)
           channel.instance_eval(&block) if block
-          @channels << channel.build
+          channel.build.tap { |c| @channels << c }
         end
 
         # @!visibility private

@@ -181,7 +181,7 @@ module OpenHAB
         # @return [String, nil]
         attr_accessor :format
         # The icon to be associated with the item
-        # @return [Symbol, nil]
+        # @return [Symbol, String, nil]
         attr_accessor :icon
         # Groups to which this item should be added
         # @return [Array<String, GroupItem>]
@@ -240,7 +240,7 @@ module OpenHAB
         # @param dimension [Symbol, nil] The unit dimension for a {NumberItem} (see {ItemBuilder#dimension})
         # @param unit [Symbol, String, nil] The unit for a {NumberItem} (see {ItemBuilder#unit})
         # @param format [String, nil] The formatting pattern for the item's state (see {ItemBuilder#format})
-        # @param icon [Symbol, nil] The icon to be associated with the item (see {ItemBuilder#icon})
+        # @param icon [Symbol, String, nil] The icon to be associated with the item (see {ItemBuilder#icon})
         # @param group [String,
         #   GroupItem,
         #   GroupItemBuilder,
@@ -260,7 +260,7 @@ module OpenHAB
         # @param autoupdate [true, false, nil] Autoupdate setting (see {ItemBuilder#autoupdate})
         # @param thing [String, Core::Things::Thing, Core::Things::ThingUID, nil]
         #   A Thing to be used as the base for the channel.
-        # @param channel [String, Core::Things::ChannelUID, nil]
+        # @param channel [String, Symbol, Core::Things::ChannelUID, Core::Things::Channel, nil]
         #   Channel to link the item to (see {ItemBuilder#channel}).
         # @param expire [String] An expiration specification (see {ItemBuilder#expire}).
         # @param alexa [String, Symbol, Array<(String, Hash<String, Object>)>, nil]
@@ -414,9 +414,9 @@ module OpenHAB
         #
         # Add a channel link to this item.
         #
-        # @param [String, Core::Things::ChannelUID, Symbol] channel Channel to link the item to.
-        #   When thing is set, this can be a relative channel name.
-        # @param [Hash] config Additional configuration, such as profile
+        # @param channel [String, Symbol, Core::Things::ChannelUID, Core::Things::Channel]
+        #   Channel to link the item to. When thing is set, this can be a relative channel name.
+        # @param config [Hash] Additional configuration, such as profile
         # @return [void]
         #
         # @example
