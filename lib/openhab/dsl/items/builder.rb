@@ -259,9 +259,10 @@ module OpenHAB
         #        Fluent alias for `tag`.
         # @param autoupdate [true, false, nil] Autoupdate setting (see {ItemBuilder#autoupdate})
         # @param thing [String, Core::Things::Thing, Core::Things::ThingUID, nil]
-        #   A Thing to be used as the base for the channel
-        # @param channel [String, Core::Things::ChannelUID, nil] Channel to link the item to
-        # @param expire [String] An expiration specification.
+        #   A Thing to be used as the base for the channel.
+        # @param channel [String, Core::Things::ChannelUID, nil]
+        #   Channel to link the item to (see {ItemBuilder#channel}).
+        # @param expire [String] An expiration specification (see {ItemBuilder#expire}).
         # @param alexa [String, Symbol, Array<(String, Hash<String, Object>)>, nil]
         #   Alexa metadata (see {ItemBuilder#alexa})
         # @param ga [String, Symbol, Array<(String, Hash<String, Object>)>, nil]
@@ -413,7 +414,9 @@ module OpenHAB
         #
         # Add a channel link to this item.
         #
-        # @param config [Hash] Additional configuration, such as profile
+        # @param [String, Core::Things::ChannelUID, Symbol] channel Channel to link the item to.
+        #   When thing is set, this can be a relative channel name.
+        # @param [Hash] config Additional configuration, such as profile
         # @return [void]
         #
         # @example
@@ -423,7 +426,13 @@ module OpenHAB
         #     end
         #   end
         #
+        # @example Relative channel name
+        #   items.build do
+        #     switch_item Bedroom_Light, thing: "mqtt:topic:bedroom-light", channel: :power
+        #   end
+        #
         def channel(channel, config = {})
+          channel = channel.to_s
           channel = "#{@thing}:#{channel}" if @thing && !channel.include?(":")
           @channels << [channel, config]
         end
