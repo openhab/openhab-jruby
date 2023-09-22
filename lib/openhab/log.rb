@@ -83,8 +83,8 @@ module OpenHAB
         when String
           name = object
         when :main
-          name = "#{Logger::PREFIX}.#{rules_file.tr_s(":", "_")
-                                   .gsub(/[^A-Za-z0-9_.-]/, "")}"
+          name = "#{Logger::PREFIX}.#{rules_file.tr_s(":", "_").gsub(/[^A-Za-z0-9_.-]/, "")}"
+          name = "#{name}.#{$ctx["ruleUID"]}" if $ctx&.key?("ruleUID")
           return @loggers[name] ||= BiLogger.new(Logger.new(name))
         end
 
