@@ -3539,7 +3539,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#expire-instance_method" title="#expire (instance method)">#<strong>expire</strong>(command: nil, state: nil)  &#x21d2; void </a>
+      <a href="#expire-instance_method" title="#expire (instance method)">#<strong>expire</strong>(duration, command: nil, state: nil, ignore_state_updates: nil, ignore_commands: nil)  &#x21d2; void </a>
     
 
     
@@ -5117,7 +5117,7 @@ openHAB 3.4 and 4.0.</p>
       <div class="method_details ">
   <h3 class="signature " id="expire-instance_method">
   
-    #<strong>expire</strong>(command: nil, state: nil)  &#x21d2; <tt>void</tt> 
+    #<strong>expire</strong>(duration, command: nil, state: nil, ignore_state_updates: nil, ignore_commands: nil)  &#x21d2; <tt>void</tt> 
   
 
   
@@ -5172,7 +5172,106 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       
       <pre class="example code"><code>expire <span class="integer">5</span>.minutes, <span class="key">command</span>: <span class="constant">OFF</span></code></pre>
     
+      
+        <p class="example_title"><div class='inline'><p>Specify the duration and command in the same string</p>
+</div></p>
+      
+      <pre class="example code"><code>expire <span class="string"><span class="delimiter">&quot;</span><span class="content">5h,command=OFF</span><span class="delimiter">&quot;</span></span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Set the expire configuration</p>
+</div></p>
+      
+      <pre class="example code"><code>expire <span class="integer">5</span>.minutes, <span class="key">ignore_state_updates</span>: <span class="predefined-constant">true</span></code></pre>
+    
   </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>duration</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../CoreExt/Java/Duration.html" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Duration after which the command or state should be applied</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>command</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Command to send on expiration</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>state</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>State to set on expiration</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>ignore_state_updates</span>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>When true, state updates will not reset the expire timer</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>ignore_commands</span>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>When true, commands will not reset the expire timer</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 <p class="tag_title">Raises:</p>
 <ul class="raise">
@@ -5194,16 +5293,6 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
-460
-461
-462
-463
-464
-465
-466
-467
-468
-469
 470
 471
 472
@@ -5212,12 +5301,27 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
 475
 476
 477
-478</pre>
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 460</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 470</span>
 
-<span class="keyword">def</span> <span class="function">expire</span>(*args, <span class="key">command</span>: <span class="predefined-constant">nil</span>, <span class="key">state</span>: <span class="predefined-constant">nil</span>)
+<span class="keyword">def</span> <span class="function">expire</span>(*args, <span class="key">command</span>: <span class="predefined-constant">nil</span>, <span class="key">state</span>: <span class="predefined-constant">nil</span>, <span class="key">ignore_state_updates</span>: <span class="predefined-constant">nil</span>, <span class="key">ignore_commands</span>: <span class="predefined-constant">nil</span>)
   <span class="keyword">unless</span> (<span class="integer">0</span>..<span class="integer">2</span>).cover?(args.length)
     raise <span class="constant">ArgumentError</span>,
           <span class="string"><span class="delimiter">&quot;</span><span class="content">wrong number of arguments (given </span><span class="inline"><span class="inline-delimiter">#{</span>args.length<span class="inline-delimiter">}</span></span><span class="content">, expected 0..2)</span><span class="delimiter">&quot;</span></span>
@@ -5232,9 +5336,14 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
 
   duration = duration.to_s[<span class="integer">2</span>..].downcase <span class="keyword">if</span> duration.is_a?(<span class="constant">Duration</span>)
   state = <span class="string"><span class="delimiter">&quot;</span><span class="content">'</span><span class="inline"><span class="inline-delimiter">#{</span>state<span class="inline-delimiter">}</span></span><span class="content">'</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> state.respond_to?(<span class="symbol">:to_str</span>) &amp;&amp; type == <span class="symbol">:string</span>
-  <span class="instance-variable">@expire</span> = duration
-  <span class="instance-variable">@expire</span> += <span class="string"><span class="delimiter">&quot;</span><span class="content">,state=</span><span class="inline"><span class="inline-delimiter">#{</span>state<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> state
-  <span class="instance-variable">@expire</span> += <span class="string"><span class="delimiter">&quot;</span><span class="content">,command=</span><span class="inline"><span class="inline-delimiter">#{</span>command<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> command
+
+  value = duration
+  value += <span class="string"><span class="delimiter">&quot;</span><span class="content">,state=</span><span class="inline"><span class="inline-delimiter">#{</span>state<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> state
+  value += <span class="string"><span class="delimiter">&quot;</span><span class="content">,command=</span><span class="inline"><span class="inline-delimiter">#{</span>command<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> command
+
+  config = { <span class="key">ignoreStateUpdates</span>: ignore_state_updates, <span class="key">ignoreCommands</span>: ignore_commands }
+  config.compact!
+  <span class="instance-variable">@expire</span> = [value, config]
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -5513,17 +5622,17 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
-535
-536
-537
-538
-539
-540
-541
-542</pre>
+550
+551
+552
+553
+554
+555
+556
+557</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 535</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 550</span>
 
 <span class="keyword">def</span> <span class="function">inspect</span>
   s = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Items::</span><span class="inline"><span class="inline-delimiter">#{</span>inspect_type<span class="inline-delimiter">}</span></span><span class="content">ItemBuilder</span><span class="inline"><span class="inline-delimiter">#{</span>type_details<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>label.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
@@ -5651,7 +5760,7 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
 </div>
 
         <footer>
-  Generated on Fri Sep 22 14:37:35 2023 by
+  Generated on Fri Sep 22 17:00:06 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
