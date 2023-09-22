@@ -13,6 +13,11 @@ module OpenHAB
         #
         # All keys are converted to strings.
         #
+        # As a special case, a #== comparison can be done against a [value, config] array.
+        # @example
+        #   MyItem.metadata[:namespace] = "value", { key: "value" }
+        #   MyItem.metadata[:namespace] == ["value", { "key" => "value" }] #=> true
+        #
         # @!attribute [rw] value
         #   @return [String] The main value for the metadata namespace.
         # @!attribute [r] namespace
@@ -149,6 +154,8 @@ module OpenHAB
               return configuration == other.configuration
             elsif value.empty? && other.respond_to?(:to_hash)
               return configuration == other.to_hash
+            elsif other.is_a?(Array)
+              return other == [value, configuration]
             end
             false
           end
