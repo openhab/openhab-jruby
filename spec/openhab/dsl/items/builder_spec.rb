@@ -157,6 +157,7 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
       switch_item "MySwitch2", expire: "2h"
       switch_item "MySwitch3", expire: [3.hours, OFF]
       switch_item "MySwitch4", expire: ["4h", { command: OFF }]
+      switch_item "MySwitch5", expire: ["4h", { ignore_state_updates: true }]
       string_item "MyString", expire: [5.hours, "EXPIRED"]
     end
 
@@ -164,6 +165,7 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
     expect(MySwitch2.metadata["expire"]&.value).to eq "2h"
     expect(MySwitch3.metadata["expire"]&.value).to eq "3h,state=OFF"
     expect(MySwitch4.metadata["expire"]&.value).to eq "4h,command=OFF"
+    expect(MySwitch5.metadata["expire"]).to eq ["4h", { "ignoreStateUpdates" => true }]
     expect(MyString.metadata["expire"]&.value).to eq "5h,state='EXPIRED'"
   end
 

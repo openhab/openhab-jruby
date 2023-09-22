@@ -438,10 +438,15 @@ module OpenHAB
         end
 
         #
-        # @!method expire(command: nil, state: nil)
+        # @!method expire(duration, command: nil, state: nil, ignore_state_updates: nil, ignore_commands: nil)
         #
         # Configure item expiration
         #
+        # @param duration [String, Duration, nil] Duration after which the command or state should be applied
+        # @param command [String, nil] Command to send on expiration
+        # @param state [String, nil] State to set on expiration
+        # @param ignore_state_updates [true, false] When true, state updates will not reset the expire timer
+        # @param ignore_commands [true, false] When true, commands will not reset the expire timer
         # @return [void]
         #
         # @example Get the current expire setting
@@ -457,7 +462,12 @@ module OpenHAB
         #   expire 5.minutes, state: NULL
         # @example Send a command on expiration
         #   expire 5.minutes, command: OFF
-        def expire(*args, command: nil, state: nil)
+        # @example Specify the duration and command in the same string
+        #   expire "5h,command=OFF"
+        # @example Set the expire configuration
+        #   expire 5.minutes, ignore_state_updates: true
+        #
+        def expire(*args, command: nil, state: nil, ignore_state_updates: nil, ignore_commands: nil)
           unless (0..2).cover?(args.length)
             raise ArgumentError,
                   "wrong number of arguments (given #{args.length}, expected 0..2)"
@@ -472,9 +482,14 @@ module OpenHAB
 
           duration = duration.to_s[2..].downcase if duration.is_a?(Duration)
           state = "'#{state}'" if state.respond_to?(:to_str) && type == :string
-          @expire = duration
-          @expire += ",state=#{state}" if state
-          @expire += ",command=#{command}" if command
+
+          value = duration
+          value += ",state=#{state}" if state
+          value += ",command=#{command}" if command
+
+          config = { ignoreStateUpdates: ignore_state_updates, ignoreCommands: ignore_commands }
+          config.compact!
+          @expire = [value, config]
         end
 
         # @!attribute [w] unit
