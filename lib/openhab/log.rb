@@ -2,6 +2,8 @@
 
 require "forwardable"
 
+$ctx ||= nil
+
 module OpenHAB
   # rubocop:disable Layout/LineLength
 
