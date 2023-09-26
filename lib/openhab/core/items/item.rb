@@ -264,11 +264,16 @@ module OpenHAB
         #
         # @return [Array<Thing>] An array of things or an empty array
         def things
-          registry = Things::Links::Provider.registry
-          channels = registry.get_bound_channels(name).to_a
-          channels.map(&:thing_uid).uniq.map { |tuid| EntityLookup.lookup_thing(tuid) }.compact
+          Things::Links::Provider.registry.get_bound_things(name).map { |thing| Things::Proxy.new(thing) }
         end
         alias_method :all_linked_things, :things
+
+        # Returns all of the item's links (channels and link configurations).
+        #
+        # @return [Array<ItemChannelLink>] An array of ItemChannelLink or an empty array
+        def links
+          Things::Links::Provider.registry.get_links(name)
+        end
 
         # @return [String]
         def inspect
@@ -284,6 +289,23 @@ module OpenHAB
         # @return [org.openhab.core.common.registry.Provider, nil]
         def provider
           Provider.registry.provider_for(self)
+        end
+
+        #
+        # Compares all attributes except metadata and channels/links of the item with another item.
+        #
+        # @param other [Item] The item to compare with
+        # @return [true,false] true if all attributes are equal, false otherwise
+        #
+        # @!visibility private
+        def config_eql?(other)
+          # GenericItem#equals checks whether other has the same name and class
+          return false unless equals(other)
+
+          %i[label category tags group_names].all? do |method|
+            # Don't use #send here. It is defined in GenericItem for sending commands
+            public_send(method) == other.public_send(method)
+          end
         end
 
         def_type_predicate(:color)

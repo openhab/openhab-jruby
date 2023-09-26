@@ -57,6 +57,7 @@ module OpenHAB
         #
         # Enter the Sitemap Builder DSL.
         #
+        # @param update [true, false]  When true, existing sitemaps with the same name will be updated.
         # @yield Block executed in the context of a {DSL::Sitemaps::Builder}
         # @return [void]
         #
@@ -82,8 +83,8 @@ module OpenHAB
         #     end
         #   end
         #
-        def build(&block)
-          DSL::Sitemaps::Builder.new(self).instance_eval(&block)
+        def build(update: true, &block)
+          DSL::Sitemaps::Builder.new(self, update: update).instance_eval(&block)
         end
         # rubocop:enable Layout/LineLength
 
@@ -123,7 +124,7 @@ module OpenHAB
           @listeners.each { |l| l.model_changed(element.name, org.openhab.core.model.core.EventType::REMOVED) }
         end
 
-        def notify_listeners_about_updated_element(element)
+        def notify_listeners_about_updated_element(_old_element, element)
           @listeners.each { |l| l.model_changed(element.name, org.openhab.core.model.core.EventType::MODIFIED) }
         end
       end

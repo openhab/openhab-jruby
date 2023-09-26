@@ -11,9 +11,274 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
     end
   end
 
-  it "complains if you try to add an item that already exists" do
-    items.build { switch_item "Switch1" }
-    expect { items.build { switch_item "Switch1" } }.to raise_error(ArgumentError)
+  context "when items already exist and build is called" do
+    context "with update: false" do
+      it "raises an error" do
+        items.build { switch_item "Switch1" }
+        expect { items.build(update: false) { switch_item "Switch1" } }.to raise_error(ArgumentError)
+      end
+
+      it "the failure in creating the new item doesn't cause any changes to the original item" do
+        things.build do
+          thing "a:b:c" do
+            channel "old", "switch"
+            channel "new", "switch"
+          end
+        end
+
+        properties = {
+          tags: ["Light"],
+          unit: "W",
+          format: "%f",
+          ga: ["Light", {}],
+          groups: ["Group1"],
+          icon: "light",
+          autoupdate: "true",
+          expire: "1h",
+          channel: "a:b:c:old",
+          state: 1
+        }.freeze
+
+        items.build { number_item "Number1", "Old Label", **properties }
+
+        expect do
+          items.build(update: false) do
+            number_item "Number1",
+                        "New Label",
+                        tags: "Measurement",
+                        unit: "°C",
+                        format: "%s",
+                        ga: "Fan",
+                        groups: "Group2",
+                        icon: "window",
+                        autoupdate: "false",
+                        expire: ["2h", { ignore_state_updates: true }],
+                        channel: "a:b:c:new",
+                        state: 2
+          end
+        end.to raise_error(ArgumentError)
+        expect(Number1.label).to eql "Old Label"
+        expect(Number1.tags.to_a).to eql properties[:tags]
+        expect(Number1.unit.to_s).to eql properties[:unit]
+        expect(Number1.state_description.pattern).to eql properties[:format]
+        expect(Number1.metadata[:ga]).to eq properties[:ga]
+        expect(Number1.group_names.to_a).to eql properties[:groups]
+        expect(Number1.category).to eql properties[:icon]
+        expect(Number1.metadata[:autoupdate].value).to eql properties[:autoupdate]
+        expect(Number1.metadata[:expire].value).to eq properties[:expire]
+        expect(Number1.metadata[:expire]).to be_empty
+        expect(Number1.links.first.linked_uid.to_s).to eql properties[:channel]
+        expect(Number1.links.size).to be 1
+        expect(Number1.state.to_i).to eql properties[:state]
+      end
+    end
+
+    context "with the default argument (update: true)" do
+      subject(:item) { Built }
+
+      it "raises an error if the existing item is from a different provider" do
+        item_name = "ItemFromAnotherProvider"
+        existing_item = OpenHAB::Core::Items::StringItem.new(item_name)
+        generic_item_provider = OpenHAB::OSGi.service("org.openhab.core.items.ItemProvider")
+        allow(OpenHAB::DSL.items).to receive(:key?).with(item_name).and_return(true)
+        allow(OpenHAB::DSL.items).to receive(:[]).with(item_name).and_return(existing_item)
+        allow(existing_item).to receive(:provider).and_return(generic_item_provider)
+        expect { items.build { number_item item_name } }.to raise_error(FrozenError)
+      end
+
+      #
+      # Create an item, then create it again with build(update: true)
+      #
+      # @param [Hash] org_config Config to create the original item
+      # @param [Hash] new_config Config to create the new item
+      # @param [:new_item,:old_item] item_to_keep Whether the new item should replace the old item or not
+      # @return [Array<OpenHAB::Core::Items::Item, OpenHAB::Core::Items::Item>]
+      #   An array of [original item, updated item]. These are unproxied raw items
+      #
+      def build_and_update(org_config, new_config, item_to_keep: :new_item, &block)
+        org_config = org_config.dup
+        new_config = new_config.dup
+        org_item = items.build do
+          send("#{org_config.delete(:type) || "number"}_item", "Built", org_config.delete(:label), **org_config)
+        end
+        # The proxy is cached based on uid, so when the proxy for the new item with the same uid/name is "created",
+        # it will reuse the existing proxy for the old item to hold the new item, overwriting the underlying object.
+        # So we must unwrap the actual item here before the new item is created.
+        org_item = org_item.__getobj__
+        expect(Built.__getobj__).to be org_item
+        yield :original, org_item if block
+
+        new_item = items.build do
+          send("#{new_config.delete(:type) || "number"}_item", "Built", new_config.delete(:label), **new_config)
+        end
+        new_item = new_item.__getobj__
+        expect(Built.__getobj__).to be new_item
+        yield :updated, new_item if block
+
+        case item_to_keep
+        when :new_item then expect(new_item).not_to be org_item
+        when :old_item then expect(new_item).to be org_item
+        end
+
+        [org_item, new_item]
+      end
+
+      context "with changes" do
+        it "replaces the old item when the item type is different" do
+          build_and_update({ type: "switch" }, { type: "string" })
+          expect(item).to be_a_string_item
+        end
+
+        it "replaces the old item when the label is different" do
+          build_and_update({ label: "Old Label" }, { label: "New Label" })
+          expect(item.label).to eql "New Label"
+        end
+
+        it "replaces the old item when the dimension is different" do
+          build_and_update({ dimension: "Power" }, { dimension: "Length" })
+          expect(item.dimension.ruby_class).to be javax.measure.quantity.Length
+        end
+
+        it "replaces the old item when a unit is added" do
+          build_and_update({}, { unit: "W" })
+          expect(item.unit.to_s).to eql "W"
+        end
+
+        it "replaces the old item when a unit is removed" do
+          build_and_update({ unit: "W" }, {})
+          expect(item.unit).to be_nil
+        end
+
+        it "replaces the old item when the groups changed" do
+          build_and_update({ group: "Group1" }, { groups: %w[Group1 Group2] })
+          expect(item.group_names).to match_array %w[Group1 Group2]
+        end
+
+        it "replaces the old item when the tags changed" do
+          build_and_update({ tags: %w[Tag1 Tag2 Light] }, { tags: %w[Tag1 Tag2] }) do |built, item|
+            expect(item.metadata[:semantics]).not_to be_nil if built == :original
+          end
+          expect(item.tags).to match_array %w[Tag1 Tag2]
+          expect(item.metadata[:semantics]).to be_nil
+        end
+
+        it "replaces the old item when icon is different" do
+          build_and_update({ icon: :light }, {}) do |built, item|
+            case built
+            when :original then expect(item.category).to eql "light"
+            when :updated then expect(item.category).to be_nil
+            end
+          end
+        end
+
+        it "keeps the old item but updates its links when the channels are different" do
+          things.build do
+            thing "a:b:c" do
+              channel "old", "number"
+              channel "new", "number"
+            end
+          end
+          build_and_update({ channel: "a:b:c:old" }, { channel: "a:b:c:new" }, item_to_keep: :old_item)
+          expect(item.links.map(&:linked_uid)).to match_array(things["a:b:c"].channels["new"].uid)
+        end
+
+        it "keeps the old item but updates its links when the channel configs are different" do
+          things.build do
+            thing "a:b:c" do
+              channel "d", "number"
+            end
+          end
+          build_and_update({ channel: ["a:b:c:d", { foo: "bar" }] },
+                           { channel: ["a:b:c:d", { foo: "qux" }] },
+                           item_to_keep: :old_item)
+          link = item.links.first
+          expect(link.linked_uid).to eql things["a:b:c"].channels["d"].uid
+          expect(link.configuration).to eq({ "foo" => "qux" })
+        end
+
+        it "replaces the old item when necessary but verifies that channels remain the same" do
+          things.build do
+            thing "a:b:c" do
+              channel "d", "number"
+            end
+          end
+          channel_config = { "foo" => "bar" }.freeze
+          build_and_update({ channel: ["a:b:c:d", channel_config] },
+                           { channel: ["a:b:c:d", channel_config], label: "x" })
+          link = item.links.first
+          expect(link.linked_uid).to eql things["a:b:c"].channels["d"].uid
+          expect(link.configuration).to eq channel_config
+        end
+
+        it "keeps the old item but delete its metadata when the new item has no metadata" do
+          build_and_update({ metadata: { foo: "baz" } }, {}, item_to_keep: :old_item)
+          expect(item.metadata.key?(:foo)).to be false
+        end
+
+        it "keeps the old item but reset to the new metadata" do
+          build_and_update({ metadata: { foo: "bar", moo: "cow" } },
+                           { metadata: { foo: "baz", qux: "quux" } },
+                           item_to_keep: :old_item)
+          expect(item.metadata[:foo].value).to eq "baz"
+          expect(item.metadata[:qux].value).to eq "quux"
+          expect(item.metadata.key?(:moo)).to be false
+        end
+
+        it "works when there's a special semantics (unmanaged) metadata" do
+          build_and_update({ tags: "Lightbulb", metadata: { qux: "quux" } },
+                           { tags: "Lightbulb", metadata: { foo: "bar" } },
+                           item_to_keep: :old_item) do |type, item|
+            expect(item.metadata[:semantics]).not_to be_nil if type == :original
+          end
+          expect(item.metadata.key?(:qux)).to be false
+          expect(item.metadata[:foo].value).to eql "bar"
+        end
+
+        it "keeps the old item when only the format (state description metadata) is different" do
+          build_and_update({ format: "OLD %s" }, { format: "NEW %s" }, item_to_keep: :old_item)
+          expect(item.state_description.pattern).to eql "NEW %s"
+        end
+
+        it "keeps the old item when autoupdate (metadata) is different" do
+          build_and_update({ autoupdate: true }, { autoupdate: false }, item_to_keep: :old_item)
+          expect(item.metadata[:autoupdate].value).to eql "false"
+        end
+
+        it "keeps the old item but remove autoupdate (metadata)" do
+          build_and_update({ autoupdate: true }, {}, item_to_keep: :old_item)
+          expect(item.metadata.key?(:autoupdate)).to be false
+        end
+
+        it "keeps the old item but add expire (metadata)" do
+          build_and_update({}, { expire: "5s" }, item_to_keep: :old_item)
+          expect(item.metadata[:expire].value).to eql "5s"
+        end
+      end
+
+      context "with no changes" do
+        it "keeps the old item" do
+          properties = {
+            label: "Just a label",
+            tags: "Light",
+            unit: "W",
+            format: "%f",
+            ga: "Light",
+            groups: "Group1",
+            icon: :light,
+            autoupdate: true,
+            expire: "1h",
+            channel: "a:b:c:old"
+          }.freeze
+
+          build_and_update(properties, properties, item_to_keep: :old_item)
+        end
+
+        it "keeps the old item but updates to the new state" do
+          build_and_update({ state: 1 }, { state: 2 }, item_to_keep: :old_item)
+          expect(item.state).to eq 2
+        end
+      end
+    end
   end
 
   it "can remove an item" do

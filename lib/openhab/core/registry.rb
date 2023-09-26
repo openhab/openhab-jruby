@@ -30,9 +30,7 @@ module OpenHAB
           # So take an extra step to verify that the provider really holds the given instance.
           # by using equal? to compare the object's identity.
           # Only ManagedProviders have a #get method to look up the object by uid.
-          if !provider.is_a?(org.openhab.core.common.registry.ManagedProvider) || provider.get(key.uid).equal?(key)
-            provider
-          end
+          provider if !provider.is_a?(ManagedProvider) || provider.get(key.uid).equal?(key)
         elsif (element = identifierToElement[key])
           elementToProvider[element]
         end

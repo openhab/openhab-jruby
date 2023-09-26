@@ -12,8 +12,9 @@ module OpenHAB
       # Base sitemap builder DSL
       class Builder
         # @!visibility private
-        def initialize(provider)
+        def initialize(provider, update:)
           @provider = provider
+          @update = update
         end
 
         # (see SitemapBuilder#initialize)
@@ -23,8 +24,12 @@ module OpenHAB
         def sitemap(name, label = nil, icon: nil, &block)
           sitemap = SitemapBuilder.new(name, label, icon: icon)
           sitemap.instance_eval_with_dummy_items(&block) if block
-          @provider.add(sitemap.build)
-          sitemap
+          sitemap = sitemap.build
+          if @update && @provider.get(sitemap.uid)
+            @provider.update(sitemap)
+          else
+            @provider.add(sitemap)
+          end
         end
       end
 

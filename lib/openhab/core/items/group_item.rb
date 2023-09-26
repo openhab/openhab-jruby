@@ -106,6 +106,9 @@ module OpenHAB
           alias_method :to_s, :inspect
         end
 
+        # @!attribute [r] function
+        # @return [GroupFunction] Returns the function of this GroupItem
+
         # Override because we want to send them to the base item if possible
         %i[command update].each do |method|
           define_method(method) do |command|
@@ -150,6 +153,19 @@ module OpenHAB
               base_item&.is_a?(#{type_class}Item)  #   base_item&.is_a?(DateTimeItem)
             end                                    # end
           RUBY
+        end
+
+        #
+        # Compares all attributes of the item with another item.
+        #
+        # @param other [Item] The item to compare with
+        # @return [true,false] true if all attributes are equal, false otherwise
+        #
+        # @!visibility private
+        def config_eql?(other)
+          return false unless super
+
+          base_item&.type == other.base_item&.type && function&.inspect == other.function&.inspect
         end
 
         private

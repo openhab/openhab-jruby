@@ -48,6 +48,11 @@ module OpenHAB
           super
         end
 
+        # @!visibility private
+        def config_eql?(other)
+          super && dimension == other.dimension
+        end
+
         protected
 
         # Adds the unit dimension

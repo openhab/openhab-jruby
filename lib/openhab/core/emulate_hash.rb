@@ -103,7 +103,12 @@ module OpenHAB
       def merge!(*others, &block)
         return self if others.empty?
 
-        replace(merge(*others, &block))
+        # don't call replace here so we don't touch other keys
+        others.shift.merge(*others, &block).each do |key, value|
+          value = yield key, self[key], value if key?(key) && block
+          store(key, value)
+        end
+        self
       end
       alias_method :update, :merge!
 

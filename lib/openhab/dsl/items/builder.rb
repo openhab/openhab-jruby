@@ -118,23 +118,68 @@ module OpenHAB
         class ProviderWrapper
           attr_reader :provider
 
-          def initialize(provider)
+          def initialize(provider, update:)
             @provider = provider
+            @update = update
           end
 
           # @!visibility private
           def add(builder)
-            item = builder.build
-            provider.add(item)
+            if DSL.items.key?(builder.name)
+              raise ArgumentError, "Item #{builder.name} already exists" unless @update
+
+              # Use provider.get because openHAB's ManagedProvider does not support the #[] method.
+              unless (old_item = provider.get(builder.name))
+                raise FrozenError, "Item #{builder.name} is managed by #{DSL.items[builder.name].provider}"
+              end
+
+              item = builder.build
+              if item.config_eql?(old_item)
+                logger.debug { "Not replacing existing item #{item.uid} because it is identical" }
+                item = old_item
+              else
+                logger.debug { "Replacing existing item #{item.uid} because it is not identical" }
+                provider.update(item)
+              end
+              item.metadata.merge!(builder.metadata)
+              item.metadata
+                  .reject { |namespace, _| builder.metadata.key?(namespace) }
+                  .each do |namespace, metadata|
+                item.metadata.delete(namespace) if metadata.provider == Core::Items::Metadata::Provider.current
+              end
+            else
+              item = builder.build
+              item.metadata.merge!(builder.metadata)
+              provider.add(item)
+            end
+
+            item.update(builder.state) unless builder.state.nil?
+
             # make sure to add the item to the registry before linking it
-            builder.channels.each do |(channel, config)|
+            provider = Core::Things::Links::Provider.current
+            channel_uids = builder.channels.to_set do |(channel, config)|
+              # fill in partial channel names from group's thing id
               if !channel.include?(":") &&
                  (group = builder.groups.find { |g| g.is_a?(GroupItemBuilder) && g.thing })
                 thing = group.thing
                 channel = "#{thing}:#{channel}"
               end
-              Core::Things::Links::Provider.link(item, channel, config)
+
+              new_link = Core::Things::Links::Provider.create_link(item, channel, config)
+              if !(current_link = provider.get(new_link.uid))
+                provider.add(new_link)
+              elsif current_link.configuration != config
+                provider.update(new_link)
+              end
+
+              new_link.linked_uid
             end
+
+            # remove links not in the new item
+            provider.all.each do |link|
+              provider.remove(link.uid) if link.item_name == item.name && !channel_uids.include?(link.linked_uid)
+            end
+
             item
           end
         end
@@ -143,8 +188,8 @@ module OpenHAB
         # @return [org.openhab.core.items.ItemProvider]
         attr_reader :provider
 
-        def initialize(provider)
-          @provider = ProviderWrapper.new(Core::Items::Provider.current(provider))
+        def initialize(provider, update:)
+          @provider = ProviderWrapper.new(Core::Items::Provider.current(provider), update: update)
         end
       end
 
@@ -549,12 +594,10 @@ module OpenHAB
           tags.each do |tag|
             item.add_tag(tag)
           end
-          item.metadata.merge!(metadata)
-          item.metadata["autoupdate"] = autoupdate.to_s unless autoupdate.nil?
-          item.metadata["expire"] = expire if expire
-          item.metadata["stateDescription"] = { "pattern" => format } if format
-          item.metadata["unit"] = unit if unit
-          item.state = item.format_update(state) unless state.nil?
+          metadata["autoupdate"] = autoupdate.to_s unless autoupdate.nil?
+          metadata["expire"] = expire if expire
+          metadata["stateDescription"] = { "pattern" => format } if format
+          metadata["unit"] = unit if unit
           item
         end
 
