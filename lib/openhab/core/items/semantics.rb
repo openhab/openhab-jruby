@@ -323,6 +323,44 @@ module OpenHAB
                 lookup(name)
               end.compact
             end
+
+            #
+            # Removes custom semantic tags.
+            #
+            # @param [SemanticTag, String, Symbol] tags Custom Semantic Tags to remove.
+            #   The built in Semantic Tags cannot be removed.
+            # @param [true, false] recursive Remove all children of the given tags.
+            #
+            # @return [Array<SemanticTag>] An array of tags successfully removed.
+            # @raise [ArgumentError] if any of the tags have children
+            # @raise [FrozenError] if any of the tags are not custom tags
+            #
+            # @since openHAB 4.0
+            #
+            def remove(*tags, recursive: false)
+              tags.flat_map do |tag|
+                tag = lookup(tag) unless tag.is_a?(SemanticTag)
+                next unless tag
+
+                provider = Provider.registry.provider_for(tag)
+                unless provider.is_a?(ManagedProvider)
+                  raise FrozenError, "Cannot remove item #{tag} from non-managed provider #{provider.inspect}"
+                end
+
+                children = []
+                Provider.registry.providers.grep(ManagedProvider).each do |managed_provider|
+                  managed_provider.all.each do |existing_tag|
+                    next unless existing_tag.parent_uid == tag.uid
+                    raise ArgumentError, "Cannot remove #{tag} because it has children" unless recursive
+
+                    children += remove(existing_tag, recursive: recursive)
+                  end
+                end
+
+                remove_const(tag.name) if provider.remove(tag.uid) && const_defined?(tag.name)
+                [tag] + children
+              end.compact
+            end
           end
         end
 
