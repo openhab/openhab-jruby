@@ -272,7 +272,8 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
     end
   end
 
-  if Semantics.respond_to?(:add) # @deprecated OH3.4 - if guard only needed with OH3.4
+  # @deprecated OH3.4 - if context guard is only needed with OH3.4
+  context "with custom semantics", if: Semantics.respond_to?(:add) do
     describe "#add" do
       it "works" do
         Semantics.add(SecretRoom: Semantics::Room)
@@ -353,6 +354,67 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
 
         expect(Semantics.lookup("Syn1")).to be Semantics::ArraySynonyms
         expect(Semantics.lookup("Syn2")).to be Semantics::ArraySynonyms
+      end
+    end
+
+    describe "#remove" do
+      it "works" do
+        to_be_removed = Semantics.add(RemoveTest: Semantics::Equipment)
+        expect(Semantics::RemoveTest < Semantics::Equipment).to be true
+        expect(Semantics.remove(Semantics::RemoveTest)).to eql to_be_removed
+        expect { Semantics::RemoveTest }.to raise_error(NameError)
+      end
+
+      it "supports tag name as string" do
+        Semantics.add(RemoveTest: Semantics::Equipment)
+        Semantics.remove("RemoveTest")
+        expect { Semantics::RemoveTest }.to raise_error(NameError)
+      end
+
+      it "supports tag name as symbol" do
+        Semantics.add(RemoveTest: Semantics::Equipment)
+        Semantics.remove(:RemoveTest)
+        expect { Semantics::RemoveTest }.to raise_error(NameError)
+      end
+
+      it "supports removing multiple tags" do
+        Semantics.add(RemoveTest1: Semantics::Equipment, RemoveTest2: Semantics::Equipment)
+        Semantics.remove(Semantics::RemoveTest1, Semantics::RemoveTest2)
+        expect { Semantics::RemoveTest1 }.to raise_error(NameError)
+        expect { Semantics::RemoveTest2 }.to raise_error(NameError)
+      end
+
+      it "returns an empty array if the tag doesn't exist" do
+        expect(Semantics.remove(:NotATag)).to be_empty
+      end
+
+      it "complains when trying to remove a tag that has children" do
+        # Note we want to use a unique name here so it won't affect other tests
+        Semantics.add(FailedTest: Semantics::Equipment)
+        Semantics.add(FailedTestChild: Semantics::FailedTest)
+        expect { Semantics.remove(:FailedTest) }.to raise_error(ArgumentError)
+      end
+
+      it "can remove the tag and its children recursively with recursive: true" do
+        added = Semantics.add(RemoveTest: Semantics::Equipment)
+        added += Semantics.add(RemoveTestChild1: Semantics::RemoveTest)
+        added += Semantics.add(RemoveTestChild2: Semantics::RemoveTest)
+        added += Semantics.add(RemoveTestGrandChild11: Semantics::RemoveTestChild1)
+        added += Semantics.add(RemoveTestGrandChild21: Semantics::RemoveTestChild2)
+
+        expect(Semantics.remove(Semantics::RemoveTestChild2,
+                                Semantics::RemoveTest,
+                                recursive: true)).to match_array(added)
+
+        expect { Semantics::RemoveTest }.to raise_error(NameError)
+        expect { Semantics::RemoveTestChild1 }.to raise_error(NameError)
+        expect { Semantics::RemoveTestChild2 }.to raise_error(NameError)
+        expect { Semantics::RemoveTestGrandChild11 }.to raise_error(NameError)
+        expect { Semantics::RemoveTestGrandChild21 }.to raise_error(NameError)
+      end
+
+      it "complains when trying to remove a default tag" do
+        expect { Semantics.remove(Semantics::Lightbulb) }.to raise_error(FrozenError)
       end
     end
   end
