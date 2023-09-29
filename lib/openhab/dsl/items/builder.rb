@@ -603,7 +603,7 @@ module OpenHAB
 
           class_eval <<~RUBY, __FILE__, __LINE__ + 1
             def #{m}(*args, groups: nil, **kwargs)  # def dimmer_item(*args, groups: nil, **kwargs)
-              groups ||= []                         #   groups ||= []
+              groups = Array.wrap(groups)           #   groups = Array.wrap(groups)
               groups << self                        #   groups << self
               super                                 #   super
             end                                     # end

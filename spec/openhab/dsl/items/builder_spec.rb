@@ -31,12 +31,14 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
       group_item "MyGroupItem" do
         switch_item "MySwitchItem"
         switch_item "MySwitch2", groups: [Group1]
+        switch_item "MySwitch3", groups: Group1
       end
     end
 
-    expect(MyGroupItem.members.to_a).to match_array [MySwitchItem, MySwitch2]
+    expect(MyGroupItem.members.to_a).to match_array [MySwitchItem, MySwitch2, MySwitch3]
     expect(MySwitchItem.groups).to eq [MyGroupItem]
     expect(MySwitch2.groups).to match_array [Group1, MyGroupItem]
+    expect(MySwitch3.groups).to match_array [Group1, MyGroupItem]
   end
 
   it "can add items to groups" do
