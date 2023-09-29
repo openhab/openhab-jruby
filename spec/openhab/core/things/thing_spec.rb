@@ -25,6 +25,12 @@ RSpec.describe OpenHAB::Core::Things::Thing do
     end
   end
 
+  describe "#provider" do
+    it "works" do
+      expect(thing.provider).to be OpenHAB::Core::Things::Provider.current
+    end
+  end
+
   it "supports boolean thing status methods" do
     expect(thing).to be_online
     expect(thing).not_to be_uninitialized

@@ -174,6 +174,11 @@ module OpenHAB
           uid.to_s
         end
 
+        # @return [org.openhab.core.common.registry.Provider, nil]
+        def provider
+          Provider.registry.provider_for(uid)
+        end
+
         #
         # Fetches the actions available for this thing.
         #
