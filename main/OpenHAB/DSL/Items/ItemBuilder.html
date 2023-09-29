@@ -3770,14 +3770,15 @@
         <span class='name'>dimension</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>, <tt>nil</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
-        <div class='inline'><p>The unit dimension for a <span class='object_link'><a href="../../Core/Items/NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span> (see <span class='object_link'><a href="#dimension-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#dimension (method)">#dimension</a></span>)</p>
+        <div class='inline'><p>The unit dimension for a <span class='object_link'><a href="../../Core/Items/NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span> (see <span class='object_link'><a href="#dimension-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#dimension (method)">#dimension</a></span>)
+Note the dimension must be properly capitalized.</p>
 </div>
       
     </li>
@@ -4076,7 +4077,6 @@
       <pre class="lines">
 
 
-276
 277
 278
 279
@@ -4139,10 +4139,20 @@
 336
 337
 338
-339</pre>
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 276</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 277</span>
 
 <span class="keyword">def</span> <span class="function">initialize</span>(type,
                name = <span class="predefined-constant">nil</span>,
@@ -4166,7 +4176,16 @@
                <span class="key">metadata</span>: <span class="predefined-constant">nil</span>,
                <span class="key">state</span>: <span class="predefined-constant">nil</span>)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">`name` cannot be nil</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> name.nil?
-  raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">`dimension` can only be specified with NumberItem</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> dimension &amp;&amp; type != <span class="symbol">:number</span>
+
+  <span class="keyword">if</span> dimension
+    raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">`dimension` can only be specified with NumberItem</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> type == <span class="symbol">:number</span>
+
+    <span class="keyword">begin</span>
+      org.openhab.core.types.util.UnitUtils.parse_dimension(dimension.to_s)
+    <span class="keyword">rescue</span> java.lang.IllegalArgumentException
+      raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Invalid dimension '</span><span class="inline"><span class="inline-delimiter">#{</span>dimension<span class="inline-delimiter">}</span></span><span class="content">'</span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
 
   name = name.name <span class="keyword">if</span> name.respond_to?(<span class="symbol">:name</span>)
   <span class="keyword">if</span> provider.is_a?(<span class="constant">GroupItemBuilder</span>)
@@ -5033,7 +5052,7 @@ openHAB 3.4 and 4.0.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 376</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 386</span>
 
 </pre>
     </td>
@@ -5122,14 +5141,14 @@ openHAB 3.4 and 4.0.</p>
       <pre class="lines">
 
 
-436
-437
-438
-439
-440</pre>
+446
+447
+448
+449
+450</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 436</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 446</span>
 
 <span class="keyword">def</span> <span class="function">channel</span>(channel, config = {})
   channel = channel.to_s
@@ -5320,16 +5339,6 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
-472
-473
-474
-475
-476
-477
-478
-479
-480
-481
 482
 483
 484
@@ -5343,10 +5352,20 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
 492
 493
 494
-495</pre>
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 472</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 482</span>
 
 <span class="keyword">def</span> <span class="function">expire</span>(*args, <span class="key">command</span>: <span class="predefined-constant">nil</span>, <span class="key">state</span>: <span class="predefined-constant">nil</span>, <span class="key">ignore_state_updates</span>: <span class="predefined-constant">nil</span>, <span class="key">ignore_commands</span>: <span class="predefined-constant">nil</span>)
   <span class="keyword">unless</span> (<span class="integer">0</span>..<span class="integer">2</span>).cover?(args.length)
@@ -5448,7 +5467,7 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 387</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 397</span>
 
 </pre>
     </td>
@@ -5496,18 +5515,18 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
-366
-367
-368
-369
-370
-371
-372
-373
-374</pre>
+376
+377
+378
+379
+380
+381
+382
+383
+384</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 366</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 376</span>
 
 <span class="keyword">def</span> <span class="function">group</span>(*groups)
   <span class="keyword">unless</span> groups.all? <span class="keyword">do</span> |group|
@@ -5591,15 +5610,15 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
-409
-410
-411
-412
-413
-414</pre>
+419
+420
+421
+422
+423
+424</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 409</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 419</span>
 
 <span class="symbol"><span class="delimiter">%i[</span><span class="content">alexa ga homekit</span><span class="delimiter">]</span></span>.each <span class="keyword">do</span> |shortcut|
   define_method(shortcut) <span class="keyword">do</span> |value = <span class="predefined-constant">nil</span>, config = <span class="predefined-constant">nil</span>|
@@ -5649,17 +5668,17 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
-552
-553
-554
-555
-556
-557
-558
-559</pre>
+562
+563
+564
+565
+566
+567
+568
+569</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 552</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 562</span>
 
 <span class="keyword">def</span> <span class="function">inspect</span>
   s = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Items::</span><span class="inline"><span class="inline-delimiter">#{</span>inspect_type<span class="inline-delimiter">}</span></span><span class="content">ItemBuilder</span><span class="inline"><span class="inline-delimiter">#{</span>type_details<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>label.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
@@ -5714,12 +5733,12 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
-356
-357
-358</pre>
+366
+367
+368</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 356</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 366</span>
 
 <span class="keyword">def</span> <span class="function">tag</span>(*tags)
   <span class="instance-variable">@tags</span> += <span class="predefined-constant">self</span>.class.normalize_tags(*tags)
@@ -5767,12 +5786,12 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
-346
-347
-348</pre>
+356
+357
+358</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 346</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 356</span>
 
 <span class="keyword">def</span> <span class="function">to_s</span>
   label || name
@@ -5787,7 +5806,7 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
 </div>
 
         <footer>
-  Generated on Fri Sep 29 15:14:04 2023 by
+  Generated on Fri Sep 29 15:59:56 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
