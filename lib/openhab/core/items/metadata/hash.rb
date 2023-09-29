@@ -93,7 +93,7 @@ module OpenHAB
             return unless attached?
 
             javaify
-            provider.update(@metadata)
+            provider!.update(@metadata)
           end
 
           # @!visibility private
@@ -101,12 +101,12 @@ module OpenHAB
             return unless attached?
 
             javaify
-            (p = provider).get(uid) ? p.update(@metadata) : p.add(@metadata)
+            (p = provider!).get(uid) ? p.update(@metadata) : p.add(@metadata)
           end
 
           # @!visibility private
           def remove
-            provider.remove(uid)
+            provider!.remove(uid)
           end
 
           # @!visibility private
@@ -220,12 +220,17 @@ module OpenHAB
             [value, to_h].inspect
           end
 
+          # @return [org.openhab.core.common.registry.Provider, nil]
+          def provider
+            Provider.registry.provider_for(uid)
+          end
+
           #
           # @raise [FrozenError] if the provider is not a
           #   {org.openhab.core.common.registry.ManagedProvider ManagedProvider} that can be updated.
           # @return [org.openhab.core.common.registry.ManagedProvider]
           #
-          def provider
+          def provider!
             preferred_provider = Provider.current(
               Thread.current[:openhab_providers]&.dig(:metadata_items, uid.item_name) ||
                 Thread.current[:openhab_providers]&.dig(:metadata_namespaces, uid.namespace),
@@ -233,10 +238,10 @@ module OpenHAB
             )
 
             if attached?
-              provider = Provider.registry.provider_for(uid)
+              provider = self.provider
               return preferred_provider unless provider
 
-              unless provider.is_a?(org.openhab.core.common.registry.ManagedProvider)
+              unless provider.is_a?(ManagedProvider)
                 raise FrozenError, "Cannot modify metadata from provider #{provider.inspect} for #{uid}."
               end
 

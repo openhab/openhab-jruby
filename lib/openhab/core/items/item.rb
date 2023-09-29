@@ -281,7 +281,7 @@ module OpenHAB
           "#{s}>"
         end
 
-        # @return [org.openhab.core.common.registry.Provider]
+        # @return [org.openhab.core.common.registry.Provider, nil]
         def provider
           Provider.registry.provider_for(self)
         end

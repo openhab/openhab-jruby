@@ -90,4 +90,26 @@ RSpec.describe OpenHAB::Core::Items::Metadata::Hash do
       expect(namespace.to_h).to eql({ "qux" => "quux" })
     end
   end
+
+  describe "#provider" do
+    it "returns nil for unattached hashes" do
+      expect(OpenHAB::Core::Items::Metadata::Hash.from_value("namespace", "value").provider).to be_nil
+    end
+  end
+
+  describe "#provider!" do
+    it "returns the current provider for unattached hashes" do
+      expect(OpenHAB::Core::Items::Metadata::Hash.from_value("namespace", "value").provider!)
+        .to eq OpenHAB::Core::Items::Metadata::Provider.current
+    end
+
+    it "raises FrozenError if the provider is a generic provider" do
+      generic_provider = OpenHAB::Core::Items::Metadata::Provider.registry
+                                                                 .providers
+                                                                 .grep_v(OpenHAB::Core::ManagedProvider)
+                                                                 .first
+      allow(namespace).to receive(:provider).and_return(generic_provider)
+      expect { namespace.provider! }.to raise_error(FrozenError)
+    end
+  end
 end
