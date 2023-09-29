@@ -1491,6 +1491,7 @@ As a special case, a #== comparison can be done against a [value, config] array.
   
   
   
+  
 
         
       </ul>
@@ -3271,7 +3272,29 @@ As a special case, a #== comparison can be done against a [value, config] array.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#provider-instance_method" title="#provider (instance method)">#<strong>provider</strong>  &#x21d2; org.openhab.core.common.registry.ManagedProvider </a>
+      <a href="#provider-instance_method" title="#provider (instance method)">#<strong>provider</strong>  &#x21d2; org.openhab.core.common.registry.Provider<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#provider!-instance_method" title="#provider! (instance method)">#<strong>provider!</strong>  &#x21d2; org.openhab.core.common.registry.ManagedProvider </a>
     
 
     
@@ -3659,7 +3682,12 @@ As a special case, a #== comparison can be done against a [value, config] array.
 263
 264
 265
-266</pre>
+266
+267
+268
+269
+270
+271</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/metadata/hash.rb', line 26</span>
@@ -3734,7 +3762,7 @@ As a special case, a #== comparison can be done against a [value, config] array.
     <span class="keyword">return</span> <span class="keyword">unless</span> attached?
 
     javaify
-    provider.update(<span class="instance-variable">@metadata</span>)
+    provider!.update(<span class="instance-variable">@metadata</span>)
   <span class="keyword">end</span>
 
   <span class="comment"># @!visibility private</span>
@@ -3742,12 +3770,12 @@ As a special case, a #== comparison can be done against a [value, config] array.
     <span class="keyword">return</span> <span class="keyword">unless</span> attached?
 
     javaify
-    (p = provider).get(uid) ? p.update(<span class="instance-variable">@metadata</span>) : p.add(<span class="instance-variable">@metadata</span>)
+    (p = provider!).get(uid) ? p.update(<span class="instance-variable">@metadata</span>) : p.add(<span class="instance-variable">@metadata</span>)
   <span class="keyword">end</span>
 
   <span class="comment"># @!visibility private</span>
   <span class="keyword">def</span> <span class="function">remove</span>
-    provider.remove(uid)
+    provider!.remove(uid)
   <span class="keyword">end</span>
 
   <span class="comment"># @!visibility private</span>
@@ -3861,12 +3889,17 @@ As a special case, a #== comparison can be done against a [value, config] array.
     [value, to_h].inspect
   <span class="keyword">end</span>
 
+  <span class="comment"># @return [org.openhab.core.common.registry.Provider, nil]</span>
+  <span class="keyword">def</span> <span class="function">provider</span>
+    <span class="constant">Provider</span>.registry.provider_for(uid)
+  <span class="keyword">end</span>
+
   <span class="comment">#</span>
   <span class="comment"># @raise [FrozenError] if the provider is not a</span>
   <span class="comment">#   {org.openhab.core.common.registry.ManagedProvider ManagedProvider} that can be updated.</span>
   <span class="comment"># @return [org.openhab.core.common.registry.ManagedProvider]</span>
   <span class="comment">#</span>
-  <span class="keyword">def</span> <span class="function">provider</span>
+  <span class="keyword">def</span> <span class="function">provider!</span>
     preferred_provider = <span class="constant">Provider</span>.current(
       <span class="constant">Thread</span>.current[<span class="symbol">:openhab_providers</span>]&amp;.dig(<span class="symbol">:metadata_items</span>, uid.item_name) ||
         <span class="constant">Thread</span>.current[<span class="symbol">:openhab_providers</span>]&amp;.dig(<span class="symbol">:metadata_namespaces</span>, uid.namespace),
@@ -3874,10 +3907,10 @@ As a special case, a #== comparison can be done against a [value, config] array.
     )
 
     <span class="keyword">if</span> attached?
-      provider = <span class="constant">Provider</span>.registry.provider_for(uid)
+      provider = <span class="predefined-constant">self</span>.provider
       <span class="keyword">return</span> preferred_provider <span class="keyword">unless</span> provider
 
-      <span class="keyword">unless</span> provider.is_a?(org.openhab.core.common.registry.ManagedProvider)
+      <span class="keyword">unless</span> provider.is_a?(<span class="constant">ManagedProvider</span>)
         raise <span class="constant">FrozenError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot modify metadata from provider </span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="content"> for </span><span class="inline"><span class="inline-delimiter">#{</span>uid<span class="inline-delimiter">}</span></span><span class="content">.</span><span class="delimiter">&quot;</span></span>
       <span class="keyword">end</span>
 
@@ -4194,7 +4227,12 @@ As a special case, a #== comparison can be done against a [value, config] array.
 263
 264
 265
-266</pre>
+266
+267
+268
+269
+270
+271</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/metadata/hash.rb', line 26</span>
@@ -4269,7 +4307,7 @@ As a special case, a #== comparison can be done against a [value, config] array.
     <span class="keyword">return</span> <span class="keyword">unless</span> attached?
 
     javaify
-    provider.update(<span class="instance-variable">@metadata</span>)
+    provider!.update(<span class="instance-variable">@metadata</span>)
   <span class="keyword">end</span>
 
   <span class="comment"># @!visibility private</span>
@@ -4277,12 +4315,12 @@ As a special case, a #== comparison can be done against a [value, config] array.
     <span class="keyword">return</span> <span class="keyword">unless</span> attached?
 
     javaify
-    (p = provider).get(uid) ? p.update(<span class="instance-variable">@metadata</span>) : p.add(<span class="instance-variable">@metadata</span>)
+    (p = provider!).get(uid) ? p.update(<span class="instance-variable">@metadata</span>) : p.add(<span class="instance-variable">@metadata</span>)
   <span class="keyword">end</span>
 
   <span class="comment"># @!visibility private</span>
   <span class="keyword">def</span> <span class="function">remove</span>
-    provider.remove(uid)
+    provider!.remove(uid)
   <span class="keyword">end</span>
 
   <span class="comment"># @!visibility private</span>
@@ -4396,12 +4434,17 @@ As a special case, a #== comparison can be done against a [value, config] array.
     [value, to_h].inspect
   <span class="keyword">end</span>
 
+  <span class="comment"># @return [org.openhab.core.common.registry.Provider, nil]</span>
+  <span class="keyword">def</span> <span class="function">provider</span>
+    <span class="constant">Provider</span>.registry.provider_for(uid)
+  <span class="keyword">end</span>
+
   <span class="comment">#</span>
   <span class="comment"># @raise [FrozenError] if the provider is not a</span>
   <span class="comment">#   {org.openhab.core.common.registry.ManagedProvider ManagedProvider} that can be updated.</span>
   <span class="comment"># @return [org.openhab.core.common.registry.ManagedProvider]</span>
   <span class="comment">#</span>
-  <span class="keyword">def</span> <span class="function">provider</span>
+  <span class="keyword">def</span> <span class="function">provider!</span>
     preferred_provider = <span class="constant">Provider</span>.current(
       <span class="constant">Thread</span>.current[<span class="symbol">:openhab_providers</span>]&amp;.dig(<span class="symbol">:metadata_items</span>, uid.item_name) ||
         <span class="constant">Thread</span>.current[<span class="symbol">:openhab_providers</span>]&amp;.dig(<span class="symbol">:metadata_namespaces</span>, uid.namespace),
@@ -4409,10 +4452,10 @@ As a special case, a #== comparison can be done against a [value, config] array.
     )
 
     <span class="keyword">if</span> attached?
-      provider = <span class="constant">Provider</span>.registry.provider_for(uid)
+      provider = <span class="predefined-constant">self</span>.provider
       <span class="keyword">return</span> preferred_provider <span class="keyword">unless</span> provider
 
-      <span class="keyword">unless</span> provider.is_a?(org.openhab.core.common.registry.ManagedProvider)
+      <span class="keyword">unless</span> provider.is_a?(<span class="constant">ManagedProvider</span>)
         raise <span class="constant">FrozenError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot modify metadata from provider </span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="content"> for </span><span class="inline"><span class="inline-delimiter">#{</span>uid<span class="inline-delimiter">}</span></span><span class="content">.</span><span class="delimiter">&quot;</span></span>
       <span class="keyword">end</span>
 
@@ -4508,7 +4551,59 @@ As a special case, a #== comparison can be done against a [value, config] array.
       <div class="method_details ">
   <h3 class="signature " id="provider-instance_method">
   
-    #<strong>provider</strong>  &#x21d2; <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/common/registry/ManagedProvider.html" target="_parent" title="org.openhab.core.common.registry.ManagedProvider">org.openhab.core.common.registry.ManagedProvider</a></tt> 
+    #<strong>provider</strong>  &#x21d2; <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/common/registry/Provider.html" target="_parent" title="org.openhab.core.common.registry.Provider">org.openhab.core.common.registry.Provider</a></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/common/registry/Provider.html" target="_parent" title="org.openhab.core.common.registry.Provider">org.openhab.core.common.registry.Provider</a></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+224
+225
+226</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/metadata/hash.rb', line 224</span>
+
+<span class="keyword">def</span> <span class="function">provider</span>
+  <span class="constant">Provider</span>.registry.provider_for(uid)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="provider!-instance_method">
+  
+    #<strong>provider!</strong>  &#x21d2; <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/common/registry/ManagedProvider.html" target="_parent" title="org.openhab.core.common.registry.ManagedProvider">org.openhab.core.common.registry.ManagedProvider</a></tt> 
   
 
   
@@ -4560,11 +4655,6 @@ As a special case, a #== comparison can be done against a [value, config] array.
       <pre class="lines">
 
 
-228
-229
-230
-231
-232
 233
 234
 235
@@ -4584,12 +4674,17 @@ As a special case, a #== comparison can be done against a [value, config] array.
 249
 250
 251
-252</pre>
+252
+253
+254
+255
+256
+257</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/metadata/hash.rb', line 228</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/metadata/hash.rb', line 233</span>
 
-<span class="keyword">def</span> <span class="function">provider</span>
+<span class="keyword">def</span> <span class="function">provider!</span>
   preferred_provider = <span class="constant">Provider</span>.current(
     <span class="constant">Thread</span>.current[<span class="symbol">:openhab_providers</span>]&amp;.dig(<span class="symbol">:metadata_items</span>, uid.item_name) ||
       <span class="constant">Thread</span>.current[<span class="symbol">:openhab_providers</span>]&amp;.dig(<span class="symbol">:metadata_namespaces</span>, uid.namespace),
@@ -4597,10 +4692,10 @@ As a special case, a #== comparison can be done against a [value, config] array.
   )
 
   <span class="keyword">if</span> attached?
-    provider = <span class="constant">Provider</span>.registry.provider_for(uid)
+    provider = <span class="predefined-constant">self</span>.provider
     <span class="keyword">return</span> preferred_provider <span class="keyword">unless</span> provider
 
-    <span class="keyword">unless</span> provider.is_a?(org.openhab.core.common.registry.ManagedProvider)
+    <span class="keyword">unless</span> provider.is_a?(<span class="constant">ManagedProvider</span>)
       raise <span class="constant">FrozenError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot modify metadata from provider </span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="content"> for </span><span class="inline"><span class="inline-delimiter">#{</span>uid<span class="inline-delimiter">}</span></span><span class="content">.</span><span class="delimiter">&quot;</span></span>
     <span class="keyword">end</span>
 
@@ -4696,7 +4791,7 @@ As a special case, a #== comparison can be done against a [value, config] array.
 </div>
 
         <footer>
-  Generated on Fri Sep 29 16:00:03 2023 by
+  Generated on Fri Sep 29 21:33:02 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

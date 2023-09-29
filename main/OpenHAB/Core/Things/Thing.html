@@ -1487,6 +1487,7 @@ Channels, which can be bound to Items. - Documentation for openhab-scripting JRu
   
   
   
+  
 
         
       </ul>
@@ -3529,6 +3530,28 @@ mqtt_broker_mosquitto.online? <span class="comment"># is mqtt:broker:mosquitto t
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#provider-instance_method" title="#provider (instance method)">#<strong>provider</strong>  &#x21d2; org.openhab.core.common.registry.Provider<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#removed%3F-instance_method" title="#removed? (instance method)">#<strong>removed?</strong>  &#x21d2; true, false </a>
     
 
@@ -3685,14 +3708,14 @@ mqtt_broker_mosquitto.online? <span class="comment"># is mqtt:broker:mosquitto t
       <pre class="lines">
 
 
-201
-202
-203
-204
-205</pre>
+206
+207
+208
+209
+210</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 201</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 206</span>
 
 <span class="keyword">def</span> <span class="function">method_missing</span>(method, *args, &amp;block)
   <span class="keyword">return</span> actions.public_send(method, *args, &amp;block) <span class="keyword">if</span> actions.respond_to?(method)
@@ -3900,7 +3923,12 @@ mqtt_broker_mosquitto.online? <span class="comment"># is mqtt:broker:mosquitto t
 211
 212
 213
-214</pre>
+214
+215
+216
+217
+218
+219</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 63</span>
@@ -4017,6 +4045,11 @@ mqtt_broker_mosquitto.online? <span class="comment"># is mqtt:broker:mosquitto t
   <span class="comment">#</span>
   <span class="keyword">def</span> <span class="function">to_s</span>
     uid.to_s
+  <span class="keyword">end</span>
+
+  <span class="comment"># @return [org.openhab.core.common.registry.Provider, nil]</span>
+  <span class="keyword">def</span> <span class="function">provider</span>
+    <span class="constant">Provider</span>.registry.provider_for(uid)
   <span class="keyword">end</span>
 
   <span class="comment">#</span>
@@ -4252,7 +4285,12 @@ mqtt_broker_mosquitto.online? <span class="comment"># is mqtt:broker:mosquitto t
 211
 212
 213
-214</pre>
+214
+215
+216
+217
+218
+219</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 63</span>
@@ -4369,6 +4407,11 @@ mqtt_broker_mosquitto.online? <span class="comment"># is mqtt:broker:mosquitto t
   <span class="comment">#</span>
   <span class="keyword">def</span> <span class="function">to_s</span>
     uid.to_s
+  <span class="keyword">end</span>
+
+  <span class="comment"># @return [org.openhab.core.common.registry.Provider, nil]</span>
+  <span class="keyword">def</span> <span class="function">provider</span>
+    <span class="constant">Provider</span>.registry.provider_for(uid)
   <span class="keyword">end</span>
 
   <span class="comment">#</span>
@@ -4614,7 +4657,12 @@ logger.info things[<span class="string"><span class="delimiter">&quot;</span><sp
 211
 212
 213
-214</pre>
+214
+215
+216
+217
+218
+219</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 63</span>
@@ -4731,6 +4779,11 @@ logger.info things[<span class="string"><span class="delimiter">&quot;</span><sp
   <span class="comment">#</span>
   <span class="keyword">def</span> <span class="function">to_s</span>
     uid.to_s
+  <span class="keyword">end</span>
+
+  <span class="comment"># @return [org.openhab.core.common.registry.Provider, nil]</span>
+  <span class="keyword">def</span> <span class="function">provider</span>
+    <span class="constant">Provider</span>.registry.provider_for(uid)
   <span class="keyword">end</span>
 
   <span class="comment">#</span>
@@ -4975,7 +5028,12 @@ logger.info things[<span class="string"><span class="delimiter">&quot;</span><sp
 211
 212
 213
-214</pre>
+214
+215
+216
+217
+218
+219</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 63</span>
@@ -5092,6 +5150,11 @@ logger.info things[<span class="string"><span class="delimiter">&quot;</span><sp
   <span class="comment">#</span>
   <span class="keyword">def</span> <span class="function">to_s</span>
     uid.to_s
+  <span class="keyword">end</span>
+
+  <span class="comment"># @return [org.openhab.core.common.registry.Provider, nil]</span>
+  <span class="keyword">def</span> <span class="function">provider</span>
+    <span class="constant">Provider</span>.registry.provider_for(uid)
   <span class="keyword">end</span>
 
   <span class="comment">#</span>
@@ -5328,7 +5391,12 @@ logger.info things[<span class="string"><span class="delimiter">&quot;</span><sp
 211
 212
 213
-214</pre>
+214
+215
+216
+217
+218
+219</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 63</span>
@@ -5445,6 +5513,11 @@ logger.info things[<span class="string"><span class="delimiter">&quot;</span><sp
   <span class="comment">#</span>
   <span class="keyword">def</span> <span class="function">to_s</span>
     uid.to_s
+  <span class="keyword">end</span>
+
+  <span class="comment"># @return [org.openhab.core.common.registry.Provider, nil]</span>
+  <span class="keyword">def</span> <span class="function">provider</span>
+    <span class="constant">Provider</span>.registry.provider_for(uid)
   <span class="keyword">end</span>
 
   <span class="comment">#</span>
@@ -5681,7 +5754,12 @@ logger.info things[<span class="string"><span class="delimiter">&quot;</span><sp
 211
 212
 213
-214</pre>
+214
+215
+216
+217
+218
+219</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 63</span>
@@ -5798,6 +5876,11 @@ logger.info things[<span class="string"><span class="delimiter">&quot;</span><sp
   <span class="comment">#</span>
   <span class="keyword">def</span> <span class="function">to_s</span>
     uid.to_s
+  <span class="keyword">end</span>
+
+  <span class="comment"># @return [org.openhab.core.common.registry.Provider, nil]</span>
+  <span class="keyword">def</span> <span class="function">provider</span>
+    <span class="constant">Provider</span>.registry.provider_for(uid)
   <span class="keyword">end</span>
 
   <span class="comment">#</span>
@@ -5922,12 +6005,12 @@ logger.info things[<span class="string"><span class="delimiter">&quot;</span><sp
       <pre class="lines">
 
 
-191
-192
-193</pre>
+196
+197
+198</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 191</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 196</span>
 
 <span class="keyword">def</span> <span class="function">actions</span>(scope = <span class="predefined-constant">nil</span>)
   <span class="global-variable">$actions</span>.get(scope || uid.binding_id, uid.to_s)
@@ -6252,6 +6335,58 @@ logger.info things[<span class="string"><span class="delimiter">&quot;</span><sp
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="provider-instance_method">
+  
+    #<strong>provider</strong>  &#x21d2; <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/common/registry/Provider.html" target="_parent" title="org.openhab.core.common.registry.Provider">org.openhab.core.common.registry.Provider</a></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/common/registry/Provider.html" target="_parent" title="org.openhab.core.common.registry.Provider">org.openhab.core.common.registry.Provider</a></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+178
+179
+180</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/thing.rb', line 178</span>
+
+<span class="keyword">def</span> <span class="function">provider</span>
+  <span class="constant">Provider</span>.registry.provider_for(uid)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="removed?-instance_method">
   
     #<strong>removed?</strong>  &#x21d2; <tt>true</tt>, <tt>false</tt> 
@@ -6509,7 +6644,7 @@ logger.info things[<span class="string"><span class="delimiter">&quot;</span><sp
 </div>
 
         <footer>
-  Generated on Fri Sep 29 15:59:52 2023 by
+  Generated on Fri Sep 29 21:32:52 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
