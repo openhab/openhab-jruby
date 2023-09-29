@@ -57,8 +57,14 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
   it "can set a dimension on a number item" do
     items.build do
       number_item "MyNumberItem", dimension: "Power"
+      number_item "MyNumberItem2", dimension: :ElectricPotential
     end
     expect(MyNumberItem.dimension.ruby_class).to be javax.measure.quantity.Power
+    expect(MyNumberItem2.dimension.ruby_class).to be javax.measure.quantity.ElectricPotential
+  end
+
+  it "complains about invalid dimension" do
+    expect { items.build { number_item "MyNumberItem", dimension: "Foo" } }.to raise_error(ArgumentError)
   end
 
   it "can set a unit on a number item" do

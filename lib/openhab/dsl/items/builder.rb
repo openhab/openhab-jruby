@@ -237,7 +237,8 @@ module OpenHAB
           end
         end
 
-        # @param dimension [Symbol, nil] The unit dimension for a {NumberItem} (see {ItemBuilder#dimension})
+        # @param dimension [Symbol, String, nil] The unit dimension for a {NumberItem} (see {ItemBuilder#dimension})
+        #   Note the dimension must be properly capitalized.
         # @param unit [Symbol, String, nil] The unit for a {NumberItem} (see {ItemBuilder#unit})
         # @param format [String, nil] The formatting pattern for the item's state (see {ItemBuilder#format})
         # @param icon [Symbol, String, nil] The icon to be associated with the item (see {ItemBuilder#icon})
@@ -293,7 +294,16 @@ module OpenHAB
                        metadata: nil,
                        state: nil)
           raise ArgumentError, "`name` cannot be nil" if name.nil?
-          raise ArgumentError, "`dimension` can only be specified with NumberItem" if dimension && type != :number
+
+          if dimension
+            raise ArgumentError, "`dimension` can only be specified with NumberItem" unless type == :number
+
+            begin
+              org.openhab.core.types.util.UnitUtils.parse_dimension(dimension.to_s)
+            rescue java.lang.IllegalArgumentException
+              raise ArgumentError, "Invalid dimension '#{dimension}'"
+            end
+          end
 
           name = name.name if name.respond_to?(:name)
           if provider.is_a?(GroupItemBuilder)
