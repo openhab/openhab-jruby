@@ -150,6 +150,8 @@ module OpenHAB
 
       # The ItemBuilder DSL allows you to customize an Item
       class ItemBuilder
+        include Core::EntityLookup
+
         # The type of this item
         # @example
         #   type #=> :switch

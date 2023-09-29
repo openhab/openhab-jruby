@@ -313,6 +313,16 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
       end
       expect(gGroup2).to be_a(GroupItem)
     end
+
+    it "can reference a group item within the item's block" do
+      items.build do
+        group_item "gTestGroup"
+        number_item "TestItem" do
+          group gTestGroup
+        end
+      end
+      expect(TestItem.groups).to eql [gTestGroup]
+    end
   end
 
   context "with a thing" do
