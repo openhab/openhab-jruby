@@ -323,8 +323,8 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
         expect(Semantics.constants).to include(*to_create)
       end
 
-      it "doesn't create a tag with an invalid parent" do
-        expect(Semantics.add(InvalidParentTag: :Blah)).to be_empty
+      it "raises an error when trying to create a tag with an invalid parent" do
+        expect { Semantics.add(InvalidParentTag: :Blah) }.to raise_error(ArgumentError)
         expect(Semantics.constants).not_to include(:InvalidParentTag)
       end
 
