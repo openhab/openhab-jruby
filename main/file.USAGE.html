@@ -3172,7 +3172,7 @@ If you're new to Ruby, you may want to check out <a href="file.ruby-basics.html"
 <li>Abstract away complexities of openHAB</li>
 <li>Enable all the power of Ruby and openHAB</li>
 <li>Create a Frictionless experience for building automation</li>
-<li>The common, yet tricky tasks are abstracted and made easy. e.g. creating a timer that automatically reschedules itself.</li>
+<li>The common, yet tricky tasks are abstracted and made easy, e.g. creating a timer that automatically reschedules itself.</li>
 <li>Tested
 <ul>
 <li>Designed and tested using <a href="https://en.wikipedia.org/wiki/Test-driven_development">Test-Driven Development</a> with <a href="https://rspec.info/">RSpec</a></li>
@@ -3193,8 +3193,7 @@ If you're new to Ruby, you may want to check out <a href="file.ruby-basics.html"
 </ol>
 <h3 id="from-the-user-interface"><a href="#from-the-user-interface" class="header-anchor">#</a>From the User Interface <!-- raw HTML omitted --></h3>
 <ol>
-<li>Go to <code>Settings -&gt; Add-ons -&gt; Automation</code> and install the jrubyscripting automation addon
-following the <a href="https://www.openhab.org/docs/configuration/addons.html">openHAB instructions</a>.
+<li>Go to <code>Settings -&gt; Add-ons -&gt; Automation</code> and install the jrubyscripting automation addon following the <a href="https://www.openhab.org/docs/configuration/addons.html">openHAB instructions</a>.
 In openHAB 4.0+ the defaults are set so the next step can be skipped.</li>
 <li>Go to <code>Settings -&gt; Other Services -&gt; JRuby Scripting</code>:
 <ul>
@@ -3206,8 +3205,7 @@ In openHAB 4.0+ the defaults are set so the next step can be skipped.</li>
 <h3 id="using-files"><a href="#using-files" class="header-anchor">#</a>Using Files <!-- raw HTML omitted --></h3>
 <ol>
 <li>
-<p>Edit <code>&lt;OPENHAB_CONF&gt;/services/addons.cfg</code> and ensure that <code>jrubyscripting</code> is included in
-an uncommented <code>automation=</code> list of automations to install.
+<p>Edit <code>&lt;OPENHAB_CONF&gt;/services/addons.cfg</code> and ensure that <code>jrubyscripting</code> is included in an uncommented <code>automation=</code> list of automations to install.
 In openHAB 4.0+ the defaults are set so the next step can be skipped.</p>
 </li>
 <li>
@@ -3272,16 +3270,14 @@ Simply change the <code>gems</code> and <code>require</code> configuration setti
 org.openhab.automation.jrubyscripting:require=openhab/dsl
 </code></pre>
 <h3 id="gem_home"><a href="#gem_home" class="header-anchor">#</a>gem_home <!-- raw HTML omitted --></h3>
-<p>Path to where Ruby Gems will be installed to and loaded from. The directory will be created if necessary.
-You can use <code>{RUBY_ENGINE_VERSION}</code>, <code>{RUBY_ENGINE}</code> and/or <code>{RUBY_VERSION}</code> replacements in this value
-to automatically point to a new directory when the addon is updated with a new version of JRuby.</p>
+<p>Path to where Ruby Gems will be installed to and loaded from.
+The directory will be created if necessary.
+You can use <code>{RUBY_ENGINE_VERSION}</code>, <code>{RUBY_ENGINE}</code> and/or <code>{RUBY_VERSION}</code> replacements in this value to automatically point to a new directory when the addon is updated with a new version of JRuby.</p>
 <h3 id="gems"><a href="#gems" class="header-anchor">#</a>gems <!-- raw HTML omitted --></h3>
 <p>A comma separated list of <a href="https://rubygems.org/">Ruby Gems</a> to install.</p>
 <p>The default installs the version of the helper for this version of openHAB.
-When overriding the default, be sure to still include the <code>openhab-scripting</code> gem in the
-list of gems to install.</p>
-<p>Each gem can have version specifiers which uses
-<a href="https://thoughtbot.com/blog/rubys-pessimistic-operator">pessimistic versioning</a>.
+When overriding the default, be sure to still include the <code>openhab-scripting</code> gem in the list of gems to install.</p>
+<p>Each gem can have version specifiers which uses <a href="https://thoughtbot.com/blog/rubys-pessimistic-operator">pessimistic versioning</a>.
 Multiple version specifiers can be added by separating them with a semicolon.</p>
 <p>Examples:</p>
 <table>
@@ -3316,29 +3312,28 @@ Multiple version specifiers can be added by separating them with a semicolon.</p
 </table>
 <h3 id="check_update"><a href="#check_update" class="header-anchor">#</a>check_update <!-- raw HTML omitted --></h3>
 <p>Check RubyGems for updates to the above gems when openHAB starts or JRuby settings are changed.
-Otherwise it will try to fulfil the requirements with locally installed gems, and you can manage them yourself
-with an external Ruby by setting the same GEM_HOME.</p>
+Otherwise it will try to fulfil the requirements with locally installed gems, and you can manage them yourself with an external Ruby by setting the same GEM_HOME.</p>
 <h3 id="require"><a href="#require" class="header-anchor">#</a>require <!-- raw HTML omitted --></h3>
 <p>A comma separated list of script names to be required by the JRuby Scripting Engine at the beginning of user scripts.
 The default is to require the helper library.</p>
 <h3 id="rubylib"><a href="#rubylib" class="header-anchor">#</a>rubylib <!-- raw HTML omitted --></h3>
-<p>Search path for user libraries. Separate each path with a colon (semicolon in Windows).</p>
+<p>Search path for user libraries.
+Separate each path with a colon (semicolon in Windows).</p>
 <h3 id="dependency_tracking"><a href="#dependency_tracking" class="header-anchor">#</a>dependency_tracking <!-- raw HTML omitted --></h3>
 <p>Dependency tracking allows your scripts to automatically reload when one of its dependencies is updated.
-You may want to disable dependency tracking if you plan on editing or updating a shared library,
-but don't want all your scripts to reload until you can test it.</p>
+You may want to disable dependency tracking if you plan on editing or updating a shared library, but don't want all your scripts to reload until you can test it.</p>
 <h3 id="local_context"><a href="#local_context" class="header-anchor">#</a>local_context <!-- raw HTML omitted --></h3>
 <p>The local context holds Ruby runtime, name-value pairs for sharing variables between Java and Ruby.
 Valid values are: <code>singleton</code>, <code>threadsafe</code>, <code>singlethread</code>, or <code>concurrent</code>.
 See <a href="https://github.com/jruby/jruby/wiki/RedBridge#context-instance-type">this</a> for options and details.</p>
 <h3 id="local_variables"><a href="#local_variables" class="header-anchor">#</a>local_variables <!-- raw HTML omitted --></h3>
-<p>Defines how variables are shared between Ruby and Java. Valid values are: <code>transient</code>, <code>persistent</code>, or <code>global</code>.
+<p>Defines how variables are shared between Ruby and Java.
+Valid values are: <code>transient</code>, <code>persistent</code>, or <code>global</code>.
 See the <a href="https://github.com/jruby/jruby/wiki/RedBridge#local-variable-behavior-options">JRuby documentation</a> for options and details.</p>
 <h2 id="usage"><a href="#usage" class="header-anchor">#</a>Usage</h2>
 <h3 id="ui-based-scripts"><a href="#ui-based-scripts" class="header-anchor">#</a>UI Based Scripts</h3>
 <p>The quickest way to add rules is through the openHAB Web UI.</p>
-<p>Advanced users, or users migrating scripts from existing systems may want to use
-<a href="#file-based-scripts">File Based Scripts</a> for managing rules using files in the user configuration directory.</p>
+<p>Advanced users, or users migrating scripts from existing systems may want to use <a href="#file-based-scripts">File Based Scripts</a> for managing rules using files in the user configuration directory.</p>
 <h4 id="adding-triggers"><a href="#adding-triggers" class="header-anchor">#</a>Adding Triggers <!-- raw HTML omitted --></h4>
 <p>Using the openHAB UI, first create a new rule and set a trigger condition.</p>
 <p><img src="docs/images/rule-config.png" alt="openHAB Rule Configuration"></p>
@@ -3366,7 +3361,8 @@ Local variable state is not persisted among reloads, see using the <a href="#cac
 See <a href="#file-based-rules">File Based Rules</a> for examples of creating rules within your scripts.</p>
 <h3 id="event-object"><a href="#event-object" class="header-anchor">#</a>Event Object</h3>
 <p>When you use "Item event" as trigger (i.e. "[item] received a command", "[item] was updated", "[item] changed"), there is additional context available for the action in a variable called <code>event</code>.</p>
-<p>This tables gives an overview of the <code>event</code> object for most common trigger types. For full details, explore <span class='object_link'><a href="OpenHAB/Core/Events.html" title="OpenHAB::Core::Events (module)">OpenHAB::Core::Events</a></span>.</p>
+<p>This tables gives an overview of the <code>event</code> object for most common trigger types.
+For full details, explore <span class='object_link'><a href="OpenHAB/Core/Events.html" title="OpenHAB::Core::Events (module)">OpenHAB::Core::Events</a></span>.</p>
 <table>
 <thead>
 <tr>
@@ -3578,9 +3574,7 @@ items[<span class="string"><span class="delimiter">'</span><span class="content"
 </code></pre>
 <p>See <span class='object_link'><a href="OpenHAB/DSL.html#unit-class_method" title="OpenHAB::DSL.unit (method)">unit block</a></span></p>
 <h5 id="range-checking"><a href="#range-checking" class="header-anchor">#</a>Range checking <!-- raw HTML omitted --></h5>
-<p>Types that are comparable, such as <span class='object_link'><a href="OpenHAB/Core/Types/StringType.html" title="OpenHAB::Core::Types::StringType (class)">StringType</a></span>, <span class='object_link'><a href="OpenHAB/Core/Types/DateTimeType.html" title="OpenHAB::Core::Types::DateTimeType (class)">DateTimeType</a></span>, <span class='object_link'><a href="OpenHAB/Core/Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span>, <span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span>,
-include Ruby's <a href="https://docs.ruby-lang.org/en/master/Comparable.html">Comparable</a> module which provides
-the handy <a href="https://docs.ruby-lang.org/en/master/Comparable.html#method-i-between-3F">between?</a> method.</p>
+<p>Types that are comparable, such as <span class='object_link'><a href="OpenHAB/Core/Types/StringType.html" title="OpenHAB::Core::Types::StringType (class)">StringType</a></span>, <span class='object_link'><a href="OpenHAB/Core/Types/DateTimeType.html" title="OpenHAB::Core::Types::DateTimeType (class)">DateTimeType</a></span>, <span class='object_link'><a href="OpenHAB/Core/Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span>, <span class='object_link'><a href="OpenHAB/Core/Types/PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span>, include Ruby's <a href="https://docs.ruby-lang.org/en/master/Comparable.html">Comparable</a> module which provides the handy <a href="https://docs.ruby-lang.org/en/master/Comparable.html#method-i-between-3F">between?</a> method.</p>
 <pre class="code ruby"><code class="ruby"><span class="constant">String_Item</span>.update(<span class="string"><span class="delimiter">&quot;</span><span class="content">Freddy</span><span class="delimiter">&quot;</span></span>)
 <span class="constant">String_Item</span>.state.between?(<span class="string"><span class="delimiter">&quot;</span><span class="content">E</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">G</span><span class="delimiter">&quot;</span></span>) <span class="comment"># =&gt; true</span>
 
@@ -3592,8 +3586,8 @@ the handy <a href="https://docs.ruby-lang.org/en/master/Comparable.html#method-i
 <span class="constant">Temperature_Item</span>.update(<span class="integer">16</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)
 <span class="constant">Temperature_Item</span>.state.between?(<span class="integer">20</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>, <span class="integer">24</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>) <span class="comment"># =&gt; false</span>
 </code></pre>
-<p>Alternatively, a Ruby <a href="https://docs.ruby-lang.org/en/master/Range.html">range</a> can be used. This can be
-handy for excluding the end of the range with the <code>...</code> operator.</p>
+<p>Alternatively, a Ruby <a href="https://docs.ruby-lang.org/en/master/Range.html">range</a> can be used.
+This can be handy for excluding the end of the range with the <code>...</code> operator.</p>
 <pre class="code ruby"><code class="ruby"><span class="keyword">if</span> (<span class="integer">5</span>..<span class="integer">10</span>).cover?(<span class="constant">Number_Item</span>.state)
   logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">Number_Item is in the expected range</span><span class="delimiter">&quot;</span></span>
 <span class="keyword">end</span>
@@ -3725,11 +3719,12 @@ Thing actions can be called directly on the <span class='object_link'><a href="O
 <pre class="code ruby"><code class="ruby"><span class="constant">Exec</span>.execute_command_line(<span class="string"><span class="delimiter">'</span><span class="content">/path/to/program</span><span class="delimiter">'</span></span>)
 </code></pre>
 <h3 id="logging"><a href="#logging" class="header-anchor">#</a>Logging</h3>
-<p>The JRuby Scripting addon has a global <code>logger</code> object for logging. To log a message on <code>INFO</code> log level:</p>
+<p>The JRuby Scripting addon has a global <code>logger</code> object for logging.
+To log a message on <code>INFO</code> log level:</p>
 <pre class="code ruby"><code class="ruby">logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">The current time is </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Time</span>.now<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
 </code></pre>
 <p>The default logger name for UI rules is <code>org.openhab.automation.jrubyscripting.script</code>.
-For file-based rules, it's based on the rule's ID, such as <code>org.openhab.automation.jrubyscripting.rule.myrule.rb:15</code></p>
+For file-based rules, it's based on the rule's ID, such as <code>org.openhab.automation.jrubyscripting.rule.myrule.rb:15</code>.</p>
 <p>To use a custom logger name:</p>
 <pre class="code ruby"><code class="ruby">logger = <span class="constant">OpenHAB</span>::<span class="constant">Log</span>.logger(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.custom</span><span class="delimiter">&quot;</span></span>)
 </code></pre>
@@ -3752,7 +3747,9 @@ Additionally, all of these methods can take a <a href="https://ruby-doc.com/docs
 <pre class="code ruby"><code class="ruby">sleep <span class="float">1.5</span> <span class="comment"># sleep for 1.5 seconds</span>
 </code></pre>
 <p>See Ruby docs on <a href="https://docs.ruby-lang.org/en/master/Kernel.html#method-i-sleep">sleep</a>.</p>
-<p><code>sleep</code> should be avoided if possible. A <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#delay-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#delay (method)">delay</a></span> can be inserted in between two execution blocks to achieve the same result. This delay is implemented with a timer.
+<p><code>sleep</code> should be avoided if possible.
+A <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#delay-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#delay (method)">delay</a></span> can be inserted in between two execution blocks to achieve the same result.
+This delay is implemented with a timer.
 This is available only on file-based rules.</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">delay something</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   on_load
@@ -4044,16 +4041,15 @@ notify(<span class="string"><span class="delimiter">&quot;</span><span class="co
 <span class="constant">Date</span>.today.in_dayset?(<span class="symbol">:school</span>) <span class="comment"># =&gt; false</span>
 </code></pre>
 <h3 id="rules-scripts-and-scenes"><a href="#rules-scripts-and-scenes" class="header-anchor">#</a>Rules, Scripts, and Scenes</h3>
-<p><span class='object_link'><a href="OpenHAB/Core/Rules/Rule.html" title="OpenHAB::Core::Rules::Rule (module)">Rules</a></span>, Scenes and Scripts can be accessed using the
-<span class='object_link'><a href="OpenHAB/Core/Rules/Registry.html" title="OpenHAB::Core::Rules::Registry (class)">rules</a></span> object. For example, to execute/trigger a rule:</p>
+<p><span class='object_link'><a href="OpenHAB/Core/Rules/Rule.html" title="OpenHAB::Core::Rules::Rule (module)">Rules</a></span>, Scenes and Scripts can be accessed using the <span class='object_link'><a href="OpenHAB/Core/Rules/Registry.html" title="OpenHAB::Core::Rules::Registry (class)">rules</a></span> object.
+For example, to execute/trigger a rule:</p>
 <pre class="code ruby"><code class="ruby">rules[rule_uid].trigger
 </code></pre>
-<p>Scenes are rules with a <code>Scene</code> tag, and Scripts are rules with a <code>Script</code> tag. They can be found
-using their uid just like normal rules, i.e. <code>rules[uid]</code>. For convenience, a list of all Scenes are
-available through the enumerable <span class='object_link'><a href="OpenHAB/Core/Rules/Registry.html#scenes-instance_method" title="OpenHAB::Core::Rules::Registry#scenes (method)">rules.scenes</a></span>,
-and a list of all Scripts through <span class='object_link'><a href="OpenHAB/Core/Rules/Registry.html#scripts-instance_method" title="OpenHAB::Core::Rules::Registry#scripts (method)">rules.scripts</a></span>.</p>
-<p>Example: All scenes tagged <code>sunrise</code> will be triggered at sunrise, and all scenes tagged
-<code>sunset</code> will be triggered at sunset. Note: these use the <span class='object_link'><a href="OpenHAB/DSL/Rules/Terse.html" title="OpenHAB::DSL::Rules::Terse (module)">Terse Rule</a></span> syntax.</p>
+<p>Scenes are rules with a <code>Scene</code> tag, and Scripts are rules with a <code>Script</code> tag.
+They can be found using their uid just like normal rules, i.e. <code>rules[uid]</code>.
+For convenience, a list of all Scenes are available through the enumerable <span class='object_link'><a href="OpenHAB/Core/Rules/Registry.html#scenes-instance_method" title="OpenHAB::Core::Rules::Registry#scenes (method)">rules.scenes</a></span>, and a list of all Scripts through <span class='object_link'><a href="OpenHAB/Core/Rules/Registry.html#scripts-instance_method" title="OpenHAB::Core::Rules::Registry#scripts (method)">rules.scripts</a></span>.</p>
+<p>Example: All scenes tagged <code>sunrise</code> will be triggered at sunrise, and all scenes tagged <code>sunset</code> will be triggered at sunset.
+Note: these use the <span class='object_link'><a href="OpenHAB/DSL/Rules/Terse.html" title="OpenHAB::DSL::Rules::Terse (module)">Terse Rule</a></span> syntax.</p>
 <pre class="code ruby"><code class="ruby">channel(<span class="string"><span class="delimiter">&quot;</span><span class="content">astro:sun:home:rise#event</span><span class="delimiter">&quot;</span></span>) { rules.scenes.tagged(<span class="string"><span class="delimiter">&quot;</span><span class="content">sunrise</span><span class="delimiter">&quot;</span></span>).each(&amp;<span class="symbol">:trigger</span>) }
 channel(<span class="string"><span class="delimiter">&quot;</span><span class="content">astro:sun:home:set#event</span><span class="delimiter">&quot;</span></span>) { rules.scenes.tagged(<span class="string"><span class="delimiter">&quot;</span><span class="content">sunset</span><span class="delimiter">&quot;</span></span>).each(&amp;<span class="symbol">:trigger</span>) }
 </code></pre>
@@ -4093,9 +4089,9 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
 rules[rule_uid].disable
 </code></pre>
 <h4 id="passing-values-to-rules"><a href="#passing-values-to-rules" class="header-anchor">#</a>Passing Values to Rules <!-- raw HTML omitted --></h4>
-<p>A rule/script may be given additional context/data by the caller. This additional data is available
-within the rule by referring to the names of the context variable. This is applicable to both
-UI rules and file-based rules.</p>
+<p>A rule/script may be given additional context/data by the caller.
+This additional data is available within the rule by referring to the names of the context variable.
+This is applicable to both UI rules and file-based rules.</p>
 <p>Within the script/rule body (either UI or file rule)</p>
 <pre class="code ruby"><code class="ruby">script <span class="key">id</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">check_temp</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   <span class="keyword">if</span> <span class="constant">CPU_Temperature</span>.state &gt; maxTemperature
@@ -4103,12 +4099,12 @@ UI rules and file-based rules.</p>
   <span class="keyword">end</span>
 <span class="keyword">end</span>
 </code></pre>
-<p>The above script can be executed, passing it the <code>maxTemperature</code> argument from any supported
-scripting language, e.g.:</p>
+<p>The above script can be executed, passing it the <code>maxTemperature</code> argument from any supported scripting language, e.g.:</p>
 <pre class="code ruby"><code class="ruby">rules[<span class="string"><span class="delimiter">&quot;</span><span class="content">check_temp</span><span class="delimiter">&quot;</span></span>].trigger(<span class="key">maxTemperature</span>: <span class="integer">80</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)
 </code></pre>
 <h3 id="gems"><a href="#gems" class="header-anchor">#</a>Gems</h3>
-<p><a href="https://bundler.io/">Bundler</a> is integrated, enabling any <a href="https://rubygems.org/">Ruby gem</a> compatible with JRuby to be used within rules. This permits easy access to the vast ecosystem of libraries within the Ruby community.
+<p><a href="https://bundler.io/">Bundler</a> is integrated, enabling any <a href="https://rubygems.org/">Ruby gem</a> compatible with JRuby to be used within rules.
+This permits easy access to the vast ecosystem of libraries within the Ruby community.
 Gems are available using the <a href="https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html">inline bundler syntax</a>.
 The require statement can be omitted.</p>
 <pre class="code ruby"><code class="ruby">gemfile <span class="keyword">do</span>
@@ -4135,9 +4131,8 @@ logger.info(my_lib_version)
 </code></pre>
 <h3 id="transformations"><a href="#transformations" class="header-anchor">#</a>Transformations</h3>
 <h4 id="using-openhab-transformations"><a href="#using-openhab-transformations" class="header-anchor">#</a>Using openHAB Transformations <!-- raw HTML omitted --></h4>
-<p>Although it can often be done better and more easily in native Ruby code, existing openHAB transformations
-such as MAP, JSONPATH, Jinja Transformation, or even Ruby transformation written in the <code>/transform</code> folder
-can also be used by calling the <span class='object_link'><a href="OpenHAB/DSL.html#transform-class_method" title="OpenHAB::DSL.transform (method)">transform</a></span> method.</p>
+<p>Existing openHAB transformations can also be used by calling the <span class='object_link'><a href="OpenHAB/DSL.html#transform-class_method" title="OpenHAB::DSL.transform (method)">transform</a></span> method.
+This enables the use of any transformations from the <code>/transform</code> folder or managed through the UI, such as MAP, JSONPATH, Jinja Transformation, etc.</p>
 <pre class="code ruby"><code class="ruby"><span class="comment"># Convert OPEN/CLOSED to Online/Offline using availability.map</span>
 <span class="comment"># OPEN=Online</span>
 <span class="comment"># CLOSED=OFFLINE</span>
@@ -4147,16 +4142,13 @@ logger.info transform(<span class="symbol">:map</span>, <span class="string"><sp
 <p>This add-on also provides the necessary infrastructure to use Ruby for writing <a href="https://www.openhab.org/docs/configuration/transformations.html">transformations</a>.</p>
 <p>The main value to be transformed is given to the script in a variable called <code>input</code>.
 Note that the values are passed to the transformation as Strings even for numeric items and data types.</p>
-<p><strong>Note</strong>: In openHAB 3.4, due to an <a href="https://github.com/jruby/jruby/issues/5876">issue</a> in the current version of JRuby,
-you will need to begin your script with <code>input ||= nil</code> (and <code>a ||= nil</code> etc. for additional query variables) so that
-JRuby will recognize the variables as variables--rather than method calls--when it's parsing the script.
+<p><strong>Note</strong>: In openHAB 3.4, due to an <a href="https://github.com/jruby/jruby/issues/5876">issue</a> in the current version of JRuby, you will need to begin your script with <code>input ||= nil</code> (and <code>a ||= nil</code> etc. for additional query variables) so that JRuby will recognize the variables as variables--rather than method calls--when it's parsing the script.
 Otherwise you will get errors like <code>(NameError) undefined local variable or method 'input' for main:Object</code>.
 This is not necessary in openHAB 4.0+.</p>
 <h4 id="file-based-transformations"><a href="#file-based-transformations" class="header-anchor">#</a>File Based Transformations <!-- raw HTML omitted --></h4>
 <p>Once the addon is installed, you can create a Ruby file in the <code>$OPENHAB_CONF/transform</code> directory, with the extension <code>.rb</code>.
 When referencing the file, you need to specify the <code>RB</code> transform: <code>RB(mytransform.rb):%s</code>.</p>
-<p>You can also specify additional variables to be set in the script using a URI-like query syntax: <code>RB(mytransform.rb?a=1&amp;b=c):%s</code>
-in order to share a single script with slightly different parameters for different items.</p>
+<p>You can also specify additional variables to be set in the script using a URI-like query syntax: <code>RB(mytransform.rb?a=1&amp;b=c):%s</code> in order to share a single script with slightly different parameters for different items.</p>
 <h5 id="example:-display-the-wind-direction-in-degrees-and-cardinal-direction"><a href="#example:-display-the-wind-direction-in-degrees-and-cardinal-direction" class="header-anchor">#</a>Example: Display the wind direction in degrees and cardinal direction <!-- raw HTML omitted --></h5>
 <p><code>weather.items</code></p>
 <pre class="code Xtend"><code class="Xtend">Number:Angle Exterior_WindDirection &quot;Wind Direction [RB(compass.rb):%s]&quot; &lt;wind&gt;
@@ -4181,7 +4173,8 @@ Group gOutdoorLights &quot;Outdoor Lights [RB(group_count.rb?group=gOutdoorLight
 </code></pre>
 <p>When 3 lights out of 10 lights are on, this will produce a formatted state of <code>3/10</code></p>
 <h4 id="inline-transformations"><a href="#inline-transformations" class="header-anchor">#</a>Inline Transformations <!-- raw HTML omitted --></h4>
-<p>Inline transformations are supported too. For example, to display the temperature in both °C and °F:</p>
+<p>Inline transformations are supported too.
+For example, to display the temperature in both °C and °F:</p>
 <pre class="code Xtend"><code class="Xtend">Number:Temperature Outside_Temperature &quot;Outside Temperature [RB(|  input.to_f.|(&#39;°C&#39;).then { |t| %(#{t.format(&#39;%d °C&#39;)} / #{t.to_unit(&#39;°F&#39;).format(&#39;%d °F&#39;)}) }   ):%s]&quot;
 </code></pre>
 <p>When the item contains <code>0 °C</code>, this will produce a formatted state of <code>0 °C / 32 °F</code>.</p>
@@ -4233,8 +4226,8 @@ For more details, see <span class='object_link'><a href="OpenHAB/DSL.html#profil
 </code></pre>
 <p>See <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#changed-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#changed (method)">#changed</a></span></p>
 <h5 id="detecting-change-duration"><a href="#detecting-change-duration" class="header-anchor">#</a>Detecting Change Duration <!-- raw HTML omitted --></h5>
-<p>Only execute a rule when an item state changed and stayed the same for a period of time. This method
-can only be done using a file-based rule.</p>
+<p>Only execute a rule when an item state changed and stayed the same for a period of time.
+This method can only be done using a file-based rule.</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Garage Door Alert</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="constant">GarageDoor</span>, <span class="key">to</span>: <span class="constant">OPEN</span>, <span class="key">for</span>: <span class="integer">20</span>.minutes
   run { <span class="constant">Voice</span>.say <span class="string"><span class="delimiter">&quot;</span><span class="content">The garage door has been open for 20 minutes!</span><span class="delimiter">&quot;</span></span> }
@@ -4355,11 +4348,11 @@ See the <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#Tri
 <p>See <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#Guards-group" title="group::OpenHAB::DSL::Rules::BuilderDSL::Guards (group)">Rule Guards</a></span></p>
 <h3 id="rule-executions"><a href="#rule-executions" class="header-anchor">#</a>Rule Executions</h3>
 <p>Execution blocks are executed when a rule is triggered and all the rule conditions are met.
-Multiple execution blocks can be specified. This can be useful especially when using a delay execution
-block inbetween two run or triggered blocks.</p>
+Multiple execution blocks can be specified.
+This can be useful especially when using a delay execution block inbetween two run or triggered blocks.</p>
 <h4 id="run-execution-block"><a href="#run-execution-block" class="header-anchor">#</a>Run Execution Block</h4>
-<p>A run execution block is the most commonly used execution block. It provides the full <a href="#event-object">event object</a>
-to the block.</p>
+<p>A run execution block is the most commonly used execution block.
+It provides the full <a href="#event-object">event object</a> to the block.</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Rule with a run block</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   received_command <span class="constant">SwitchItem1</span>
   run <span class="keyword">do</span> |event|
@@ -4368,17 +4361,17 @@ to the block.</p>
 <span class="keyword">end</span>
 </code></pre>
 <h4 id="triggered-execution-block"><a href="#triggered-execution-block" class="header-anchor">#</a>Triggered Execution Block</h4>
-<p>A triggered execution block passes the <code>TriggeringItem</code> object directly to the block. It is handy when combined with
-Ruby's pretzel-colon operator to act directly on the object.</p>
+<p>A triggered execution block passes the <code>TriggeringItem</code> object directly to the block.
+It is handy when combined with Ruby's pretzel-colon operator to act directly on the object.</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Limit the duration of TV watching</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed gTVPower.members, <span class="key">to</span>: <span class="constant">ON</span>, <span class="key">for</span>: <span class="integer">2</span>.hours
   triggered(&amp;<span class="symbol">:off</span>)
 <span class="keyword">end</span>
 </code></pre>
 <h4 id="delay-execution-block"><a href="#delay-execution-block" class="header-anchor">#</a>Delay Execution Block</h4>
-<p>A delay exection block is useful for adding a delay inbetween rule executions or even at the beginning of the
-trigger event without having to manually create a timer. Unlike <code>sleep</code>, a delay block does not block
-the current executing thread. It actually sets a timer for you behind the scenes.</p>
+<p>A delay exection block is useful for adding a delay inbetween rule executions or even at the beginning of the trigger event without having to manually create a timer.
+Unlike <code>sleep</code>, a delay block does not block the current executing thread.
+It actually sets a timer for you behind the scenes.</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Check for offline things 15 minutes after openHAB had started</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   on_start
   delay <span class="integer">15</span>.minutes
@@ -4475,7 +4468,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Sun Oct  1 13:07:27 2023 by
+  Generated on Sun Oct  1 13:16:53 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
