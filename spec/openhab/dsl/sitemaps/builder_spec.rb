@@ -167,4 +167,16 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
       end
     end
   end
+
+  context "when redefining a sitemap" do
+    it "with update: false, complains if you try to create a sitemap with the same name" do
+      sitemaps.build(update: false) { sitemap "default" }
+      expect { sitemaps.build(update: false) { sitemap "default" } }.to raise_error(ArgumentError)
+    end
+
+    it "allows you to redefine a sitemap with the same name by default" do
+      sitemaps.build { sitemap "default" }
+      sitemaps.build { sitemap "default" }
+    end
+  end
 end

@@ -40,8 +40,9 @@ module OpenHAB
         # @return [org.openhab.core.thing.ManagedThingProvider]
         attr_reader :provider
 
-        def initialize(provider)
+        def initialize(provider, update: false)
           @provider = Core::Things::Provider.current(provider)
+          @update = update
         end
 
         # Create a new Bridge
@@ -61,10 +62,27 @@ module OpenHAB
         def build(klass, *args, **kwargs, &block)
           builder = klass.new(*args, **kwargs)
           builder.instance_eval(&block) if block
-          thing = provider.add(builder.build)
-          thing = Core::Things::Proxy.new(thing)
+          thing = builder.build
+
+          if DSL.things.key?(thing.uid)
+            raise ArgumentError, "Thing #{thing.uid} already exists" unless @update
+
+            unless (old_thing = provider.get(thing.uid))
+              raise FrozenError, "Thing #{thing.uid} is managed by #{thing.provider}"
+            end
+
+            if thing.config_eql?(old_thing)
+              logger.debug { "Not replacing existing thing #{thing.uid}" }
+              thing = old_thing
+            else
+              provider.update(thing)
+            end
+          else
+            provider.add(thing)
+          end
           thing.enable(enabled: builder.enabled) unless builder.enabled.nil?
-          thing
+
+          Core::Things::Proxy.new(thing)
         end
       end
 
@@ -196,6 +214,7 @@ module OpenHAB
           builder = org.openhab.core.thing.binding.builder.ThingBuilder
                        .create(thing_type_uid, uid)
                        .with_label(label)
+                       .with_location(location)
                        .with_configuration(configuration)
                        .with_bridge(bridge_uid)
                        .with_channels(channels)
@@ -210,9 +229,7 @@ module OpenHAB
             builder.with_properties(thing_type.properties)
           end
 
-          thing = builder.build
-          Core::Things.manager.set_enabled(uid, enabled) unless enabled.nil?
-          thing
+          builder.build
         end
 
         private

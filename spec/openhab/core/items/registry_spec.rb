@@ -28,5 +28,11 @@ RSpec.describe OpenHAB::Core::Items::Registry do
     it "works" do
       expect(SwitchTwo.provider).to be_a OpenHAB::Core::Items::Provider
     end
+
+    it "returns nil for items that aren't registered" do
+      expect(SwitchTwo.provider).not_to be_nil
+      unmanaged_item = OpenHAB::DSL::Items::ItemBuilder.item_factory.create_item("Switch", "SwitchTwo")
+      expect(unmanaged_item.provider).to be_nil
+    end
   end
 end

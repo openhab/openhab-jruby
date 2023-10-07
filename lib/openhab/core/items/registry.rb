@@ -45,13 +45,19 @@ module OpenHAB
         # Enter the Item Builder DSL.
         #
         # @param (see Core::Provider.current)
+        # @param update [true, false]  Update existing items with the same name.
+        #   When false, an error will be raised if an item with the same name already exists.
         # @yield Block executed in the context of a {DSL::Items::Builder}
         # @return [Object] The return value of the block.
+        # @raise [ArgumentError] if an item with the same name already exists and `update` is false.
+        # @raise [FrozenError] if `update` is true but the existing item with the same name
+        #   wasn't created by the current provider.
         #
         # @see DSL::Items::Builder
         #
-        def build(preferred_provider = nil, &block)
-          DSL::Items::BaseBuilderDSL.new(preferred_provider).instance_eval_with_dummy_items(&block)
+        def build(preferred_provider = nil, update: true, &block)
+          DSL::Items::BaseBuilderDSL.new(preferred_provider, update: update)
+                                    .instance_eval_with_dummy_items(&block)
         end
 
         #

@@ -198,6 +198,16 @@ module OpenHAB
         end
 
         #
+        # Compares all attributes of the thing with another thing.
+        #
+        # @param other [Thing] The thing to compare with
+        # @return [true,false] true if all attributes are equal, false otherwise
+        #
+        def config_eql?(other)
+          %i[uid label channels bridge_uid location configuration].all? { |method| send(method) == other.send(method) }
+        end
+
+        #
         # Delegate missing methods to the thing's default actions scope.
         #
         # @example

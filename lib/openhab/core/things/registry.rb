@@ -39,11 +39,17 @@ module OpenHAB
         #
         # Enter the Thing Builder DSL.
         # @param (see Core::Provider.current)
+        # @param update [true, false]
+        #   When true, existing things with the same name will be redefined if they're different.
+        #   When false, an error will be raised if a thing with the same uid already exists.
         # @yield Block executed in the context of a {DSL::Things::Builder}.
         # @return [Object] The result of the block.
+        # @raise [ArgumentError] if a thing with the same uid already exists and `update` is false.
+        # @raise [FrozenError] if `update` is true but the existing thing with the same uid
+        #   wasn't created by the current provider.
         #
-        def build(preferred_provider = nil, &block)
-          DSL::Things::Builder.new(preferred_provider).instance_eval(&block)
+        def build(preferred_provider = nil, update: true, &block)
+          DSL::Things::Builder.new(preferred_provider, update: update).instance_eval(&block)
         end
 
         #
