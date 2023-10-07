@@ -80,19 +80,19 @@ module OpenHAB
         # @!attribute [r] latitude
         # @return [QuantityType]
         def latitude
-          QuantityType.new(raw_latitude.to_big_decimal, SIUnits::DEGREE_ANGLE)
+          QuantityType.new(raw_latitude.to_big_decimal, Units::DEGREE_ANGLE)
         end
 
         # @!attribute [r] longitude
         # @return [QuantityType]
         def longitude
-          QuantityType.new(raw_longitude.to_big_decimal, SIUnits::DEGREE_ANGLE)
+          QuantityType.new(raw_longitude.to_big_decimal, Units::DEGREE_ANGLE)
         end
 
         # @!attribute [r] altitude
         # @return [QuantityType]
         def altitude
-          QuantityType.new(raw_altitude.to_big_decimal, Units::METRE)
+          QuantityType.new(raw_altitude.to_big_decimal, SIUnits::METRE)
         end
 
         #
