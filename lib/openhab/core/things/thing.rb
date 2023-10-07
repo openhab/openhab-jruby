@@ -35,7 +35,7 @@ module OpenHAB
       #   @return [org.openhab.core.thing.ThingStatus]
       #
       # @!attribute [r] channels
-      #   @return [ChannelArray]
+      #   @return [ChannelsArray]
       #
       # @!attribute [r] uid
       #   Return the UID.
