@@ -327,6 +327,7 @@ module OpenHAB
         org.openhab.core.io.monitor
         org.openhab.core.io.rest
         org.openhab.core.io.rest.sse
+        org.eclipse.jetty.http2.hpack
       ].freeze
       private_constant :ALLOWED_BUNDLES
 
@@ -742,6 +743,8 @@ module OpenHAB
 
         startlevels = File.read(config_file)
         startlevels.sub!(",rules:refresh,rules:dslprovider", "")
+        startlevels.sub!(",automation:scriptEngineFactories", "") # since OH4
+        startlevels.sub!("dsl:rules,", "") # since OH41-snapshot
 
         target_file = "#{oh_userdata}/services.cfg"
         target_file_contents = File.read(target_file) if File.exist?(target_file)

@@ -231,14 +231,6 @@ module OpenHAB
 
         rs = OSGi.service("org.openhab.core.service.ReadyService")
 
-        # Add a fake automation:scriptEngineFactories to satisfy startlevel 30
-        begin
-          sef_marker = org.openhab.core.automation.module.script.internal.ScriptEngineFactoryBundleTracker::READY_MARKER
-          rs.mark_ready(sef_marker)
-        rescue NameError
-          # @deprecated OH3.4 NOOP - the ScriptEngineFactoryBundleTracker doesn't exist in OH3
-        end
-
         # wait for the rule engine
         filter = org.openhab.core.service.ReadyMarkerFilter.new
                     .with_type(org.openhab.core.service.StartLevelService::STARTLEVEL_MARKER_TYPE)
