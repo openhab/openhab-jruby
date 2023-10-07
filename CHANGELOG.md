@@ -1,5 +1,27 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.8.0](https://github.com/openhab/openhab-jruby/tree/v5.8.0) (2023-10-07)
+
+[Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.7.1...v5.8.0)
+
+### Features
+
+- Add Thing\#provider [\#167](https://github.com/openhab/openhab-jruby/pull/167) ([ccutrer](https://github.com/ccutrer))
+- Support removing custom semantic tags [\#162](https://github.com/openhab/openhab-jruby/pull/162) ([jimtng](https://github.com/jimtng))
+- Support expire configuration options in Item Builder [\#158](https://github.com/openhab/openhab-jruby/pull/158) ([jimtng](https://github.com/jimtng))
+- Allow updating things/items/sitemaps by recreating them [\#157](https://github.com/openhab/openhab-jruby/pull/157) ([jimtng](https://github.com/jimtng))
+- Allow symbolic channel name in ItemBuilder [\#156](https://github.com/openhab/openhab-jruby/pull/156) ([jimtng](https://github.com/jimtng))
+- Add UI script's uid to logger prefix [\#152](https://github.com/openhab/openhab-jruby/pull/152) ([jimtng](https://github.com/jimtng))
+
+### Bug Fixes
+
+- Metadata::Hash\#provider shouldn't raise an exception [\#161](https://github.com/openhab/openhab-jruby/issues/161)
+- Fix latitude/longitude/altitude getters on Location objects [\#174](https://github.com/openhab/openhab-jruby/pull/174) ([uqs](https://github.com/uqs))
+- Semantics.add should raise an error if parent is invalid [\#168](https://github.com/openhab/openhab-jruby/pull/168) ([jimtng](https://github.com/jimtng))
+- Verify item builder's `dimension` [\#165](https://github.com/openhab/openhab-jruby/pull/165) ([jimtng](https://github.com/jimtng))
+- Fix a non-array passed to item's `groups` argument inside group block [\#164](https://github.com/openhab/openhab-jruby/pull/164) ([jimtng](https://github.com/jimtng))
+- Fix entity lookup inside item builder's item block [\#163](https://github.com/openhab/openhab-jruby/pull/163) ([jimtng](https://github.com/jimtng))
+
 ## [v5.7.1](https://github.com/openhab/openhab-jruby/tree/v5.7.1) (2023-09-18)
 
 [Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.7.0...v5.7.1)
