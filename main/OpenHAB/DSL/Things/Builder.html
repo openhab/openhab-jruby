@@ -778,6 +778,7 @@ or even later based on a rule executing. - Documentation for openhab-scripting J
   
   
   
+  
 
         
       </ul>
@@ -1468,6 +1469,7 @@ or even later based on a rule executing. - Documentation for openhab-scripting J
     
   </li>
 
+  
   
   
   
@@ -3244,7 +3246,7 @@ things.build <span class="keyword">do</span>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(provider)  &#x21d2; Builder </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(provider, update: false)  &#x21d2; Builder </a>
     
 
     
@@ -3299,7 +3301,7 @@ things.build <span class="keyword">do</span>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(provider)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::DSL::Things::Builder (class)">Builder</a></span></tt> 
+    #<strong>initialize</strong>(provider, update: false)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::DSL::Things::Builder (class)">Builder</a></span></tt> 
   
 
   
@@ -3323,13 +3325,15 @@ things.build <span class="keyword">do</span>
 
 43
 44
-45</pre>
+45
+46</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/things/builder.rb', line 43</span>
 
-<span class="keyword">def</span> <span class="function">initialize</span>(provider)
+<span class="keyword">def</span> <span class="function">initialize</span>(provider, <span class="key">update</span>: <span class="predefined-constant">false</span>)
   <span class="instance-variable">@provider</span> = <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Provider</span>.current(provider)
+  <span class="instance-variable">@update</span> = update
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3434,12 +3438,12 @@ things.build <span class="keyword">do</span>
       <pre class="lines">
 
 
-49
 50
-51</pre>
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/things/builder.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/things/builder.rb', line 50</span>
 
 <span class="keyword">def</span> <span class="function">bridge</span>(*args, **kwargs, &amp;block)
   build(<span class="constant">BridgeBuilder</span>, *args, **kwargs, &amp;block)
@@ -3481,12 +3485,12 @@ things.build <span class="keyword">do</span>
       <pre class="lines">
 
 
-55
 56
-57</pre>
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/things/builder.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/things/builder.rb', line 56</span>
 
 <span class="keyword">def</span> <span class="function">thing</span>(*args, **kwargs, &amp;block)
   build(<span class="constant">ThingBuilder</span>, *args, **kwargs, &amp;block)
@@ -3501,7 +3505,7 @@ things.build <span class="keyword">do</span>
 </div>
 
         <footer>
-  Generated on Sat Oct  7 14:41:04 2023 by
+  Generated on Sat Oct  7 15:24:50 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
