@@ -32,9 +32,14 @@ module OpenHAB
         def inspect
           r = "#<OpenHAB::Core::Things::Channel #{uid}"
           r += " #{label.inspect}" if label
-          r += " auto_update_policy=#{auto_update_policy}" if auto_update_policy
+          r += " description=#{description.inspect}" if description
+          r += " kind=#{kind.inspect}"
+          r += " channel_type_uid=#{channel_type_uid.inspect}" if channel_type_uid
           r += " configuration=#{configuration.properties.to_h}" unless configuration.properties.empty?
           r += " properties=#{properties.to_h}" unless properties.empty?
+          r += " default_tags=#{default_tags.to_a}" unless default_tags.empty?
+          r += " auto_update_policy=#{auto_update_policy}" if auto_update_policy
+          r += " accepted_item_type=#{accepted_item_type}" if accepted_item_type
           "#{r}>"
         end
 
