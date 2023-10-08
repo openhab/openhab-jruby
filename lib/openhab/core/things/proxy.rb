@@ -29,7 +29,7 @@ module OpenHAB
         #
         # @return [Array] channels
         def channels
-          Thing::ChannelsArray.new(super.to_a)
+          Thing::ChannelsArray.new(self, super.to_a)
         end
 
         #
