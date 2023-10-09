@@ -54,6 +54,13 @@ RSpec.describe OpenHAB::Core::Things::Thing do
       it "returns its thing" do
         expect(thing.channels["phase#name"].thing).to be thing
       end
+
+      it "supports lookup by channel UID" do
+        channel_id = "phase#name"
+        channel_uid = org.openhab.core.thing.ChannelUID.new(thing.uid, channel_id)
+        expect(thing.channels[channel_uid]).not_to be_nil
+        expect(thing.channels[channel_uid]).to be thing.channels[channel_id]
+      end
     end
   end
 

@@ -64,13 +64,17 @@ module OpenHAB
         # Array wrapper class to allow searching a list of channels
         # by channel id
         class ChannelsArray < Array
+          def initialize(thing, array)
+            super(array)
+            @thing = thing
+          end
+
           # Allows indexing by both integer as an array or channel id acting like a hash.
-          # @param [Integer, String] index Numeric index or string channel id to search for.
+          # @param [Integer, String, ChannelUID] index
+          #   Numeric index, string channel id, or a {ChannelUID} to search for.
           def [](index)
-            if index.respond_to?(:to_str)
-              key = index.to_str
-              return find { |channel| channel.uid.id == key }
-            end
+            return @thing.get_channel(index) if index.is_a?(ChannelUID)
+            return @thing.get_channel(index.to_str) if index.respond_to?(:to_str)
 
             super
           end
