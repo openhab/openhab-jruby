@@ -208,7 +208,9 @@ module OpenHAB
         # @return [true,false] true if all attributes are equal, false otherwise
         #
         def config_eql?(other)
-          %i[uid label channels bridge_uid location configuration].all? { |method| send(method) == other.send(method) }
+          # @deprecated OH3.4 - in OH4, channels can be included in the array and do not need to be compared separately
+          channels.to_a == other.channels.to_a &&
+            %i[uid label bridge_uid location configuration].all? { |method| send(method) == other.send(method) }
         end
 
         #

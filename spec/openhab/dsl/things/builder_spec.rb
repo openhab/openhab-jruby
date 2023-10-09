@@ -90,7 +90,13 @@ RSpec.describe OpenHAB::DSL::Things::Builder do
         new_config = new_config.dup
         default_uid = uid
         org_thing = things.build do
-          thing(org_config.delete(:uid) || default_uid, org_config.delete(:label), **org_config)
+          channels = org_config.delete(:channels)
+          thing(org_config.delete(:uid) || default_uid, org_config.delete(:label), **org_config) do
+            channels&.each do |c|
+              c = c.dup
+              channel(c.delete(:uid), c.delete(:type), **c)
+            end
+          end
         end
         # Unwrap the thing object now before creating the new thing.
         # See the comment in items/builder_spec.rb for more details.
@@ -98,7 +104,13 @@ RSpec.describe OpenHAB::DSL::Things::Builder do
         yield :original, org_thing if block
 
         new_thing = things.build do
-          thing(new_config.delete(:uid) || default_uid, new_config.delete(:label), **new_config)
+          channels = new_config.delete(:channels)
+          thing(new_config.delete(:uid) || default_uid, new_config.delete(:label), **new_config) do
+            channels&.each do |c|
+              c = c.dup
+              channel(c.delete(:uid), c.delete(:type), **c)
+            end
+          end
         end
         new_thing = new_thing.__getobj__
         yield :updated, new_thing if block
@@ -109,6 +121,17 @@ RSpec.describe OpenHAB::DSL::Things::Builder do
         end
 
         [org_thing, new_thing]
+      end
+
+      it "keeps the original thing when there are no changes" do
+        config = {
+          uid: "a:b:c",
+          label: "Label",
+          bridge: "a:b:bridge",
+          config: { ipAddress: "1" },
+          channels: [{ uid: "a", type: "string", config: { stateTopic: "a/b/c" } }]
+        }.freeze
+        build_and_update(config, config, thing_to_keep: :old_thing)
       end
 
       context "with changes" do
@@ -130,10 +153,6 @@ RSpec.describe OpenHAB::DSL::Things::Builder do
         it "replaces the old thing when the config is different" do
           build_and_update({ config: { ipAddress: "1" } }, { config: { ipAddress: "2" } })
           expect(thing.configuration[:ipAddress]).to eq "2"
-        end
-
-        it "keeps the old thing when nothing is different" do
-          build_and_update({}, {}, thing_to_keep: :old_thing)
         end
 
         it "keeps the old thing but update the state" do
@@ -159,16 +178,132 @@ RSpec.describe OpenHAB::DSL::Things::Builder do
     expect(home.configuration.get("geolocation")).to eq "0,0"
   end
 
-  it "can create channels" do
-    things.build do
-      thing "astro:sun:home" do
-        channel "channeltest", "string", config: { config1: "testconfig" }
+  context "with channels" do
+    it "works" do
+      things.build do
+        thing "astro:sun:home" do
+          channel "channeltest", "string"
+        end
+      end
+      expect(home = things["astro:sun:home"]).not_to be_nil
+      expect(home.channels["channeltest"].uid.to_s).to eql "astro:sun:home:channeltest"
+    end
+
+    context "with channel attributes" do
+      it "supports config" do
+        thing = things.build do
+          thing "astro:sun:home" do
+            channel "channeltest", "string", config: { config1: "testconfig" }
+          end
+        end
+        channel = thing.channels["channeltest"]
+        expect(channel.configuration).to have_key("config1")
+        expect(channel.configuration.get("config1")).to eq "testconfig"
+      end
+
+      context "with default_tags" do
+        it "accepts a string tag" do
+          thing = things.build do
+            thing "astro:sun:home" do
+              channel "channeltest", "string", default_tags: "tag1"
+            end
+          end
+          expect(thing.channels["channeltest"].default_tags.to_a).to eq %w[tag1]
+        end
+
+        it "accepts a symbolic tag" do
+          thing = things.build do
+            thing "astro:sun:home" do
+              channel "channeltest", "string", default_tags: :tag1
+            end
+          end
+          expect(thing.channels["channeltest"].default_tags.to_a).to eq %w[tag1]
+        end
+
+        it "accepts a Semantic tag constant" do
+          thing = things.build do
+            thing "astro:sun:home" do
+              channel "channeltest", "string", default_tags: Semantics::Status
+            end
+          end
+          expect(thing.channels["channeltest"].default_tags.to_a).to eq %w[Status]
+        end
+
+        it "accepts an array of symbolic tag" do
+          thing = things.build do
+            thing "astro:sun:home" do
+              channel "channeltest", "string", default_tags: %i[tag1]
+            end
+          end
+          expect(thing.channels["channeltest"].default_tags.to_a).to eq %w[tag1]
+        end
+
+        it "accepts an array of string tag" do
+          thing = things.build do
+            thing "astro:sun:home" do
+              channel "channeltest", "string", default_tags: %w[tag1]
+            end
+          end
+          expect(thing.channels["channeltest"].default_tags.to_a).to eq %w[tag1]
+        end
+
+        it "accepts an array of Semantic tag constants" do
+          thing = things.build do
+            thing "astro:sun:home" do
+              channel "channeltest", "string", default_tags: [Semantics::Status]
+            end
+          end
+          expect(thing.channels["channeltest"].default_tags.to_a).to eq %w[Status]
+        end
+      end
+
+      context "with auto_update_policy" do
+        it "accepts symbolic policy" do
+          thing = things.build do
+            thing "astro:sun:home" do
+              org.openhab.core.thing.type.AutoUpdatePolicy.values.each do |policy| # rubocop:disable Style/HashEachMethods
+                channel policy.to_s.downcase, "string", auto_update_policy: policy.to_s.downcase.to_sym
+              end
+            end
+          end
+
+          org.openhab.core.thing.type.AutoUpdatePolicy.values.each do |policy| # rubocop:disable Style/HashEachMethods
+            expect(thing.channels[policy.to_s.downcase].auto_update_policy).to eq policy
+          end
+        end
+
+        it "accepts AutoUpdatePolicy enum" do
+          thing = things.build do
+            thing "astro:sun:home" do
+              org.openhab.core.thing.type.AutoUpdatePolicy.values.each do |policy| # rubocop:disable Style/HashEachMethods
+                channel policy.to_s.downcase, "string", auto_update_policy: policy
+              end
+            end
+          end
+
+          org.openhab.core.thing.type.AutoUpdatePolicy.values.each do |policy| # rubocop:disable Style/HashEachMethods
+            expect(thing.channels[policy.to_s.downcase].auto_update_policy).to eq policy
+          end
+        end
+      end
+
+      it "supports label, description, properties, and accepted_item_type attributes" do
+        thing = things.build do
+          thing "astro:sun:home" do
+            channel "channeltest",
+                    "string",
+                    "testlabel",
+                    description: "testdescription",
+                    properties: { property1: "testproperty" },
+                    accepted_item_type: "Number"
+          end
+        end
+        channel = thing.channels["channeltest"]
+        expect(channel.label).to eq "testlabel"
+        expect(channel.description).to eq "testdescription"
+        expect(channel.properties).to eq("property1" => "testproperty")
+        expect(channel.accepted_item_type).to eq "Number"
       end
     end
-    expect(home = things["astro:sun:home"]).not_to be_nil
-    expect(home.channels.map { |c| c.uid.to_s }).to include("astro:sun:home:channeltest")
-    channel = home.channels.find { |c| c.uid.id == "channeltest" }
-    expect(channel.configuration.properties).to have_key("config1")
-    expect(channel.configuration.get("config1")).to eq "testconfig"
   end
 end

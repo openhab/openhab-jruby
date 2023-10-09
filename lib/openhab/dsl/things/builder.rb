@@ -257,7 +257,14 @@ module OpenHAB
       # The ChannelBuilder DSL allows you to customize a channel
       class ChannelBuilder
         attr_accessor :label
-        attr_reader :uid, :config, :type
+        attr_reader :uid,
+                    :config,
+                    :type,
+                    :default_tags,
+                    :properties,
+                    :description,
+                    :auto_update_policy,
+                    :accepted_item_type
 
         #
         # Constructor for ChannelBuilder
@@ -269,10 +276,27 @@ module OpenHAB
         # @param [String] label The channel label.
         # @param [thing] thing The thing associated with this channel.
         #   This parameter is not needed for the {ThingBuilder#channel} method.
+        # @param [String] description The channel description.
         # @param [String] group The group name.
         # @param [Hash] config Channel configuration. The keys can be strings or symbols.
+        # @param [Hash] properties The channel properties.
+        # @param [String,Symbol,Semantics::Tag,Array<String,Symbol,Semantics::Tag>] default_tags
+        #   The default tags for this channel.
+        # @param [:default, :recommend, :veto, org.openhab.core.thing.type.AutoUpdatePolicy] auto_update_policy
+        #   The channel's auto update policy.
+        # @param [String] accepted_item_type The accepted item type.
         #
-        def initialize(uid, type, label = nil, thing:, group: nil, config: {})
+        def initialize(uid,
+                       type,
+                       label = nil,
+                       thing:,
+                       description: nil,
+                       group: nil,
+                       config: nil,
+                       properties: nil,
+                       default_tags: nil,
+                       auto_update_policy: nil,
+                       accepted_item_type: nil)
           @thing = thing
 
           uid = uid.to_s
@@ -292,7 +316,14 @@ module OpenHAB
           end
           @type = type
           @label = label
-          @config = config.transform_keys(&:to_s)
+          @config = config&.transform_keys(&:to_s)
+          @default_tags = Items::ItemBuilder.normalize_tags(*Array.wrap(default_tags))
+          @properties = properties&.transform_keys(&:to_s)
+          @description = description
+          @accepted_item_type = accepted_item_type
+          return unless auto_update_policy
+
+          @auto_update_policy = org.openhab.core.thing.type.AutoUpdatePolicy.value_of(auto_update_policy.to_s.upcase)
         end
 
         # @!visibility private
@@ -300,7 +331,15 @@ module OpenHAB
           org.openhab.core.thing.binding.builder.ChannelBuilder.create(uid)
              .with_kind(kind)
              .with_type(type)
-             .with_configuration(Core::Configuration.new(config))
+             .tap do |builder|
+               builder.with_label(label) if label
+               builder.with_configuration(Core::Configuration.new(config)) if config && !config.empty?
+               builder.with_default_tags(Set.new(default_tags).to_java) unless default_tags.empty?
+               builder.with_properties(properties) if properties
+               builder.with_description(description) if description
+               builder.with_auto_update_policy(auto_update_policy) if auto_update_policy
+               builder.with_accepted_item_type(accepted_item_type) if accepted_item_type
+             end
              .build
         end
 
