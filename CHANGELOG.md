@@ -1,5 +1,15 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.9.0](https://github.com/openhab/openhab-jruby/tree/v5.9.0) (2023-10-09)
+
+[Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.8.0...v5.9.0)
+
+### Features
+
+- Support all attributes of channel builder [\#178](https://github.com/openhab/openhab-jruby/pull/178) ([jimtng](https://github.com/jimtng))
+- Refactor ChannelsArray lookup by channel id and uid [\#177](https://github.com/openhab/openhab-jruby/pull/177) ([jimtng](https://github.com/jimtng))
+- Inspect the full details of Channel attributes [\#176](https://github.com/openhab/openhab-jruby/pull/176) ([jimtng](https://github.com/jimtng))
+
 ## [v5.8.0](https://github.com/openhab/openhab-jruby/tree/v5.8.0) (2023-10-07)
 
 [Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.7.1...v5.8.0)
