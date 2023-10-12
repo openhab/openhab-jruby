@@ -156,7 +156,6 @@ module OpenHAB
             item.update(builder.state) unless builder.state.nil?
 
             # make sure to add the item to the registry before linking it
-            provider = Core::Things::Links::Provider.current
             channel_uids = builder.channels.to_set do |(channel, config)|
               # fill in partial channel names from group's thing id
               if !channel.include?(":") &&
@@ -165,17 +164,11 @@ module OpenHAB
                 channel = "#{thing}:#{channel}"
               end
 
-              new_link = Core::Things::Links::Provider.create_link(item, channel, config)
-              if !(current_link = provider.get(new_link.uid))
-                provider.add(new_link)
-              elsif current_link.configuration != config
-                provider.update(new_link)
-              end
-
-              new_link.linked_uid
+              item.link(channel, config).linked_uid
             end
 
             # remove links not in the new item
+            provider = Core::Things::Links::Provider.current
             provider.all.each do |link|
               provider.remove(link.uid) if link.item_name == item.name && !channel_uids.include?(link.linked_uid)
             end

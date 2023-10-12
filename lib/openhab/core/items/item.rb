@@ -251,6 +251,7 @@ module OpenHAB
           !(self.tags.to_a & tags).empty?
         end
 
+        # @!attribute thing [r]
         # Return the item's thing if this item is linked with a thing. If an item is linked to more than one thing,
         # this method only returns the first thing.
         #
@@ -260,6 +261,7 @@ module OpenHAB
         end
         alias_method :linked_thing, :thing
 
+        # @!attribute things [r]
         # Returns all of the item's linked things.
         #
         # @return [Array<Thing>] An array of things or an empty array
@@ -268,11 +270,80 @@ module OpenHAB
         end
         alias_method :all_linked_things, :things
 
+        #
+        # @!attribute links [r]
         # Returns all of the item's links (channels and link configurations).
         #
-        # @return [Array<ItemChannelLink>] An array of ItemChannelLink or an empty array
+        # @return [ItemChannelLinks] An array of ItemChannelLink or an empty array
+        #
+        # @example Get the configuration of the first link
+        #   LivingRoom_Light_Power.links.first.configuration
+        #
+        # @example Remove all managed links
+        #   LivingRoom_Light_Power.links.clear
+        #
+        # @see link
+        # @see unlink
+        #
         def links
-          Things::Links::Provider.registry.get_links(name)
+          ItemChannelLinks.new(self, Things::Links::Provider.registry.get_links(name))
+        end
+
+        #
+        # Links the item to a channel.
+        #
+        # @param [String, Things::Channel, Things::ChannelUID] channel The channel to link to.
+        # @param [Hash] config The configuration for the link.
+        #
+        # @return [Things::ItemChannelLink] The created link.
+        #
+        # @example Link an item to a channel
+        #   LivingRoom_Light_Power.link("mqtt:topic:livingroom-light:power")
+        #
+        # @example Link to a Thing's channel
+        #   LivingRoom_Light_Power.link(things["mqtt:topic:livingroom-light"].channels["power"])
+        #
+        # @example Specify a link configuration
+        #   High_Temperature_Alert.link(
+        #     "mqtt:topic:outdoor-thermometer:temperature",
+        #     profile: "system:hysteresis",
+        #     lower: "29 °C",
+        #     upper: "30 °C")
+        #
+        # @see links
+        # @see unlink
+        #
+        def link(channel, config = {})
+          Core::Things::Links::Provider.create_link(self, channel, config).tap do |new_link|
+            provider = Core::Things::Links::Provider.current
+            if !(current_link = provider.get(new_link.uid))
+              provider.add(new_link)
+            elsif current_link.configuration != config
+              provider.update(new_link)
+            end
+          end
+        end
+
+        #
+        # Removes a link to a channel from managed link providers.
+        #
+        # @param [String, Things::Channel, Things::ChannelUID] channel The channel to remove the link to.
+        #
+        # @return [Things::ItemChannelLink, nil] The removed link, if found.
+        # @raise [FrozenError] if the link is not managed by a managed link provider.
+        #
+        # @see link
+        # @see links
+        #
+        def unlink(channel)
+          link_to_delete = Things::Links::Provider.create_link(self, channel, {})
+          provider = Things::Links::Provider.registry.provider_for(link_to_delete.uid)
+          unless provider.is_a?(ManagedProvider)
+            raise FrozenError,
+                  "Cannot remove the link #{link_to_delete.uid} from non-managed provider #{provider.inspect}"
+          end
+
+          provider.remove(link_to_delete.uid)
         end
 
         # @return [String]
@@ -286,7 +357,8 @@ module OpenHAB
           "#{s}>"
         end
 
-        # @return [org.openhab.core.common.registry.Provider, nil]
+        # @!attribute provider [r]
+        # @return [org.openhab.core.common.registry.Provider, nil] Returns the provider for this item.
         def provider
           Provider.registry.provider_for(self)
         end
