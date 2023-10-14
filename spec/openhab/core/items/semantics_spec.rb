@@ -355,6 +355,12 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
         expect(Semantics.lookup("Syn1")).to be Semantics::ArraySynonyms
         expect(Semantics.lookup("Syn2")).to be Semantics::ArraySynonyms
       end
+
+      it "warns when trying to create a tag that already exists" do
+        Semantics.add(ExistingTag: Semantics::Equipment)
+        expect(Semantics.logger).to receive(:warn).with(/already exists/)
+        Semantics.add(ExistingTag: Semantics::Point)
+      end
     end
 
     describe "#remove" do
