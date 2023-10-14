@@ -311,14 +311,17 @@ module OpenHAB
               synonyms = Array.wrap(synonyms).map { |s| s.to_s.strip }
 
               tags.map do |name, parent|
+                if (existing_tag = lookup(name))
+                  logger.warn("Tag already exists: #{existing_tag.inspect}")
+                  next
+                end
+
                 unless parent.is_a?(SemanticTag)
                   parent_tag = lookup(parent)
                   raise ArgumentError, "Unknown parent: #{parent}" unless parent_tag
 
                   parent = parent_tag
                 end
-
-                next if lookup(name)
 
                 new_tag = org.openhab.core.semantics.SemanticTagImpl.new("#{parent.uid}_#{name}",
                                                                          label,
