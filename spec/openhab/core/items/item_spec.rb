@@ -216,7 +216,7 @@ RSpec.describe OpenHAB::Core::Items::Item do
     end
   end
 
-  describe "#thing" do
+  context "with linked channels" do
     before do
       install_addon "binding-astro", ready_markers: "openhab.xmlThingTypes"
 
@@ -226,27 +226,100 @@ RSpec.describe OpenHAB::Core::Items::Item do
       end
     end
 
-    it "returns nil for an unlinked item" do
-      expect(LightSwitch.thing).to be_nil
-    end
-
-    it "returns its linked thing" do
-      items.build do
-        string_item "PhaseName", channel: "astro:sun:home:phase#name"
+    describe "#thing" do
+      it "returns nil for an unlinked item" do
+        expect(LightSwitch.thing).to be_nil
       end
 
-      expect(PhaseName.thing).to be things["astro:sun:home"]
-    end
-
-    it "returns all linked things" do
-      items.build do
-        string_item "PhaseName" do
-          channel "astro:sun:home:phase#name"
-          channel "astro:moon:home:phase#name"
+      it "returns its linked thing" do
+        items.build do
+          string_item "PhaseName", channel: "astro:sun:home:phase#name"
         end
+
+        expect(PhaseName.thing).to be things["astro:sun:home"]
       end
 
-      expect(PhaseName.things).to match_array [things["astro:sun:home"], things["astro:moon:home"]]
+      it "returns all linked things" do
+        items.build do
+          string_item "PhaseName" do
+            channel "astro:sun:home:phase#name"
+            channel "astro:moon:home:phase#name"
+          end
+        end
+
+        expect(PhaseName.things).to match_array [things["astro:sun:home"], things["astro:moon:home"]]
+      end
+    end
+
+    describe "#links" do
+      it "returns an empty array for an unlinked item" do
+        items.build { string_item "UnlinkedItem" }
+        expect(UnlinkedItem.links).to be_empty
+      end
+
+      it "returns its linked channels" do
+        items.build do
+          number_item "SunAzimuth" do
+            channel "astro:sun:home:position#azimuth", profile: "offset", offset: "30"
+          end
+        end
+        expect(SunAzimuth.links.map(&:channel_uid)).to match_array ["astro:sun:home:position#azimuth"]
+        expect(SunAzimuth.links.first.configuration).to eq({ "profile" => "offset", "offset" => "30" })
+      end
+
+      it "can clear all links" do
+        items.build do
+          number_item "SunAzimuth", channel: "astro:sun:home:position#azimuth"
+        end
+        SunAzimuth.links.clear
+        expect(SunAzimuth.links).to be_empty
+        expect(SunAzimuth.thing).to be_nil
+      end
+    end
+
+    describe "#link" do
+      it "accepts a channel uid (String) argument" do
+        items.build { string_item "SunAzimuth" }
+        SunAzimuth.link("astro:sun:home:position#azimuth")
+        expect(SunAzimuth.links.map(&:channel_uid)).to match_array ["astro:sun:home:position#azimuth"]
+      end
+
+      it "accepts a ChannelUID argument" do
+        items.build { string_item "SunAzimuth" }
+        SunAzimuth.link(OpenHAB::Core::Things::ChannelUID.new("astro:sun:home:position#azimuth"))
+        expect(SunAzimuth.links.map(&:channel_uid)).to match_array ["astro:sun:home:position#azimuth"]
+      end
+
+      it "accepts a Channel argument" do
+        items.build { string_item "SunAzimuth" }
+        SunAzimuth.link(things["astro:sun:home"].channels["position#azimuth"])
+        expect(SunAzimuth.links.map(&:channel_uid)).to match_array ["astro:sun:home:position#azimuth"]
+      end
+
+      it "accepts a configuration for the link" do
+        items.build { string_item "SunAzimuth" }
+        SunAzimuth.link("astro:sun:home:position#azimuth", profile: "offset", offset: "30")
+        expect(SunAzimuth.links.map(&:channel_uid)).to match_array ["astro:sun:home:position#azimuth"]
+        expect(SunAzimuth.links.first.configuration).to eq({ "profile" => "offset", "offset" => "30" })
+      end
+
+      it "can replace an existing link" do
+        items.build { string_item "SunAzimuth" }
+        SunAzimuth.link("astro:sun:home:position#azimuth")
+        SunAzimuth.link("astro:sun:home:position#azimuth", profile: "offset", offset: "30")
+        expect(SunAzimuth.links.map(&:channel_uid)).to match_array ["astro:sun:home:position#azimuth"]
+        expect(SunAzimuth.links.first.configuration).to eq({ "profile" => "offset", "offset" => "30" })
+      end
+    end
+
+    describe "#unlink" do
+      it "works" do
+        items.build { string_item "SunAzimuth" }
+        channel = "astro:sun:home:position#azimuth"
+        SunAzimuth.link(channel)
+        SunAzimuth.unlink(channel)
+        expect(SunAzimuth.links).to be_empty
+      end
     end
   end
 
