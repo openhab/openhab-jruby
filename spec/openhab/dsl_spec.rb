@@ -70,6 +70,21 @@ RSpec.describe OpenHAB::DSL do
       MyString << "foo"
       expect(unit).to eql "°F"
     end
+
+    # Whilst sending a command to astro:sun:home:season#name does nothing, it's used here
+    # to test that it doesn't cause any errors due to formatting being done by ProfileCallback
+    it "supports sending a command to a channel that has a different type than the item" do
+      profile :season_color do |callback:|
+        callback.handle_command("test")
+        false
+      end
+
+      items.build do
+        color_item "SeasonColor", channel: ["astro:sun:home:season#name", { profile: "ruby:season_color" }]
+      end
+
+      SeasonColor << "0,100,100"
+    end
   end
 
   describe "#script" do

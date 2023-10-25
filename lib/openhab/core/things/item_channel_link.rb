@@ -26,6 +26,12 @@ module OpenHAB
           DSL.items[item_name]
         end
 
+        # @!attribute [r] channel
+        # @return [Channel]
+        def channel
+          DSL.things[linked_uid.thing_uid].channels[linked_uid.id]
+        end
+
         alias_method :channel_uid, :linked_uid
       end
     end
