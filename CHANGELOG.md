@@ -1,5 +1,19 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.10.0](https://github.com/openhab/openhab-jruby/tree/v5.10.0) (2023-10-25)
+
+[Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.9.0...v5.10.0)
+
+### Features
+
+- Add Item.link, Item.unlink, and Item.links.clear to add/remove a link to a channel [\#180](https://github.com/openhab/openhab-jruby/pull/180) ([jimtng](https://github.com/jimtng))
+- Add `event.group` for `triggeringGroup` [\#160](https://github.com/openhab/openhab-jruby/pull/160) ([jimtng](https://github.com/jimtng))
+
+### Bug Fixes
+
+- Fix ProfileCallback\#handle\_command when an item is linked to a different channel type [\#182](https://github.com/openhab/openhab-jruby/pull/182) ([jimtng](https://github.com/jimtng))
+- Warn when creating a tag that already exists [\#181](https://github.com/openhab/openhab-jruby/pull/181) ([jimtng](https://github.com/jimtng))
+
 ## [v5.9.0](https://github.com/openhab/openhab-jruby/tree/v5.9.0) (2023-10-09)
 
 [Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.8.0...v5.9.0)
