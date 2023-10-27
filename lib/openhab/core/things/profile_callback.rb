@@ -14,9 +14,10 @@ module OpenHAB
         # @param [Command] command
         #
         def handle_command(command)
-          @dummy_channel_item ||= DSL::Items::ItemBuilder.item_factory.create_item(link.channel.accepted_item_type,
-                                                                                   "")
-          command = @dummy_channel_item.format_command(command)
+          link.channel.accepted_item_type&.then do |item_type|
+            @dummy_channel_item ||= DSL::Items::ItemBuilder.item_factory.create_item(item_type, "")
+            command = @dummy_channel_item.format_command(command) if @dummy_channel_item
+          end
           super(command)
         end
 
