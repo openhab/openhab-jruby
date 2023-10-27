@@ -474,6 +474,9 @@ My_Item.ensure << ON
 logger.info("Turning off the light") if My_Item.ensure.off
 ```
 
+See {OpenHAB::DSL.ensure_states ensure_states}, {OpenHAB::DSL.ensure_states! ensure_states!},
+{OpenHAB::DSL::Items::Ensure::Ensurable.ensure ensure}.
+
 ##### Timed Commands <!-- omit from toc -->
 
 A {OpenHAB::DSL::Items::TimedCommand Timed Command} is similar to the openHAB Item's [expire parameter](https://www.openhab.org/docs/configuration/items.html#parameter-expire) but it offers more flexibility.

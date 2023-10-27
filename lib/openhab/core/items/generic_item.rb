@@ -128,8 +128,11 @@ module OpenHAB
         # Send a command to this item
         #
         # When this method is chained after the {OpenHAB::DSL::Items::Ensure::Ensurable#ensure ensure}
-        # method, or issued inside an {OpenHAB::DSL.ensure_states ensure_states} block,
+        # method, or issued inside an {OpenHAB::DSL.ensure_states ensure_states} block, or after
+        # {OpenHAB::DSL.ensure_states! ensure_states!} have been called,
         # the command will only be sent if the item is not already in the same state.
+        #
+        # The similar method `command!`, however, will always send the command regardless of the item's state.
         #
         # @param [Command] command command to send to the item
         # @return [self, nil] nil when `ensure` is in effect and the item was already in the same state,
@@ -137,6 +140,7 @@ module OpenHAB
         #
         # @see DSL::Items::TimedCommand#command Timed Command
         # @see OpenHAB::DSL.ensure_states ensure_states
+        # @see OpenHAB::DSL.ensure_states! ensure_states!
         # @see DSL::Items::Ensure::Ensurable#ensure ensure
         #
         def command(command)
@@ -145,6 +149,7 @@ module OpenHAB
           $events.send_command(self, command)
           Proxy.new(self)
         end
+        alias_method :command!, :command
 
         # not an alias to allow easier stubbing and overriding
         def <<(command)
@@ -170,6 +175,7 @@ module OpenHAB
           $events.post_update(self, state)
           Proxy.new(self)
         end
+        alias_method :update!, :update
 
         # @!visibility private
         def format_command(command)

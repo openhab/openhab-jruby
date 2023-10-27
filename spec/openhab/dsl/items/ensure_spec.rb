@@ -43,6 +43,17 @@ RSpec.describe OpenHAB::DSL::Items::Ensure do
     expect(yield).to be expected_result
   end
 
+  def check_group_command(initial1, initial2, final1 = initial1, final2 = initial2, *expected_triggers)
+    group
+    Dimmer1.update(initial1)
+    Dimmer2.update(initial2)
+    triggers.clear
+    yield
+    expect(Dimmer1.state).to eq final1
+    expect(Dimmer2.state).to eq final2
+    expect(triggers).to match_array(expected_triggers)
+  end
+
   describe "#ensure" do
     it "sends commands if not in a given state" do
       check_command(0, 100, *both) { item.ensure.on }
@@ -80,17 +91,6 @@ RSpec.describe OpenHAB::DSL::Items::Ensure do
       check_command(100) { item.ensure << ON }
       check_command(100) { item.ensure << 100 }
       check_command(100) { item.ensure.update(100) }
-    end
-
-    def check_group_command(initial1, initial2, final1 = initial1, final2 = initial2, *expected_triggers)
-      group
-      Dimmer1.update(initial1)
-      Dimmer2.update(initial2)
-      triggers.clear
-      yield
-      expect(Dimmer1.state).to eq final1
-      expect(Dimmer2.state).to eq final2
-      expect(triggers).to match_array(expected_triggers)
     end
 
     it "sends commands to group if not in a given state" do
@@ -290,6 +290,73 @@ RSpec.describe OpenHAB::DSL::Items::Ensure do
       check_obj_return_value(50, 50, items) { ensure_states { items.command(0) } }
       check_obj_return_value(0, 50, items) { ensure_states { items.command(0) } }
       check_obj_return_value(50, 0, items) { ensure_states { items.command(0) } }
+    end
+  end
+
+  describe "#ensure_states!" do
+    around do |example|
+      ensure_states!
+      example.run
+    ensure
+      ensure_states!(active: false)
+    end
+
+    it "works with items" do
+      check_command(0) { item.off }
+      check_command(0) { item.command(OFF) }
+      check_command(0) { item << OFF }
+      check_command(0) { item.update(0) }
+      check_command(50) { item.on }
+      check_command(50) { item.command(ON) }
+      check_command(50) { item << ON }
+      check_command(50) { item.update(ON) }
+      check_command(50) { item.update(50) }
+    end
+
+    it "works with groups" do
+      check_group_command(0, 0) { group.off }
+      check_group_command(0, 0) { group.command OFF }
+      check_group_command(100, 0) { group.command 50 }
+      check_group_command(100, 0) { group.update 50 }
+    end
+
+    it "works with group members" do
+      check_group_command(0, 0) { group.members.off }
+      check_group_command(0, 0) { group.members.command OFF }
+      check_group_command(50, 50) { group.members.command 50 }
+      check_group_command(50, 50) { group.members.update 50 }
+    end
+
+    context "when bang! commands are issued" do
+      context "with items" do
+        it "they are executed unconditionally" do
+          check_command(0, 0, *both) { item.command! OFF }
+          check_command(0, 0, *both) { item.off! }
+          check_command(0, 0, :updated) { item.update! OFF }
+
+          check_command(100, 100, *both) { item.command! ON }
+          check_command(100, 100, *both) { item.on! }
+          check_command(100, 100, :updated) { item.update! ON }
+        end
+      end
+
+      context "with groups" do
+        it "they are executed unconditionally" do
+          check_group_command(0, 0, 0, 0, *all) { group.off! }
+          check_group_command(0, 0, 0, 0, *all) { group.command! OFF }
+          check_group_command(100, 0, 50, 50, *all) { group.command! 50 }
+          # NOTE: Posting an update to a group.update! won't trigger an event for the group
+        end
+      end
+
+      context "with group members" do
+        it "they are executed unconditionally" do
+          check_group_command(0, 0, 0, 0, *all) { group.members.off! }
+          check_group_command(0, 0, 0, 0, *all) { group.members.command! OFF }
+          check_group_command(50, 50, 50, 50, *all) { group.members.command! 50 }
+          check_group_command(50, 50, 50, 50, :updated, :updated) { group.members.update! 50 }
+        end
+      end
     end
   end
 end

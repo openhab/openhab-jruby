@@ -67,8 +67,16 @@ module OpenHAB
         #   Send the {ON} command to the item
         #   @return [SwitchItem] `self`
 
+        # @!method on!
+        #   Send the {ON} command to the item, even when {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.
+        #   @return [SwitchItem] `self`
+
         # @!method off
         #   Send the {OFF} command to the item
+        #   @return [SwitchItem] `self`
+
+        # @!method off!
+        #   Send the {OFF} command to the item, even when {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.
         #   @return [SwitchItem] `self`
       end
     end

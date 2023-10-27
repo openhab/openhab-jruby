@@ -558,9 +558,46 @@ module OpenHAB
     #
 
     #
+    # Permanently enable conditional execution of commands and updates for the current thread.
+    # When conditional executions are enabled, commands and updates will only be sent if the
+    # item's current state is not the same as the command or updated state.
+    #
+    # When conditional executions are enabled either by this method or within a block of {ensure_states},
+    # commands and updates can still be forcefully executed using the corresponding bang methods, e.g.
+    # `Item1.on!`, `Item1.command!(50)`, or `Item1.update!(ON)`. This eliminates the need to chain the
+    # command calls through {DSL::Items::Ensure::Ensurable#ensure ensure}.
+    #
+    # @note This method is only intended for use at the top level of rule
+    #   scripts. If it's used within library methods, or hap-hazardly within
+    #   rules, things can get very confusing because the prior state won't be
+    #   properly restored.
+    #
+    # @param [Boolean] active Whether to enable or disable conditional executions.
+    # @return [Boolean] The previous ensure_states setting.
+    #
+    # @example Make ensure_states the default for the rest of the script
+    #   ensure_states!
+    #
+    #   # From now, all commands are "ensured", i.e. only sent when the current state is different
+    #   Item1.on
+    #   Item2.command(ON)
+    #
+    #   # While ensure_states! is active, we can still forcibly send a command
+    #   # regardless of the item's current state
+    #   Item2.on!
+    #
+    # @see ensure_states
+    #
+    def ensure_states!(active: true)
+      old = Thread.current[:openhab_ensure_states]
+      Thread.current[:openhab_ensure_states] = active
+      old
+    end
+
+    #
     # Global method that takes a block and for the duration of the block
     # all commands sent will check if the item is in the command's state
-    # before sending the command.
+    # before sending the command. This also applies to updates.
     #
     # @yield
     # @return [Object] The result of the block.
@@ -603,11 +640,10 @@ module OpenHAB
     #   end
     #
     def ensure_states
-      old = Thread.current[:openhab_ensure_states]
-      Thread.current[:openhab_ensure_states] = true
+      old = ensure_states!
       yield
     ensure
-      Thread.current[:openhab_ensure_states] = old
+      ensure_states!(active: old)
     end
 
     #
@@ -841,7 +877,7 @@ module OpenHAB
     #     elements, the {Core::Items::Metadata::Hash} will be passed as an argument. Therefore it's
     #     recommended that you use a Proc, not a Lambda, for permissive argument matching.
     #
-    # @return [void]
+    # @return [Hash] the prior provider configuration.
     #
     # @see provider
     # @see OpenHAB::Core::Provider.current Provider.current for how the current provider is calculated
