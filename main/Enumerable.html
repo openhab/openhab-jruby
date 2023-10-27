@@ -1163,6 +1163,11 @@
   
   
   
+  
+  
+  
+  
+  
 
         
       </ul>
@@ -2735,6 +2740,7 @@
   
   
   
+  
 
         
       </ul>
@@ -3433,6 +3439,29 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#command!-instance_method" title="#command! (instance method)">#<strong>command!</strong>(command)  &#x21d2; self </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Send a command to every item in the collection, even when <span class='object_link'><a href="OpenHAB/DSL.html#ensure_states!-class_method" title="OpenHAB::DSL.ensure_states! (method)">ensure_states!</a></span> is in effect.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#decrease-instance_method" title="#decrease (instance method)">#<strong>decrease</strong>  &#x21d2; self </a>
     
 
@@ -3798,6 +3827,29 @@
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#update!-instance_method" title="#update! (instance method)">#<strong>update!</strong>(state)  &#x21d2; self </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Update the state of every item in the collection, even when   <span class='object_link'><a href="OpenHAB/DSL.html#ensure_states!-class_method" title="OpenHAB::DSL.ensure_states! (method)">ensure_states!</a></span> is in effect.</p>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -3973,6 +4025,65 @@ otherwise self</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="command!-instance_method">
+  
+    #<strong>command!</strong>(command)  &#x21d2; <tt>self</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Send a command to every item in the collection, even when <span class='object_link'><a href="OpenHAB/DSL.html#ensure_states!-class_method" title="OpenHAB::DSL.ensure_states! (method)">ensure_states!</a></span> is in effect.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>self</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+106
+107
+108
+109
+110
+111</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 106</span>
+
+<span class="keyword">def</span> <span class="function">command!</span>(command)
+  <span class="comment"># We cannot alias this to #command above, otherwise it will call</span>
+  <span class="comment"># DSL::Items::Ensure::Item#command which checks for ensure_states</span>
+  each { |i| i.command!(command) }
+  <span class="predefined-constant">self</span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="decrease-instance_method">
   
     #<strong>decrease</strong>  &#x21d2; <tt>self</tt> 
@@ -4013,7 +4124,7 @@ otherwise self</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 143</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 162</span>
 
 </pre>
     </td>
@@ -4062,7 +4173,7 @@ otherwise self</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 146</span>
 
 </pre>
     </td>
@@ -4204,7 +4315,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 159</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 178</span>
 
 </pre>
     </td>
@@ -4306,7 +4417,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 158</span>
 
 </pre>
     </td>
@@ -4547,7 +4658,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 154</span>
 
 </pre>
     </td>
@@ -4596,7 +4707,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 163</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 182</span>
 
 </pre>
     </td>
@@ -4781,7 +4892,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 119</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 138</span>
 
 </pre>
     </td>
@@ -4830,7 +4941,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 115</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 134</span>
 
 </pre>
     </td>
@@ -4879,7 +4990,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 151</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 170</span>
 
 </pre>
     </td>
@@ -4928,7 +5039,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 147</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 166</span>
 
 </pre>
     </td>
@@ -5092,7 +5203,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 167</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 186</span>
 
 </pre>
     </td>
@@ -5141,7 +5252,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 130</span>
 
 </pre>
     </td>
@@ -5190,7 +5301,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 155</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 174</span>
 
 </pre>
     </td>
@@ -5239,7 +5350,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 131</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 150</span>
 
 </pre>
     </td>
@@ -5356,7 +5467,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 142</span>
 
 </pre>
     </td>
@@ -5407,15 +5518,75 @@ otherwise self</p>
       <pre class="lines">
 
 
-107
-108
-109</pre>
+116
+117
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 116</span>
 
 <span class="keyword">def</span> <span class="function">update</span>(state)
   <span class="predefined-constant">self</span> <span class="keyword">if</span> count { |i| i.update(state) }.positive?
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="update!-instance_method">
+  
+    #<strong>update!</strong>(state)  &#x21d2; <tt>self</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Update the state of every item in the collection, even when
+<span class='object_link'><a href="OpenHAB/DSL.html#ensure_states!-class_method" title="OpenHAB::DSL.ensure_states! (method)">ensure_states!</a></span> is in effect.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>self</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+123
+124
+125
+126
+127
+128</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 123</span>
+
+<span class="keyword">def</span> <span class="function">update!</span>(state)
+  <span class="comment"># We cannot alias this to #update above, otherwise it will call</span>
+  <span class="comment"># DSL::Items::Ensure::Item#update which checks for ensure_states</span>
+  each { |i| i.update!(state) }
+  <span class="predefined-constant">self</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -5427,7 +5598,7 @@ otherwise self</p>
 </div>
 
         <footer>
-  Generated on Fri Oct 27 13:27:00 2023 by
+  Generated on Fri Oct 27 22:19:33 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

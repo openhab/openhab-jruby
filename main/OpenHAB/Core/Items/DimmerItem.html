@@ -1164,6 +1164,11 @@ percent values to reflect the dimmed state. - Documentation for openhab-scriptin
   
   
   
+  
+  
+  
+  
+  
 
         
       </ul>
@@ -2736,6 +2741,7 @@ percent values to reflect the dimmed state. - Documentation for openhab-scriptin
   
   
   
+  
 
         
       </ul>
@@ -3361,6 +3367,29 @@ percent values to reflect the dimmed state.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#decrease!-instance_method" title="#decrease! (instance method)">#<strong>decrease!</strong>  &#x21d2; DimmerItem </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Send the <span class='object_link'><a href="../Types/IncreaseDecreaseType.html#DECREASE-constant" title="OpenHAB::Core::Types::IncreaseDecreaseType::DECREASE (constant)">DECREASE</a></span> command to the item, even when   <span class='object_link'><a href="../../DSL.html#ensure_states!-class_method" title="OpenHAB::DSL.ensure_states! (method)">ensure_states!</a></span> is in effect.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#dim-instance_method" title="#dim (instance method)">#<strong>dim</strong>(amount = 1)  &#x21d2; Integer </a>
     
 
@@ -3404,6 +3433,29 @@ percent values to reflect the dimmed state.</p>
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#increase!-instance_method" title="#increase! (instance method)">#<strong>increase!</strong>  &#x21d2; DimmerItem </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Send the <span class='object_link'><a href="../Types/IncreaseDecreaseType.html#INCREASE-constant" title="OpenHAB::Core::Types::IncreaseDecreaseType::INCREASE (constant)">INCREASE</a></span> command to the item, even when   <span class='object_link'><a href="../../DSL.html#ensure_states!-class_method" title="OpenHAB::DSL.ensure_states! (method)">ensure_states!</a></span> is in effect.</p>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -3424,7 +3476,7 @@ percent values to reflect the dimmed state.</p>
   
   
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="SwitchItem.html" title="OpenHAB::Core::Items::SwitchItem (class)">SwitchItem</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="SwitchItem.html#off-instance_method" title="OpenHAB::Core::Items::SwitchItem#off (method)">#off</a></span>, <span class='object_link'><a href="SwitchItem.html#off%3F-instance_method" title="OpenHAB::Core::Items::SwitchItem#off? (method)">#off?</a></span>, <span class='object_link'><a href="SwitchItem.html#on-instance_method" title="OpenHAB::Core::Items::SwitchItem#on (method)">#on</a></span>, <span class='object_link'><a href="SwitchItem.html#on%3F-instance_method" title="OpenHAB::Core::Items::SwitchItem#on? (method)">#on?</a></span>, <span class='object_link'><a href="SwitchItem.html#toggle-instance_method" title="OpenHAB::Core::Items::SwitchItem#toggle (method)">#toggle</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="SwitchItem.html#off-instance_method" title="OpenHAB::Core::Items::SwitchItem#off (method)">#off</a></span>, <span class='object_link'><a href="SwitchItem.html#off!-instance_method" title="OpenHAB::Core::Items::SwitchItem#off! (method)">#off!</a></span>, <span class='object_link'><a href="SwitchItem.html#off%3F-instance_method" title="OpenHAB::Core::Items::SwitchItem#off? (method)">#off?</a></span>, <span class='object_link'><a href="SwitchItem.html#on-instance_method" title="OpenHAB::Core::Items::SwitchItem#on (method)">#on</a></span>, <span class='object_link'><a href="SwitchItem.html#on!-instance_method" title="OpenHAB::Core::Items::SwitchItem#on! (method)">#on!</a></span>, <span class='object_link'><a href="SwitchItem.html#on%3F-instance_method" title="OpenHAB::Core::Items::SwitchItem#on? (method)">#on?</a></span>, <span class='object_link'><a href="SwitchItem.html#toggle-instance_method" title="OpenHAB::Core::Items::SwitchItem#toggle (method)">#toggle</a></span></p>
 
   
   
@@ -3596,7 +3648,17 @@ percent values to reflect the dimmed state.</p>
 140
 141
 142
-143</pre>
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/dimmer_item.rb', line 87</span>
@@ -3648,6 +3710,16 @@ percent values to reflect the dimmed state.</p>
 
   <span class="comment"># @!method decrease</span>
   <span class="comment">#   Send the {DECREASE} command to the item</span>
+  <span class="comment">#   @return [DimmerItem] `self`</span>
+
+  <span class="comment"># @!method increase!</span>
+  <span class="comment">#   Send the {INCREASE} command to the item, even when</span>
+  <span class="comment">#     {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.</span>
+  <span class="comment">#   @return [DimmerItem] `self`</span>
+
+  <span class="comment"># @!method decrease!</span>
+  <span class="comment">#   Send the {DECREASE} command to the item, even when</span>
+  <span class="comment">#     {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.</span>
   <span class="comment">#   @return [DimmerItem] `self`</span>
 
   <span class="comment"># raw numbers translate directly to PercentType, not a DecimalType</span>
@@ -3817,6 +3889,60 @@ If 1 is the amount, the INCREASE command is sent, otherwise the</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="decrease!-instance_method">
+  
+    #<strong>decrease!</strong>  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::Core::Items::DimmerItem (class)">DimmerItem</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Send the <span class='object_link'><a href="../Types/IncreaseDecreaseType.html#DECREASE-constant" title="OpenHAB::Core::Types::IncreaseDecreaseType::DECREASE (constant)">DECREASE</a></span> command to the item, even when
+<span class='object_link'><a href="../../DSL.html#ensure_states!-class_method" title="OpenHAB::DSL.ensure_states! (method)">ensure_states!</a></span> is in effect.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="OpenHAB::Core::Items::DimmerItem (class)">DimmerItem</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><code>self</code></p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/dimmer_item.rb', line 141</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="dim-instance_method">
   
     #<strong>dim</strong>(amount = 1)  &#x21d2; <tt><span class='object_link'><a href="../../../Integer.html" title="Integer (class)">Integer</a></span></tt> 
@@ -3962,12 +4088,66 @@ current state - amount is sent as a command.</p>
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="increase!-instance_method">
+  
+    #<strong>increase!</strong>  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::Core::Items::DimmerItem (class)">DimmerItem</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Send the <span class='object_link'><a href="../Types/IncreaseDecreaseType.html#INCREASE-constant" title="OpenHAB::Core::Types::IncreaseDecreaseType::INCREASE (constant)">INCREASE</a></span> command to the item, even when
+<span class='object_link'><a href="../../DSL.html#ensure_states!-class_method" title="OpenHAB::DSL.ensure_states! (method)">ensure_states!</a></span> is in effect.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="OpenHAB::Core::Items::DimmerItem (class)">DimmerItem</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><code>self</code></p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/dimmer_item.rb', line 136</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
         <footer>
-  Generated on Fri Oct 27 13:27:07 2023 by
+  Generated on Fri Oct 27 22:19:39 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
