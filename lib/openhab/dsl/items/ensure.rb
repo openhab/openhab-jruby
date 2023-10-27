@@ -24,7 +24,7 @@ module OpenHAB
 
         # Extensions for {::Item} to implement {Ensure}'s functionality
         #
-        # @see OpenHAB::DSL.ensure ensure
+        # @see OpenHAB::DSL::Items::Ensure::Ensurable#ensure ensure
         # @see OpenHAB::DSL.ensure_states ensure_states
         module Item
           include Ensurable

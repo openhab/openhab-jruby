@@ -39,24 +39,50 @@ module OpenHAB
         #   Send the {PLAY} command to the item
         #   @return [PlayerItem] `self`
 
+        # @!method play!
+        #   Send the {PLAY} command to the item, even when {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.
+        #   @return [PlayerItem] `self`
+
         # @!method pause
         #   Send the {PAUSE} command to the item
+        #   @return [PlayerItem] `self`
+
+        # @!method pause!
+        #   Send the {PAUSE} command to the item, even when {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.
         #   @return [PlayerItem] `self`
 
         # @!method rewind
         #   Send the {REWIND} command to the item
         #   @return [PlayerItem] `self`
 
+        # @!method rewind
+        #   Send the {REWIND} command to the item, even when {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.
+        #   @return [PlayerItem] `self`
+
         # @!method fast_forward
         #   Send the {FASTFORWARD} command to the item
+        #   @return [PlayerItem] `self`
+
+        # @!method fast_forward!
+        #   Send the {FASTFORWARD} command to the item, even when
+        #     {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.
         #   @return [PlayerItem] `self`
 
         # @!method next
         #   Send the {NEXT} command to the item
         #   @return [PlayerItem] `self`
 
+        # @!method next!
+        #   Send the {NEXT} command to the item, even when {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.
+        #   @return [PlayerItem] `self`
+
         # @!method previous
         #   Send the {PREVIOUS} command to the item
+        #   @return [PlayerItem] `self`
+
+        # @!method previous!
+        #   Send the {PREVIOUS} command to the item, even when
+        #     {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.
         #   @return [PlayerItem] `self`
       end
     end
