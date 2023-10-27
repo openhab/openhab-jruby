@@ -304,6 +304,16 @@ RSpec.describe OpenHAB::DSL::Things::Builder do
         expect(channel.properties).to eq("property1" => "testproperty")
         expect(channel.accepted_item_type).to eq "Number"
       end
+
+      it "infers accepted_item_type from ChannelTypeRegistry" do
+        thing = things.build do
+          thing "astro:sun:home" do
+            channel "test", "start"
+          end
+        end
+        channel = thing.channels["test"]
+        expect(channel.accepted_item_type).to eq "DateTime"
+      end
     end
   end
 end
