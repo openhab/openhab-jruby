@@ -3268,15 +3268,17 @@ and channels.</p>
 18
 19
 20
-21</pre>
+21
+22</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/profile_callback.rb', line 16</span>
 
 <span class="keyword">def</span> <span class="function">handle_command</span>(command)
-  <span class="instance-variable">@dummy_channel_item</span> ||= <span class="constant">DSL</span>::<span class="constant">Items</span>::<span class="constant">ItemBuilder</span>.item_factory.create_item(link.channel.accepted_item_type,
-                                                                           <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>)
-  command = <span class="instance-variable">@dummy_channel_item</span>.format_command(command)
+  <span class="keyword">unless</span> instance_variable_defined?(<span class="symbol">:@dummy_channel_item</span>)
+    <span class="instance-variable">@dummy_channel_item</span> = <span class="constant">DSL</span>::<span class="constant">Items</span>::<span class="constant">ItemBuilder</span>.item_factory.create_item(link.channel.accepted_item_type, <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">end</span>
+  command = <span class="instance-variable">@dummy_channel_item</span>.format_command(command) <span class="keyword">if</span> <span class="instance-variable">@dummy_channel_item</span>
   <span class="keyword">super</span>(command)
 <span class="keyword">end</span></pre>
     </td>
@@ -3324,13 +3326,13 @@ and channels.</p>
       <pre class="lines">
 
 
-28
 29
 30
-31</pre>
+31
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/profile_callback.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/profile_callback.rb', line 29</span>
 
 <span class="keyword">def</span> <span class="function">send_command</span>(command)
   command = link.item.format_command(command)
@@ -3381,13 +3383,13 @@ and channels.</p>
       <pre class="lines">
 
 
-38
 39
 40
-41</pre>
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/profile_callback.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/profile_callback.rb', line 39</span>
 
 <span class="keyword">def</span> <span class="function">send_update</span>(state)
   state = link.item.format_update(state)
@@ -3403,7 +3405,7 @@ and channels.</p>
 </div>
 
         <footer>
-  Generated on Sat Oct 28 15:56:36 2023 by
+  Generated on Sat Oct 28 15:58:37 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
