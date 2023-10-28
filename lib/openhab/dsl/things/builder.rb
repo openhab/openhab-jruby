@@ -263,8 +263,14 @@ module OpenHAB
                     :default_tags,
                     :properties,
                     :description,
-                    :auto_update_policy,
-                    :accepted_item_type
+                    :auto_update_policy
+
+        class << self
+          # @!visibility private
+          def channel_type_registry
+            @channel_type_registry ||= OSGi.service("org.openhab.core.thing.type.ChannelTypeRegistry")
+          end
+        end
 
         #
         # Constructor for ChannelBuilder
@@ -284,7 +290,7 @@ module OpenHAB
         #   The default tags for this channel.
         # @param [:default, :recommend, :veto, org.openhab.core.thing.type.AutoUpdatePolicy] auto_update_policy
         #   The channel's auto update policy.
-        # @param [String] accepted_item_type The accepted item type.
+        # @param [String] accepted_item_type The accepted item type. If nil, infer the item type from the channel type.
         #
         def initialize(uid,
                        type,
@@ -341,6 +347,12 @@ module OpenHAB
                builder.with_accepted_item_type(accepted_item_type) if accepted_item_type
              end
              .build
+        end
+
+        # @!attribute [r] accepted_item_type
+        # @return [String] The accepted item type.
+        def accepted_item_type
+          @accepted_item_type ||= self.class.channel_type_registry.get_channel_type(type)&.item_type
         end
 
         private
