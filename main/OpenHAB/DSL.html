@@ -3962,16 +3962,16 @@ see OpenHAB::DSL::Rules::AutomationRule#execute!</p>
       <pre class="lines">
 
 
-1021
-1022
 1023
 1024
 1025
 1026
-1027</pre>
+1027
+1028
+1029</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 1021</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 1023</span>
 
 ruby2_keywords <span class="keyword">def</span> <span class="function">method_missing</span>(method, *args)
   <span class="keyword">return</span> <span class="keyword">super</span> <span class="keyword">unless</span> args.empty? &amp;&amp; !block_given?
@@ -4630,15 +4630,15 @@ ensure_states <span class="keyword">do</span>
       <pre class="lines">
 
 
-642
-643
 644
 645
 646
-647</pre>
+647
+648
+649</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 642</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 644</span>
 
 <span class="keyword">def</span> <span class="function">ensure_states</span>
   old = ensure_states!
@@ -4672,13 +4672,14 @@ properly restored.</p>
 </div>
   </div>
 
-<p>Permanently enable conditional execution of commands and updates for the current thread.
-When conditional executions are enabled, commands and updates will only be sent if the
-item's current state is not the same as the command or updated state.</p>
+<p>Permanently enable conditional execution of commands and updates for the current thread.</p>
+<p>When conditional executions are enabled, commands and updates will only be sent if the
+item's current state is not the same as the command or updated state.
+This eliminates the need to chain the command and update calls through
+<span class='object_link'><a href="DSL/Items/Ensure/Ensurable.html#ensure-instance_method" title="OpenHAB::DSL::Items::Ensure::Ensurable#ensure (method)">ensure</a></span>.</p>
 <p>When conditional executions are enabled either by this method or within a block of <span class='object_link'><a href="#ensure_states-class_method" title="OpenHAB::DSL.ensure_states (method)">ensure_states</a></span>,
 commands and updates can still be forcefully executed using the corresponding bang methods, e.g.
-<code>Item1.on!</code>, <code>Item1.command!(50)</code>, or <code>Item1.update!(ON)</code>. This eliminates the need to chain the
-command calls through <span class='object_link'><a href="DSL/Items/Ensure/Ensurable.html#ensure-instance_method" title="OpenHAB::DSL::Items::Ensure::Ensurable#ensure (method)">ensure</a></span>.</p>
+<code>Item1.on!</code>, <code>Item1.command!(50)</code>, or <code>Item1.update!(ON)</code>.</p>
 
 
   </div>
@@ -4756,14 +4757,14 @@ command calls through <span class='object_link'><a href="DSL/Items/Ensure/Ensura
       <pre class="lines">
 
 
-591
-592
 593
 594
-595</pre>
+595
+596
+597</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 591</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 593</span>
 
 <span class="keyword">def</span> <span class="function">ensure_states!</span>(<span class="key">active</span>: <span class="predefined-constant">true</span>)
   old = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_ensure_states</span>]
@@ -4939,8 +4940,6 @@ for <span class='object_link'><a href="CoreExt/Ephemeris.html" title="OpenHAB::C
       <pre class="lines">
 
 
-972
-973
 974
 975
 976
@@ -4949,10 +4948,12 @@ for <span class='object_link'><a href="CoreExt/Ephemeris.html" title="OpenHAB::C
 979
 980
 981
-982</pre>
+982
+983
+984</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 972</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 974</span>
 
 <span class="keyword">def</span> <span class="function">holiday_file</span>(*args)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">wrong number of arguments (given </span><span class="inline"><span class="inline-delimiter">#{</span>args.length<span class="inline-delimiter">}</span></span><span class="content">, expected 0..1)</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> args.length &gt; <span class="integer">1</span>
@@ -5050,12 +5051,12 @@ for <span class='object_link'><a href="CoreExt/Ephemeris.html" title="OpenHAB::C
       <pre class="lines">
 
 
-997
-998
-999</pre>
+999
+1000
+1001</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 997</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 999</span>
 
 <span class="keyword">def</span> <span class="function">holiday_file!</span>(file = <span class="predefined-constant">nil</span>)
   <span class="constant">Thread</span>.current[<span class="symbol">:openhab_holiday_file</span>] = file
@@ -5367,15 +5368,15 @@ for method calls inside the block</p>
       <pre class="lines">
 
 
-667
-668
 669
 670
 671
-672</pre>
+672
+673
+674</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 667</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 669</span>
 
 <span class="keyword">def</span> <span class="function">persistence</span>(service)
   old = persistence!(service)
@@ -5471,14 +5472,14 @@ the system's default persistence service.</p>
       <pre class="lines">
 
 
-689
-690
 691
 692
-693</pre>
+693
+694
+695</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 689</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 691</span>
 
 <span class="keyword">def</span> <span class="function">persistence!</span>(service = <span class="predefined-constant">nil</span>)
   old = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_persistence_service</span>]
@@ -5948,8 +5949,6 @@ recommended that you use a Proc, not a Lambda, for permissive argument matching.
       <pre class="lines">
 
 
-843
-844
 845
 846
 847
@@ -5957,10 +5956,12 @@ recommended that you use a Proc, not a Lambda, for permissive argument matching.
 849
 850
 851
-852</pre>
+852
+853
+854</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 843</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 845</span>
 
 <span class="keyword">def</span> <span class="function">provider</span>(*providers, **providers_by_type)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">You must give a block to set the provider for the duration of</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block_given?
@@ -6083,8 +6084,6 @@ recommended that you use a Proc, not a Lambda, for permissive argument matching.
       <pre class="lines">
 
 
-885
-886
 887
 888
 889
@@ -6142,10 +6141,12 @@ recommended that you use a Proc, not a Lambda, for permissive argument matching.
 941
 942
 943
-944</pre>
+944
+945
+946</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 885</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 887</span>
 
 <span class="keyword">def</span> <span class="function">provider!</span>(*providers, **providers_by_type)
   thread_providers = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_providers</span>] ||= {}
@@ -7489,8 +7490,6 @@ unit(<span class="string"><span class="delimiter">'</span><span class="content">
       <pre class="lines">
 
 
-756
-757
 758
 759
 760
@@ -7502,10 +7501,12 @@ unit(<span class="string"><span class="delimiter">'</span><span class="content">
 766
 767
 768
-769</pre>
+769
+770
+771</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 756</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 758</span>
 
 <span class="keyword">def</span> <span class="function">unit</span>(*units)
   <span class="keyword">if</span> units.length == <span class="integer">1</span> &amp;&amp; units.first.is_a?(javax.measure.Dimension)
@@ -7681,8 +7682,6 @@ unit!
       <pre class="lines">
 
 
-812
-813
 814
 815
 816
@@ -7690,10 +7689,12 @@ unit!
 818
 819
 820
-821</pre>
+821
+822
+823</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 812</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 814</span>
 
 <span class="keyword">def</span> <span class="function">unit!</span>(*units)
   units = units.each_with_object({}) <span class="keyword">do</span> |unit, r|
@@ -7715,7 +7716,7 @@ unit!
 </div>
 
         <footer>
-  Generated on Fri Oct 27 22:19:29 2023 by
+  Generated on Sat Oct 28 15:56:33 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
