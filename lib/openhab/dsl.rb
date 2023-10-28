@@ -559,13 +559,15 @@ module OpenHAB
 
     #
     # Permanently enable conditional execution of commands and updates for the current thread.
+    #
     # When conditional executions are enabled, commands and updates will only be sent if the
     # item's current state is not the same as the command or updated state.
+    # This eliminates the need to chain the command and update calls through
+    # {DSL::Items::Ensure::Ensurable#ensure ensure}.
     #
     # When conditional executions are enabled either by this method or within a block of {ensure_states},
     # commands and updates can still be forcefully executed using the corresponding bang methods, e.g.
-    # `Item1.on!`, `Item1.command!(50)`, or `Item1.update!(ON)`. This eliminates the need to chain the
-    # command calls through {DSL::Items::Ensure::Ensurable#ensure ensure}.
+    # `Item1.on!`, `Item1.command!(50)`, or `Item1.update!(ON)`.
     #
     # @note This method is only intended for use at the top level of rule
     #   scripts. If it's used within library methods, or hap-hazardly within
