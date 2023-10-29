@@ -210,7 +210,18 @@ module OpenHAB
               thing_type,
               self.class.config_description_registry
             )
+
+            predefined_channels = self.class.thing_factory_helper
+                                      .create_channels(thing_type, uid, self.class.config_description_registry)
+                                      .to_h { |channel| [channel.uid, channel] }
+            new_channels = channels.to_h { |channel| [channel.uid, channel] }
+            merged_channels = predefined_channels.merge(new_channels) do |_key, predefined_channel, new_channel|
+              predefined_channel.configuration.merge!(new_channel.configuration)
+              predefined_channel
+            end
+            @channels = merged_channels.values
           end
+
           builder = org.openhab.core.thing.binding.builder.ThingBuilder
                        .create(thing_type_uid, uid)
                        .with_label(label)
@@ -219,15 +230,7 @@ module OpenHAB
                        .with_bridge(bridge_uid)
                        .with_channels(channels)
 
-          if thing_type
-            # can't use with_channels, or it will wipe out custom channels from above
-            self.class.thing_factory_helper.create_channels(thing_type,
-                                                            uid,
-                                                            self.class.config_description_registry).each do |channel|
-              builder.with_channel(channel)
-            end
-            builder.with_properties(thing_type.properties)
-          end
+          builder.with_properties(thing_type.properties) if thing_type
 
           builder.build
         end
