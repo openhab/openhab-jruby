@@ -314,6 +314,16 @@ RSpec.describe OpenHAB::DSL::Things::Builder do
         channel = thing.channels["test"]
         expect(channel.accepted_item_type).to eq "DateTime"
       end
+
+      it "can customize predefined channels" do
+        thing = things.build do
+          thing "astro:sun:home" do
+            channel "rise#start", "start", config: { offset: 5 }
+          end
+        end
+        channel = thing.channels["rise#start"]
+        expect(channel.configuration[:offset].to_i).to eq 5
+      end
     end
   end
 end
