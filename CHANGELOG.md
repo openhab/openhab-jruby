@@ -1,5 +1,18 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.11.0](https://github.com/openhab/openhab-jruby/tree/v5.11.0) (2023-10-29)
+
+[Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.10.0...v5.11.0)
+
+### Features
+
+- Add ensure\_states! and bang version of command shortcuts [\#184](https://github.com/openhab/openhab-jruby/pull/184) ([jimtng](https://github.com/jimtng))
+
+### Bug Fixes
+
+- Allow configuring predefined channels in Thing builder [\#189](https://github.com/openhab/openhab-jruby/pull/189) ([jimtng](https://github.com/jimtng))
+- Infer accepted\_item\_type in ChannelBuilder [\#187](https://github.com/openhab/openhab-jruby/pull/187) ([jimtng](https://github.com/jimtng))
+
 ## [v5.10.0](https://github.com/openhab/openhab-jruby/tree/v5.10.0) (2023-10-25)
 
 [Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.9.0...v5.10.0)
