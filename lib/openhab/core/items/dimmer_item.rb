@@ -102,7 +102,7 @@ module OpenHAB
         #
         def dim(amount = 1)
           target = [state&.-(amount), 0].compact.max
-          command(target)
+          command!(target)
           target
         end
 
@@ -121,7 +121,7 @@ module OpenHAB
         #
         def brighten(amount = 1)
           target = [state&.+(amount), 100].compact.min
-          command(target)
+          command!(target)
           target
         end
 
@@ -131,16 +131,6 @@ module OpenHAB
 
         # @!method decrease
         #   Send the {DECREASE} command to the item
-        #   @return [DimmerItem] `self`
-
-        # @!method increase!
-        #   Send the {INCREASE} command to the item, even when
-        #     {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.
-        #   @return [DimmerItem] `self`
-
-        # @!method decrease!
-        #   Send the {DECREASE} command to the item, even when
-        #     {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.
         #   @return [DimmerItem] `self`
 
         # raw numbers translate directly to PercentType, not a DecimalType

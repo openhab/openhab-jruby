@@ -57,16 +57,8 @@ module OpenHAB
         #   Send the {STOP} command to the item
         #   @return [RollershutterItem] `self`
 
-        # @!method stop!
-        #   Send the {STOP} command to the item, even when {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.
-        #   @return [RollershutterItem] `self`
-
         # @!method move
         #   Send the {MOVE} command to the item
-        #   @return [RollershutterItem] `self`
-
-        # @!method move!
-        #   Send the {MOVE} command to the item, even when {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.
         #   @return [RollershutterItem] `self`
 
         # raw numbers translate directly to PercentType, not a DecimalType

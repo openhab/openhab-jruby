@@ -60,25 +60,43 @@ module OpenHAB
             command = Types::COMMAND_ALIASES[value.to_s]
             next if klass.instance_methods.include?(command)
 
-            logger.trace("Defining #{klass}##{command} for #{value}")
-            klass.class_eval <<~RUBY, __FILE__, __LINE__ + 1
-              ruby2_keywords def #{command}(*args, &block)  # ruby2_keywords def on(*args, &block)
-                command(#{value}, *args, &block)            #   command(ON, *args, &block)
-              end                                           # end
-              ruby2_keywords def #{command}!(*args, &block) # ruby2_keywords def on!(*args, &block)
-                command!(#{value}, *args, &block)           #   command!(ON, *args, &block)
-              end                                           # end
-            RUBY
+            if value.is_a?(Types::State)
+              logger.trace("Defining #{klass}/Enumerable##{command}/#{command}! for #{value}")
 
-            logger.trace("Defining Enumerable##{command} for #{value}")
-            Enumerable.class_eval <<~RUBY, __FILE__, __LINE__ + 1
-              def #{command}         # def on
-                each(&:#{command})   #   each(&:on)
-              end                    # end
-              def #{command}!        # def on!
-                each(&:#{command}!)  #   each(&:on!)
-              end                    # end
-            RUBY
+              klass.class_eval <<~RUBY, __FILE__, __LINE__ + 1
+                ruby2_keywords def #{command}(*args, &block)   # ruby2_keywords def on(*args, &block)
+                  command(#{value}, *args, &block)             #   command(ON, *args, &block)
+                end                                            # end
+                                                               #
+                ruby2_keywords def #{command}!(*args, &block)  # ruby2_keywords def on!(*args, &block)
+                  command!(#{value}, *args, &block)            #   command!(ON, *args, &block)
+                end                                            # end
+              RUBY
+
+              Enumerable.class_eval <<~RUBY, __FILE__, __LINE__ + 1
+                def #{command}         # def on
+                  each(&:#{command})   #   each(&:on)
+                end                    # end
+                                       #
+                def #{command}!        # def on!
+                  each(&:#{command}!)  #   each(&:on!)
+                end                    # end
+              RUBY
+            else
+              logger.trace("Defining #{klass}/Enumerable##{command} for #{value}")
+
+              klass.class_eval <<~RUBY, __FILE__, __LINE__ + 1
+                ruby2_keywords def #{command}(*args, &block)  # ruby2_keywords def refresh(*args, &block)
+                  command!(#{value}, *args, &block)           #   command!(REFRESH, *args, &block)
+                end                                           # end
+              RUBY
+
+              Enumerable.class_eval <<~RUBY, __FILE__, __LINE__ + 1
+                def #{command}        # def refresh
+                  each(&:#{command})  #   each(&:refresh)
+                end                   # end
+              RUBY
+            end
 
             logger.trace("Defining ItemCommandEvent##{command}? for #{value}")
             Events::ItemCommandEvent.class_eval <<~RUBY, __FILE__, __LINE__ + 1
