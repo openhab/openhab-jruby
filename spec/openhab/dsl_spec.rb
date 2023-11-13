@@ -9,6 +9,24 @@ RSpec.describe OpenHAB::DSL do
     expect(described_class).to respond_to(:changed)
   end
 
+  describe "#config_description" do
+    it "works" do
+      config = config_description do
+        parameter "test", :text, label: "Test", description: "Test"
+      end
+      expect(config).to be_a(org.openhab.core.config.core.ConfigDescription)
+    end
+
+    it "can infer the group name when nested inside group" do
+      config = config_description do
+        group "group1" do
+          parameter "test1", :text
+        end
+      end
+      expect(config.parameters.first.group_name).to eq "group1"
+    end
+  end
+
   describe "#profile" do
     before do
       install_addon "binding-astro", ready_markers: "openhab.xmlThingTypes"
@@ -84,6 +102,20 @@ RSpec.describe OpenHAB::DSL do
       end
 
       SeasonColor << "0,100,100"
+    end
+
+    context "with UI support" do
+      it "supports UI label" do
+        profile("ui_profile", label: "Profile Visible in UI") { |_event| true }
+      end
+
+      it "supports config description" do
+        config_description = config_description do
+          parameter "test", :text, label: "Test", description: "Test"
+        end
+
+        profile(:test, label: "Test Profile", config_description: config_description) { |_event| true }
+      end
     end
   end
 

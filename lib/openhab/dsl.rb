@@ -77,7 +77,13 @@ module OpenHAB
     #
     # Defines a new profile that can be applied to item channel links.
     #
+    # To create a profile that can be used in the UI, provide a label and optionally a {config_description},
+    # otherwise the profile will not be visible in the UI.
+    #
     # @param [String, Symbol] id The id for the profile.
+    # @param [String, nil] label The label for the profile. When nil, the profile will not be visible in the UI.
+    # @param [org.openhab.core.config.core.ConfigDescription, nil] config_description
+    #   The configuration description for the profile so that it can be configured in the UI.
     # @yield [event, command: nil, state: nil, callback:, link:, item:, channel_uid:, configuration:, context:]
     #   All keyword params are optional. Any that aren't defined won't be passed.
     # @yieldparam [:command_from_item, :state_from_item, :command_from_handler, :state_from_handler] event
@@ -97,8 +103,8 @@ module OpenHAB
     # @yieldreturn [Boolean] Return true from the block in order to have default processing.
     # @return [void]
     #
-    # @see org.openhab.thing.Profile
-    # @see org.openhab.thing.StateProfile
+    # @see org.openhab.core.thing.profiles.Profile
+    # @see org.openhab.core.thing.profiles.StateProfile
     #
     # @example Vetoing a command
     #   profile(:veto_closing_shades) do |event, item:, command:|
@@ -142,15 +148,52 @@ module OpenHAB
     #   # can also be referenced from an `.items` file:
     #   # Number:Temperature MyTempWithNonUnitValueFromBinding "I prefer Celsius [%d °C]" { channel="something_that_returns_F"[profile="ruby:set_uom", unit="°F"] }
     #
-    def profile(id, &block)
+    # @example Create a profile that is usable in the UI
+    #   config_description = config_description do
+    #     parameter :min, :decimal, label: "Minimum", description: "Minimum value"
+    #     parameter :max, :decimal, label: "Maximum", description: "Maximum value"
+    #   end
+    #
+    #   profile(:range_filter, label: "Range Filter", config_description: config_description) do |event, state:, configuration:|
+    #     return true unless event == :state_from_handler
+    #
+    #     (configuration["min"]..configuration["max"]).cover?(state)
+    #   end
+    #
+    def profile(id, label: nil, config_description: nil, &block)
       raise ArgumentError, "Block is required" unless block
 
       id = id.to_s
-      uid = org.openhab.core.thing.profiles.ProfileTypeUID.new("ruby", id)
 
       ThreadLocal.thread_local(openhab_rule_type: "profile", openhab_rule_uid: id) do
-        Core::ProfileFactory.instance.register(uid, block)
+        Core::ProfileFactory.instance.register(id, block, label: label, config_description: config_description)
       end
+    end
+
+    #
+    # Create a {org.openhab.core.config.core.ConfigDescription ConfigDescription} object.
+    #
+    # @param [String, java.net.URI] uri The URI for the ConfigDescription. When nil, a dummy URI is used which will
+    #   be replaced by the profile with the correct URI for that profile.
+    # @yield Block that consists of {ConfigDescription::Builder#parameter} and {ConfigDescription::Builder#group} calls.
+    #
+    # @return [org.openhab.core.config.core.ConfigDescription]
+    #   The created {org.openhab.core.config.core.ConfigDescription ConfigDescription} object
+    #
+    # @example
+    #  config_description = config_description do
+    #    parameter :ungrouped_parameter, :decimal, label: "Ungrouped Parameter", min: 1, max: 5
+    #
+    #    group "Config Group", label: "Grouped parameters", advanced: true do
+    #      parameter :my_parameter, :string, label: "My Parameter", description: "My Parameter Description"
+    #      parameter :other_parameter, :integer, label: "Other Parameter", description: "Other Parameter Description"
+    #    end
+    #  end
+    #
+    def config_description(uri = nil, &block)
+      raise ArgumentError, "Block is required" unless block
+
+      ConfigDescription::Builder.new.build(uri, &block)
     end
 
     # rubocop:enable Layout/LineLength
