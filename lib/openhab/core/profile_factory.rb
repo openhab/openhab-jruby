@@ -6,12 +6,14 @@ require_relative "script_handling"
 
 module OpenHAB
   module Core
+    # rubocop:disable Naming/MethodName
     # @!visibility private
     class ProfileFactory
+      include org.openhab.core.config.core.ConfigDescriptionProvider # This needs to be included first
       include org.openhab.core.thing.profiles.ProfileFactory
+      include org.openhab.core.thing.profiles.ProfileTypeProvider
       include Singleton
 
-      # rubocop:disable Naming/MethodName
       class Profile
         include org.openhab.core.thing.profiles.StateProfile
 
@@ -96,10 +98,10 @@ module OpenHAB
         end
       end
       private_constant :Profile
-      # rubocop:enable Naming/MethodName
 
       def initialize
         @profiles = {}
+        @uri_to_uid = {}
 
         @registration = OSGi.register_service(self)
         ScriptHandling.script_unloaded { unregister }
@@ -116,17 +118,56 @@ module OpenHAB
       end
 
       # @!visibility private
-      def register(uid, block)
-        @profiles[uid] = [DSL::ThreadLocal.persist, block]
+      def register(id, block, label: nil, config_description: nil)
+        uid = org.openhab.core.thing.profiles.ProfileTypeUID.new("ruby", id)
+        uri = java.net.URI.new("profile", uid.to_s, nil)
+        if config_description && config_description.uid != uri
+          config_description = org.openhab.core.config.core.ConfigDescriptionBuilder.create(uri)
+                                  .with_parameters(config_description.parameters)
+                                  .with_parameter_groups(config_description.parameter_groups)
+                                  .build
+        end
+
+        @profiles[uid] = {
+          thread_locals: DSL::ThreadLocal.persist,
+          label: label,
+          config_description: config_description,
+          block: block
+        }
+        @uri_to_uid[uri] = uid
       end
 
-      def createProfile(type, callback, context) # rubocop:disable Naming/MethodName
-        @profiles[type].then { |(thread_locals, block)| Profile.new(callback, context, type, thread_locals, block) }
+      # @!visibility private
+      def createProfile(uid, callback, context)
+        profile = @profiles[uid]
+        Profile.new(callback, context, uid, profile[:thread_locals], profile[:block])
       end
 
-      def getSupportedProfileTypeUIDs # rubocop:disable Naming/MethodName
+      # @!visibility private
+      def getSupportedProfileTypeUIDs
         @profiles.keys
       end
+
+      # @!visibility private
+      def getProfileTypes(_locale)
+        @profiles.map do |uid, profile|
+          next if profile[:label].nil?
+
+          org.openhab.core.thing.profiles.ProfileTypeBuilder.new_state(uid, "RUBY #{profile[:label]}").build
+        end.compact
+      end
+
+      # @!visibility private
+      def getConfigDescriptions(_locale)
+        @profiles.values.map { |profile| profile[:config_description] if profile[:label] }.compact
+      end
+
+      # @!visibility private
+      def getConfigDescription(uri, _locale)
+        uid = @uri_to_uid[uri]
+        @profiles.dig(uid, :config_description)
+      end
     end
+    # rubocop:enable Naming/MethodName
   end
 end
