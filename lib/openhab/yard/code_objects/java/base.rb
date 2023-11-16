@@ -9,7 +9,9 @@ module YARD
       # Which might be a class, an enum, or an interface
       module Base
         module ClassMethods
-          def new(name)
+          def new(name, _suffix = nil)
+            # _suffix is given when it encounters a class with ::, e.g. org.openhab.core.OpenHAB::DEFAULT_CONFIG_FOLDER
+
             super(:root, name)
           end
         end
