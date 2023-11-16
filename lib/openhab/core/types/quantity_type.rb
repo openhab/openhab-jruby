@@ -106,7 +106,7 @@ module OpenHAB
         #   #
         #   # Convert this {QuantityType} into another unit.
         #   #
-        #   # @param [String, javax.measure.units.Unit] unit
+        #   # @param [String, javax.measure.Unit] unit
         #   # @return [QuantityType]
         #   #
         #   # @example
@@ -287,7 +287,7 @@ module OpenHAB
           end
         end
 
-        # if unit is {org.openhab.core.library.unit.Units.ONE}, return a plain
+        # if unit is {org.openhab.core.library.unit.Units::ONE}, return a plain
         # Java BigDecimal
         # @!visibility private
         def deunitize

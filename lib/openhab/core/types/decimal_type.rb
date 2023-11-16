@@ -70,7 +70,7 @@ module OpenHAB
         #
         # Convert DecimalType to a QuantityType
         #
-        # @param [String, javax.measure.units.Unit] other
+        # @param [String, javax.measure.Unit] other
         #
         # @return [QuantityType] `self` as a {QuantityType} of the supplied Unit
         #
