@@ -284,6 +284,7 @@ module OpenHAB
 
           @switch = switch
           @frequency = frequency
+          @switch_enabled = nil
         end
 
         # (see #switch=)
