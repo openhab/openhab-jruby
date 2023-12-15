@@ -70,13 +70,17 @@ module OpenHAB
         #         text label: "Climate", icon: "if:mdi:home-thermometer-outline" do
         #           frame label: "Main Floor" do
         #             text item: MainFloor_AmbTemp
-        #             switch item: MainFloorThermostat_TargetMode, label: "Mode", mappings: %w[off auto cool heat]
+        #             # colors are set with a hash, with key being condition, and value being the color
+        #             switch item: MainFloorThermostat_TargetMode, label: "Mode", mappings: %w[off auto cool heat], label_color: { "==heat" => "red", "" => "black" }
+        #             # an array of conditions are OR'd together
+        #             switch item: MainFloorThermostat_TargetMode, label: "Mode", mappings: %w[off auto cool heat], label_color: { ["==heat", "==cool"], => "green" }
         #             setpoint item: MainFloorThermostat_SetPoint, label: "Set Point", visibility: "MainFloorThermostat_TargetMode!=off"
         #           end
         #           frame label: "Basement" do
         #             text item: Basement_AmbTemp
         #             switch item: BasementThermostat_TargetMode, label: "Mode", mappings: { OFF: "off", COOL: "cool", HEAT: "heat" }
-        #             setpoint item: BasementThermostat_SetPoint, label: "Set Point", visibility: "BasementThermostat_TargetMode!=off"
+        #             # nested arrays are conditions that are AND'd together, instead of OR'd (requires openHAB 4.1)
+        #             setpoint item: BasementThermostat_SetPoint, label: "Set Point", visibility: [["BasementThermostat_TargetMode!=off", "Vacation_Switch!=OFF"]]
         #           end
         #         end
         #       end
