@@ -50,9 +50,9 @@ module OpenHAB
         # @return [self]
         #
         def toggle
-          return on unless state?
+          return on! unless state?
 
-          command(!state)
+          command!(!state)
         end
 
         # @!method on?

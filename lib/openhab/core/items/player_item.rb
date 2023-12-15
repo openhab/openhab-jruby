@@ -55,7 +55,7 @@ module OpenHAB
         #   Send the {REWIND} command to the item
         #   @return [PlayerItem] `self`
 
-        # @!method rewind
+        # @!method rewind!
         #   Send the {REWIND} command to the item, even when {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.
         #   @return [PlayerItem] `self`
 
@@ -72,17 +72,8 @@ module OpenHAB
         #   Send the {NEXT} command to the item
         #   @return [PlayerItem] `self`
 
-        # @!method next!
-        #   Send the {NEXT} command to the item, even when {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.
-        #   @return [PlayerItem] `self`
-
         # @!method previous
         #   Send the {PREVIOUS} command to the item
-        #   @return [PlayerItem] `self`
-
-        # @!method previous!
-        #   Send the {PREVIOUS} command to the item, even when
-        #     {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.
         #   @return [PlayerItem] `self`
       end
     end
