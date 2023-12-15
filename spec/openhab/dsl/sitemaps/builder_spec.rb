@@ -25,6 +25,79 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
   end
 
+  it "supports visibility" do
+    s = sitemaps.build do
+      sitemap "default", "My Residence" do
+        switch item: "Switch1", visibility: "Switch1 == ON"
+      end
+    end
+
+    switch = s.children.first
+    cond = switch.visibility.first
+    # @deprecated OH 4.0
+    cond = cond.conditions.first if cond.respond_to?(:conditions)
+    expect(cond.item).to eq "Switch1"
+    expect(cond.condition.to_s).to eq "=="
+    expect(cond.state).to eq "ON"
+  end
+
+  it "supports colors" do
+    s = sitemaps.build do
+      sitemap "default", "My Residence" do
+        switch item: "Switch1", label_color: { "Switch1 == ON" => "green" }
+      end
+    end
+
+    switch = s.children.first
+    cond = rule = switch.label_color.first
+    # @deprecated OH 4.0
+    cond = cond.conditions.first if cond.respond_to?(:conditions)
+    expect(cond.item).to eq "Switch1"
+    expect(cond.condition.to_s).to eq "=="
+    expect(cond.state).to eq "ON"
+    expect(rule.arg).to eq "green"
+  end
+
+  # @deprecated OH 4.0
+  if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.1.0") ||
+     OpenHAB::Core::VERSION.start_with?("4.1.0.M")
+    it "supports AND conditions on visibility" do
+      sitemaps.build do
+        sitemap "default", "My Residence" do
+          switch item: "Switch1", visibility: [["Switch1 == ON"]]
+        end
+      end
+    end
+
+    it "supports AND conditions on colors" do
+      sitemaps.build do
+        sitemap "default", "My Residence" do
+          switch item: "Switch1", label_color: { [["Switch1 == ON", "Switch2 == OFF"]] => "green" }
+        end
+      end
+    end
+  else
+    it "does not support AND conditions on visibility" do
+      expect do
+        sitemaps.build do
+          sitemap "default", "My Residence" do
+            switch item: "Switch1", visibility: [["Switch1 == ON"]]
+          end
+        end
+      end.to raise_error(ArgumentError)
+    end
+
+    it "does not support AND conditions on colors" do
+      expect do
+        sitemaps.build do
+          sitemap "default", "My Residence" do
+            switch item: "Switch1", label_color: { [["Switch1 == ON", "Switch2 == OFF"]] => "green" }
+          end
+        end
+      end.to raise_error(ArgumentError)
+    end
+  end
+
   it "can add a frame" do
     sitemaps.build do
       sitemap "default" do
