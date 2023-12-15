@@ -22,6 +22,16 @@ module OpenHAB
           EntityLookup.lookup_thing(thing_uid)
         end
 
+        # @attribute [r] channel
+        #
+        # Return the channel object for this channel
+        #
+        # @return [Channel, nil]
+        #
+        def channel
+          things.channels[self]
+        end
+
         #
         # @attribute [r] item
         #
