@@ -72,6 +72,7 @@ module OpenHAB
           # Allows indexing by both integer as an array or channel id acting like a hash.
           # @param [Integer, String, ChannelUID] index
           #   Numeric index, string channel id, or a {ChannelUID} to search for.
+          # @return [Channel, nil]
           def [](index)
             return @thing.get_channel(index) if index.is_a?(ChannelUID)
             return @thing.get_channel(index.to_str) if index.respond_to?(:to_str)
