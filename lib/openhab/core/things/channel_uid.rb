@@ -29,7 +29,7 @@ module OpenHAB
         # @return [Channel, nil]
         #
         def channel
-          things.channels[self]
+          thing.channels[self]
         end
 
         #
