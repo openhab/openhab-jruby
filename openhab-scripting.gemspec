@@ -30,9 +30,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "cuke_linter", "~> 1.2"
   spec.add_development_dependency "faraday-retry", "~> 2.1"
   spec.add_development_dependency "gem-release", "~> 2.2"
-  spec.add_development_dependency "guard-rubocop", "~> 1.5"
-  spec.add_development_dependency "guard-shell", "~> 0.7"
-  spec.add_development_dependency "guard-yard", "~> 2.2"
   spec.add_development_dependency "httparty", "~> 0.20"
   spec.add_development_dependency "irb", "1.6.3" # 1.6.4 breaks Ruby 2.6/JRuby 9.3 compatibility
   spec.add_development_dependency "nokogiri", "~> 1.13"
