@@ -137,7 +137,7 @@ module OpenHAB
         #
 
         ThingStatus.constants.each do |thingstatus|
-          define_method("#{thingstatus.to_s.downcase}?") { status == ThingStatus.value_of(thingstatus) }
+          define_method(:"#{thingstatus.to_s.downcase}?") { status == ThingStatus.value_of(thingstatus) }
         end
 
         #

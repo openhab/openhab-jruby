@@ -27,6 +27,9 @@ Bundler/GemFilename:
   Exclude:
     - lib/openhab/dsl/gems.rb
 
+FactoryBot:
+  Enabled: false
+
 Layout/LineLength:
   AllowedPatterns:
     - "# @!method" # Some YARD tags can't be broken up onto multiple ines
@@ -45,9 +48,9 @@ RSpec/DescribeClass:
 RSpec/ExpectActual:
   Exclude:
     - spec/openhab/core/types/*_spec.rb
-RSpec/FactoryBot:
-  Enabled: false
 RSpec/FilePath:
+  Enabled: false  # superceded by RSpec/SpecFilePathSuffix and RSpec/SpecFilePathFormat
+RSpec/SpecFilePathFormat:
   CustomTransform:
     OpenHAB: openhab
 RSpec/IdenticalEqualityAssertion:

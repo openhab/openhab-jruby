@@ -36,6 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "process_exists", "~> 0.2"
   spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "rspec", "~> 3.11"
+  spec.add_development_dependency "rubocop", "~> 1.57.2" # can't update due to https://github.com/rubocop/rubocop/issues/12558
   spec.add_development_dependency "rubocop-inst"
   spec.add_development_dependency "rubocop-rake", "~> 0.6"
   spec.add_development_dependency "rubocop-rspec", "~> 2.11"

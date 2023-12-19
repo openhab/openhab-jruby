@@ -20,15 +20,15 @@ module OpenHAB
           #   in this module than instance variable belong to the module not the calling class
           define_method(name) do |*args, &block|
             if args.empty? && block.nil? == true
-              instance_variable_get("@#{name}")
+              instance_variable_get(:"@#{name}")
             else
               logger.trace("Property '#{name}' called with args(#{args}) and block(#{block})")
               if args.length == 1
-                instance_variable_set("@#{name}", args.first)
+                instance_variable_set(:"@#{name}", args.first)
               elsif args.length > 1
-                instance_variable_set("@#{name}", args)
+                instance_variable_set(:"@#{name}", args)
               elsif block
-                instance_variable_set("@#{name}", block)
+                instance_variable_set(:"@#{name}", block)
               end
             end
           end
@@ -47,7 +47,7 @@ module OpenHAB
           define_method(name) do |*args, &block|
             array_name ||= name
             if args.empty? && block.nil? == true
-              instance_variable_get("@#{array_name}")
+              instance_variable_get(:"@#{array_name}")
             else
               logger.trace("Property '#{name}' called with args(#{args}) and block(#{block})")
               if args.length == 1
@@ -59,14 +59,14 @@ module OpenHAB
               end
               yield insert if block_given?
               insert = wrapper.new(insert) if wrapper
-              instance_variable_set("@#{array_name}", (instance_variable_get("@#{array_name}") || []) << insert)
+              instance_variable_set(:"@#{array_name}", (instance_variable_get(:"@#{array_name}") || []) << insert)
             end
           end
 
           return unless array_name
 
           define_method(array_name) do
-            instance_variable_get("@#{array_name}")
+            instance_variable_get(:"@#{array_name}")
           end
         end
       end

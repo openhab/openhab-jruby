@@ -174,10 +174,10 @@ module OpenHAB
           def self.duration_to_map(duration)
             if duration.to_millis_part.zero? && duration.to_nanos_part.zero? && duration.to_days.zero?
               %i[second minute hour].each do |unit|
-                to_unit_part = duration.public_send("to_#{unit}s_part")
+                to_unit_part = duration.public_send(:"to_#{unit}s_part")
                 next unless to_unit_part.positive?
 
-                to_unit = duration.public_send("to_#{unit}s")
+                to_unit = duration.public_send(:"to_#{unit}s")
                 break unless to_unit_part == to_unit
 
                 return EXPRESSION_MAP[unit].merge(unit => "*/#{to_unit}")
