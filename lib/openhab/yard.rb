@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "byebug"
-
 Dir[File.expand_path("yard/**/*.rb", __dir__)].sort.each do |f|
   require f
 end
