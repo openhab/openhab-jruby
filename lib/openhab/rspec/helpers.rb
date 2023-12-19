@@ -449,10 +449,13 @@ module OpenHAB
 
       def parse_emacs_modeline(line)
         line[EMACS_MODELINE_REGEXP, 1]
-            &.split(";")
-            &.map(&:strip)
-            &.map { |l| l.split(":", 2).map(&:strip).tap { |a| a[1] ||= nil } }
-            &.to_h
+          &.split(";")
+          &.to_h do |l|
+            l.strip
+             .split(":", 2)
+             .map(&:strip)
+             .tap { |a| a[1] ||= nil }
+          end
       end
 
       def ruby_file?(script)

@@ -116,7 +116,7 @@ module OpenHAB
                        icon_color: nil,
                        visibility: nil,
                        &block)
-          unless SitemapBuilder.factory.respond_to?("create_#{type}")
+          unless SitemapBuilder.factory.respond_to?(:"create_#{type}")
             raise ArgumentError,
                   "#{type} is not a valid widget type"
           end
@@ -183,7 +183,7 @@ module OpenHAB
 
         # @!visibility private
         def build
-          widget = SitemapBuilder.factory.send("create_#{@type}")
+          widget = SitemapBuilder.factory.send(:"create_#{@type}")
           item = @item
           item = item.name if item.respond_to?(:name)
           widget.item = item if item

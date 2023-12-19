@@ -210,7 +210,7 @@ module OpenHAB
       #   @return [true,false]
       #
       def def_level_predicate(level)
-        define_method("#{level}?") { @slf4j_logger.send("is_#{level}_enabled") }
+        define_method(:"#{level}?") { @slf4j_logger.send(:"is_#{level}_enabled") }
       end
     end
 
@@ -318,7 +318,7 @@ module OpenHAB
       raise ArgumentError, "Unknown Severity #{severity}" unless LEVELS.include? severity
 
       # Dynamically check enablement of underlying logger
-      return unless send("#{severity}?")
+      return unless send(:"#{severity}?")
 
       # Process block if no message provided
       msg = yield if msg.nil? && block_given?

@@ -394,11 +394,11 @@ RSpec.describe OpenHAB::Core::Items::Item do
     end
 
     all_items = [Switch1, Switch2, Switch3]
-    expect(all_items).to be_include(Switch1)
-    expect(all_items).to be_include(Switch2)
-    expect(all_items).to be_include(Switch3)
+    expect(all_items).to include(Switch1)
+    expect(all_items).to include(Switch2)
+    expect(all_items).to include(Switch3)
 
-    expect([Switch1, Switch3]).not_to be_include(Switch2)
+    expect([Switch1, Switch3]).not_to include(Switch2)
   end
 
   it "compares items by item, not by state" do

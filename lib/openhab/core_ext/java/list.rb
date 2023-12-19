@@ -311,7 +311,7 @@ module Java::JavaUtil::List # rubocop:disable Style/ClassAndModuleChildren
   end
 
   def rotate!(count = 1)
-    count = count % length
+    count %= length
     push(*shift(count))
     self
   end

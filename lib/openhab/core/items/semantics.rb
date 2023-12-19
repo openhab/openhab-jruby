@@ -676,8 +676,8 @@ module Enumerable
 
     begin
       raise ArgumentError unless point_or_property_types.all? do |tag|
-                                   (tag < Semantics::Point ||
-                                    tag < Semantics::Property)
+                                   tag < Semantics::Point ||
+                                   tag < Semantics::Property
                                  end
     rescue ArgumentError, TypeError
       raise ArgumentError, "point_or_property_types must all be a subclass of Point or Property"

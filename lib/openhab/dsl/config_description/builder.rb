@@ -125,7 +125,7 @@ module OpenHAB
             parameter = org.openhab.core.config.core.ConfigDescriptionParameterBuilder.create(name.to_s, type)
 
             p.each do |key, value|
-              parameter.send("with_#{key}", value) unless value.nil?
+              parameter.send(:"with_#{key}", value) unless value.nil?
             end
             parameter.build
           end
