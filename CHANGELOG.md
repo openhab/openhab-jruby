@@ -1,5 +1,18 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.12.0](https://github.com/openhab/openhab-jruby/tree/v5.12.0) (2023-12-19)
+
+
+
+### Features
+* Make profile usable in UI by @jimtng in https://github.com/openhab/openhab-jruby/pull/196
+* Add/document ChannelTriggeredEvent by @ccutrer in https://github.com/openhab/openhab-jruby/pull/198
+### Bug Fixes
+* Support AND'd visibility and color rules in sitemap builder by @ccutrer in https://github.com/openhab/openhab-jruby/pull/200
+* Avoid extra ensure state check from item helper commands by @ccutrer in https://github.com/openhab/openhab-jruby/pull/190
+
+
+**Full Changelog**: https://github.com/openhab/openhab-jruby/compare/v5.11.0...v5.12.0
 ## [v5.11.0](https://github.com/openhab/openhab-jruby/tree/v5.11.0) (2023-10-29)
 
 [Full Changelog](https://github.com/openhab/openhab-jruby/compare/v5.10.0...v5.11.0)
