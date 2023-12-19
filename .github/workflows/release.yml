@@ -47,10 +47,16 @@ jobs:
           ruby -Ilib/openhab/dsl -r version -e 'puts "new_version=#{OpenHAB::DSL::VERSION}"' >> $GITHUB_OUTPUT
       - name: Generate CHANGELOG
         env:
-          CHANGELOG_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           bin/rake update_doc_links[${{ env.OLD_VERSION }},${{ env.NEW_VERSION }}]
-          bin/rake changelog[${{ env.OLD_VERSION }},${{ env.NEW_VERSION }},tmp/new_changes.md]
+
+          gh release create v${{ env.NEW_VERSION }} --generate-notes --draft
+          gh release view v${{ env.NEW_VERSION }} --json body | jq -r .body | sed '1,3d' > new_changes.md
+          gh release delete v${{ env.NEW_VERSION }} --yes
+
+          bin/rake changelog[${{ env.OLD_VERSION }},${{ env.NEW_VERSION }},new_changes.md]
+
           git add Gemfile.lock CHANGELOG.md USAGE.md templates .known_good_references
       - name: Release Gem
         env:
@@ -62,7 +68,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create v${{ env.NEW_VERSION }} --notes-file tmp/new_changes.md 
+          gh release create v${{ env.NEW_VERSION }} --notes-file new_changes.md 
   publish_main_docs:
     needs: release
     uses: ./.github/workflows/yardoc.yml

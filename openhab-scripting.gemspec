@@ -30,7 +30,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "cuke_linter", "~> 1.2"
   spec.add_development_dependency "faraday-retry", "~> 2.1"
   spec.add_development_dependency "gem-release", "~> 2.2"
-  spec.add_development_dependency "github_changelog_generator", "~> 1.16"
   spec.add_development_dependency "guard-rubocop", "~> 1.5"
   spec.add_development_dependency "guard-shell", "~> 0.7"
   spec.add_development_dependency "guard-yard", "~> 2.2"

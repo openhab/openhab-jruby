@@ -1,16 +1,5 @@
 # frozen_string_literal: true
 
-require "github_changelog_generator/task"
-
-module GitHubChangelogGenerator
-  class Generator
-    # Don't add any header or footer
-    def insert_fixed_string(log)
-      log
-    end
-  end
-end
-
 directory "tmp"
 
 desc "Generate Changelog"
@@ -20,21 +9,11 @@ task :changelog, %i[old_version new_version output] => ["tmp"] do |_task, args|
     raise ArgumentError, "old_version, new_version, and output arguments must be specified"
   end
 
-  GitHubChangelogGenerator::RakeTask.new :new_changelog do |config|
-    config.user = "openhab"
-    config.project = "openhab-jruby"
-    config.since_tag = "v#{old_version}"
-    config.future_release = "v#{new_version}"
-    config.bug_prefix = "### Bug Fixes"
-    config.enhancement_prefix = "### Features"
-    config.issues = true
-    config.add_pr_wo_labels = false
-    config.add_issues_wo_labels = false
-    config.exclude_labels = ["documentation"]
-    config.output = new_filename
-  end
+  today = Time.now.strftime("%Y-%m-%d")
+  header = "## [v#{new_version}](https://github.com/openhab/openhab-jruby/tree/v#{new_version}) (#{today})\n\n"
 
-  Rake::Task["new_changelog"].execute
+  release_notes = File.read(new_filename)
+  File.write(new_filename, "#{header}\n\n#{release_notes}")
 
   insert_new_changelog(new_filename, main_filename: "CHANGELOG.md")
 end
