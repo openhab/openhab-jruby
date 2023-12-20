@@ -10,10 +10,16 @@ task :changelog, %i[old_version new_version output] => ["tmp"] do |_task, args|
   end
 
   today = Time.now.strftime("%Y-%m-%d")
-  header = "## [v#{new_version}](https://github.com/openhab/openhab-jruby/tree/v#{new_version}) (#{today})\n\n"
+  header = "## [v#{new_version}](https://github.com/openhab/openhab-jruby/tree/v#{new_version}) (#{today})"
 
   release_notes = File.read(new_filename)
-  File.write(new_filename, "#{header}\n\n#{release_notes}")
+  release_notes = release_notes.gsub(/by @(\w+)/, 'by [@\1](https://github.com/\1)')
+                               .gsub(%r{in (https://github.com/\S+/(\d+))}, 'in [#\2](\1)')
+                               .gsub(%r{(Full Changelog..:) (https://\S+/compare/(\S+))}, '\1 [\3](\2)')
+                               .gsub(/^(###.*)$/, "\n\\1\n")
+                               .gsub(/^\* /, "- ")
+                               .gsub(/\n{3,}/, "\n\n")
+  File.write(new_filename, "#{header}\n#{release_notes}\n")
 
   insert_new_changelog(new_filename, main_filename: "CHANGELOG.md")
 end
