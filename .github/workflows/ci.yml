@@ -13,6 +13,7 @@ concurrency:
 env:
   RUBY_VERSION: 3.1.3
   GITHUB_TOKEN: ${{ github.token }}
+  BUNDLE_LOCKFILE: active
 
 jobs:
   rubocop:
@@ -24,7 +25,6 @@ jobs:
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
           bundler-cache: true
-          rubygems: latest
       - name: RuboCop
         run: bin/rubocop
 
@@ -37,7 +37,6 @@ jobs:
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
           bundler-cache: true
-          rubygems: latest
       - name: Cucumber Lint
         run: bin/cuke_linter -p features/
 
@@ -60,7 +59,6 @@ jobs:
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
           bundler-cache: true
-          rubygems: latest
       - name: Yard Coverage
         run: |
           bin/yardoc -c --no-cache --private --fail-on-warning
@@ -102,7 +100,6 @@ jobs:
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
           bundler-cache: true
-          rubygems: latest
       - uses: actions/setup-java@v3
         with:
           distribution: zulu
@@ -144,7 +141,6 @@ jobs:
         with:
           ruby-version: ${{ matrix.jruby_version }}
           bundler-cache: true
-          rubygems: latest
       - uses: actions/setup-java@v3
         with:
           distribution: zulu
@@ -187,7 +183,7 @@ jobs:
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
           bundler-cache: true
-          rubygems: latest
+          rubygems: 3.4.22
       - uses: actions/setup-java@v3
         with:
           distribution: zulu
