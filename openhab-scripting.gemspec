@@ -30,16 +30,10 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "cuke_linter", "~> 1.2"
   spec.add_development_dependency "gem-release", "~> 2.2"
   spec.add_development_dependency "httparty", "~> 0.20"
-  spec.add_development_dependency "irb", "1.6.3" # 1.6.4 breaks Ruby 2.6/JRuby 9.3 compatibility
-  spec.add_development_dependency "nokogiri", "1.13.10" # 1.14.0 breaks Ruby 2.6/JRuby 9.3 compatibility
   spec.add_development_dependency "persistent_httparty", "~> 0.1"
   spec.add_development_dependency "process_exists", "~> 0.2"
   spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "rspec", "~> 3.11"
-  spec.add_development_dependency "rubocop", "~> 1.57.2" # can't update due to https://github.com/rubocop/rubocop/issues/12558
-  spec.add_development_dependency "rubocop-inst"
-  spec.add_development_dependency "rubocop-rake", "~> 0.6"
-  spec.add_development_dependency "rubocop-rspec", "~> 2.11"
   spec.add_development_dependency "timecop", "~> 0.9"
   spec.add_development_dependency "tty-command", "~> 0.10"
   spec.add_development_dependency "yaml-lint", "~> 0.0"
