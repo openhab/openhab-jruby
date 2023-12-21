@@ -46,6 +46,7 @@ module OpenHAB
                 @block = block
                 @subdirs = subdirs
                 @path = Pathname.new(path)
+                @custom_watcher = nil
                 return if path.to_s.start_with?(OpenHAB::Core.config_folder.to_s)
 
                 @custom_watcher = "jrubyscripting-#{SecureRandom.uuid}"
