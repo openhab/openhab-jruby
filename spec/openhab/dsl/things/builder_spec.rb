@@ -326,4 +326,24 @@ RSpec.describe OpenHAB::DSL::Things::Builder do
       end
     end
   end
+
+  describe "#bridge" do
+    before { install_addon "binding-mqtt", ready_markers: "openhab.xmlThingTypes" }
+
+    it "can create a bridge" do
+      things.build do
+        bridge "mqtt:broker:mybroker", config: { host: "127.0.0.1" }
+      end
+    end
+
+    it "can create nested things" do
+      things.build do
+        bridge "mqtt:broker:mybroker", config: { host: "127.0.0.1" } do
+          thing "mqtt:topic:mytopic", config: { stateTopic: "mything/mytopic" }
+        end
+      end
+
+      expect(things["mqtt:topic:mytopic"].bridge_uid).to eq "mqtt:broker:mybroker"
+    end
+  end
 end
