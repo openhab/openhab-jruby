@@ -63,6 +63,8 @@ jobs:
           git add Gemfile.lock CHANGELOG.md USAGE.md templates .known_good_references
           git commit --amend --no-edit
       - uses: rubygems/release-gem@v1
+        with:
+          await-release: false
       - name: Create Github Release
         env:
           GH_TOKEN: ${{ github.token }}
