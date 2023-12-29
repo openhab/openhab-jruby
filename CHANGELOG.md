@@ -1,5 +1,14 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.12.1](https://github.com/openhab/openhab-jruby/tree/v5.12.1) (2023-12-29)
+
+### Bug Fixes
+
+- ensure ivar is initialized by [@ccutrer](https://github.com/ccutrer) in [#205](https://github.com/openhab/openhab-jruby/pull/205)
+- Fix Bridge Builder and allow nested Thing by [@jimtng](https://github.com/jimtng) in [#208](https://github.com/openhab/openhab-jruby/pull/208)
+
+**Full Changelog**: [v5.12.0...v5.12.1](https://github.com/openhab/openhab-jruby/compare/v5.12.0...v5.12.1)
+
 ## [v5.12.0](https://github.com/openhab/openhab-jruby/tree/v5.12.0) (2023-12-19)
 
 ### Features
