@@ -27,6 +27,9 @@ concurrency:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
     outputs:
       new_version: ${{ steps.bump_version.outputs.new_version }}
     steps:
@@ -58,12 +61,8 @@ jobs:
           bin/rake changelog[${{ env.OLD_VERSION }},${{ env.NEW_VERSION }},new_changes.md]
 
           git add Gemfile.lock CHANGELOG.md USAGE.md templates .known_good_references
-      - name: Release Gem
-        env:
-          GEM_HOST_API_KEY: ${{ secrets.GEM_HOST_API_KEY }} 
-        run: |
           git commit --amend --no-edit
-          bin/rake release || (git status; false)
+      - uses: rubygems/release-gem@v1
       - name: Create Github Release
         env:
           GH_TOKEN: ${{ github.token }}
