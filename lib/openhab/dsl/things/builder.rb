@@ -32,6 +32,36 @@ module OpenHAB
       #     end
       #   end
       #
+      # @example Create a Thing within a Bridge
+      #   things.build do
+      #     bridge "mqtt:broker:mosquitto", config: { host: "127.0.0.1", enableDiscovery: false } do
+      #       thing "mqtt:topic:window1", "My Window Sensor" do
+      #         channel "contact1", "contact", config: {
+      #           stateTopic: "zigbee2mqtt/window1/contact",
+      #           on: "false",
+      #           off: "true"
+      #         }
+      #       end
+      #     end
+      #   end
+      #
+      #   items.build do
+      #     contact_item Window1_Contact, channel: "mqtt:topic:window1:contact1"
+      #   end
+      #
+      # @example Create a Thing separately from the Bridge
+      #   things.build do
+      #     bridge = bridge "mqtt:broker:mosquitto", config: { host: "127.0.0.1", enableDiscovery: false }
+      #
+      #     thing "mqtt:topic:window1", "My Window Sensor", bridge: bridge do
+      #       channel "contact1", "contact", config: {
+      #         stateTopic: "zigbee2mqtt/window1/contact",
+      #         on: "false",
+      #         off: "true"
+      #       }
+      #     end
+      #   end
+      #
       # @see ThingBuilder#initialize ThingBuilder#initialize for #thing's parameters
       # @see ChannelBuilder#initialize ChannelBuilder#initialize for #channel's parameters
       # @see Items::Builder
@@ -61,6 +91,7 @@ module OpenHAB
 
         def build(klass, *args, **kwargs, &block)
           builder = klass.new(*args, **kwargs)
+          builder.parent_builder = self if builder.respond_to?(:parent_builder=)
           builder.instance_eval(&block) if block
           thing = builder.build
 
@@ -190,6 +221,7 @@ module OpenHAB
           @location = location.label if location.is_a?(Item)
           @config = config.transform_keys(&:to_s)
           @enabled = enabled
+          @builder = org.openhab.core.thing.binding.builder.ThingBuilder unless instance_variable_defined?(:@builder)
         end
 
         # Add an explicitly configured channel to this item
@@ -222,13 +254,12 @@ module OpenHAB
             @channels = merged_channels.values
           end
 
-          builder = org.openhab.core.thing.binding.builder.ThingBuilder
-                       .create(thing_type_uid, uid)
-                       .with_label(label)
-                       .with_location(location)
-                       .with_configuration(configuration)
-                       .with_bridge(bridge_uid)
-                       .with_channels(channels)
+          builder = @builder.create(thing_type_uid, uid)
+                            .with_label(label)
+                            .with_location(location)
+                            .with_configuration(configuration)
+                            .with_bridge(bridge_uid)
+                            .with_channels(channels)
 
           builder.with_properties(thing_type.properties) if thing_type
 
@@ -244,16 +275,26 @@ module OpenHAB
 
       # The BridgeBuilder DSL allows you to customize a thing
       class BridgeBuilder < ThingBuilder
+        # @!visibility private
+        attr_accessor :parent_builder
+
+        # Constructor for BridgeBuilder
+        # @see ThingBuilder#initialize
+        def initialize(uid, label = nil, binding: nil, type: nil, bridge: nil, location: nil, config: {}, enabled: nil)
+          @builder = org.openhab.core.thing.binding.builder.BridgeBuilder
+          super
+        end
+
         # Create a new Bridge with this Bridge as its Bridge
         # @see BridgeBuilder#initialize
         def bridge(*args, **kwargs, &block)
-          super(*args, bridge: self, **kwargs, &block)
+          parent_builder.bridge(*args, bridge: self, **kwargs, &block)
         end
 
         # Create a new Thing with this Bridge as its Bridge
         # @see ThingBuilder#initialize
         def thing(*args, **kwargs, &block)
-          super(*args, bridge: self, **kwargs, &block)
+          parent_builder.thing(*args, bridge: self, **kwargs, &block)
         end
       end
 
@@ -283,7 +324,7 @@ module OpenHAB
         # @param [String] uid The channel's ID.
         # @param [String, ChannelTypeUID, :trigger] type The concrete type of the channel.
         # @param [String] label The channel label.
-        # @param [thing] thing The thing associated with this channel.
+        # @param [Thing] thing The thing associated with this channel.
         #   This parameter is not needed for the {ThingBuilder#channel} method.
         # @param [String] description The channel description.
         # @param [String] group The group name.
