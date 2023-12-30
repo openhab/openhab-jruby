@@ -7,9 +7,7 @@ module OpenHAB
     # as well as related infrastructure.
     #
     module Things
-      java_import org.openhab.core.thing.ThingStatus,
-                  org.openhab.core.thing.ThingUID,
-                  org.openhab.core.thing.ThingTypeUID
+      java_import org.openhab.core.thing.ThingStatus
 
       class << self
         # @!visibility private

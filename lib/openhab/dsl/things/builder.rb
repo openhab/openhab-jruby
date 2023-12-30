@@ -309,13 +309,6 @@ module OpenHAB
                     :description,
                     :auto_update_policy
 
-        class << self
-          # @!visibility private
-          def channel_type_registry
-            @channel_type_registry ||= OSGi.service("org.openhab.core.thing.type.ChannelTypeRegistry")
-          end
-        end
-
         #
         # Constructor for ChannelBuilder
         #
@@ -396,7 +389,7 @@ module OpenHAB
         # @!attribute [r] accepted_item_type
         # @return [String] The accepted item type.
         def accepted_item_type
-          @accepted_item_type ||= self.class.channel_type_registry.get_channel_type(type)&.item_type
+          @accepted_item_type ||= type.channel_type&.item_type
         end
 
         private

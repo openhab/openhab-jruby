@@ -23,6 +23,9 @@ module OpenHAB
       # @!attribute [r] uid
       #   @return [ChannelUID]
       #
+      # @!attribute [r] channel_type_uid
+      #   @return [ChannelTypeUID]
+      #
       class Channel
         extend Forwardable
 
@@ -41,6 +44,12 @@ module OpenHAB
           r += " auto_update_policy=#{auto_update_policy}" if auto_update_policy
           r += " accepted_item_type=#{accepted_item_type}" if accepted_item_type
           "#{r}>"
+        end
+
+        # @!attribute [r] channel_type
+        # @return [ChannelType]
+        def channel_type
+          ChannelType.registry.get_channel_type(channel_type_uid)
         end
 
         # @return [String]
