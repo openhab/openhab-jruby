@@ -52,8 +52,6 @@ module OpenHAB
           @registration.unregister
         end
 
-        # rubocop:disable Layout/LineLength
-
         #
         # Enter the Sitemap Builder DSL.
         #
@@ -69,18 +67,45 @@ module OpenHAB
         #       frame label: "Control" do
         #         text label: "Climate", icon: "if:mdi:home-thermometer-outline" do
         #           frame label: "Main Floor" do
-        #             text item: MainFloor_AmbTemp
         #             # colors are set with a hash, with key being condition, and value being the color
-        #             switch item: MainFloorThermostat_TargetMode, label: "Mode", mappings: %w[off auto cool heat], label_color: { "==heat" => "red", "" => "black" }
-        #             # an array of conditions are OR'd together
-        #             switch item: MainFloorThermostat_TargetMode, label: "Mode", mappings: %w[off auto cool heat], label_color: { ["==heat", "==cool"], => "green" }
-        #             setpoint item: MainFloorThermostat_SetPoint, label: "Set Point", visibility: "MainFloorThermostat_TargetMode!=off"
+        #             # The :default key is used when no other condition matches
+        #             text item: MainFloor_AmbTemp,
+        #               label_color: "purple", # A simple string can be used when no conditions are needed
+        #               value_color: { ">=90" => "red", "<=70" => "blue", :default => "black" }
+        #
+        #             # If item name is not provided in the condition, it will default to the widget's Item
+        #             # The operator will default to == if not specified
+        #             switch item: MainFloorThermostat_TargetMode, label: "Mode",
+        #               mappings: %w[off auto cool heat],
+        #               value_color: { "cool" => "blue", "heat" => "red", :default => "black" }
+        #
+        #             # an array of conditions are AND'd together
+        #             setpoint item: MainFloorThermostat_SetPoint, label: "Set Point",
+        #               value_color: {
+        #                 ["MainFloorThermostat_TargetMode!=off", ">80"] => "red", # red if mode!=off AND setpoint > 80
+        #                 ["MainFloorThermostat_TargetMode!=off", ">74"] => "yellow",
+        #                 ["MainFloorThermostat_TargetMode!=off", ">70"] => "green",
+        #                 "MainFloorThermostat_TargetMode!=off" => "blue",
+        #                 :default => "gray"
+        #               }
         #           end
         #           frame label: "Basement" do
         #             text item: Basement_AmbTemp
-        #             switch item: BasementThermostat_TargetMode, label: "Mode", mappings: { OFF: "off", COOL: "cool", HEAT: "heat" }
-        #             # nested arrays are conditions that are AND'd together, instead of OR'd (requires openHAB 4.1)
-        #             setpoint item: BasementThermostat_SetPoint, label: "Set Point", visibility: [["BasementThermostat_TargetMode!=off", "Vacation_Switch!=OFF"]]
+        #             switch item: BasementThermostat_TargetMode, label: "Mode",
+        #               mappings: { OFF: "off", COOL: "cool", HEAT: "heat" }
+        #
+        #             # Conditions within a nested array are AND'd together (requires openHAB 4.1)
+        #             setpoint item: BasementThermostat_SetPoint, label: "Set Point",
+        #               visibility: [["BasementThermostat_TargetMode!=off", "Vacation_Switch==OFF"]]
+        #
+        #             # Additional elements are OR'd
+        #             # The following visibility conditions are evaluated as:
+        #             # (BasementThermostat_TargetMode!=off AND Vacation_Switch==OFF) OR Verbose_Mode==ON
+        #             setpoint item: BasementThermostat_SetPoint, label: "Set Point",
+        #               visibility: [
+        #                 ["BasementThermostat_TargetMode!=off", "Vacation_Switch==OFF"],
+        #                 "Verbose_Mode==ON"
+        #               ]
         #           end
         #         end
         #       end
@@ -90,7 +115,6 @@ module OpenHAB
         def build(update: true, &block)
           DSL::Sitemaps::Builder.new(self, update: update).instance_eval(&block)
         end
-        # rubocop:enable Layout/LineLength
 
         # For use in specs
         # @!visibility private

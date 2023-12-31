@@ -36,8 +36,14 @@ module OpenHAB
       # Base class for all widgets
       # @see org.openhab.core.model.sitemap.sitemap.Widget
       class WidgetBuilder
-        # This is copied directly out of UIComponentSitemapProvider.java
-        CONDITION_PATTERN = /(?<item>[A-Za-z]\w*)?\s*(?<condition>==|!=|<=|>=|<|>)?\s*(?<sign>\+|-)?(?<state>.+)/.freeze
+        include Core::EntityLookup
+
+        # This is copied out of UIComponentSitemapProvider.java
+        # The original pattern will match plain state e.g. "ON" as item="O" and state="N"
+        # this pattern is modified so it matches as item=nil and state="ON" by using atomic grouping `(?>subexpression)`
+        # rubocop:disable Layout/LineLength
+        CONDITION_PATTERN = /(?>(?<item>[A-Za-z]\w*)?\s*(?<condition>==|!=|<=|>=|<|>))?\s*(?<sign>\+|-)?(?<state>.+)/.freeze
+        # rubocop:enable Layout/LineLength
         private_constant :CONDITION_PATTERN
 
         # @return [String, nil]
@@ -49,15 +55,15 @@ module OpenHAB
         # @see https://www.openhab.org/docs/ui/sitemaps.html#icons
         attr_accessor :icon
         # Label color rules
-        # @return [Hash<String, String>]
+        # @return [Hash<String, String>, Hash<Array<String>, String>]
         # @see https://www.openhab.org/docs/ui/sitemaps.html#label-value-and-icon-colors
         attr_reader :label_colors
         # Value color rules
-        # @return [Hash<String, String>]
+        # @return [Hash<String, String>, Hash<Array<String>, String>]
         # @see https://www.openhab.org/docs/ui/sitemaps.html#label-value-and-icon-colors
         attr_reader :value_colors
         # Icon color rules
-        # @return [Hash<String, String>]
+        # @return [Hash<String, String>, Hash<Array<String>, String>]
         # @see https://www.openhab.org/docs/ui/sitemaps.html#label-value-and-icon-colors
         attr_reader :icon_colors
         # Visibility rules
@@ -68,10 +74,14 @@ module OpenHAB
         # @param item [String, Core::Items::Item, nil] The item whose state to show (see {#item})
         # @param label [String, nil] (see {#label})
         # @param icon [String, nil] (see {#icon})
-        # @param label_color [String, Array<String>, nil] One or more label color rules (see {#label_color})
-        # @param value_color [String, Array<String>, nil] One or more value color rules (see {#value_color})
-        # @param icon_color [String, Array<String>, nil] One or more icon color rules (see {#icon_color})
-        # @param visibility [String, Array<String>, nil] One or more visibility rules (see {#visibility})
+        # @param label_color [String, Hash<String, String>, Hash<Array<String>, String>, nil]
+        #   One or more label color rules (see {#label_color})
+        # @param value_color [String, Hash<String, String>, Hash<Array<String>, String>, nil]
+        #   One or more value color rules (see {#value_color})
+        # @param icon_color [String, Hash<String, String>, Hash<Array<String>, String>, nil]
+        #   One or more icon color rules (see {#icon_color})
+        # @param visibility [String, Array<String>, Array<Array<String>>, nil]
+        #   One or more visibility rules (see {#visibility})
         # @!visibility private
         def initialize(type,
                        item: nil,
@@ -104,18 +114,21 @@ module OpenHAB
         # Adds one or more new rules for setting the label color
         # @return [Hash<String, String>] the current rules
         def label_color(rules)
+          rules = { default: rules } if rules.is_a?(String)
           @label_colors.merge!(rules)
         end
 
         # Adds one or more new rules for setting the value color
         # @return [Hash<String, String>] the current rules
         def value_color(rules)
+          rules = { default: rules } if rules.is_a?(String)
           @value_colors.merge!(rules)
         end
 
         # Adds one or more new rules for setting the icon color
         # @return [Hash<String, String>] the current rules
         def icon_color(rules)
+          rules = { default: rules } if rules.is_a?(String)
           @icon_colors.merge!(rules)
         end
 
@@ -138,25 +151,7 @@ module OpenHAB
           add_colors(widget, :value_color, value_colors)
           add_colors(widget, :icon_color, icon_colors)
 
-          # @deprecated OH 4.1
-          if SitemapBuilder.factory.respond_to?(:create_condition)
-            add_conditions(widget, :visibility, visibilities, :create_visibility_rule)
-          else
-            visibilities.each do |v|
-              raise ArgumentError, "AND conditions not supported prior to openHAB 4.1" if v.is_a?(Array)
-
-              unless (match = CONDITION_PATTERN.match(v))
-                raise ArgumentError, "Syntax error in visibility rule #{v.inspect}"
-              end
-
-              rule = SitemapBuilder.factory.create_visibility_rule
-              rule.item = match["item"]
-              rule.condition = match["condition"]
-              rule.sign = match["sign"]
-              rule.state = match["state"]
-              widget.visibility.add(rule)
-            end
-          end
+          add_conditions(widget, :visibility, visibilities, :create_visibility_rule)
 
           widget
         end
@@ -173,12 +168,12 @@ module OpenHAB
 
         private
 
-        def add_colors(widget, method, conditions)
-          conditions.each do |condition, color|
-            condition = [condition] unless condition.is_a?(Array)
-            add_conditions(widget, method, condition, :create_color_array) do |color_array|
-              color_array.arg = color
-            end
+        def add_colors(widget, method, colors)
+          # ensure that the default color is at the end, and make the conditions nil (no conditions)
+          colors.delete(:default)&.tap { |default_color| colors.merge!(nil => default_color) }
+
+          add_conditions(widget, method, colors.keys, :create_color_array) do |color_array, key|
+            color_array.arg = colors[key]
           end
         end
 
@@ -186,25 +181,22 @@ module OpenHAB
           return if conditions.empty?
 
           object = widget.send(method)
-          has_and_conditions = conditions.any?(Array)
-          # @deprecated OH 4.1
-          if !SitemapBuilder.factory.respond_to?(:create_condition) && has_and_conditions
+          # @deprecated OH 4.0
+          if conditions.any?(Array) && !SitemapBuilder.factory.respond_to?(:create_condition)
             raise ArgumentError, "AND conditions not supported prior to openHAB 4.1"
           end
-
-          conditions = [conditions] unless has_and_conditions
 
           conditions.each do |sub_conditions|
             container = SitemapBuilder.factory.send(container_method)
 
             add_conditions_to_container(container, sub_conditions)
-            yield container if block_given?
+            yield container, sub_conditions if block_given?
             object.add(container)
           end
         end
 
         def add_conditions_to_container(container, conditions)
-          # @deprecated OH 4.1
+          # @deprecated OH 4.0
           supports_and_conditions = SitemapBuilder.factory.respond_to?(:create_condition)
 
           Array.wrap(conditions).each do |c|
@@ -591,8 +583,6 @@ module OpenHAB
       # Parent class for builders of widgets that can contain other widgets.
       # @see org.openhab.core.model.sitemap.sitemap.LinkableWidget
       class LinkableWidgetBuilder < WidgetBuilder
-        include Core::EntityLookup
-
         # allow referring to items that don't exist yet
         self.create_dummy_items = true
 
