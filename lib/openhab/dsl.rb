@@ -61,13 +61,13 @@ module OpenHAB
     end
 
     # (see Rules::Builder#scene)
-    def scene(name = nil, id: nil, **kwargs, &block)
-      rules.build { scene(name, id: id, **kwargs, &block) }
+    def scene(name = nil, description: nil, id: nil, tag: nil, tags: nil, **kwargs, &block)
+      rules.build { scene(name, description: description, id: id, tag: tag, tags: tags, **kwargs, &block) }
     end
 
     # (see Rules::Builder#script)
-    def script(name = nil, id: nil, **kwargs, &block)
-      rules.build { script(name, id: id, **kwargs, &block) }
+    def script(name = nil, description: nil, id: nil, tag: nil, tags: nil, **kwargs, &block)
+      rules.build { script(name, description: description, id: id, tag: tag, tags: tags, **kwargs, &block) }
     end
 
     # @!group Rule Support

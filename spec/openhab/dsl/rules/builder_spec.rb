@@ -2064,4 +2064,70 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       expect(r.dependencies(:updated)).to eql [Item3]
     end
   end
+
+  describe "#script" do
+    it "works" do
+      executed = false
+      script "MyScript", id: "myscript" do
+        executed = true
+      end
+      expect(rules.scripts["myscript"].name).to eql "MyScript"
+      rules.scripts["myscript"].run
+      expect(executed).to be true
+    end
+
+    it "supports tags" do
+      script id: "myscript", tags: %w[tag1 tag2] do
+        nil
+      end
+      expect(rules.scripts["myscript"].tags).to include("tag1", "tag2")
+    end
+
+    it "supports specifying a single tag" do
+      script id: "myscript", tag: :test do
+        nil
+      end
+      expect(rules.scripts["myscript"].tags).to include("test")
+    end
+
+    it "supports description" do
+      script id: "myscript", description: "My Script Description" do
+        nil
+      end
+      expect(rules.scripts["myscript"].description).to eql "My Script Description"
+    end
+  end
+
+  describe "#scene" do
+    it "works" do
+      executed = false
+      scene "MyScene", id: "myscene" do
+        executed = true
+      end
+      expect(rules.scenes["myscene"].name).to eql "MyScene"
+      rules.scenes["myscene"].run
+      expect(executed).to be true
+    end
+
+    it "supports tags" do
+      scene id: "myscene", tags: %w[tag1 tag2] do
+        nil
+      end
+      expect(rules.scenes["myscene"].tags).to include("tag1", "tag2")
+    end
+
+    it "supports specifying a single tag" do
+      scene id: "myscene", tag: Semantics::Outdoor do
+        nil
+      end
+      expect(rules.scenes["myscene"].tags).to include("Outdoor")
+    end
+
+    it "supports description" do
+      scene id: "myscene", description: "My Scene Description" do
+        nil
+      end
+      expect(rules.scenes["myscene"].description).to eql "My Scene Description"
+    end
+  end
 end

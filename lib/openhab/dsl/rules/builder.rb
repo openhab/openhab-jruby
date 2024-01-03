@@ -38,7 +38,7 @@ module OpenHAB
         # Create a new rule
         #
         # The rule must have at least one trigger and one execution block.
-        # To create a "script" without any triggers, use {#script}.
+        # To create a "script" without any triggers, use {OpenHAB::DSL.script script}.
         #
         # @param [String] name The rule name
         # @yield Block executed in the context of a {Rules::BuilderDSL}
@@ -87,14 +87,45 @@ module OpenHAB
         # Create a new script
         #
         # A script is a rule with no triggers. It can be called by various other actions,
-        # such as the Run Rules action.
+        # such as the Run Rules action, or by calling {Core::Rules::Rule#trigger}.
         #
-        # @param [String] name A descriptive name
+        # Scripts can be executed with some additional context, similar to method parameters
+        # (see {Core::Rules::Rule#trigger}).
+        # The context can be accessed from within the script's execution block as a "local" variable.
+        #
+        # @param [String] name A name for the script
+        # @param [String] description A description of the script
         # @param [String] id The script's ID
+        # @param [String, Symbol, Semantics::Tag, Array<String, Symbol, Semantics::Tag>, nil] tag
+        #   Tags to assign to the script
+        # @param [String, Symbol, Semantics::Tag, Array<String, Symbol, Semantics::Tag>, nil] tags
+        #   Fluent alias for `tag`
         # @yield [] Block executed when the script is executed.
         # @return [Core::Rules::Rule]
         #
-        def script(name = nil, id: nil, script: nil, &block)
+        # @example A simple script
+        #   # return the script object into a variable
+        #   door_check = script "Check all doors", id: "door_check", tags: :security do
+        #     open_doors = gDoors.members.select(&:open?).map(&:label).join(", ")
+        #     notify("The following doors are open: #{open_doors}") unless open_doors.empty?
+        #   end
+        #
+        #   # run is an alias of trigger
+        #   door_check.run
+        #
+        # @example A script with context
+        #   # This script expects to be called with `message` as context/parameter
+        #   DESTINATION_EMAIL = "myemail@example.com"
+        #   script "Send Notifications", id: "send_alert" do
+        #     notify(message)
+        #     things["mail:smtp:local"].send_mail(DESTINATION_EMAIL, "OpenHAB Alert", message)
+        #   end
+        #
+        #   rules.scripts["send_alert"].run(message: "The door is open!")
+        #
+        # @see Core::Rules::Rule#trigger
+        #
+        def script(name = nil, description: nil, id: nil, tag: nil, tags: nil, script: nil, &block)
           raise ArgumentError, "Block is required" unless block
 
           id ||= NameInference.infer_rule_id_from_block(block)
@@ -105,8 +136,9 @@ module OpenHAB
           ThreadLocal.thread_local(openhab_rule_type: "script", openhab_rule_uid: id) do
             builder = BuilderDSL.new(block.binding)
             builder.uid(id)
-            builder.tags("Script")
+            builder.tags("Script", *Array.wrap(tag), *Array.wrap(tags))
             builder.name(name)
+            builder.description(description)
             builder.script(&block)
             logger.trace { builder.inspect }
             builder.build(provider, script)
@@ -119,12 +151,17 @@ module OpenHAB
         # A scene is a rule with no triggers. It can be called by various other actions,
         # such as the Run Rules action.
         #
-        # @param [String] name A descriptive name
+        # @param [String] name A name for the scene
+        # @param [String] description A description of the scene
         # @param [String] id The script's ID
+        # @param [String, Symbol, Semantics::Tag, Array<String, Symbol, Semantics::Tag>, nil] tag
+        #   Tags to assign to the script
+        # @param [String, Symbol, Semantics::Tag, Array<String, Symbol, Semantics::Tag>, nil] tags
+        #   Fluent alias for `tag`
         # @yield [] Block executed when the script is executed.
         # @return [Core::Rules::Rule]
         #
-        def scene(name = nil, id: nil, script: nil, &block)
+        def scene(name = nil, description: nil, id: nil, tag: nil, tags: nil, script: nil, &block)
           raise ArgumentError, "Block is required" unless block
 
           id ||= NameInference.infer_rule_id_from_block(block)
@@ -135,8 +172,9 @@ module OpenHAB
           ThreadLocal.thread_local(openhab_rule_type: "script", openhab_rule_uid: id) do
             builder = BuilderDSL.new(block.binding)
             builder.uid(id)
-            builder.tags("Scene")
+            builder.tags("Scene", *Array.wrap(tag), *Array.wrap(tags))
             builder.name(name)
+            builder.description(description)
             builder.script(&block)
             logger.trace { builder.inspect }
             builder.build(provider, script)
