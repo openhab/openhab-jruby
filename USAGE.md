@@ -60,6 +60,7 @@ If you're new to Ruby, you may want to check out [Ruby Basics](docs/ruby-basics.
   - [Terse Rules](#terse-rules)
   - [Early Exit From a Rule](#early-exit-from-a-rule)
   - [Dynamic Generation of Rules](#dynamic-generation-of-rules)
+  - [Scenes and Scripts](#scenes-and-scripts)
   - [Hooks](#hooks)
 - [Calling Java From JRuby](#calling-java-from-jruby)
 - [Full Documentation](#full-documentation)
@@ -1743,6 +1744,24 @@ virtual_switches.each do |switch|
   end
 end
 ```
+
+### Scenes and Scripts
+
+A `scene` can be created using the {OpenHAB::DSL.scene .scene} method.
+
+```ruby
+scene "Movie", id: "movie", description: "Set up the theatre for movie watching" do
+  Theatre_Window_Blinds.down
+  Theatre_Screen_Curtain.up
+  Theatre_Mood_Light.on
+  Theatre_Light.off
+  Theatre_Projector.on
+  Theatre_Receiver.on
+end
+```
+
+To create a `script`, use the {OpenHAB::DSL.script .script} method.
+Note that scripts can be executed with additional contexts.
 
 ### Hooks
 
