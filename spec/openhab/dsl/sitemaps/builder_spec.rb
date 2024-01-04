@@ -25,37 +25,148 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
   end
 
-  it "supports visibility" do
-    s = sitemaps.build do
-      sitemap "default", "My Residence" do
-        switch item: "Switch1", visibility: "Switch1 == ON"
+  describe "#visibility" do
+    it "supports a simple condition" do
+      s = sitemaps.build do
+        sitemap "default", "My Residence" do
+          switch item: "Switch1", visibility: "Switch1 == ON"
+        end
       end
+
+      switch = s.children.first
+      cond = switch.visibility.first
+      # @deprecated OH 4.0
+      cond = cond.conditions.first if cond.respond_to?(:conditions)
+      expect(cond.item).to eq "Switch1"
+      expect(cond.condition.to_s).to eq "=="
+      expect(cond.state).to eq "ON"
     end
 
-    switch = s.children.first
-    cond = switch.visibility.first
-    # @deprecated OH 4.0
-    cond = cond.conditions.first if cond.respond_to?(:conditions)
-    expect(cond.item).to eq "Switch1"
-    expect(cond.condition.to_s).to eq "=="
-    expect(cond.state).to eq "ON"
+    it "supports a condition with just the state" do
+      s = sitemaps.build do
+        sitemap "default", "My Residence" do
+          switch item: "Switch1", visibility: "ON"
+        end
+      end
+
+      switch = s.children.first
+      cond = switch.visibility.first
+      # @deprecated OH 4.0
+      cond = cond.conditions.first if cond.respond_to?(:conditions)
+      expect(cond.item).to be_nil
+      expect(cond.condition).to be_nil
+      expect(cond.state).to eq "ON"
+    end
+
+    it "supports a condition with operator and state" do
+      s = sitemaps.build do
+        sitemap "default", "My Residence" do
+          switch item: "Switch1", visibility: "==ON"
+        end
+      end
+
+      switch = s.children.first
+      cond = switch.visibility.first
+      # @deprecated OH 4.0
+      cond = cond.conditions.first if cond.respond_to?(:conditions)
+      expect(cond.item).to be_nil
+      expect(cond.condition.to_s).to eq "=="
+      expect(cond.state).to eq "ON"
+    end
+
+    it "supports multiple conditions" do
+      s = sitemaps.build do
+        sitemap "default", "My Residence" do
+          switch item: "Switch1", visibility: ["Switch1 == ON", "Switch2 == ON"]
+        end
+      end
+
+      switch = s.children.first
+
+      expect(switch.visibility.size).to eq 2
+
+      cond = switch.visibility.first
+      # @deprecated OH 4.0
+      cond = cond.conditions.first if cond.respond_to?(:conditions)
+      expect(cond.item).to eq "Switch1"
+      expect(cond.condition.to_s).to eq "=="
+      expect(cond.state).to eq "ON"
+
+      cond = switch.visibility.last
+      # @deprecated OH 4.0
+      cond = cond.conditions.first if cond.respond_to?(:conditions)
+      expect(cond.item).to eq "Switch2"
+      expect(cond.condition.to_s).to eq "=="
+      expect(cond.state).to eq "ON"
+    end
   end
 
-  it "supports colors" do
-    s = sitemaps.build do
-      sitemap "default", "My Residence" do
-        switch item: "Switch1", label_color: { "Switch1 == ON" => "green" }
+  context "with colors" do
+    it "supports conditions" do
+      s = sitemaps.build do
+        sitemap "default", "My Residence" do
+          switch item: "Switch1", label_color: { "Switch1 == ON" => "green" }
+        end
       end
+
+      switch = s.children.first
+      cond = rule = switch.label_color.first
+      # @deprecated OH 4.0
+      cond = cond.conditions.first if cond.respond_to?(:conditions)
+      expect(cond.item).to eq "Switch1"
+      expect(cond.condition.to_s).to eq "=="
+      expect(cond.state).to eq "ON"
+      expect(rule.arg).to eq "green"
     end
 
-    switch = s.children.first
-    cond = rule = switch.label_color.first
-    # @deprecated OH 4.0
-    cond = cond.conditions.first if cond.respond_to?(:conditions)
-    expect(cond.item).to eq "Switch1"
-    expect(cond.condition.to_s).to eq "=="
-    expect(cond.state).to eq "ON"
-    expect(rule.arg).to eq "green"
+    it "supports conditions with default value" do
+      s = sitemaps.build do
+        sitemap "default", "My Residence" do
+          switch item: "Switch1", label_color: { "Switch1 == ON" => "green", :default => "red" }
+        end
+      end
+
+      switch = s.children.first
+      rules = switch.label_color
+      expect(rules.size).to eq 2
+
+      default = rules.last
+      # @deprecated OH 4.0
+      if default.respond_to?(:conditions)
+        expect(default.conditions).to be_empty
+      else
+        expect(default.condition.to_s).to be_empty
+      end
+      expect(default.arg).to eq "red"
+    end
+
+    it "supports non-conditional string value" do
+      s = sitemaps.build do
+        sitemap "default", "My Residence" do
+          switch item: "Switch1", label_color: "red"
+        end
+      end
+
+      switch = s.children.first
+      expect(switch.label_color.size).to eq 1
+      rule = switch.label_color.first
+      expect(rule.arg).to eq "red"
+    end
+
+    it "supports simple color as the default in multiple calls" do
+      s = sitemaps.build do
+        sitemap "default", "My Residence" do
+          switch item: "Switch1" do
+            label_color "red" # The default doesn't have to be specified last
+            label_color "Switch1 == ON" => "green"
+          end
+        end
+      end
+
+      switch = s.children.first
+      expect(switch.label_color.first.arg).to eq "green"
+      expect(switch.label_color.last.arg).to eq "red"
+    end
   end
 
   # @deprecated OH 4.0
@@ -70,11 +181,24 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
 
     it "supports AND conditions on colors" do
-      sitemaps.build do
+      s = sitemaps.build do
         sitemap "default", "My Residence" do
-          switch item: "Switch1", label_color: { [["Switch1 == ON", "Switch2 == OFF"]] => "green" }
+          switch item: "Switch1", label_color: { ["Switch1 == ON", "Switch2 == OFF"] => "green" }
         end
       end
+
+      switch = s.children.first
+      rule = switch.label_color.first
+      cond = rule.conditions.first
+      expect(cond.item).to eq "Switch1"
+      expect(cond.condition.to_s).to eq "=="
+      expect(cond.state).to eq "ON"
+
+      cond = rule.conditions.last
+      expect(cond.item).to eq "Switch2"
+      expect(cond.condition.to_s).to eq "=="
+      expect(cond.state).to eq "OFF"
+      expect(rule.arg).to eq "green"
     end
   else
     it "does not support AND conditions on visibility" do
@@ -91,7 +215,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
       expect do
         sitemaps.build do
           sitemap "default", "My Residence" do
-            switch item: "Switch1", label_color: { [["Switch1 == ON", "Switch2 == OFF"]] => "green" }
+            switch item: "Switch1", label_color: { ["Switch1 == ON", "Switch2 == OFF"] => "green" }
           end
         end
       end.to raise_error(ArgumentError)
