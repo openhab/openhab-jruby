@@ -3351,18 +3351,45 @@
     frame <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Control</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
       text <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Climate</span><span class="delimiter">&quot;</span></span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">if:mdi:home-thermometer-outline</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
         frame <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Main Floor</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
-          text <span class="key">item</span>: <span class="constant">MainFloor_AmbTemp</span>
           <span class="comment"># colors are set with a hash, with key being condition, and value being the color</span>
-          switch <span class="key">item</span>: <span class="constant">MainFloorThermostat_TargetMode</span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Mode</span><span class="delimiter">&quot;</span></span>, <span class="key">mappings</span>: <span class="string"><span class="delimiter">%w[</span><span class="content">off auto cool heat</span><span class="delimiter">]</span></span>, <span class="key">label_color</span>: { <span class="string"><span class="delimiter">&quot;</span><span class="content">==heat</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">red</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">black</span><span class="delimiter">&quot;</span></span> }
-          <span class="comment"># an array of conditions are OR'd together</span>
-          switch <span class="key">item</span>: <span class="constant">MainFloorThermostat_TargetMode</span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Mode</span><span class="delimiter">&quot;</span></span>, <span class="key">mappings</span>: <span class="string"><span class="delimiter">%w[</span><span class="content">off auto cool heat</span><span class="delimiter">]</span></span>, <span class="key">label_color</span>: { [<span class="string"><span class="delimiter">&quot;</span><span class="content">==heat</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">==cool</span><span class="delimiter">&quot;</span></span>], =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">green</span><span class="delimiter">&quot;</span></span> }
-          setpoint <span class="key">item</span>: <span class="constant">MainFloorThermostat_SetPoint</span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Set Point</span><span class="delimiter">&quot;</span></span>, <span class="key">visibility</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">MainFloorThermostat_TargetMode!=off</span><span class="delimiter">&quot;</span></span>
+          <span class="comment"># The :default key is used when no other condition matches</span>
+          text <span class="key">item</span>: <span class="constant">MainFloor_AmbTemp</span>,
+            <span class="key">label_color</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">purple</span><span class="delimiter">&quot;</span></span>, <span class="comment"># A simple string can be used when no conditions are needed</span>
+            <span class="key">value_color</span>: { <span class="string"><span class="delimiter">&quot;</span><span class="content">&gt;=90</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">red</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">&lt;=70</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">blue</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:default</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">black</span><span class="delimiter">&quot;</span></span> }
+
+          <span class="comment"># If item name is not provided in the condition, it will default to the widget's Item</span>
+          <span class="comment"># The operator will default to == if not specified</span>
+          switch <span class="key">item</span>: <span class="constant">MainFloorThermostat_TargetMode</span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Mode</span><span class="delimiter">&quot;</span></span>,
+            <span class="key">mappings</span>: <span class="string"><span class="delimiter">%w[</span><span class="content">off auto cool heat</span><span class="delimiter">]</span></span>,
+            <span class="key">value_color</span>: { <span class="string"><span class="delimiter">&quot;</span><span class="content">cool</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">blue</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">heat</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">red</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:default</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">black</span><span class="delimiter">&quot;</span></span> }
+
+          <span class="comment"># an array of conditions are AND'd together</span>
+          setpoint <span class="key">item</span>: <span class="constant">MainFloorThermostat_SetPoint</span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Set Point</span><span class="delimiter">&quot;</span></span>,
+            <span class="key">value_color</span>: {
+              [<span class="string"><span class="delimiter">&quot;</span><span class="content">MainFloorThermostat_TargetMode!=off</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">&gt;80</span><span class="delimiter">&quot;</span></span>] =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">red</span><span class="delimiter">&quot;</span></span>, <span class="comment"># red if mode!=off AND setpoint &gt; 80</span>
+              [<span class="string"><span class="delimiter">&quot;</span><span class="content">MainFloorThermostat_TargetMode!=off</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">&gt;74</span><span class="delimiter">&quot;</span></span>] =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">yellow</span><span class="delimiter">&quot;</span></span>,
+              [<span class="string"><span class="delimiter">&quot;</span><span class="content">MainFloorThermostat_TargetMode!=off</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">&gt;70</span><span class="delimiter">&quot;</span></span>] =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">green</span><span class="delimiter">&quot;</span></span>,
+              <span class="string"><span class="delimiter">&quot;</span><span class="content">MainFloorThermostat_TargetMode!=off</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">blue</span><span class="delimiter">&quot;</span></span>,
+              <span class="symbol">:default</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">gray</span><span class="delimiter">&quot;</span></span>
+            }
         <span class="keyword">end</span>
         frame <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Basement</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
           text <span class="key">item</span>: <span class="constant">Basement_AmbTemp</span>
-          switch <span class="key">item</span>: <span class="constant">BasementThermostat_TargetMode</span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Mode</span><span class="delimiter">&quot;</span></span>, <span class="key">mappings</span>: { <span class="key">OFF</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">off</span><span class="delimiter">&quot;</span></span>, <span class="key">COOL</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">cool</span><span class="delimiter">&quot;</span></span>, <span class="key">HEAT</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">heat</span><span class="delimiter">&quot;</span></span> }
-          <span class="comment"># nested arrays are conditions that are AND'd together, instead of OR'd (requires openHAB 4.1)</span>
-          setpoint <span class="key">item</span>: <span class="constant">BasementThermostat_SetPoint</span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Set Point</span><span class="delimiter">&quot;</span></span>, <span class="key">visibility</span>: [[<span class="string"><span class="delimiter">&quot;</span><span class="content">BasementThermostat_TargetMode!=off</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Vacation_Switch!=OFF</span><span class="delimiter">&quot;</span></span>]]
+          switch <span class="key">item</span>: <span class="constant">BasementThermostat_TargetMode</span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Mode</span><span class="delimiter">&quot;</span></span>,
+            <span class="key">mappings</span>: { <span class="key">OFF</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">off</span><span class="delimiter">&quot;</span></span>, <span class="key">COOL</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">cool</span><span class="delimiter">&quot;</span></span>, <span class="key">HEAT</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">heat</span><span class="delimiter">&quot;</span></span> }
+
+          <span class="comment"># Conditions within a nested array are AND'd together (requires openHAB 4.1)</span>
+          setpoint <span class="key">item</span>: <span class="constant">BasementThermostat_SetPoint</span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Set Point</span><span class="delimiter">&quot;</span></span>,
+            <span class="key">visibility</span>: [[<span class="string"><span class="delimiter">&quot;</span><span class="content">BasementThermostat_TargetMode!=off</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Vacation_Switch==OFF</span><span class="delimiter">&quot;</span></span>]]
+
+          <span class="comment"># Additional elements are OR'd</span>
+          <span class="comment"># The following visibility conditions are evaluated as:</span>
+          <span class="comment"># (BasementThermostat_TargetMode!=off AND Vacation_Switch==OFF) OR Verbose_Mode==ON</span>
+          setpoint <span class="key">item</span>: <span class="constant">BasementThermostat_SetPoint</span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Set Point</span><span class="delimiter">&quot;</span></span>,
+            <span class="key">visibility</span>: [
+              [<span class="string"><span class="delimiter">&quot;</span><span class="content">BasementThermostat_TargetMode!=off</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Vacation_Switch==OFF</span><span class="delimiter">&quot;</span></span>],
+              <span class="string"><span class="delimiter">&quot;</span><span class="content">Verbose_Mode==ON</span><span class="delimiter">&quot;</span></span>
+            ]
         <span class="keyword">end</span>
       <span class="keyword">end</span>
     <span class="keyword">end</span>
@@ -3423,12 +3450,12 @@
       <pre class="lines">
 
 
-90
-91
-92</pre>
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/sitemaps/provider.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/sitemaps/provider.rb', line 115</span>
 
 <span class="keyword">def</span> <span class="function">build</span>(<span class="key">update</span>: <span class="predefined-constant">true</span>, &amp;block)
   <span class="constant">DSL</span>::<span class="constant">Sitemaps</span>::<span class="constant">Builder</span>.new(<span class="predefined-constant">self</span>, <span class="key">update</span>: update).instance_eval(&amp;block)
@@ -3495,12 +3522,12 @@
       <pre class="lines">
 
 
-110
-111
-112</pre>
+134
+135
+136</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/sitemaps/provider.rb', line 110</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/sitemaps/provider.rb', line 134</span>
 
 <span class="keyword">def</span> <span class="function">remove</span>(sitemap_name)
   <span class="keyword">super</span>(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">PREFIX</span><span class="inline-delimiter">}</span></span><span class="inline"><span class="inline-delimiter">#{</span>sitemap_name<span class="inline-delimiter">}</span></span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">SUFFIX</span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
@@ -3515,7 +3542,7 @@
 </div>
 
         <footer>
-  Generated on Thu Jan  4 16:35:47 2024 by
+  Generated on Thu Jan  4 16:47:36 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
