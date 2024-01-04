@@ -25,6 +25,62 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
   end
 
+  context "with icon" do
+    it "supports a simple icon" do
+      s = sitemaps.build do
+        sitemap "default" do
+          switch item: Switch1, icon: "light"
+        end
+      end
+
+      switch = s.children.first
+      expect(switch.icon).to eq "light"
+    end
+
+    it "supports dynamic icons", if: Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.1.0") do
+      s = sitemaps.build do
+        sitemap "default" do
+          switch item: Switch1, icon: { "ON" => "f7:lightbulb_fill", "OFF" => "f7:lightbulb_slash_fill" }
+        end
+      end
+
+      switch = s.children.first
+      expect(switch.icon).to be_nil
+
+      expect(switch.icon_rules.size).to eq 2
+      cond = switch.icon_rules.first
+      expect(cond.conditions.first.state).to eq "ON"
+      expect(cond.arg).to eq "f7:lightbulb_fill"
+
+      cond = switch.icon_rules.last
+      expect(cond.conditions.first.state).to eq "OFF"
+      expect(cond.arg).to eq "f7:lightbulb_slash_fill"
+    end
+  end
+
+  context "with static_icon", if: Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.1.0") do
+    it "works" do
+      s = sitemaps.build do
+        sitemap "default" do
+          switch item: Switch1, static_icon: "light"
+        end
+      end
+
+      switch = s.children.first
+      expect(switch.static_icon).to eq "light"
+    end
+
+    it "is mutually exclusive with icon" do
+      expect do
+        sitemaps.build do
+          sitemap "default" do
+            switch item: Switch1, static_icon: "light", icon: "light"
+          end
+        end
+      end.to raise_error(ArgumentError)
+    end
+  end
+
   describe "#visibility" do
     it "supports a simple condition" do
       s = sitemaps.build do

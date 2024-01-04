@@ -51,9 +51,29 @@ module OpenHAB
         # The item whose state to show
         # @return [String, Core::Items::Item, nil]
         attr_accessor :item
-        # @return [String, nil]
+        # The icon to show
+        # It can be a string, or a hash of conditions and icons.
+        # @example A simple icon
+        #   sitemaps.build { text icon: "f7:house" }
+        #
+        # @example A dynamic icon with conditions
+        #   sitemaps.build do
+        #     text item: Wifi_Status, icon: {
+        #       "ON" => "f7:wifi",
+        #       "OFF" => "f7:wifi_slash",
+        #       default: "f7:wifi_exclamationmark"
+        #     }
+        #   end
+        #
+        # @return [String, Hash<String, String>, Hash<Array<String>, String>, nil]
         # @see https://www.openhab.org/docs/ui/sitemaps.html#icons
         attr_accessor :icon
+        # The static icon to show
+        # This is mutually exclusive with {#icon}
+        # @return [String, nil]
+        # @since openHAB 4.1
+        # @see https://www.openhab.org/docs/ui/sitemaps.html#element-types
+        attr_accessor :static_icon
         # Label color rules
         # @return [Hash<String, String>, Hash<Array<String>, String>]
         # @see https://www.openhab.org/docs/ui/sitemaps.html#label-value-and-icon-colors
@@ -73,7 +93,8 @@ module OpenHAB
 
         # @param item [String, Core::Items::Item, nil] The item whose state to show (see {#item})
         # @param label [String, nil] (see {#label})
-        # @param icon [String, nil] (see {#icon})
+        # @param icon [String, Hash<String, String>, Hash<Array<String>, String>, nil] (see {#icon})
+        # @param static_icon [String, nil] (see {#static_icon})
         # @param label_color [String, Hash<String, String>, Hash<Array<String>, String>, nil]
         #   One or more label color rules (see {#label_color})
         # @param value_color [String, Hash<String, String>, Hash<Array<String>, String>, nil]
@@ -87,6 +108,7 @@ module OpenHAB
                        item: nil,
                        label: nil,
                        icon: nil,
+                       static_icon: nil,
                        label_color: nil,
                        value_color: nil,
                        icon_color: nil,
@@ -100,6 +122,7 @@ module OpenHAB
           @item = item
           @label = label
           @icon = icon
+          @static_icon = static_icon
           @visibilities = []
           @label_colors = {}
           @value_colors = {}
@@ -145,7 +168,18 @@ module OpenHAB
           item = item.name if item.respond_to?(:name)
           widget.item = item if item
           widget.label = @label
-          widget.icon = @icon
+
+          raise ArgumentError, "icon and static_icon are mutually exclusive" if icon && static_icon
+
+          if static_icon
+            widget.static_icon = static_icon
+          elsif icon.is_a?(String)
+            widget.icon = @icon
+          elsif icon.is_a?(Hash)
+            add_icons(widget)
+          elsif !icon.nil?
+            raise ArgumentError, "icon must be a String or a Hash"
+          end
 
           add_colors(widget, :label_color, label_colors)
           add_colors(widget, :value_color, value_colors)
@@ -174,6 +208,13 @@ module OpenHAB
 
           add_conditions(widget, method, colors.keys, :create_color_array) do |color_array, key|
             color_array.arg = colors[key]
+          end
+        end
+
+        def add_icons(widget)
+          icon.delete(:default)&.tap { |default_icon| icon.merge!(nil => default_icon) }
+          add_conditions(widget, :icon_rules, icon.keys, :create_icon_rule) do |icon_array, key|
+            icon_array.arg = icon[key]
           end
         end
 
@@ -227,7 +268,7 @@ module OpenHAB
         attr_accessor :mappings
 
         # (see WidgetBuilder#initialize)
-        # @!method initialize(item: nil, label: nil, icon: nil, mappings: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
+        # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, mappings: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param mappings [Hash, Array, nil] Mappings from command to label (see {SwitchBuilder#mappings})
         # @!visibility private
         def initialize(type, mappings: nil, **kwargs)
@@ -267,7 +308,7 @@ module OpenHAB
         attr_accessor :step
 
         # (see WidgetBuilder#initialize)
-        # @!method initialize(item: nil, label: nil, icon: nil, range: nil, step: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
+        # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, range: nil, step: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param range [Range, nil] Allowed range of the value (see {SetpointBuilder#range})
         # @param step [Numeric,nil] How far the value will change with each button press (see {SetpointBuilder#step})
         # @!visibility private
@@ -301,7 +342,7 @@ module OpenHAB
         attr_writer :switch
 
         # (see SetpointBuilder#initialize)
-        # @!method initialize(item: nil, label: nil, icon: nil, range: nil, step: nil, switch: nil, frequency: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
+        # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, range: nil, step: nil, switch: nil, frequency: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param switch [true, false, nil]
         #   A short press on the item toggles the item on or off (see {SliderBuilder#switch=})
         # @param frequency [Numeric, nil]
@@ -342,7 +383,7 @@ module OpenHAB
         attr_reader :encoding
 
         # (see WidgetBuilder#initialize)
-        # @!method initialize(item: nil, label: nil, icon: nil, url: nil, encoding: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
+        # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, url: nil, encoding: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param [String, nil] url (see {VideoBuilder#url})
         # @param [:mjpeg, :hls, nil] encoding (see {VideoBuilder#encoding})
         # @!visibility private
@@ -400,7 +441,7 @@ module OpenHAB
         attr_accessor :y_axis_pattern
 
         # (see WidgetBuilder#initialize)
-        # @!method initialize(item: nil, label: nil, icon: nil, service: nil, refresh: nil, period: nil, legend: nil, group: nil, y_axis_pattern: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
+        # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, service: nil, refresh: nil, period: nil, legend: nil, group: nil, y_axis_pattern: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param service [String, nil]
         #   The persistence service to use (see {ChartBuilder#service})
         # @param refresh [Numeric, nil)]
@@ -469,7 +510,7 @@ module OpenHAB
         attr_accessor :height
 
         # (see WidgetBuilder#initialize)
-        # @!method initialize(item: nil, label: nil, icon: nil, height: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
+        # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, height: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param height [Integer] The number of element rows to fill (see {DefaultBuilder#height})
         # @!visibility private
         def initialize(type, height: nil, **kwargs)
@@ -494,7 +535,7 @@ module OpenHAB
         attr_accessor :url
 
         # (see DefaultBuilder#initialize)
-        # @!method initialize(item: nil, label: nil, icon: nil, url: nil, height: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
+        # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, url: nil, height: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param url [String, nil] (see {WebviewBuilder#url})
         # @!visibility private
         def initialize(type, url: nil, **kwargs)
@@ -520,7 +561,7 @@ module OpenHAB
         attr_accessor :frequency
 
         # (see WidgetBuilder#initialize)
-        # @!method initialize(item: nil, label: nil, icon: nil, frequency: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
+        # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, frequency: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param frequency [Numeric, nil] How often to send requests (see {ColorpickerBuilder#frequency})
         # @!visibility private
         def initialize(type, frequency: nil, **kwargs)
@@ -555,7 +596,7 @@ module OpenHAB
         attr_reader :hint
 
         # (see WidgetBuilder#initialize)
-        # @!method initialize(item: nil, label: nil, icon: nil, hint: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
+        # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, hint: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param [:text, :number, :date, :time, :datetime, nil] hint
         #   Gives a hint to the user interface to use a widget adapted to a specific use (see {InputBuilder#hint})
         # @!visibility private
@@ -599,6 +640,7 @@ module OpenHAB
         #   def frame(item: nil,
         #             label: nil,
         #             icon: nil,
+        #             static_icon: nil,
         #             label_color: nil,
         #             value_color: nil,
         #             icon_color: nil,
@@ -613,6 +655,7 @@ module OpenHAB
         #   def text(item: nil,
         #            label: nil,
         #            icon: nil,
+        #            static_icon: nil,
         #            label_color: nil,
         #            value_color: nil,
         #            icon_color: nil,
@@ -627,6 +670,7 @@ module OpenHAB
         #   def group(item: nil,
         #             label: nil,
         #             icon: nil,
+        #             static_icon: nil,
         #             label_color: nil,
         #             value_color: nil,
         #             icon_color: nil,
@@ -641,6 +685,7 @@ module OpenHAB
         #   def image(item: nil,
         #             label: nil,
         #             icon: nil,
+        #             static_icon: nil,
         #             url: nil,
         #             refresh: nil,
         #             label_color: nil,
@@ -657,6 +702,7 @@ module OpenHAB
         #   def video(item: nil,
         #             label: nil,
         #             icon: nil,
+        #             static_icon: nil,
         #             url: nil,
         #             encoding: nil,
         #             label_color: nil,
@@ -673,6 +719,7 @@ module OpenHAB
         #   def chart(item: nil,
         #             label: nil,
         #             icon: nil,
+        #             static_icon: nil,
         #             service: nil,
         #             refresh: nil,
         #             period: nil,
@@ -693,6 +740,7 @@ module OpenHAB
         #   def webview(item: nil,
         #               label: nil,
         #               icon: nil,
+        #               static_icon: nil,
         #               url: nil,
         #               height: nil,
         #               label_color: nil,
@@ -709,6 +757,7 @@ module OpenHAB
         #   def switch(item: nil,
         #              label: nil,
         #              icon: nil,
+        #              static_icon: nil,
         #              mappings: nil,
         #              label_color: nil,
         #              value_color: nil,
@@ -724,6 +773,7 @@ module OpenHAB
         #   def mapview(item: nil,
         #               label: nil,
         #               icon: nil,
+        #               static_icon: nil,
         #               height: nil,
         #               label_color: nil,
         #               value_color: nil,
@@ -739,6 +789,7 @@ module OpenHAB
         #   def slider(item: nil,
         #              label: nil,
         #              icon: nil,
+        #              static_icon: nil,
         #              range: nil,
         #              step: nil,
         #              switch: nil,
@@ -757,6 +808,7 @@ module OpenHAB
         #   def selection(item: nil,
         #                 label: nil,
         #                 icon: nil,
+        #                 static_icon: nil,
         #                 mappings: nil,
         #                 label_color: nil,
         #                 value_color: nil,
@@ -773,6 +825,7 @@ module OpenHAB
         #   def input(item: nil,
         #             label: nil,
         #             icon: nil,
+        #             static_icon: nil,
         #             hint: nil,
         #             label_color: nil,
         #             value_color: nil,
@@ -788,6 +841,7 @@ module OpenHAB
         #   def setpoint(item: nil,
         #               label: nil,
         #               icon: nil,
+        #               static_icon: nil,
         #               range: nil,
         #               step: nil,
         #               label_color: nil,
@@ -804,6 +858,7 @@ module OpenHAB
         #   def colorpicker(item: nil,
         #                   label: nil,
         #                   icon: nil,
+        #                   static_icon: nil,
         #                   frequency: nil,
         #                   label_color: nil,
         #                   value_color: nil,
@@ -819,6 +874,7 @@ module OpenHAB
         #   def default(item: nil,
         #              label: nil,
         #              icon: nil,
+        #              static_icon: nil,
         #              height: nil,
         #              label_color: nil,
         #              value_color: nil,
@@ -855,7 +911,7 @@ module OpenHAB
         end
 
         # (see WidgetBuilder#initialize)
-        # @!method initialize(item: nil, label: nil, icon: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
+        # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @!visibility private
         def initialize(*, **)
           super
@@ -905,7 +961,7 @@ module OpenHAB
         attr_accessor :refresh
 
         # (see LinkableWidgetBuilder#initialize)
-        # @!method initialize(item: nil, label: nil, icon: nil, url: nil, refresh: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
+        # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, url: nil, refresh: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param url [String, nil] The URL for the image (see {ImageBuilder#url})
         # @param refresh [Numeric, nil] How often to refresh the image (see {ImageBuilder#refresh})
         # @!visibility private
