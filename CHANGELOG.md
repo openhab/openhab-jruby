@@ -1,5 +1,19 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.13.0](https://github.com/openhab/openhab-jruby/tree/v5.13.0) (2024-01-04)
+
+### Features
+
+- Add tags and description to #script and #scene by [@jimtng](https://github.com/jimtng) in [#214](https://github.com/openhab/openhab-jruby/pull/214)
+- Support staticIcon and dynamic icon in sitemap by [@jimtng](https://github.com/jimtng) in [#212](https://github.com/openhab/openhab-jruby/pull/212)
+- Support Buttongrid in Sitemap Builder by [@jimtng](https://github.com/jimtng) in [#211](https://github.com/openhab/openhab-jruby/pull/211)
+
+### Bug Fixes
+
+- Fix condition handling for colors and visibility in sitemap builder by [@jimtng](https://github.com/jimtng) in [#210](https://github.com/openhab/openhab-jruby/pull/210)
+
+**Full Changelog**: [v5.12.1...v5.13.0](https://github.com/openhab/openhab-jruby/compare/v5.12.1...v5.13.0)
+
 ## [v5.12.1](https://github.com/openhab/openhab-jruby/tree/v5.12.1) (2023-12-29)
 
 ### Bug Fixes
