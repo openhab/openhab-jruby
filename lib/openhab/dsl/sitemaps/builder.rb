@@ -621,6 +621,84 @@ module OpenHAB
         end
       end
 
+      # Builds a `Buttongrid` element
+      # @since openHAB 4.1
+      # @see https://www.openhab.org/docs/ui/sitemaps.html#element-type-buttongrid
+      # @see org.openhab.core.model.sitemap.sitemap.Buttongrid
+      class ButtongridBuilder < WidgetBuilder
+        # @return [Array<Array<int, int, Command, String, String>>]
+        #   An array of buttons to display
+        attr_reader :buttons
+
+        # (see WidgetBuilder#initialize)
+        # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, buttons: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
+        # @param [Array<Array<int, int, Command, String, String>>] buttons An array of buttons to display.
+        #   Each element is an array with the following elements:
+        #   - row: 1-12
+        #   - column: 1-12
+        #   - command: The command to send when the button is pressed
+        #   - label: The label to display on the button
+        #   - icon: The icon to display on the button (optional)
+        #
+        # @example
+        #   # This creates a buttongrid to emulate a TV remote control
+        #   sitemaps.build do
+        #     buttongrid item: LivingRoom_TV_RCButton, buttons: [
+        #       [1, 1, "BACK", "Back", "f7:return"],
+        #       [1, 2, "HOME", "Menu", "material:apps"],
+        #       [1, 3, "YELLOW", "Search", "f7:search"],
+        #       [2, 2, "UP", "Up", "f7:arrowtriangle_up"],
+        #       [4, 2, "DOWN", "Down", "f7:arrowtriangle_down"],
+        #       [3, 1, "LEFT", "Left", "f7:arrowtriangle_left"],
+        #       [3, 3, "RIGHT", "Right", "f7:arrowtriangle_right"],
+        #       [3, 2, "ENTER", "Enter", "material:adjust"]
+        #     ]
+        #   end
+        #
+        # @see https://www.openhab.org/docs/ui/sitemaps.html#element-type-buttongrid
+        # @!visibility private
+        def initialize(type, buttons: [], **kwargs)
+          super(type, **kwargs)
+          buttons.each { |button| validate_button(button) }
+          @buttons = buttons
+        end
+
+        #
+        # Adds a button to the buttongrid
+        #
+        # @param [Array<int, int, Command, String, String>] button the button to add
+        # @return [Array<Array<int, int, Command, String, String>>] the current buttons
+        #
+        def button(button)
+          validate_button(button)
+          @buttons << button
+        end
+
+        # @!visibility private
+        def build
+          widget = super
+          buttons.each do |button|
+            button_object = SitemapBuilder.factory.create_button
+            button_object.row = button[0]
+            button_object.column = button[1]
+            button_object.cmd = button[2]
+            button_object.label = button[3]
+            button_object.icon = button[4] if button[4]
+            widget.buttons.add(button_object)
+          end
+
+          widget
+        end
+
+        private
+
+        def validate_button(button)
+          return if (4..5).cover?(button.size)
+
+          raise ArgumentError, "Invalid button: '#{button.inspect}'. It must be an array with (4..5) elements"
+        end
+      end
+
       # Parent class for builders of widgets that can contain other widgets.
       # @see org.openhab.core.model.sitemap.sitemap.LinkableWidget
       class LinkableWidgetBuilder < WidgetBuilder
@@ -833,6 +911,23 @@ module OpenHAB
         #             visibility: nil)
         #   end
         #
+        #   # (see ButtongridBuilder#initialize)
+        #   # Create a new `Buttongrid` element.
+        #   # @yield Block executed in the context of an {ButtongridBuilder}
+        #   # @return [ButtongridBuilder]
+        #   # @since openHAB 4.1
+        #   # @!visibility public
+        #   def buttongrid(item: nil,
+        #                  label: nil,
+        #                  icon: nil,
+        #                  static_icon: nil,
+        #                  buttons: nil,
+        #                  label_color: nil,
+        #                  value_color: nil,
+        #                  icon_color: nil,
+        #                  visibility: nil)
+        #   end
+        #
         #   # (see SetpointBuilder#initialize)
         #   # Create a new `Setpoint` element.
         #   # @yield Block executed in the context of a {SetpointBuilder}
@@ -895,6 +990,7 @@ module OpenHAB
            slider
            selection
            input
+           buttongrid
            setpoint
            colorpicker
            default].each do |method|

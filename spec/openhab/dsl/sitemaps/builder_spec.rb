@@ -413,6 +413,61 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
   end
 
+  describe "#buttongrid", if: OpenHAB::Core::VERSION >= "4.1.0" do
+    it "works" do
+      s = sitemaps.build do
+        sitemap "default" do
+          buttongrid buttons: [
+            [1, 1, "BACK", "Back", "f7:return"],
+            [1, 2, "HOME", "Menu", "material:apps"],
+            [1, 3, "YELLOW", "Search", "f7:search"],
+            [2, 2, "UP", "Up", "f7:arrowtriangle_up"],
+            [4, 2, "DOWN", "Down", "f7:arrowtriangle_down"],
+            [3, 1, "LEFT", "Left", "f7:arrowtriangle_left"]
+          ] do
+            button [3, 3, "RIGHT", "Right", "f7:arrowtriangle_right"]
+            button [3, 2, "ENTER", "Enter"]
+          end
+        end
+      end
+
+      bg = s.children.first
+      expect(bg.buttons.size).to eq 8
+      expect(bg.buttons[0].row).to eq 1
+      expect(bg.buttons[7].cmd).to eq "ENTER"
+    end
+
+    it "raises an error when button is incomplete" do
+      expect do
+        sitemaps.build do
+          sitemap "default" do
+            buttongrid buttons: [[1, 2, 3]]
+          end
+        end
+      end.to raise_error(ArgumentError)
+
+      expect do
+        sitemaps.build do
+          sitemap "default" do
+            buttongrid do
+              button
+            end
+          end
+        end
+      end.to raise_error(ArgumentError)
+
+      expect do
+        sitemaps.build do
+          sitemap "default" do
+            buttongrid do
+              button [1, 2, 3]
+            end
+          end
+        end
+      end.to raise_error(ArgumentError)
+    end
+  end
+
   it "can add a default" do
     sitemaps.build do
       sitemap "default" do
