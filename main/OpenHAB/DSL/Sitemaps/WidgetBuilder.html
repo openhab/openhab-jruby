@@ -3227,7 +3227,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#icon-instance_method" title="#icon (instance method)">#<strong>icon</strong>  &#x21d2; String<sup>?</sup> </a>
+      <a href="#icon-instance_method" title="#icon (instance method)">#<strong>icon</strong>  &#x21d2; String, ... </a>
     
 
     
@@ -3244,7 +3244,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>The icon to show It can be a string, or a hash of conditions and icons.</p>
+</div></span>
   
 </li>
 
@@ -3351,6 +3352,32 @@
 
   
     <span class="summary_desc"><div class='inline'><p>Label color rules.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#static_icon-instance_method" title="#static_icon (instance method)">#<strong>static_icon</strong>  &#x21d2; String<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The static icon to show This is mutually exclusive with <span class='object_link'><a href="#icon-instance_method" title="OpenHAB::DSL::Sitemaps::WidgetBuilder#icon (method)">#icon</a></span>.</p>
 </div></span>
   
 </li>
@@ -3553,7 +3580,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="icon-instance_method">
   
-    #<strong>icon</strong>  &#x21d2; <tt>String</tt><sup>?</sup> 
+    #<strong>icon</strong>  &#x21d2; <tt>String</tt>, ... 
   
 
   
@@ -3561,19 +3588,44 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
+    <p>The icon to show
+It can be a string, or a hash of conditions and icons.</p>
+
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>A simple icon</p>
+</div></p>
+      
+      <pre class="example code"><code>sitemaps.build { text <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:house</span><span class="delimiter">&quot;</span></span> }</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>A dynamic icon with conditions</p>
+</div></p>
+      
+      <pre class="example code"><code>sitemaps.build <span class="keyword">do</span>
+  text <span class="key">item</span>: <span class="constant">Wifi_Status</span>, <span class="key">icon</span>: {
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">ON</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:wifi</span><span class="delimiter">&quot;</span></span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">OFF</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:wifi_slash</span><span class="delimiter">&quot;</span></span>,
+    <span class="key">default</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:wifi_exclamationmark</span><span class="delimiter">&quot;</span></span>
+  }
+<span class="keyword">end</span></code></pre>
+    
+  </div>
+
 <p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
       
       
-        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt>String</tt>, <tt>Hash&lt;String, String&gt;</tt>, <tt>Hash&lt;<span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String&gt;, String&gt;</tt>, <tt>nil</tt>)</span>
       
       
       
@@ -3594,12 +3646,12 @@
       <pre class="lines">
 
 
-56
-57
-58</pre>
+70
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 70</span>
 
 <span class="keyword">def</span> <span class="function">icon</span>
   <span class="instance-variable">@icon</span>
@@ -3656,12 +3708,12 @@
       <pre class="lines">
 
 
-68
-69
-70</pre>
+88
+89
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 88</span>
 
 <span class="keyword">def</span> <span class="function">icon_colors</span>
   <span class="instance-variable">@icon_colors</span>
@@ -3827,15 +3879,93 @@
       <pre class="lines">
 
 
-60
-61
-62</pre>
+80
+81
+82</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 80</span>
 
 <span class="keyword">def</span> <span class="function">label_colors</span>
   <span class="instance-variable">@label_colors</span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="static_icon=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="static_icon-instance_method">
+  
+    #<strong>static_icon</strong>  &#x21d2; <tt>String</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The static icon to show
+This is mutually exclusive with <span class='object_link'><a href="#icon-instance_method" title="OpenHAB::DSL::Sitemaps::WidgetBuilder#icon (method)">#icon</a></span></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://www.openhab.org/docs/ui/sitemaps.html#element-types" target="_parent" title="https://www.openhab.org/docs/ui/sitemaps.html#element-types">https://www.openhab.org/docs/ui/sitemaps.html#element-types</a></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+76
+77
+78</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 76</span>
+
+<span class="keyword">def</span> <span class="function">static_icon</span>
+  <span class="instance-variable">@static_icon</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3889,12 +4019,12 @@
       <pre class="lines">
 
 
-64
-65
-66</pre>
+84
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 84</span>
 
 <span class="keyword">def</span> <span class="function">value_colors</span>
   <span class="instance-variable">@value_colors</span>
@@ -3951,12 +4081,12 @@
       <pre class="lines">
 
 
-72
-73
-74</pre>
+92
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 92</span>
 
 <span class="keyword">def</span> <span class="function">visibilities</span>
   <span class="instance-variable">@visibilities</span>
@@ -4015,13 +4145,13 @@
       <pre class="lines">
 
 
-130
-131
-132
-133</pre>
+153
+154
+155
+156</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 130</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 153</span>
 
 <span class="keyword">def</span> <span class="function">icon_color</span>(rules)
   rules = { <span class="key">default</span>: rules } <span class="keyword">if</span> rules.is_a?(<span class="constant">String</span>)
@@ -4074,13 +4204,13 @@
       <pre class="lines">
 
 
-116
-117
-118
-119</pre>
+139
+140
+141
+142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 139</span>
 
 <span class="keyword">def</span> <span class="function">label_color</span>(rules)
   rules = { <span class="key">default</span>: rules } <span class="keyword">if</span> rules.is_a?(<span class="constant">String</span>)
@@ -4133,13 +4263,13 @@
       <pre class="lines">
 
 
-123
-124
-125
-126</pre>
+146
+147
+148
+149</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 146</span>
 
 <span class="keyword">def</span> <span class="function">value_color</span>(rules)
   rules = { <span class="key">default</span>: rules } <span class="keyword">if</span> rules.is_a?(<span class="constant">String</span>)
@@ -4192,12 +4322,12 @@
       <pre class="lines">
 
 
-137
-138
-139</pre>
+160
+161
+162</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 137</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 160</span>
 
 <span class="keyword">def</span> <span class="function">visibility</span>(*rules)
   <span class="instance-variable">@visibilities</span>.concat(rules)
@@ -4212,7 +4342,7 @@
 </div>
 
         <footer>
-  Generated on Thu Jan  4 16:47:34 2024 by
+  Generated on Thu Jan  4 17:02:02 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
