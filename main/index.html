@@ -3227,6 +3227,7 @@ If you're new to Ruby, you may want to check out <a href="file.ruby-basics.html"
 <li><a href="#terse-rules">Terse Rules</a></li>
 <li><a href="#early-exit-from-a-rule">Early Exit From a Rule</a></li>
 <li><a href="#dynamic-generation-of-rules">Dynamic Generation of Rules</a></li>
+<li><a href="#scenes-and-scripts">Scenes and Scripts</a></li>
 <li><a href="#hooks">Hooks</a></li>
 </ul>
 </li>
@@ -4526,6 +4527,19 @@ virtual_switches.each <span class="keyword">do</span> |switch|
   <span class="keyword">end</span>
 <span class="keyword">end</span>
 </code></pre>
+<h3 id="scenes-and-scripts"><a href="#scenes-and-scripts" class="header-anchor">#</a>Scenes and Scripts</h3>
+<p>A <code>scene</code> can be created using the <span class='object_link'><a href="OpenHAB/DSL.html#scene-class_method" title="OpenHAB::DSL.scene (method)">.scene</a></span> method.</p>
+<pre class="code ruby"><code class="ruby">scene <span class="string"><span class="delimiter">&quot;</span><span class="content">Movie</span><span class="delimiter">&quot;</span></span>, <span class="key">id</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">movie</span><span class="delimiter">&quot;</span></span>, <span class="key">description</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Set up the theatre for movie watching</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+  <span class="constant">Theatre_Window_Blinds</span>.down
+  <span class="constant">Theatre_Screen_Curtain</span>.up
+  <span class="constant">Theatre_Mood_Light</span>.on
+  <span class="constant">Theatre_Light</span>.off
+  <span class="constant">Theatre_Projector</span>.on
+  <span class="constant">Theatre_Receiver</span>.on
+<span class="keyword">end</span>
+</code></pre>
+<p>To create a <code>script</code>, use the <span class='object_link'><a href="OpenHAB/DSL.html#script-class_method" title="OpenHAB::DSL.script (method)">.script</a></span> method.
+Note that scripts can be executed with additional contexts.</p>
 <h3 id="hooks"><a href="#hooks" class="header-anchor">#</a>Hooks</h3>
 <p>File based scripts can also register <span class='object_link'><a href="OpenHAB/Core/ScriptHandling.html" title="OpenHAB::Core::ScriptHandling (module)">hooks</a></span> that will be called when the script has completed loading (<code>script_loaded</code>) and when it gets unloaded (<code>script_unloaded</code>).</p>
 <pre class="code ruby"><code class="ruby">x = <span class="integer">1</span>
@@ -4557,7 +4571,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Fri Dec 29 16:46:37 2023 by
+  Generated on Thu Jan  4 16:35:37 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

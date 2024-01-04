@@ -3298,7 +3298,7 @@ inside of other classes, or include the module.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#scene-class_method" title="scene (class method)">.<strong>scene</strong>(name = nil, id: nil, **kwargs) { ... } &#x21d2; Core::Rules::Rule </a>
+      <a href="#scene-class_method" title="scene (class method)">.<strong>scene</strong>(name = nil, description: nil, id: nil, tag: nil, tags: nil, **kwargs) { ... } &#x21d2; Core::Rules::Rule </a>
     
 
     
@@ -3321,7 +3321,7 @@ inside of other classes, or include the module.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#script-class_method" title="script (class method)">.<strong>script</strong>(name = nil, id: nil, **kwargs) { ... } &#x21d2; Core::Rules::Rule </a>
+      <a href="#script-class_method" title="script (class method)">.<strong>script</strong>(name = nil, description: nil, id: nil, tag: nil, tags: nil, **kwargs) { ... } &#x21d2; Core::Rules::Rule </a>
     
 
     
@@ -6486,7 +6486,7 @@ recommended that you use a Proc, not a Lambda, for permissive argument matching.
   <div class="discussion">
     <p>Create a new rule</p>
 <p>The rule must have at least one trigger and one execution block.
-To create a "script" without any triggers, use <span class='object_link'>#script</span>.</p>
+To create a "script" without any triggers, use <span class='object_link'><a href="#script-class_method" title="OpenHAB::DSL.script (method)">script</a></span>.</p>
 
 
   </div>
@@ -6668,7 +6668,7 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
       <div class="method_details ">
   <h3 class="signature " id="scene-class_method">
   
-    .<strong>scene</strong>(name = nil, id: nil, **kwargs) { ... } &#x21d2; <tt><span class='object_link'><a href="Core/Rules/Rule.html" title="OpenHAB::Core::Rules::Rule (module)">Core::Rules::Rule</a></span></tt> 
+    .<strong>scene</strong>(name = nil, description: nil, id: nil, tag: nil, tags: nil, **kwargs) { ... } &#x21d2; <tt><span class='object_link'><a href="Core/Rules/Rule.html" title="OpenHAB::Core::Rules::Rule (module)">Core::Rules::Rule</a></span></tt> 
   
 
   
@@ -6699,7 +6699,24 @@ such as the Run Rules action.</p>
       
       
         &mdash;
-        <div class='inline'><p>A descriptive name</p>
+        <div class='inline'><p>A name for the scene</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>description</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>A description of the scene</p>
 </div>
       
     </li>
@@ -6717,6 +6734,40 @@ such as the Run Rules action.</p>
       
         &mdash;
         <div class='inline'><p>The script's ID</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>tag</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a></tt>, <tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;String, <span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>, <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a>&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Tags to assign to the script</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>tags</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a></tt>, <tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;String, <span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>, <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a>&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Fluent alias for <code>tag</code></p>
 </div>
       
     </li>
@@ -6767,8 +6818,8 @@ such as the Run Rules action.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 64</span>
 
-<span class="keyword">def</span> <span class="function">scene</span>(name = <span class="predefined-constant">nil</span>, <span class="key">id</span>: <span class="predefined-constant">nil</span>, **kwargs, &amp;block)
-  rules.build { scene(name, <span class="key">id</span>: id, **kwargs, &amp;block) }
+<span class="keyword">def</span> <span class="function">scene</span>(name = <span class="predefined-constant">nil</span>, <span class="key">description</span>: <span class="predefined-constant">nil</span>, <span class="key">id</span>: <span class="predefined-constant">nil</span>, <span class="key">tag</span>: <span class="predefined-constant">nil</span>, <span class="key">tags</span>: <span class="predefined-constant">nil</span>, **kwargs, &amp;block)
+  rules.build { scene(name, <span class="key">description</span>: description, <span class="key">id</span>: id, <span class="key">tag</span>: tag, <span class="key">tags</span>: tags, **kwargs, &amp;block) }
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -6778,7 +6829,7 @@ such as the Run Rules action.</p>
       <div class="method_details ">
   <h3 class="signature " id="script-class_method">
   
-    .<strong>script</strong>(name = nil, id: nil, **kwargs) { ... } &#x21d2; <tt><span class='object_link'><a href="Core/Rules/Rule.html" title="OpenHAB::Core::Rules::Rule (module)">Core::Rules::Rule</a></span></tt> 
+    .<strong>script</strong>(name = nil, description: nil, id: nil, tag: nil, tags: nil, **kwargs) { ... } &#x21d2; <tt><span class='object_link'><a href="Core/Rules/Rule.html" title="OpenHAB::Core::Rules::Rule (module)">Core::Rules::Rule</a></span></tt> 
   
 
   
@@ -6788,13 +6839,47 @@ such as the Run Rules action.</p>
   <div class="discussion">
     <p>Create a new script</p>
 <p>A script is a rule with no triggers. It can be called by various other actions,
-such as the Run Rules action.</p>
+such as the Run Rules action, or by calling <span class='object_link'><a href="Core/Rules/Rule.html#trigger-instance_method" title="OpenHAB::Core::Rules::Rule#trigger (method)">Core::Rules::Rule#trigger</a></span>.</p>
+<p>Scripts can be executed with some additional context, similar to method parameters
+(see <span class='object_link'><a href="Core/Rules/Rule.html#trigger-instance_method" title="OpenHAB::Core::Rules::Rule#trigger (method)">Core::Rules::Rule#trigger</a></span>).
+The context can be accessed from within the script's execution block as a "local" variable.</p>
 
 
   </div>
 </div>
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>A simple script</p>
+</div></p>
+      
+      <pre class="example code"><code><span class="comment"># return the script object into a variable</span>
+door_check = script <span class="string"><span class="delimiter">&quot;</span><span class="content">Check all doors</span><span class="delimiter">&quot;</span></span>, <span class="key">id</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">door_check</span><span class="delimiter">&quot;</span></span>, <span class="key">tags</span>: <span class="symbol">:security</span> <span class="keyword">do</span>
+  open_doors = gDoors.members.select(&amp;<span class="symbol">:open?</span>).map(&amp;<span class="symbol">:label</span>).join(<span class="string"><span class="delimiter">&quot;</span><span class="content">, </span><span class="delimiter">&quot;</span></span>)
+  notify(<span class="string"><span class="delimiter">&quot;</span><span class="content">The following doors are open: </span><span class="inline"><span class="inline-delimiter">#{</span>open_doors<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>) <span class="keyword">unless</span> open_doors.empty?
+<span class="keyword">end</span>
+
+<span class="comment"># run is an alias of trigger</span>
+door_check.run</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>A script with context</p>
+</div></p>
+      
+      <pre class="example code"><code><span class="comment"># This script expects to be called with `message` as context/parameter</span>
+<span class="constant">DESTINATION_EMAIL</span> = <span class="string"><span class="delimiter">&quot;</span><span class="content">myemail@example.com</span><span class="delimiter">&quot;</span></span>
+script <span class="string"><span class="delimiter">&quot;</span><span class="content">Send Notifications</span><span class="delimiter">&quot;</span></span>, <span class="key">id</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">send_alert</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+  notify(message)
+  things[<span class="string"><span class="delimiter">&quot;</span><span class="content">mail:smtp:local</span><span class="delimiter">&quot;</span></span>].send_mail(<span class="constant">DESTINATION_EMAIL</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">OpenHAB Alert</span><span class="delimiter">&quot;</span></span>, message)
+<span class="keyword">end</span>
+
+rules.scripts[<span class="string"><span class="delimiter">&quot;</span><span class="content">send_alert</span><span class="delimiter">&quot;</span></span>].run(<span class="key">message</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">The door is open!</span><span class="delimiter">&quot;</span></span>)</code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -6809,7 +6894,24 @@ such as the Run Rules action.</p>
       
       
         &mdash;
-        <div class='inline'><p>A descriptive name</p>
+        <div class='inline'><p>A name for the script</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>description</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>A description of the script</p>
 </div>
       
     </li>
@@ -6827,6 +6929,40 @@ such as the Run Rules action.</p>
       
         &mdash;
         <div class='inline'><p>The script's ID</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>tag</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a></tt>, <tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;String, <span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>, <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a>&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Tags to assign to the script</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>tags</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a></tt>, <tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;String, <span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>, <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/Tag.html" target="_parent" title="Semantics::Tag">Semantics::Tag</a>&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Fluent alias for <code>tag</code></p>
 </div>
       
     </li>
@@ -6864,6 +7000,13 @@ such as the Run Rules action.</p>
   
 </ul>
 
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Core/Rules/Rule.html#trigger-instance_method" title="OpenHAB::Core::Rules::Rule#trigger (method)">Core::Rules::Rule#trigger</a></span></li>
+    
+  </ul>
+
 </div><table class="source_code">
   <tr>
     <td>
@@ -6877,8 +7020,8 @@ such as the Run Rules action.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 69</span>
 
-<span class="keyword">def</span> <span class="function">script</span>(name = <span class="predefined-constant">nil</span>, <span class="key">id</span>: <span class="predefined-constant">nil</span>, **kwargs, &amp;block)
-  rules.build { script(name, <span class="key">id</span>: id, **kwargs, &amp;block) }
+<span class="keyword">def</span> <span class="function">script</span>(name = <span class="predefined-constant">nil</span>, <span class="key">description</span>: <span class="predefined-constant">nil</span>, <span class="key">id</span>: <span class="predefined-constant">nil</span>, <span class="key">tag</span>: <span class="predefined-constant">nil</span>, <span class="key">tags</span>: <span class="predefined-constant">nil</span>, **kwargs, &amp;block)
+  rules.build { script(name, <span class="key">description</span>: description, <span class="key">id</span>: id, <span class="key">tag</span>: tag, <span class="key">tags</span>: tags, **kwargs, &amp;block) }
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -7976,7 +8119,7 @@ unit!
 </div>
 
         <footer>
-  Generated on Fri Dec 29 16:46:38 2023 by
+  Generated on Thu Jan  4 16:35:38 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
