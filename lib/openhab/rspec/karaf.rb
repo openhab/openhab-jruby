@@ -537,6 +537,10 @@ module OpenHAB
 
       def add_class_loader(bundle)
         return if @class_loaders.include?(bundle.symbolic_name)
+        # this bundle sometimes has an invalid internal jar (geronimo-osgi-locator.jar) which will
+        # spam the logs with useless errors. it's doubtful we'll need to access a class from this
+        # bundle directly
+        return if bundle.symbolic_name == "org.apache.aries.javax.jax.rs-api"
 
         @class_loaders << bundle.symbolic_name
         ::JRuby.runtime.instance_config.add_loader(JRuby::OSGiBundleClassLoader.new(bundle))
