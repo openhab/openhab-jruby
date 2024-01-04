@@ -252,10 +252,10 @@ module OpenHAB
         end
 
         # @!attribute thing [r]
-        # Return the item's thing if this item is linked with a thing. If an item is linked to more than one thing,
+        # Return the item's thing if this item is linked with a thing. If an item is linked to more than one channel,
         # this method only returns the first thing.
         #
-        # @return [Thing] The thing associated with this item or nil
+        # @return [Things::Thing, nil]
         def thing
           all_linked_things.first
         end
@@ -264,11 +264,45 @@ module OpenHAB
         # @!attribute things [r]
         # Returns all of the item's linked things.
         #
-        # @return [Array<Thing>] An array of things or an empty array
+        # @return [Array<Things::Thing>] An array of things or an empty array
         def things
           Things::Links::Provider.registry.get_bound_things(name).map { |thing| Things::Proxy.new(thing) }
         end
         alias_method :all_linked_things, :things
+
+        # @!attribute channel_uid [r]
+        # Return the UID of the channel this item is linked to. If an item is linked to more than one channel,
+        # this method only returns the first channel.
+        #
+        # @return [Things::ChannelUID, nil]
+        def channel_uid
+          channel_uids.first
+        end
+
+        # @!attribute channel_uids [r]
+        # Return the UIDs of all of the channels this item is linked to.
+        #
+        # @return [Array<Things::ChannelUID>]
+        def channel_uids
+          Things::Links::Provider.registry.get_bound_channels(name)
+        end
+
+        # @!attribute channel [r]
+        # Return the the channel this item is linked to. If an item is linked to more than one channel,
+        # this method only returns the first channel.
+        #
+        # @return [Things::Channel, nil]
+        def channel
+          channel_uids.first&.channel
+        end
+
+        # @!attribute channels [r]
+        # Return all of the channels this item is linked to.
+        #
+        # @return [Array<Things::Channel>]
+        def channels
+          channel_uids.map(&:channel)
+        end
 
         #
         # @!attribute links [r]
@@ -290,30 +324,43 @@ module OpenHAB
         end
 
         #
-        # Links the item to a channel.
+        # @return [Things::ItemChannelLink, nil]
         #
-        # @param [String, Things::Channel, Things::ChannelUID] channel The channel to link to.
-        # @param [Hash] config The configuration for the link.
+        # @overload link
+        #   Returns the item's link. If an item is linked to more than one channel,
+        #   this method only returns the first link.
         #
-        # @return [Things::ItemChannelLink] The created link.
+        #   @return [Things::ItemChannelLink, nil]
         #
-        # @example Link an item to a channel
-        #   LivingRoom_Light_Power.link("mqtt:topic:livingroom-light:power")
+        # @overload link(channel, config = {})
         #
-        # @example Link to a Thing's channel
-        #   LivingRoom_Light_Power.link(things["mqtt:topic:livingroom-light"].channels["power"])
+        #   Links the item to a channel.
         #
-        # @example Specify a link configuration
-        #   High_Temperature_Alert.link(
-        #     "mqtt:topic:outdoor-thermometer:temperature",
-        #     profile: "system:hysteresis",
-        #     lower: "29 °C",
-        #     upper: "30 °C")
+        #   @param [String, Things::Channel, Things::ChannelUID] channel The channel to link to.
+        #   @param [Hash] config The configuration for the link.
         #
-        # @see links
-        # @see unlink
+        #   @return [Things::ItemChannelLink] The created link.
         #
-        def link(channel, config = {})
+        #   @example Link an item to a channel
+        #     LivingRoom_Light_Power.link("mqtt:topic:livingroom-light:power")
+        #
+        #   @example Link to a Thing's channel
+        #     LivingRoom_Light_Power.link(things["mqtt:topic:livingroom-light"].channels["power"])
+        #
+        #   @example Specify a link configuration
+        #     High_Temperature_Alert.link(
+        #       "mqtt:topic:outdoor-thermometer:temperature",
+        #       profile: "system:hysteresis",
+        #       lower: "29 °C",
+        #       upper: "30 °C")
+        #
+        #   @see links
+        #   @see unlink
+        #
+        def link(channel = nil, config = nil)
+          return Things::Links::Provider.registry.get_links(name).first if channel.nil? && config.nil?
+
+          config ||= {}
           Core::Things::Links::Provider.create_link(self, channel, config).tap do |new_link|
             provider = Core::Things::Links::Provider.current
             if !(current_link = provider.get(new_link.uid))
