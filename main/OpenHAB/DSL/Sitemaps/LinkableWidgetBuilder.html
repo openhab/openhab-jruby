@@ -2604,6 +2604,19 @@
   
   <li class="">
     <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ButtongridBuilder.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder (class)">ButtongridBuilder</a></span>
+      
+        &lt; WidgetBuilder
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ChartBuilder.html" title="OpenHAB::DSL::Sitemaps::ChartBuilder (class)">ChartBuilder</a></span>
       
         &lt; WidgetBuilder
@@ -3395,6 +3408,29 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#buttongrid-instance_method" title="#buttongrid (instance method)">#<strong>buttongrid</strong>(item: nil, label: nil, icon: nil, static_icon: nil, buttons: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil) { ... } &#x21d2; ButtongridBuilder </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a new <code>Buttongrid</code> element.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#chart-instance_method" title="#chart (instance method)">#<strong>chart</strong>(item: nil, label: nil, icon: nil, static_icon: nil, service: nil, refresh: nil, period: nil, legend: nil, group: nil, y_axis_pattern: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil) { ... } &#x21d2; ChartBuilder </a>
     
 
@@ -3780,7 +3816,298 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="chart-instance_method">
+  <h3 class="signature first" id="buttongrid-instance_method">
+  
+    #<strong>buttongrid</strong>(item: nil, label: nil, icon: nil, static_icon: nil, buttons: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil) { ... } &#x21d2; <tt><span class='object_link'><a href="ButtongridBuilder.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder (class)">ButtongridBuilder</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a new <code>Buttongrid</code> element.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class="comment"># This creates a buttongrid to emulate a TV remote control</span>
+sitemaps.build <span class="keyword">do</span>
+  buttongrid <span class="key">item</span>: <span class="constant">LivingRoom_TV_RCButton</span>, <span class="key">buttons</span>: [
+    [<span class="integer">1</span>, <span class="integer">1</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">BACK</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Back</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:return</span><span class="delimiter">&quot;</span></span>],
+    [<span class="integer">1</span>, <span class="integer">2</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">HOME</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Menu</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">material:apps</span><span class="delimiter">&quot;</span></span>],
+    [<span class="integer">1</span>, <span class="integer">3</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">YELLOW</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Search</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:search</span><span class="delimiter">&quot;</span></span>],
+    [<span class="integer">2</span>, <span class="integer">2</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">UP</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Up</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:arrowtriangle_up</span><span class="delimiter">&quot;</span></span>],
+    [<span class="integer">4</span>, <span class="integer">2</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">DOWN</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Down</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:arrowtriangle_down</span><span class="delimiter">&quot;</span></span>],
+    [<span class="integer">3</span>, <span class="integer">1</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">LEFT</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Left</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:arrowtriangle_left</span><span class="delimiter">&quot;</span></span>],
+    [<span class="integer">3</span>, <span class="integer">3</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">RIGHT</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Right</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:arrowtriangle_right</span><span class="delimiter">&quot;</span></span>],
+    [<span class="integer">3</span>, <span class="integer">2</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">ENTER</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Enter</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">material:adjust</span><span class="delimiter">&quot;</span></span>]
+  ]
+<span class="keyword">end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>item</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Core::Items::Item</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The item whose state to show (see <span class='object_link'><a href="WidgetBuilder.html#item-instance_method" title="OpenHAB::DSL::Sitemaps::WidgetBuilder#item (method)">WidgetBuilder#item</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>label</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>(see <span class='object_link'><a href="WidgetBuilder.html#label-instance_method" title="OpenHAB::DSL::Sitemaps::WidgetBuilder#label (method)">WidgetBuilder#label</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>icon</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>Hash&lt;String, String&gt;</tt>, <tt>Hash&lt;<span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String&gt;, String&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>(see <span class='object_link'><a href="WidgetBuilder.html#icon-instance_method" title="OpenHAB::DSL::Sitemaps::WidgetBuilder#icon (method)">WidgetBuilder#icon</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>static_icon</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>(see <span class='object_link'><a href="WidgetBuilder.html#static_icon-instance_method" title="OpenHAB::DSL::Sitemaps::WidgetBuilder#static_icon (method)">WidgetBuilder#static_icon</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>label_color</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>Hash&lt;String, String&gt;</tt>, <tt>Hash&lt;<span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String&gt;, String&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>One or more label color rules (see <span class='object_link'><a href="WidgetBuilder.html#label_color-instance_method" title="OpenHAB::DSL::Sitemaps::WidgetBuilder#label_color (method)">WidgetBuilder#label_color</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>value_color</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>Hash&lt;String, String&gt;</tt>, <tt>Hash&lt;<span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String&gt;, String&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>One or more value color rules (see <span class='object_link'><a href="WidgetBuilder.html#value_color-instance_method" title="OpenHAB::DSL::Sitemaps::WidgetBuilder#value_color (method)">WidgetBuilder#value_color</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>icon_color</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>Hash&lt;String, String&gt;</tt>, <tt>Hash&lt;<span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String&gt;, String&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>One or more icon color rules (see <span class='object_link'><a href="WidgetBuilder.html#icon_color-instance_method" title="OpenHAB::DSL::Sitemaps::WidgetBuilder#icon_color (method)">WidgetBuilder#icon_color</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>visibility</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String&gt;</tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String&gt;&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>One or more visibility rules (see <span class='object_link'><a href="WidgetBuilder.html#visibility-instance_method" title="OpenHAB::DSL::Sitemaps::WidgetBuilder#visibility (method)">WidgetBuilder#visibility</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>buttons</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;int, int, <span class='object_link'><a href="../../Core/Types/Command.html" title="OpenHAB::Core::Types::Command (module)">Command</a></span>, String, String&gt;&gt;</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An array of buttons to display.
+Each element is an array with the following elements:</p>
+<ul>
+<li>row: 1-12</li>
+<li>column: 1-12</li>
+<li>command: The command to send when the button is pressed</li>
+<li>label: The label to display on the button</li>
+<li>icon: The icon to display on the button (optional)</li>
+</ul>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>Block executed in the context of an <span class='object_link'><a href="ButtongridBuilder.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder (class)">ButtongridBuilder</a></span></p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="ButtongridBuilder.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder (class)">ButtongridBuilder</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://www.openhab.org/docs/ui/sitemaps.html#element-type-buttongrid" target="_parent" title="https://www.openhab.org/docs/ui/sitemaps.html#element-type-buttongrid">https://www.openhab.org/docs/ui/sitemaps.html#element-type-buttongrid</a></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 208</span>
+
+<span class="keyword">def</span> <span class="function">buttongrid</span>(<span class="key">item</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">label</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">icon</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">static_icon</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">buttons</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">label_color</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">value_color</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">icon_color</span>: <span class="predefined-constant">nil</span>,
+               <span class="key">visibility</span>: <span class="predefined-constant">nil</span>)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="chart-instance_method">
   
     #<strong>chart</strong>(item: nil, label: nil, icon: nil, static_icon: nil, service: nil, refresh: nil, period: nil, legend: nil, group: nil, y_axis_pattern: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil) { ... } &#x21d2; <tt><span class='object_link'><a href="ChartBuilder.html" title="OpenHAB::DSL::Sitemaps::ChartBuilder (class)">ChartBuilder</a></span></tt> 
   
@@ -4328,19 +4655,19 @@ How often to refresh the chart (in seconds) (see <span class='object_link'><a hr
       <pre class="lines">
 
 
-224
-225
-226
-227
-228
-229
-230
-231
-232
-233</pre>
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 224</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 241</span>
 
 <span class="keyword">def</span> <span class="function">colorpicker</span>(<span class="key">item</span>: <span class="predefined-constant">nil</span>,
                 <span class="key">label</span>: <span class="predefined-constant">nil</span>,
@@ -4569,19 +4896,19 @@ How often to refresh the chart (in seconds) (see <span class='object_link'><a hr
       <pre class="lines">
 
 
-240
-241
-242
-243
-244
-245
-246
-247
-248
-249</pre>
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 240</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 257</span>
 
 <span class="keyword">def</span> <span class="function">default</span>(<span class="key">item</span>: <span class="predefined-constant">nil</span>,
            <span class="key">label</span>: <span class="predefined-constant">nil</span>,
@@ -5955,20 +6282,20 @@ How often to refresh the chart (in seconds) (see <span class='object_link'><a hr
       <pre class="lines">
 
 
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217</pre>
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 207</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 224</span>
 
 <span class="keyword">def</span> <span class="function">setpoint</span>(<span class="key">item</span>: <span class="predefined-constant">nil</span>,
             <span class="key">label</span>: <span class="predefined-constant">nil</span>,
@@ -7272,7 +7599,7 @@ How often to refresh the chart (in seconds) (see <span class='object_link'><a hr
 </div>
 
         <footer>
-  Generated on Thu Jan  4 21:21:01 2024 by
+  Generated on Thu Jan  4 22:35:55 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
