@@ -2,15 +2,32 @@
 
 require "forwardable"
 
+require_relative "uid"
+
 module OpenHAB
   module Core
     module Things
       java_import org.openhab.core.thing.ChannelUID
 
       #
-      # {ChannelUID} represents a unique identifier for {Channel channels}.
+      # {ChannelUID} represents a unique identifier for a {Channel}.
       #
-      class ChannelUID
+      # @!attribute [r] id
+      #   @return [String]
+      #
+      # @!attribute [r] id_without_group
+      #   @return [String]
+      #
+      # @!attribute [r] group_id
+      #   @return [String, nil]
+      #
+      # @!attribute [r] thing_uid
+      #   @return [ThingUID]
+      #
+      class ChannelUID < UID
+        # @return [true, false]
+        alias_method :in_group?, :is_in_group
+
         #
         # @attribute [r] thing
         #

@@ -39,11 +39,14 @@ module OpenHAB
       #
       # @!attribute [r] uid
       #   Return the UID.
-      #   @return [org.openhab.core.thing.ThingUID]
+      #   @return [ThingUID]
       #
       # @!attribute [r] bridge_uid
       #   Return the Bridge UID when available.
-      #   @return [org.openhab.core.thing.ThingUID]
+      #   @return [ThingUID]
+      #
+      # @!attribute [r] thing_type_uid
+      #   @return [ThingTypeUID]
       #
       # @!attribute [r] configuration
       #   Return the thing's configuration.
@@ -154,6 +157,12 @@ module OpenHAB
         #
         def disable
           enable(enabled: false)
+        end
+
+        # @!attribute [r] thing_type
+        # @return [ThingType]
+        def thing_type
+          ThingType.registry.get_thing_type(thing_type_uid)
         end
 
         # @return [String]
