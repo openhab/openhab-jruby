@@ -29,7 +29,13 @@ module OpenHAB
           @thing = thing
         end
 
-        def handle_command(channel, command); end
+        def handle_command(channel_uid, command)
+          channel = thing.get_channel(channel_uid)
+          return unless channel
+          return if channel.auto_update_policy == org.openhab.core.thing.type.AutoUpdatePolicy::VETO
+
+          callback&.state_updated(channel_uid, command) if command.is_a?(Core::Types::State)
+        end
 
         def set_callback(callback)
           @callback = callback

@@ -38,7 +38,6 @@ module OpenHAB
           end
 
           Helpers.autorequires unless Configuration.private_confdir
-          Helpers.send(:set_up_autoupdates)
           Helpers.load_transforms
           Helpers.load_rules
 
@@ -103,7 +102,6 @@ module OpenHAB
           # wipe this
           DSL::Items::TimedCommand.timed_commands.clear
           Timecop.return
-          restore_autoupdate_items
           Mocks::PersistenceService.instance.reset
           Hooks.cache_script_extension.sharedCache.clear if DSL.shared_cache
           DSL.persistence!(nil)
