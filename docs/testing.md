@@ -135,6 +135,9 @@ OpenHAB::Log.events.level = :info
 - If you have any Things in your openHAB instance that take two minutes to come
   online due to missing type metadata, you can force them to initialize
   immediately by calling {OpenHAB::RSpec::Helpers#initialize_missing_thing_types}.
+- You can add a `binding.irb` call in to a spec (or your rule file) to break
+  execution at that point and allow you to explore the current state of things
+  with a REPL.
 
 ## Configuration
 
