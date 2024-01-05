@@ -88,7 +88,7 @@ explicitly. - Documentation for openhab-scripting JRuby helper library.">
         </nav>
         <div class="page-versions">
   <ul class="version-switcher">
-    <li><a href="/openhab-jruby/5.12" class="version-button stable">Stable <small>(5.12)</small></a></li>
+    <li><a href="/openhab-jruby/5.13" class="version-button stable">Stable <small>(5.13)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
   
@@ -3960,43 +3960,43 @@ The addon's bundle id is used as the identifier.</p>
       <pre class="lines">
 
 
-321
-322
-323
-324
-325
-326
-327
-328
-329
-330
-331
-332
-333
-334
-335
-336
-337
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
 351
 352
 353
-354</pre>
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 321</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 351</span>
 
 <span class="keyword">def</span> <span class="function">install_addon</span>(addon_id, <span class="key">wait</span>: <span class="predefined-constant">true</span>, <span class="key">ready_markers</span>: <span class="predefined-constant">nil</span>)
   service_filter = <span class="string"><span class="delimiter">&quot;</span><span class="content">(component.name=org.openhab.core.karafaddons)</span><span class="delimiter">&quot;</span></span>
@@ -4119,7 +4119,37 @@ The addon's bundle id is used as the identifier.</p>
 253
 254
 255
-256</pre>
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 207</span>
@@ -4146,8 +4176,11 @@ The addon's bundle id is used as the identifier.</p>
   require_relative <span class="string"><span class="delimiter">&quot;</span><span class="content">openhab/core/actions</span><span class="delimiter">&quot;</span></span>
 
   ps = <span class="constant">Mocks</span>::<span class="constant">PersistenceService</span>.instance
-  bundle = org.osgi.framework.FrameworkUtil.get_bundle(org.openhab.core.persistence.PersistenceService.java_class)
-  bundle.bundle_context.register_service(org.openhab.core.persistence.PersistenceService.java_class, ps, <span class="predefined-constant">nil</span>)
+  persistence_bundle = org.osgi.framework.FrameworkUtil
+                          .get_bundle(org.openhab.core.persistence.PersistenceService.java_class)
+  persistence_bundle.bundle_context.register_service(org.openhab.core.persistence.PersistenceService.java_class,
+                                                     ps,
+                                                     <span class="predefined-constant">nil</span>)
 
   rs = <span class="constant">OSGi</span>.service(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.service.ReadyService</span><span class="delimiter">&quot;</span></span>)
 
@@ -4158,6 +4191,33 @@ The addon's bundle id is used as the identifier.</p>
 
   karaf.send(<span class="symbol">:wait</span>) <span class="keyword">do</span> |continue|
     rs.register_tracker(org.openhab.core.service.ReadyService::<span class="constant">ReadyTracker</span>.impl { continue.call }, filter)
+  <span class="keyword">end</span>
+
+  <span class="keyword">begin</span>
+    <span class="comment"># load storage based type providers</span>
+    ast = org.openhab.core.thing.binding.AbstractStorageBasedTypeProvider
+    ast_bundle = org.osgi.framework.FrameworkUtil.get_bundle(ast.java_class)
+    storage_service = <span class="constant">OSGi</span>.service(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.storage.StorageService</span><span class="delimiter">&quot;</span></span>)
+    require_relative <span class="string"><span class="delimiter">&quot;</span><span class="content">mocks/abstract_storage_based_type_provider_wrapped_storage_service</span><span class="delimiter">&quot;</span></span>
+
+    <span class="constant">OSGi</span>.bundle_context.bundles.each <span class="keyword">do</span> |bundle|
+      <span class="constant">OSGi</span>.service_component_classes(bundle)
+          .select { |klass, _services| klass.ancestors.include?(ast.java_class) }
+          .each <span class="keyword">do</span> |klass, services|
+        new_ast_klass = <span class="constant">Class</span>.new(ast)
+        new_ast_klass.become_java!
+        wrapped_storage_service = <span class="constant">Mocks</span>::<span class="constant">AbstractStorageBasedTypeProviderWrappedStorageService</span>
+                                  .new(storage_service,
+                                       new_ast_klass.java_class,
+                                       klass)
+        new_ast = new_ast_klass.new(wrapped_storage_service)
+
+        services -= [klass.name]
+        <span class="constant">OSGi</span>.register_service(new_ast, *services, <span class="key">bundle</span>: ast_bundle)
+      <span class="keyword">end</span>
+    <span class="keyword">end</span>
+  <span class="keyword">rescue</span> <span class="constant">NameError</span>
+    <span class="comment"># @deprecated OH 4.0</span>
   <span class="keyword">end</span>
 
   <span class="comment"># RSpec additions</span>
@@ -4205,28 +4265,28 @@ The addon's bundle id is used as the identifier.</p>
       <pre class="lines">
 
 
-265
-266
-267
-268
-269
-270
-271
-272
-273
-274
-275
-276
-277
-278
-279
-280
-281
-282
-283</pre>
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 265</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 295</span>
 
 <span class="keyword">def</span> <span class="function">load_rules</span>
   automation_paths = Array(::<span class="constant">RSpec</span>.configuration.openhab_automation_search_paths)
@@ -4281,24 +4341,24 @@ recognized.</p>
       <pre class="lines">
 
 
-296
-297
-298
-299
-300
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310</pre>
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 296</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 326</span>
 
 <span class="keyword">def</span> <span class="function">load_transforms</span>
   transform_path = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>org.openhab.core.OpenHAB.config_folder<span class="inline-delimiter">}</span></span><span class="content">/transform</span><span class="delimiter">&quot;</span></span>
@@ -4362,12 +4422,12 @@ recognized.</p>
       <pre class="lines">
 
 
-357
-358
-359</pre>
+387
+388
+389</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 357</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 387</span>
 
 <span class="keyword">def</span> <span class="function">log_file</span>
   <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>java.lang.System.get_property(<span class="string"><span class="delimiter">&quot;</span><span class="content">openhab.logdir</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">nil</span>)<span class="inline-delimiter">}</span></span><span class="content">/openhab.log</span><span class="delimiter">&quot;</span></span>
@@ -4430,15 +4490,15 @@ recognized.</p>
       <pre class="lines">
 
 
-370
-371
-372
-373
-374
-375</pre>
+400
+401
+402
+403
+404
+405</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 370</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 400</span>
 
 <span class="keyword">def</span> <span class="function">spec_log_lines</span>
   <span class="constant">File</span>.open(log_file, <span class="string"><span class="delimiter">&quot;</span><span class="content">rb</span><span class="delimiter">&quot;</span></span>) <span class="keyword">do</span> |f|
@@ -4741,7 +4801,7 @@ will just sleep for <code>duration</code></p>
 </div>
 
         <footer>
-  Generated on Thu Jan  4 22:35:47 2024 by
+  Generated on Fri Jan  5 02:21:35 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

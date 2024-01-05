@@ -83,7 +83,7 @@
         </nav>
         <div class="page-versions">
   <ul class="version-switcher">
-    <li><a href="/openhab-jruby/5.12" class="version-button stable">Stable <small>(5.12)</small></a></li>
+    <li><a href="/openhab-jruby/5.13" class="version-button stable">Stable <small>(5.13)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
   
@@ -3453,6 +3453,118 @@
       <li class="public ">
   <span class="summary_signature">
     
+      <a href="#channel-instance_method" title="#channel (instance method)">#<strong>channel</strong>  &#x21d2; Things::Channel<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Return the the channel this item is linked to.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#channel_uid-instance_method" title="#channel_uid (instance method)">#<strong>channel_uid</strong>  &#x21d2; Things::ChannelUID<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Return the UID of the channel this item is linked to.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#channel_uids-instance_method" title="#channel_uids (instance method)">#<strong>channel_uids</strong>  &#x21d2; Array&lt;Things::ChannelUID&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Return the UIDs of all of the channels this item is linked to.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#channels-instance_method" title="#channels (instance method)">#<strong>channels</strong>  &#x21d2; Array&lt;Things::Channel&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Return all of the channels this item is linked to.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#groups-instance_method" title="#groups (instance method)">#<strong>groups</strong>  &#x21d2; Array&lt;GroupItem&gt; </a>
     
 
@@ -3593,7 +3705,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#thing-instance_method" title="#thing (instance method)">#<strong>thing</strong>  &#x21d2; Thing </a>
+      <a href="#thing-instance_method" title="#thing (instance method)">#<strong>thing</strong>  &#x21d2; Things::Thing<sup>?</sup> </a>
     
 
     
@@ -3623,7 +3735,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#things-instance_method" title="#things (instance method)">#<strong>things</strong>  &#x21d2; Array&lt;Thing&gt; </a>
+      <a href="#things-instance_method" title="#things (instance method)">#<strong>things</strong>  &#x21d2; Array&lt;Things::Thing&gt; </a>
     
 
     
@@ -3828,7 +3940,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#link-instance_method" title="#link (instance method)">#<strong>link</strong>(channel, config = {})  &#x21d2; Things::ItemChannelLink </a>
+      <a href="#link-instance_method" title="#link (instance method)">#<strong>link</strong>(channel = nil, config = nil)  &#x21d2; Things::ItemChannelLink<sup>?</sup> </a>
     
 
     
@@ -3842,8 +3954,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Links the item to a channel.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -4274,6 +4385,228 @@
       
       <span id=""></span>
       <div class="method_details ">
+  <h3 class="signature " id="channel-instance_method">
+  
+    #<strong>channel</strong>  &#x21d2; <tt><span class='object_link'><a href="../Things/Channel.html" title="OpenHAB::Core::Things::Channel (class)">Things::Channel</a></span></tt><sup>?</sup>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Return the the channel this item is linked to. If an item is linked to more than one channel,
+this method only returns the first channel.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Things/Channel.html" title="OpenHAB::Core::Things::Channel (class)">Things::Channel</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+295
+296
+297</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 295</span>
+
+<span class="keyword">def</span> <span class="function">channel</span>
+  channel_uids.first&amp;.channel
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="channel_uid-instance_method">
+  
+    #<strong>channel_uid</strong>  &#x21d2; <tt><span class='object_link'><a href="../Things/ChannelUID.html" title="OpenHAB::Core::Things::ChannelUID (class)">Things::ChannelUID</a></span></tt><sup>?</sup>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Return the UID of the channel this item is linked to. If an item is linked to more than one channel,
+this method only returns the first channel.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Things/ChannelUID.html" title="OpenHAB::Core::Things::ChannelUID (class)">Things::ChannelUID</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+278
+279
+280</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 278</span>
+
+<span class="keyword">def</span> <span class="function">channel_uid</span>
+  channel_uids.first
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="channel_uids-instance_method">
+  
+    #<strong>channel_uids</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Things/ChannelUID.html" title="OpenHAB::Core::Things::ChannelUID (class)">Things::ChannelUID</a></span>&gt;</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Return the UIDs of all of the channels this item is linked to.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Things/ChannelUID.html" title="OpenHAB::Core::Things::ChannelUID (class)">Things::ChannelUID</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+286
+287
+288</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 286</span>
+
+<span class="keyword">def</span> <span class="function">channel_uids</span>
+  <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_bound_channels(name)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="channels-instance_method">
+  
+    #<strong>channels</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Things/Channel.html" title="OpenHAB::Core::Things::Channel (class)">Things::Channel</a></span>&gt;</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Return all of the channels this item is linked to.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Things/Channel.html" title="OpenHAB::Core::Things::Channel (class)">Things::Channel</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+303
+304
+305</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 303</span>
+
+<span class="keyword">def</span> <span class="function">channels</span>
+  channel_uids.map(&amp;<span class="symbol">:channel</span>)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
   <h3 class="signature " id="groups-instance_method">
   
     #<strong>groups</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="GroupItem.html" title="OpenHAB::Core::Items::GroupItem (class)">GroupItem</a></span>&gt;</tt>  <span class="extras">(readonly)</span>
@@ -4400,12 +4733,12 @@
       <pre class="lines">
 
 
-288
-289
-290</pre>
+322
+323
+324</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 288</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 322</span>
 
 <span class="keyword">def</span> <span class="function">links</span>
   <span class="constant">ItemChannelLinks</span>.new(<span class="predefined-constant">self</span>, <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_links(name))
@@ -4748,12 +5081,12 @@ String StringItem1
       <pre class="lines">
 
 
-362
-363
-364</pre>
+409
+410
+411</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 362</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 409</span>
 
 <span class="keyword">def</span> <span class="function">provider</span>
   <span class="constant">Provider</span>.registry.provider_for(<span class="predefined-constant">self</span>)
@@ -4768,7 +5101,7 @@ String StringItem1
       <div class="method_details ">
   <h3 class="signature " id="thing-instance_method">
   
-    #<strong>thing</strong>  &#x21d2; <tt>Thing</tt>  <span class="extras">(readonly)</span>
+    #<strong>thing</strong>  &#x21d2; <tt><span class='object_link'><a href="../Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Things::Thing</a></span></tt><sup>?</sup>  <span class="extras">(readonly)</span>
   
 
   
@@ -4780,7 +5113,7 @@ String StringItem1
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Return the item's thing if this item is linked with a thing. If an item is linked to more than one thing,
+    <p>Return the item's thing if this item is linked with a thing. If an item is linked to more than one channel,
 this method only returns the first thing.</p>
 
 
@@ -4794,13 +5127,9 @@ this method only returns the first thing.</p>
     <li>
       
       
-        <span class='type'>(<tt>Thing</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Things::Thing</a></span></tt>, <tt>nil</tt>)</span>
       
       
-      
-        &mdash;
-        <div class='inline'><p>The thing associated with this item or nil</p>
-</div>
       
     </li>
   
@@ -4832,7 +5161,7 @@ this method only returns the first thing.</p>
       <div class="method_details ">
   <h3 class="signature " id="things-instance_method">
   
-    #<strong>things</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;Thing&gt;</tt>  <span class="extras">(readonly)</span>
+    #<strong>things</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Things::Thing</a></span>&gt;</tt>  <span class="extras">(readonly)</span>
   
 
   
@@ -4857,7 +5186,7 @@ this method only returns the first thing.</p>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;Thing&gt;</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Things::Thing</a></span>&gt;</tt>)</span>
       
       
       
@@ -4942,10 +5271,10 @@ this method only returns the first thing.</p>
       <pre class="lines">
 
 
-383</pre>
+430</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 383</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 430</span>
 
 def_type_predicate(<span class="symbol">:color</span>)</pre>
     </td>
@@ -4998,10 +5327,10 @@ def_type_predicate(<span class="symbol">:color</span>)</pre>
       <pre class="lines">
 
 
-384</pre>
+431</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 384</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 431</span>
 
 def_type_predicate(<span class="symbol">:contact</span>)</pre>
     </td>
@@ -5054,10 +5383,10 @@ def_type_predicate(<span class="symbol">:contact</span>)</pre>
       <pre class="lines">
 
 
-385</pre>
+432</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 385</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 432</span>
 
 def_type_predicate(<span class="symbol">:date_time</span>)</pre>
     </td>
@@ -5116,10 +5445,10 @@ def_type_predicate(<span class="symbol">:date_time</span>)</pre>
       <pre class="lines">
 
 
-387</pre>
+434</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 387</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 434</span>
 
 def_type_predicate(<span class="symbol">:dimmer</span>)</pre>
     </td>
@@ -5172,10 +5501,10 @@ def_type_predicate(<span class="symbol">:dimmer</span>)</pre>
       <pre class="lines">
 
 
-388</pre>
+435</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 388</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 435</span>
 
 def_type_predicate(<span class="symbol">:group</span>)</pre>
     </td>
@@ -5228,10 +5557,10 @@ def_type_predicate(<span class="symbol">:group</span>)</pre>
       <pre class="lines">
 
 
-389</pre>
+436</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 389</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 436</span>
 
 def_type_predicate(<span class="symbol">:image</span>)</pre>
     </td>
@@ -5276,18 +5605,18 @@ def_type_predicate(<span class="symbol">:image</span>)</pre>
       <pre class="lines">
 
 
-350
-351
-352
-353
-354
-355
-356
-357
-358</pre>
+397
+398
+399
+400
+401
+402
+403
+404
+405</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 350</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 397</span>
 
 <span class="keyword">def</span> <span class="function">inspect</span>
   s = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Items::</span><span class="inline"><span class="inline-delimiter">#{</span>type<span class="inline-delimiter">}</span></span><span class="content">Item</span><span class="inline"><span class="inline-delimiter">#{</span>type_details<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>label.inspect<span class="inline-delimiter">}</span></span><span class="content"> state=</span><span class="inline"><span class="inline-delimiter">#{</span>raw_state.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
@@ -5306,13 +5635,61 @@ def_type_predicate(<span class="symbol">:image</span>)</pre>
       <div class="method_details ">
   <h3 class="signature " id="link-instance_method">
   
-    #<strong>link</strong>(channel, config = {})  &#x21d2; <tt><span class='object_link'><a href="../Things/ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">Things::ItemChannelLink</a></span></tt> 
+    
+      <span class="overload">#<strong>link</strong>  &#x21d2; <tt><span class='object_link'><a href="../Things/ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">Things::ItemChannelLink</a></span></tt><sup>?</sup> </span>
+    
+      <span class="overload">#<strong>link</strong>(channel, config = {})  &#x21d2; <tt><span class='object_link'><a href="../Things/ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">Things::ItemChannelLink</a></span></tt> </span>
+    
   
 
   
 
   
 </h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+  <p class="tag_title">Overloads:</p>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">#<strong>link</strong>  &#x21d2; <tt><span class='object_link'><a href="../Things/ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">Things::ItemChannelLink</a></span></tt><sup>?</sup> </span>
+        <div class="docstring">
+  <div class="discussion">
+    <p>Returns the item's link. If an item is linked to more than one channel,
+this method only returns the first link.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Things/ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">Things::ItemChannelLink</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">#<strong>link</strong>(channel, config = {})  &#x21d2; <tt><span class='object_link'><a href="../Things/ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">Things::ItemChannelLink</a></span></tt> </span>
+        <div class="docstring">
   <div class="discussion">
     <p>Links the item to a channel.</p>
 
@@ -5411,27 +5788,52 @@ def_type_predicate(<span class="symbol">:image</span>)</pre>
     
   </ul>
 
+</div>
+      </li>
+    
+  </ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Things/ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">Things::ItemChannelLink</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
 </div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-316
-317
-318
-319
-320
-321
-322
-323
-324
-325</pre>
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 316</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 360</span>
 
-<span class="keyword">def</span> <span class="function">link</span>(channel, config = {})
+<span class="keyword">def</span> <span class="function">link</span>(channel = <span class="predefined-constant">nil</span>, config = <span class="predefined-constant">nil</span>)
+  <span class="keyword">return</span> <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_links(name).first <span class="keyword">if</span> channel.nil? &amp;&amp; config.nil?
+
+  config ||= {}
   <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.create_link(<span class="predefined-constant">self</span>, channel, config).tap <span class="keyword">do</span> |new_link|
     provider = <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.current
     <span class="keyword">if</span> !(current_link = provider.get(new_link.uid))
@@ -5491,10 +5893,10 @@ def_type_predicate(<span class="symbol">:image</span>)</pre>
       <pre class="lines">
 
 
-390</pre>
+437</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 390</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 437</span>
 
 def_type_predicate(<span class="symbol">:location</span>)</pre>
     </td>
@@ -5633,10 +6035,10 @@ def_type_predicate(<span class="symbol">:location</span>)</pre>
       <pre class="lines">
 
 
-391</pre>
+438</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 391</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 438</span>
 
 def_type_predicate(<span class="symbol">:number</span>)</pre>
     </td>
@@ -5689,10 +6091,10 @@ def_type_predicate(<span class="symbol">:number</span>)</pre>
       <pre class="lines">
 
 
-392</pre>
+439</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 392</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 439</span>
 
 def_type_predicate(<span class="symbol">:player</span>)</pre>
     </td>
@@ -5745,10 +6147,10 @@ def_type_predicate(<span class="symbol">:player</span>)</pre>
       <pre class="lines">
 
 
-393</pre>
+440</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 393</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 440</span>
 
 def_type_predicate(<span class="symbol">:rollershutter</span>)</pre>
     </td>
@@ -5801,10 +6203,10 @@ def_type_predicate(<span class="symbol">:rollershutter</span>)</pre>
       <pre class="lines">
 
 
-394</pre>
+441</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 394</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 441</span>
 
 def_type_predicate(<span class="symbol">:string</span>)</pre>
     </td>
@@ -5863,10 +6265,10 @@ def_type_predicate(<span class="symbol">:string</span>)</pre>
       <pre class="lines">
 
 
-396</pre>
+443</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 396</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 443</span>
 
 def_type_predicate(<span class="symbol">:switch</span>)</pre>
     </td>
@@ -6117,19 +6519,19 @@ def_type_predicate(<span class="symbol">:switch</span>)</pre>
       <pre class="lines">
 
 
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347</pre>
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 338</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 385</span>
 
 <span class="keyword">def</span> <span class="function">unlink</span>(channel)
   link_to_delete = <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.create_link(<span class="predefined-constant">self</span>, channel, {})
@@ -6151,7 +6553,7 @@ def_type_predicate(<span class="symbol">:switch</span>)</pre>
 </div>
 
         <footer>
-  Generated on Thu Jan  4 22:35:48 2024 by
+  Generated on Fri Jan  5 02:21:36 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

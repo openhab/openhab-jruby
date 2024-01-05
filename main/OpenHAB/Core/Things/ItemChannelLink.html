@@ -84,7 +84,7 @@ Channel. - Documentation for openhab-scripting JRuby helper library.">
         </nav>
         <div class="page-versions">
   <ul class="version-switcher">
-    <li><a href="/openhab-jruby/5.12" class="version-button stable">Stable <small>(5.12)</small></a></li>
+    <li><a href="/openhab-jruby/5.13" class="version-button stable">Stable <small>(5.13)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
   
@@ -3492,6 +3492,41 @@ Channel. - Documentation for openhab-scripting JRuby helper library.">
 
 
 
+  
+    <h2 id="Instance Method Summary">
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#inspect-instance_method" title="#inspect (instance method)">#<strong>inspect</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
 
 
   
@@ -3614,7 +3649,14 @@ Channel. - Documentation for openhab-scripting JRuby helper library.">
 33
 34
 35
-36</pre>
+36
+37
+38
+39
+40
+41
+42
+43</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/item_channel_link.rb', line 18</span>
@@ -3637,6 +3679,13 @@ Channel. - Documentation for openhab-scripting JRuby helper library.">
   <span class="keyword">end</span>
 
   alias_method <span class="symbol">:channel_uid</span>, <span class="symbol">:linked_uid</span>
+
+  <span class="comment"># @return [String]</span>
+  <span class="keyword">def</span> <span class="function">inspect</span>
+    r = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Things::ItemChannelLink item_name=</span><span class="inline"><span class="inline-delimiter">#{</span>item_name<span class="inline-delimiter">}</span></span><span class="content"> channel_uid=</span><span class="inline"><span class="inline-delimiter">#{</span>channel_uid<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> configuration=</span><span class="inline"><span class="inline-delimiter">#{</span>configuration.properties.to_h<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> configuration.properties.empty?
+    <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>r<span class="inline-delimiter">}</span></span><span class="content">&gt;</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3754,7 +3803,14 @@ Channel. - Documentation for openhab-scripting JRuby helper library.">
 33
 34
 35
-36</pre>
+36
+37
+38
+39
+40
+41
+42
+43</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/item_channel_link.rb', line 18</span>
@@ -3777,6 +3833,13 @@ Channel. - Documentation for openhab-scripting JRuby helper library.">
   <span class="keyword">end</span>
 
   alias_method <span class="symbol">:channel_uid</span>, <span class="symbol">:linked_uid</span>
+
+  <span class="comment"># @return [String]</span>
+  <span class="keyword">def</span> <span class="function">inspect</span>
+    r = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Things::ItemChannelLink item_name=</span><span class="inline"><span class="inline-delimiter">#{</span>item_name<span class="inline-delimiter">}</span></span><span class="content"> channel_uid=</span><span class="inline"><span class="inline-delimiter">#{</span>channel_uid<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> configuration=</span><span class="inline"><span class="inline-delimiter">#{</span>configuration.properties.to_h<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> configuration.properties.empty?
+    <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>r<span class="inline-delimiter">}</span></span><span class="content">&gt;</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3786,10 +3849,72 @@ Channel. - Documentation for openhab-scripting JRuby helper library.">
   </div>
 
 
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="inspect-instance_method">
+  
+    #<strong>inspect</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+38
+39
+40
+41
+42</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/item_channel_link.rb', line 38</span>
+
+<span class="keyword">def</span> <span class="function">inspect</span>
+  r = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Things::ItemChannelLink item_name=</span><span class="inline"><span class="inline-delimiter">#{</span>item_name<span class="inline-delimiter">}</span></span><span class="content"> channel_uid=</span><span class="inline"><span class="inline-delimiter">#{</span>channel_uid<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+  r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> configuration=</span><span class="inline"><span class="inline-delimiter">#{</span>configuration.properties.to_h<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> configuration.properties.empty?
+  <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>r<span class="inline-delimiter">}</span></span><span class="content">&gt;</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
 </div>
 
         <footer>
-  Generated on Thu Jan  4 22:35:58 2024 by
+  Generated on Fri Jan  5 02:21:47 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

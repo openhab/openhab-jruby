@@ -83,7 +83,7 @@
         </nav>
         <div class="page-versions">
   <ul class="version-switcher">
-    <li><a href="/openhab-jruby/5.12" class="version-button stable">Stable <small>(5.12)</small></a></li>
+    <li><a href="/openhab-jruby/5.13" class="version-button stable">Stable <small>(5.13)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
   
@@ -3435,7 +3435,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#register_service-class_method" title="register_service (class method)">.<strong>register_service</strong>(instance, *interfaces, **properties)  &#x21d2; org.osgi.framework.ServiceRegistration </a>
+      <a href="#register_service-class_method" title="register_service (class method)">.<strong>register_service</strong>(instance, *interfaces, bundle: nil, **properties)  &#x21d2; org.osgi.framework.ServiceRegistration </a>
     
 
     
@@ -3552,12 +3552,12 @@
       <pre class="lines">
 
 
-63
-64
-65</pre>
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/osgi.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/osgi.rb', line 68</span>
 
 <span class="keyword">def</span> <span class="function">bundle</span>
   <span class="instance-variable">@bundle</span> ||= org.osgi.framework.FrameworkUtil.getBundle(<span class="global-variable">$scriptExtension</span>.java_class)
@@ -3611,12 +3611,12 @@
       <pre class="lines">
 
 
-57
-58
-59</pre>
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/osgi.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/osgi.rb', line 62</span>
 
 <span class="keyword">def</span> <span class="function">bundle_context</span>
   <span class="instance-variable">@bundle_context</span> ||= bundle.bundle_context
@@ -3636,7 +3636,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="register_service-class_method">
   
-    .<strong>register_service</strong>(instance, *interfaces, **properties)  &#x21d2; <tt>org.osgi.framework.ServiceRegistration</tt> 
+    .<strong>register_service</strong>(instance, *interfaces, bundle: nil, **properties)  &#x21d2; <tt>org.osgi.framework.ServiceRegistration</tt> 
   
 
   
@@ -3673,7 +3673,7 @@
         <span class='name'>interfaces</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../Module.html" title="Module (class)">Module</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Module.html" title="Module (class)">Module</a></span></tt>, <tt>String</tt>)</span>
       
       
       
@@ -3681,6 +3681,25 @@
         <div class='inline'><p>The interfaces to register this service for.
 If not provided, it will default to all Java interfaces the instance
 implements.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>bundle</span>
+      
+      
+        <span class='type'>(<tt>org.osgi.framework.Bundle</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The bundle to register
+the service from. If not provided, it will default to the bundle of the first
+interface.</p>
 </div>
       
     </li>
@@ -3722,9 +3741,6 @@ implements.</p>
       <pre class="lines">
 
 
-42
-43
-44
 45
 46
 47
@@ -3733,19 +3749,26 @@ implements.</p>
 50
 51
 52
-53</pre>
+53
+54
+55
+56
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/osgi.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/osgi.rb', line 45</span>
 
-<span class="keyword">def</span> <span class="function">register_service</span>(instance, *interfaces, **properties)
+<span class="keyword">def</span> <span class="function">register_service</span>(instance, *interfaces, <span class="key">bundle</span>: <span class="predefined-constant">nil</span>, **properties)
   <span class="keyword">if</span> interfaces.empty?
     interfaces = instance.class.ancestors.select { |k| k.respond_to?(<span class="symbol">:java_class</span>) &amp;&amp; k.java_class&amp;.interface? }
   <span class="keyword">end</span>
 
-  bundle = org.osgi.framework.FrameworkUtil.get_bundle(interfaces.first.java_class)
+  bundle_class = interfaces.first.is_a?(<span class="constant">Module</span>) ? interfaces.first : instance
+  bundle ||= org.osgi.framework.FrameworkUtil.get_bundle(bundle_class.java_class)
+  interfaces.map! { |i| i.is_a?(<span class="constant">String</span>) ? i : i.java_class.name }
   bundle.bundle_context.register_service(
-    interfaces.map { |i| i.java_class.name }.to_java(java.lang.String),
+    interfaces.to_java(java.lang.String),
     instance,
     java.util.Hashtable.new(properties)
   )
@@ -3947,7 +3970,7 @@ implements.</p>
 </div>
 
         <footer>
-  Generated on Thu Jan  4 22:35:47 2024 by
+  Generated on Fri Jan  5 02:21:35 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
