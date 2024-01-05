@@ -33,20 +33,25 @@ module OpenHAB
       # Register a new service instance with OSGi
       #
       # @param [Object] instance The service instance
-      # @param [Module] interfaces The interfaces to register this service for.
+      # @param [Module, String] interfaces The interfaces to register this service for.
       #   If not provided, it will default to all Java interfaces the instance
       #   implements.
+      # @param [org.osgi.framework.Bundle, nil] bundle The bundle to register
+      #   the service from. If not provided, it will default to the bundle of the first
+      #   interface.
       # @param [Hash] properties The service registration properties.
       # @return [org.osgi.framework.ServiceRegistration]
       #
-      def register_service(instance, *interfaces, **properties)
+      def register_service(instance, *interfaces, bundle: nil, **properties)
         if interfaces.empty?
           interfaces = instance.class.ancestors.select { |k| k.respond_to?(:java_class) && k.java_class&.interface? }
         end
 
-        bundle = org.osgi.framework.FrameworkUtil.get_bundle(interfaces.first.java_class)
+        bundle_class = interfaces.first.is_a?(Module) ? interfaces.first : instance
+        bundle ||= org.osgi.framework.FrameworkUtil.get_bundle(bundle_class.java_class)
+        interfaces.map! { |i| i.is_a?(String) ? i : i.java_class.name }
         bundle.bundle_context.register_service(
-          interfaces.map { |i| i.java_class.name }.to_java(java.lang.String),
+          interfaces.to_java(java.lang.String),
           instance,
           java.util.Hashtable.new(properties)
         )
@@ -62,6 +67,32 @@ module OpenHAB
       # @return [org.osgi.framework.Bundle] The OSGi Bundle for ScriptExtension Class
       def bundle
         @bundle ||= org.osgi.framework.FrameworkUtil.getBundle($scriptExtension.java_class)
+      end
+
+      # @!visibility private
+      SCR_NAMESPACE = "http://www.osgi.org/xmlns/scr/v1.4.0"
+      private_constant :SCR_NAMESPACE
+
+      # @!visibility private
+      def service_component_classes(bundle)
+        require "nokogiri"
+
+        component_paths = bundle.headers.get(
+          org.osgi.service.component.ComponentConstants::SERVICE_COMPONENT
+        )&.split(",") || []
+        component_paths.filter_map do |path|
+          stream = bundle.get_entry(path).open_stream
+          xml = Nokogiri::XML(String.from_java_bytes(stream.read_all_bytes))
+
+          class_name = xml.at_xpath("scr:component/implementation", scr: SCR_NAMESPACE)&.[]("class")
+          next unless class_name
+
+          services = xml.xpath("scr:component/service/provide", scr: SCR_NAMESPACE).map { |p| p["interface"] }
+
+          [bundle.load_class(class_name), services]
+        ensure
+          stream&.close
+        end.to_h
       end
     end
   end
