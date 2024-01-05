@@ -251,6 +251,51 @@ RSpec.describe OpenHAB::Core::Items::Item do
       end
     end
 
+    describe "#channel" do
+      it "returns nil for an unlinked item" do
+        expect(LightSwitch.channel_uid).to be_nil
+        expect(LightSwitch.channel).to be_nil
+      end
+
+      it "returns its linked channel" do
+        items.build do
+          string_item "PhaseName", channel: "astro:sun:home:phase#name"
+        end
+
+        expect(PhaseName.channel).to be things["astro:sun:home"].channels["phase#name"]
+        expect(PhaseName.channel_uid).to eq things["astro:sun:home"].channels["phase#name"].uid
+      end
+
+      it "returns all linked channels" do
+        items.build do
+          string_item "PhaseName" do
+            channel "astro:sun:home:phase#name"
+            channel "astro:moon:home:phase#name"
+          end
+        end
+
+        expect(PhaseName.channels).to match_array [things["astro:sun:home"].channels["phase#name"],
+                                                   things["astro:moon:home"].channels["phase#name"]]
+        expect(PhaseName.channel_uids).to match_array [things["astro:sun:home"].channels["phase#name"].uid,
+                                                       things["astro:moon:home"].channels["phase#name"].uid]
+      end
+    end
+
+    describe "#link (noun)" do
+      it "returns nil for an unlinked item" do
+        expect(LightSwitch.link).to be_nil
+      end
+
+      it "returns the link" do
+        items.build do
+          string_item "PhaseName", channel: "astro:sun:home:phase#name"
+        end
+
+        expect(PhaseName.link).not_to be_nil
+        expect(PhaseName.link.channel).to be things["astro:sun:home"].channels["phase#name"]
+      end
+    end
+
     describe "#links" do
       it "returns an empty array for an unlinked item" do
         items.build { string_item "UnlinkedItem" }
@@ -277,7 +322,7 @@ RSpec.describe OpenHAB::Core::Items::Item do
       end
     end
 
-    describe "#link" do
+    describe "#link (verb)" do
       it "accepts a channel uid (String) argument" do
         items.build { string_item "SunAzimuth" }
         SunAzimuth.link("astro:sun:home:position#azimuth")

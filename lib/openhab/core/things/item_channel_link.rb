@@ -33,6 +33,13 @@ module OpenHAB
         end
 
         alias_method :channel_uid, :linked_uid
+
+        # @return [String]
+        def inspect
+          r = "#<OpenHAB::Core::Things::ItemChannelLink item_name=#{item_name} channel_uid=#{channel_uid}"
+          r += " configuration=#{configuration.properties.to_h}" unless configuration.properties.empty?
+          "#{r}>"
+        end
       end
     end
   end
