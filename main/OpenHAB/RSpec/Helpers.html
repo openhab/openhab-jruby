@@ -3403,7 +3403,7 @@ explicitly.</p>
 </li>
 
       
-        <li class="public ">
+        <li class="public deprecated">
   <span class="summary_signature">
     
       <a href="#autoupdate_all_items-class_method" title="autoupdate_all_items (class method)">.<strong>autoupdate_all_items</strong>  &#x21d2; void </a>
@@ -3416,12 +3416,11 @@ explicitly.</p>
   
   
   
-  
+  <span class="deprecated note title">deprecated</span>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Reconfigure all items to autoupdate.</p>
-</div></span>
+    <span class="summary_desc"><strong>Deprecated.</strong> <div class='inline'></div></span>
   
 </li>
 
@@ -3738,26 +3737,26 @@ explicitly.</p>
       <pre class="lines">
 
 
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
 210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226</pre>
+211</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 210</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 195</span>
 
 <span class="keyword">def</span> <span class="function">autorequires</span>
   <span class="predefined-constant">ENV</span>[<span class="string"><span class="delimiter">&quot;</span><span class="content">RUBYLIB</span><span class="delimiter">&quot;</span></span>] ||= <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>
@@ -3792,7 +3791,8 @@ explicitly.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Reconfigure all items to autoupdate</p>
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'></div></div>
+<p class="note returns_void">This method returns an undefined value.</p><p>Reconfigure all items to autoupdate</p>
 <p>To bypass any items configured to not autoupdate, waiting for the binding to update them.</p>
 
 
@@ -3807,47 +3807,15 @@ explicitly.</p>
       <pre class="lines">
 
 
-80
 81
 82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98</pre>
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 81</span>
 
 <span class="keyword">def</span> <span class="function">autoupdate_all_items</span>
-  <span class="keyword">if</span> instance_variable_defined?(<span class="symbol">:@autoupdated_items</span>)
-    raise <span class="constant">RuntimeError</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">You should only call `autoupdate_all_items` once per spec</span><span class="delimiter">&quot;</span></span>
-  <span class="keyword">end</span>
-
-  <span class="instance-variable">@autoupdated_items</span> = []
-  <span class="instance-variable">@spec_metadata_provider</span> = <span class="constant">Core</span>::<span class="constant">Items</span>::<span class="constant">Metadata</span>::<span class="constant">Provider</span>.current
-
-  <span class="global-variable">$ir</span>.for_each <span class="keyword">do</span> |_provider, item|
-    <span class="keyword">if</span> (hash = item.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">autoupdate</span><span class="delimiter">&quot;</span></span>])
-      provider = <span class="constant">Core</span>::<span class="constant">Items</span>::<span class="constant">Metadata</span>::<span class="constant">Provider</span>.registry.provider_for(hash.uid)
-      provider.remove(hash.uid)
-      <span class="instance-variable">@autoupdated_items</span> &lt;&lt; [provider, hash]
-      provider(<span class="instance-variable">@spec_metadata_provider</span>) <span class="keyword">do</span>
-        item.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">autoupdate</span><span class="delimiter">&quot;</span></span>] = <span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span>
-      <span class="keyword">end</span>
-    <span class="keyword">end</span>
-  <span class="keyword">end</span>
+  <span class="comment"># no-op</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3879,17 +3847,17 @@ explicitly.</p>
       <pre class="lines">
 
 
-134
-135
-136
-137
-138
-139
-140
-141</pre>
+119
+120
+121
+122
+123
+124
+125
+126</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 119</span>
 
 <span class="keyword">def</span> <span class="function">execute_timers</span>
   raise <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot execute timers when timers aren't mocked</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> <span class="predefined-constant">self</span>.class.mock_timers?
@@ -3934,26 +3902,26 @@ immediately.</p>
       <pre class="lines">
 
 
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
 111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127</pre>
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 96</span>
 
 <span class="keyword">def</span> <span class="function">initialize_missing_thing_types</span>
   thing_manager = <span class="constant">OpenHAB</span>::<span class="constant">OSGi</span>.service(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.thing.ThingManager</span><span class="delimiter">&quot;</span></span>)
@@ -4056,6 +4024,21 @@ The addon's bundle id is used as the identifier.</p>
       <pre class="lines">
 
 
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
 380
 381
 382
@@ -4074,25 +4057,10 @@ The addon's bundle id is used as the identifier.</p>
 395
 396
 397
-398
-399
-400
-401
-402
-403
-404
-405
-406
-407
-408
-409
-410
-411
-412
-413</pre>
+398</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 380</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 365</span>
 
 <span class="keyword">def</span> <span class="function">install_addon</span>(addon_id, <span class="key">wait</span>: <span class="predefined-constant">true</span>, <span class="key">ready_markers</span>: <span class="predefined-constant">nil</span>)
   service_filter = <span class="string"><span class="delimiter">&quot;</span><span class="content">(component.name=org.openhab.core.karafaddons)</span><span class="delimiter">&quot;</span></span>
@@ -4166,6 +4134,21 @@ The addon's bundle id is used as the identifier.</p>
       <pre class="lines">
 
 
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
 236
 237
 238
@@ -4230,25 +4213,10 @@ The addon's bundle id is used as the identifier.</p>
 297
 298
 299
-300
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312
-313
-314
-315</pre>
+300</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 236</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 221</span>
 
 <span class="keyword">def</span> <span class="function">launch_karaf</span>(<span class="key">include_bindings</span>: <span class="predefined-constant">true</span>,
                  <span class="key">include_jsondb</span>: <span class="predefined-constant">true</span>,
@@ -4361,28 +4329,28 @@ The addon's bundle id is used as the identifier.</p>
       <pre class="lines">
 
 
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
 324
 325
 326
-327
-328
-329
-330
-331
-332
-333
-334
-335
-336
-337
-338
-339
-340
-341
-342</pre>
+327</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 324</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 309</span>
 
 <span class="keyword">def</span> <span class="function">load_rules</span>
   automation_paths = Array(::<span class="constant">RSpec</span>.configuration.openhab_automation_search_paths)
@@ -4437,24 +4405,24 @@ recognized.</p>
       <pre class="lines">
 
 
-355
-356
-357
-358
-359
-360
-361
-362
-363
-364
-365
-366
-367
-368
-369</pre>
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 355</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 340</span>
 
 <span class="keyword">def</span> <span class="function">load_transforms</span>
   transform_path = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>org.openhab.core.OpenHAB.config_folder<span class="inline-delimiter">}</span></span><span class="content">/transform</span><span class="delimiter">&quot;</span></span>
@@ -4518,12 +4486,12 @@ recognized.</p>
       <pre class="lines">
 
 
-416
-417
-418</pre>
+401
+402
+403</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 416</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 401</span>
 
 <span class="keyword">def</span> <span class="function">log_file</span>
   <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>java.lang.System.get_property(<span class="string"><span class="delimiter">&quot;</span><span class="content">openhab.logdir</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">nil</span>)<span class="inline-delimiter">}</span></span><span class="content">/openhab.log</span><span class="delimiter">&quot;</span></span>
@@ -4586,15 +4554,15 @@ recognized.</p>
       <pre class="lines">
 
 
-429
-430
-431
-432
-433
-434</pre>
+414
+415
+416
+417
+418
+419</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 429</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 414</span>
 
 <span class="keyword">def</span> <span class="function">spec_log_lines</span>
   <span class="constant">File</span>.open(log_file, <span class="string"><span class="delimiter">&quot;</span><span class="content">rb</span><span class="delimiter">&quot;</span></span>) <span class="keyword">do</span> |f|
@@ -4649,12 +4617,12 @@ recognized.</p>
       <pre class="lines">
 
 
-165
-166
-167</pre>
+150
+151
+152</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 165</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 150</span>
 
 <span class="keyword">def</span> <span class="function">suspend_rules</span>(&amp;block)
   <span class="constant">SuspendRules</span>.suspend_rules(&amp;block)
@@ -4691,17 +4659,17 @@ will just sleep for <code>duration</code></p>
       <pre class="lines">
 
 
-151
-152
-153
-154
-155
-156
-157
-158</pre>
+136
+137
+138
+139
+140
+141
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 151</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 136</span>
 
 <span class="keyword">def</span> <span class="function">time_travel_and_execute_timers</span>(duration)
   <span class="keyword">if</span> <span class="predefined-constant">self</span>.class.mock_timers?
@@ -4777,15 +4745,15 @@ will just sleep for <code>duration</code></p>
       <pre class="lines">
 
 
-196
-197
-198
-199
-200
-201</pre>
+181
+182
+183
+184
+185
+186</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 196</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 181</span>
 
 <span class="keyword">def</span> <span class="function">trigger_channel</span>(channel, event = <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>)
   channel = org.openhab.core.thing.ChannelUID.new(channel) <span class="keyword">if</span> channel.is_a?(<span class="constant">String</span>)
@@ -4857,22 +4825,22 @@ will just sleep for <code>duration</code></p>
       <pre class="lines">
 
 
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185
-186
-187</pre>
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 175</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 160</span>
 
 <span class="keyword">def</span> <span class="function">wait</span>(how_long = <span class="integer">2</span>.seconds)
   start = <span class="constant">Process</span>.clock_gettime(<span class="constant">Process</span>::<span class="constant">CLOCK_MONOTONIC</span>)
@@ -4897,7 +4865,7 @@ will just sleep for <code>duration</code></p>
 </div>
 
         <footer>
-  Generated on Fri Jan  5 02:31:37 2024 by
+  Generated on Fri Jan  5 02:59:33 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
