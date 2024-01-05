@@ -11,7 +11,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
 
     sitemaps.build do
-      sitemap "default", "My Residence" do
+      sitemap "default", label: "My Residence" do
         text item: Switch1
       end
     end
@@ -19,7 +19,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
 
   it "automatically uses proxy items if the item doesn't exist" do
     sitemaps.build do
-      sitemap "default", "My Residence" do
+      sitemap "default", label: "My Residence" do
         text item: Switch1
       end
     end
@@ -84,7 +84,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
   describe "#visibility" do
     it "supports a simple condition" do
       s = sitemaps.build do
-        sitemap "default", "My Residence" do
+        sitemap "default", label: "My Residence" do
           switch item: "Switch1", visibility: "Switch1 == ON"
         end
       end
@@ -100,7 +100,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
 
     it "supports a condition with just the state" do
       s = sitemaps.build do
-        sitemap "default", "My Residence" do
+        sitemap "default", label: "My Residence" do
           switch item: "Switch1", visibility: "ON"
         end
       end
@@ -116,7 +116,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
 
     it "supports a condition with operator and state" do
       s = sitemaps.build do
-        sitemap "default", "My Residence" do
+        sitemap "default", label: "My Residence" do
           switch item: "Switch1", visibility: "==ON"
         end
       end
@@ -132,7 +132,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
 
     it "supports multiple conditions" do
       s = sitemaps.build do
-        sitemap "default", "My Residence" do
+        sitemap "default", label: "My Residence" do
           switch item: "Switch1", visibility: ["Switch1 == ON", "Switch2 == ON"]
         end
       end
@@ -160,7 +160,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
   context "with colors" do
     it "supports conditions" do
       s = sitemaps.build do
-        sitemap "default", "My Residence" do
+        sitemap "default", label: "My Residence" do
           switch item: "Switch1", label_color: { "Switch1 == ON" => "green" }
         end
       end
@@ -177,7 +177,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
 
     it "supports conditions with default value" do
       s = sitemaps.build do
-        sitemap "default", "My Residence" do
+        sitemap "default", label: "My Residence" do
           switch item: "Switch1", label_color: { "Switch1 == ON" => "green", :default => "red" }
         end
       end
@@ -198,7 +198,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
 
     it "supports non-conditional string value" do
       s = sitemaps.build do
-        sitemap "default", "My Residence" do
+        sitemap "default", label: "My Residence" do
           switch item: "Switch1", label_color: "red"
         end
       end
@@ -211,7 +211,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
 
     it "supports simple color as the default in multiple calls" do
       s = sitemaps.build do
-        sitemap "default", "My Residence" do
+        sitemap "default", label: "My Residence" do
           switch item: "Switch1" do
             label_color "red" # The default doesn't have to be specified last
             label_color "Switch1 == ON" => "green"
@@ -230,7 +230,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
      OpenHAB::Core::VERSION.start_with?("4.1.0.M")
     it "supports AND conditions on visibility" do
       sitemaps.build do
-        sitemap "default", "My Residence" do
+        sitemap "default", label: "My Residence" do
           switch item: "Switch1", visibility: [["Switch1 == ON"]]
         end
       end
@@ -238,7 +238,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
 
     it "supports AND conditions on colors" do
       s = sitemaps.build do
-        sitemap "default", "My Residence" do
+        sitemap "default", label: "My Residence" do
           switch item: "Switch1", label_color: { ["Switch1 == ON", "Switch2 == OFF"] => "green" }
         end
       end
@@ -260,7 +260,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     it "does not support AND conditions on visibility" do
       expect do
         sitemaps.build do
-          sitemap "default", "My Residence" do
+          sitemap "default", label: "My Residence" do
             switch item: "Switch1", visibility: [["Switch1 == ON"]]
           end
         end
@@ -270,7 +270,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     it "does not support AND conditions on colors" do
       expect do
         sitemaps.build do
-          sitemap "default", "My Residence" do
+          sitemap "default", label: "My Residence" do
             switch item: "Switch1", label_color: { ["Switch1 == ON", "Switch2 == OFF"] => "green" }
           end
         end

@@ -63,7 +63,7 @@ module OpenHAB
         #
         # @example
         #   sitemaps.build do
-        #     sitemap "default", "My Residence" do
+        #     sitemap "default", label: "My Residence" do
         #       frame label: "Control" do
         #         text label: "Climate", icon: "if:mdi:home-thermometer-outline" do
         #           frame label: "Main Floor" do
