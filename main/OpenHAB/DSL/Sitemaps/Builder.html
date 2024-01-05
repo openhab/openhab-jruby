@@ -3390,7 +3390,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#sitemap-instance_method" title="#sitemap (instance method)">#<strong>sitemap</strong>(name, label = nil, icon: nil) { ... } &#x21d2; SitemapBuilder </a>
+      <a href="#sitemap-instance_method" title="#sitemap (instance method)">#<strong>sitemap</strong>(name, label: nil, icon: nil) { ... } &#x21d2; SitemapBuilder </a>
     
 
     
@@ -3422,7 +3422,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="sitemap-instance_method">
   
-    #<strong>sitemap</strong>(name, label = nil, icon: nil) { ... } &#x21d2; <tt><span class='object_link'><a href="SitemapBuilder.html" title="OpenHAB::DSL::Sitemaps::SitemapBuilder (class)">SitemapBuilder</a></span></tt> 
+    #<strong>sitemap</strong>(name, label: nil, icon: nil) { ... } &#x21d2; <tt><span class='object_link'><a href="SitemapBuilder.html" title="OpenHAB::DSL::Sitemaps::SitemapBuilder (class)">SitemapBuilder</a></span></tt> 
   
 
   
@@ -3514,7 +3514,6 @@
       <pre class="lines">
 
 
-24
 25
 26
 27
@@ -3523,13 +3522,14 @@
 30
 31
 32
-33</pre>
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 25</span>
 
-<span class="keyword">def</span> <span class="function">sitemap</span>(name, label = <span class="predefined-constant">nil</span>, <span class="key">icon</span>: <span class="predefined-constant">nil</span>, &amp;block)
-  sitemap = <span class="constant">SitemapBuilder</span>.new(name, label, <span class="key">icon</span>: icon)
+<span class="keyword">def</span> <span class="function">sitemap</span>(name, <span class="key">label</span>: <span class="predefined-constant">nil</span>, <span class="key">icon</span>: <span class="predefined-constant">nil</span>, &amp;block)
+  sitemap = <span class="constant">SitemapBuilder</span>.new(name, <span class="key">label</span>: label, <span class="key">icon</span>: icon)
   sitemap.instance_eval_with_dummy_items(&amp;block) <span class="keyword">if</span> block
   sitemap = sitemap.build
   <span class="keyword">if</span> <span class="instance-variable">@update</span> &amp;&amp; <span class="instance-variable">@provider</span>.get(sitemap.uid)
@@ -3548,7 +3548,7 @@
 </div>
 
         <footer>
-  Generated on Fri Jan  5 02:59:39 2024 by
+  Generated on Fri Jan  5 03:25:58 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
