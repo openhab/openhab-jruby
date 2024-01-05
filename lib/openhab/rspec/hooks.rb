@@ -51,6 +51,10 @@ module OpenHAB
           end
         end
 
+        config.around do |example|
+          Mocks::Timer.mock_timers(self.class.mock_timers?, &example)
+        end
+
         config.before do
           suspend_rules do
             $ir.for_each do |_provider, item|
@@ -86,8 +90,6 @@ module OpenHAB
           end
           @profile_factory = Core::ProfileFactory.send(:new)
           allow(Core::ProfileFactory).to receive(:instance).and_return(@profile_factory)
-
-          stub_const("OpenHAB::Core::Timer", Mocks::Timer) if self.class.mock_timers?
 
           log_line = "rspec #{example.location} # #{example.full_description}"
           logger.info(log_line)

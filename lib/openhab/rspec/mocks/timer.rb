@@ -72,6 +72,42 @@ module OpenHAB
         end
         Timecop::TimeStackItem.prepend(TimeCopStackItem)
 
+        class << self
+          # If timers are currently mocked
+          # @return [true, false]
+          def mock_timers?
+            @mock_timers
+          end
+
+          #
+          # Temporarily mock or unmock timers
+          #
+          # @param [true, false] mock_timers if timers should be mocked
+          # @yield
+          # @return [Object] the block's return value
+          def mock_timers(mock_timers)
+            old_mock_timers = @mock_timers
+            @mock_timers = mock_timers
+            yield
+          ensure
+            @mock_timers = old_mock_timers
+          end
+        end
+
+        @mock_timers = true
+
+        # @!visibility private
+        module ClassMethods
+          # @!visibility private
+          def new(*args, **kwargs)
+            return super if self == Timer
+            return Timer.new(*args, **kwargs) if Timer.mock_timers?
+
+            super
+          end
+        end
+        Core::Timer.singleton_class.prepend(ClassMethods)
+
         attr_reader :execution_time, :id, :block
 
         def initialize(time, id:, thread_locals:, block:) # rubocop:disable Lint/MissingSuper
