@@ -18,11 +18,12 @@ module OpenHAB
         end
 
         # (see SitemapBuilder#initialize)
+        # @!method sitemap(name, label: nil, icon: nil, &block)
         # @yield Block executed in the context of a {SitemapBuilder}
         # @return [SitemapBuilder]
         # @!visibility public
-        def sitemap(name, label = nil, icon: nil, &block)
-          sitemap = SitemapBuilder.new(name, label, icon: icon)
+        def sitemap(name, label: nil, icon: nil, &block)
+          sitemap = SitemapBuilder.new(name, label: label, icon: icon)
           sitemap.instance_eval_with_dummy_items(&block) if block
           sitemap = sitemap.build
           if @update && @provider.get(sitemap.uid)
@@ -1110,7 +1111,7 @@ module OpenHAB
         # @param label [String, nil]
         # @param icon [String, nil]
         # @!visibility private
-        def initialize(name, label = nil, icon: nil)
+        def initialize(name, label: nil, icon: nil)
           super(:sitemap, label: label, icon: icon)
 
           @name = name
