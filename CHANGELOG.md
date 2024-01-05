@@ -1,5 +1,22 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.14.0](https://github.com/openhab/openhab-jruby/tree/v5.14.0) (2024-01-05)
+
+### Features
+
+- Add more helper methods to access linked channels by [@ccutrer](https://github.com/ccutrer) in [#215](https://github.com/openhab/openhab-jruby/pull/215)
+- testing: add helper to initialize missing thing types by [@ccutrer](https://github.com/ccutrer) in [#218](https://github.com/openhab/openhab-jruby/pull/218)
+
+### Bug Fixes
+
+- testing: load storage based type providers by [@ccutrer](https://github.com/ccutrer) in [#216](https://github.com/openhab/openhab-jruby/pull/216)
+- ignore damaged bundle in rspec by [@ccutrer](https://github.com/ccutrer) in [#217](https://github.com/openhab/openhab-jruby/pull/217)
+- spec: "autoupdate" channels from mock thing handler by [@ccutrer](https://github.com/ccutrer) in [#219](https://github.com/openhab/openhab-jruby/pull/219)
+- Make sitemap label a kwarg by [@jimtng](https://github.com/jimtng) in [#220](https://github.com/openhab/openhab-jruby/pull/220)
+- spec: change how mock timers hook in by [@ccutrer](https://github.com/ccutrer) in [#221](https://github.com/openhab/openhab-jruby/pull/221)
+
+**Full Changelog**: [v5.13.0...v5.14.0](https://github.com/openhab/openhab-jruby/compare/v5.13.0...v5.14.0)
+
 ## [v5.13.0](https://github.com/openhab/openhab-jruby/tree/v5.13.0) (2024-01-04)
 
 ### Features
