@@ -226,8 +226,11 @@ module OpenHAB
         require_relative "openhab/core/actions"
 
         ps = Mocks::PersistenceService.instance
-        bundle = org.osgi.framework.FrameworkUtil.get_bundle(org.openhab.core.persistence.PersistenceService.java_class)
-        bundle.bundle_context.register_service(org.openhab.core.persistence.PersistenceService.java_class, ps, nil)
+        persistence_bundle = org.osgi.framework.FrameworkUtil
+                                .get_bundle(org.openhab.core.persistence.PersistenceService.java_class)
+        persistence_bundle.bundle_context.register_service(org.openhab.core.persistence.PersistenceService.java_class,
+                                                           ps,
+                                                           nil)
 
         rs = OSGi.service("org.openhab.core.service.ReadyService")
 
@@ -238,6 +241,33 @@ module OpenHAB
 
         karaf.send(:wait) do |continue|
           rs.register_tracker(org.openhab.core.service.ReadyService::ReadyTracker.impl { continue.call }, filter)
+        end
+
+        begin
+          # load storage based type providers
+          ast = org.openhab.core.thing.binding.AbstractStorageBasedTypeProvider
+          ast_bundle = org.osgi.framework.FrameworkUtil.get_bundle(ast.java_class)
+          storage_service = OSGi.service("org.openhab.core.storage.StorageService")
+          require_relative "mocks/abstract_storage_based_type_provider_wrapped_storage_service"
+
+          OSGi.bundle_context.bundles.each do |bundle|
+            OSGi.service_component_classes(bundle)
+                .select { |klass, _services| klass.ancestors.include?(ast.java_class) }
+                .each do |klass, services|
+              new_ast_klass = Class.new(ast)
+              new_ast_klass.become_java!
+              wrapped_storage_service = Mocks::AbstractStorageBasedTypeProviderWrappedStorageService
+                                        .new(storage_service,
+                                             new_ast_klass.java_class,
+                                             klass)
+              new_ast = new_ast_klass.new(wrapped_storage_service)
+
+              services -= [klass.name]
+              OSGi.register_service(new_ast, *services, bundle: ast_bundle)
+            end
+          end
+        rescue NameError
+          # @deprecated OH 4.0
         end
 
         # RSpec additions
