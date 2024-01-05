@@ -98,6 +98,35 @@ module OpenHAB
       end
 
       #
+      # Force things to come online that are missing their thing type
+      #
+      # As of openHAB 4.0, things that are missing their thing type will not
+      # come online immediately. This especially impacts bindings that
+      # dynamically generate their thing types, but don't persist those
+      # thing types. You can use this method to force them to come online
+      # immediately.
+      #
+      # @return [void]
+      #
+      def initialize_missing_thing_types
+        thing_manager = OpenHAB::OSGi.service("org.openhab.core.thing.ThingManager")
+        thing_manager.class.field_reader :missingPrerequisites
+        first = true
+        thing_manager.missingPrerequisites.each_value do |prereq|
+          if first
+            prereq.class.field_accessor :timesChecked
+            first = false
+          end
+          prereq.timesChecked = 60
+        end
+        m = thing_manager.class.java_class.get_declared_method(:checkMissingPrerequisites)
+        m.accessible = true
+        suspend_rules do
+          m.invoke(thing_manager)
+        end
+      end
+
+      #
       # Execute all pending timers
       #
       # @return [void]
