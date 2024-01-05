@@ -18,18 +18,5 @@ RSpec.describe OpenHAB::RSpec::Helpers do
       subject.load_rules
     end
   end
-
-  describe "autoupdate_all_items" do
-    it "works" do
-      items.build { switch_item "Switch1", autoupdate: false }
-
-      Switch1.on
-      expect(Switch1).to be_null
-
-      autoupdate_all_items
-      Switch1.on
-      expect(Switch1).to be_on
-    end
-  end
 end
 # rubocop:enable RSpec/NamedSubject

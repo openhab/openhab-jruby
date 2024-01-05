@@ -77,24 +77,9 @@ module OpenHAB
       #
       # @return [void]
       #
+      # @deprecated
       def autoupdate_all_items
-        if instance_variable_defined?(:@autoupdated_items)
-          raise RuntimeError "You should only call `autoupdate_all_items` once per spec"
-        end
-
-        @autoupdated_items = []
-        @spec_metadata_provider = Core::Items::Metadata::Provider.current
-
-        $ir.for_each do |_provider, item|
-          if (hash = item.metadata["autoupdate"])
-            provider = Core::Items::Metadata::Provider.registry.provider_for(hash.uid)
-            provider.remove(hash.uid)
-            @autoupdated_items << [provider, hash]
-            provider(@spec_metadata_provider) do
-              item.metadata["autoupdate"] = "true"
-            end
-          end
-        end
+        # no-op
       end
 
       #
@@ -480,32 +465,6 @@ module OpenHAB
           .sub(/^[a-z\d]*/, &:capitalize)
           .gsub(%r{(?:_|(/))([a-z\d]*)}) { "#{$1}#{$2.capitalize}" }
           .split("/")
-      end
-
-      # need to transfer autoupdate metadata from GenericMetadataProvider to ManagedMetadataProvider
-      # so that we can mutate it in the future
-      def set_up_autoupdates
-        registry = Core::Items::Metadata::Provider.registry
-        registry.class.field_reader :identifierToElement
-
-        autoupdate_provider = Core::Items::Metadata::Provider.send(:new)
-        registry.all.each do |metadata|
-          next unless metadata.uid.namespace == "autoupdate"
-
-          # tweak the registry to allow us to overwrite this element
-          registry.identifierToElement.delete(metadata.uid)
-          autoupdate_provider.add(metadata)
-        end
-      end
-
-      def restore_autoupdate_items
-        return unless instance_variable_defined?(:@autoupdated_items)
-
-        @autoupdated_items.each do |(provider, hash)|
-          @spec_metadata_provider.remove(hash.uid)
-          provider.add(hash.instance_variable_get(:@metadata))
-        end
-        @autoupdated_items = nil
       end
     end
 

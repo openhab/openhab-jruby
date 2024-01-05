@@ -164,7 +164,7 @@ RSpec.describe OpenHAB::DSL::Items::TimedCommand do
     manualitem.update(OFF)
     manualitem.command(ON, for: 3.seconds)
     manualitem.update(ON)
-    autoupdate_all_items
+    manualitem.metadata[:autoupdate] = true
     time_travel_and_execute_timers(5.seconds)
     expect(manualitem.state).to eq OFF
   end

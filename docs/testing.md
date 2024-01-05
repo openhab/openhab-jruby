@@ -27,7 +27,7 @@ source "https://rubygems.org"
 
 group(:test) do
   gem "rspec", "~> 3.11"
-  gem "openhab-scripting", "~> 0.1"
+  gem "openhab-scripting", "~> 5.0"
   gem "timecop"
 end
 
@@ -116,11 +116,6 @@ OpenHAB::Log.root.level = :debug
 OpenHAB::Log.events.level = :info
 ```
 
-- Sometimes items are set to `autoupdate="false"` in production to ensure the
-   devices responds, but you don't really care about the device in tests, you
-   just want to check if the effects of a rule happened. You can enable
-   autoupdating of all items by calling {OpenHAB::RSpec::Helpers#autoupdate_all_items}
-   from either your spec itself, or a `before` block.
 - Differing from when openHAB loads rules, all rules are loaded into a single
    JRuby execution context, so changes to globals in one file will affect other
    files. In particular, this applies to ids for reentrant timers will now share
@@ -137,6 +132,9 @@ OpenHAB::Log.events.level = :info
    addon like `binding-astro` if you need to be able to create things from your
    rules. Note that the addon isn't actually allowed to start, just be installed to
    make type metadata from XML available.
+- If you have any Things in your openHAB instance that take two minutes to come
+  online due to missing type metadata, you can force them to initialize
+  immediately by calling {OpenHAB::RSpec::Helpers#initialize_missing_thing_types}.
 
 ## Configuration
 
@@ -183,7 +181,6 @@ begin
   require "openhab/rspec"
 
   autorequires
-  set_up_autoupdates
   load_rules
   load_transforms
 rescue => e
