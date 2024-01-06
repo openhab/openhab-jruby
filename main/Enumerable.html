@@ -3427,7 +3427,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#equipments-instance_method" title="#equipments (instance method)">#<strong>equipments</strong>(type = nil)  &#x21d2; Array&lt;Item&gt; </a>
+      <a href="#equipments-instance_method" title="#equipments (instance method)">#<strong>equipments</strong>(*types)  &#x21d2; Array&lt;Item&gt; </a>
     
 
     
@@ -3441,7 +3441,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns a new array of items that are a semantics equipment (optionally of the given type).</p>
+    <span class="summary_desc"><div class='inline'><p>Returns a new array of items that are a semantics equipment (optionally of one of the given types).</p>
 </div></span>
   
 </li>
@@ -3473,7 +3473,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#locations-instance_method" title="#locations (instance method)">#<strong>locations</strong>(type = nil)  &#x21d2; Array&lt;Item&gt; </a>
+      <a href="#locations-instance_method" title="#locations (instance method)">#<strong>locations</strong>(*types)  &#x21d2; Array&lt;Item&gt; </a>
     
 
     
@@ -3487,7 +3487,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns a new array of items that are a semantics Location (optionally of the given type).</p>
+    <span class="summary_desc"><div class='inline'><p>Returns a new array of items that are a semantics Location (optionally of one of the given types).</p>
 </div></span>
   
 </li>
@@ -4436,7 +4436,7 @@ otherwise self</p>
       <div class="method_details ">
   <h3 class="signature " id="equipments-instance_method">
   
-    #<strong>equipments</strong>(type = nil)  &#x21d2; <tt><span class='object_link'><a href="Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="OpenHAB/Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span>&gt;</tt> 
+    #<strong>equipments</strong>(*types)  &#x21d2; <tt><span class='object_link'><a href="Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="OpenHAB/Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span>&gt;</tt> 
   
 
   
@@ -4455,7 +4455,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 </div>
   </div>
 
-<p>Returns a new array of items that are a semantics equipment (optionally of the given type)</p>
+<p>Returns a new array of items that are a semantics equipment (optionally of one of the given types)</p>
 
 
   </div>
@@ -4469,7 +4469,13 @@ before calling <span class='object_link'><a href="#points-instance_method" title
         <p class="example_title"><div class='inline'><p>Get all TVs in a room</p>
 </div></p>
       
-      <pre class="example code"><code>lGreatRoom.equipments(<span class="constant">Semantics</span>::<span class="constant">Screen</span>)</code></pre>
+      <pre class="example code"><code>lGreatRoom.equipments(<span class="constant">Semantics</span>::<span class="constant">Television</span>)</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Get all TVs and Speakers in a room</p>
+</div></p>
+      
+      <pre class="example code"><code>lGreatRoom.equipments(<span class="constant">Semantics</span>::<span class="constant">Television</span>, <span class="constant">Semantics</span>::<span class="constant">Speaker</span>)</code></pre>
     
   </div>
 
@@ -4493,31 +4499,31 @@ before calling <span class='object_link'><a href="#points-instance_method" title
       <pre class="lines">
 
 
-637
-638
-639
-640
-641
-642
-643
-644
-645
-646
-647
-648</pre>
+650
+651
+652
+653
+654
+655
+656
+657
+658
+659
+660
+661</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 637</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 650</span>
 
-<span class="keyword">def</span> <span class="function">equipments</span>(type = <span class="predefined-constant">nil</span>)
+<span class="keyword">def</span> <span class="function">equipments</span>(*types)
   <span class="keyword">begin</span>
-    raise <span class="constant">ArgumentError</span> <span class="keyword">if</span> type &amp;&amp; !(type &lt; <span class="constant">Semantics</span>::<span class="constant">Equipment</span>)
+    raise <span class="constant">ArgumentError</span> <span class="keyword">unless</span> types.all? { |type| type &lt; <span class="constant">Semantics</span>::<span class="constant">Equipment</span> }
   <span class="keyword">rescue</span> <span class="constant">ArgumentError</span>, <span class="constant">TypeError</span>
     raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">type must be a subclass of Equipment</span><span class="delimiter">&quot;</span></span>
   <span class="keyword">end</span>
 
   result = select(&amp;<span class="symbol">:equipment?</span>)
-  result.select! { |i| i.equipment_type &lt;= type } <span class="keyword">if</span> type
+  result.select! { |i| types.any? { |type| i.equipment_type &lt;= type } } <span class="keyword">unless</span> types.empty?
 
   result
 <span class="keyword">end</span></pre>
@@ -4680,7 +4686,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
       <div class="method_details ">
   <h3 class="signature " id="locations-instance_method">
   
-    #<strong>locations</strong>(type = nil)  &#x21d2; <tt><span class='object_link'><a href="Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="OpenHAB/Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span>&gt;</tt> 
+    #<strong>locations</strong>(*types)  &#x21d2; <tt><span class='object_link'><a href="Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="OpenHAB/Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span>&gt;</tt> 
   
 
   
@@ -4688,13 +4694,30 @@ before calling <span class='object_link'><a href="#points-instance_method" title
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new array of items that are a semantics Location (optionally of the given type)</p>
+    <p>Returns a new array of items that are a semantics Location (optionally of one of the given types)</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Get all rooms</p>
+</div></p>
+      
+      <pre class="example code"><code>items.locations(<span class="constant">Semantics</span>::<span class="constant">Room</span>)</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Get all bedrooms and bathrooms</p>
+</div></p>
+      
+      <pre class="example code"><code>items.locations(<span class="constant">Semantics</span>::<span class="constant">Bedroom</span>, <span class="constant">Semantics</span>::<span class="constant">Bathroom</span>)</code></pre>
+    
+  </div>
+
 <p class="tag_title">Returns:</p>
 <ul class="return">
   
@@ -4715,31 +4738,31 @@ before calling <span class='object_link'><a href="#points-instance_method" title
       <pre class="lines">
 
 
-612
-613
-614
-615
-616
-617
-618
-619
 620
 621
 622
-623</pre>
+623
+624
+625
+626
+627
+628
+629
+630
+631</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 612</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 620</span>
 
-<span class="keyword">def</span> <span class="function">locations</span>(type = <span class="predefined-constant">nil</span>)
+<span class="keyword">def</span> <span class="function">locations</span>(*types)
   <span class="keyword">begin</span>
-    raise <span class="constant">ArgumentError</span> <span class="keyword">if</span> type &amp;&amp; !(type &lt; <span class="constant">Semantics</span>::<span class="constant">Location</span>)
+    raise <span class="constant">ArgumentError</span> <span class="keyword">unless</span> types.all? { |type| type &lt; <span class="constant">Semantics</span>::<span class="constant">Location</span> }
   <span class="keyword">rescue</span> <span class="constant">ArgumentError</span>, <span class="constant">TypeError</span>
     raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">type must be a subclass of Location</span><span class="delimiter">&quot;</span></span>
   <span class="keyword">end</span>
 
   result = select(&amp;<span class="symbol">:location?</span>)
-  result.select! { |i| i.location_type &lt;= type } <span class="keyword">if</span> type
+  result.select! { |i| types.any? { |type| i.location_type &lt;= type } } <span class="keyword">unless</span> types.empty?
 
   result
 <span class="keyword">end</span></pre>
@@ -5355,19 +5378,6 @@ before calling <span class='object_link'><a href="#points-instance_method" title
       <pre class="lines">
 
 
-659
-660
-661
-662
-663
-664
-665
-666
-667
-668
-669
-670
-671
 672
 673
 674
@@ -5379,10 +5389,23 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 680
 681
 682
-683</pre>
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694
+695
+696</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 659</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics.rb', line 672</span>
 
 <span class="keyword">def</span> <span class="function">points</span>(*point_or_property_types)
   <span class="keyword">unless</span> (<span class="integer">0</span>..<span class="integer">2</span>).cover?(point_or_property_types.length)
@@ -5903,7 +5926,7 @@ otherwise self</p>
 </div>
 
         <footer>
-  Generated on Sat Jan  6 03:47:34 2024 by
+  Generated on Sat Jan  6 05:50:37 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
