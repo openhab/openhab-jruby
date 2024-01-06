@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.15.1](https://github.com/openhab/openhab-jruby/tree/v5.15.1) (2024-01-06)
+
+### Bug Fixes
+
+- Fix sitemap builder proxy by [@jimtng](https://github.com/jimtng) in [#229](https://github.com/openhab/openhab-jruby/pull/229)
+
+**Full Changelog**: [v5.15.0...v5.15.1](https://github.com/openhab/openhab-jruby/compare/v5.15.0...v5.15.1)
+
 ## [v5.15.0](https://github.com/openhab/openhab-jruby/tree/v5.15.0) (2024-01-06)
 
 ### Features
