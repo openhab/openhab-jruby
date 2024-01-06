@@ -607,22 +607,31 @@ module Enumerable
   # @!group Filtering Methods
   #
 
-  # Returns a new array of items that are a semantics Location (optionally of the given type)
+  #
+  # Returns a new array of items that are a semantics Location (optionally of one of the given types)
   # @return [Array<Item>]
-  def locations(type = nil)
+  #
+  # @example Get all rooms
+  #   items.locations(Semantics::Room)
+  #
+  # @example Get all bedrooms and bathrooms
+  #   items.locations(Semantics::Bedroom, Semantics::Bathroom)
+  #
+  def locations(*types)
     begin
-      raise ArgumentError if type && !(type < Semantics::Location)
+      raise ArgumentError unless types.all? { |type| type < Semantics::Location }
     rescue ArgumentError, TypeError
       raise ArgumentError, "type must be a subclass of Location"
     end
 
     result = select(&:location?)
-    result.select! { |i| i.location_type <= type } if type
+    result.select! { |i| types.any? { |type| i.location_type <= type } } unless types.empty?
 
     result
   end
 
-  # Returns a new array of items that are a semantics equipment (optionally of the given type)
+  #
+  # Returns a new array of items that are a semantics equipment (optionally of one of the given types)
   #
   # @note As {Semantics::Equipment equipments} are usually
   #   {GroupItem GroupItems}, this method therefore returns an array of
@@ -633,16 +642,20 @@ module Enumerable
   # @return [Array<Item>]
   #
   # @example Get all TVs in a room
-  #   lGreatRoom.equipments(Semantics::Screen)
-  def equipments(type = nil)
+  #   lGreatRoom.equipments(Semantics::Television)
+  #
+  # @example Get all TVs and Speakers in a room
+  #   lGreatRoom.equipments(Semantics::Television, Semantics::Speaker)
+  #
+  def equipments(*types)
     begin
-      raise ArgumentError if type && !(type < Semantics::Equipment)
+      raise ArgumentError unless types.all? { |type| type < Semantics::Equipment }
     rescue ArgumentError, TypeError
       raise ArgumentError, "type must be a subclass of Equipment"
     end
 
     result = select(&:equipment?)
-    result.select! { |i| i.equipment_type <= type } if type
+    result.select! { |i| types.any? { |type| i.equipment_type <= type } } unless types.empty?
 
     result
   end

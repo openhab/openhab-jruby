@@ -205,12 +205,38 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
       end
     end
 
+    describe "#locations" do
+      it "supports multiple arguments" do
+        items.build do
+          group_item "gIndoor", tag: Semantics::Indoor do
+            group_item "gLivingRoom", tag: Semantics::LivingRoom
+            group_item "gKitchen", tag: Semantics::Kitchen
+            group_item "gBedroom", tag: Semantics::Bedroom
+          end
+        end
+
+        expect(gIndoor.locations(Semantics::LivingRoom, Semantics::Kitchen)).to match_array([gLivingRoom, gKitchen])
+      end
+    end
+
     describe "#equipments" do
       it "gets sub-equipment" do
         items.build do
           group_item "SubEquipment", group: Patio_Light_Bulb, tag: Semantics::Lightbulb
         end
         expect(gPatio.equipments(Semantics::Lightbulb).members.equipments).to eql [SubEquipment]
+      end
+
+      it "supports multiple arguments" do
+        items.build do
+          group_item "gIndoor", tag: Semantics::Indoor do
+            group_item "gTV", tag: Semantics::Television
+            group_item "gSpeaker", tag: Semantics::Speaker
+            group_item "gLightbulb", tag: Semantics::Lightbulb
+          end
+        end
+
+        expect(gIndoor.equipments(Semantics::Television, Semantics::Speaker)).to match_array([gTV, gSpeaker])
       end
     end
 
