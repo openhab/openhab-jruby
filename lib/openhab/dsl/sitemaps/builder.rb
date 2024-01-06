@@ -12,8 +12,9 @@ module OpenHAB
       # Base sitemap builder DSL
       class Builder
         # @!visibility private
-        def initialize(provider, update:)
+        def initialize(provider, builder_proxy, update:)
           @provider = provider
+          @builder_proxy = builder_proxy
           @update = update
         end
 
@@ -23,8 +24,7 @@ module OpenHAB
         # @return [SitemapBuilder]
         # @!visibility public
         def sitemap(name, label: nil, icon: nil, &block)
-          sitemap = SitemapBuilder.new(name, label: label, icon: icon)
-          sitemap.instance_eval_with_dummy_items(&block) if block
+          sitemap = SitemapBuilder.new(name, @builder_proxy, label: label, icon: icon, &block)
           sitemap = sitemap.build
           if @update && @provider.get(sitemap.uid)
             @provider.update(sitemap)
@@ -106,6 +106,7 @@ module OpenHAB
         #   One or more visibility rules (see {#visibility})
         # @!visibility private
         def initialize(type,
+                       builder_proxy,
                        item: nil,
                        label: nil,
                        icon: nil,
@@ -113,13 +114,15 @@ module OpenHAB
                        label_color: nil,
                        value_color: nil,
                        icon_color: nil,
-                       visibility: nil)
+                       visibility: nil,
+                       &block)
           unless SitemapBuilder.factory.respond_to?("create_#{type}")
             raise ArgumentError,
                   "#{type} is not a valid widget type"
           end
 
           @type = type
+          @builder_proxy = builder_proxy
           @item = item
           @label = label
           @icon = icon
@@ -133,6 +136,20 @@ module OpenHAB
           self.value_color(value_color) if value_color
           self.icon_color(icon_color) if icon_color
           self.visibility(*visibility) if visibility
+
+          return unless block
+
+          @builder_proxy ||= SimpleDelegator.new(nil) if block.arity == 1
+
+          if @builder_proxy
+            old_obj = @builder_proxy.__getobj__
+            @builder_proxy.__setobj__(self)
+            yield @builder_proxy
+          else
+            instance_eval_with_dummy_items(&block)
+          end
+        ensure
+          @builder_proxy&.__setobj__(old_obj)
         end
 
         # Adds one or more new rules for setting the label color
@@ -272,8 +289,8 @@ module OpenHAB
         # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, mappings: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param mappings [Hash, Array, nil] Mappings from command to label (see {SwitchBuilder#mappings})
         # @!visibility private
-        def initialize(type, mappings: nil, **kwargs)
-          super(type, **kwargs)
+        def initialize(type, builder_proxy, mappings: nil, **kwargs, &block)
+          super(type, builder_proxy, **kwargs, &block)
 
           @mappings = mappings
         end
@@ -313,8 +330,8 @@ module OpenHAB
         # @param range [Range, nil] Allowed range of the value (see {SetpointBuilder#range})
         # @param step [Numeric,nil] How far the value will change with each button press (see {SetpointBuilder#step})
         # @!visibility private
-        def initialize(type, range: nil, step: nil, **kwargs)
-          super(type, **kwargs)
+        def initialize(type, builder_proxy, range: nil, step: nil, **kwargs, &block)
+          super(type, builder_proxy, **kwargs, &block)
 
           @range = range
           @step = step
@@ -349,8 +366,8 @@ module OpenHAB
         # @param frequency [Numeric, nil]
         #   How often to send requests (in seconds) (see {SliderBuilder#frequency})
         # @!visibility private
-        def initialize(type, switch: nil, frequency: nil, **kwargs)
-          super(type, **kwargs)
+        def initialize(type, builder_proxy, switch: nil, frequency: nil, **kwargs, &block)
+          super(type, builder_proxy, **kwargs, &block)
 
           @switch = switch
           @frequency = frequency
@@ -388,8 +405,8 @@ module OpenHAB
         # @param [String, nil] url (see {VideoBuilder#url})
         # @param [:mjpeg, :hls, nil] encoding (see {VideoBuilder#encoding})
         # @!visibility private
-        def initialize(type, url: nil, encoding: nil, **kwargs)
-          super(type, **kwargs)
+        def initialize(type, builder_proxy, url: nil, encoding: nil, **kwargs, &block)
+          super(type, builder_proxy, **kwargs, &block)
 
           @url = url
           self.encoding = encoding
@@ -457,14 +474,16 @@ module OpenHAB
         #   Formatting string for values on the y axis (see {ChartBuilder#y_axis_pattern})
         # @!visibility private
         def initialize(type,
+                       builder_proxy,
                        service: nil,
                        refresh: nil,
                        period: nil,
                        legend: nil,
                        group: nil,
                        y_axis_pattern: nil,
-                       **kwargs)
-          super(type, **kwargs)
+                       **kwargs,
+                       &block)
+          super(type, builder_proxy, **kwargs, &block)
 
           @service = service
           self.refresh = refresh
@@ -514,8 +533,8 @@ module OpenHAB
         # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, height: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param height [Integer] The number of element rows to fill (see {DefaultBuilder#height})
         # @!visibility private
-        def initialize(type, height: nil, **kwargs)
-          super(type, **kwargs)
+        def initialize(type, builder_proxy, height: nil, **kwargs, &block)
+          super(type, builder_proxy, **kwargs, &block)
 
           @height = height
         end
@@ -539,8 +558,8 @@ module OpenHAB
         # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, url: nil, height: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param url [String, nil] (see {WebviewBuilder#url})
         # @!visibility private
-        def initialize(type, url: nil, **kwargs)
-          super(type, **kwargs)
+        def initialize(type, builder_proxy, url: nil, **kwargs, &block)
+          super(type, builder_proxy, **kwargs, &block)
 
           @url = url
         end
@@ -565,8 +584,8 @@ module OpenHAB
         # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, frequency: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param frequency [Numeric, nil] How often to send requests (see {ColorpickerBuilder#frequency})
         # @!visibility private
-        def initialize(type, frequency: nil, **kwargs)
-          super(type, **kwargs)
+        def initialize(type, builder_proxy, frequency: nil, **kwargs, &block)
+          super(type, builder_proxy, **kwargs, &block)
 
           @frequency = frequency
         end
@@ -601,8 +620,8 @@ module OpenHAB
         # @param [:text, :number, :date, :time, :datetime, nil] hint
         #   Gives a hint to the user interface to use a widget adapted to a specific use (see {InputBuilder#hint})
         # @!visibility private
-        def initialize(type, hint: nil, **kwargs)
-          super(type, **kwargs)
+        def initialize(type, builder_proxy, hint: nil, **kwargs, &block)
+          super(type, builder_proxy, **kwargs, &block)
 
           self.hint = hint
         end
@@ -658,10 +677,10 @@ module OpenHAB
         #
         # @see https://www.openhab.org/docs/ui/sitemaps.html#element-type-buttongrid
         # @!visibility private
-        def initialize(type, buttons: [], **kwargs)
-          super(type, **kwargs)
-          buttons.each { |button| validate_button(button) }
+        def initialize(type, builder_proxy, buttons: [], **kwargs, &block)
           @buttons = buttons
+          super(type, builder_proxy, **kwargs, &block)
+          buttons.each { |button| validate_button(button) }
         end
 
         #
@@ -998,9 +1017,10 @@ module OpenHAB
           class_eval <<~RUBY, __FILE__, __LINE__ + 1
             def #{method}(*args, **kwargs, &block)                         # def frame(*args, **kwargs, &block)
               widget = #{method.capitalize}Builder.new(#{method.inspect},  #   widget = FrameBuilder.new(:frame,
+                                                       @builder_proxy,     #                             @builder_proxy,
                                                        *args,              #                             *args,
-                                                       **kwargs)           #                             **kwargs)
-              widget.instance_eval_with_dummy_items(&block) if block       #   widget.instance_eval_with_dummy_items(&block) if block
+                                                       **kwargs,           #                             **kwargs,
+                                                       &block)             #                             &block)
               children << widget                                           #   children << widget
               widget                                                       #   widget
             end                                                            # end
@@ -1011,9 +1031,9 @@ module OpenHAB
         # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @!visibility private
         def initialize(*, **)
-          super
-
           @children = []
+
+          super
         end
 
         # @!visibility private
@@ -1062,8 +1082,8 @@ module OpenHAB
         # @param url [String, nil] The URL for the image (see {ImageBuilder#url})
         # @param refresh [Numeric, nil] How often to refresh the image (see {ImageBuilder#refresh})
         # @!visibility private
-        def initialize(type, url: nil, refresh: nil, **kwargs)
-          super(type, **kwargs)
+        def initialize(type, builder_proxy, url: nil, refresh: nil, **kwargs, &block)
+          super(type, builder_proxy, **kwargs, &block)
 
           @url = url
           @refresh = refresh
@@ -1111,8 +1131,8 @@ module OpenHAB
         # @param label [String, nil]
         # @param icon [String, nil]
         # @!visibility private
-        def initialize(name, label: nil, icon: nil)
-          super(:sitemap, label: label, icon: icon)
+        def initialize(name, builder_proxy, label: nil, icon: nil)
+          super(:sitemap, builder_proxy, label: label, icon: icon)
 
           @name = name
         end
