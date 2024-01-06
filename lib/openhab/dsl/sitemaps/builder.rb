@@ -663,16 +663,18 @@ module OpenHAB
         # @example
         #   # This creates a buttongrid to emulate a TV remote control
         #   sitemaps.build do
-        #     buttongrid item: LivingRoom_TV_RCButton, buttons: [
-        #       [1, 1, "BACK", "Back", "f7:return"],
-        #       [1, 2, "HOME", "Menu", "material:apps"],
-        #       [1, 3, "YELLOW", "Search", "f7:search"],
-        #       [2, 2, "UP", "Up", "f7:arrowtriangle_up"],
-        #       [4, 2, "DOWN", "Down", "f7:arrowtriangle_down"],
-        #       [3, 1, "LEFT", "Left", "f7:arrowtriangle_left"],
-        #       [3, 3, "RIGHT", "Right", "f7:arrowtriangle_right"],
-        #       [3, 2, "ENTER", "Enter", "material:adjust"]
-        #     ]
+        #     sitemap "remote", label: "TV Remote Control" do
+        #       buttongrid item: LivingRoom_TV_RCButton, buttons: [
+        #         [1, 1, "BACK", "Back", "f7:return"],
+        #         [1, 2, "HOME", "Menu", "material:apps"],
+        #         [1, 3, "YELLOW", "Search", "f7:search"],
+        #         [2, 2, "UP", "Up", "f7:arrowtriangle_up"],
+        #         [4, 2, "DOWN", "Down", "f7:arrowtriangle_down"],
+        #         [3, 1, "LEFT", "Left", "f7:arrowtriangle_left"],
+        #         [3, 3, "RIGHT", "Right", "f7:arrowtriangle_right"],
+        #         [3, 2, "ENTER", "Enter", "material:adjust"]
+        #       ]
+        #     end
         #   end
         #
         # @see https://www.openhab.org/docs/ui/sitemaps.html#element-type-buttongrid
