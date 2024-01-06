@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.15.0](https://github.com/openhab/openhab-jruby/tree/v5.15.0) (2024-01-06)
+
+### Features
+
+- Add Enumerable#toggle to complement #on and #off by [@jimtng](https://github.com/jimtng) in [#226](https://github.com/openhab/openhab-jruby/pull/226)
+
+**Full Changelog**: [v5.14.0...v5.15.0](https://github.com/openhab/openhab-jruby/compare/v5.14.0...v5.15.0)
+
 ## [v5.14.0](https://github.com/openhab/openhab-jruby/tree/v5.14.0) (2024-01-05)
 
 ### Features
