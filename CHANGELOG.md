@@ -13,6 +13,7 @@
 ### Features
 
 - Add Enumerable#toggle to complement #on and #off by [@jimtng](https://github.com/jimtng) in [#226](https://github.com/openhab/openhab-jruby/pull/226)
+- allow _not_ using instance_exec with sitemap builder by [@ccutrer](https://github.com/ccutrer) in [227](https://github.com/openhab/openhab-jruby/pull/227)
 
 **Full Changelog**: [v5.14.0...v5.15.0](https://github.com/openhab/openhab-jruby/compare/v5.14.0...v5.15.0)
 
