@@ -156,6 +156,16 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
       end
     end
 
+    describe "#toggle" do
+      it "works for switches" do
+        triggered = false
+        received_command(LivingRoom_Light1_Custom) { triggered = true }
+        [LivingRoom_Light1_Custom].toggle
+        expect(triggered).to be true
+        expect(LivingRoom_Light1_Custom).to be_on
+      end
+    end
+
     describe "#points" do
       def points(*args)
         gPatio.members.equipments.members.points(*args)

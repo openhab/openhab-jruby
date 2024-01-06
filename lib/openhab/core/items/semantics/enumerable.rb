@@ -193,4 +193,12 @@ module Enumerable
   def ensure
     OpenHAB::DSL::Items::Ensure::ItemDelegate.new(self)
   end
+
+  #
+  # Send a toggle command to every item in the collection
+  # @return [self]
+  #
+  def toggle
+    each(&:toggle)
+  end
 end
