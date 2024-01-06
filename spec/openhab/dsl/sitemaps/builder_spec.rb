@@ -35,6 +35,10 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         expect(b.__getobj__).to be_a(OpenHAB::DSL::Sitemaps::SitemapBuilder)
         expect(self).not_to respond_to(:text)
         b.text item: "Switch1"
+        expect(self).to be example
+        expect(b.__getobj__).to be_a(OpenHAB::DSL::Sitemaps::SitemapBuilder)
+        expect(self).not_to respond_to(:text)
+        expect { b.text }.not_to raise_error # Call a second time to ensure that builder proxy got reset correctly
       end
     end
   end

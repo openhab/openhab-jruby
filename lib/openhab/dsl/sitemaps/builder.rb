@@ -144,12 +144,14 @@ module OpenHAB
           if @builder_proxy
             old_obj = @builder_proxy.__getobj__
             @builder_proxy.__setobj__(self)
-            yield @builder_proxy
+            begin
+              yield @builder_proxy
+            ensure
+              @builder_proxy.__setobj__(old_obj)
+            end
           else
             instance_eval_with_dummy_items(&block)
           end
-        ensure
-          @builder_proxy&.__setobj__(old_obj)
         end
 
         # Adds one or more new rules for setting the label color
