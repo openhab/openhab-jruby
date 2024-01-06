@@ -112,8 +112,30 @@ module OpenHAB
         #     end
         #   end
         #
+        # @example
+        #   def add_tv(builder, tv)
+        #     builder.frame label: tv.location.label do
+        #       builder.switch item: tv.points(Semantics::Switch), label: "Power"
+        #     end
+        #   end
+        #
+        #   sitemaps.build do |builder|
+        #     builder.sitemap "tvs", label: "TVs" do
+        #       items.equipments(Semantics::TV).each do |tv|
+        #         add_tv(builder, tv)
+        #       end
+        #     end
+        #   end
+        #
         def build(update: true, &block)
-          DSL::Sitemaps::Builder.new(self, update: update).instance_eval(&block)
+          builder_proxy = SimpleDelegator.new(nil) if block.arity == 1
+          builder = DSL::Sitemaps::Builder.new(self, builder_proxy, update: update)
+          if block.arity == 1
+            builder_proxy.__setobj__(builder)
+            yield builder_proxy
+          else
+            builder.instance_eval(&block)
+          end
         end
 
         # For use in specs

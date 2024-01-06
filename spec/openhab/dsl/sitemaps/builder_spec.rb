@@ -25,6 +25,33 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
   end
 
+  it "supports receiving a builder argument" do
+    example = self
+    sitemaps.build do |b|
+      expect(self).to be example
+      expect(b.__getobj__).to be_a(OpenHAB::DSL::Sitemaps::Builder)
+      b.sitemap "default", label: "My Residence" do
+        expect(self).to be example
+        expect(b.__getobj__).to be_a(OpenHAB::DSL::Sitemaps::SitemapBuilder)
+        expect(self).not_to respond_to(:text)
+        b.text item: "Switch1"
+      end
+    end
+  end
+
+  it "supports receiving a builder argument in an inner block" do
+    example = self
+    sitemaps.build do
+      example.expect(self).to example.be_a(OpenHAB::DSL::Sitemaps::Builder)
+      sitemap "default", label: "My Residence" do |b|
+        example.expect(self).to example.be_a(OpenHAB::DSL::Sitemaps::Builder)
+        example.expect(b.__getobj__).to example.be_a(OpenHAB::DSL::Sitemaps::SitemapBuilder)
+        example.expect(self).not_to example.respond_to(:text)
+        b.text item: "Switch1"
+      end
+    end
+  end
+
   context "with icon" do
     it "supports a simple icon" do
       s = sitemaps.build do
