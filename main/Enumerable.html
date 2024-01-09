@@ -5414,8 +5414,8 @@ before calling <span class='object_link'><a href="#points-instance_method" title
 
   <span class="keyword">begin</span>
     raise <span class="constant">ArgumentError</span> <span class="keyword">unless</span> point_or_property_types.all? <span class="keyword">do</span> |tag|
-                                 (tag &lt; <span class="constant">Semantics</span>::<span class="constant">Point</span> ||
-                                  tag &lt; <span class="constant">Semantics</span>::<span class="constant">Property</span>)
+                                 tag &lt; <span class="constant">Semantics</span>::<span class="constant">Point</span> ||
+                                 tag &lt; <span class="constant">Semantics</span>::<span class="constant">Property</span>
                                <span class="keyword">end</span>
   <span class="keyword">rescue</span> <span class="constant">ArgumentError</span>, <span class="constant">TypeError</span>
     raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">point_or_property_types must all be a subclass of Point or Property</span><span class="delimiter">&quot;</span></span>
@@ -5926,7 +5926,7 @@ otherwise self</p>
 </div>
 
         <footer>
-  Generated on Sat Jan  6 13:46:39 2024 by
+  Generated on Tue Jan  9 22:56:32 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
