@@ -371,15 +371,88 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
   end
 
-  it "can add a switch with array mappings" do
-    sitemaps.build do
-      sitemap "default" do
-        switch label: "My Switch", mappings: %w[off cool heat]
+  context "when adding a switch with array mappings" do
+    it "can contain scalar that represent the command and the label" do
+      sitemaps.build do
+        sitemap "default" do
+          switch label: "My Switch", mappings: %w[off cool heat]
+        end
       end
+      switch = sitemaps["default"].children.first
+      expect(switch.mappings.map(&:cmd)).to eq %w[off cool heat]
+      expect(switch.mappings.map(&:label)).to eq %w[off cool heat]
     end
-    switch = sitemaps["default"].children.first
-    expect(switch.mappings.map(&:label)).to eq %w[off cool heat]
-    expect(switch.mappings.map(&:cmd)).to eq %w[off cool heat]
+
+    it "can contain arrays of command and label" do
+      sitemaps.build do
+        sitemap "default" do
+          switch label: "My Switch", mappings: [%w[OFF off], %w[COOL cool], %w[HEAT heat]]
+        end
+      end
+      switch = sitemaps["default"].children.first
+      expect(switch.mappings.map(&:cmd)).to eq %w[OFF COOL HEAT]
+      expect(switch.mappings.map(&:label)).to eq %w[off cool heat]
+    end
+
+    it "can contain arrays of command, label, and an optional icon" do
+      sitemaps.build do
+        sitemap "default" do
+          # @deprecated OH 4.1
+          if OpenHAB::Core::VERSION >= "4.1.0"
+            switch label: "My Switch", mappings: [%w[OFF off], %w[COOL cool f7:snow], %w[HEAT heat f7:flame]]
+          else
+            switch label: "My Switch", mappings: [%w[OFF off], %w[COOL cool], %w[HEAT heat]]
+          end
+        end
+      end
+      switch = sitemaps["default"].children.first
+      expect(switch.mappings.map(&:cmd)).to eq %w[OFF COOL HEAT]
+      expect(switch.mappings.map(&:label)).to eq %w[off cool heat]
+      # @deprecated OH 4.1 - the if check is not needed in OH4.1+
+      expect(switch.mappings.map(&:icon)).to eq [nil, "f7:snow", "f7:flame"] if OpenHAB::Core::VERSION >= "4.1.0"
+    end
+
+    it "can contain hashes of command, label, and an optional icon" do
+      sitemaps.build do
+        sitemap "default" do
+          # @deprecated OH 4.1
+          if OpenHAB::Core::VERSION >= "4.1.0"
+            switch label: "My Switch", mappings: [
+              { command: "OFF", label: "off" },
+              { command: "COOL", label: "cool", icon: "f7:snow" },
+              { command: "HEAT", label: "heat", icon: "f7:flame" }
+            ]
+          else
+            switch label: "My Switch", mappings: [
+              { command: "OFF", label: "off" },
+              { command: "COOL", label: "cool" },
+              { command: "HEAT", label: "heat" }
+            ]
+          end
+        end
+      end
+      switch = sitemaps["default"].children.first
+      expect(switch.mappings.map(&:cmd)).to eq %w[OFF COOL HEAT]
+      expect(switch.mappings.map(&:label)).to eq %w[off cool heat]
+      # @deprecated OH 4.1 - the if check is not needed in OH4.1+
+      expect(switch.mappings.map(&:icon)).to eq [nil, "f7:snow", "f7:flame"] if OpenHAB::Core::VERSION >= "4.1.0"
+    end
+
+    it "can contain a mix of scalar, arrays, and hashes" do
+      sitemaps.build do
+        sitemap "default" do
+          # @deprecated OH 4.1
+          switch label: "My Switch", mappings: [
+            "OFF",
+            %w[COOL cool],
+            { command: "HEAT", label: "heat" }
+          ]
+        end
+      end
+      switch = sitemaps["default"].children.first
+      expect(switch.mappings.map(&:cmd)).to eq %w[OFF COOL HEAT]
+      expect(switch.mappings.map(&:label)).to eq %w[OFF cool heat]
+    end
   end
 
   it "can add a switch with hash mappings" do
@@ -389,8 +462,8 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
       end
     end
     switch = sitemaps["default"].children.first
-    expect(switch.mappings.map(&:label)).to eq %w[off cool heat]
     expect(switch.mappings.map(&:cmd)).to eq %w[OFF COOL HEAT]
+    expect(switch.mappings.map(&:label)).to eq %w[off cool heat]
   end
 
   it "can add a mapview" do

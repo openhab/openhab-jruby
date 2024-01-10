@@ -281,9 +281,41 @@ module OpenHAB
       class SwitchBuilder < WidgetBuilder
         # Mappings from command to label
         #
-        # Keys can be any {Core::Types::Command command}, values are strings.
-        # If an array is given, the same value is used for both command and label.
+        # If a hash is given, the keys are the commands and the values are the labels.
+        # The keys can be any {Core::Types::Command command}, string or symbol.
+        # They will be converted to strings.
+        #
+        # If an array is given:
+        # - Scalar elements define the command, and the label is the same as the command.
+        # - Array elements contain the command, label, and optional third element for the icon.
+        # - Hash elements contain the command, label, and optional icon defined by the corresponding keys.
+        #
+        # @since openHAB 4.1 added support for icons
+        #
+        # @example A Hash to specify different command and label
+        #   switch mappings: { off: "Off", cool: "Cool", heat: "Heat" }
+        #
+        # @example A simple array with the same command and label
+        #   switch mappings: %w[off cool heat]
+        #
+        # @example An array of arrays containing the command, label, and icon
+        #   switch mappings: [
+        #     %w[off Off f7:power],
+        #     %w[cool Cool f7:snow],
+        #     %w[heat Heat f7:flame],
+        #     %w[auto Auto] # no icon
+        #   ]
+        #
+        # @example An array of hashes for the command, label, and icon
+        #   switch mappings: [
+        #     {command: "off", label: "Off", icon: "f7:power"},
+        #     {command: "cool", label: "Cool", icon: "f7:snow"},
+        #     {command: "heat", label: "Heat", icon: "f7:flame"},
+        #     {command: "auto", label: "Auto"} # no icon
+        #   ]
+        #
         # @return [Hash, Array, nil]
+        # @see LinkableWidgetBuilder#switch
         # @see https://www.openhab.org/docs/ui/sitemaps.html#mappings
         attr_accessor :mappings
 
@@ -300,10 +332,13 @@ module OpenHAB
         # @!visibility private
         def build
           widget = super
-          mappings&.each do |cmd, label|
+          mappings&.each do |cmd, label, icon|
             mapping = SitemapBuilder.factory.create_mapping
+            cmd, label, icon = cmd.values_at(:command, :label, :icon) if cmd.is_a?(Hash)
             mapping.cmd = cmd.to_s
             mapping.label = label&.to_s || cmd.to_s
+            # @deprecated OH 4.1 the if check is not needed in OH4.1+
+            mapping.icon = icon if icon
             widget.mappings.add(mapping)
           end
           widget
