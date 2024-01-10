@@ -3479,14 +3479,60 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p>Mappings from command to label</p>
-<p>Keys can be any <span class='object_link'><a href="../../Core/Types/Command.html" title="OpenHAB::Core::Types::Command (module)">command</a></span>, values are strings.
-If an array is given, the same value is used for both command and label.</p>
+<p>If a hash is given, the keys are the commands and the values are the labels.
+The keys can be any <span class='object_link'><a href="../../Core/Types/Command.html" title="OpenHAB::Core::Types::Command (module)">command</a></span>, string or symbol.
+They will be converted to strings.</p>
+<p>If an array is given:</p>
+<ul>
+<li>Scalar elements define the command, and the label is the same as the command.</li>
+<li>Array elements contain the command, label, and optional third element for the icon.</li>
+<li>Hash elements contain the command, label, and optional icon defined by the corresponding keys.</li>
+</ul>
 
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>A Hash to specify different command and label</p>
+</div></p>
+      
+      <pre class="example code"><code>switch <span class="key">mappings</span>: { <span class="key">off</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Off</span><span class="delimiter">&quot;</span></span>, <span class="key">cool</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Cool</span><span class="delimiter">&quot;</span></span>, <span class="key">heat</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Heat</span><span class="delimiter">&quot;</span></span> }</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>A simple array with the same command and label</p>
+</div></p>
+      
+      <pre class="example code"><code>switch <span class="key">mappings</span>: <span class="string"><span class="delimiter">%w[</span><span class="content">off cool heat</span><span class="delimiter">]</span></span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>An array of arrays containing the command, label, and icon</p>
+</div></p>
+      
+      <pre class="example code"><code>switch <span class="key">mappings</span>: [
+  <span class="string"><span class="delimiter">%w[</span><span class="content">off Off f7:power</span><span class="delimiter">]</span></span>,
+  <span class="string"><span class="delimiter">%w[</span><span class="content">cool Cool f7:snow</span><span class="delimiter">]</span></span>,
+  <span class="string"><span class="delimiter">%w[</span><span class="content">heat Heat f7:flame</span><span class="delimiter">]</span></span>,
+  <span class="string"><span class="delimiter">%w[</span><span class="content">auto Auto</span><span class="delimiter">]</span></span> <span class="comment"># no icon</span>
+]</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>An array of hashes for the command, label, and icon</p>
+</div></p>
+      
+      <pre class="example code"><code>switch <span class="key">mappings</span>: [
+  {<span class="key">command</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">off</span><span class="delimiter">&quot;</span></span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Off</span><span class="delimiter">&quot;</span></span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:power</span><span class="delimiter">&quot;</span></span>},
+  {<span class="key">command</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">cool</span><span class="delimiter">&quot;</span></span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Cool</span><span class="delimiter">&quot;</span></span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:snow</span><span class="delimiter">&quot;</span></span>},
+  {<span class="key">command</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">heat</span><span class="delimiter">&quot;</span></span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Heat</span><span class="delimiter">&quot;</span></span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:flame</span><span class="delimiter">&quot;</span></span>},
+  {<span class="key">command</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">auto</span><span class="delimiter">&quot;</span></span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Auto</span><span class="delimiter">&quot;</span></span>} <span class="comment"># no icon</span>
+]</code></pre>
+    
+  </div>
+
 <p class="tag_title">Returns:</p>
 <ul class="return">
   
@@ -3504,9 +3550,26 @@ If an array is given, the same value is used for both command and label.</p>
   <p class="tag_title">See Also:</p>
   <ul class="see">
     
+      <li><span class='object_link'><a href="LinkableWidgetBuilder.html#switch-instance_method" title="OpenHAB::DSL::Sitemaps::LinkableWidgetBuilder#switch (method)">LinkableWidgetBuilder#switch</a></span></li>
+    
       <li><a href="https://www.openhab.org/docs/ui/sitemaps.html#mappings" target="_parent" title="https://www.openhab.org/docs/ui/sitemaps.html#mappings">https://www.openhab.org/docs/ui/sitemaps.html#mappings</a></li>
     
   </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.1 added support for icons</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -3514,12 +3577,12 @@ If an array is given, the same value is used for both command and label.</p>
       <pre class="lines">
 
 
-288
-289
-290</pre>
+320
+321
+322</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 288</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 320</span>
 
 <span class="keyword">def</span> <span class="function">mappings</span>
   <span class="instance-variable">@mappings</span>
@@ -3535,7 +3598,7 @@ If an array is given, the same value is used for both command and label.</p>
 </div>
 
         <footer>
-  Generated on Wed Jan 10 04:22:49 2024 by
+  Generated on Wed Jan 10 04:34:57 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
