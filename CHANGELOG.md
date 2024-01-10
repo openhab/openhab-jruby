@@ -1,5 +1,14 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.16.0](https://github.com/openhab/openhab-jruby/tree/v5.16.0) (2024-01-10)
+
+### Features
+
+- Support selecting multiple types of location and equipment by [@jimtng](https://github.com/jimtng) in [#230](https://github.com/openhab/openhab-jruby/pull/230)
+- Add support for icons in sitemap builder switch mappings by [@jimtng](https://github.com/jimtng) in [#232](https://github.com/openhab/openhab-jruby/pull/232)
+
+**Full Changelog**: [v5.15.1...v5.16.0](https://github.com/openhab/openhab-jruby/compare/v5.15.1...v5.16.0)
+
 ## [v5.15.1](https://github.com/openhab/openhab-jruby/tree/v5.15.1) (2024-01-06)
 
 ### Bug Fixes
