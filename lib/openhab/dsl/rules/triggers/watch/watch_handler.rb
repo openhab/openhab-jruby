@@ -310,7 +310,7 @@ module OpenHAB
               logger.trace("Added watch trigger handler")
             end
 
-            # Invoked by openHAB core to get a trigger handler for the supllied trigger
+            # Invoked by openHAB core to get a trigger handler for the supplied trigger
             # @param [org.openhab.core.automation.Trigger] trigger
             #
             # @return [WatchTriggerHandler] trigger handler for supplied trigger
