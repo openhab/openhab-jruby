@@ -21,7 +21,8 @@ module OpenHAB
         attr_accessor :main_thread
 
         def initialize
-          super(1)
+          # Allocate a (hopefully) big enough pool size to accommodate scheduled tasks
+          super(10)
         end
 
         def submit(runnable)
