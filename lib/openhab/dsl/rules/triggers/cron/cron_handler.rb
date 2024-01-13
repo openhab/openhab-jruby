@@ -106,7 +106,7 @@ if Gem::Version.new(OpenHAB::Core::VERSION) < Gem::Version.new("4.0.0")
               # Invoked by openHAB core to get a trigger handler for the supplied trigger
               # @param [org.openhab.core.automation.Trigger] trigger
               #
-              # @return [WatchTriggerHandler] trigger handler for supplied trigger
+              # @return [CronTriggerHandler] trigger handler for supplied trigger
               def get(trigger)
                 CronTriggerHandler.new(trigger)
               end
