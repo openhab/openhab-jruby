@@ -47,6 +47,7 @@ jobs:
           bundle config unset deployment
           ruby -Ilib/openhab/dsl -r version -e 'puts "OLD_VERSION=#{OpenHAB::DSL::VERSION}"' >> $GITHUB_ENV
           bundle exec gem bump -v ${{ inputs.version }} -m "v%{version}" --file lib/openhab/dsl/version.rb
+          bundle install
           ruby -Ilib/openhab/dsl -r version -e 'puts "NEW_VERSION=#{OpenHAB::DSL::VERSION}"' >> $GITHUB_ENV
           ruby -Ilib/openhab/dsl -r version -e 'puts "new_version=#{OpenHAB::DSL::VERSION}"' >> $GITHUB_OUTPUT
       - name: Generate CHANGELOG
@@ -61,7 +62,8 @@ jobs:
 
           bin/rake changelog[${{ env.OLD_VERSION }},${{ env.NEW_VERSION }},new_changes.md]
 
-          git add Gemfile.lock CHANGELOG.md USAGE.md templates .known_good_references
+          # @deprecated OH3.4 Gemfile.ruby-2.6 is only for OH3
+          git add Gemfile.lock Gemfile.ruby-2.6.lock CHANGELOG.md USAGE.md templates .known_good_references
           git commit --amend --no-edit
       - uses: rubygems/release-gem@v1
       - name: Create Github Release
