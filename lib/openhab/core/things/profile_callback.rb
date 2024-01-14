@@ -40,6 +40,11 @@ module OpenHAB
           state = link.item.format_update(state)
           super(state)
         end
+
+        # @!method send_time_series(time_series)
+        #   Send a time series to the framework.
+        #   @param [TimeSeries] time_series
+        #   @since openHAB 4.1
       end
     end
   end

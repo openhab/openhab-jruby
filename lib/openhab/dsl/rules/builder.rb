@@ -1089,7 +1089,7 @@ module OpenHAB
               raise ArgumentError, "items must be an Item, GroupItem::Members, Thing, or ThingUID"
             end
 
-            logger.trace("Creating changed trigger for entity(#{item}), to(#{to.inspect}), from(#{from.inspect})")
+            logger.trace { "Creating changed trigger for entity(#{item}), to(#{to.inspect}), from(#{from.inspect})" }
 
             Array.wrap(from).each do |from_state|
               Array.wrap(to).each do |to_state|
@@ -1381,7 +1381,7 @@ module OpenHAB
           levels.each do |level|
             logger.warn "Rule engine doesn't start until start level 40" if level < 40
             config = { startlevel: level }
-            logger.trace("Creating a SystemStartlevelTrigger with startlevel=#{level}")
+            logger.trace { "Creating a SystemStartlevelTrigger with startlevel=#{level}" }
             Triggers::Trigger.new(rule_triggers: @rule_triggers)
                              .append_trigger(type: "core.SystemStartlevelTrigger", config: config, attach: attach)
           end
@@ -1480,7 +1480,7 @@ module OpenHAB
               raise ArgumentError, "items must be an Item or GroupItem::Members"
             end
             commands.each do |cmd|
-              logger.trace "Creating received command trigger for items #{item.inspect} and commands #{cmd.inspect}"
+              logger.trace { "Creating received command trigger for items #{item.inspect} and commands #{cmd.inspect}" }
 
               command_trigger.trigger(item: item, command: cmd, attach: attach)
             end
@@ -1699,7 +1699,7 @@ module OpenHAB
         #   end
         #
         def trigger(type, attach: nil, **configuration)
-          logger.trace("Creating trigger (#{type}) with configuration(#{configuration})")
+          logger.trace { "Creating trigger (#{type}) with configuration(#{configuration})" }
           Triggers::Trigger.new(rule_triggers: @rule_triggers)
                            .append_trigger(type: type, config: configuration, attach: attach)
         end
@@ -1802,11 +1802,46 @@ module OpenHAB
               raise ArgumentError, "items must be an Item, GroupItem::Members, Thing, or ThingUID"
             end
 
-            logger.trace("Creating updated trigger for item(#{item}) to(#{to})")
+            logger.trace { "Creating updated trigger for item(#{item}) to(#{to})" }
             [to].flatten.map do |to_state|
               updated.trigger(item: item, to: to_state, attach: attach)
             end
           end.flatten
+        end
+
+        #
+        # Creates a time series updated trigger
+        #
+        # The `event` passed to run blocks will be a {OpenHAB::Core::Events::ItemTimeSeriesUpdatedEvent}
+        #
+        # @param [Item] items Items to create trigger for.
+        # @param [Object] attach Object to be attached to the trigger.
+        # @return [void]
+        #
+        # @since openHAB 4.1
+        # @see Core::Types::TimeSeries TimeSeries
+        # @see Core::Items::GenericItem#time_series= GenericItem#time_series=
+        #
+        # @example
+        #   rule 'Execute rule when item time series is updated' do
+        #     time_series_updated MyItem
+        #     run do |event|
+        #       logger.info("Item time series updated: #{event.item.name}.")
+        #       logger.info("  TimeSeries size: #{event.time_series.size}, policy: #{event.time_series.policy}")
+        #       event.time_series.each do |entry|
+        #         timestamp = entry.timestamp.to_time.strftime("%Y-%m-%d %H:%M:%S")
+        #         logger.info("    Entry: #{timestamp}: State: #{entry.state}")
+        #       end
+        #     end
+        #   end
+        #
+        def time_series_updated(*items, attach: nil)
+          @ruby_triggers << [:time_series_updated, items]
+          items.map do |item|
+            raise ArgumentError, "items must be an Item or GroupItem::Members" unless item.is_a?(Core::Items::Item)
+
+            event("openhab/items/#{item.name}/timeseriesupdated", types: "ItemTimeSeriesUpdatedEvent", attach: attach)
+          end
         end
 
         #
@@ -1987,7 +2022,7 @@ module OpenHAB
           elsif !execution_blocks?
             logger.warn "Rule '#{uid}' has no execution blocks, not creating rule"
           elsif !enabled
-            logger.trace "Rule '#{uid}' marked as disabled, not creating rule."
+            logger.trace { "Rule '#{uid}' marked as disabled, not creating rule." }
           else
             return true
           end
@@ -2024,7 +2059,7 @@ module OpenHAB
             duplicate_index += 1
             rule.uid = "#{base_uid} (#{duplicate_index})"
           end
-          logger.trace("Adding rule: #{rule}")
+          logger.trace { "Adding rule: #{rule}" }
           unmanaged_rule = Core.automation_manager.add_unmanaged_rule(rule)
           provider.add(unmanaged_rule)
           unmanaged_rule

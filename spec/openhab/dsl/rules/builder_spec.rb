@@ -1080,6 +1080,25 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       end
     end
 
+    describe "#time_series_updated", if: OpenHAB::Core.version >= OpenHAB::Core::V4_1 do
+      it "triggers" do
+        items.build { number_item "MyNumberItem" }
+
+        triggered = nil
+        rule do
+          time_series_updated MyNumberItem
+          run { |event| triggered = event.time_series }
+        end
+
+        time_series = TimeSeries.new
+                                .add(Time.at(0), DecimalType.new(1))
+                                .add(Time.at(1), DecimalType.new(2))
+        MyNumberItem.time_series = time_series
+
+        expect(triggered).to eql time_series
+      end
+    end
+
     describe "#cron" do
       it "can use cron syntax" do
         attachment = nil
@@ -2022,6 +2041,10 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
     end
     test_it(:on_load)
     test_it(:trigger, "core.ItemStateUpdateTrigger", itemName: "Item1") { item.on }
+    # @deprecated OH4.0 Guard not needed in OH 4.1
+    if OpenHAB::Core.version >= OpenHAB::Core::V4_1
+      test_it(:time_series_updated, "item") { item.time_series = TimeSeries.new }
+    end
 
     it "passes through attachment for watch" do
       Dir.mktmpdir("openhab-rspec") do |temp_dir|

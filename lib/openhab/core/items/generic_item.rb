@@ -208,6 +208,18 @@ module OpenHAB
         end
 
         #
+        # @method time_series=(time_series)
+        #   Set a new time series.
+        #
+        #   This will trigger a {DSL::Rules::BuilderDSL#time_series_updated time_series_updated} event.
+        #
+        #   @param [Core::Types::TimeSeries] time_series New time series to set.
+        #   @return [void]
+        #
+        #   @since openHAB 4.1
+        #
+
+        #
         # Defers notifying openHAB of modifications to multiple attributes until the block is complete.
         #
         # @param [true, false] force When true, allow modifications to file-based items.

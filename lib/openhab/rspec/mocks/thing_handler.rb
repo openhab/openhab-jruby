@@ -37,6 +37,10 @@ module OpenHAB
           callback&.state_updated(channel_uid, command) if command.is_a?(Core::Types::State)
         end
 
+        def send_time_series(channel_uid, time_series)
+          @callback&.send_time_series(channel_uid, time_series)
+        end
+
         def set_callback(callback)
           @callback = callback
         end
