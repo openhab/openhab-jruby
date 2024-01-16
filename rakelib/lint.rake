@@ -16,7 +16,7 @@ namespace :lint do
 
   desc "YARD Docs"
   task :yard do
-    sh "yard stats"
+    sh "yard stats -c --list-undoc"
   end
 
   desc "Execute all lint tests"
