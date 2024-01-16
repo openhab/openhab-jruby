@@ -226,10 +226,7 @@ module OpenHAB
 
             # @deprecated OH3.4 - the Property tag had an ID of "MeasurementProperty" in OH3.4.
             # This was corrected in OH4.
-            # Make sure we compare against pre-release versions
-            if id == "Property" && Gem::Version.new(Core::VERSION) < Gem::Version.new("4.0.0.M1")
-              id = "MeasurementProperty"
-            end
+            id = "MeasurementProperty" if id == "Property" && Core.version < Core::V4_0
 
             # @deprecated OH3.4 missing registry
             if Provider.registry

@@ -26,7 +26,7 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
           variance_since
         ]
       # @deprecated OH3.4
-      since_methods << :all_states_since if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0")
+      since_methods << :all_states_since if OpenHAB::Core.version >= OpenHAB::Core::V4_0
       since_methods.each do |method|
         item.__send__(method, 1.minute.ago)
         item.__send__(method, 1.minute.ago, :influxdb)
@@ -45,7 +45,7 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
         variance_between
       ]
       # @deprecated OH3.4
-      between_methods << :all_states_between if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0")
+      between_methods << :all_states_between if OpenHAB::Core.version >= OpenHAB::Core::V4_0
       between_methods.each do |method|
         item.__send__(method, 2.minutes.ago, Time.now)
         item.__send__(method, 2.minutes.ago, Time.now, :influxdb)
@@ -83,7 +83,7 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
   end
 
   # @deprecated OH3.4
-  if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0")
+  if OpenHAB::Core.version >= OpenHAB::Core::V4_0
     describe "all_states_since and all_states_between" do
       before do
         items.build { number_item Number1, state: 10 }

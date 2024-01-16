@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # @deprecated OH3.4 - this guard is not needed on OH4
-if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0")
+if OpenHAB::Core.version >= OpenHAB::Core::V4_0
 
   RSpec.describe OpenHAB::Core::Events::TimerEvent do
     describe "#cron_expression" do
