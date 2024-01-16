@@ -68,7 +68,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
       expect(switch.icon).to eq "light"
     end
 
-    it "supports dynamic icons", if: Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.1.0") do
+    it "supports dynamic icons", if: OpenHAB::Core.version >= OpenHAB::Core::V4_1 do
       s = sitemaps.build do
         sitemap "default" do
           switch item: Switch1, icon: { "ON" => "f7:lightbulb_fill", "OFF" => "f7:lightbulb_slash_fill" }
@@ -89,7 +89,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
   end
 
-  context "with static_icon", if: Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.1.0") do
+  context "with static_icon", if: OpenHAB::Core.version >= OpenHAB::Core::V4_1 do
     it "works" do
       s = sitemaps.build do
         sitemap "default" do
@@ -257,8 +257,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
   end
 
   # @deprecated OH 4.0
-  if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.1.0") ||
-     OpenHAB::Core::VERSION.start_with?("4.1.0.M")
+  if OpenHAB::Core.version >= OpenHAB::Core::V4_1
     it "supports AND conditions on visibility" do
       sitemaps.build do
         sitemap "default", label: "My Residence" do
@@ -398,7 +397,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
       sitemaps.build do
         sitemap "default" do
           # @deprecated OH 4.1
-          if OpenHAB::Core::VERSION >= "4.1.0"
+          if OpenHAB::Core.version >= OpenHAB::Core::V4_1
             switch label: "My Switch", mappings: [%w[OFF off], %w[COOL cool f7:snow], %w[HEAT heat f7:flame]]
           else
             switch label: "My Switch", mappings: [%w[OFF off], %w[COOL cool], %w[HEAT heat]]
@@ -409,14 +408,18 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
       expect(switch.mappings.map(&:cmd)).to eq %w[OFF COOL HEAT]
       expect(switch.mappings.map(&:label)).to eq %w[off cool heat]
       # @deprecated OH 4.1 - the if check is not needed in OH4.1+
-      expect(switch.mappings.map(&:icon)).to eq [nil, "f7:snow", "f7:flame"] if OpenHAB::Core::VERSION >= "4.1.0"
+      if OpenHAB::Core.version >= OpenHAB::Core::V4_1
+        expect(switch.mappings.map(&:icon)).to eq [nil,
+                                                   "f7:snow",
+                                                   "f7:flame"]
+      end
     end
 
     it "can contain hashes of command, label, and an optional icon" do
       sitemaps.build do
         sitemap "default" do
-          # @deprecated OH 4.1
-          if OpenHAB::Core::VERSION >= "4.1.0"
+          # @deprecated OH 4.0
+          if OpenHAB::Core.version >= OpenHAB::Core::V4_1
             switch label: "My Switch", mappings: [
               { command: "OFF", label: "off" },
               { command: "COOL", label: "cool", icon: "f7:snow" },
@@ -434,8 +437,10 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
       switch = sitemaps["default"].children.first
       expect(switch.mappings.map(&:cmd)).to eq %w[OFF COOL HEAT]
       expect(switch.mappings.map(&:label)).to eq %w[off cool heat]
-      # @deprecated OH 4.1 - the if check is not needed in OH4.1+
-      expect(switch.mappings.map(&:icon)).to eq [nil, "f7:snow", "f7:flame"] if OpenHAB::Core::VERSION >= "4.1.0"
+      # @deprecated OH 4.0 - the if check is not needed in OH4.1+
+      if OpenHAB::Core.version >= OpenHAB::Core::V4_1
+        expect(switch.mappings.map(&:icon)).to eq [nil, "f7:snow", "f7:flame"]
+      end
     end
 
     it "can contain a mix of scalar, arrays, and hashes" do
@@ -492,7 +497,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
 
   it "can add an input" do
     # @deprecated OH 3.4
-    skip unless OpenHAB::Core::VERSION >= "4.0.0"
+    skip unless OpenHAB::Core.version >= OpenHAB::Core::V4_0
 
     sitemaps.build do
       sitemap "default" do
@@ -517,7 +522,8 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
   end
 
-  describe "#buttongrid", if: OpenHAB::Core::VERSION >= "4.1.0" do
+  # @deprecated OH 4.0 guard is only needed for < OH 4.1
+  describe "#buttongrid", if: OpenHAB::Core.version >= OpenHAB::Core::V4_1 do
     it "works" do
       s = sitemaps.build do
         sitemap "default" do

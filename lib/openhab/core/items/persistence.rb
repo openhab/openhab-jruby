@@ -83,9 +83,7 @@ module OpenHAB
                                   updated_since?])
 
         # @deprecated OH3.4 - in openHAB 4, just add :get_all_states_since and freeze the list above
-        if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0")
-          PERSISTENCE_METHODS << :get_all_states_since
-        end
+        PERSISTENCE_METHODS << :get_all_states_since if OpenHAB::Core.version >= OpenHAB::Core::V4_0
         PERSISTENCE_METHODS.freeze
 
         private_constant :QUANTITY_METHODS, :PERSISTENCE_METHODS
@@ -386,7 +384,7 @@ module OpenHAB
         alias_method :state_changes_since, :count_state_changes_since
         alias_method :state_changes_between, :count_state_changes_between
         # @deprecated OH 3.4 - if guard is unnecessary in OH4
-        if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0")
+        if OpenHAB::Core.version >= OpenHAB::Core::V4_0
           alias_method :all_states_since, :get_all_states_since
           alias_method :all_states_between, :get_all_states_between
         end

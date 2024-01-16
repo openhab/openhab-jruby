@@ -208,7 +208,8 @@ RSpec.describe OpenHAB::Core::Items::Item do
       expect(MyTemp.formatted_state).to eq "32.1 °F"
     end
 
-    if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0.M3")
+    # @deprecated OH3.4 guard only needed in OH 3
+    if OpenHAB::Core.version >= OpenHAB::Core::V4_0
       it "does unit transformations if necessary" do
         items.build { number_item MyTemp, format: "%.1f °F", unit: "°C", state: 1.234 }
         expect(MyTemp.formatted_state).to eq "34.2 °F"

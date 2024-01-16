@@ -58,7 +58,7 @@ module OpenHAB
         end
 
         # @deprecated OH3.4 this whole section is not needed in OH4+. Also see Thing#config_eql?
-        if Gem::Version.new(Core::VERSION) < Gem::Version.new("4.0.0")
+        if Core.version < Core::V4_0
           # @!visibility private
           module ChannelComparable
             # @!visibility private

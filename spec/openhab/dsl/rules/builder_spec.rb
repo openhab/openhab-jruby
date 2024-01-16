@@ -347,7 +347,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
                              to: proc { true })
 
         # @deprecated OH3.4 the context wrapper is needed for OH3
-        context "with openHAB >= 4.0.0", if: Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0") do
+        context "with openHAB >= 4.0.0", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
           it "reports the triggering group" do
             triggering_group = nil
             Switch1.update(ON)
@@ -427,7 +427,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           end
 
           # @deprecated OH3.4 the if guard for OH3
-          context "with openHAB >= 4.0.0", if: Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0") do
+          context "with openHAB >= 4.0.0", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
             it "reports the triggering group" do
               triggering_group = nil
               Switch1.update(ON)
@@ -809,7 +809,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       end
 
       # @deprecated OH3.4 the if guard for OH3
-      context "with openHAB >= 4.0.0", if: Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0") do
+      context "with openHAB >= 4.0.0", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
         it "reports the triggering group" do
           triggering_group = nil
           rule do
@@ -1016,7 +1016,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         end
 
         # @deprecated OH3.4 the if guard for OH3
-        context "with openHAB >= 4.0.0", if: Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0") do
+        context "with openHAB >= 4.0.0", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
           it "reports the triggering group" do
             triggering_group = nil
             rule do
@@ -1414,7 +1414,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         end
 
         # @deprecated OH3.4 remove this wrapper
-        if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0.M1")
+        if OpenHAB::Core.version >= OpenHAB::Core::V4_0
           # do not remove this test in OH4
           it "uses the built in configWatcher to monitor inside openHAB config folder" do
             expect(OpenHAB::DSL::Rules::Triggers::WatchHandler.factory).not_to receive(:create_watch_service)

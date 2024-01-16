@@ -12,7 +12,8 @@ module OpenHAB
         #
         class Cron < Trigger
           # Trigger ID for Cron Triggers
-          CRON_TRIGGER_MODULE_ID = if Gem::Version.new(OpenHAB::Core::VERSION) >= Gem::Version.new("4.0.0")
+          # @deprecated OH 3.4
+          CRON_TRIGGER_MODULE_ID = if OpenHAB::Core.version >= OpenHAB::Core::V4_0
                                      "timer.GenericCronTrigger"
                                    else
                                      # @deprecated OH3.4 We need to use a custom CronTrigger handler
@@ -211,7 +212,7 @@ module OpenHAB
           #
           def trigger(config:, attach:)
             # @deprecated OH3.4 needs a custom CronTriggerHandlerFactory
-            if Gem::Version.new(OpenHAB::Core::VERSION) < Gem::Version.new("4.0.0")
+            if OpenHAB::Core.version < OpenHAB::Core::V4_0
               CronHandler::CronTriggerHandlerFactory.instance # ensure it's registered
             end
             append_trigger(type: CRON_TRIGGER_MODULE_ID, config: config, attach: attach)
