@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
 RSpec.describe OpenHAB::CoreExt::Ephemeris do
+  let(:holidays_gb) do
+    # @deprecated OH 4.1 Ephemeris holiday file format changed in openHAB 4.2
+    file = if OpenHAB::Core.version >= OpenHAB::Core::V4_2
+             "Holidays_gb.xml"
+           else
+             "Holidays_gb_4.1.xml"
+           end
+    fixture(file)
+  end
+
   describe "#holiday" do
     it "returns a specific holiday" do
       expect(MonthDay.parse("12-25").holiday).to be :christmas
@@ -21,7 +31,7 @@ RSpec.describe OpenHAB::CoreExt::Ephemeris do
     end
 
     it "works for religous holidays" do
-      holiday = LocalDate.parse("2023-04-07").holiday(fixture("Holidays_gb.xml"))
+      holiday = LocalDate.parse("2023-04-07").holiday(holidays_gb)
       expect(holiday).to be :"christian.good_friday"
       expect(Ephemeris.holiday_name(holiday)).to eq "Good Friday"
     end
@@ -83,7 +93,7 @@ RSpec.describe OpenHAB::CoreExt::Ephemeris do
 
   context "with a holiday file set" do
     around do |spec|
-      holiday_file(fixture("Holidays_gb.xml"), &spec)
+      holiday_file(holidays_gb, &spec)
     end
 
     it "uses the file" do
