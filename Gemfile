@@ -16,7 +16,6 @@ lockfile active: RUBY_VERSION >= "2.7" do
   gem "debug", "~> 1.9", require: false, platform: :mri
   gem "irb", "~> 1.6"
   gem "nokogiri", "~> 1.15"
-  gem "rubocop", "~> 1.57.2" # can't update due to https://github.com/rubocop/rubocop/issues/12558
   gem "rubocop-inst", "~> 1.0"
   gem "rubocop-rake", "~> 0.6"
   gem "rubocop-rspec", "~> 2.11"
