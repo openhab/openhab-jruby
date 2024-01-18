@@ -3504,7 +3504,7 @@ things[<span class="string"><span class="delimiter">'</span><span class="content
 ruby2_keywords <span class="keyword">def</span> <span class="function">method_missing</span>(method, *args)
   <span class="keyword">return</span> <span class="keyword">super</span> <span class="keyword">unless</span> args.empty? &amp;&amp; !block_given?
 
-  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">method missing, performing openHAB Lookup for: </span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+  logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">method missing, performing openHAB Lookup for: </span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
   <span class="constant">EntityLookup</span>.lookup_entity(method,
                              <span class="key">create_dummy_items</span>: <span class="predefined-constant">self</span>.class.respond_to?(<span class="symbol">:create_dummy_items?</span>) &amp;&amp;
                                <span class="predefined-constant">self</span>.class.create_dummy_items?) || <span class="keyword">super</span>
@@ -3520,7 +3520,7 @@ ruby2_keywords <span class="keyword">def</span> <span class="function">method_mi
 </div>
 
         <footer>
-  Generated on Wed Jan 17 23:00:23 2024 by
+  Generated on Thu Jan 18 04:17:12 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

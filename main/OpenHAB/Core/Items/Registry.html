@@ -3616,17 +3616,13 @@
 
 22
 23
-24
-25
-26</pre>
+24</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 22</span>
 
 <span class="keyword">def</span> <span class="function">[]</span>(name)
   <span class="constant">EntityLookup</span>.lookup_item(name)
-<span class="keyword">rescue</span> org.openhab.core.items.ItemNotFoundException
-  <span class="predefined-constant">nil</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3788,13 +3784,13 @@ wasn't created by the current provider.</p>
       <pre class="lines">
 
 
+56
+57
 58
-59
-60
-61</pre>
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 56</span>
 
 <span class="keyword">def</span> <span class="function">build</span>(preferred_provider = <span class="predefined-constant">nil</span>, <span class="key">update</span>: <span class="predefined-constant">true</span>, &amp;block)
   <span class="constant">DSL</span>::<span class="constant">Items</span>::<span class="constant">BaseBuilderDSL</span>.new(preferred_provider, <span class="key">update</span>: update)
@@ -3870,15 +3866,15 @@ wasn't created by the current provider.</p>
       <pre class="lines">
 
 
-31
-32
-33</pre>
+29
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 29</span>
 
 <span class="keyword">def</span> <span class="function">key?</span>(name)
-  !<span class="global-variable">$ir</span>.getItems(name).empty?
+  !<span class="global-variable">$ir</span>.get(name).nil?
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3961,6 +3957,8 @@ wasn't created by the current provider.</p>
       <pre class="lines">
 
 
+71
+72
 73
 74
 75
@@ -3974,12 +3972,10 @@ wasn't created by the current provider.</p>
 83
 84
 85
-86
-87
-88</pre>
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 71</span>
 
 <span class="keyword">def</span> <span class="function">remove</span>(item_name, <span class="key">recursive</span>: <span class="predefined-constant">false</span>)
   item_name = item_name.name <span class="keyword">if</span> item_name.is_a?(<span class="constant">Item</span>)
@@ -4040,12 +4036,12 @@ wasn't created by the current provider.</p>
       <pre class="lines">
 
 
-40
-41
-42</pre>
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 38</span>
 
 <span class="keyword">def</span> <span class="function">to_a</span>
   <span class="global-variable">$ir</span>.items.map { |item| <span class="constant">Proxy</span>.new(item) }
@@ -4060,7 +4056,7 @@ wasn't created by the current provider.</p>
 </div>
 
         <footer>
-  Generated on Wed Jan 17 23:00:27 2024 by
+  Generated on Thu Jan 18 04:17:16 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
