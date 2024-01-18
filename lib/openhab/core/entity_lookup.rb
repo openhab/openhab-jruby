@@ -74,7 +74,7 @@ module OpenHAB
       ruby2_keywords def method_missing(method, *args)
         return super unless args.empty? && !block_given?
 
-        logger.trace("method missing, performing openHAB Lookup for: #{method}")
+        logger.trace { "method missing, performing openHAB Lookup for: #{method}" }
         EntityLookup.lookup_entity(method,
                                    create_dummy_items: self.class.respond_to?(:create_dummy_items?) &&
                                      self.class.create_dummy_items?) || super
@@ -82,7 +82,7 @@ module OpenHAB
 
       # @!visibility private
       def respond_to_missing?(method, *)
-        logger.trace("Checking if openHAB entities exist for #{method}")
+        logger.trace { "Checking if openHAB entities exist for #{method}" }
         EntityLookup.lookup_entity(method) || super
       end
 
@@ -121,14 +121,14 @@ module OpenHAB
         # @return [Things::Thing, nil]
         #
         def lookup_thing(uid)
-          logger.trace("Looking up thing '#{uid}'")
+          logger.trace { "Looking up thing '#{uid}'" }
           uid = uid.to_s if uid.is_a?(Symbol)
 
           uid = Things::ThingUID.new(uid) unless uid.is_a?(Things::ThingUID)
           thing = $things.get(uid)
           return unless thing
 
-          logger.trace("Retrieved Thing(#{thing}) from registry for uid: #{uid}")
+          logger.trace { "Retrieved Thing(#{thing}) from registry for uid: #{uid}" }
           Things::Proxy.new(thing)
         end
 
@@ -164,7 +164,7 @@ module OpenHAB
         # @return [Item, nil]
         #
         def lookup_item(name)
-          logger.trace("Looking up item '#{name}'")
+          logger.trace { "Looking up item '#{name}'" }
           name = name.to_s if name.is_a?(Symbol)
           item = $ir.get(name)
           Items::Proxy.new(item) unless item.nil?

@@ -21,15 +21,13 @@ module OpenHAB
         # @return [Item] Item from registry, nil if item missing or requested item is a Group Type
         def [](name)
           EntityLookup.lookup_item(name)
-        rescue org.openhab.core.items.ItemNotFoundException
-          nil
         end
 
         # Returns true if the given item name exists
         # @param name [String] Item name to check
         # @return [true,false] true if the item exists, false otherwise
         def key?(name)
-          !$ir.getItems(name).empty?
+          !$ir.get(name).nil?
         end
         alias_method :include?, :key?
         # @deprecated
