@@ -43,8 +43,7 @@ end
 Terse rules
 
 JRubyScripting supports {OpenHAB::DSL::Rules::Terse Terse syntax} as well as the normal,
-more traditional syntax. Some attributes such as rule description and tags cannot be set
-using the Terse syntax. They can be specified using the full rule syntax.
+more traditional syntax.
 
 ---
 JS:
@@ -75,7 +74,7 @@ Ruby:
 
 ```ruby
 # Turn on the kitchen light at SUNSET
-channel("astro:sun:home:set#event", name: "Sunset Rule") { KitchenLight.on }
+channel("astro:sun:home:set#event", name: "Sunset Rule", description: "turn on the kitchen light at SUNSET") { KitchenLight.on }
 ```
 
 ---
@@ -90,7 +89,7 @@ Ruby:
 
 ```ruby
 # Turn off the kitchen light at 9PM
-every(:day, at: '9pm', name: "9PM Rule") { KitchenLight.off }
+every(:day, at: '9pm', name: "9PM Rule", description: "turn off the kitchen light at 9PM", tags: %w[Tag1 Tag2]) { KitchenLight.off }
 ```
 
 ---
@@ -105,7 +104,7 @@ Ruby:
 
 ```ruby
 # Set the colour of the hall light to pink at 9PM and use a custom ID
-every(:day, at: '9pm', name: "Pink Rule", id: "MyCustomID") { HallLight << "300,100,100" }
+every(:day, at: '9pm', id: "MyCustomID", name: "Pink Rule", description: "set the colour of the hall light to pink at 9PM", tags: %w[Tag1 Tag2]) { HallLight << "300,100,100" }
 ```
 
 ---
