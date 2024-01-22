@@ -233,7 +233,7 @@ def office_heater(event):
   door = items["OfficeDoor"]
   difference = hall_temp - office_temp
   degree_difference = 2.0
-  trigger = occupied == ON && door == CLOSED && heat_set > office_temp && difference > degree_difference
+  trigger = occupied == ON and door == CLOSED and heat_set > office_temp and difference > degree_difference
 
   if trigger:
     events.sendCommand("Lights_Office_Outlet","ON")
