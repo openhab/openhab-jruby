@@ -76,7 +76,7 @@ RSpec.describe OpenHAB::Core::Types::QuantityType do
     expect(QuantityType.new("50 °F")).to be < QuantityType.new("25 °C")
   end
 
-  it "responds to positive?, negative?, and zero?" do
+  it "responds to positive?, negative?, zero?, and nonzero?" do
     items.build do
       number_item "NumberF", state: "2 °F"
       number_item "NumberC", state: "2 °C"
@@ -95,8 +95,11 @@ RSpec.describe OpenHAB::Core::Types::QuantityType do
     expect(NumberC).not_to be_negative
     expect(PowerPos).to be_positive
     expect(PowerNeg).to be_negative
+    expect(PowerNeg).to be_nonzero
     expect(PowerZero).to be_zero
+    expect(PowerZero).not_to be_nonzero
     expect(Number1).to be_positive
+    expect(Number1).to be_nonzero
   end
 
   it "converts to another unit with |" do
