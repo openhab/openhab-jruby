@@ -17,10 +17,34 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
   end
 
-  it "automatically uses proxy items if the item doesn't exist" do
-    sitemaps.build do
-      sitemap "default", label: "My Residence" do
-        text item: Switch1
+  context "with proxy items" do
+    it "automatically uses proxy items if the item doesn't exist" do
+      sitemaps.build do
+        sitemap "default", label: "My Residence" do
+          text item: Switch1
+        end
+      end
+    end
+
+    it "works with builder proxy" do
+      sitemaps.build do |builder|
+        builder.sitemap "default", label: "My Residence" do
+          builder.text item: Switch1
+        end
+      end
+
+      sitemaps.build do
+        sitemap "default", label: "My Residence" do |builder|
+          builder.text item: Switch1
+        end
+      end
+
+      sitemaps.build do
+        sitemap "default", label: "My Residence" do
+          text do |builder|
+            builder.switch item: Switch1
+          end
+        end
       end
     end
   end

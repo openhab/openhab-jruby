@@ -132,7 +132,9 @@ module OpenHAB
           builder = DSL::Sitemaps::Builder.new(self, builder_proxy, update: update)
           if block.arity == 1
             builder_proxy.__setobj__(builder)
-            yield builder_proxy
+            DSL::ThreadLocal.thread_local(openhab_create_dummy_items: true) do
+              yield builder_proxy
+            end
           else
             builder.instance_eval(&block)
           end
