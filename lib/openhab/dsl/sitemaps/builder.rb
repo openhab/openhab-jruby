@@ -144,7 +144,7 @@ module OpenHAB
           if @builder_proxy
             old_obj = @builder_proxy.__getobj__
             @builder_proxy.__setobj__(self)
-            begin
+            DSL::ThreadLocal.thread_local(openhab_create_dummy_items: true) do
               yield @builder_proxy
             ensure
               @builder_proxy.__setobj__(old_obj)
