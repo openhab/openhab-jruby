@@ -104,6 +104,56 @@ RSpec.describe OpenHAB::DSL do
       SeasonColor << "0,100,100"
     end
 
+    # @deprecated OH 4 guard needed prior to OH 4.1
+    context "with time series", if: OpenHAB::Core.version >= OpenHAB::Core::V4_1 do
+      it "supports sending a time series" do
+        profile :send_as_time_series do |event, callback:, command:|
+          next unless event == :command_from_item
+
+          time_series_from_command = TimeSeries.new.add(Time.now, command)
+          callback.send_time_series(time_series_from_command)
+          false
+        end
+
+        items.build do
+          color_item "SeasonColor", channel: ["astro:sun:home:season#name", { profile: "ruby:send_as_time_series" }]
+        end
+
+        time_series = nil
+        rule do
+          time_series_updated SeasonColor
+          run { |event| time_series = event.time_series }
+        end
+
+        SeasonColor << "0,100,100"
+
+        expect(time_series).not_to be_nil
+        expect(time_series.first.state).to eql HSBType.new("0,100,100")
+      end
+
+      it "supports time series from handler" do
+        profile :send_time_series_as_update do |event, callback:, time_series:|
+          next unless event == :time_series_from_handler
+
+          callback.send_update(time_series.first.state)
+          false
+        end
+
+        items.build do
+          color_item "SeasonColor",
+                     channel: ["astro:sun:home:season#name", { profile: "ruby:send_time_series_as_update" }]
+        end
+
+        state = nil
+        updated(SeasonColor) { |event| state = event.state }
+
+        time_series = TimeSeries.new.add(Time.now, HSBType.new("0,100,100"))
+        SeasonColor.thing.handler.send_time_series(SeasonColor.channel.uid, time_series)
+
+        expect(state).to eql HSBType.new("0,100,100")
+      end
+    end
+
     context "with UI support" do
       it "supports UI label" do
         profile("ui_profile", label: "Profile Visible in UI") { |_event| true }

@@ -64,6 +64,8 @@ module OpenHAB
               infer_rule_name_from_item_registry_trigger(trigger)
             when :thing_added, :thing_removed, :thing_updated
               infer_rule_name_from_thing_trigger(trigger)
+            when :time_series_updated
+              infer_rule_name_from_time_series_trigger(items)
             when :on_start
               infer_rule_name_from_on_start_trigger(items)
             end
@@ -134,6 +136,11 @@ module OpenHAB
               thing_updated: "Thing updated",
               thing_removed: "Thing removed"
             }[trigger]
+          end
+
+          # formulate a readable rule name from a time series updated trigger
+          def infer_rule_name_from_time_series_trigger(items)
+            "#{format_array(items.map(&:name))} time series updated"
           end
 
           # formulate a readable rule name from an on_start trigger
