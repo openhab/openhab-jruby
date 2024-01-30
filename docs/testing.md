@@ -62,19 +62,19 @@ require "openhab/rspec"
 RSpec.describe "switches.rb" do
   describe "gFullOn" do
     it "works" do
-      GuestCans_Dimmer.update(0)
-      GuestCans_Scene.update(1.3)
-      expect(GuestCans_Dimmer.state).to eq 100
+      GuestDownlights_Dimmer.update(0)
+      GuestDownlights_Scene.update(1.3)
+      expect(GuestDownlights_Dimmer.state).to eq 100
     end
 
     it "sets some state" do
       rules["my rule"].trigger
-      expect(GuestCans_Scene.state).to be_nil
+      expect(GuestDownlights_Scene.state).to be_nil
     end
 
     it "triggers a rule expecting an event" do
-      rules["my rule 2"].trigger(Struct.new(:item).new(GuestCans_Scene))
-      expect(GuestCans_Scene.state).to be_nil
+      rules["my rule 2"].trigger(Struct.new(:item).new(GuestDownlights_Scene))
+      expect(GuestDownlights_Scene.state).to be_nil
     end
   end
 end
