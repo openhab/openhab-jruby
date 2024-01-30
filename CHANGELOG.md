@@ -1,5 +1,21 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.17.0](https://github.com/openhab/openhab-jruby/tree/v5.17.0) (2024-01-30)
+
+### Features
+
+- Add description and tags to terse rules by [@jimtng](https://github.com/jimtng) in [#241](https://github.com/openhab/openhab-jruby/pull/241)
+- Add NumericItem#nonzero? by [@jimtng](https://github.com/jimtng) in [#243](https://github.com/openhab/openhab-jruby/pull/243)
+- Add support for TimeSeries by [@jimtng](https://github.com/jimtng) in [#236](https://github.com/openhab/openhab-jruby/pull/236)
+- Add Thing#bridge convenience accessor by [@ccutrer](https://github.com/ccutrer) in [#237](https://github.com/openhab/openhab-jruby/pull/237)
+
+### Bug Fixes
+
+- Refactor item lookup to speed up item builder by [@jimtng](https://github.com/jimtng) in [#240](https://github.com/openhab/openhab-jruby/pull/240)
+- Fix dummy items when using sitemap proxy builder by [@jimtng](https://github.com/jimtng) in [#245](https://github.com/openhab/openhab-jruby/pull/245)
+
+**Full Changelog**: [v5.16.0...v5.17.0](https://github.com/openhab/openhab-jruby/compare/v5.16.0...v5.17.0)
+
 ## [v5.16.0](https://github.com/openhab/openhab-jruby/tree/v5.16.0) (2024-01-10)
 
 ### Features
