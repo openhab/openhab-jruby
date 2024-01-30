@@ -165,6 +165,12 @@ module OpenHAB
           ThingType.registry.get_thing_type(thing_type_uid)
         end
 
+        # @!attribute [r] bridge
+        # @return [Thing, nil]
+        def bridge
+          bridge_uid && EntityLookup.lookup_thing(bridge_uid)
+        end
+
         # @return [String]
         def inspect
           r = "#<OpenHAB::Core::Things::Thing #{uid}"
