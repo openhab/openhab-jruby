@@ -3415,19 +3415,19 @@ require <span class="string"><span class="delimiter">&quot;</span><span class="c
 <pre class="code ruby"><code class="ruby"><span class="constant">RSpec</span>.describe <span class="string"><span class="delimiter">&quot;</span><span class="content">switches.rb</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   describe <span class="string"><span class="delimiter">&quot;</span><span class="content">gFullOn</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
     it <span class="string"><span class="delimiter">&quot;</span><span class="content">works</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
-      <span class="constant">GuestCans_Dimmer</span>.update(<span class="integer">0</span>)
-      <span class="constant">GuestCans_Scene</span>.update(<span class="float">1.3</span>)
-      expect(<span class="constant">GuestCans_Dimmer</span>.state).to eq <span class="integer">100</span>
+      <span class="constant">GuestDownlights_Dimmer</span>.update(<span class="integer">0</span>)
+      <span class="constant">GuestDownlights_Scene</span>.update(<span class="float">1.3</span>)
+      expect(<span class="constant">GuestDownlights_Dimmer</span>.state).to eq <span class="integer">100</span>
     <span class="keyword">end</span>
 
     it <span class="string"><span class="delimiter">&quot;</span><span class="content">sets some state</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
       rules[<span class="string"><span class="delimiter">&quot;</span><span class="content">my rule</span><span class="delimiter">&quot;</span></span>].trigger
-      expect(<span class="constant">GuestCans_Scene</span>.state).to be_nil
+      expect(<span class="constant">GuestDownlights_Scene</span>.state).to be_nil
     <span class="keyword">end</span>
 
     it <span class="string"><span class="delimiter">&quot;</span><span class="content">triggers a rule expecting an event</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
-      rules[<span class="string"><span class="delimiter">&quot;</span><span class="content">my rule 2</span><span class="delimiter">&quot;</span></span>].trigger(<span class="constant">Struct</span>.new(<span class="symbol">:item</span>).new(<span class="constant">GuestCans_Scene</span>))
-      expect(<span class="constant">GuestCans_Scene</span>.state).to be_nil
+      rules[<span class="string"><span class="delimiter">&quot;</span><span class="content">my rule 2</span><span class="delimiter">&quot;</span></span>].trigger(<span class="constant">Struct</span>.new(<span class="symbol">:item</span>).new(<span class="constant">GuestDownlights_Scene</span>))
+      expect(<span class="constant">GuestDownlights_Scene</span>.state).to be_nil
     <span class="keyword">end</span>
   <span class="keyword">end</span>
 <span class="keyword">end</span>
@@ -3553,7 +3553,7 @@ require <span class="string"><span class="delimiter">&quot;</span><span class="c
 </div></div>
 
         <footer>
-  Generated on Tue Jan 30 16:55:01 2024 by
+  Generated on Tue Jan 30 21:20:06 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
