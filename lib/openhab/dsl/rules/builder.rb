@@ -994,12 +994,19 @@ module OpenHAB
         # @param [Item, GroupItem::Members, Thing] items Objects to create trigger for.
         # @param [State, Array<State>, #===, nil] from
         #   Only execute rule if previous state matches `from` state(s).
-        # @param [State, Array<State>, #===, nil] to State(s) for
+        # @param [State, Array<State>, #===, nil] to
         #   Only execute rule if new state matches `to` state(s).
-        # @param [java.time.temporal.TemporalAmount] for
-        #   Duration item must remain in the same state before executing the execution blocks.
-        # @param [Object] attach object to be attached to the trigger
+        # @param [java.time.temporal.TemporalAmount, Proc, nil] for
+        #   Duration for which the item/thing must remain in the same state before executing the execution blocks.
+        #   When a proc is provided, it will be called when the rule is triggered to get the duration.
+        # @param [Object, nil] attach object to be attached to the trigger
         # @return [void]
+        #
+        # @example Single item trigger
+        #   rule "Execute rule when a sensor changed" do
+        #     changed FrontMotion_Sensor
+        #     run { |event| logger.info("Motion detected by #{event.item.name}") }
+        #   end
         #
         # @example Multiple items can be separated with a comma:
         #   rule "Execute rule when either sensor changed" do
@@ -1013,23 +1020,15 @@ module OpenHAB
         #     run { |event| logger.info("Motion detected by #{event.item.name}") }
         #   end
         #
-        # @example `for` parameter can be a proc too:
-        #   Alarm_Delay << 20
-        #
-        #   rule "Execute rule when item is changed for specified duration" do
-        #     changed Alarm_Mode, for: -> { Alarm_Delay.state }
-        #     run { logger.info("Alarm Mode Updated") }
-        #   end
-        #
-        # @example You can optionally provide `from` and `to` states to restrict the cases in which the rule executes:
-        #   rule "Execute rule when item is changed to specific number, from specific number, for specified duration" do
-        #     changed Alarm_Mode, from: 8, to: [14,12], for: 12.seconds
+        # @example You can optionally provide `from` and/or `to` states to restrict the cases in which the rule executes:
+        #   rule "Execute rule when item is changed to specific number, from specific number" do
+        #     changed Alarm_Mode, from: 8, to: [14,12]
         #     run { logger.info("Alarm Mode Updated") }
         #   end
         #
         # @example Works with ranges:
-        #   rule "Execute when item changed to a range of numbers, from a range of numbers, for specified duration" do
-        #     changed Alarm_Mode, from: 8..10, to: 12..14, for: 12.seconds
+        #   rule "Execute when item changed to a range of numbers, from a range of numbers" do
+        #     changed Alarm_Mode, from: 8..10, to: 12..14
         #     run { logger.info("Alarm Mode Updated") }
         #   end
         #
@@ -1040,14 +1039,14 @@ module OpenHAB
         #   end
         #
         # @example Works with procs:
-        #   rule "Execute when item state is changed from an odd number, to an even number, for specified duration" do
-        #     changed Alarm_Mode, from: proc { |from| from.odd? }, to: proc {|to| to.even? }, for: 12.seconds
+        #   rule "Execute when item state is changed from an odd number, to an even number" do
+        #     changed Alarm_Mode, from: proc { |from| from.odd? }, to: proc {|to| to.even? }
         #     run { logger.info("Alarm Mode Updated") }
         #   end
         #
         # @example Works with lambdas:
-        #   rule "Execute when item state is changed from an odd number, to an even number, for specified duration" do
-        #     changed Alarm_Mode, from: -> from { from.odd? }, to: -> to { to.even? }, for: 12.seconds
+        #   rule "Execute when item state is changed from an odd number, to an even number" do
+        #     changed Alarm_Mode, from: -> from { from.odd? }, to: -> to { to.even? }
         #     run { logger.info("Alarm Mode Updated") }
         #   end
         #
@@ -1055,6 +1054,22 @@ module OpenHAB
         #   rule "Execute when item state is changed to something matching a regex" do
         #     changed Alarm_Mode, to: /armed/
         #     run { logger.info("Alarm armed") }
+        #   end
+        #
+        # @example Delay the trigger until the item has been in the same state for 10 seconds
+        #    rule "Execute rule when item is changed for specified duration" do
+        #      changed Closet_Door, to: CLOSED, for: 10.seconds
+        #      run do
+        #        Closet_Light.off
+        #      end
+        #    end
+        #
+        # @example `for` parameter can be a proc that returns a duration:
+        #   Alarm_Delay << 20
+        #
+        #   rule "Execute rule when item is changed for specified duration" do
+        #     changed Alarm_Mode, for: -> { Alarm_Delay.state.to_i.seconds }
+        #     run { logger.info("Alarm Mode Updated") }
         #   end
         #
         # @example Works with Things:
