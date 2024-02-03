@@ -241,6 +241,13 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         test_changed_trigger("Switch1", initial_state: OFF, new_state: ON)
         test_changed_trigger("Switch1", initial_state: ON, new_state: ON, expect_triggered: nil)
         test_changed_trigger("Switch1", initial_state: ON, new_state: OFF)
+        test_changed_trigger("Switch1", initial_state: OFF, new_state: ON, from: { OFF => ON })
+        test_changed_trigger("Switch1", initial_state: OFF, new_state: ON, from: { OFF => ON, ON => OFF })
+        test_changed_trigger("Switch1",
+                             initial_state: NULL,
+                             new_state: ON,
+                             from: { OFF => ON, ON => OFF },
+                             expect_triggered: nil)
         test_changed_trigger("Alarm_Mode1, Alarm_Mode2",
                              new_state: 3,
                              expect_triggered: "Alarm_Mode1")

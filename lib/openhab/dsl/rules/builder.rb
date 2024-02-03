@@ -992,8 +992,13 @@ module OpenHAB
         # triggering element was an item or a thing.
         #
         # @param [Item, GroupItem::Members, Thing] items Objects to create trigger for.
-        # @param [State, Array<State>, #===, nil] from
+        # @param [State, Array<State>, #===, Hash, nil] from
         #   Only execute rule if previous state matches `from` state(s).
+        #   - When an array is provided, only execute when the state changed from any of the states.
+        #   - When a proc or lambda is provided, it will be called with the previous state.
+        #     The rule will execute if the proc returns true.
+        #   - When a Hash is provided, only execute when the state changed from the key to its corresponding value.
+        #     In this case, the `to` parameter must be nil.
         # @param [State, Array<State>, #===, nil] to
         #   Only execute rule if new state matches `to` state(s).
         # @param [java.time.temporal.TemporalAmount, Proc, nil] for
@@ -1056,6 +1061,12 @@ module OpenHAB
         #     run { logger.info("Alarm armed") }
         #   end
         #
+        # @example Trigger based on specific state transitions
+        #   rule "Execute only when item changed from 8 to 14, or 10 to 12" do
+        #     changed Alarm_Mode, from: { 8 => 14, 10 => 12 }
+        #     run { logger.info("Alarm Mode Updated") }
+        #   end
+        #
         # @example Delay the trigger until the item has been in the same state for 10 seconds
         #    rule "Execute rule when item is changed for specified duration" do
         #      changed Closet_Door, to: CLOSED, for: 10.seconds
@@ -1085,6 +1096,8 @@ module OpenHAB
         #   end
         #
         def changed(*items, to: nil, from: nil, for: nil, attach: nil)
+          raise ArgumentError, "When from is a hash, to must be nil" if from.respond_to?(:to_hash) && !to.nil?
+
           changed = Changed.new(rule_triggers: @rule_triggers)
           # for is a reserved word in ruby, so use local_variable_get :for
           duration = binding.local_variable_get(:for)
@@ -1105,10 +1118,15 @@ module OpenHAB
             end
 
             logger.trace { "Creating changed trigger for entity(#{item}), to(#{to.inspect}), from(#{from.inspect})" }
-
-            Array.wrap(from).each do |from_state|
-              Array.wrap(to).each do |to_state|
+            if from.respond_to?(:to_hash)
+              from.each do |from_state, to_state|
                 changed.trigger(item: item, from: from_state, to: to_state, duration: duration, attach: attach)
+              end
+            else
+              Array.wrap(from).each do |from_state|
+                Array.wrap(to).each do |to_state|
+                  changed.trigger(item: item, from: from_state, to: to_state, duration: duration, attach: attach)
+                end
               end
             end
           end
