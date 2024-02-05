@@ -19,16 +19,18 @@ module OpenHAB
           # @param [Core::Items::Item, Core::Items::GroupItem::Members] item item to create trigger for
           # @param [Core::Types::State, Symbol, #===, nil] from state to restrict trigger to
           # @param [Core::Types::State, Symbol, #===, nil] to state to restrict trigger to
-          # @param [Duration, nil] duration duration to delay trigger until to state is met
+          # @param [Duration, Proc, nil] duration duration to delay trigger until to state is met
           # @param [Object] attach object to be attached to the trigger
           #
           # @return [org.openhab.core.automation.Trigger] openHAB triggers
           #
           def trigger(item:, from:, to:, duration:, attach:)
             if duration
-              item_name = item.respond_to?(:name) ? item.name : item.to_s
-              logger.trace("Creating Changed Wait Change Trigger for Item(#{item_name}) Duration(#{duration}) " \
-                           "To(#{to}) From(#{from}) Attach(#{attach})")
+              if logger.trace?
+                item_name = item.respond_to?(:name) ? item.name : item.to_s
+                logger.trace("Creating Changed Wait Change Trigger for Item(#{item_name}) Duration(#{duration}) " \
+                             "To(#{to}) From(#{from}) Attach(#{attach})")
+              end
               conditions = Conditions::Duration.new(to: to, from: from, duration: duration)
               changed_trigger(item: item, from: nil, to: nil, attach: attach, conditions: conditions)
             else
