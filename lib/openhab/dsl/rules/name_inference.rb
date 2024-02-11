@@ -27,6 +27,7 @@ module OpenHAB
           # get the block's source location, and simplify to a simple filename
           def infer_rule_id_from_block(block)
             file = File.basename(block.source_location.first)
+            file = "script:#{$ctx["ruleUID"]}" if $ctx&.key?("ruleUID") && file == "<script>"
             "#{file}:#{block.source_location.last}"
           end
 
