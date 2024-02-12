@@ -149,6 +149,7 @@ module OpenHAB
           r += " #{visibility}" unless visible?
           r += " #{status || "<detached>"}"
           r += " (#{status_info.status_detail})" if status_info && status_info.status_detail != RuleStatusDetail::NONE
+          r += " description=#{description.inspect}" if description
           r += " tags=#{tags.to_a.inspect}" unless tags.empty?
           r += " configuration=#{configuration.properties.to_h}" if configuration && !configuration.properties.empty?
           "#{r}>"

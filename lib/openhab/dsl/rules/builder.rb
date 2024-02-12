@@ -40,7 +40,17 @@ module OpenHAB
         # The rule must have at least one trigger and one execution block.
         # To create a "script" without any triggers, use {OpenHAB::DSL.script script}.
         #
+        # When explicit `id` is not provided, the rule's ID will be inferred from the block's source location,
+        # and a suffix will be added to avoid clashing against existing rules.
+        #
+        # When an explicit `id` is provided and an existing rule with the same id already exists,
+        # the rule will not be created, and the method will return nil.
+        #
+        # To ensure that a rule with an explicit `id` is created, you can use
+        # {Core::Rules::Registry#remove rules.remove} to remove any existing rule prior to creating the new rule.
+        #
         # @param [String] name The rule name
+        # @param [String] id The rule's ID. This can also be defined in the block using {Rules::BuilderDSL#uid uid}.
         # @yield Block executed in the context of a {Rules::BuilderDSL}
         # @yieldparam [Rules::BuilderDSL] rule
         #   Optional parameter to access the rule configuration from within execution blocks and guards.
@@ -50,18 +60,24 @@ module OpenHAB
         # @see Rules::Terse Terse Rules
         #
         # @example
-        #   require "openhab/dsl"
-        #
         #   rule "name" do
         #     <one or more triggers>
         #     <one or more execution blocks>
         #     <zero or more guards>
         #   end
         #
+        # @example Create a rule with an explicit id, deleting any existing rule with the same id
+        #   rules.remove("my_happy_day_reminder")
+        #   rule "name", id: "my_happy_day_reminder" do
+        #     every :day
+        #     run { logger.info "Happy new day!" }
+        #   end
+        #
         def rule(name = nil, id: nil, script: nil, binding: nil, &block)
           raise ArgumentError, "Block is required" unless block
 
-          id ||= NameInference.infer_rule_id_from_block(block)
+          inferred_id = nil
+          id ||= inferred_id = NameInference.infer_rule_id_from_block(block)
           script ||= block.source rescue nil # rubocop:disable Style/RescueModifier
 
           builder = nil
@@ -70,6 +86,13 @@ module OpenHAB
             builder = BuilderDSL.new(binding || block.binding)
             builder.uid(id)
             builder.instance_exec(builder, &block)
+
+            if (inferred_id.nil? || builder.uid != inferred_id) && (existing = $rules.get(builder.uid))
+              logger.warn "Rule '#{builder.uid}' is not created because " \
+                          "another rule/script/scene with the same id already exists: #{existing.inspect}."
+              return nil
+            end
+
             builder.guard = Guard.new(run_context: builder.caller,
                                       only_if: builder.only_if,
                                       not_if: builder.not_if)
@@ -101,7 +124,7 @@ module OpenHAB
         # @param [String, Symbol, Semantics::Tag, Array<String, Symbol, Semantics::Tag>, nil] tags
         #   Fluent alias for `tag`
         # @yield [] Block executed when the script is executed.
-        # @return [Core::Rules::Rule]
+        # @return [Core::Rules::Rule, nil]
         #
         # @example A simple script
         #   # return the script object into a variable
@@ -123,10 +146,17 @@ module OpenHAB
         #
         #   rules.scripts["send_alert"].run(message: "The door is open!")
         #
+        # @see DSL.rule
         # @see Core::Rules::Rule#trigger
         #
         def script(name = nil, description: nil, id: nil, tag: nil, tags: nil, script: nil, &block)
           raise ArgumentError, "Block is required" unless block
+
+          if id && (existing = $rules.get(id))
+            logger.warn "Script '#{id}' is not created because " \
+                        "another script/scene/rule with the same id already exists: #{existing.inspect}."
+            return nil
+          end
 
           id ||= NameInference.infer_rule_id_from_block(block)
           name ||= id
@@ -159,10 +189,18 @@ module OpenHAB
         # @param [String, Symbol, Semantics::Tag, Array<String, Symbol, Semantics::Tag>, nil] tags
         #   Fluent alias for `tag`
         # @yield [] Block executed when the script is executed.
-        # @return [Core::Rules::Rule]
+        # @return [Core::Rules::Rule, nil]
+        #
+        # @see DSL.rule
         #
         def scene(name = nil, description: nil, id: nil, tag: nil, tags: nil, script: nil, &block)
           raise ArgumentError, "Block is required" unless block
+
+          if id && (existing = $rules.get(id))
+            logger.warn "Scene '#{id}' is not created because " \
+                        "another scene/rule/script with the same id already exists: #{existing.inspect}."
+            return nil
+          end
 
           id ||= NameInference.infer_rule_id_from_block(block)
           name ||= id

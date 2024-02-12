@@ -11,6 +11,28 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
     expect(spec_log_lines).to include(include("has no execution blocks, not creating rule"))
   end
 
+  it "a rule with an explicit id cannot be created if it already exists" do
+    original_rule = rule id: "myrule" do
+      description "This is the original rule"
+      every :day
+      run { nil }
+    end
+    expect(original_rule).not_to be_nil
+
+    new_rule = rule id: "myrule" do
+      every :day
+      run { nil }
+    end
+    expect(new_rule).to be_nil
+
+    new_rule = rule do
+      every :day
+      uid "myrule"
+      run { nil }
+    end
+    expect(new_rule).to be_nil
+  end
+
   it "can access items from the rule block" do
     items.build do
       switch_item "lowerCaseSwitchItem"
