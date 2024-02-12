@@ -56,8 +56,8 @@ module OpenHAB
     # @!group Rule Creation
 
     # (see Rules::Builder#rule)
-    def rule(name = nil, **kwargs, &block)
-      rules.build { rule(name, **kwargs, &block) }
+    def rule(name = nil, id: nil, **kwargs, &block)
+      rules.build { rule(name, id: id, **kwargs, &block) }
     end
 
     # (see Rules::Builder#scene)
