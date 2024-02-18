@@ -301,7 +301,7 @@ module OpenHAB
               Core.automation_manager.add_trigger_type(org.openhab.core.automation.type.TriggerType.new(
                                                          WATCH_TRIGGER_MODULE_ID,
                                                          nil,
-                                                         "A path change event is detected",
+                                                         "a path change event is detected",
                                                          "Triggers when a path change event is detected",
                                                          nil,
                                                          org.openhab.core.automation.Visibility::VISIBLE,
