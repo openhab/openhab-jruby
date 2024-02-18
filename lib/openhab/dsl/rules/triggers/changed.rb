@@ -32,7 +32,13 @@ module OpenHAB
                              "To(#{to}) From(#{from}) Attach(#{attach})")
               end
               conditions = Conditions::Duration.new(to: to, from: from, duration: duration)
-              changed_trigger(item: item, from: nil, to: nil, attach: attach, conditions: conditions)
+              label = NameInference.infer_rule_name_from_trigger(:changed,
+                                                                 [item],
+                                                                 from: from,
+                                                                 to: to,
+                                                                 duration: duration)
+
+              changed_trigger(item: item, from: nil, to: nil, attach: attach, conditions: conditions, label: label)
             else
               # swap from/to w/ nil if from/to need to be processed in Ruby
               # rubocop:disable Style/ParallelAssignment
@@ -66,7 +72,7 @@ module OpenHAB
           # @param [Object] attach object to be attached to the trigger
           # @return [org.openhab.core.automation.Trigger]
           #
-          def changed_trigger(item:, from:, to:, attach: nil, conditions: nil)
+          def changed_trigger(item:, from:, to:, attach: nil, conditions: nil, label: nil)
             type, config = case item
                            when GroupItem::Members
                              group(group: item, from: from, to: to)
@@ -76,7 +82,7 @@ module OpenHAB
                            else
                              item(item: item, from: from, to: to)
                            end
-            append_trigger(type: type, config: config, attach: attach, conditions: conditions)
+            append_trigger(type: type, config: config, attach: attach, conditions: conditions, label: label)
           end
 
           #

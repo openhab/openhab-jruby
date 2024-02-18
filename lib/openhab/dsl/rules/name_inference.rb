@@ -48,8 +48,6 @@ module OpenHAB
             infer_rule_name_from_trigger(*config.ruby_triggers.first)
           end
 
-          private
-
           # formulate a readable rule name from a single trigger if possible
           def infer_rule_name_from_trigger(trigger, items = nil, kwargs = {})
             case trigger
@@ -72,6 +70,8 @@ module OpenHAB
             end
           end
 
+          private
+
           # formulate a readable rule name from an item-type trigger
           def infer_rule_name_from_item_trigger(trigger, items, kwargs)
             kwargs.delete(:command) if kwargs[:command] == [nil]
@@ -86,10 +86,10 @@ module OpenHAB
 
             trigger_name = trigger.to_s.tr("_", " ")
             item_names = items.map do |item|
-              if item.is_a?(GroupItem::Members)
-                "#{item.group.name}.members"
-              else
-                item.name
+              case item
+              when GroupItem::Members then "#{item.group.name}.members"
+              when Core::Items::Item then item.name
+              else item.to_s
               end
             end
             name = "#{format_array(item_names)} #{trigger_name}"
