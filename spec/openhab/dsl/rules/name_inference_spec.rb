@@ -55,6 +55,31 @@ RSpec.describe OpenHAB::DSL::Rules::NameInference do
       r = rules.build { send(trigger, SwitchItem1, from: OFF, to: ON) { nil } }
       expect(r.name).to eql "SwitchItem1 changed from OFF to ON"
     end
+
+    describe "trigger with duration generates a descriptive label" do
+      context "with items" do
+        it "works" do
+          trigger = self.trigger
+          r = rules.build { send(trigger, SwitchItem1, from: OFF, to: ON, for: 1.hour) { nil } }
+          expect(r.triggers.first.label).to eql "SwitchItem1 changed from OFF to ON for PT1H"
+        end
+      end
+
+      context "with things" do
+        let(:thing) do
+          things.build { thing "astro:sun:home", "Astro Sun Data" }
+        end
+
+        it "works" do
+          trigger = self.trigger
+          thing = self.thing
+          r = rules.build do
+            send(trigger, thing, from: :offline, to: :online, for: 1.hour) { nil }
+          end
+          expect(r.triggers.first.label).to eql "astro:sun:home changed from :offline to :online for PT1H"
+        end
+      end
+    end
   end
 
   context "with #updated" do
