@@ -1207,7 +1207,10 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
 
         rule = rules["dynamic_at_rule"]
         trigger = rule.triggers.first
-        handler = OpenHAB::Core::Rules.manager.get_module_handler(trigger, rule.uid)
+
+        handler = OpenHAB::Core::Rules.manager.get_module_handler_factory(trigger.type_uid)
+                                      .get_handler(trigger, rule.uid)
+
         expect(handler.getTemporalAdjuster).not_to be_nil
 
         MyDateTimeItem.update(Time.now + 2 - 2.days)

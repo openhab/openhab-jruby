@@ -7,6 +7,15 @@ module OpenHAB
         include org.openhab.core.persistence.ModifiablePersistenceService
         include Singleton
 
+        OPERATOR_TO_SYMBOL = {
+          EQ: :==,
+          NEQ: :!=,
+          GT: :>,
+          LT: :<,
+          GTE: :>=,
+          LTE: :<=
+        }.freeze
+
         class HistoricItem
           include org.openhab.core.persistence.HistoricItem
 
@@ -134,9 +143,7 @@ module OpenHAB
 
           range = first_index...last_index
 
-          operator = filter.operator.symbol
-          operator = "==" if operator == "="
-
+          operator = OPERATOR_TO_SYMBOL[filter.operator]
           block = lambda do |i|
             next if filter.state && !item_history[i].state.send(operator, filter.state)
 
