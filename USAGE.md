@@ -100,7 +100,7 @@ Additional [example rules are available](docs/examples.md), as well as examples 
 
 1. Go to `Settings -> Add-ons -> Automation` and install the jrubyscripting automation addon following the [openHAB instructions](https://www.openhab.org/docs/configuration/addons.html).
    In openHAB 4.0+ the defaults are set so the next step can be skipped.
-1. Go to `Settings -> Other Services -> JRuby Scripting`:
+1. Go to `Settings -> Add-on Settings -> JRuby Scripting`:
    - **Ruby Gems**: `openhab-scripting=~>5.0`
    - **Require Scripts**: `openhab/dsl` (not required, but recommended)
 
@@ -119,7 +119,7 @@ Additional [example rules are available](docs/examples.md), as well as examples 
 
 ## Configuration
 
-After installing this add-on, you will find configuration options in the openHAB portal under _Settings -> Other Services -> JRuby Scripting_.
+After installing this add-on, you will find configuration options in the openHAB portal under _Settings -> Add-on Settings -> JRuby Scripting_.
 Alternatively, JRuby configuration parameters may be set by creating a `jruby.cfg` file in `conf/services/`.
 
 By default this add-on includes the [openhab-scripting](https://github.com/openhab/openhab-jruby) Ruby gem and automatically `require`s it.
