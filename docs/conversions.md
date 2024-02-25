@@ -31,8 +31,8 @@ EMAIL = "juliet@capulet.org"
 rule "Balcony Lights ON at 5pm" do
   description "Light will turn on when it's 5:00pm"
   every :day, at: '5pm' # This can be written as: `cron "0 0 17 * * ?"` if preferred
-  tags: %w[Balcony Lights]
-  uid: "BalconyLightsOn"
+  tags %w[Balcony Lights]
+  uid "BalconyLightsOn"
   run do |event|
     BalconyLights.on
     NotificationAction.send_notification(EMAIL, "Balcony lights are ON")
