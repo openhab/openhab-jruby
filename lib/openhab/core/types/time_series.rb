@@ -101,12 +101,22 @@ module OpenHAB
         # @note This method returns self so it can be chained, unlike the Java version.
         #
         # @param [Instant, #to_zoned_date_time, #to_instant] instant An instant for the given state.
-        # @param [State] state The State at the given timestamp.
+        # @param [State, String, Numeric] state The State at the given timestamp.
+        #   If a String is given, it will be converted to {StringType}.
+        #   If a {Numeric} is given, it will be converted to {DecimalType}.
         # @return [self]
+        # @raise [ArgumentError] if state is not a {State}, String or {Numeric}
         #
         def add(instant, state)
           instant = instant.to_zoned_date_time if instant.respond_to?(:to_zoned_date_time)
           instant = instant.to_instant if instant.respond_to?(:to_instant)
+          state = case state
+                  when State then state
+                  when String then StringType.new(state)
+                  when Numeric then DecimalType.new(state)
+                  else
+                    raise ArgumentError, "state must be a State, String or Numeric, but was #{state.class}"
+                  end
           add_instant(instant, state)
           self
         end
