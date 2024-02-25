@@ -48,4 +48,14 @@ RSpec.describe OpenHAB::Core::Types::StringType do
     specify { expect(state == nil).to be false } # rubocop:disable Style/NilComparison
     specify { expect(state != nil).to be true } # rubocop:disable Style/NonNilCheck
   end
+
+  describe "#eql?" do
+    it "works" do
+      expect(state).to eql StringType.new("Hello")
+    end
+
+    it "returns false when compared against a plain string" do
+      expect(state).not_to eql "Hello"
+    end
+  end
 end

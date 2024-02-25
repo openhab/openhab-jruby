@@ -49,6 +49,25 @@ RSpec.describe OpenHAB::Core::Types::TimeSeries do
       ts.add(Time.at(0), DecimalType.new(1))
       expect(ts.begin).to eql Instant.of_epoch_second(0)
     end
+
+    it "accepts a string value" do
+      ts.add(Time.at(0), "1")
+      expect(ts.first.state).to eql StringType.new("1")
+    end
+
+    it "accepts a numeric value" do
+      ts.add(Time.at(0), 1)
+      expect(ts.first.state).to eql DecimalType.new(1)
+    end
+
+    it "accepts a QuantityType" do
+      ts.add(Time.at(0), 1 | "W")
+      expect(ts.first.state.class).to be QuantityType
+    end
+
+    it "raises an error if the value is not a State, number or string" do
+      expect { ts.add(Time.at(0), Object.new) }.to raise_error ArgumentError
+    end
   end
 
   context "when accessed as an Array" do

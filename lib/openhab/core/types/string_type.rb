@@ -26,7 +26,7 @@ module OpenHAB
         def eql?(other)
           return false unless other.instance_of?(self.class)
 
-          to_s.compare_to(other.to_s).zero?
+          to_s == other.to_s
         end
 
         #
