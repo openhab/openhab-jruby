@@ -60,14 +60,36 @@ module OpenHAB
       rules.build { rule(name, id: id, **kwargs, &block) }
     end
 
+    # Creates a rule that will remove existing rules with the same id, even when the id has been inferred.
+    # @see rule
+    def rule!(name = nil, id: nil, **kwargs, &block)
+      rules.build { rule(name, id: id, replace: true, **kwargs, &block) }
+    end
+
     # (see Rules::Builder#scene)
     def scene(name = nil, description: nil, id: nil, tag: nil, tags: nil, **kwargs, &block)
       rules.build { scene(name, description: description, id: id, tag: tag, tags: tags, **kwargs, &block) }
     end
 
+    # Creates a scene that will remove existing rules/scenes with the same id, even when the id has been inferred.
+    # @see scene
+    def scene!(name = nil, description: nil, id: nil, tag: nil, tags: nil, **kwargs, &block)
+      rules.build do
+        scene(name, description: description, id: id, tag: tag, tags: tags, replace: true, **kwargs, &block)
+      end
+    end
+
     # (see Rules::Builder#script)
     def script(name = nil, description: nil, id: nil, tag: nil, tags: nil, **kwargs, &block)
       rules.build { script(name, description: description, id: id, tag: tag, tags: tags, **kwargs, &block) }
+    end
+
+    # Creates a script that will remove existing rules/scripts with the same id, even when the id has been inferred.
+    # @see script
+    def script!(name = nil, description: nil, id: nil, tag: nil, tags: nil, **kwargs, &block)
+      rules.build do
+        script(name, description: description, id: id, tag: tag, tags: tags, replace: true, **kwargs, &block)
+      end
     end
 
     # @!group Rule Support

@@ -46,7 +46,7 @@ module OpenHAB
         # When an explicit `id` is provided and an existing rule with the same id already exists,
         # the rule will not be created, and the method will return nil.
         #
-        # To ensure that a rule with an explicit `id` is created, you can use
+        # To ensure that a rule is created even when the same id already exists, use {OpenHAB::DSL.rule!} or call
         # {Core::Rules::Registry#remove rules.remove} to remove any existing rule prior to creating the new rule.
         #
         # @param [String] name The rule name
@@ -58,6 +58,7 @@ module OpenHAB
         #
         # @see OpenHAB::DSL::Rules::BuilderDSL Rule BuilderDSL for details on rule triggers, guards and execution blocks
         # @see Rules::Terse Terse Rules
+        # @see DSL.rule!
         #
         # @example
         #   rule "name" do
@@ -67,13 +68,12 @@ module OpenHAB
         #   end
         #
         # @example Create a rule with an explicit id, deleting any existing rule with the same id
-        #   rules.remove("my_happy_day_reminder")
-        #   rule "name", id: "my_happy_day_reminder" do
+        #   rule! "name", id: "my_happy_day_reminder" do
         #     every :day
         #     run { logger.info "Happy new day!" }
         #   end
         #
-        def rule(name = nil, id: nil, script: nil, binding: nil, &block)
+        def rule(name = nil, id: nil, replace: false, script: nil, binding: nil, &block)
           raise ArgumentError, "Block is required" unless block
 
           inferred_id = nil
@@ -87,10 +87,15 @@ module OpenHAB
             builder.uid(id)
             builder.instance_exec(builder, &block)
 
-            if (inferred_id.nil? || builder.uid != inferred_id) && (existing = $rules.get(builder.uid))
-              logger.warn "Rule '#{builder.uid}' is not created because " \
-                          "another rule/script/scene with the same id already exists: #{existing.inspect}."
-              return nil
+            if replace
+              logger.debug { "Removing existing rule '#{builder.uid}'." } if DSL.rules.remove(builder.uid)
+            else
+              id_not_inferred = inferred_id.nil? || inferred_id != builder.uid
+              if id_not_inferred && (existing_rule = $rules.get(builder.uid))
+                logger.warn "Rule '#{builder.uid}' is not created because " \
+                            "another rule/script/scene with the same id already exists: #{existing_rule.inspect}."
+                return nil
+              end
             end
 
             builder.guard = Guard.new(run_context: builder.caller,
@@ -148,19 +153,23 @@ module OpenHAB
         #
         # @see DSL.rule
         # @see Core::Rules::Rule#trigger
+        # @see DSL.script!
         #
-        def script(name = nil, description: nil, id: nil, tag: nil, tags: nil, script: nil, &block)
+        def script(name = nil, description: nil, id: nil, tag: nil, tags: nil, replace: false, script: nil, &block)
           raise ArgumentError, "Block is required" unless block
 
-          if id && (existing = $rules.get(id))
-            logger.warn "Script '#{id}' is not created because " \
-                        "another script/scene/rule with the same id already exists: #{existing.inspect}."
-            return nil
-          end
-
-          id ||= NameInference.infer_rule_id_from_block(block)
+          inferred_id = nil # rubocop:disable Lint/UselessAssignment it is used below
+          id ||= inferred_id = NameInference.infer_rule_id_from_block(block)
           name ||= id
           script ||= block.source rescue nil # rubocop:disable Style/RescueModifier
+
+          if replace
+            logger.debug { "Removing existing rule '#{id}'." } if DSL.rules.remove(id)
+          elsif inferred_id.nil? && (existing_rule = $rules.get(id))
+            logger.warn "Script '#{id}' is not created because " \
+                        "another script/scene/rule with the same id already exists: #{existing_rule.inspect}."
+            return nil
+          end
 
           builder = nil
           ThreadLocal.thread_local(openhab_rule_type: "script", openhab_rule_uid: id) do
@@ -192,19 +201,23 @@ module OpenHAB
         # @return [Core::Rules::Rule, nil]
         #
         # @see DSL.rule
+        # @see DSL.scene!
         #
-        def scene(name = nil, description: nil, id: nil, tag: nil, tags: nil, script: nil, &block)
+        def scene(name = nil, description: nil, id: nil, tag: nil, tags: nil, replace: false, script: nil, &block)
           raise ArgumentError, "Block is required" unless block
 
-          if id && (existing = $rules.get(id))
-            logger.warn "Scene '#{id}' is not created because " \
-                        "another scene/rule/script with the same id already exists: #{existing.inspect}."
-            return nil
-          end
-
-          id ||= NameInference.infer_rule_id_from_block(block)
+          inferred_id = nil # rubocop:disable Lint/UselessAssignment
+          id ||= inferred_id = NameInference.infer_rule_id_from_block(block)
           name ||= id
           script ||= block.source rescue nil # rubocop:disable Style/RescueModifier
+
+          if replace
+            logger.debug { "Removing existing rule '#{id}'." } if DSL.rules.remove(id)
+          elsif inferred_id.nil? && (existing_rule = $rules.get(id))
+            logger.warn "Scene '#{id}' is not created because " \
+                        "another script/scene/rule with the same id already exists: #{existing_rule.inspect}."
+            return nil
+          end
 
           builder = nil
           ThreadLocal.thread_local(openhab_rule_type: "script", openhab_rule_uid: id) do

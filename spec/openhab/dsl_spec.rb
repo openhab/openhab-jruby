@@ -169,6 +169,73 @@ RSpec.describe OpenHAB::DSL do
     end
   end
 
+  describe "#rule" do
+    it "infers the rule id and generate unique id to avoid conflicts" do
+      created_rules = (1..2).map do
+        rule "MyRule" do
+          every :day
+          run { nil }
+        end
+      end
+      expect(created_rules.compact.size).to eq 2
+      expect(created_rules.map(&:uid).uniq.size).to eq 2
+      expect(created_rules.map { |r| rules[r.uid] }.compact.size).to eq 2
+    end
+
+    it "fails and returns nil when an an existing id is given" do
+      rule_id = "myrule"
+
+      rule "Original rule", id: rule_id do
+        every :day
+        run { nil }
+      end
+      expect(rules[rule_id]).not_to be_nil
+
+      new_rule = rule "Rule 1", id: rule_id do
+        every :day
+        run { nil }
+      end
+      expect(new_rule).to be_nil
+
+      new_rule = rule "Rule 2" do
+        every :day
+        uid rule_id
+        run { nil }
+      end
+      expect(new_rule).to be_nil
+
+      expect(rules[rule_id].name).to eql "Original rule"
+    end
+  end
+
+  describe "#rule!" do
+    it "infers the id but removes the existing rule with the same inferred id" do
+      created_rules = (1..2).map do |i|
+        rule! "Rule #{i}" do
+          every :day
+          run { nil }
+        end
+      end
+      expect(created_rules.map(&:uid).uniq.size).to eq 1
+      expect(rules[created_rules.first.uid].name).to eq "Rule #{created_rules.length}"
+    end
+
+    it "replaces the existing rule with the same id" do
+      rule_id = "myrule"
+      rule "Original Rule", id: rule_id do
+        every :day
+        run { nil }
+      end
+      expect(rules[rule_id].name).to eql "Original Rule"
+
+      rule! "NewRule", id: rule_id do
+        every :day
+        run { nil }
+      end
+      expect(rules[rule_id].name).to eql "NewRule"
+    end
+  end
+
   describe "#script" do
     it "creates triggerable rule" do
       triggered = false
@@ -191,7 +258,18 @@ RSpec.describe OpenHAB::DSL do
     end
   end
 
-  describe "#scenes" do
+  describe "#script!" do
+    it "replaces the existing script with the same id" do
+      script_id = "myscript"
+      script("Original Script", id: script_id) { nil }
+      expect(rules[script_id].name).to eql "Original Script"
+
+      script!("NewScript", id: script_id) { nil }
+      expect(rules[script_id].name).to eql "NewScript"
+    end
+  end
+
+  describe "#scene" do
     it "creates triggerable scene" do
       triggered = false
       scene id: "testscene" do
@@ -210,6 +288,17 @@ RSpec.describe OpenHAB::DSL do
 
       rules["testscene"].trigger(nil, foo: "bar")
       expect(received_context).to eql "bar"
+    end
+  end
+
+  describe "#scene!" do
+    it "replaces the existing scene with the same id" do
+      scene_id = "myscene"
+      scene("Original Scene", id: scene_id) { nil }
+      expect(rules[scene_id].name).to eql "Original Scene"
+
+      scene!("NewScene", id: scene_id) { nil }
+      expect(rules[scene_id].name).to eql "NewScene"
     end
   end
 
