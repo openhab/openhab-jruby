@@ -26,9 +26,9 @@ module OpenHAB
         class << self
           # get the block's source location, and simplify to a simple filename
           def infer_rule_id_from_block(block)
-            file = File.basename(block.source_location.first)
+            file = File.basename(block.source_location.first, ".rb")
             file = "script:#{$ctx["ruleUID"]}" if $ctx&.key?("ruleUID") && file == "<script>"
-            "#{file}:#{block.source_location.last}"
+            "#{file}:#{block.source_location.last}".tr(".", "_")
           end
 
           # formulate a readable rule name such as "TestSwitch received command ON" if possible
