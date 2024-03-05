@@ -63,7 +63,8 @@ module OpenHAB
         #
         def remove(rule_uid)
           rule_uid = rule_uid.uid if rule_uid.is_a?(Rule)
-          provider = Provider.registry.provider_for(rule_uid)
+          return nil unless (provider = Provider.registry.provider_for(rule_uid))
+
           unless provider.is_a?(org.openhab.core.common.registry.ManagedProvider)
             raise "Cannot remove rule #{rule_uid} from non-managed provider #{provider.inspect}"
           end

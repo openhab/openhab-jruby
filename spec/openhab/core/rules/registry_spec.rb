@@ -30,6 +30,10 @@ RSpec.describe OpenHAB::Core::Rules::Registry do
       expect(rules).to have_key("myid")
     end
 
+    it "returns nil if the rule is not found" do
+      expect(rules.remove("nonexistent")).to be_nil
+    end
+
     it "cleans up timers for a duration condition when the rule is removed" do
       items.build { switch_item "Item1" }
       my_rule = rule do
