@@ -400,7 +400,7 @@ module OpenHAB
         # @param [String] id
         # @return [void]
         #
-        prop :uid
+        prop(:uid) { |id| Thread.current[:openhab_rule_uid] = id }
 
         #
         # @!method name(value)

@@ -53,6 +53,14 @@ RSpec.describe OpenHAB::Log do
           expect(logger.name).to eql "org.openhab.automation.jrubyscripting.rule.log_test"
         end
       end
+
+      rule "log test with uid" do
+        uid "log_test2"
+        on_load
+        run do
+          expect(logger.name).to eql "org.openhab.automation.jrubyscripting.rule.log_test2"
+        end
+      end
     end
 
     it "uses the rule id inside a timer block inside a rule" do

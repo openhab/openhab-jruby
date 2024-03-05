@@ -13,8 +13,10 @@ module OpenHAB
         # and a setter with any number of arguments or a block.
         #
         # @param [String] name of the property
+        # @yield Block to call when the property is set
+        # @yieldparam [Object] value the value being set
         #
-        def prop(name)
+        def prop(name, &assignment_block)
           # rubocop rules are disabled because this method is dynamically defined on the calling
           #   object making calls to other methods in this module impossible, or if done on methods
           #   in this module than instance variable belong to the module not the calling class
@@ -30,6 +32,7 @@ module OpenHAB
               elsif block
                 instance_variable_set(:"@#{name}", block)
               end
+              assignment_block&.call(instance_variable_get(:"@#{name}"))
             end
           end
         end
