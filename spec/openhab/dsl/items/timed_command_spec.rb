@@ -168,4 +168,30 @@ RSpec.describe OpenHAB::DSL::Items::TimedCommand do
     time_travel_and_execute_timers(5.seconds)
     expect(manualitem.state).to eq OFF
   end
+
+  context "with Enumerable" do
+    before do
+      items.build do
+        switch_item Switch1, state: OFF
+        switch_item Switch2, state: OFF
+      end
+    end
+
+    it "works" do
+      [Switch1, Switch2].command(ON, for: 1.second)
+      expect(Switch1).to be_on
+      expect(Switch2).to be_on
+      time_travel_and_execute_timers(2.seconds)
+      expect(Switch1).to be_off
+      expect(Switch2).to be_off
+    end
+
+    it "each member has its own timer" do
+      [Switch1, Switch2].command(ON, for: 1.second)
+      Switch1.on
+      time_travel_and_execute_timers(2.seconds)
+      expect(Switch1).to be_on
+      expect(Switch2).to be_off
+    end
+  end
 end
