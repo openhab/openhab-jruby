@@ -168,4 +168,13 @@ RSpec.describe OpenHAB::DSL::Items::TimedCommand do
     time_travel_and_execute_timers(5.seconds)
     expect(manualitem.state).to eq OFF
   end
+
+  it "works with GroupItem" do
+    items.build { group_item "Group1", type: "Switch", autoupdate: true }
+    Group1.update(OFF)
+    Group1.command(ON, for: 1.second)
+    expect(Group1).to be_on
+    time_travel_and_execute_timers(2.seconds)
+    expect(Group1).to be_off
+  end
 end

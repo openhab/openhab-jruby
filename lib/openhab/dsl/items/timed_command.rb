@@ -74,6 +74,7 @@ module OpenHAB
         end
 
         Core::Items::GenericItem.prepend(self)
+        Core::Items::GroupItem.prepend(self)
 
         #
         # Sends command to an item for specified duration, then on timer expiration sends
