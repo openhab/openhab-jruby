@@ -3011,6 +3011,9 @@ met, enabling the core dynamic functionality of openHAB. - Documentation for ope
   
   
   
+  
+  
+  
 
         
       </ul>
@@ -4586,7 +4589,8 @@ met, enabling the core dynamic functionality of openHAB.</p>
 152
 153
 154
-155</pre>
+155
+156</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 146</span>
@@ -4597,6 +4601,7 @@ met, enabling the core dynamic functionality of openHAB.</p>
   r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>visibility<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> visible?
   r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>status || <span class="string"><span class="delimiter">&quot;</span><span class="content">&lt;detached&gt;</span><span class="delimiter">&quot;</span></span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
   r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>status_info.status_detail<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> status_info &amp;&amp; status_info.status_detail != <span class="constant">RuleStatusDetail</span>::<span class="constant">NONE</span>
+  r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> description=</span><span class="inline"><span class="inline-delimiter">#{</span>description.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> description
   r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> tags=</span><span class="inline"><span class="inline-delimiter">#{</span>tags.to_a.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> tags.empty?
   r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> configuration=</span><span class="inline"><span class="inline-delimiter">#{</span>configuration.properties.to_h<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> configuration &amp;&amp; !configuration.properties.empty?
   <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>r<span class="inline-delimiter">}</span></span><span class="content">&gt;</span><span class="delimiter">&quot;</span></span>
@@ -4775,12 +4780,12 @@ met, enabling the core dynamic functionality of openHAB.</p>
       <pre class="lines">
 
 
-158
 159
-160</pre>
+160
+161</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 158</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 159</span>
 
 <span class="keyword">def</span> <span class="function">to_s</span>
   uid
@@ -4889,7 +4894,6 @@ met, enabling the core dynamic functionality of openHAB.</p>
       <pre class="lines">
 
 
-170
 171
 172
 173
@@ -4901,10 +4905,11 @@ met, enabling the core dynamic functionality of openHAB.</p>
 179
 180
 181
-182</pre>
+182
+183</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 171</span>
 
 <span class="keyword">def</span> <span class="function">trigger</span>(event = <span class="predefined-constant">nil</span>, <span class="key">consider_conditions</span>: <span class="predefined-constant">false</span>, **context)
   <span class="keyword">begin</span>
@@ -5033,7 +5038,7 @@ met, enabling the core dynamic functionality of openHAB.</p>
 </div>
 
         <footer>
-  Generated on Tue Mar  5 15:35:26 2024 by
+  Generated on Tue Mar  5 16:17:03 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
