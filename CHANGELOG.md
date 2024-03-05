@@ -1,5 +1,23 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.18.0](https://github.com/openhab/openhab-jruby/tree/v5.18.0) (2024-03-05)
+
+### Features
+
+- Infer id for rules created from UI by [@jimtng](https://github.com/jimtng) in [#250](https://github.com/openhab/openhab-jruby/pull/250)
+- Add a descriptive label to changed duration trigger by [@jimtng](https://github.com/jimtng) in [#254](https://github.com/openhab/openhab-jruby/pull/254)
+- TimeSeries#add: accept a Ruby String or a Numeric value by [@jimtng](https://github.com/jimtng) in [#259](https://github.com/openhab/openhab-jruby/pull/259)
+
+### Bug Fixes
+
+- Use lowercase in watch trigger label to be consistent with core by [@jimtng](https://github.com/jimtng) in [#255](https://github.com/openhab/openhab-jruby/pull/255)
+- Update logger prefix if uid is set inside rule block by [@jimtng](https://github.com/jimtng) in [#252](https://github.com/openhab/openhab-jruby/pull/252)
+- Rules Registry#remove should return nil on non-existent ruleuid by [@jimtng](https://github.com/jimtng) in [#251](https://github.com/openhab/openhab-jruby/pull/251)
+- Tweak Rule ID inference to work with F7 router by [@jimtng](https://github.com/jimtng) in [#260](https://github.com/openhab/openhab-jruby/pull/260)
+- Don't create rule with an explicit rule uid when it already exists by [@jimtng](https://github.com/jimtng) in [#253](https://github.com/openhab/openhab-jruby/pull/253)
+
+**Full Changelog**: [v5.17.0...v5.18.0](https://github.com/openhab/openhab-jruby/compare/v5.17.0...v5.18.0)
+
 ## [v5.17.0](https://github.com/openhab/openhab-jruby/tree/v5.17.0) (2024-01-30)
 
 ### Features
