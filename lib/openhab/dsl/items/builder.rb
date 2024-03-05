@@ -672,7 +672,6 @@ module OpenHAB
         # @param (see ItemBuilder#initialize)
         def initialize(*args, type: nil, function: nil, thing: nil, **kwargs)
           raise ArgumentError, "invalid function #{function}" if function && !function.match?(FUNCTION_REGEX)
-          raise ArgumentError, "state cannot be set on GroupItems" if kwargs[:state]
 
           super(type, *args, **kwargs)
           @function = function
