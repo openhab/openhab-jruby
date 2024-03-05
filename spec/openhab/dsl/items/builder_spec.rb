@@ -534,6 +534,11 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
     expect(DateTimeItem1.state).to eq Time.parse("1970-01-01T00:00:00+00:00")
   end
 
+  it "sets initial state on a group item" do
+    items.build { group_item "GroupItem1", type: "Switch", state: ON }
+    expect(GroupItem1.state).to be ON
+  end
+
   describe "entity lookup" do
     it "can reference a group item directly" do
       items.build do
