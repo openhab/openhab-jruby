@@ -65,16 +65,18 @@ RSpec.describe OpenHAB::Log do
 
     it "uses the rule id inside a timer block inside a rule" do
       executed = false
+      logger_name = nil
       rule "log test" do
         on_load
         run do
           after(1.second) do
             executed = true
-            expect(logger.name).to match(/^org\.openhab\.automation\.jrubyscripting\.rule\.log_spec\.rb:(?:\d+)$/)
+            logger_name = logger.name
           end
         end
       end
       time_travel_and_execute_timers(5.seconds)
+      expect(logger_name).to match(/^org\.openhab\.automation\.jrubyscripting\.rule\.log_spec:(?:\d+)$/)
       expect(executed).to be true
     end
 
