@@ -44,22 +44,27 @@ module OpenHAB
           #   @see BuilderDSL#$1
           def def_terse_rule(trigger)
             class_eval(<<~RUBY, __FILE__, __LINE__ + 1)
-              def #{trigger}(*args, id: nil, name: nil, description: nil,       # def changed(*args, id: nil, name: nil, description: nil,
-                  tag: nil, tags: nil, on_load: false, **kwargs, &block)        #     tag: nil, tags: nil, on_load: false, **kwargs, &block)
-                raise ArgumentError, "Block is required" unless block           #   raise ArgumentError, "Block is required" unless block
-                                                                                #
-                id ||= NameInference.infer_rule_id_from_block(block)            #   id ||= NameInference.infer_rule_id_from_block(block)
-                script = block.source rescue nil                                #   script = block.source rescue nil
-                caller_binding = block.binding                                  #   caller_binding = block.binding
-                rule name, id: id, script: script, binding: caller_binding do   #   rule name, id: id, script: script, binding: caller_binding do
-                  self.on_load if on_load                                       #     self.on_load if on_load
-                  self.description(description) if description                  #     self.description(description) if description
-                  self.tags(*Array.wrap(tag), *Array.wrap(tags))                #     self.tags(*Array.wrap(tag), *Array.wrap(tags))
-                  #{trigger}(*args, **kwargs)                                   #     changed(*args, **kwargs)
-                  run(&block)                                                   #     run(&block)
-                end                                                             #   end
-              end                                                               # end
-              module_function #{trigger.inspect}                                # module_function :changed
+              def #{trigger}(*args, id: nil, name: nil, description: nil,  # def changed(*args, id: nil, name: nil, description: nil,
+                  tag: nil, tags: nil, on_load: false, **kwargs, &block)   #     tag: nil, tags: nil, on_load: false, **kwargs, &block)
+                raise ArgumentError, "Block is required" unless block      #   raise ArgumentError, "Block is required" unless block
+                                                                           #
+                replace = nil                                              #   replace = nil
+                unless id                                                  #   unless id
+                  replace = false                                          #     replace = false
+                  id = NameInference.infer_rule_id_from_block(block)       #     id = NameInference.infer_rule_id_from_block(block)
+                end                                                        #   end
+                script = block.source rescue nil                           #   script = block.source rescue nil
+                caller_binding = block.binding                             #   caller_binding = block.binding
+                rule name, id: id, replace: replace, script: script,       #   rule name, id: id, replace: replace, script: script
+                  binding: caller_binding do                               #     binding: caller_binding do
+                  self.on_load if on_load                                  #     self.on_load if on_load
+                  self.description(description) if description             #     self.description(description) if description
+                  self.tags(*Array.wrap(tag), *Array.wrap(tags))           #     self.tags(*Array.wrap(tag), *Array.wrap(tags))
+                  #{trigger}(*args, **kwargs)                              #     changed(*args, **kwargs)
+                  run(&block)                                              #     run(&block)
+                end                                                        #   end
+              end                                                          # end
+              module_function #{trigger.inspect}                           # module_function :changed
             RUBY
           end
         end

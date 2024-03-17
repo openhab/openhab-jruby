@@ -16,6 +16,20 @@ RSpec.describe OpenHAB::DSL::Rules::Terse do
     expect(ran).to be true
   end
 
+  it "infers a unique id for each rule" do
+    rules = []
+    2.times do
+      rules << changed(TestSwitch) { nil }
+    end
+    expect(rules.map(&:uid).uniq.length).to be > 1
+  end
+
+  it "doesn't create a new rule with an existing rule id" do
+    changed(TestSwitch, id: "Test") { nil }
+    rule = changed(TestSwitch, id: "Test") { nil }
+    expect(rule).to be_nil
+  end
+
   it "returns the rule object" do
     rule = changed(TestSwitch) { nil }
     expect(rule).to be_a OpenHAB::Core::Rules::Rule
