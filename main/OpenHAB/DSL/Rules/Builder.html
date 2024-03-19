@@ -3500,7 +3500,7 @@ Note that all methods on this module are also availabe directly on OpenHAB::DSL.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#rule-instance_method" title="#rule (instance method)">#<strong>rule</strong>(name = nil, id: nil, replace: false, script: nil, binding: nil) {|rule| ... } &#x21d2; Core::Rules::Rule<sup>?</sup> </a>
+      <a href="#rule-instance_method" title="#rule (instance method)">#<strong>rule</strong>(name = nil, id: nil, replace: nil, script: nil, binding: nil) {|rule| ... } &#x21d2; Core::Rules::Rule<sup>?</sup> </a>
     
 
     
@@ -3714,7 +3714,7 @@ Note that all methods on this module are also availabe directly on OpenHAB::DSL.
       <div class="method_details first">
   <h3 class="signature first" id="rule-instance_method">
   
-    #<strong>rule</strong>(name = nil, id: nil, replace: false, script: nil, binding: nil) {|rule| ... } &#x21d2; <tt><span class='object_link'><a href="../../Core/Rules/Rule.html" title="OpenHAB::Core::Rules::Rule (module)">Core::Rules::Rule</a></span></tt><sup>?</sup> 
+    #<strong>rule</strong>(name = nil, id: nil, replace: nil, script: nil, binding: nil) {|rule| ... } &#x21d2; <tt><span class='object_link'><a href="../../Core/Rules/Rule.html" title="OpenHAB::Core::Rules::Rule (module)">Core::Rules::Rule</a></span></tt><sup>?</sup> 
   
 
   
@@ -3921,7 +3921,7 @@ the rule will not be created, and the method will return nil.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 76</span>
 
-<span class="keyword">def</span> <span class="function">rule</span>(name = <span class="predefined-constant">nil</span>, <span class="key">id</span>: <span class="predefined-constant">nil</span>, <span class="key">replace</span>: <span class="predefined-constant">false</span>, <span class="key">script</span>: <span class="predefined-constant">nil</span>, <span class="key">binding</span>: <span class="predefined-constant">nil</span>, &amp;block)
+<span class="keyword">def</span> <span class="function">rule</span>(name = <span class="predefined-constant">nil</span>, <span class="key">id</span>: <span class="predefined-constant">nil</span>, <span class="key">replace</span>: <span class="predefined-constant">nil</span>, <span class="key">script</span>: <span class="predefined-constant">nil</span>, <span class="key">binding</span>: <span class="predefined-constant">nil</span>, &amp;block)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Block is required</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block
 
   inferred_id = <span class="predefined-constant">nil</span>
@@ -3937,7 +3937,7 @@ the rule will not be created, and the method will return nil.</p>
 
     <span class="keyword">if</span> replace
       logger.debug { <span class="string"><span class="delimiter">&quot;</span><span class="content">Removing existing rule '</span><span class="inline"><span class="inline-delimiter">#{</span>builder.uid<span class="inline-delimiter">}</span></span><span class="content">'.</span><span class="delimiter">&quot;</span></span> } <span class="keyword">if</span> <span class="constant">DSL</span>.rules.remove(builder.uid)
-    <span class="keyword">else</span>
+    <span class="keyword">elsif</span> replace.nil?
       id_not_inferred = inferred_id.nil? || inferred_id != builder.uid
       <span class="keyword">if</span> id_not_inferred &amp;&amp; (existing_rule = <span class="global-variable">$rules</span>.get(builder.uid))
         logger.warn <span class="string"><span class="delimiter">&quot;</span><span class="content">Rule '</span><span class="inline"><span class="inline-delimiter">#{</span>builder.uid<span class="inline-delimiter">}</span></span><span class="content">' is not created because </span><span class="delimiter">&quot;</span></span> \
@@ -4470,7 +4470,7 @@ rules.scripts[<span class="string"><span class="delimiter">&quot;</span><span cl
 </div>
 
         <footer>
-  Generated on Thu Mar  7 05:32:23 2024 by
+  Generated on Tue Mar 19 22:00:56 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
