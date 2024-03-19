@@ -73,7 +73,7 @@ module OpenHAB
         #     run { logger.info "Happy new day!" }
         #   end
         #
-        def rule(name = nil, id: nil, replace: false, script: nil, binding: nil, &block)
+        def rule(name = nil, id: nil, replace: nil, script: nil, binding: nil, &block)
           raise ArgumentError, "Block is required" unless block
 
           inferred_id = nil
@@ -89,7 +89,7 @@ module OpenHAB
 
             if replace
               logger.debug { "Removing existing rule '#{builder.uid}'." } if DSL.rules.remove(builder.uid)
-            else
+            elsif replace.nil?
               id_not_inferred = inferred_id.nil? || inferred_id != builder.uid
               if id_not_inferred && (existing_rule = $rules.get(builder.uid))
                 logger.warn "Rule '#{builder.uid}' is not created because " \
