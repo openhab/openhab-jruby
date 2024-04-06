@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.18.1](https://github.com/openhab/openhab-jruby/tree/v5.18.1) (2024-04-06)
+
+### Bug Fixes
+
+- Terse Rule: fix inferred id not generating unique suffix by [@jimtng](https://github.com/jimtng) in [#264](https://github.com/openhab/openhab-jruby/pull/264)
+
+**Full Changelog**: [v5.18.0...v5.18.1](https://github.com/openhab/openhab-jruby/compare/v5.18.0...v5.18.1)
+
 ## [v5.18.0](https://github.com/openhab/openhab-jruby/tree/v5.18.0) (2024-03-05)
 
 ### Features
