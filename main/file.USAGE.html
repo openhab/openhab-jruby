@@ -4134,7 +4134,7 @@ The following rule automatically finds and reschedules the timer matching the sa
 <p>Furthermore, you can manipulate the managed timers using the built-in <span class='object_link'><a href="OpenHAB/DSL/TimerManager.html" title="OpenHAB::DSL::TimerManager (class)">timers</a></span> object.</p>
 <pre class="code ruby"><code class="ruby"><span class="comment"># timers is a special object to access the timers created with an id</span>
 rule <span class="string"><span class="delimiter">&quot;</span><span class="content">cancel all timers</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
-  received_command <span class="constant">Cancel_All_Timers</span>, <span class="key">to</span>: <span class="constant">ON</span> <span class="comment"># Send a command to this item to cancel all timers</span>
+  received_command <span class="constant">Cancel_All_Timers</span>, <span class="key">command</span>: <span class="constant">ON</span> <span class="comment"># Send a command to this item to cancel all timers</span>
   run <span class="keyword">do</span>
     gOutdoorLights.members.each <span class="keyword">do</span> |item_as_timer_id|
       timers.cancel(item_as_timer_id)
@@ -4143,7 +4143,7 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
 <span class="keyword">end</span>
 
 rule <span class="string"><span class="delimiter">&quot;</span><span class="content">reschedule all timers</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
-  received_command <span class="constant">Reschedule_All_Timers</span>, <span class="key">to</span>: <span class="constant">ON</span> <span class="comment"># Send a command to this item to restart all timers</span>
+  received_command <span class="constant">Reschedule_All_Timers</span>, <span class="key">command</span>: <span class="constant">ON</span> <span class="comment"># Send a command to this item to restart all timers</span>
   run <span class="keyword">do</span>
     gOutdoorLights.members.each <span class="keyword">do</span> |item_as_timer_id|
       timers.reschedule(item_as_timer_id)
@@ -4548,7 +4548,7 @@ This method can only be done using a file-based rule.</p>
 <p>See <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#updated-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#updated (method)">#updated</a></span></p>
 <h4 id="item-received-a-command"><a href="#item-received-a-command" class="header-anchor">#</a>Item Received a Command</h4>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Received a command</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
-  received_command <span class="constant">DoorBell</span>, <span class="key">to</span>: <span class="constant">ON</span>
+  received_command <span class="constant">DoorBell</span>, <span class="key">command</span>: <span class="constant">ON</span>
   run <span class="keyword">do</span> |event|
     notify <span class="string"><span class="delimiter">&quot;</span><span class="content">Someone pressed the door bell</span><span class="delimiter">&quot;</span></span>
     play_sound <span class="string"><span class="delimiter">&quot;</span><span class="content">doorbell.mp3</span><span class="delimiter">&quot;</span></span>
@@ -4688,7 +4688,7 @@ It actually sets a timer for you behind the scenes.</p>
 <p>See <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#Execution-Blocks-group" title="group::OpenHAB::DSL::Rules::BuilderDSL::Execution-Blocks (group)">Execution Blocks</a></span></p>
 <h3 id="terse-rules"><a href="#terse-rules" class="header-anchor">#</a>Terse Rules</h3>
 <p>A rule with a trigger and an execution block can be created with just one line.</p>
-<pre class="code ruby"><code class="ruby">received_command(<span class="constant">My_Switch</span>, <span class="key">to</span>: <span class="constant">ON</span>) { <span class="constant">My_Light</span>.on }
+<pre class="code ruby"><code class="ruby">received_command(<span class="constant">My_Switch</span>, <span class="key">command</span>: <span class="constant">ON</span>) { <span class="constant">My_Light</span>.on }
 </code></pre>
 <p>See <span class='object_link'><a href="OpenHAB/DSL/Rules/Terse.html" title="OpenHAB::DSL::Rules::Terse (module)">Terse Rules</a></span> for full details.</p>
 <h3 id="early-exit-from-a-rule"><a href="#early-exit-from-a-rule" class="header-anchor">#</a>Early Exit From a Rule</h3>
@@ -4785,7 +4785,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Sat Apr  6 00:15:43 2024 by
+  Generated on Thu Apr 11 03:16:31 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
