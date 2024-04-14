@@ -27,6 +27,11 @@ module OpenHAB
         def channel_uid
           Things::ChannelUID.new(channelUID)
         end
+
+        # @return [String]
+        def to_s
+          "#{item_name} -> #{channelUID}"
+        end
       end
     end
   end

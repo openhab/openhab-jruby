@@ -741,6 +741,49 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         expect(linked_item).to be StringItem1
         expect(linked_thing).to be things["astro:sun:home"]
       end
+
+      context "with filtering", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
+        it "filters by item" do
+          linked_item = linked_thing = nil
+          channel_linked(item: "StringItem1") do |event|
+            linked_item = event.link.item
+            linked_thing = event.link.channel_uid.thing
+          end
+
+          items.build { string_item "StringItem1", channel: "astro:sun:home:season#name" }
+
+          expect(linked_item).to be StringItem1
+          expect(linked_thing).to be things["astro:sun:home"]
+        end
+
+        it "filters by channel" do
+          linked_item = linked_channel = nil
+          channel_linked(channel: "astro:sun:home:season#name") do |event|
+            linked_item = event.link.item
+            linked_channel = event.link.channel_uid
+          end
+
+          items.build { string_item "StringItem1", channel: "astro:sun:home:season#name" }
+          StringItem1.link("astro:sun:home:zodiac#sign")
+
+          expect(linked_item).to be StringItem1
+          expect(linked_channel).to eq "astro:sun:home:season#name"
+        end
+
+        it "filters by item and channel" do
+          linked_item = linked_channel = nil
+          channel_linked(item: "StringItem1", channel: "astro:sun:home:season#name") do |event|
+            linked_item = event.link.item
+            linked_channel = event.link.channel_uid
+          end
+
+          items.build { string_item "StringItem1", channel: "astro:sun:home:season#name" }
+          StringItem1.link("astro:sun:home:zodiac#sign")
+
+          expect(linked_item).to be StringItem1
+          expect(linked_channel).to eq "astro:sun:home:season#name"
+        end
+      end
     end
 
     describe "#received_command" do
@@ -847,6 +890,20 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
 
         expect(new_item.name).to eql "Item1"
       end
+
+      it "supports pattern filter", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
+        new_item = nil
+        item_added("Item1") do |event|
+          new_item = event.item
+        end
+
+        items.build { switch_item Item1 }
+        expect(new_item.name).to eql "Item1"
+
+        new_item = nil
+        items.build { switch_item Item2 }
+        expect(new_item).to be_nil
+      end
     end
 
     describe "#item_removed" do
@@ -861,6 +918,22 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
 
         expect(removed_item.name).to eql "Item1"
       end
+
+      it "supports pattern filter", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
+        removed_item = nil
+        item_removed("Item1") do |event|
+          removed_item = event.item
+        end
+
+        items.build { switch_item Item1 }
+        items.remove(Item1)
+        expect(removed_item.name).to eql "Item1"
+
+        removed_item = nil
+        items.build { switch_item Item2 }
+        items.remove(Item2)
+        expect(removed_item).to be_nil
+      end
     end
 
     describe "#thing_added" do
@@ -873,6 +946,20 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         things.build { thing "astro:sun:home", config: { "geolocation" => "0,0" } }
 
         expect(new_thing.uid).to eql "astro:sun:home"
+      end
+
+      it "supports pattern filter", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
+        new_thing = nil
+        thing_added("astro:sun:home") do |event|
+          new_thing = event.thing
+        end
+
+        things.build { thing "astro:sun:home", config: { "geolocation" => "0,0" } }
+        expect(new_thing.uid).to eql "astro:sun:home"
+
+        new_thing = nil
+        things.build { thing "astro:sun:home2", config: { "geolocation" => "0,0" } }
+        expect(new_thing).to be_nil
       end
     end
 
@@ -887,6 +974,22 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         things.remove("astro:sun:home")
 
         expect(removed_thing.uid).to eql "astro:sun:home"
+      end
+
+      it "supports pattern filter", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
+        removed_thing = nil
+        thing_removed("astro:sun:home") do |event|
+          removed_thing = event.thing
+        end
+
+        things.build { thing "astro:sun:home", config: { "geolocation" => "0,0" } }
+        things.remove("astro:sun:home")
+        expect(removed_thing.uid).to eql "astro:sun:home"
+
+        removed_thing = nil
+        things.build { thing "astro:sun:home2", config: { "geolocation" => "0,0" } }
+        things.remove("astro:sun:home2")
+        expect(removed_thing).to be_nil
       end
     end
 
