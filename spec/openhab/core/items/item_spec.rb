@@ -185,7 +185,13 @@ RSpec.describe OpenHAB::Core::Items::Item do
   describe "#formatted_state" do
     it "just returns the state if it has no format" do
       items.build { number_item MyTemp, state: 5.556 }
-      expect(MyTemp.formatted_state[0...5]).to eql "5.556"
+      if OpenHAB::Core.version < OpenHAB::Core::V4_2
+        expect(MyTemp.formatted_state[0...5]).to eql "5.556"
+      else
+        # This is due to the change in OH4.2
+        # https://github.com/openhab/openhab-core/pull/4175
+        expect(MyTemp.formatted_state).to eql "6"
+      end
     end
 
     it "handles format strings" do
