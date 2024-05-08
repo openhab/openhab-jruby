@@ -9,7 +9,7 @@ Feature:  logging
       """
       gemfile do
         source 'https://rubygems.org'
-        gem 'httparty'
+        gem 'nap', '1.1.0'
       end
 
       logger.info("openHAB Rules!")
