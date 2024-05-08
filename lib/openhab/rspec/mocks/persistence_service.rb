@@ -28,7 +28,7 @@ module OpenHAB
           end
         end
 
-        module HistoricState
+        module PersistedState
           def timestamp
             # PersistenceExtensions uses an anonymous class to wrap the current
             # state if that happens to be an answer. Except it calls
@@ -41,7 +41,7 @@ module OpenHAB
             super
           end
         end
-        Core::Items::Persistence::HistoricState.prepend(HistoricState)
+        Core::Items::Persistence::PersistedState.prepend(PersistedState)
 
         attr_reader :id
 
@@ -54,14 +54,18 @@ module OpenHAB
           @data = Hash.new { |h, k| h[k] = [] }
         end
 
-        def store(item, date = nil, state = nil)
-          date = nil if date.is_a?(String) # alias overload
+        def store(item, date = nil, state = nil, item_alias = nil)
+          if date.is_a?(String) # alias overload
+            item_alias = date
+            date = nil
+          end
           state ||= item.state
           date ||= ZonedDateTime.now
+          item_alias ||= item.name
 
           new_item = HistoricItem.new(date, state, item.name)
 
-          item_history = @data[item.name]
+          item_history = @data[item_alias]
 
           insert_index = item_history.bsearch_index do |i|
             i.timestamp.compare_to(date).positive?
@@ -79,6 +83,7 @@ module OpenHAB
             historic_item = item_history.delete_at(index)
             @data.delete(historic_item.name) if item_history.empty?
           end
+          true
         end
 
         def query(filter)
