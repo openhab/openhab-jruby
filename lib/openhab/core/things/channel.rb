@@ -57,6 +57,126 @@ module OpenHAB
           uid.to_s
         end
 
+        # @!attribute item_name [r]
+        # Return the name of the item this channel is linked to. If a channel is linked to more than one item,
+        # this method only returns the first item.
+        #
+        # @return [String, nil]
+        def item_name
+          item_names.first
+        end
+
+        # @!attribute item_names [r]
+        # Return the names of all of the items this channel is linked to.
+        #
+        # @return [Array<String>]
+        def item_names
+          Things::Links::Provider.registry.get_linked_item_names(uid)
+        end
+
+        # @!attribute item [r]
+        # Return the item this channel is linked to. If a channel is linked to more than one item,
+        # this method only returns the first item.
+        #
+        # @return [Items::Item, nil]
+        def item
+          items.first
+        end
+
+        # @!attribute items [r]
+        # Return all of the items this channel is linked to.
+        #
+        # @return [Array<Items::Item>]
+        def items
+          Things::Links::Provider.registry.get_linked_items(uid).map { |item| Items::Proxy.new(item) }
+        end
+
+        #
+        # @!attribute links [r]
+        # Returns all of the channel's links (items and link configurations).
+        #
+        # @return [Items::ItemChannelLinks] An array of ItemChannelLink or an empty array
+        #
+        # @example Get the configuration of the first link
+        #   things["mqtt:topic:livingroom-light"].channel["power"].links.first.configuration
+        #
+        # @example Remove all managed links
+        #   things["mqtt:topic:livingroom-light"].channel["power"].links.clear
+        #
+        # @see link
+        # @see unlink
+        #
+        def links
+          Items::ItemChannelLinks.new(uid, Things::Links::Provider.registry.get_links(uid))
+        end
+
+        #
+        # @return [ItemChannelLink, nil]
+        #
+        # @overload link
+        #   Returns the channel's link. If an channel is linked to more than one item,
+        #   this method only returns the first link.
+        #
+        #   @return [Things::ItemChannelLink, nil]
+        #
+        # @overload link(item, config = {})
+        #
+        #   Links the channel to an item.
+        #
+        #   @param [String, Items::Item] channel The channel to link to.
+        #   @param [Hash] config The configuration for the link.
+        #
+        #   @return [Things::ItemChannelLink] The created link.
+        #
+        #   @example Link a channel to an item
+        #     things["mqtt:topic:livingroom-light"].channels["power"].link(LivingRoom_Light_Power)
+        #
+        #   @example Specify a link configuration
+        #     things["mqtt:topic:outdoor-thermometer"].channels["temperature"].link(
+        #       High_Temperature_Alert,
+        #       profile: "system:hysteresis",
+        #       lower: "29 °C",
+        #       upper: "30 °C")
+        #
+        #   @see links
+        #   @see unlink
+        #
+        def link(item = nil, config = nil)
+          return Things::Links::Provider.registry.get_links(uid).first if item.nil? && config.nil?
+
+          config ||= {}
+          Core::Things::Links::Provider.create_link(item, self, config).tap do |new_link|
+            provider = Core::Things::Links::Provider.current
+            if !(current_link = provider.get(new_link.uid))
+              provider.add(new_link)
+            elsif current_link.configuration != config
+              provider.update(new_link)
+            end
+          end
+        end
+
+        #
+        # Removes a link to an item from managed link providers.
+        #
+        # @param [String, Items::Item] item The item to remove the link to.
+        #
+        # @return [Things::ItemChannelLink, nil] The removed link, if found.
+        # @raise [FrozenError] if the link is not managed by a managed link provider.
+        #
+        # @see link
+        # @see links
+        #
+        def unlink(item)
+          link_to_delete = Things::Links::Provider.create_link(item, self, {})
+          provider = Things::Links::Provider.registry.provider_for(link_to_delete.uid)
+          unless provider.is_a?(ManagedProvider)
+            raise FrozenError,
+                  "Cannot remove the link #{link_to_delete.uid} from non-managed provider #{provider.inspect}"
+          end
+
+          provider.remove(link_to_delete.uid)
+        end
+
         # @deprecated OH3.4 this whole section is not needed in OH4+. Also see Thing#config_eql?
         if Core.version < Core::V4_0
           # @!visibility private

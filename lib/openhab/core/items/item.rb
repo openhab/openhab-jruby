@@ -288,7 +288,7 @@ module OpenHAB
         end
 
         # @!attribute channel [r]
-        # Return the the channel this item is linked to. If an item is linked to more than one channel,
+        # Return the channel this item is linked to. If an item is linked to more than one channel,
         # this method only returns the first channel.
         #
         # @return [Things::Channel, nil]
@@ -320,7 +320,7 @@ module OpenHAB
         # @see unlink
         #
         def links
-          ItemChannelLinks.new(self, Things::Links::Provider.registry.get_links(name))
+          ItemChannelLinks.new(name, Things::Links::Provider.registry.get_links(name))
         end
 
         #

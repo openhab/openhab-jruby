@@ -28,7 +28,8 @@ module OpenHAB
               config = Configuration.new(config.transform_keys(&:to_s))
               channel = ChannelUID.new(channel) if channel.is_a?(String)
               channel = channel.uid if channel.is_a?(Channel)
-              org.openhab.core.thing.link.ItemChannelLink.new(item.name, channel, config)
+              item = item.name if item.is_a?(Item)
+              org.openhab.core.thing.link.ItemChannelLink.new(item, channel, config)
             end
           end
 
