@@ -992,8 +992,13 @@ module OpenHAB
         #
         # Creates a channel linked trigger
         #
+        # @param [Item, String, nil] item The item to create a trigger for. If nil, all items are matched.
+        # @param [Core::Things::Channel, Core::Things::ChannelUID, String, nil] channel
+        #   The channel to create a trigger for. If nil, all channels are matched.
         # @param [Object] attach object to be attached to the trigger
         # @return [void]
+        #
+        # @since openHAB 4.0 Support for filtering with item and channel was added
         #
         # @example
         #    rule "channel linked" do
@@ -1002,9 +1007,10 @@ module OpenHAB
         #        logger.info("#{event.link.item.name} linked to #{event.link.channel_uid}.")
         #      end
         #    end
-        def channel_linked(attach: nil)
-          @ruby_triggers << [:channel_linked]
-          event("openhab/links/*/added", types: "ItemChannelLinkAddedEvent", attach: attach)
+        def channel_linked(item: nil, channel: nil, attach: nil)
+          pattern = (item.nil? && channel.nil?) ? "*" : "#{item || "*"}-#{channel || "*"}"
+          @ruby_triggers << [:channel_linked, pattern]
+          event("openhab/links/#{pattern}/added", types: "ItemChannelLinkAddedEvent", attach: attach)
         end
 
         #
@@ -1013,8 +1019,13 @@ module OpenHAB
         # Note that the item or the thing it's linked to may no longer exist,
         # so if you try to access those objects they'll be nil.
         #
+        # @param [Item, String, nil] item The item to create a trigger for. If nil, all items are matched.
+        # @param [Core::Things::Channel, Core::Things::ChannelUID, String, nil] channel
+        #   The channel to create a trigger for. If nil, all channels are matched.
         # @param [Object] attach object to be attached to the trigger
         # @return [void]
+        #
+        # @since openHAB 4.0 Support for filtering with item and channel was added
         #
         # @example
         #    rule "channel unlinked" do
@@ -1023,9 +1034,10 @@ module OpenHAB
         #        logger.info("#{event.link.item_name} unlinked from #{event.link.channel_uid}.")
         #      end
         #    end
-        def channel_unlinked(attach: nil)
-          @ruby_triggers << [:channel_linked]
-          event("openhab/links/*/removed", types: "ItemChannelLinkRemovedEvent", attach: attach)
+        def channel_unlinked(item: nil, channel: nil, attach: nil)
+          pattern = (item.nil? && channel.nil?) ? "*" : "#{item || "*"}-#{channel || "*"}"
+          @ruby_triggers << [:channel_unlinked, pattern]
+          event("openhab/links/#{pattern}/removed", types: "ItemChannelLinkRemovedEvent", attach: attach)
         end
 
         #
@@ -1556,8 +1568,11 @@ module OpenHAB
         #
         # Creates an item added trigger
         #
+        # @param [String, nil] pattern The pattern to match items against
         # @param [Object] attach object to be attached to the trigger
         # @return [void]
+        #
+        # @since openHAB 4.0 Support for pattern filter was added
         #
         # @example
         #    rule "item added" do
@@ -1566,16 +1581,19 @@ module OpenHAB
         #        logger.info("#{event.item.name} added.")
         #      end
         #    end
-        def item_added(attach: nil)
-          @ruby_triggers << [:item_added]
-          event("openhab/items/*/added", types: "ItemAddedEvent", attach: attach)
+        def item_added(pattern = "*", attach: nil)
+          @ruby_triggers << [:item_added, pattern]
+          event("openhab/items/#{pattern}/added", types: "ItemAddedEvent", attach: attach)
         end
 
         #
         # Creates an item removed trigger
         #
+        # @param [String, nil] pattern The pattern to match items against
         # @param [Object] attach object to be attached to the trigger
         # @return [void]
+        #
+        # @since openHAB 4.0 Support for pattern filter was added
         #
         # @example
         #    rule "item removed" do
@@ -1584,14 +1602,15 @@ module OpenHAB
         #        logger.info("#{event.item.name} removed.")
         #      end
         #    end
-        def item_removed(attach: nil)
-          @ruby_triggers << [:item_removed]
-          event("openhab/items/*/removed", types: "ItemRemovedEvent", attach: attach)
+        def item_removed(pattern = "*", attach: nil)
+          @ruby_triggers << [:item_removed, pattern]
+          event("openhab/items/#{pattern}/removed", types: "ItemRemovedEvent", attach: attach)
         end
 
         #
         # Creates an item updated trigger
         #
+        # @param [String, nil] pattern The pattern to match items against
         # @param [Object] attach object to be attached to the trigger
         # @return [void]
         #
@@ -1603,16 +1622,19 @@ module OpenHAB
         #     end
         #   end
         #
-        def item_updated(attach: nil)
-          @ruby_triggers << [:item_updated]
-          event("openhab/items/*/updated", types: "ItemUpdatedEvent", attach: attach)
+        def item_updated(pattern = "*", attach: nil)
+          @ruby_triggers << [:item_updated, pattern]
+          event("openhab/items/#{pattern}/updated", types: "ItemUpdatedEvent", attach: attach)
         end
 
         #
         # Creates a thing added trigger
         #
+        # @param [String, nil] pattern The pattern to match things against
         # @param [Object] attach object to be attached to the trigger
         # @return [void]
+        #
+        # @since openHAB 4.0 Support for pattern filter was added
         #
         # @example
         #    rule "thing added" do
@@ -1621,16 +1643,19 @@ module OpenHAB
         #        logger.info("#{event.thing.uid} added.")
         #      end
         #    end
-        def thing_added(attach: nil)
-          @ruby_triggers << [:thing_added]
-          event("openhab/things/*/added", types: "ThingAddedEvent", attach: attach)
+        def thing_added(pattern = "*", attach: nil)
+          @ruby_triggers << [:thing_added, pattern]
+          event("openhab/things/#{pattern}/added", types: "ThingAddedEvent", attach: attach)
         end
 
         #
         # Creates a thing removed trigger
         #
+        # @param [String, nil] pattern The pattern to match things against
         # @param [Object] attach object to be attached to the trigger
         # @return [void]
+        #
+        # @since openHAB 4.0 Support for pattern filter was added
         #
         # @example
         #    rule "thing removed" do
@@ -1639,16 +1664,19 @@ module OpenHAB
         #        logger.info("#{event.thing.uid} removed.")
         #      end
         #    end
-        def thing_removed(attach: nil)
-          @ruby_triggers << [:thing_removed]
-          event("openhab/things/*/removed", types: "ThingRemovedEvent", attach: attach)
+        def thing_removed(pattern = "*", attach: nil)
+          @ruby_triggers << [:thing_removed, pattern]
+          event("openhab/things/#{pattern}/removed", types: "ThingRemovedEvent", attach: attach)
         end
 
         #
         # Creates a thing updated trigger
         #
+        # @param [String, nil] pattern The pattern to match things against
         # @param [Object] attach object to be attached to the trigger
         # @return [void]
+        #
+        # @since openHAB 4.0 Support for pattern filter was added
         #
         # @example
         #   rule "thing updated" do
@@ -1658,9 +1686,9 @@ module OpenHAB
         #     end
         #   end
         #
-        def thing_updated(attach: nil)
-          @ruby_triggers << [:thing_updated]
-          event("openhab/things/*/updated", types: "ThingUpdatedEvent", attach: attach)
+        def thing_updated(pattern = "*", attach: nil)
+          @ruby_triggers << [:thing_updated, pattern]
+          event("openhab/things/#{pattern}/updated", types: "ThingUpdatedEvent", attach: attach)
         end
 
         #
