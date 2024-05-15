@@ -973,9 +973,10 @@ openHAB's Persistence feature. - Documentation for openhab-scripting JRuby helpe
         
         
   
+  
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span>
       
         &lt; SimpleDelegator
       
@@ -985,6 +986,28 @@ openHAB's Persistence feature. - Documentation for openhab-scripting JRuby helpe
     
   </li>
 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
@@ -3441,7 +3464,7 @@ openHAB's Persistence feature. - Documentation for openhab-scripting JRuby helpe
 end</span></span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>HistoricState</p>
+        <p class="example_title"><div class='inline'><p>PersistedState</p>
 </div></p>
       
       <pre class="example code"><code>max = <span class="constant">Power_Usage</span>.maximum_since(<span class="constant">LocalTime</span>::<span class="constant">MIDNIGHT</span>)
@@ -3463,10 +3486,37 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span>
     
   
 </p>
+
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="HistoricState-constant" class="deprecated">HistoricState =
+          <div class="docstring">
+  <div class="discussion">
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>Use <span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span> instead</p>
+</div></div>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></dd>
+      
+    </dl>
+  
 
 
 
@@ -3487,7 +3537,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#all_states_between-instance_method" title="#all_states_between (instance method)">#<strong>all_states_between</strong>(start, finish, service = nil)  &#x21d2; Array&lt;HistoricState&gt; </a>
+      <a href="#all_states_between-instance_method" title="#all_states_between (instance method)">#<strong>all_states_between</strong>(start, finish, service = nil)  &#x21d2; Array&lt;PersistedState&gt; </a>
     
 
     
@@ -3510,7 +3560,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#all_states_since-instance_method" title="#all_states_since (instance method)">#<strong>all_states_since</strong>(timestamp, service = nil)  &#x21d2; Array&lt;HistoricState&gt; </a>
+      <a href="#all_states_since-instance_method" title="#all_states_since (instance method)">#<strong>all_states_since</strong>(timestamp, service = nil)  &#x21d2; Array&lt;PersistedState&gt; </a>
     
 
     
@@ -3525,6 +3575,29 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 
   
     <span class="summary_desc"><div class='inline'><p>Returns all the states from a point in time until now.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#all_states_until-instance_method" title="#all_states_until (instance method)">#<strong>all_states_until</strong>(timestamp, service = nil)  &#x21d2; Array&lt;PersistedState&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns all the states between now until the given time.</p>
 </div></span>
   
 </li>
@@ -3579,6 +3652,29 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#average_until-instance_method" title="#average_until (instance method)">#<strong>average_until</strong>(timestamp, service = nil)  &#x21d2; DecimalType, ... </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the average value of the item's state between now until the given time.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#changed_between%3F-instance_method" title="#changed_between? (instance method)">#<strong>changed_between?</strong>(start, finish, service = nil)  &#x21d2; true, false </a>
     
 
@@ -3625,6 +3721,29 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#changed_until%3F-instance_method" title="#changed_until? (instance method)">#<strong>changed_until?</strong>(timestamp, service = nil)  &#x21d2; true, false </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Whether the item's state has changed between now until the given time.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#count_between-instance_method" title="#count_between (instance method)">#<strong>count_between</strong>(start, finish, service = nil)  &#x21d2; Integer </a>
     
 
@@ -3639,7 +3758,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns the number of available historic data points between two points in time.</p>
+    <span class="summary_desc"><div class='inline'><p>Returns the number of available data points between two points in time.</p>
 </div></span>
   
 </li>
@@ -3687,7 +3806,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns the number of changes in historic data points between two points in time.</p>
+    <span class="summary_desc"><div class='inline'><p>Returns the number of changes in data points between two points in time.</p>
 </div></span>
   
 </li>
@@ -3713,6 +3832,54 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 
   
     <span class="summary_desc"><div class='inline'><p>Returns the number of changes in historic data points from a point in time until now.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#count_state_changes_until-instance_method" title="#count_state_changes_until (instance method)">#<strong>count_state_changes_until</strong>(timestamp, service = nil)  &#x21d2; Integer </a>
+    
+
+    
+      (also: #state_changes_until)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the number of changes in data points between now until the given time.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#count_until-instance_method" title="#count_until (instance method)">#<strong>count_until</strong>(timestamp, service = nil)  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the number of available data points between now until the given time.</p>
 </div></span>
   
 </li>
@@ -3767,6 +3934,29 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#delta_until-instance_method" title="#delta_until (instance method)">#<strong>delta_until</strong>(timestamp, service = nil)  &#x21d2; DecimalType, ... </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the difference value of the item's state between now until the given time.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#deviation_between-instance_method" title="#deviation_between (instance method)">#<strong>deviation_between</strong>(start, finish, service = nil)  &#x21d2; DecimalType, ... </a>
     
 
@@ -3813,7 +4003,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#evolution_rate-instance_method" title="#evolution_rate (instance method)">#<strong>evolution_rate</strong>(timestamp, service = nil)  &#x21d2; DecimalType, ... </a>
+      <a href="#deviation_until-instance_method" title="#deviation_until (instance method)">#<strong>deviation_until</strong>(timestamp, service = nil)  &#x21d2; DecimalType, ... </a>
     
 
     
@@ -3827,7 +4017,30 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns the evolution rate of the item's state.</p>
+    <span class="summary_desc"><div class='inline'><p>Returns the standard deviation of the item's state beetween now until the given time.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public deprecated">
+  <span class="summary_signature">
+    
+      <a href="#evolution_rate-instance_method" title="#evolution_rate (instance method)">#<strong>evolution_rate</strong>(start, finish_or_service = nil, service = nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  <span class="deprecated note title">deprecated</span>
+  
+
+  
+    <span class="summary_desc"><strong>Deprecated.</strong> <div class='inline'><p>OH 4.2 this method is deprecated in OH 4.2 and may be removed in a future version</p>
 </div></span>
   
 </li>
@@ -3836,7 +4049,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#historic_state-instance_method" title="#historic_state (instance method)">#<strong>historic_state</strong>(timestamp, service = nil)  &#x21d2; HistoricState<sup>?</sup> </a>
+      <a href="#evolution_rate_between-instance_method" title="#evolution_rate_between (instance method)">#<strong>evolution_rate_between</strong>(start, finish, service = nil)  &#x21d2; DecimalType<sup>?</sup> </a>
     
 
     
@@ -3850,7 +4063,76 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns the the item's state at the given time.</p>
+    <span class="summary_desc"><div class='inline'><p>Returns the evolution rate of the item's state between two points in time.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#evolution_rate_since-instance_method" title="#evolution_rate_since (instance method)">#<strong>evolution_rate_since</strong>(timestamp, service = nil)  &#x21d2; DecimalType<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the evolution rate of the item's state since the given time.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#evolution_rate_until-instance_method" title="#evolution_rate_until (instance method)">#<strong>evolution_rate_until</strong>(timestamp, service = nil)  &#x21d2; DecimalType<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the evolution rate of the item's state between now until the given time.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public deprecated">
+  <span class="summary_signature">
+    
+      <a href="#historic_state-instance_method" title="#historic_state (instance method)">#<strong>historic_state</strong>(timestamp, service = nil)  &#x21d2; PersistedState<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  <span class="deprecated note title">deprecated</span>
+  
+
+  
+    <span class="summary_desc"><strong>Deprecated.</strong> <div class='inline'><p>In openHAB 4.2, use <span class='object_link'><a href="#persisted_state-instance_method" title="OpenHAB::Core::Items::Persistence#persisted_state (method)">#persisted_state</a></span> instead</p>
 </div></span>
   
 </li>
@@ -3882,7 +4164,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#maximum_between-instance_method" title="#maximum_between (instance method)">#<strong>maximum_between</strong>(start, finish, service = nil)  &#x21d2; HistoricState<sup>?</sup> </a>
+      <a href="#maximum_between-instance_method" title="#maximum_between (instance method)">#<strong>maximum_between</strong>(start, finish, service = nil)  &#x21d2; PersistedState<sup>?</sup> </a>
     
 
     
@@ -3905,7 +4187,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#maximum_since-instance_method" title="#maximum_since (instance method)">#<strong>maximum_since</strong>(timestamp, service = nil)  &#x21d2; HistoricState<sup>?</sup> </a>
+      <a href="#maximum_since-instance_method" title="#maximum_since (instance method)">#<strong>maximum_since</strong>(timestamp, service = nil)  &#x21d2; PersistedState<sup>?</sup> </a>
     
 
     
@@ -3928,7 +4210,30 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#minimum_between-instance_method" title="#minimum_between (instance method)">#<strong>minimum_between</strong>(start, finish, service = nil)  &#x21d2; HistoricState<sup>?</sup> </a>
+      <a href="#maximum_until-instance_method" title="#maximum_until (instance method)">#<strong>maximum_until</strong>(timestamp, service = nil)  &#x21d2; PersistedState<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the maximum value of the item's state between now until the given time.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#minimum_between-instance_method" title="#minimum_between (instance method)">#<strong>minimum_between</strong>(start, finish, service = nil)  &#x21d2; PersistedState<sup>?</sup> </a>
     
 
     
@@ -3951,7 +4256,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#minimum_since-instance_method" title="#minimum_since (instance method)">#<strong>minimum_since</strong>(timestamp, service = nil)  &#x21d2; HistoricState<sup>?</sup> </a>
+      <a href="#minimum_since-instance_method" title="#minimum_since (instance method)">#<strong>minimum_since</strong>(timestamp, service = nil)  &#x21d2; PersistedState<sup>?</sup> </a>
     
 
     
@@ -3974,7 +4279,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#persist-instance_method" title="#persist (instance method)">#<strong>persist</strong>(service = nil)  &#x21d2; void </a>
+      <a href="#minimum_until-instance_method" title="#minimum_until (instance method)">#<strong>minimum_until</strong>(timestamp, service = nil)  &#x21d2; PersistedState<sup>?</sup> </a>
     
 
     
@@ -3988,7 +4293,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Persists the state of the item.</p>
+    <span class="summary_desc"><div class='inline'><p>Returns the minimum value of the item's state between now until the given time.</p>
 </div></span>
   
 </li>
@@ -3997,7 +4302,99 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#previous_state-instance_method" title="#previous_state (instance method)">#<strong>previous_state</strong>(service = nil, skip_equal: false)  &#x21d2; HistoricState<sup>?</sup> </a>
+      <a href="#next_state-instance_method" title="#next_state (instance method)">#<strong>next_state</strong>(service = nil, skip_equal: false)  &#x21d2; PersistedState<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Return the next state of the item.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#next_update-instance_method" title="#next_update (instance method)">#<strong>next_update</strong>(service = nil)  &#x21d2; ZonedDateTime<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the first future update time of the item.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#persist-instance_method" title="#persist (instance method)">#<strong>persist</strong>(*args)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Persist item state to the persistence service.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#persisted_state-instance_method" title="#persisted_state (instance method)">#<strong>persisted_state</strong>(timestamp, service = nil)  &#x21d2; PersistedState<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the the item's state at the given time.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#previous_state-instance_method" title="#previous_state (instance method)">#<strong>previous_state</strong>(service = nil, skip_equal: false)  &#x21d2; PersistedState<sup>?</sup> </a>
     
 
     
@@ -4012,6 +4409,75 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 
   
     <span class="summary_desc"><div class='inline'><p>Return the previous state of the item.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#remove_all_states_between-instance_method" title="#remove_all_states_between (instance method)">#<strong>remove_all_states_between</strong>(start, finish, service = nil)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Removes persisted data points between two points in time.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#remove_all_states_since-instance_method" title="#remove_all_states_since (instance method)">#<strong>remove_all_states_since</strong>(timestamp, service = nil)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Removes persisted data points since a certain point in time.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#remove_all_states_until-instance_method" title="#remove_all_states_until (instance method)">#<strong>remove_all_states_until</strong>(timestamp, service = nil)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Removes persisted data points from now until the given point in time.</p>
 </div></span>
   
 </li>
@@ -4066,6 +4532,29 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#sum_until-instance_method" title="#sum_until (instance method)">#<strong>sum_until</strong>(timestamp, service = nil)  &#x21d2; DecimalType, ... </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the sum of the item's state between now until the given time.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#updated_between%3F-instance_method" title="#updated_between? (instance method)">#<strong>updated_between?</strong>(start, finish, service = nil)  &#x21d2; true, false </a>
     
 
@@ -4104,6 +4593,29 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 
   
     <span class="summary_desc"><div class='inline'><p>Whether the item's state has been updated since the given time.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#updated_until%3F-instance_method" title="#updated_until? (instance method)">#<strong>updated_until?</strong>(timestamp, service = nil)  &#x21d2; true, false </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Whether the item's state will be updated between now until the given time.</p>
 </div></span>
   
 </li>
@@ -4155,6 +4667,29 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#variance_until-instance_method" title="#variance_until (instance method)">#<strong>variance_until</strong>(timestamp, service = nil)  &#x21d2; DecimalType, ... </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the variance of the item's state between now until the given time.</p>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -4168,7 +4703,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
       <div class="method_details first">
   <h3 class="signature first" id="all_states_between-instance_method">
   
-    #<strong>all_states_between</strong>(start, finish, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span>&gt;</tt> 
+    #<strong>all_states_between</strong>(start, finish, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span>&gt;</tt> 
   
 
   
@@ -4240,12 +4775,12 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span>&gt;</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span>&gt;</tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><p>An array of <span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span> persisted for this item.</p>
+        <div class='inline'><p>An array of <span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span> persisted for this item.</p>
 </div>
       
     </li>
@@ -4273,22 +4808,12 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
       <pre class="lines">
 
 
-298
-299
-300
-301
-302
-303</pre>
+</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 298</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 391</span>
 
-<span class="symbol"><span class="delimiter">%i[</span><span class="content">persist last_update</span><span class="delimiter">]</span></span>.each <span class="keyword">do</span> |method|
-  define_method(method) <span class="keyword">do</span> |service = <span class="predefined-constant">nil</span>|
-    service ||= persistence_service
-    <span class="constant">Actions</span>::<span class="constant">PersistenceExtensions</span>.public_send(method, <span class="predefined-constant">self</span>, service&amp;.to_s)
-  <span class="keyword">end</span>
-<span class="keyword">end</span></pre>
+</pre>
     </td>
   </tr>
 </table>
@@ -4297,7 +4822,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
       <div class="method_details ">
   <h3 class="signature " id="all_states_since-instance_method">
   
-    #<strong>all_states_since</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span>&gt;</tt> 
+    #<strong>all_states_since</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span>&gt;</tt> 
   
 
   
@@ -4354,12 +4879,12 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span>&gt;</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span>&gt;</tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><p>An array of <span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span> persisted for this item.</p>
+        <div class='inline'><p>An array of <span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span> persisted for this item.</p>
 </div>
       
     </li>
@@ -4390,7 +4915,111 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 283</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 377</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="all_states_until-instance_method">
+  
+    #<strong>all_states_until</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span>&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns all the states between now until the given time.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>timestamp</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time until which to search</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>An array of <span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span> persisted for this item.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 384</span>
 
 </pre>
     </td>
@@ -4479,7 +5108,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
       
         &mdash;
         <div class='inline'><p>The average value between <code>start</code> and <code>finish</code>,
-or nil if no previous state could be found.</p>
+or nil if no states could be found.</p>
 </div>
       
     </li>
@@ -4495,7 +5124,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 89</span>
 
 </pre>
     </td>
@@ -4569,7 +5198,7 @@ or nil if no previous state could be found.</p>
       
         &mdash;
         <div class='inline'><p>The average value since <code>timestamp</code>,
-or nil if no previous state could be found.</p>
+or nil if no previous states could be found.</p>
 </div>
       
     </li>
@@ -4585,7 +5214,112 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 74</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="average_until-instance_method">
+  
+    #<strong>average_until</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt>, ... 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the average value of the item's state between now until the given time</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>timestamp</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time until which to search</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt>, <tt><span class='object_link'><a href="../Types/QuantityType.html" title="OpenHAB::Core::Types::QuantityType (class)">QuantityType</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The average value until <code>timestamp</code>,
+or nil if no future states could be found.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 81</span>
 
 </pre>
     </td>
@@ -4689,7 +5423,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 182</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 202</span>
 
 </pre>
     </td>
@@ -4778,7 +5512,111 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 189</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="changed_until?-instance_method">
+  
+    #<strong>changed_until?</strong>(timestamp, service = nil)  &#x21d2; <tt>true</tt>, <tt>false</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Whether the item's state has changed between now until the given time</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>timestamp</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time until which to search</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>True if the item's state has changed until the given <code>timestamp</code>, False otherwise.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 195</span>
 
 </pre>
     </td>
@@ -4797,7 +5635,7 @@ or nil if no previous state could be found.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns the number of available historic data points between two points in time.</p>
+    <p>Returns the number of available data points between two points in time.</p>
 
 
   </div>
@@ -4882,7 +5720,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 263</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 350</span>
 
 </pre>
     </td>
@@ -4971,7 +5809,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 257</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 337</span>
 
 </pre>
     </td>
@@ -4994,7 +5832,7 @@ or nil if no previous state could be found.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns the number of changes in historic data points between two points in time.</p>
+    <p>Returns the number of changes in data points between two points in time.</p>
 
 
   </div>
@@ -5079,7 +5917,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 276</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 370</span>
 
 </pre>
     </td>
@@ -5172,7 +6010,219 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 270</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 357</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="count_state_changes_until-instance_method">
+  
+    #<strong>count_state_changes_until</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../../../Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='state_changes_until-instance_method'>state_changes_until</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the number of changes in data points between now until the given time.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>timestamp</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time until which to search</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The number of values persisted for this item.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 363</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="count_until-instance_method">
+  
+    #<strong>count_until</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../../../Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the number of available data points between now until the given time.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>timestamp</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time until which to search</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The number of values persisted for this item.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 343</span>
 
 </pre>
     </td>
@@ -5261,7 +6311,7 @@ or nil if no previous state could be found.</p>
       
         &mdash;
         <div class='inline'><p>The difference value between <code>start</code> and <code>finish</code>,
-or nil if no previous state could be found.</p>
+or nil if no states could be found.</p>
 </div>
       
     </li>
@@ -5277,7 +6327,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 112</span>
 
 </pre>
     </td>
@@ -5351,7 +6401,7 @@ or nil if no previous state could be found.</p>
       
         &mdash;
         <div class='inline'><p>The difference value since <code>timestamp</code>,
-or nil if no previous state could be found.</p>
+or nil if no previous states could be found.</p>
 </div>
       
     </li>
@@ -5367,7 +6417,112 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 97</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="delta_until-instance_method">
+  
+    #<strong>delta_until</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt>, ... 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the difference value of the item's state between now until the given time</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>timestamp</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time until which to search</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt>, <tt><span class='object_link'><a href="../Types/QuantityType.html" title="OpenHAB::Core::Types::QuantityType (class)">QuantityType</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The difference value until <code>timestamp</code>,
+or nil if no future states could be found.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 104</span>
 
 </pre>
     </td>
@@ -5456,7 +6611,7 @@ or nil if no previous state could be found.</p>
       
         &mdash;
         <div class='inline'><p>The standard deviation between <code>start</code> and <code>finish</code>,
-or nil if no previous state could be found.</p>
+or nil if no states could be found.</p>
 </div>
       
     </li>
@@ -5472,7 +6627,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 138</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 135</span>
 
 </pre>
     </td>
@@ -5546,7 +6701,7 @@ or nil if no previous state could be found.</p>
       
         &mdash;
         <div class='inline'><p>The standard deviation since <code>timestamp</code>,
-or nil if no previous state could be found.</p>
+or nil if no previous states could be found.</p>
 </div>
       
     </li>
@@ -5562,7 +6717,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 131</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 120</span>
 
 </pre>
     </td>
@@ -5571,13 +6726,9 @@ or nil if no previous state could be found.</p>
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="evolution_rate-instance_method">
+  <h3 class="signature " id="deviation_until-instance_method">
   
-    
-      <span class="overload">#<strong>evolution_rate</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt>, ... </span>
-    
-      <span class="overload">#<strong>evolution_rate</strong>(start, finish, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt>, ... </span>
-    
+    #<strong>deviation_until</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt>, ... 
   
 
   
@@ -5585,22 +6736,7 @@ or nil if no previous state could be found.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns the evolution rate of the item's state</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-  <p class="tag_title">Overloads:</p>
-  <ul class="overload">
-    
-      
-      <li class="overload_item">
-        <span class="signature">#<strong>evolution_rate</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt>, ... </span>
-        <div class="docstring">
-  <div class="discussion">
-    <p>Returns the evolution rate of the item's state since the given time</p>
+    <p>Returns the standard deviation of the item's state beetween now until the given time</p>
 
 
   </div>
@@ -5619,7 +6755,7 @@ or nil if no previous state could be found.</p>
       
       
         &mdash;
-        <div class='inline'><p>The point in time from which to search</p>
+        <div class='inline'><p>The point in time until which to search</p>
 </div>
       
     </li>
@@ -5654,21 +6790,93 @@ or nil if no previous state could be found.</p>
       
       
         &mdash;
-        <div class='inline'><p>The evolution rate since <code>timestamp</code>,
-or nil if no previous state could be found.</p>
+        <div class='inline'><p>The standard deviation until <code>timestamp</code>,
+or nil if no future states could be found.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
 </div>
       
     </li>
   
 </ul>
 
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 127</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
 </div>
-      </li>
     
-      
-      <li class="overload_item">
-        <span class="signature">#<strong>evolution_rate</strong>(start, finish, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt>, ... </span>
-        <div class="docstring">
+      <div class="method_details ">
+  <h3 class="signature " id="evolution_rate-instance_method">
+  
+    #<strong>evolution_rate</strong>(start, finish_or_service = nil, service = nil)  &#x21d2; <tt><span class='object_link'>Object</span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>OH 4.2 this method is deprecated in OH 4.2 and may be removed in a future version</p>
+</div></div>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 209</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="evolution_rate_between-instance_method">
+  
+    #<strong>evolution_rate_between</strong>(start, finish, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns the evolution rate of the item's state between two points in time</p>
 
@@ -5734,37 +6942,28 @@ or nil if no previous state could be found.</p>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt>, <tt><span class='object_link'><a href="../Types/QuantityType.html" title="OpenHAB::Core::Types::QuantityType (class)">QuantityType</a></span></tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt>, <tt>nil</tt>)</span>
       
       
       
         &mdash;
         <div class='inline'><p>The evolution rate between <code>start</code> and <code>finish</code>,
-or nil if no previous state could be found.</p>
+or nil if no states could be found.</p>
 </div>
       
     </li>
   
 </ul>
-
-</div>
-      </li>
-    
-  </ul>
-
-<p class="tag_title">Returns:</p>
-<ul class="return">
+<p class="tag_title">Since:</p>
+<ul class="since">
   
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt>, <tt><span class='object_link'><a href="../Types/QuantityType.html" title="OpenHAB::Core::Types::QuantityType (class)">QuantityType</a></span></tt>, <tt>nil</tt>)</span>
       
       
-      
-        &mdash;
-        <div class='inline'><p>The evolution rate since <code>timestamp</code>,
-or nil if no previous state could be found.</p>
+        
+        <div class='inline'><p>openHAB 4.2</p>
 </div>
       
     </li>
@@ -5780,7 +6979,217 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 189</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 246</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="evolution_rate_since-instance_method">
+  
+    #<strong>evolution_rate_since</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the evolution rate of the item's state since the given time</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>timestamp</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time from which to search</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The evolution rate since <code>timestamp</code>,
+or nil if no previous states could be found.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 230</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="evolution_rate_until-instance_method">
+  
+    #<strong>evolution_rate_until</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the evolution rate of the item's state between now until the given time</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>timestamp</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time until which to search</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The evolution rate until <code>timestamp</code>,
+or nil if no future states could be found.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 238</span>
 
 </pre>
     </td>
@@ -5791,7 +7200,7 @@ or nil if no previous state could be found.</p>
       <div class="method_details ">
   <h3 class="signature " id="historic_state-instance_method">
   
-    #<strong>historic_state</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span></tt><sup>?</sup> 
+    #<strong>historic_state</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt><sup>?</sup> 
   
 
   
@@ -5799,7 +7208,9 @@ or nil if no previous state could be found.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns the the item's state at the given time</p>
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>In openHAB 4.2, use <span class='object_link'><a href="#persisted_state-instance_method" title="OpenHAB::Core::Items::Persistence#persisted_state (method)">#persisted_state</a></span> instead</p>
+</div></div>
+<p>Returns the the item's state at the given time</p>
 
 
   </div>
@@ -5848,7 +7259,7 @@ or nil if no previous state could be found.</p>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span></tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt>, <tt>nil</tt>)</span>
       
       
       
@@ -5870,7 +7281,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 207</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 255</span>
 
 </pre>
     </td>
@@ -5944,7 +7355,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 499</span>
 
 </pre>
     </td>
@@ -5955,7 +7366,7 @@ or nil if no previous state could be found.</p>
       <div class="method_details ">
   <h3 class="signature " id="maximum_between-instance_method">
   
-    #<strong>maximum_between</strong>(start, finish, service = nil)  &#x21d2; <tt><span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span></tt><sup>?</sup> 
+    #<strong>maximum_between</strong>(start, finish, service = nil)  &#x21d2; <tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt><sup>?</sup> 
   
 
   
@@ -6027,13 +7438,13 @@ or nil if no previous state could be found.</p>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span></tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt>, <tt>nil</tt>)</span>
       
       
       
         &mdash;
         <div class='inline'><p>The maximum value between <code>start</code> and <code>finish</code>,
-or nil if no previous state could be found.</p>
+or nil if no states could be found.</p>
 </div>
       
     </li>
@@ -6049,7 +7460,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 286</span>
 
 </pre>
     </td>
@@ -6060,7 +7471,7 @@ or nil if no previous state could be found.</p>
       <div class="method_details ">
   <h3 class="signature " id="maximum_since-instance_method">
   
-    #<strong>maximum_since</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span></tt><sup>?</sup> 
+    #<strong>maximum_since</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt><sup>?</sup> 
   
 
   
@@ -6117,13 +7528,13 @@ or nil if no previous state could be found.</p>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span></tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt>, <tt>nil</tt>)</span>
       
       
       
         &mdash;
         <div class='inline'><p>The maximum value since <code>timestamp</code>,
-or nil if no previous state could be found.</p>
+or nil if no previous states could be found.</p>
 </div>
       
     </li>
@@ -6139,7 +7550,112 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 214</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 271</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="maximum_until-instance_method">
+  
+    #<strong>maximum_until</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the maximum value of the item's state between now until the given time</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>timestamp</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time until which to search</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The maximum value until <code>timestamp</code>,
+or nil if no future states could be found.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 278</span>
 
 </pre>
     </td>
@@ -6150,7 +7666,7 @@ or nil if no previous state could be found.</p>
       <div class="method_details ">
   <h3 class="signature " id="minimum_between-instance_method">
   
-    #<strong>minimum_between</strong>(start, finish, service = nil)  &#x21d2; <tt><span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span></tt><sup>?</sup> 
+    #<strong>minimum_between</strong>(start, finish, service = nil)  &#x21d2; <tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt><sup>?</sup> 
   
 
   
@@ -6222,13 +7738,13 @@ or nil if no previous state could be found.</p>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span></tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt>, <tt>nil</tt>)</span>
       
       
       
         &mdash;
         <div class='inline'><p>The minimum value between <code>start</code> and <code>finish</code>,
-or nil if no previous state could be found.</p>
+or nil if no states could be found.</p>
 </div>
       
     </li>
@@ -6244,7 +7760,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 236</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 309</span>
 
 </pre>
     </td>
@@ -6255,7 +7771,7 @@ or nil if no previous state could be found.</p>
       <div class="method_details ">
   <h3 class="signature " id="minimum_since-instance_method">
   
-    #<strong>minimum_since</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span></tt><sup>?</sup> 
+    #<strong>minimum_since</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt><sup>?</sup> 
   
 
   
@@ -6312,13 +7828,13 @@ or nil if no previous state could be found.</p>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span></tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt>, <tt>nil</tt>)</span>
       
       
       
         &mdash;
         <div class='inline'><p>The minimum value since <code>timestamp</code>,
-or nil if no previous state could be found.</p>
+or nil if no previous states could be found.</p>
 </div>
       
     </li>
@@ -6334,7 +7850,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 229</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 294</span>
 
 </pre>
     </td>
@@ -6343,9 +7859,9 @@ or nil if no previous state could be found.</p>
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="persist-instance_method">
+  <h3 class="signature " id="minimum_until-instance_method">
   
-    #<strong>persist</strong>(service = nil)  &#x21d2; <tt>void</tt> 
+    #<strong>minimum_until</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt><sup>?</sup> 
   
 
   
@@ -6353,7 +7869,396 @@ or nil if no previous state could be found.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Persists the state of the item</p>
+    <p>Returns the minimum value of the item's state between now until the given time</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>timestamp</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time until which to search</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The minimum value until <code>timestamp</code>,
+or nil if no future states could be found.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 301</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="next_state-instance_method">
+  
+    #<strong>next_state</strong>(service = nil, skip_equal: false)  &#x21d2; <tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Return the next state of the item</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>skip_equal</span>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>if true, skips equal state values and
+searches the first state not equal the current state</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>the name of the PersistenceService to use</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the previous state or nil if no previous state could be found,
+or if the default persistence service is not configured or
+does not refer to a valid service</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 551</span>
+
+<span class="symbol"><span class="delimiter">%i[</span><span class="content">previous_state next_state</span><span class="delimiter">]</span></span>.each <span class="keyword">do</span> |method|
+  <span class="comment"># @deprecated OH 4.1 remove this guard when dropping OH 4.1</span>
+  <span class="keyword">next</span> <span class="keyword">unless</span> <span class="constant">Actions</span>::<span class="constant">PersistenceExtensions</span>.respond_to?(method)
+
+  class_eval <span class="string"><span class="delimiter">&lt;&lt;~RUBY</span></span>, <span class="predefined-constant">__FILE__</span>, <span class="predefined-constant">__LINE__</span> + <span class="integer">1</span><span class="string"><span class="content">
+    def </span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="content">(service = nil, skip_equal: false)       # def previous_state(service = nil, skip_equal: false)
+      service ||= persistence_service                     #   service ||= persistence_service
+      result = Actions::PersistenceExtensions.</span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="content">(  #   result = Actions::PersistenceExtensions.previous_state(
+        self,                                             #     self,
+        skip_equal,                                       #     skip_equal,
+        service&amp;.to_s                                     #     service&amp;.to_s
+      )                                                   #   )
+      wrap_result(result, quantify: true)                 #   wrap_result(result, quantify: true)
+    end                                                   # end</span><span class="delimiter">
+  RUBY</span></span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="next_update-instance_method">
+  
+    #<strong>next_update</strong>(service = nil)  &#x21d2; <tt><span class='object_link'><a href="../../CoreExt/Java/ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the first future update time of the item.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../CoreExt/Java/ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The timestamp of the next update</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#last_update-instance_method" title="OpenHAB::Core::Items::Persistence#last_update (method)">#last_update</a></span></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 511</span>
+
+<span class="symbol"><span class="delimiter">%i[</span><span class="content">last_update next_update</span><span class="delimiter">]</span></span>.each <span class="keyword">do</span> |method|
+  <span class="comment"># @deprecated OH 4.1 remove this guard when dropping OH 4.1</span>
+  <span class="keyword">next</span> <span class="keyword">unless</span> <span class="constant">Actions</span>::<span class="constant">PersistenceExtensions</span>.respond_to?(method)
+
+  class_eval <span class="string"><span class="delimiter">&lt;&lt;~RUBY</span></span>, <span class="predefined-constant">__FILE__</span>, <span class="predefined-constant">__LINE__</span> + <span class="integer">1</span><span class="string"><span class="content">
+    def </span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="content">(service = nil)                            # def last_update(service = nil)
+      service ||= persistence_service                       #   service ||= persistence_service
+      result = Actions::PersistenceExtensions.</span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="content">(    #   result = Actions::PersistenceExtensions.last_update(
+        self,                                               #     self,
+        service&amp;.to_s                                       #     service&amp;.to_s
+      )                                                     #   )
+      wrap_result(result)                                   #   wrap_result(result)
+    end                                                     # end</span><span class="delimiter">
+  RUBY</span></span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="persist-instance_method">
+  
+    
+      <span class="overload">#<strong>persist</strong>(service = nil)  &#x21d2; <tt>void</tt> </span>
+    
+      <span class="overload">#<strong>persist</strong>(timestamp, state, service = nil)  &#x21d2; <tt>void</tt> </span>
+    
+      <span class="overload">#<strong>persist</strong>(time_series, service = nil)  &#x21d2; <tt>void</tt> </span>
+    
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Persist item state to the persistence service</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <p class="tag_title">Overloads:</p>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">#<strong>persist</strong>(service = nil)  &#x21d2; <tt>void</tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Persists the current state of the item</p>
 
 
   </div>
@@ -6382,6 +8287,372 @@ or nil if no previous state could be found.</p>
 </ul>
 
 
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">#<strong>persist</strong>(timestamp, state, service = nil)  &#x21d2; <tt>void</tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Persists a state at a given timestamp</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>timestamp</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The timestamp for the given state to be stored</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>state</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Types/State.html" title="OpenHAB::Core::Types::State (module)">Types::State</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The state to be stored</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">#<strong>persist</strong>(time_series, service = nil)  &#x21d2; <tt>void</tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Persists a time series</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>time_series</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Types/TimeSeries.html" title="OpenHAB::Core::Types::TimeSeries (class)">Types::TimeSeries</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The time series of states to be stored</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+  </ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 444</span>
+
+<span class="keyword">def</span> <span class="function">persist</span>(*args)
+  <span class="comment"># @deprecated OH 4.1 this if block content can be removed when dropping OH 4.1 support</span>
+  <span class="keyword">if</span> <span class="constant">Core</span>.version &lt; <span class="constant">Core</span>::<span class="constant">V4_2</span>
+    raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">wrong number of arguments (given </span><span class="inline"><span class="inline-delimiter">#{</span>args.size<span class="inline-delimiter">}</span></span><span class="content">, expected 0..1)</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> args.size &gt; <span class="integer">1</span>
+
+    service = args.last || persistence_service
+    <span class="constant">Actions</span>::<span class="constant">PersistenceExtensions</span>.persist(<span class="predefined-constant">self</span>, service&amp;.to_s)
+    <span class="keyword">return</span>
+  <span class="keyword">end</span>
+
+  first_arg = args.first
+  <span class="keyword">if</span> first_arg.is_a?(<span class="constant">TimeSeries</span>)
+    <span class="keyword">if</span> args.size &gt; <span class="integer">2</span>
+      raise <span class="constant">ArgumentError</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">wrong number of arguments to persist a time series (given </span><span class="inline"><span class="inline-delimiter">#{</span>args.size<span class="inline-delimiter">}</span></span><span class="content">, expected 1..2)</span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
+
+    service = args[<span class="integer">1</span>] || persistence_service
+    <span class="constant">Actions</span>::<span class="constant">PersistenceExtensions</span>.java_send <span class="symbol">:persist</span>,
+                                             [<span class="constant">Item</span>.java_class, <span class="constant">Types</span>::<span class="constant">TimeSeries</span>.java_class, java.lang.String],
+                                             <span class="predefined-constant">self</span>,
+                                             first_arg,
+                                             service&amp;.to_s
+  <span class="keyword">elsif</span> first_arg.respond_to?(<span class="symbol">:to_zoned_date_time</span>)
+    <span class="keyword">unless</span> args.size.between?(<span class="integer">2</span>, <span class="integer">3</span>)
+      raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">wrong number of arguments to persist a state (given </span><span class="inline"><span class="inline-delimiter">#{</span>args.size<span class="inline-delimiter">}</span></span><span class="content">, expected 2..3)</span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
+
+    timestamp = first_arg.to_zoned_date_time
+    state = format_update(args[<span class="integer">1</span>])
+    service = args[<span class="integer">2</span>] || persistence_service
+    <span class="constant">Actions</span>::<span class="constant">PersistenceExtensions</span>.java_send <span class="symbol">:persist</span>,
+                                             [<span class="constant">Item</span>.java_class,
+                                              <span class="constant">ZonedDateTime</span>.java_class,
+                                              org.openhab.core.types.State,
+                                              java.lang.String],
+                                             <span class="predefined-constant">self</span>,
+                                             timestamp,
+                                             state,
+                                             service&amp;.to_s
+
+  <span class="keyword">else</span>
+    <span class="keyword">if</span> args.size &gt; <span class="integer">1</span>
+      raise <span class="constant">ArgumentError</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">wrong number of arguments to persist the current state (given </span><span class="inline"><span class="inline-delimiter">#{</span>args.size<span class="inline-delimiter">}</span></span><span class="content">, expected 0..1)</span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
+    service = first_arg || persistence_service
+    <span class="constant">Actions</span>::<span class="constant">PersistenceExtensions</span>.java_send <span class="symbol">:persist</span>,
+                                             [<span class="constant">Item</span>.java_class, java.lang.String],
+                                             <span class="predefined-constant">self</span>,
+                                             service&amp;.to_s
+
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="persisted_state-instance_method">
+  
+    #<strong>persisted_state</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the the item's state at the given time</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>timestamp</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time at which to search</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The item's state at <code>timestamp</code>,
+or nil if no state could be found.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 </div><table class="source_code">
   <tr>
     <td>
@@ -6391,7 +8662,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 263</span>
 
 </pre>
     </td>
@@ -6402,7 +8673,7 @@ or nil if no previous state could be found.</p>
       <div class="method_details ">
   <h3 class="signature " id="previous_state-instance_method">
   
-    #<strong>previous_state</strong>(service = nil, skip_equal: false)  &#x21d2; <tt><span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span></tt><sup>?</sup> 
+    #<strong>previous_state</strong>(service = nil, skip_equal: false)  &#x21d2; <tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt><sup>?</sup> 
   
 
   
@@ -6462,7 +8733,7 @@ searches the first state not equal the current state</p>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="Persistence/HistoricState.html" title="OpenHAB::Core::Items::Persistence::HistoricState (class)">HistoricState</a></span></tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt>, <tt>nil</tt>)</span>
       
       
       
@@ -6482,20 +8753,288 @@ does not refer to a valid service</p>
       <pre class="lines">
 
 
-316
-317
-318
-319
-320</pre>
+</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 316</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 527</span>
 
-<span class="keyword">def</span> <span class="function">previous_state</span>(service = <span class="predefined-constant">nil</span>, <span class="key">skip_equal</span>: <span class="predefined-constant">false</span>)
-  service ||= persistence_service
-  result = <span class="constant">Actions</span>::<span class="constant">PersistenceExtensions</span>.previous_state(<span class="predefined-constant">self</span>, skip_equal, service&amp;.to_s)
-  <span class="constant">HistoricState</span>.new(quantify(result.state), result) <span class="keyword">if</span> result
-<span class="keyword">end</span></pre>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="remove_all_states_between-instance_method">
+  
+    #<strong>remove_all_states_between</strong>(start, finish, service = nil)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Removes persisted data points between two points in time.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>start</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time from which to remove</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>finish</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time to which to remove</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 413</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="remove_all_states_since-instance_method">
+  
+    #<strong>remove_all_states_since</strong>(timestamp, service = nil)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Removes persisted data points since a certain point in time.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>timestamp</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time from which to remove</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 399</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="remove_all_states_until-instance_method">
+  
+    #<strong>remove_all_states_until</strong>(timestamp, service = nil)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Removes persisted data points from now until the given point in time.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>timestamp</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time until which to remove</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 406</span>
+
+</pre>
     </td>
   </tr>
 </table>
@@ -6582,7 +9121,7 @@ does not refer to a valid service</p>
       
         &mdash;
         <div class='inline'><p>The sum between <code>start</code> and <code>finish</code>,
-or nil if no previous state could be found.</p>
+or nil if no states could be found.</p>
 </div>
       
     </li>
@@ -6598,7 +9137,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 158</span>
 
 </pre>
     </td>
@@ -6672,7 +9211,7 @@ or nil if no previous state could be found.</p>
       
         &mdash;
         <div class='inline'><p>The sum since <code>timestamp</code>,
-or nil if no previous state could be found.</p>
+or nil if no previous states could be found.</p>
 </div>
       
     </li>
@@ -6688,7 +9227,112 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 146</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 143</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="sum_until-instance_method">
+  
+    #<strong>sum_until</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt>, ... 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the sum of the item's state between now until the given time</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>timestamp</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time until which to search</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt>, <tt><span class='object_link'><a href="../Types/QuantityType.html" title="OpenHAB::Core::Types::QuantityType (class)">QuantityType</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The sum until <code>timestamp</code>,
+or nil if no future states could be found.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 150</span>
 
 </pre>
     </td>
@@ -6792,7 +9436,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 250</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 330</span>
 
 </pre>
     </td>
@@ -6881,7 +9525,111 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 244</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 317</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="updated_until?-instance_method">
+  
+    #<strong>updated_until?</strong>(timestamp, service = nil)  &#x21d2; <tt>true</tt>, <tt>false</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Whether the item's state will be updated between now until the given time</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>timestamp</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time until which to search</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>True if the item's state will be updated until the given <code>timestamp</code>, False otherwise.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 323</span>
 
 </pre>
     </td>
@@ -6970,7 +9718,7 @@ or nil if no previous state could be found.</p>
       
         &mdash;
         <div class='inline'><p>The variance between <code>start</code> and <code>finish</code>,
-or nil if no previous state could be found.</p>
+or nil if no states could be found.</p>
 </div>
       
     </li>
@@ -6986,7 +9734,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 168</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 181</span>
 
 </pre>
     </td>
@@ -7060,7 +9808,7 @@ or nil if no previous state could be found.</p>
       
         &mdash;
         <div class='inline'><p>The variance since <code>timestamp</code>,
-or nil if no previous state could be found.</p>
+or nil if no previous states could be found.</p>
 </div>
       
     </li>
@@ -7076,7 +9824,112 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 161</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 166</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="variance_until-instance_method">
+  
+    #<strong>variance_until</strong>(timestamp, service = nil)  &#x21d2; <tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt>, ... 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the variance of the item's state between now until the given time</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>timestamp</span>
+      
+      
+        <span class='type'>(<tt>#to_zoned_date_time</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The point in time until which to search</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Types/DecimalType.html" title="OpenHAB::Core::Types::DecimalType (class)">DecimalType</a></span></tt>, <tt><span class='object_link'><a href="../Types/QuantityType.html" title="OpenHAB::Core::Types::QuantityType (class)">QuantityType</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The variance until <code>timestamp</code>,
+or nil if no future states could be found.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 173</span>
 
 </pre>
     </td>
@@ -7089,7 +9942,7 @@ or nil if no previous state could be found.</p>
 </div>
 
         <footer>
-  Generated on Tue May 14 03:45:25 2024 by
+  Generated on Wed May 15 16:08:37 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
