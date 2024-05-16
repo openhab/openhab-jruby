@@ -1,5 +1,15 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.19.0](https://github.com/openhab/openhab-jruby/tree/v5.19.0) (2024-05-16)
+
+### Features
+
+- Support filtered item|thing_added|removed and channel_linked|unlinked triggers by [@jimtng](https://github.com/jimtng) in [#266](https://github.com/openhab/openhab-jruby/pull/266)
+- Support changes in OH4.2 persistence by [@jimtng](https://github.com/jimtng) in [#244](https://github.com/openhab/openhab-jruby/pull/244)
+- Add link management methods to channel by [@ccutrer](https://github.com/ccutrer) in [#268](https://github.com/openhab/openhab-jruby/pull/268)
+
+**Full Changelog**: [v5.18.1...v5.19.0](https://github.com/openhab/openhab-jruby/compare/v5.18.1...v5.19.0)
+
 ## [v5.18.1](https://github.com/openhab/openhab-jruby/tree/v5.18.1) (2024-04-06)
 
 ### Bug Fixes
