@@ -3544,14 +3544,22 @@ Adds methods for clearing item's links to channels. - Documentation for openhab-
 37
 38
 39
-40</pre>
+40
+41
+42
+43
+44</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item_channel_links.rb', line 28</span>
 
 <span class="keyword">def</span> <span class="function">clear</span>
   <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.all.each <span class="keyword">do</span> |link|
-    <span class="keyword">next</span> <span class="keyword">unless</span> link.item_name == <span class="instance-variable">@item</span>.name
+    <span class="keyword">if</span> <span class="instance-variable">@owner</span>.is_a?(<span class="constant">String</span>)
+      <span class="keyword">next</span> <span class="keyword">unless</span> link.item_name == <span class="instance-variable">@owner</span>
+    <span class="keyword">else</span>
+      <span class="keyword">next</span> <span class="keyword">unless</span> link.linked_uid == <span class="instance-variable">@owner</span>
+    <span class="keyword">end</span>
 
     provider = <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.provider_for(link.uid)
     <span class="keyword">if</span> provider.is_a?(<span class="constant">ManagedProvider</span>)
@@ -3572,7 +3580,7 @@ Adds methods for clearing item's links to channels. - Documentation for openhab-
 </div>
 
         <footer>
-  Generated on Wed May 15 22:10:36 2024 by
+  Generated on Thu May 16 16:10:03 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

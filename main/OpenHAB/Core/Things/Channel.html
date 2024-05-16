@@ -3504,7 +3504,7 @@ Therefore <span class='object_link'><a href="../Items/Item.html" title="OpenHAB:
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#item-instance_method" title="#item (instance method)">#<strong>item</strong>  &#x21d2; Item<sup>?</sup> </a>
+      <a href="#item-instance_method" title="#item (instance method)">#<strong>item</strong>  &#x21d2; Items::Item<sup>?</sup> </a>
     
 
     
@@ -3523,7 +3523,7 @@ Therefore <span class='object_link'><a href="../Items/Item.html" title="OpenHAB:
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Return the item if this channel is linked with an item.</p>
+    <span class="summary_desc"><div class='inline'><p>Return the item this channel is linked to.</p>
 </div></span>
   
 </li>
@@ -3532,7 +3532,7 @@ Therefore <span class='object_link'><a href="../Items/Item.html" title="OpenHAB:
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#items-instance_method" title="#items (instance method)">#<strong>items</strong>  &#x21d2; Array&lt;Item&gt; </a>
+      <a href="#item_name-instance_method" title="#item_name (instance method)">#<strong>item_name</strong>  &#x21d2; String<sup>?</sup> </a>
     
 
     
@@ -3551,7 +3551,91 @@ Therefore <span class='object_link'><a href="../Items/Item.html" title="OpenHAB:
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns all of the channel's linked items.</p>
+    <span class="summary_desc"><div class='inline'><p>Return the name of the item this channel is linked to.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#item_names-instance_method" title="#item_names (instance method)">#<strong>item_names</strong>  &#x21d2; Array&lt;String&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Return the names of all of the items this channel is linked to.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#items-instance_method" title="#items (instance method)">#<strong>items</strong>  &#x21d2; Array&lt;Items::Item&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Return all of the items this channel is linked to.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#links-instance_method" title="#links (instance method)">#<strong>links</strong>  &#x21d2; Items::ItemChannelLinks </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns all of the channel's links (items and link configurations).</p>
 </div></span>
   
 </li>
@@ -3652,6 +3736,28 @@ Therefore <span class='object_link'><a href="../Items/Item.html" title="OpenHAB:
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#link-instance_method" title="#link (instance method)">#<strong>link</strong>(item = nil, config = nil)  &#x21d2; ItemChannelLink<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#to_s-instance_method" title="#to_s (instance method)">#<strong>to_s</strong>  &#x21d2; String </a>
     
 
@@ -3667,6 +3773,29 @@ Therefore <span class='object_link'><a href="../Items/Item.html" title="OpenHAB:
 
   
     <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#unlink-instance_method" title="#unlink (instance method)">#<strong>unlink</strong>(item)  &#x21d2; Things::ItemChannelLink<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Removes a link to an item from managed link providers.</p>
+</div></span>
   
 </li>
 
@@ -3842,7 +3971,127 @@ Therefore <span class='object_link'><a href="../Items/Item.html" title="OpenHAB:
 84
 85
 86
-87</pre>
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/channel.rb', line 29</span>
@@ -3876,6 +4125,126 @@ Therefore <span class='object_link'><a href="../Items/Item.html" title="OpenHAB:
   <span class="comment"># @return [String]</span>
   <span class="keyword">def</span> <span class="function">to_s</span>
     uid.to_s
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute item_name [r]</span>
+  <span class="comment"># Return the name of the item this channel is linked to. If a channel is linked to more than one item,</span>
+  <span class="comment"># this method only returns the first item.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [String, nil]</span>
+  <span class="keyword">def</span> <span class="function">item_name</span>
+    item_names.first
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute item_names [r]</span>
+  <span class="comment"># Return the names of all of the items this channel is linked to.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Array&lt;String&gt;]</span>
+  <span class="keyword">def</span> <span class="function">item_names</span>
+    <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_linked_item_names(uid)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute item [r]</span>
+  <span class="comment"># Return the item this channel is linked to. If a channel is linked to more than one item,</span>
+  <span class="comment"># this method only returns the first item.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Items::Item, nil]</span>
+  <span class="keyword">def</span> <span class="function">item</span>
+    items.first
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute items [r]</span>
+  <span class="comment"># Return all of the items this channel is linked to.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Array&lt;Items::Item&gt;]</span>
+  <span class="keyword">def</span> <span class="function">items</span>
+    <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_linked_items(uid).map { |item| <span class="constant">Items</span>::<span class="constant">Proxy</span>.new(item) }
+  <span class="keyword">end</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># @!attribute links [r]</span>
+  <span class="comment"># Returns all of the channel's links (items and link configurations).</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Items::ItemChannelLinks] An array of ItemChannelLink or an empty array</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example Get the configuration of the first link</span>
+  <span class="comment">#   things[&quot;mqtt:topic:livingroom-light&quot;].channel[&quot;power&quot;].links.first.configuration</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example Remove all managed links</span>
+  <span class="comment">#   things[&quot;mqtt:topic:livingroom-light&quot;].channel[&quot;power&quot;].links.clear</span>
+  <span class="comment">#</span>
+  <span class="comment"># @see link</span>
+  <span class="comment"># @see unlink</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">links</span>
+    <span class="constant">Items</span>::<span class="constant">ItemChannelLinks</span>.new(uid, <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_links(uid))
+  <span class="keyword">end</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># @return [ItemChannelLink, nil]</span>
+  <span class="comment">#</span>
+  <span class="comment"># @overload link</span>
+  <span class="comment">#   Returns the channel's link. If an channel is linked to more than one item,</span>
+  <span class="comment">#   this method only returns the first link.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @return [Things::ItemChannelLink, nil]</span>
+  <span class="comment">#</span>
+  <span class="comment"># @overload link(item, config = {})</span>
+  <span class="comment">#</span>
+  <span class="comment">#   Links the channel to an item.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @param [String, Items::Item] channel The channel to link to.</span>
+  <span class="comment">#   @param [Hash] config The configuration for the link.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @return [Things::ItemChannelLink] The created link.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @example Link a channel to an item</span>
+  <span class="comment">#     things[&quot;mqtt:topic:livingroom-light&quot;].channels[&quot;power&quot;].link(LivingRoom_Light_Power)</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @example Specify a link configuration</span>
+  <span class="comment">#     things[&quot;mqtt:topic:outdoor-thermometer&quot;].channels[&quot;temperature&quot;].link(</span>
+  <span class="comment">#       High_Temperature_Alert,</span>
+  <span class="comment">#       profile: &quot;system:hysteresis&quot;,</span>
+  <span class="comment">#       lower: &quot;29 °C&quot;,</span>
+  <span class="comment">#       upper: &quot;30 °C&quot;)</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @see links</span>
+  <span class="comment">#   @see unlink</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">link</span>(item = <span class="predefined-constant">nil</span>, config = <span class="predefined-constant">nil</span>)
+    <span class="keyword">return</span> <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_links(uid).first <span class="keyword">if</span> item.nil? &amp;&amp; config.nil?
+
+    config ||= {}
+    <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.create_link(item, <span class="predefined-constant">self</span>, config).tap <span class="keyword">do</span> |new_link|
+      provider = <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.current
+      <span class="keyword">if</span> !(current_link = provider.get(new_link.uid))
+        provider.add(new_link)
+      <span class="keyword">elsif</span> current_link.configuration != config
+        provider.update(new_link)
+      <span class="keyword">end</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># Removes a link to an item from managed link providers.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @param [String, Items::Item] item The item to remove the link to.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Things::ItemChannelLink, nil] The removed link, if found.</span>
+  <span class="comment"># @raise [FrozenError] if the link is not managed by a managed link provider.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @see link</span>
+  <span class="comment"># @see links</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">unlink</span>(item)
+    link_to_delete = <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.create_link(item, <span class="predefined-constant">self</span>, {})
+    provider = <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.provider_for(link_to_delete.uid)
+    <span class="keyword">unless</span> provider.is_a?(<span class="constant">ManagedProvider</span>)
+      raise <span class="constant">FrozenError</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot remove the link </span><span class="inline"><span class="inline-delimiter">#{</span>link_to_delete.uid<span class="inline-delimiter">}</span></span><span class="content"> from non-managed provider </span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
+
+    provider.remove(link_to_delete.uid)
   <span class="keyword">end</span>
 
   <span class="comment"># @deprecated OH3.4 this whole section is not needed in OH4+. Also see Thing#config_eql?</span>
@@ -3916,7 +4285,7 @@ Therefore <span class='object_link'><a href="../Items/Item.html" title="OpenHAB:
       <div class="method_details ">
   <h3 class="signature " id="item-instance_method">
   
-    #<strong>item</strong>  &#x21d2; <tt><span class='object_link'><a href="../Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span></tt><sup>?</sup>  <span class="extras">(readonly)</span>
+    #<strong>item</strong>  &#x21d2; <tt><span class='object_link'><a href="../Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Items::Item</a></span></tt><sup>?</sup>  <span class="extras">(readonly)</span>
   
 
   
@@ -3924,7 +4293,7 @@ Therefore <span class='object_link'><a href="../Items/Item.html" title="OpenHAB:
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Return the item if this channel is linked with an item. If a channel is linked to more than one item,
+    <p>Return the item this channel is linked to. If a channel is linked to more than one item,
 this method only returns the first item.</p>
 
 
@@ -3938,7 +4307,7 @@ this method only returns the first item.</p>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span></tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Items::Item</a></span></tt>, <tt>nil</tt>)</span>
       
       
       
@@ -4010,7 +4379,127 @@ this method only returns the first item.</p>
 84
 85
 86
-87</pre>
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/channel.rb', line 29</span>
@@ -4044,6 +4533,126 @@ this method only returns the first item.</p>
   <span class="comment"># @return [String]</span>
   <span class="keyword">def</span> <span class="function">to_s</span>
     uid.to_s
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute item_name [r]</span>
+  <span class="comment"># Return the name of the item this channel is linked to. If a channel is linked to more than one item,</span>
+  <span class="comment"># this method only returns the first item.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [String, nil]</span>
+  <span class="keyword">def</span> <span class="function">item_name</span>
+    item_names.first
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute item_names [r]</span>
+  <span class="comment"># Return the names of all of the items this channel is linked to.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Array&lt;String&gt;]</span>
+  <span class="keyword">def</span> <span class="function">item_names</span>
+    <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_linked_item_names(uid)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute item [r]</span>
+  <span class="comment"># Return the item this channel is linked to. If a channel is linked to more than one item,</span>
+  <span class="comment"># this method only returns the first item.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Items::Item, nil]</span>
+  <span class="keyword">def</span> <span class="function">item</span>
+    items.first
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute items [r]</span>
+  <span class="comment"># Return all of the items this channel is linked to.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Array&lt;Items::Item&gt;]</span>
+  <span class="keyword">def</span> <span class="function">items</span>
+    <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_linked_items(uid).map { |item| <span class="constant">Items</span>::<span class="constant">Proxy</span>.new(item) }
+  <span class="keyword">end</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># @!attribute links [r]</span>
+  <span class="comment"># Returns all of the channel's links (items and link configurations).</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Items::ItemChannelLinks] An array of ItemChannelLink or an empty array</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example Get the configuration of the first link</span>
+  <span class="comment">#   things[&quot;mqtt:topic:livingroom-light&quot;].channel[&quot;power&quot;].links.first.configuration</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example Remove all managed links</span>
+  <span class="comment">#   things[&quot;mqtt:topic:livingroom-light&quot;].channel[&quot;power&quot;].links.clear</span>
+  <span class="comment">#</span>
+  <span class="comment"># @see link</span>
+  <span class="comment"># @see unlink</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">links</span>
+    <span class="constant">Items</span>::<span class="constant">ItemChannelLinks</span>.new(uid, <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_links(uid))
+  <span class="keyword">end</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># @return [ItemChannelLink, nil]</span>
+  <span class="comment">#</span>
+  <span class="comment"># @overload link</span>
+  <span class="comment">#   Returns the channel's link. If an channel is linked to more than one item,</span>
+  <span class="comment">#   this method only returns the first link.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @return [Things::ItemChannelLink, nil]</span>
+  <span class="comment">#</span>
+  <span class="comment"># @overload link(item, config = {})</span>
+  <span class="comment">#</span>
+  <span class="comment">#   Links the channel to an item.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @param [String, Items::Item] channel The channel to link to.</span>
+  <span class="comment">#   @param [Hash] config The configuration for the link.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @return [Things::ItemChannelLink] The created link.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @example Link a channel to an item</span>
+  <span class="comment">#     things[&quot;mqtt:topic:livingroom-light&quot;].channels[&quot;power&quot;].link(LivingRoom_Light_Power)</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @example Specify a link configuration</span>
+  <span class="comment">#     things[&quot;mqtt:topic:outdoor-thermometer&quot;].channels[&quot;temperature&quot;].link(</span>
+  <span class="comment">#       High_Temperature_Alert,</span>
+  <span class="comment">#       profile: &quot;system:hysteresis&quot;,</span>
+  <span class="comment">#       lower: &quot;29 °C&quot;,</span>
+  <span class="comment">#       upper: &quot;30 °C&quot;)</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @see links</span>
+  <span class="comment">#   @see unlink</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">link</span>(item = <span class="predefined-constant">nil</span>, config = <span class="predefined-constant">nil</span>)
+    <span class="keyword">return</span> <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_links(uid).first <span class="keyword">if</span> item.nil? &amp;&amp; config.nil?
+
+    config ||= {}
+    <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.create_link(item, <span class="predefined-constant">self</span>, config).tap <span class="keyword">do</span> |new_link|
+      provider = <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.current
+      <span class="keyword">if</span> !(current_link = provider.get(new_link.uid))
+        provider.add(new_link)
+      <span class="keyword">elsif</span> current_link.configuration != config
+        provider.update(new_link)
+      <span class="keyword">end</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># Removes a link to an item from managed link providers.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @param [String, Items::Item] item The item to remove the link to.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Things::ItemChannelLink, nil] The removed link, if found.</span>
+  <span class="comment"># @raise [FrozenError] if the link is not managed by a managed link provider.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @see link</span>
+  <span class="comment"># @see links</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">unlink</span>(item)
+    link_to_delete = <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.create_link(item, <span class="predefined-constant">self</span>, {})
+    provider = <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.provider_for(link_to_delete.uid)
+    <span class="keyword">unless</span> provider.is_a?(<span class="constant">ManagedProvider</span>)
+      raise <span class="constant">FrozenError</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot remove the link </span><span class="inline"><span class="inline-delimiter">#{</span>link_to_delete.uid<span class="inline-delimiter">}</span></span><span class="content"> from non-managed provider </span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
+
+    provider.remove(link_to_delete.uid)
   <span class="keyword">end</span>
 
   <span class="comment"># @deprecated OH3.4 this whole section is not needed in OH4+. Also see Thing#config_eql?</span>
@@ -4082,9 +4691,9 @@ this method only returns the first item.</p>
       
       <span id=""></span>
       <div class="method_details ">
-  <h3 class="signature " id="items-instance_method">
+  <h3 class="signature " id="item_name-instance_method">
   
-    #<strong>items</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span>&gt;</tt>  <span class="extras">(readonly)</span>
+    #<strong>item_name</strong>  &#x21d2; <tt>String</tt><sup>?</sup>  <span class="extras">(readonly)</span>
   
 
   
@@ -4092,7 +4701,8 @@ this method only returns the first item.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns all of the channel's linked items.</p>
+    <p>Return the name of the item this channel is linked to. If a channel is linked to more than one item,
+this method only returns the first item.</p>
 
 
   </div>
@@ -4105,13 +4715,119 @@ this method only returns the first item.</p>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span>&gt;</tt>)</span>
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
       
       
       
-        &mdash;
-        <div class='inline'><p>An array of things or an empty array</p>
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+65
+66
+67</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/channel.rb', line 65</span>
+
+<span class="keyword">def</span> <span class="function">item_name</span>
+  item_names.first
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
 </div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="item_names-instance_method">
+  
+    #<strong>item_names</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String&gt;</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Return the names of all of the items this channel is linked to.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;String&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+73
+74
+75</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/channel.rb', line 73</span>
+
+<span class="keyword">def</span> <span class="function">item_names</span>
+  <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_linked_item_names(uid)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="items-instance_method">
+  
+    #<strong>items</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Items::Item</a></span>&gt;</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Return all of the items this channel is linked to.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Items::Item</a></span>&gt;</tt>)</span>
+      
+      
       
     </li>
   
@@ -4181,7 +4897,127 @@ this method only returns the first item.</p>
 84
 85
 86
-87</pre>
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/channel.rb', line 29</span>
@@ -4217,6 +5053,126 @@ this method only returns the first item.</p>
     uid.to_s
   <span class="keyword">end</span>
 
+  <span class="comment"># @!attribute item_name [r]</span>
+  <span class="comment"># Return the name of the item this channel is linked to. If a channel is linked to more than one item,</span>
+  <span class="comment"># this method only returns the first item.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [String, nil]</span>
+  <span class="keyword">def</span> <span class="function">item_name</span>
+    item_names.first
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute item_names [r]</span>
+  <span class="comment"># Return the names of all of the items this channel is linked to.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Array&lt;String&gt;]</span>
+  <span class="keyword">def</span> <span class="function">item_names</span>
+    <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_linked_item_names(uid)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute item [r]</span>
+  <span class="comment"># Return the item this channel is linked to. If a channel is linked to more than one item,</span>
+  <span class="comment"># this method only returns the first item.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Items::Item, nil]</span>
+  <span class="keyword">def</span> <span class="function">item</span>
+    items.first
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute items [r]</span>
+  <span class="comment"># Return all of the items this channel is linked to.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Array&lt;Items::Item&gt;]</span>
+  <span class="keyword">def</span> <span class="function">items</span>
+    <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_linked_items(uid).map { |item| <span class="constant">Items</span>::<span class="constant">Proxy</span>.new(item) }
+  <span class="keyword">end</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># @!attribute links [r]</span>
+  <span class="comment"># Returns all of the channel's links (items and link configurations).</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Items::ItemChannelLinks] An array of ItemChannelLink or an empty array</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example Get the configuration of the first link</span>
+  <span class="comment">#   things[&quot;mqtt:topic:livingroom-light&quot;].channel[&quot;power&quot;].links.first.configuration</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example Remove all managed links</span>
+  <span class="comment">#   things[&quot;mqtt:topic:livingroom-light&quot;].channel[&quot;power&quot;].links.clear</span>
+  <span class="comment">#</span>
+  <span class="comment"># @see link</span>
+  <span class="comment"># @see unlink</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">links</span>
+    <span class="constant">Items</span>::<span class="constant">ItemChannelLinks</span>.new(uid, <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_links(uid))
+  <span class="keyword">end</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># @return [ItemChannelLink, nil]</span>
+  <span class="comment">#</span>
+  <span class="comment"># @overload link</span>
+  <span class="comment">#   Returns the channel's link. If an channel is linked to more than one item,</span>
+  <span class="comment">#   this method only returns the first link.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @return [Things::ItemChannelLink, nil]</span>
+  <span class="comment">#</span>
+  <span class="comment"># @overload link(item, config = {})</span>
+  <span class="comment">#</span>
+  <span class="comment">#   Links the channel to an item.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @param [String, Items::Item] channel The channel to link to.</span>
+  <span class="comment">#   @param [Hash] config The configuration for the link.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @return [Things::ItemChannelLink] The created link.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @example Link a channel to an item</span>
+  <span class="comment">#     things[&quot;mqtt:topic:livingroom-light&quot;].channels[&quot;power&quot;].link(LivingRoom_Light_Power)</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @example Specify a link configuration</span>
+  <span class="comment">#     things[&quot;mqtt:topic:outdoor-thermometer&quot;].channels[&quot;temperature&quot;].link(</span>
+  <span class="comment">#       High_Temperature_Alert,</span>
+  <span class="comment">#       profile: &quot;system:hysteresis&quot;,</span>
+  <span class="comment">#       lower: &quot;29 °C&quot;,</span>
+  <span class="comment">#       upper: &quot;30 °C&quot;)</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @see links</span>
+  <span class="comment">#   @see unlink</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">link</span>(item = <span class="predefined-constant">nil</span>, config = <span class="predefined-constant">nil</span>)
+    <span class="keyword">return</span> <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_links(uid).first <span class="keyword">if</span> item.nil? &amp;&amp; config.nil?
+
+    config ||= {}
+    <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.create_link(item, <span class="predefined-constant">self</span>, config).tap <span class="keyword">do</span> |new_link|
+      provider = <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.current
+      <span class="keyword">if</span> !(current_link = provider.get(new_link.uid))
+        provider.add(new_link)
+      <span class="keyword">elsif</span> current_link.configuration != config
+        provider.update(new_link)
+      <span class="keyword">end</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># Removes a link to an item from managed link providers.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @param [String, Items::Item] item The item to remove the link to.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Things::ItemChannelLink, nil] The removed link, if found.</span>
+  <span class="comment"># @raise [FrozenError] if the link is not managed by a managed link provider.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @see link</span>
+  <span class="comment"># @see links</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">unlink</span>(item)
+    link_to_delete = <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.create_link(item, <span class="predefined-constant">self</span>, {})
+    provider = <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.provider_for(link_to_delete.uid)
+    <span class="keyword">unless</span> provider.is_a?(<span class="constant">ManagedProvider</span>)
+      raise <span class="constant">FrozenError</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot remove the link </span><span class="inline"><span class="inline-delimiter">#{</span>link_to_delete.uid<span class="inline-delimiter">}</span></span><span class="content"> from non-managed provider </span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
+
+    provider.remove(link_to_delete.uid)
+  <span class="keyword">end</span>
+
   <span class="comment"># @deprecated OH3.4 this whole section is not needed in OH4+. Also see Thing#config_eql?</span>
   <span class="keyword">if</span> <span class="constant">Core</span>.version &lt; <span class="constant">Core</span>::<span class="constant">V4_0</span>
     <span class="comment"># @!visibility private</span>
@@ -4244,6 +5200,91 @@ this method only returns the first item.</p>
     <span class="keyword">end</span>
     org.openhab.core.thing.binding.builder.ChannelBuilder.const_get(<span class="symbol">:ChannelImpl</span>).prepend(<span class="constant">ChannelComparable</span>)
   <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="links-instance_method">
+  
+    #<strong>links</strong>  &#x21d2; <tt><span class='object_link'><a href="../Items/ItemChannelLinks.html" title="OpenHAB::Core::Items::ItemChannelLinks (class)">Items::ItemChannelLinks</a></span></tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns all of the channel's links (items and link configurations).</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Get the configuration of the first link</p>
+</div></p>
+      
+      <pre class="example code"><code>things[<span class="string"><span class="delimiter">&quot;</span><span class="content">mqtt:topic:livingroom-light</span><span class="delimiter">&quot;</span></span>].channel[<span class="string"><span class="delimiter">&quot;</span><span class="content">power</span><span class="delimiter">&quot;</span></span>].links.first.configuration</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Remove all managed links</p>
+</div></p>
+      
+      <pre class="example code"><code>things[<span class="string"><span class="delimiter">&quot;</span><span class="content">mqtt:topic:livingroom-light</span><span class="delimiter">&quot;</span></span>].channel[<span class="string"><span class="delimiter">&quot;</span><span class="content">power</span><span class="delimiter">&quot;</span></span>].links.clear</code></pre>
+    
+  </div>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Items/ItemChannelLinks.html" title="OpenHAB::Core::Items::ItemChannelLinks (class)">Items::ItemChannelLinks</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>An array of ItemChannelLink or an empty array</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#link-instance_method" title="OpenHAB::Core::Things::Channel#link (method)">#link</a></span></li>
+    
+      <li><span class='object_link'><a href="#unlink-instance_method" title="OpenHAB::Core::Things::Channel#unlink (method)">#unlink</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+109
+110
+111</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/channel.rb', line 109</span>
+
+<span class="keyword">def</span> <span class="function">links</span>
+  <span class="constant">Items</span>::<span class="constant">ItemChannelLinks</span>.new(uid, <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_links(uid))
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4348,7 +5389,127 @@ this method only returns the first item.</p>
 84
 85
 86
-87</pre>
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/channel.rb', line 29</span>
@@ -4382,6 +5543,126 @@ this method only returns the first item.</p>
   <span class="comment"># @return [String]</span>
   <span class="keyword">def</span> <span class="function">to_s</span>
     uid.to_s
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute item_name [r]</span>
+  <span class="comment"># Return the name of the item this channel is linked to. If a channel is linked to more than one item,</span>
+  <span class="comment"># this method only returns the first item.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [String, nil]</span>
+  <span class="keyword">def</span> <span class="function">item_name</span>
+    item_names.first
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute item_names [r]</span>
+  <span class="comment"># Return the names of all of the items this channel is linked to.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Array&lt;String&gt;]</span>
+  <span class="keyword">def</span> <span class="function">item_names</span>
+    <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_linked_item_names(uid)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute item [r]</span>
+  <span class="comment"># Return the item this channel is linked to. If a channel is linked to more than one item,</span>
+  <span class="comment"># this method only returns the first item.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Items::Item, nil]</span>
+  <span class="keyword">def</span> <span class="function">item</span>
+    items.first
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute items [r]</span>
+  <span class="comment"># Return all of the items this channel is linked to.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Array&lt;Items::Item&gt;]</span>
+  <span class="keyword">def</span> <span class="function">items</span>
+    <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_linked_items(uid).map { |item| <span class="constant">Items</span>::<span class="constant">Proxy</span>.new(item) }
+  <span class="keyword">end</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># @!attribute links [r]</span>
+  <span class="comment"># Returns all of the channel's links (items and link configurations).</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Items::ItemChannelLinks] An array of ItemChannelLink or an empty array</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example Get the configuration of the first link</span>
+  <span class="comment">#   things[&quot;mqtt:topic:livingroom-light&quot;].channel[&quot;power&quot;].links.first.configuration</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example Remove all managed links</span>
+  <span class="comment">#   things[&quot;mqtt:topic:livingroom-light&quot;].channel[&quot;power&quot;].links.clear</span>
+  <span class="comment">#</span>
+  <span class="comment"># @see link</span>
+  <span class="comment"># @see unlink</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">links</span>
+    <span class="constant">Items</span>::<span class="constant">ItemChannelLinks</span>.new(uid, <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_links(uid))
+  <span class="keyword">end</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># @return [ItemChannelLink, nil]</span>
+  <span class="comment">#</span>
+  <span class="comment"># @overload link</span>
+  <span class="comment">#   Returns the channel's link. If an channel is linked to more than one item,</span>
+  <span class="comment">#   this method only returns the first link.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @return [Things::ItemChannelLink, nil]</span>
+  <span class="comment">#</span>
+  <span class="comment"># @overload link(item, config = {})</span>
+  <span class="comment">#</span>
+  <span class="comment">#   Links the channel to an item.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @param [String, Items::Item] channel The channel to link to.</span>
+  <span class="comment">#   @param [Hash] config The configuration for the link.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @return [Things::ItemChannelLink] The created link.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @example Link a channel to an item</span>
+  <span class="comment">#     things[&quot;mqtt:topic:livingroom-light&quot;].channels[&quot;power&quot;].link(LivingRoom_Light_Power)</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @example Specify a link configuration</span>
+  <span class="comment">#     things[&quot;mqtt:topic:outdoor-thermometer&quot;].channels[&quot;temperature&quot;].link(</span>
+  <span class="comment">#       High_Temperature_Alert,</span>
+  <span class="comment">#       profile: &quot;system:hysteresis&quot;,</span>
+  <span class="comment">#       lower: &quot;29 °C&quot;,</span>
+  <span class="comment">#       upper: &quot;30 °C&quot;)</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @see links</span>
+  <span class="comment">#   @see unlink</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">link</span>(item = <span class="predefined-constant">nil</span>, config = <span class="predefined-constant">nil</span>)
+    <span class="keyword">return</span> <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_links(uid).first <span class="keyword">if</span> item.nil? &amp;&amp; config.nil?
+
+    config ||= {}
+    <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.create_link(item, <span class="predefined-constant">self</span>, config).tap <span class="keyword">do</span> |new_link|
+      provider = <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.current
+      <span class="keyword">if</span> !(current_link = provider.get(new_link.uid))
+        provider.add(new_link)
+      <span class="keyword">elsif</span> current_link.configuration != config
+        provider.update(new_link)
+      <span class="keyword">end</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># Removes a link to an item from managed link providers.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @param [String, Items::Item] item The item to remove the link to.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Things::ItemChannelLink, nil] The removed link, if found.</span>
+  <span class="comment"># @raise [FrozenError] if the link is not managed by a managed link provider.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @see link</span>
+  <span class="comment"># @see links</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">unlink</span>(item)
+    link_to_delete = <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.create_link(item, <span class="predefined-constant">self</span>, {})
+    provider = <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.provider_for(link_to_delete.uid)
+    <span class="keyword">unless</span> provider.is_a?(<span class="constant">ManagedProvider</span>)
+      raise <span class="constant">FrozenError</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot remove the link </span><span class="inline"><span class="inline-delimiter">#{</span>link_to_delete.uid<span class="inline-delimiter">}</span></span><span class="content"> from non-managed provider </span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
+
+    provider.remove(link_to_delete.uid)
   <span class="keyword">end</span>
 
   <span class="comment"># @deprecated OH3.4 this whole section is not needed in OH4+. Also see Thing#config_eql?</span>
@@ -4514,7 +5795,127 @@ this method only returns the first item.</p>
 84
 85
 86
-87</pre>
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/channel.rb', line 29</span>
@@ -4548,6 +5949,126 @@ this method only returns the first item.</p>
   <span class="comment"># @return [String]</span>
   <span class="keyword">def</span> <span class="function">to_s</span>
     uid.to_s
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute item_name [r]</span>
+  <span class="comment"># Return the name of the item this channel is linked to. If a channel is linked to more than one item,</span>
+  <span class="comment"># this method only returns the first item.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [String, nil]</span>
+  <span class="keyword">def</span> <span class="function">item_name</span>
+    item_names.first
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute item_names [r]</span>
+  <span class="comment"># Return the names of all of the items this channel is linked to.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Array&lt;String&gt;]</span>
+  <span class="keyword">def</span> <span class="function">item_names</span>
+    <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_linked_item_names(uid)
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute item [r]</span>
+  <span class="comment"># Return the item this channel is linked to. If a channel is linked to more than one item,</span>
+  <span class="comment"># this method only returns the first item.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Items::Item, nil]</span>
+  <span class="keyword">def</span> <span class="function">item</span>
+    items.first
+  <span class="keyword">end</span>
+
+  <span class="comment"># @!attribute items [r]</span>
+  <span class="comment"># Return all of the items this channel is linked to.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Array&lt;Items::Item&gt;]</span>
+  <span class="keyword">def</span> <span class="function">items</span>
+    <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_linked_items(uid).map { |item| <span class="constant">Items</span>::<span class="constant">Proxy</span>.new(item) }
+  <span class="keyword">end</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># @!attribute links [r]</span>
+  <span class="comment"># Returns all of the channel's links (items and link configurations).</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Items::ItemChannelLinks] An array of ItemChannelLink or an empty array</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example Get the configuration of the first link</span>
+  <span class="comment">#   things[&quot;mqtt:topic:livingroom-light&quot;].channel[&quot;power&quot;].links.first.configuration</span>
+  <span class="comment">#</span>
+  <span class="comment"># @example Remove all managed links</span>
+  <span class="comment">#   things[&quot;mqtt:topic:livingroom-light&quot;].channel[&quot;power&quot;].links.clear</span>
+  <span class="comment">#</span>
+  <span class="comment"># @see link</span>
+  <span class="comment"># @see unlink</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">links</span>
+    <span class="constant">Items</span>::<span class="constant">ItemChannelLinks</span>.new(uid, <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_links(uid))
+  <span class="keyword">end</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># @return [ItemChannelLink, nil]</span>
+  <span class="comment">#</span>
+  <span class="comment"># @overload link</span>
+  <span class="comment">#   Returns the channel's link. If an channel is linked to more than one item,</span>
+  <span class="comment">#   this method only returns the first link.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @return [Things::ItemChannelLink, nil]</span>
+  <span class="comment">#</span>
+  <span class="comment"># @overload link(item, config = {})</span>
+  <span class="comment">#</span>
+  <span class="comment">#   Links the channel to an item.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @param [String, Items::Item] channel The channel to link to.</span>
+  <span class="comment">#   @param [Hash] config The configuration for the link.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @return [Things::ItemChannelLink] The created link.</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @example Link a channel to an item</span>
+  <span class="comment">#     things[&quot;mqtt:topic:livingroom-light&quot;].channels[&quot;power&quot;].link(LivingRoom_Light_Power)</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @example Specify a link configuration</span>
+  <span class="comment">#     things[&quot;mqtt:topic:outdoor-thermometer&quot;].channels[&quot;temperature&quot;].link(</span>
+  <span class="comment">#       High_Temperature_Alert,</span>
+  <span class="comment">#       profile: &quot;system:hysteresis&quot;,</span>
+  <span class="comment">#       lower: &quot;29 °C&quot;,</span>
+  <span class="comment">#       upper: &quot;30 °C&quot;)</span>
+  <span class="comment">#</span>
+  <span class="comment">#   @see links</span>
+  <span class="comment">#   @see unlink</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">link</span>(item = <span class="predefined-constant">nil</span>, config = <span class="predefined-constant">nil</span>)
+    <span class="keyword">return</span> <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_links(uid).first <span class="keyword">if</span> item.nil? &amp;&amp; config.nil?
+
+    config ||= {}
+    <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.create_link(item, <span class="predefined-constant">self</span>, config).tap <span class="keyword">do</span> |new_link|
+      provider = <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.current
+      <span class="keyword">if</span> !(current_link = provider.get(new_link.uid))
+        provider.add(new_link)
+      <span class="keyword">elsif</span> current_link.configuration != config
+        provider.update(new_link)
+      <span class="keyword">end</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+
+  <span class="comment">#</span>
+  <span class="comment"># Removes a link to an item from managed link providers.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @param [String, Items::Item] item The item to remove the link to.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @return [Things::ItemChannelLink, nil] The removed link, if found.</span>
+  <span class="comment"># @raise [FrozenError] if the link is not managed by a managed link provider.</span>
+  <span class="comment">#</span>
+  <span class="comment"># @see link</span>
+  <span class="comment"># @see links</span>
+  <span class="comment">#</span>
+  <span class="keyword">def</span> <span class="function">unlink</span>(item)
+    link_to_delete = <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.create_link(item, <span class="predefined-constant">self</span>, {})
+    provider = <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.provider_for(link_to_delete.uid)
+    <span class="keyword">unless</span> provider.is_a?(<span class="constant">ManagedProvider</span>)
+      raise <span class="constant">FrozenError</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot remove the link </span><span class="inline"><span class="inline-delimiter">#{</span>link_to_delete.uid<span class="inline-delimiter">}</span></span><span class="content"> from non-managed provider </span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
+
+    provider.remove(link_to_delete.uid)
   <span class="keyword">end</span>
 
   <span class="comment"># @deprecated OH3.4 this whole section is not needed in OH4+. Also see Thing#config_eql?</span>
@@ -4663,6 +6184,216 @@ this method only returns the first item.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="link-instance_method">
+  
+    
+      <span class="overload">#<strong>link</strong>  &#x21d2; <tt><span class='object_link'><a href="ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">Things::ItemChannelLink</a></span></tt><sup>?</sup> </span>
+    
+      <span class="overload">#<strong>link</strong>(item, config = {})  &#x21d2; <tt><span class='object_link'><a href="ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">Things::ItemChannelLink</a></span></tt> </span>
+    
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+  <p class="tag_title">Overloads:</p>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">#<strong>link</strong>  &#x21d2; <tt><span class='object_link'><a href="ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">Things::ItemChannelLink</a></span></tt><sup>?</sup> </span>
+        <div class="docstring">
+  <div class="discussion">
+    <p>Returns the channel's link. If an channel is linked to more than one item,
+this method only returns the first link.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">Things::ItemChannelLink</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">#<strong>link</strong>(item, config = {})  &#x21d2; <tt><span class='object_link'><a href="ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">Things::ItemChannelLink</a></span></tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    <p>Links the channel to an item.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Link a channel to an item</p>
+</div></p>
+      
+      <pre class="example code"><code>things[<span class="string"><span class="delimiter">&quot;</span><span class="content">mqtt:topic:livingroom-light</span><span class="delimiter">&quot;</span></span>].channels[<span class="string"><span class="delimiter">&quot;</span><span class="content">power</span><span class="delimiter">&quot;</span></span>].link(<span class="constant">LivingRoom_Light_Power</span>)</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Specify a link configuration</p>
+</div></p>
+      
+      <pre class="example code"><code>things[<span class="string"><span class="delimiter">&quot;</span><span class="content">mqtt:topic:outdoor-thermometer</span><span class="delimiter">&quot;</span></span>].channels[<span class="string"><span class="delimiter">&quot;</span><span class="content">temperature</span><span class="delimiter">&quot;</span></span>].link(
+  <span class="constant">High_Temperature_Alert</span>,
+  <span class="key">profile</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">system:hysteresis</span><span class="delimiter">&quot;</span></span>,
+  <span class="key">lower</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">29 °C</span><span class="delimiter">&quot;</span></span>,
+  <span class="key">upper</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">30 °C</span><span class="delimiter">&quot;</span></span>)</code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>channel</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Items::Item</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The channel to link to.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>config</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The configuration for the link.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">Things::ItemChannelLink</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The created link.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#links-instance_method" title="OpenHAB::Core::Things::Channel#links (method)">#links</a></span></li>
+    
+      <li><span class='object_link'><a href="#unlink-instance_method" title="OpenHAB::Core::Things::Channel#unlink (method)">#unlink</a></span></li>
+    
+  </ul>
+
+</div>
+      </li>
+    
+  </ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">ItemChannelLink</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/channel.rb', line 144</span>
+
+<span class="keyword">def</span> <span class="function">link</span>(item = <span class="predefined-constant">nil</span>, config = <span class="predefined-constant">nil</span>)
+  <span class="keyword">return</span> <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_links(uid).first <span class="keyword">if</span> item.nil? &amp;&amp; config.nil?
+
+  config ||= {}
+  <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.create_link(item, <span class="predefined-constant">self</span>, config).tap <span class="keyword">do</span> |new_link|
+    provider = <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.current
+    <span class="keyword">if</span> !(current_link = provider.get(new_link.uid))
+      provider.add(new_link)
+    <span class="keyword">elsif</span> current_link.configuration != config
+      provider.update(new_link)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="to_s-instance_method">
   
     #<strong>to_s</strong>  &#x21d2; <tt>String</tt> 
@@ -4714,12 +6445,128 @@ this method only returns the first item.</p>
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="unlink-instance_method">
+  
+    #<strong>unlink</strong>(item)  &#x21d2; <tt><span class='object_link'><a href="ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">Things::ItemChannelLink</a></span></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Removes a link to an item from managed link providers.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>item</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Items::Item</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The item to remove the link to.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="ItemChannelLink.html" title="OpenHAB::Core::Things::ItemChannelLink (class)">Things::ItemChannelLink</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The removed link, if found.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>FrozenError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>if the link is not managed by a managed link provider.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#link-instance_method" title="OpenHAB::Core::Things::Channel#link (method)">#link</a></span></li>
+    
+      <li><span class='object_link'><a href="#links-instance_method" title="OpenHAB::Core::Things::Channel#links (method)">#links</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/channel.rb', line 169</span>
+
+<span class="keyword">def</span> <span class="function">unlink</span>(item)
+  link_to_delete = <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.create_link(item, <span class="predefined-constant">self</span>, {})
+  provider = <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.provider_for(link_to_delete.uid)
+  <span class="keyword">unless</span> provider.is_a?(<span class="constant">ManagedProvider</span>)
+    raise <span class="constant">FrozenError</span>,
+          <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot remove the link </span><span class="inline"><span class="inline-delimiter">#{</span>link_to_delete.uid<span class="inline-delimiter">}</span></span><span class="content"> from non-managed provider </span><span class="inline"><span class="inline-delimiter">#{</span>provider.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
+
+  provider.remove(link_to_delete.uid)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
         <footer>
-  Generated on Wed May 15 22:10:31 2024 by
+  Generated on Thu May 16 16:09:58 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
