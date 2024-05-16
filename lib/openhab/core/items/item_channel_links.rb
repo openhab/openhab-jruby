@@ -12,13 +12,13 @@ module OpenHAB
       #
       class ItemChannelLinks < SimpleDelegator
         #
-        # @param [Item] item The item that the links belong to
+        # @param [String, UID] owner The owner that the links belong to
         # @param [Set<ItemChannelLink>] links The set of links to delegate to
         #
         # @!visibility private
-        def initialize(item, links)
+        def initialize(owner, links)
           super(links)
-          @item = item
+          @owner = owner
         end
 
         #
@@ -27,7 +27,11 @@ module OpenHAB
         #
         def clear
           Things::Links::Provider.registry.all.each do |link|
-            next unless link.item_name == @item.name
+            if @owner.is_a?(String)
+              next unless link.item_name == @owner
+            else
+              next unless link.linked_uid == @owner
+            end
 
             provider = Things::Links::Provider.registry.provider_for(link.uid)
             if provider.is_a?(ManagedProvider)
