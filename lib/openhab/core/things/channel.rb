@@ -123,7 +123,7 @@ module OpenHAB
         #
         #   Links the channel to an item.
         #
-        #   @param [String, Items::Item] channel The channel to link to.
+        #   @param [String, Items::Item] item The item to link to.
         #   @param [Hash] config The configuration for the link.
         #
         #   @return [Things::ItemChannelLink] The created link.
