@@ -737,7 +737,12 @@ module OpenHAB
         def build
           widget = super
           buttons.each do |button|
-            button_object = SitemapBuilder.factory.create_button
+            button_object = if SitemapBuilder.factory.respond_to?(:create_button_definition)
+                              SitemapBuilder.factory.create_button_definition
+                            else
+                              # @deprecated OH 4.1 in OH 4.2 this clause is not needed
+                              SitemapBuilder.factory.create_button
+                            end
             button_object.row = button[0]
             button_object.column = button[1]
             button_object.cmd = button[2]
