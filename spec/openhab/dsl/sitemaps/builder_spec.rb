@@ -625,6 +625,43 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         end
       end.to raise_error(ArgumentError)
     end
+
+    # @deprecated OH 4.1 guard is only needed for < OH 4.2
+    describe "with button sub-widgets", if: OpenHAB::Core.version >= OpenHAB::Core::V4_2 do
+      it "works" do
+        s = sitemaps.build do
+          sitemap "default" do
+            buttongrid do
+              button row: 1, column: 1, click: "BACK", label: "Back", icon: "f7:return"
+              button row: 1, column: 2, click: "HOME", label: "Menu", icon: "material:apps"
+            end
+          end
+        end
+
+        bg = s.children.first
+        buttons = bg.children
+        expect(buttons.size).to eq 2
+        expect(buttons[0].row).to eq 1
+        expect(buttons[1].cmd).to eq "HOME"
+      end
+
+      { row: 1, column: 1, click: "CMD" }.tap do |arguments|
+        arguments.each_key do |arg|
+          it "raises an error when '#{arg}' argument is missing" do
+            expect do
+              sitemaps.build do
+                sitemap "default" do
+                  buttongrid do
+                    arguments_with_missing_key = arguments.reject { |k, _| k == arg }
+                    button(**arguments_with_missing_key)
+                  end
+                end
+              end
+            end.to raise_error(ArgumentError)
+          end
+        end
+      end
+    end
   end
 
   it "can add a default" do
