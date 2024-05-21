@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 gemspec
 
-plugin "bundler-multilock", "~> 1.2", ">= 1.2.2"
+plugin "bundler-multilock", "1.3.1"
 return unless Plugin.installed?("bundler-multilock")
 
 Plugin.send(:load_plugin, "bundler-multilock")
