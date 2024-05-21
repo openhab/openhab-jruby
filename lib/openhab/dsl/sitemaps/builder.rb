@@ -403,19 +403,25 @@ module OpenHAB
         # @return [true, false, nil]
         # @note This parameter only works on Android
         attr_writer :switch
+        # Only send the command when the slider is released
+        # @return [true, false, nil]
+        attr_writer :release_only
 
         # (see SetpointBuilder#initialize)
-        # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, range: nil, step: nil, switch: nil, frequency: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
+        # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, range: nil, step: nil, switch: nil, frequency: nil, release_only: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param switch [true, false, nil]
         #   A short press on the item toggles the item on or off (see {SliderBuilder#switch=})
         # @param frequency [Numeric, nil]
         #   How often to send requests (in seconds) (see {SliderBuilder#frequency})
+        # @param release_only [true, false, nil]
+        #   Only send the command when the slider is released (see {SliderBuilder#release_only=})
         # @!visibility private
-        def initialize(type, builder_proxy, switch: nil, frequency: nil, **kwargs, &block)
+        def initialize(type, builder_proxy, switch: nil, frequency: nil, release_only: nil, **kwargs, &block)
           super(type, builder_proxy, **kwargs, &block)
 
           @switch = switch
           @frequency = frequency
+          @release_only = release_only
         end
 
         # (see #switch=)
@@ -423,11 +429,18 @@ module OpenHAB
           @switch
         end
 
+        # (see #release_only=)
+        def release_only?
+          @release_only
+        end
+
         # @!visibility private
         def build
           widget = super
           widget.switch_enabled = switch? unless @switch.nil?
           widget.send_frequency = (frequency * 1000).to_i if frequency
+          # @deprecated OH 4.1 remove the version check when dropping OH 4.1 support
+          widget.release_only = release_only? if OpenHAB::Core.version >= OpenHAB::Core::V4_2 && !@release_only.nil?
           widget
         end
       end
@@ -943,6 +956,7 @@ module OpenHAB
         #              step: nil,
         #              switch: nil,
         #              frequency: nil,
+        #              release_only: nil,
         #              label_color: nil,
         #              value_color: nil,
         #              icon_color: nil,
