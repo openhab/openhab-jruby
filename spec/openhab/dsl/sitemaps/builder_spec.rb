@@ -503,11 +503,23 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
   end
 
-  it "can add a slider" do
-    sitemaps.build do
-      sitemap "default" do
-        slider label: "My Slider"
+  describe "#slider" do
+    it "works" do
+      sitemaps.build do
+        sitemap "default" do
+          slider label: "My Slider"
+        end
       end
+    end
+
+    it "supports switch_enabled option" do
+      s = sitemaps.build do
+        sitemap "default" do
+          slider switch: true
+        end
+      end
+
+      expect(s.children.first.switch_enabled).to be true
     end
   end
 

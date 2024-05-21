@@ -408,18 +408,17 @@ module OpenHAB
 
           @switch = switch
           @frequency = frequency
-          @switch_enabled = nil
         end
 
         # (see #switch=)
         def switch?
-          @switch_enabled
+          @switch
         end
 
         # @!visibility private
         def build
           widget = super
-          widget.switch_enabled = switch?
+          widget.switch_enabled = switch? unless @switch.nil?
           widget.send_frequency = (frequency * 1000).to_i if frequency
           widget
         end
