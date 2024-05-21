@@ -288,7 +288,8 @@ module OpenHAB
         # If an array is given:
         # - Scalar elements define the command, and the label is the same as the command.
         # - Array elements contain the command, label, and optional third element for the icon.
-        # - Hash elements contain the command, label, and optional icon defined by the corresponding keys.
+        # - Hash elements contain the `command`, `release` (optional), `label`, and `icon` (optional)
+        #   defined by the corresponding keys.
         #
         # @since openHAB 4.1 added support for icons
         #
@@ -314,6 +315,12 @@ module OpenHAB
         #     {command: "auto", label: "Auto"} # no icon
         #   ]
         #
+        # @example Since openHAB 4.2, `release` is also supported in the array of hashes
+        #   # when `release` is specified, `command` will be sent on press and `release` on release
+        #   switch mappings: [
+        #     {label: "On", command: ON, release: OFF, icon: "f7:power"}
+        #   ]
+        #
         # @return [Hash, Array, nil]
         # @see LinkableWidgetBuilder#switch
         # @see https://www.openhab.org/docs/ui/sitemaps.html#mappings
@@ -334,8 +341,9 @@ module OpenHAB
           widget = super
           mappings&.each do |cmd, label, icon|
             mapping = SitemapBuilder.factory.create_mapping
-            cmd, label, icon = cmd.values_at(:command, :label, :icon) if cmd.is_a?(Hash)
+            cmd, release_cmd, label, icon = cmd.values_at(:command, :release, :label, :icon) if cmd.is_a?(Hash)
             mapping.cmd = cmd.to_s
+            mapping.release_cmd = release_cmd.to_s unless release_cmd.nil?
             mapping.label = label&.to_s || cmd.to_s
             # @deprecated OH 4.1 the if check is not needed in OH4.1+
             mapping.icon = icon if icon
