@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.19.1](https://github.com/openhab/openhab-jruby/tree/v5.19.1) (2024-05-21)
+
+### Bug Fixes
+
+- change in Buttongrid: call create_button_definition in OH4.2 by [@jimtng](https://github.com/jimtng) in [#270](https://github.com/openhab/openhab-jruby/pull/270)
+
+**Full Changelog**: [v5.19.0...v5.19.1](https://github.com/openhab/openhab-jruby/compare/v5.19.0...v5.19.1)
+
 ## [v5.19.0](https://github.com/openhab/openhab-jruby/tree/v5.19.0) (2024-05-16)
 
 ### Features
