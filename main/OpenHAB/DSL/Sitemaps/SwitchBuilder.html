@@ -3554,7 +3554,8 @@ They will be converted to strings.</p>
 <ul>
 <li>Scalar elements define the command, and the label is the same as the command.</li>
 <li>Array elements contain the command, label, and optional third element for the icon.</li>
-<li>Hash elements contain the command, label, and optional icon defined by the corresponding keys.</li>
+<li>Hash elements contain the <code>command</code>, <code>release</code> (optional), <code>label</code>, and <code>icon</code> (optional)
+defined by the corresponding keys.</li>
 </ul>
 
 
@@ -3597,6 +3598,15 @@ They will be converted to strings.</p>
   {<span class="key">command</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">cool</span><span class="delimiter">&quot;</span></span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Cool</span><span class="delimiter">&quot;</span></span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:snow</span><span class="delimiter">&quot;</span></span>},
   {<span class="key">command</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">heat</span><span class="delimiter">&quot;</span></span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Heat</span><span class="delimiter">&quot;</span></span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:flame</span><span class="delimiter">&quot;</span></span>},
   {<span class="key">command</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">auto</span><span class="delimiter">&quot;</span></span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Auto</span><span class="delimiter">&quot;</span></span>} <span class="comment"># no icon</span>
+]</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Since openHAB 4.2, <code>release</code> is also supported in the array of hashes</p>
+</div></p>
+      
+      <pre class="example code"><code><span class="comment"># when `release` is specified, `command` will be sent on press and `release` on release</span>
+switch <span class="key">mappings</span>: [
+  {<span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">On</span><span class="delimiter">&quot;</span></span>, <span class="key">command</span>: <span class="constant">ON</span>, <span class="key">release</span>: <span class="constant">OFF</span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:power</span><span class="delimiter">&quot;</span></span>}
 ]</code></pre>
     
   </div>
@@ -3645,12 +3655,12 @@ They will be converted to strings.</p>
       <pre class="lines">
 
 
-320
-321
-322</pre>
+327
+328
+329</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 320</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 327</span>
 
 <span class="keyword">def</span> <span class="function">mappings</span>
   <span class="instance-variable">@mappings</span>
@@ -3666,7 +3676,7 @@ They will be converted to strings.</p>
 </div>
 
         <footer>
-  Generated on Wed May 22 02:13:59 2024 by
+  Generated on Wed May 22 02:15:49 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
