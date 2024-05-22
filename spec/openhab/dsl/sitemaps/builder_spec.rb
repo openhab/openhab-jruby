@@ -439,6 +439,19 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
       end
     end
 
+    it "supports release command in a hash element", if: OpenHAB::Core.version >= OpenHAB::Core::V4_2 do
+      sitemaps.build do
+        sitemap "default" do
+          switch label: "My Switch", mappings: [
+            { command: OFF, release: ON, label: "off" }
+          ]
+        end
+      end
+      switch = sitemaps["default"].children.first
+      expect(switch.mappings.first.cmd).to eq "OFF"
+      expect(switch.mappings.first.release_cmd).to eq "ON"
+    end
+
     it "can contain hashes of command, label, and an optional icon" do
       sitemaps.build do
         sitemap "default" do
