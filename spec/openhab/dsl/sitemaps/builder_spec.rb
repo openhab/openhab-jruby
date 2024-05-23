@@ -583,52 +583,80 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
             [2, 2, "UP", "Up", "f7:arrowtriangle_up"],
             [4, 2, "DOWN", "Down", "f7:arrowtriangle_down"],
             [3, 1, "LEFT", "Left", "f7:arrowtriangle_left"]
-          ] do
-            button [3, 3, "RIGHT", "Right", "f7:arrowtriangle_right"]
-            button [3, 2, "ENTER", "Enter"]
-          end
+          ]
         end
       end
 
       bg = s.children.first
-      expect(bg.buttons.size).to eq 8
-      expect(bg.buttons[0].row).to eq 1
-      expect(bg.buttons[7].cmd).to eq "ENTER"
+      expect(bg.children.size).to eq 6
+      expect(bg.children[0].row).to eq 1
+      expect(bg.children[5].cmd).to eq "LEFT"
     end
 
-    it "raises an error when button is incomplete" do
-      expect do
-        sitemaps.build do
-          sitemap "default" do
-            buttongrid buttons: [[1, 2, 3]]
-          end
+    it "accepts an array of hashes for buttons parameter" do
+      s = sitemaps.build do
+        sitemap "default" do
+          buttongrid buttons: [
+            { row: 1, column: 2, click: "BACK", label: "Back", icon: "f7:return" }
+          ]
         end
-      end.to raise_error(ArgumentError)
+      end
 
-      expect do
-        sitemaps.build do
+      bg = s.children.first
+      expect(bg.children.size).to eq 1
+      expect(bg.children[0].row).to eq 1
+      expect(bg.children[0].column).to eq 2
+      expect(bg.children[0].cmd).to eq "BACK"
+      expect(bg.children[0].label).to eq "Back"
+      expect(bg.children[0].icon).to eq "f7:return"
+    end
+
+    it "uses the command as label by default" do
+      s = sitemaps.build do
+        sitemap "default" do
+          buttongrid buttons: [[1, 1, "BACK"], [1, 2, "FORWARD", "Forward"]]
+        end
+      end
+
+      buttons = s.children.first.children
+      expect(buttons[0].label).to eq "BACK"
+      expect(buttons[1].label).to eq "Forward"
+    end
+
+    describe "#button" do
+      it "accepts an array of arguments" do
+        s = sitemaps.build do
           sitemap "default" do
             buttongrid do
-              button
+              button [1, 1, "BACK", "Back", "f7:return"]
             end
           end
         end
-      end.to raise_error(ArgumentError)
+        button = s.children.first.children.first
+        expect(button.row).to eq 1
+        expect(button.column).to eq 1
+        expect(button.cmd).to eq "BACK"
+        expect(button.label).to eq "Back"
+        expect(button.icon).to eq "f7:return"
+      end
 
-      expect do
-        sitemaps.build do
+      it "accepts positional arguments" do
+        s = sitemaps.build do
           sitemap "default" do
             buttongrid do
-              button [1, 2, 3]
+              button 1, 1, "BACK", "Back", "f7:return"
             end
           end
         end
-      end.to raise_error(ArgumentError)
-    end
+        button = s.children.first.children.first
+        expect(button.row).to eq 1
+        expect(button.column).to eq 1
+        expect(button.cmd).to eq "BACK"
+        expect(button.label).to eq "Back"
+        expect(button.icon).to eq "f7:return"
+      end
 
-    # @deprecated OH 4.1 guard is only needed for < OH 4.2
-    describe "with button sub-widgets", if: OpenHAB::Core.version >= OpenHAB::Core::V4_2 do
-      it "works" do
+      it "accepts keyword arguments" do
         s = sitemaps.build do
           sitemap "default" do
             buttongrid do
@@ -641,8 +669,77 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         bg = s.children.first
         buttons = bg.children
         expect(buttons.size).to eq 2
-        expect(buttons[0].row).to eq 1
+        expect(buttons[0].column).to eq 1
         expect(buttons[1].cmd).to eq "HOME"
+      end
+
+      context "when mixing positional and keyword arguments" do
+        it "works" do
+          sitemaps.build do
+            sitemap "default" do
+              buttongrid do
+                button 1, 1, click: "HOME", label: "Menu", icon: "material:apps"
+              end
+            end
+          end
+        end
+
+        it "keyword arguments override positional arguments" do
+          s = sitemaps.build do
+            sitemap "default" do
+              buttongrid do
+                button 1, 1, "POS", "Label", "icon", row: 2, column: 2, click: "HOME", label: "Menu", icon: "power"
+              end
+            end
+          end
+          bg = s.children.first
+          button = bg.children.first
+          expect(button.row).to eq 2
+          expect(button.column).to eq 2
+          expect(button.cmd).to eq "HOME"
+          expect(button.label).to eq "Menu"
+          expect(button.icon).to eq "power"
+        end
+      end
+
+      it "adds the buttongrid's buttons argument before the method calls in the block" do
+        s = sitemaps.build do
+          sitemap "default" do
+            buttongrid buttons: [
+              [1, 1, "BACK", "Back", "f7:return"]
+            ] do
+              button row: 1, column: 2, click: "YELLOW", label: "Search", icon: "f7:search"
+            end
+          end
+        end
+
+        bg = s.children.first
+        buttons = bg.children
+        expect(buttons.size).to eq 2
+        expect(buttons[1].row).to eq 1
+        expect(buttons[1].column).to eq 2
+        expect(buttons[1].cmd).to eq "YELLOW"
+      end
+
+      # @deprecated OH 4.1 - remove the if check when dropping OH 4.1 support
+      it "uses buttongrid's item by default", if: OpenHAB::Core.version >= OpenHAB::Core::V4_2 do
+        items.build do
+          string_item Test1
+          string_item Test2
+        end
+
+        s = sitemaps.build do
+          sitemap "default" do
+            buttongrid item: Test1 do
+              button 1, 1, "FORWARD"
+              button 1, 2, "BACK", item: Test2
+            end
+          end
+        end
+
+        buttons = s.children.first.children
+        expect(buttons[0].item).to eql "Test1"
+        expect(buttons[1].item).to eql "Test2"
       end
 
       { row: 1, column: 1, click: "CMD" }.tap do |arguments|
