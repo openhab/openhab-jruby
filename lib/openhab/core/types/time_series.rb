@@ -18,7 +18,7 @@ module OpenHAB
       # @since openHAB 4.1
       #
       # @example
-      #   time_series = TimeSeries.new # defaults to :add policy
+      #   time_series = TimeSeries.new # defaults to :replace policy
       #                           .add(Time.at(2), DecimalType.new(2))
       #                           .add(Time.at(1), DecimalType.new(1))
       #                           .add(Time.at(3), DecimalType.new(3))
