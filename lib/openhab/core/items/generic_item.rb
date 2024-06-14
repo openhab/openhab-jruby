@@ -134,7 +134,9 @@ module OpenHAB
         #
         # The similar method `command!`, however, will always send the command regardless of the item's state.
         #
-        # @param [Command] command command to send to the item
+        # @param [Command, #to_s] command command to send to the item.
+        #   When given a {Command} argument, it will be passed directly.
+        #   Otherwise, the result of `#to_s` will be parsed into a {Command}.
         # @return [self, nil] nil when `ensure` is in effect and the item was already in the same state,
         #   otherwise the item.
         #
@@ -142,6 +144,17 @@ module OpenHAB
         # @see OpenHAB::DSL.ensure_states ensure_states
         # @see OpenHAB::DSL.ensure_states! ensure_states!
         # @see DSL::Items::Ensure::Ensurable#ensure ensure
+        #
+        # @example Sending a {Command} to an item
+        #   MySwitch.command(ON) # The preferred method is `MySwitch.on`
+        #   Garage_Door.command(DOWN) # The preferred method is `Garage_Door.down`
+        #   SetTemperature.command 20 | "°C"
+        #
+        # @example Sending a plain number to a {NumberItem}
+        #   SetTemperature.command(22.5) # if it accepts a DecimalType
+        #
+        # @example Sending a string to a dimensioned {NumberItem}
+        #   SetTemperature.command("22.5 °C") # The string will be parsed and converted to a QuantityType
         #
         def command(command)
           command = format_command(command)
@@ -165,9 +178,26 @@ module OpenHAB
         #
         # Send an update to this item
         #
-        # @param [State] state
+        # @param [State, #to_s, nil] state the state to update the item.
+        #   When given a {State} argument, it will be passed directly.
+        #   Otherwise, the result of `#to_s` will be parsed into a {State} first.
+        #   If `nil` is passed, the item will be updated to {NULL}.
         # @return [self, nil] nil when `ensure` is in effect and the item was already in the same state,
         #   otherwise the item.
+        #
+        # @example Updating to a {State}
+        #   DoorStatus.update(OPEN)
+        #   InsideTemperature.update 20 | "°C"
+        #
+        # @example Updating to {NULL}, the two following are equivalent:
+        #   DoorStatus.update(nil)
+        #   DoorStatus.update(NULL)
+        #
+        # @example Updating with a plain number
+        #   PeopleCount.update(5) # A plain NumberItem
+        #
+        # @example Updating with a string to a dimensioned {NumberItem}
+        #   InsideTemperature.update("22.5 °C") # The string will be parsed and converted to a QuantityType
         #
         def update(state)
           state = format_update(state)
