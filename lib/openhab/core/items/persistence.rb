@@ -27,8 +27,7 @@ module OpenHAB
       #
       # @example Comparison using Quantity
       #   # Because Power_Usage has a unit, the return value
-      #   # from average_since is a QuantityType which can be
-      #   # compared against a string with quantity
+      #   # from average_since is a QuantityType
       #   if Power_Usage.average_since(15.minutes.ago) > 5 | "kW"
       #     logger.info("The power usage exceeded its 15 min average)
       #   end
@@ -429,7 +428,7 @@ module OpenHAB
         # @overload persist(timestamp, state, service = nil)
         #   Persists a state at a given timestamp
         #   @param [#to_zoned_date_time] timestamp The timestamp for the given state to be stored
-        #   @param [Types::State] state The state to be stored
+        #   @param [Types::State, #to_s] state The state to be stored
         #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
         #   @return [void]
         #   @since openHAB 4.2
