@@ -3980,18 +3980,18 @@
       <pre class="lines">
 
 
-278
-279
-280
-281
-282
-283
-284
-285
-286</pre>
+308
+309
+310
+311
+312
+313
+314
+315
+316</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 278</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 308</span>
 
 <span class="keyword">def</span> <span class="function">category=</span>(value)
   modify <span class="keyword">do</span>
@@ -4408,19 +4408,19 @@ Use <span class='object_link'><a href="#undef%3F-instance_method" title="OpenHAB
       <pre class="lines">
 
 
-300
-301
-302
-303
-304
-305
-306
-307
-308
-309</pre>
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 300</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 330</span>
 
 <span class="keyword">def</span> <span class="function">tags=</span>(values)
   modify <span class="keyword">do</span>
@@ -4470,7 +4470,32 @@ the command will only be sent if the item is not already in the same state.</p>
   </div>
 </div>
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Sending a <span class='object_link'><a href="../Types/Command.html" title="OpenHAB::Core::Types::Command (module)">Command</a></span> to an item</p>
+</div></p>
+      
+      <pre class="example code"><code><span class="constant">MySwitch</span>.command(<span class="constant">ON</span>) <span class="comment"># The preferred method is `MySwitch.on`</span>
+<span class="constant">Garage_Door</span>.command(<span class="constant">DOWN</span>) <span class="comment"># The preferred method is `Garage_Door.down`</span>
+<span class="constant">SetTemperature</span>.command <span class="integer">20</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Sending a plain number to a <span class='object_link'><a href="NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span></p>
+</div></p>
+      
+      <pre class="example code"><code><span class="constant">SetTemperature</span>.command(<span class="float">22.5</span>) <span class="comment"># if it accepts a DecimalType</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Sending a string to a dimensioned <span class='object_link'><a href="NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span></p>
+</div></p>
+      
+      <pre class="example code"><code><span class="constant">SetTemperature</span>.command(<span class="string"><span class="delimiter">&quot;</span><span class="content">22.5 °C</span><span class="delimiter">&quot;</span></span>) <span class="comment"># The string will be parsed and converted to a QuantityType</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -4478,12 +4503,14 @@ the command will only be sent if the item is not already in the same state.</p>
         <span class='name'>command</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../Types/Command.html" title="OpenHAB::Core::Types::Command (module)">Command</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Types/Command.html" title="OpenHAB::Core::Types::Command (module)">Command</a></span></tt>, <tt>#<span class='object_link'><a href="Item.html#to_s-instance_method" title="OpenHAB::Core::Items::Item#to_s (method)">to_s</a></span></tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><p>command to send to the item</p>
+        <div class='inline'><p>command to send to the item.
+When given a <span class='object_link'><a href="../Types/Command.html" title="OpenHAB::Core::Types::Command (module)">Command</a></span> argument, it will be passed directly.
+Otherwise, the result of <code>#to_s</code> will be parsed into a <span class='object_link'><a href="../Types/Command.html" title="OpenHAB::Core::Types::Command (module)">Command</a></span>.</p>
 </div>
       
     </li>
@@ -4528,15 +4555,15 @@ otherwise the item.</p>
       <pre class="lines">
 
 
-146
-147
-148
-149
-150
-151</pre>
+159
+160
+161
+162
+163
+164</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 146</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 159</span>
 
 <span class="keyword">def</span> <span class="function">command</span>(command)
   command = format_command(command)
@@ -4656,32 +4683,32 @@ modifications.</p>
       <pre class="lines">
 
 
-239
-240
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261</pre>
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 239</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 269</span>
 
 <span class="keyword">def</span> <span class="function">modify</span>(<span class="key">force</span>: <span class="predefined-constant">false</span>)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">you must pass a block to modify</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block_given?
@@ -4805,7 +4832,7 @@ modifications.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 161</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 174</span>
 
 </pre>
     </td>
@@ -4929,7 +4956,7 @@ modifications.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 210</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 240</span>
 
 </pre>
     </td>
@@ -5007,7 +5034,38 @@ modifications.</p>
   </div>
 </div>
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Updating to a <span class='object_link'><a href="../Types/State.html" title="OpenHAB::Core::Types::State (module)">State</a></span></p>
+</div></p>
+      
+      <pre class="example code"><code><span class="constant">DoorStatus</span>.update(<span class="constant">OPEN</span>)
+<span class="constant">InsideTemperature</span>.update <span class="integer">20</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Updating to <span class='object_link'><a href="../Types/UnDefType.html#NULL-constant" title="OpenHAB::Core::Types::UnDefType::NULL (constant)">NULL</a></span>, the two following are equivalent:</p>
+</div></p>
+      
+      <pre class="example code"><code><span class="constant">DoorStatus</span>.update(<span class="predefined-constant">nil</span>)
+<span class="constant">DoorStatus</span>.update(<span class="constant">NULL</span>)</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Updating with a plain number</p>
+</div></p>
+      
+      <pre class="example code"><code><span class="constant">PeopleCount</span>.update(<span class="integer">5</span>) <span class="comment"># A plain NumberItem</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Updating with a string to a dimensioned <span class='object_link'><a href="NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span></p>
+</div></p>
+      
+      <pre class="example code"><code><span class="constant">InsideTemperature</span>.update(<span class="string"><span class="delimiter">&quot;</span><span class="content">22.5 °C</span><span class="delimiter">&quot;</span></span>) <span class="comment"># The string will be parsed and converted to a QuantityType</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -5015,9 +5073,16 @@ modifications.</p>
         <span class='name'>state</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../Types/State.html" title="OpenHAB::Core::Types::State (module)">State</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Types/State.html" title="OpenHAB::Core::Types::State (module)">State</a></span></tt>, <tt>#<span class='object_link'><a href="Item.html#to_s-instance_method" title="OpenHAB::Core::Items::Item#to_s (method)">to_s</a></span></tt>, <tt>nil</tt>)</span>
       
       
+      
+        &mdash;
+        <div class='inline'><p>the state to update the item.
+When given a <span class='object_link'><a href="../Types/State.html" title="OpenHAB::Core::Types::State (module)">State</a></span> argument, it will be passed directly.
+Otherwise, the result of <code>#to_s</code> will be parsed into a <span class='object_link'><a href="../Types/State.html" title="OpenHAB::Core::Types::State (module)">State</a></span> first.
+If <code>nil</code> is passed, the item will be updated to <span class='object_link'><a href="../Types/UnDefType.html#NULL-constant" title="OpenHAB::Core::Types::UnDefType::NULL (constant)">NULL</a></span>.</p>
+</div>
       
     </li>
   
@@ -5048,15 +5113,15 @@ otherwise the item.</p>
       <pre class="lines">
 
 
-172
-173
-174
-175
-176
-177</pre>
+202
+203
+204
+205
+206
+207</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 172</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 202</span>
 
 <span class="keyword">def</span> <span class="function">update</span>(state)
   state = format_update(state)
@@ -5074,7 +5139,7 @@ otherwise the item.</p>
 </div>
 
         <footer>
-  Generated on Thu Jun  6 22:55:31 2024 by
+  Generated on Sat Jun 15 00:52:57 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
