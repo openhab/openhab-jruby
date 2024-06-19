@@ -80,7 +80,10 @@ module OpenHAB
         # @param value [#to_zoned_date_time, #to_time, #to_str, #to_d, nil]
         #
         def initialize(value = nil)
-          if value.respond_to?(:to_zoned_date_time)
+          if value.nil?
+            super()
+            return
+          elsif value.respond_to?(:to_zoned_date_time)
             super(value.to_zoned_date_time)
             return
           elsif value.respond_to?(:to_time)
