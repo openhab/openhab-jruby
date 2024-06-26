@@ -5,6 +5,12 @@ RSpec.describe OpenHAB::Core::Types::DateTimeType do
   let(:date2) { DateTimeType.new("2021-01-31T08:00:00+00:00") }
   let(:date3) { DateTimeType.new("2021-01-31T14:00:00+06:00") }
 
+  describe "#initialize" do
+    it "initializes to `now` if no argument is given" do
+      expect(DateTimeType.new.zoned_date_time.to_epoch_second).to be_within(1).of(ZonedDateTime.now.to_epoch_second)
+    end
+  end
+
   describe "math operations" do
     let(:date1) { DateTimeType.new("1970-01-31T08:00:00+0200") }
 
