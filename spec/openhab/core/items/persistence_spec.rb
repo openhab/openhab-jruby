@@ -51,7 +51,7 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
     end
   end
 
-  %i[last_update next_state next_update previous_state].each do |method|
+  %i[last_update next_update last_change next_change previous_state next_state].each do |method|
     next unless OpenHAB::Core::Actions::PersistenceExtensions.respond_to?(method)
 
     describe "##{method}" do

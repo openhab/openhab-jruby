@@ -507,7 +507,20 @@ module OpenHAB
         #   @see last_update
         #   @since openHAB 4.2
 
-        %i[last_update next_update].each do |method|
+        # @!method last_change(service = nil)
+        #   Returns the time the item was last changed.
+        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @return [ZonedDateTime, nil] The timestamp of the last update
+        #   @since openHAB 4.2
+
+        # @!method next_change(service = nil)
+        #   Returns the first future change time of the item.
+        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @return [ZonedDateTime, nil] The timestamp of the next update
+        #   @see last_update
+        #   @since openHAB 4.2
+
+        %i[last_update next_update last_change next_change].each do |method|
           # @deprecated OH 4.1 remove this guard when dropping OH 4.1
           next unless Actions::PersistenceExtensions.respond_to?(method)
 
