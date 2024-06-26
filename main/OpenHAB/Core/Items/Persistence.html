@@ -1039,6 +1039,8 @@ openHAB's Persistence feature. - Documentation for openhab-scripting JRuby helpe
   
   
   
+  
+  
 
         
       </ul>
@@ -4140,6 +4142,29 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#last_change-instance_method" title="#last_change (instance method)">#<strong>last_change</strong>(service = nil)  &#x21d2; ZonedDateTime<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the time the item was last changed.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#last_update-instance_method" title="#last_update (instance method)">#<strong>last_update</strong>(service = nil)  &#x21d2; ZonedDateTime<sup>?</sup> </a>
     
 
@@ -4293,6 +4318,29 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 
   
     <span class="summary_desc"><div class='inline'><p>Returns the minimum value of the item's state between now until the given time.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#next_change-instance_method" title="#next_change (instance method)">#<strong>next_change</strong>(service = nil)  &#x21d2; ZonedDateTime<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the first future change time of the item.</p>
 </div></span>
   
 </li>
@@ -7289,6 +7337,95 @@ or nil if no previous state could be found.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="last_change-instance_method">
+  
+    #<strong>last_change</strong>(service = nil)  &#x21d2; <tt><span class='object_link'><a href="../../CoreExt/Java/ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the time the item was last changed.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../CoreExt/Java/ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The timestamp of the last update</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 510</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="last_update-instance_method">
   
     #<strong>last_update</strong>(service = nil)  &#x21d2; <tt><span class='object_link'><a href="../../CoreExt/Java/ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span></tt><sup>?</sup> 
@@ -7963,6 +8100,130 @@ or nil if no future states could be found.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="next_change-instance_method">
+  
+    #<strong>next_change</strong>(service = nil)  &#x21d2; <tt><span class='object_link'><a href="../../CoreExt/Java/ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the first future change time of the item.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>service</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An optional persistence id instead of the default persistence service.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../CoreExt/Java/ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The timestamp of the next update</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#last_update-instance_method" title="OpenHAB::Core::Items::Persistence#last_update (method)">#last_update</a></span></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.2</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 523</span>
+
+<span class="symbol"><span class="delimiter">%i[</span><span class="content">last_update next_update last_change next_change</span><span class="delimiter">]</span></span>.each <span class="keyword">do</span> |method|
+  <span class="comment"># @deprecated OH 4.1 remove this guard when dropping OH 4.1</span>
+  <span class="keyword">next</span> <span class="keyword">unless</span> <span class="constant">Actions</span>::<span class="constant">PersistenceExtensions</span>.respond_to?(method)
+
+  class_eval <span class="string"><span class="delimiter">&lt;&lt;~RUBY</span></span>, <span class="predefined-constant">__FILE__</span>, <span class="predefined-constant">__LINE__</span> + <span class="integer">1</span><span class="string"><span class="content">
+    def </span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="content">(service = nil)                            # def last_update(service = nil)
+      service ||= persistence_service                       #   service ||= persistence_service
+      result = Actions::PersistenceExtensions.</span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="content">(    #   result = Actions::PersistenceExtensions.last_update(
+        self,                                               #     self,
+        service&amp;.to_s                                       #     service&amp;.to_s
+      )                                                     #   )
+      wrap_result(result)                                   #   wrap_result(result)
+    end                                                     # end</span><span class="delimiter">
+  RUBY</span></span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="next_state-instance_method">
   
     #<strong>next_state</strong>(service = nil, skip_equal: false)  &#x21d2; <tt><span class='object_link'><a href="Persistence/PersistedState.html" title="OpenHAB::Core::Items::Persistence::PersistedState (class)">PersistedState</a></span></tt><sup>?</sup> 
@@ -8060,25 +8321,25 @@ does not refer to a valid service</p>
       <pre class="lines">
 
 
-550
-551
-552
-553
-554
-555
-556
-557
-558
-559
-560
-561
-562
 563
 564
-565</pre>
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 550</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 563</span>
 
 <span class="symbol"><span class="delimiter">%i[</span><span class="content">previous_state next_state</span><span class="delimiter">]</span></span>.each <span class="keyword">do</span> |method|
   <span class="comment"># @deprecated OH 4.1 remove this guard when dropping OH 4.1</span>
@@ -8186,40 +8447,12 @@ does not refer to a valid service</p>
       <pre class="lines">
 
 
-510
-511
-512
-513
-514
-515
-516
-517
-518
-519
-520
-521
-522
-523
-524</pre>
+</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 510</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 503</span>
 
-<span class="symbol"><span class="delimiter">%i[</span><span class="content">last_update next_update</span><span class="delimiter">]</span></span>.each <span class="keyword">do</span> |method|
-  <span class="comment"># @deprecated OH 4.1 remove this guard when dropping OH 4.1</span>
-  <span class="keyword">next</span> <span class="keyword">unless</span> <span class="constant">Actions</span>::<span class="constant">PersistenceExtensions</span>.respond_to?(method)
-
-  class_eval <span class="string"><span class="delimiter">&lt;&lt;~RUBY</span></span>, <span class="predefined-constant">__FILE__</span>, <span class="predefined-constant">__LINE__</span> + <span class="integer">1</span><span class="string"><span class="content">
-    def </span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="content">(service = nil)                            # def last_update(service = nil)
-      service ||= persistence_service                       #   service ||= persistence_service
-      result = Actions::PersistenceExtensions.</span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="content">(    #   result = Actions::PersistenceExtensions.last_update(
-        self,                                               #     self,
-        service&amp;.to_s                                       #     service&amp;.to_s
-      )                                                     #   )
-      wrap_result(result)                                   #   wrap_result(result)
-    end                                                     # end</span><span class="delimiter">
-  RUBY</span></span>
-<span class="keyword">end</span></pre>
+</pre>
     </td>
   </tr>
 </table>
@@ -8755,7 +8988,7 @@ does not refer to a valid service</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 526</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 539</span>
 
 </pre>
     </td>
@@ -9941,7 +10174,7 @@ or nil if no future states could be found.</p>
 </div>
 
         <footer>
-  Generated on Wed Jun 26 14:55:33 2024 by
+  Generated on Wed Jun 26 15:03:47 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
