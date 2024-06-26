@@ -55,6 +55,8 @@ module OpenHAB
           end
         end
 
+        # @return [CallItem]
+        def_item_method(:call)
         # @return [ColorItem]
         def_item_method(:color)
         # @return [ContactItem]

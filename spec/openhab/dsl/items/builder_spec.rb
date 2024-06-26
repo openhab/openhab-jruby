@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe OpenHAB::DSL::Items::Builder do
-  %i[color contact date_time dimmer group image location number player rollershutter string switch].each do |type|
+  %i[call color contact date_time dimmer group image location number player rollershutter string switch].each do |type|
     it "can create a #{type} item" do
       items.build { send(:"#{type}_item", "MyItem", "My Label") }
       expect(MyItem.label).to eql "My Label"
