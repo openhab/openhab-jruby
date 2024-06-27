@@ -427,6 +427,7 @@ module OpenHAB
           end
         end
 
+        def_type_predicate(:call)
         def_type_predicate(:color)
         def_type_predicate(:contact)
         def_type_predicate(:date_time)
