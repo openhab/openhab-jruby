@@ -66,11 +66,13 @@ jobs:
           git add Gemfile.lock Gemfile.ruby-2.6.lock CHANGELOG.md USAGE.md templates .known_good_references
           git commit --amend --no-edit
       - uses: rubygems/release-gem@v1
+        with:
+          await-release: false
       - name: Create Github Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create v${{ env.NEW_VERSION }} --notes-file new_changes.md 
+          gh release create v${{ env.NEW_VERSION }} --notes-file new_changes.md
   publish_main_docs:
     needs: release
     uses: ./.github/workflows/yardoc.yml
