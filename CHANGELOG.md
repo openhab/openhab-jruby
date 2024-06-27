@@ -1,5 +1,21 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.20.0](https://github.com/openhab/openhab-jruby/tree/v5.20.0) (2024-06-27)
+
+### Features
+
+- Sitemaps: support `release` option in switch mappings by [@jimtng](https://github.com/jimtng) in [#275](https://github.com/openhab/openhab-jruby/pull/275)
+- Sitemaps: add `release_only` option for `slider` by [@jimtng](https://github.com/jimtng) in [#274](https://github.com/openhab/openhab-jruby/pull/274)
+- Persistence: add `last_change` and `next_change` by [@jimtng](https://github.com/jimtng) in [#277](https://github.com/openhab/openhab-jruby/pull/277)
+- Add `CallItem` and `StringListType` support by [@jimtng](https://github.com/jimtng) in [#283](https://github.com/openhab/openhab-jruby/pull/283)
+
+### Bug Fixes
+
+- Sitemaps: fix slider's switch setting by [@jimtng](https://github.com/jimtng) in [#273](https://github.com/openhab/openhab-jruby/pull/273)
+- Initializing a `DateTimeType` without an argument should set it to now by [@jimtng](https://github.com/jimtng) in [#280](https://github.com/openhab/openhab-jruby/pull/280)
+
+**Full Changelog**: [v5.19.1...v5.20.0](https://github.com/openhab/openhab-jruby/compare/v5.19.1...v5.20.0)
+
 ## [v5.19.1](https://github.com/openhab/openhab-jruby/tree/v5.19.1) (2024-05-21)
 
 ### Bug Fixes
