@@ -49,6 +49,7 @@ If you're new to Ruby, you may want to check out [Ruby Basics](docs/ruby-basics.
     - [Script is Loaded](#script-is-loaded)
     - [openHAB System Started](#openhab-system-started)
     - [Cron Trigger](#cron-trigger)
+    - [DateTimeItem Trigger](#datetimeitem-trigger)
     - [Other Triggers](#other-triggers)
     - [Combining Multiple Triggers](#combining-multiple-triggers)
     - [Combining Multiple Conditions](#combining-multiple-conditions)
@@ -1560,6 +1561,30 @@ end
 ```
 
 See {OpenHAB::DSL::Rules::BuilderDSL#every #every}
+
+#### DateTimeItem Trigger
+
+To trigger based on the date and time stored in a DateTime item, use {OpenHAB::DSL::Rules::BuilderDSL#at at ItemName}:
+
+```ruby
+rule "DateTime Trigger" do
+  at My_DateTimeItem
+  run do |event|
+    logger.info "Triggered by #{event.item} at #{event.item.state}"
+  end
+end
+```
+
+To trigger based on only the _time_ part of a DateTime item, use {OpenHAB::DSL::Rules::BuilderDSL#every every :day, at: ItemName}:
+
+```ruby
+rule "TimeOnly Trigger" do
+  every :day, at: My_DateTimeItem
+  run do |event|
+    logger.info "Triggered by #{event.item} at #{event.item.state}"
+  end
+end
+```
 
 #### Other Triggers
 

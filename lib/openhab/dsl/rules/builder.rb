@@ -1283,6 +1283,8 @@ module OpenHAB
         # @param [Object] attach Object to be attached to the trigger
         # @return [void]
         #
+        # @see at
+        #
         # @example
         #   rule "Daily" do
         #     every :day, at: '5:15'
@@ -1297,7 +1299,13 @@ module OpenHAB
         #     run { Light.on }
         #   end
         #
-        # @example
+        # @example Trigger at the time portion of a DateTime Item
+        #   rule "Every day at sunset" do
+        #     every :day, at: Sunset_Time
+        #     run { logger.info "It's getting dark" }
+        #   end
+        #
+        # @example Specific day of the week
         #   rule "Weekly" do
         #     every :monday, at: '5:15'
         #     run do
@@ -1305,7 +1313,7 @@ module OpenHAB
         #     end
         #   end
         #
-        # @example
+        # @example Symbolic interval
         #   rule "Often" do
         #     every :minute
         #     run do
@@ -1321,7 +1329,7 @@ module OpenHAB
         #     end
         #   end
         #
-        # @example
+        # @example Duration interval
         #   rule "Often" do
         #     every 5.minutes
         #     run do
@@ -1329,16 +1337,10 @@ module OpenHAB
         #     end
         #   end
         #
-        # @example
+        # @example MonthDay
         #   rule 'Every 14th of Feb at 2pm' do
         #     every '02-14', at: '2pm'
         #     run { logger.info "Happy Valentine's Day!" }
-        #   end
-        #
-        # @example
-        #   rule "Every day at sunset" do
-        #     every :day, at: Sunset_Time
-        #     run { logger.info "It's getting dark" }
         #   end
         #
         def every(value, at: nil, attach: nil)
@@ -1734,6 +1736,8 @@ module OpenHAB
         #
         # @param [Item, String, Symbol] item The item (or its name)
         # @return [void]
+        #
+        # @see every
         #
         # @example
         #   rule "say hello when the kids get home from school" do
