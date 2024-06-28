@@ -59,4 +59,10 @@ RSpec.describe Time do
       expect(time.between?(time..)).to be true
     end
   end
+
+  describe "#to_instant" do
+    it "converts to Instant" do
+      expect(described_class.now.to_instant).to be_a(java.time.Instant)
+    end
+  end
 end

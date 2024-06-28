@@ -92,6 +92,11 @@ class Time
     to_java(java.time.ZonedDateTime)
   end
 
+  # @return [java.time.Instant]
+  def to_instant
+    to_java(java.time.Instant)
+  end
+
   #
   # Converts to a {ZonedDateTime} if `other`
   # is also convertible to a ZonedDateTime.
