@@ -56,8 +56,7 @@ module OpenHAB
         #
         # Coerce object to a StringType
         #
-        # @param [String] other object to coerce to a
-        #   DateTimeType
+        # @param [String] other object to coerce to a StringType
         #
         # @return [[StringType, StringType], nil]
         #
