@@ -51,31 +51,85 @@ module OpenHAB
       module_function
 
       #
-      # Send a notification.
+      # Send a notification using
+      # {https://next.openhab.org/addons/integrations/openhabcloud/#cloud-notification-actions
+      # openHAB Cloud Notification Action}.
       #
       # @param msg [String] The message to send.
-      # @param email [String, nil] The email address to send to. If `nil`,
-      #   the message will be broadcast.
-      # @param icon [String, Symbol, nil]
-      # @param severity [String, Symbol, nil]
+      # @param email [String, nil] The email address to send to. If `nil`, the message will be broadcast.
+      # @param icon [String, Symbol, nil] The icon name
+      #   (as described in {https://next.openhab.org/docs/configuration/items.html#icons Items}).
+      # @param severity [String, Symbol, nil] A description of the severity of the incident.
+      # @param title [String, nil] The title of the notification.
+      #   When `nil`, it defaults to `openHAB` inside the Android and iOS apps.
+      # @param on_click [String, nil] The action to be performed when the user clicks on the notification.
+      #   Specified using the {https://next.openhab.org/addons/integrations/openhabcloud/#action-syntax action syntax}.
+      # @param attachment [String, nil] The URL of the media attachment to be displayed with the notification.
+      #   This URL must be reachable by the push notification client.
+      # @param buttons [Array<String>, Hash<String, String>, nil] Buttons to include in the notification.
+      #   - In array form, each element is specified as `Title=$action`, where `$action` follows the
+      #   {https://next.openhab.org/addons/integrations/openhabcloud/#action-syntax action syntax}.
+      #   - In hash form, the keys are the button titles and the values are the actions.
+      #
+      #   The maximum number of buttons is 3.
       # @return [void]
       #
+      # @note The parameters `title`, `on_click`, `attachment`, and `buttons` were added in openHAB 4.2.
+      #
+      # @see https://www.openhab.org/addons/integrations/openhabcloud/
+      #
       # @example Send a broadcast notification via openHAB Cloud
-      #   rule 'Send an alert' do
+      #   rule "Send an alert" do
       #     changed Alarm_Triggered, to: ON
-      #     run { notify 'Red Alert!' }
+      #     run { notify "Red Alert!" }
       #   end
       #
-      def notify(msg, email: nil, icon: nil, severity: nil)
+      # @example Provide action buttons in a notification
+      #   rule "Doorbell" do
+      #     changed Doorbell, to: ON
+      #     run do
+      #       notify "Someone pressed the doorbell!",
+      #         title: "Doorbell",
+      #         attachment: "http://myserver.local/cameras/frontdoor.jpg",
+      #         buttons: {
+      #           "Show Camera" => "ui:/basicui/app?w=0001&sitemap=cameras",
+      #           "Unlock Door" => "command:FrontDoor_Lock:OFF"
+      #         }
+      #     end
+      #   end
+      #
+      def notify(
+        msg,
+        email: nil,
+        icon: nil,
+        severity: nil,
+        title: nil,
+        on_click: nil,
+        attachment: nil,
+        buttons: nil
+      )
         unless Actions.const_defined?(:NotificationAction)
           raise NotImplementedError, "NotificationAction is not available. Please install the openHAB Cloud addon."
         end
 
+        args = []
         if email
-          NotificationAction.send_notification(email.to_s, msg.to_s, icon&.to_s, severity&.to_s)
+          args.push(:send_notification, email)
         else
-          NotificationAction.send_broadcast_notification(msg.to_s, icon&.to_s, severity&.to_s)
+          args.push(:send_broadcast_notification)
         end
+        args.push(msg.to_s, icon&.to_s, severity&.to_s)
+
+        # @!deprecated OH 4.1
+        if Core.version >= Core::V4_2
+          buttons ||= []
+          buttons = buttons.map { |title, action| "#{title}=#{action}" } if buttons.is_a?(Hash)
+          raise ArgumentError, "buttons must contain (0..3) elements." unless (0..3).cover?(buttons.size)
+
+          args.push(title&.to_s, on_click&.to_s, attachment&.to_s, buttons[0]&.to_s, buttons[1]&.to_s, buttons[2]&.to_s)
+        end
+
+        NotificationAction.__send__(*args)
       end
     end
   end

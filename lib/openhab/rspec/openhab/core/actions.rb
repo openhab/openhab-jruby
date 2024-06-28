@@ -5,10 +5,37 @@ module OpenHAB
     module Actions
       # redefine these to do nothing so that rules won't fail
 
-      module_function
+      class NotificationAction
+        class << self
+          def send_notification(
+            email,
+            msg,
+            icon,
+            severity,
+            title = nil,
+            on_click = nil,
+            attachment = nil,
+            button1 = nil,
+            button2 = nil,
+            button3 = nil
+          )
+            logger.debug("send_notification: #{email}, #{msg}, #{icon}, #{severity}, #{title}, #{on_click}, #{attachment}, #{button1}, #{button2}, #{button3}") # rubocop:disable Layout/LineLength
+          end
 
-      def notify(msg, email: nil)
-        logger.debug("notify: #{msg}")
+          def send_broadcast_notification(
+            msg,
+            icon,
+            severity,
+            title = nil,
+            on_click = nil,
+            attachment = nil,
+            button1 = nil,
+            button2 = nil,
+            button3 = nil
+          )
+            logger.debug("send_broadcast_notification: #{msg}, #{icon}, #{severity}, #{title}, #{on_click}, #{attachment}, #{button1}, #{button2}, #{button3}") # rubocop:disable Layout/LineLength
+          end
+        end
       end
 
       class Voice
