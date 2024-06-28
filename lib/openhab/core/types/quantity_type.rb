@@ -179,6 +179,7 @@ module OpenHAB
           class_eval( # rubocop:disable Style/DocumentDynamicEvalDefinition https://github.com/rubocop/rubocop/issues/10179
             # def +(other)
             #   logger.trace("#{self} + #{other} (#{other.class})")
+            #   other = other.state if other.is_a?(Core::Items::Persistence::PersistedState)
             #   if other.is_a?(QuantityType)
             #     add_quantity(other)
             #   elsif (thread_unit = DSL.unit(dimension))
@@ -203,6 +204,7 @@ module OpenHAB
             <<~RUBY, __FILE__, __LINE__ + 1
               def #{ruby_op}(other)
                 logger.trace("\#{self} #{ruby_op} \#{other} (\#{other.class})")
+                other = other.state if other.is_a?(Core::Items::Persistence::PersistedState)
                 if other.is_a?(QuantityType)
                   #{java_op}_quantity(other)
                 elsif (thread_unit = DSL.unit(dimension))

@@ -158,11 +158,56 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
     end
   end
 
-  it "PersistedState directly returns a state" do
-    items.build { number_item "Number1", state: 3 }
-    Number1.persist
-    max = Number1.maximum_since(10.seconds.ago)
-    expect(max).to eql max.state
-    expect(max.timestamp).to be_a ZonedDateTime
+  describe "PersistedState" do
+    before do
+      items.build do
+        number_item "Number1", state: 3
+        number_item "Qty1", state: 3 | "kW"
+      end
+      Number1.persist
+      Qty1.persist
+    end
+
+    it "works" do
+      max = Number1.maximum_since(10.seconds.ago)
+      expect(max).to be_a described_class::PersistedState
+      expect(max).to eql max.state
+      expect(max.timestamp).to be_a ZonedDateTime
+    end
+
+    it "can be compared to a state" do
+      [Number1, Qty1].each do |item|
+        max = item.maximum_since(10.seconds.ago)
+        expect(max == item.state).to be true
+        expect(max != item.state).to be false
+        expect(max >= item.state).to be true
+        expect(max <= item.state).to be true
+        expect(max < item.state).to be false
+        expect(max > item.state).to be false
+
+        expect(item.state == max).to be true
+        expect(item.state != max).to be false
+        expect(item.state >= max).to be true
+        expect(item.state <= max).to be true
+        expect(item.state > max).to be false
+        expect(item.state < max).to be false
+      end
+    end
+
+    it "can be added to a state" do
+      [Number1, Qty1].each do |item|
+        max = item.maximum_since(10.seconds.ago)
+        expect(item.state + max).to be_a(State)
+        expect(item.state - max).to be_a(State)
+      end
+    end
+
+    it "can be added to another PersistedState" do
+      [Number1, Qty1].each do |item|
+        max = item.maximum_since(10.seconds.ago)
+        expect(max + max).to be_a(State)
+        expect(max - max).to be_a(State) # rubocop:disable Lint/BinaryOperatorWithIdenticalOperands
+      end
+    end
   end
 end

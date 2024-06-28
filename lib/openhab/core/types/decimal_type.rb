@@ -146,8 +146,8 @@ module OpenHAB
             #   elsif other.is_a?(java.math.BigDecimal)
             #     self.class.new(to_big_decimal.add(other))
             #   elsif other.respond_to?(:to_d)
-            #     result = to_d + other
-            #     # result could already be a QuantityType
+            #     result = to_d + other.to_d
+            #     # result could already be a NumericType
             #     result = self.class.new(result) unless result.is_a?(NumericType)
             #     result
             #   elsif other.respond_to?(:coerce) && (lhs, rhs = other.coerce(to_d))
@@ -163,8 +163,8 @@ module OpenHAB
                 elsif other.is_a?(java.math.BigDecimal)
                   self.class.new(to_big_decimal.#{java_op}(other, java.math.MathContext::DECIMAL128))
                 elsif other.respond_to?(:to_d)
-                  result = to_d #{ruby_op} other
-                  # result could already be a QuantityType
+                  result = to_d #{ruby_op} other.to_d
+                  # result could already be a NumericType
                   result = self.class.new(result) unless result.is_a?(NumericType)
                   result
                 elsif other.respond_to?(:coerce) && (lhs, rhs = other.coerce(to_d))
