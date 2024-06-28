@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.21.0](https://github.com/openhab/openhab-jruby/tree/v5.21.0) (2024-06-28)
+
+### Features
+
+- Cloud Notification: support enhanced notification by [@jimtng](https://github.com/jimtng) in [#285](https://github.com/openhab/openhab-jruby/pull/285)
+
+**Full Changelog**: [v5.20.0...v5.21.0](https://github.com/openhab/openhab-jruby/compare/v5.20.0...v5.21.0)
+
 ## [v5.20.0](https://github.com/openhab/openhab-jruby/tree/v5.20.0) (2024-06-27)
 
 ### Features
