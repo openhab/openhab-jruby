@@ -31,6 +31,16 @@ RSpec.describe OpenHAB::DSL::Items::TimedCommand do
     expect(item.state).to eq 0
   end
 
+  describe "#timed_command?" do
+    it "works" do
+      expect(item).not_to be_timed_command
+      item.command(70, for: 5.seconds)
+      expect(item).to be_timed_command
+      item.command 70
+      expect(item).not_to be_timed_command
+    end
+  end
+
   context "with SwitchItem" do
     let(:item) { items.build { switch_item "Switch1" } }
 
