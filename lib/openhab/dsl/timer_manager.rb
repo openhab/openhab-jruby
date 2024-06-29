@@ -112,7 +112,7 @@ module OpenHAB
       #
       # @example Extend an existing timer, or schedule a new one
       #   # This is technically the same functionality as just calling `after()` with an `id`,
-      #   # but allows you to performa extra steps if the timer is actually scheduled.
+      #   # but allows you to perform extra steps if the timer is actually scheduled.
       #   timers.schedule(item) do |timer|
       #     next timer.tap(&:reschedule) if timer
       #
