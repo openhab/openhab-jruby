@@ -168,11 +168,30 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
       Qty1.persist
     end
 
+    let(:historic_item_class) do
+      Class.new do
+        include org.openhab.core.persistence.HistoricItem
+
+        attr_reader :timestamp, :state, :name
+
+        def initialize(timestamp, state, name)
+          @timestamp = timestamp
+          @state = state
+          @name = name
+        end
+      end
+    end
+
     it "works" do
       max = Number1.maximum_since(10.seconds.ago)
       expect(max).to be_a described_class::PersistedState
       expect(max).to eql max.state
       expect(max.timestamp).to be_a ZonedDateTime
+    end
+
+    it "is inspectable" do
+      max = Number1.maximum_since(10.seconds.ago)
+      expect(max.inspect).to match(/^#<OpenHAB::Core::Items::Persistence::PersistedState/)
     end
 
     it "can be compared to a state" do
@@ -194,19 +213,37 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
       end
     end
 
-    it "can be added to a state" do
-      [Number1, Qty1].each do |item|
-        max = item.maximum_since(10.seconds.ago)
-        expect(item.state + max).to be_a(State)
-        expect(item.state - max).to be_a(State)
+    describe "math operations" do
+      it "can be added to a state" do
+        [Number1, Qty1].each do |item|
+          max = item.maximum_since(10.seconds.ago)
+          expect(item.state + max).to be_a(State)
+          expect(item.state - max).to be_a(State)
+        end
       end
-    end
 
-    it "can be added to another PersistedState" do
-      [Number1, Qty1].each do |item|
-        max = item.maximum_since(10.seconds.ago)
-        expect(max + max).to be_a(State)
-        expect(max - max).to be_a(State) # rubocop:disable Lint/BinaryOperatorWithIdenticalOperands
+      it "can be added to another PersistedState" do
+        [Number1, Qty1].each do |item|
+          max = item.maximum_since(10.seconds.ago)
+          expect(max + max).to be_a(State)
+          expect(max - max).to be_a(State) # rubocop:disable Lint/BinaryOperatorWithIdenticalOperands
+        end
+      end
+
+      it "can be multiplied with a QuantityType" do
+        speed = 10 | "m/s"
+        historic_item = historic_item_class.new(Date.today.to_zoned_date_time, speed, "Speeds")
+        persisted_speed = described_class::PersistedState.new(historic_item)
+
+        duration = 5 | "s"
+        expect(duration * persisted_speed).to eql speed * duration
+        expect(persisted_speed * duration).to eql speed * duration
+      end
+
+      it "can be multiplied with a DecimalType" do
+        max = Number1.maximum_since(10.seconds.ago)
+        expect(max * DecimalType.new(2)).to be_a(State)
+        expect(DecimalType.new(2) * max).to be_a(State)
       end
     end
   end
