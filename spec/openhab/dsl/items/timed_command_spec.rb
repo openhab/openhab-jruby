@@ -31,6 +31,66 @@ RSpec.describe OpenHAB::DSL::Items::TimedCommand do
     expect(item.state).to eq 0
   end
 
+  it "can activate only when ensured" do
+    commanded = false
+    received_command(item) { commanded = true }
+
+    if commanded # This won't execute because it's only for self documentation
+      # First check our assumptions of the behavior without `only_when_ensured`
+      # Possibly unnecessary because such behavior is already tested in other specs
+      # but nice to have here for clarity
+      #
+      # ********
+      # first without ensure
+      item.update 7
+      item.command(7, for: 1.second, on_expire: 0)
+      expect(commanded).to be true
+
+      commanded = false
+      time_travel_and_execute_timers(2.seconds)
+      expect(commanded).to be true
+      expect(item.state).to eq 0
+
+      # ********
+      # now with ensure (but still without `only_when_ensured`)
+      item.update(7)
+      commanded = false
+      item.ensure.command(7, for: 1.second, on_expire: 0)
+      expect(commanded).to be false
+
+      commanded = false
+
+      # the timed command still executes even though the command was ensured
+      time_travel_and_execute_timers(2.seconds)
+      expect(commanded).to be true
+      expect(item.state).to eq 0
+    end
+
+    # ********
+    # now try it with `only_when_ensured`
+    item.update(7)
+    commanded = false
+    item.command(7, for: 1.second, on_expire: 0, only_when_ensured: true)
+    expect(commanded).to be false
+
+    time_travel_and_execute_timers(2.seconds)
+    expect(commanded).to be false
+    # The difference is here: the timer didn't even start, so the state didn't change to `on_expire` state
+    expect(item.state).to eq 7
+
+    # ********
+    # calling ensure explicitly should still work
+    item.update(7) # not necessary but for clarity
+    commanded = false
+    item.ensure.command(7, for: 1.second, on_expire: 0, only_when_ensured: true)
+    expect(commanded).to be false
+
+    time_travel_and_execute_timers(2.seconds)
+    expect(commanded).to be false
+    # The difference is here: the timer didn't even start, so the state didn't change to `on_expire` state
+    expect(item.state).to eq 7
+  end
+
   context "with SwitchItem" do
     let(:item) { items.build { switch_item "Switch1" } }
 
