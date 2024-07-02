@@ -25,6 +25,9 @@ module OpenHAB
       #
       # The {AbstractEvent} sent with an `item_updated` trigger.
       #
+      # @!attribute [r] old_item
+      #   @return [DTO::ItemDTO] the old item before the update.
+      #
       class ItemUpdatedEvent < AbstractItemRegistryEvent; end
 
       #
