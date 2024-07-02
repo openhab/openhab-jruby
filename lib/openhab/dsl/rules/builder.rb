@@ -1060,7 +1060,7 @@ module OpenHAB
         # {Core::Events::ThingStatusInfoChangedEvent} depending on if the
         # triggering element was an item or a thing.
         #
-        # @param [Item, GroupItem::Members, Thing] items Objects to create trigger for.
+        # @param [Item, GroupItem::Members, Thing, ThingUID, Things::Registry] items Objects to create trigger for.
         # @param [State, Array<State>, #===, nil] from
         #   Only execute rule if previous state matches `from` state(s).
         # @param [State, Array<State>, #===, nil] to
@@ -1147,6 +1147,14 @@ module OpenHAB
         #     run { |event| logger.info("Thing #{event.uid} status <trigger> to #{event.status}") }
         #   end
         #
+        # @example Trigger when any Thing changes status
+        #   rule "Thing status monitoring" do
+        #     changed things, to: :offline
+        #     run do |event|
+        #       notify("Thing #{event.thing.uid} is offline")
+        #     end
+        #   end
+        #
         # @example Real World Example
         #   rule "Log (or notify) when an exterior door is left open for more than 5 minutes" do
         #     changed ExteriorDoors.members, to: OPEN, for: 5.minutes
@@ -1166,11 +1174,13 @@ module OpenHAB
             case item
             when Core::Things::Thing,
                  Core::Things::ThingUID,
+                 Core::Things::Registry,
                  Core::Items::Item,
                  Core::Items::GroupItem::Members
               nil
             else
-              raise ArgumentError, "items must be an Item, GroupItem::Members, Thing, or ThingUID"
+              raise ArgumentError,
+                    "items must be an Item, GroupItem::Members, Thing, ThingUID, or Things::Registry"
             end
 
             logger.trace { "Creating changed trigger for entity(#{item}), to(#{to.inspect}), from(#{from.inspect})" }
