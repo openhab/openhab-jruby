@@ -9,7 +9,32 @@ module OpenHAB
       # @!visibility private
       org.openhab.core.model.sitemap.sitemap.impl.SitemapImpl.alias_method :uid, :name
 
-      # Base sitemap builder DSL
+      #
+      # A sitemap builder allows you to dynamically create openHAB sitemaps at runtime.
+      #
+      # @example
+      #   sitemaps.build do
+      #     sitemap "demo", label: "My home automation" do
+      #       frame label: "Date" do
+      #         text item: Date
+      #       end
+      #       frame label: "Demo" do
+      #         switch item: Lights, icon: "light"
+      #         text item: LR_Temperature, label: "Livingroom [%.1f °C]"
+      #         group item: Heating
+      #         text item: LR_Multimedia_Summary, label: "Multimedia [%s]", static_icon: "video" do
+      #           selection item: LR_TV_Channel,
+      #                     mappings: { 0 => "off", 1 => "DasErste", 2 => "BBC One", 3 => "Cartoon Network" }
+      #           slider item: LR_TV_Volume
+      #         end
+      #       end
+      #     end
+      #   end
+      #
+      # @see https://www.openhab.org/docs/ui/sitemaps.html
+      # @see OpenHAB::DSL.sitemaps
+      # @see OpenHAB::Core::Sitemaps::Provider#build sitemaps.build
+      #
       class Builder
         # @!visibility private
         def initialize(provider, builder_proxy, update:)
@@ -698,88 +723,92 @@ module OpenHAB
         end
       end
 
-      # Builds a `Buttongrid` element
-      # @since openHAB 4.1
-      # @see https://www.openhab.org/docs/ui/sitemaps.html#element-type-buttongrid
-      # @see org.openhab.core.model.sitemap.sitemap.Buttongrid
-      class ButtongridBuilder < WidgetBuilder
-        # @return [Array<Array<int, int, Command, String, String>>]
-        #   An array of buttons to display
-        attr_reader :buttons
+      # Builds a `Button` element
+      #
+      # This element can only exist within a `Buttongrid` element.
+      #
+      # @since openHAB 4.2
+      # @todo waiting for docs see www openhab.org/docs/ui/sitemaps.html#element-type-button
+      # @see org.openhab.core.model.sitemap.sitemap.Button
+      class ButtonBuilder < WidgetBuilder
+        # The row in which the button is placed
+        # @return [Integer]
+        attr_accessor :row
+
+        # The column in which the button is placed
+        # @return [Integer]
+        attr_accessor :column
+
+        # The command to send when the button is pressed
+        # @return [String, Command]
+        attr_accessor :click
+
+        # The command to send when the button is released
+        # @return [String, Command, nil]
+        attr_accessor :release
+
+        # Whether the button is stateless
+        # @return [true, false, nil]
+        attr_writer :stateless
 
         # (see WidgetBuilder#initialize)
-        # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, buttons: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
-        # @param [Array<Array<int, int, Command, String, String>>] buttons An array of buttons to display.
-        #   Each element is an array with the following elements:
-        #   - row: 1-12
-        #   - column: 1-12
-        #   - command: The command to send when the button is pressed
-        #   - label: The label to display on the button
-        #   - icon: The icon to display on the button (optional)
+        # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, row:, column:, click:, release: nil, stateless: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
+        # @param [Integer] row
+        #   The row in which the button is placed (see {ButtonBuilder#row})
+        # @param [Integer] column
+        #   The column in which the button is placed (see {ButtonBuilder#column})
+        # @param [String, Command] click
+        #   The command to send when the button is pressed (see {ButtonBuilder#click})
+        # @param [String, Command, nil] release
+        #   The command to send when the button is released (see {ButtonBuilder#release})
+        # @param [true, false, nil] stateless
+        #   Whether the button is stateless (see {ButtonBuilder#stateless=})
         #
-        # @example
-        #   # This creates a buttongrid to emulate a TV remote control
-        #   sitemaps.build do
-        #     sitemap "remote", label: "TV Remote Control" do
-        #       buttongrid item: LivingRoom_TV_RCButton, buttons: [
-        #         [1, 1, "BACK", "Back", "f7:return"],
-        #         [1, 2, "HOME", "Menu", "material:apps"],
-        #         [1, 3, "YELLOW", "Search", "f7:search"],
-        #         [2, 2, "UP", "Up", "f7:arrowtriangle_up"],
-        #         [4, 2, "DOWN", "Down", "f7:arrowtriangle_down"],
-        #         [3, 1, "LEFT", "Left", "f7:arrowtriangle_left"],
-        #         [3, 3, "RIGHT", "Right", "f7:arrowtriangle_right"],
-        #         [3, 2, "ENTER", "Enter", "material:adjust"]
-        #       ]
-        #     end
-        #   end
-        #
-        # @see https://www.openhab.org/docs/ui/sitemaps.html#element-type-buttongrid
         # @!visibility private
-        def initialize(type, builder_proxy, buttons: [], **kwargs, &block)
-          @buttons = buttons
-          super(type, builder_proxy, **kwargs, &block)
-          buttons.each { |button| validate_button(button) }
+        def initialize(builder_proxy,
+                       row:,
+                       column:,
+                       click:,
+                       release: nil,
+                       stateless: nil,
+                       **kwargs,
+                       &block)
+
+          super(:button, builder_proxy, **kwargs, &block)
+
+          @row = row
+          @column = column
+          @click = click
+          @release = release
+          @stateless = stateless
         end
 
-        #
-        # Adds a button to the buttongrid
-        #
-        # @param [Array<int, int, Command, String, String>] button the button to add
-        # @return [Array<Array<int, int, Command, String, String>>] the current buttons
-        #
-        def button(button)
-          validate_button(button)
-          @buttons << button
+        # (see #stateless=)
+        def stateless?
+          @stateless
         end
 
         # @!visibility private
         def build
-          widget = super
-          buttons.each do |button|
-            button_object = if SitemapBuilder.factory.respond_to?(:create_button_definition)
-                              SitemapBuilder.factory.create_button_definition
-                            else
-                              # @deprecated OH 4.1 in OH 4.2 this clause is not needed
-                              SitemapBuilder.factory.create_button
-                            end
-            button_object.row = button[0]
-            button_object.column = button[1]
-            button_object.cmd = button[2]
-            button_object.label = button[3]
-            button_object.icon = button[4] if button[4]
-            widget.buttons.add(button_object)
+          if Core.version >= Core::V4_2
+            super.tap do |widget|
+              widget.row = row
+              widget.column = column
+              widget.cmd = click.to_s
+              widget.release_cmd = release.to_s unless release.nil?
+              widget.stateless = stateless? unless @stateless.nil?
+            end
+          else
+            # @deprecated OH 4.1
+            # in OH 4.1, the button is a property of the Buttongrid, not a widget
+            SitemapBuilder.factory.create_button.tap do |button|
+              button.row = row
+              button.column = column
+              button.cmd = click.to_s
+              button.label = label
+              button.icon = icon if icon
+            end
           end
-
-          widget
-        end
-
-        private
-
-        def validate_button(button)
-          return if (4..5).cover?(button.size)
-
-          raise ArgumentError, "Invalid button: '#{button.inspect}'. It must be an array with (4..5) elements"
         end
       end
 
@@ -1167,6 +1196,209 @@ module OpenHAB
       # @see https://www.openhab.org/docs/ui/sitemaps.html#element-type-frame
       # @see org.openhab.core.model.sitemap.sitemap.Frame
       class FrameBuilder < LinkableWidgetBuilder
+      end
+
+      # Builds a `Buttongrid` element
+      # @since openHAB 4.1
+      # @see https://www.openhab.org/docs/ui/sitemaps.html#element-type-buttongrid
+      # @see org.openhab.core.model.sitemap.sitemap.Buttongrid
+      class ButtongridBuilder < LinkableWidgetBuilder
+        REQUIRED_BUTTON_ARGS = %i[row column click].freeze
+        private_constant :REQUIRED_BUTTON_ARGS
+
+        # @!deprecated OH 4.1 in OH 4.1, Buttongrid is not a LinkableWidget.
+        # Pretend that the buttons property is its children so we can add to it in LinkableWidgetBuilder#build
+        if (Core::V4_1...Core::V4_2).cover?(Core.version)
+          java_import org.openhab.core.model.sitemap.sitemap.Buttongrid
+          module Buttongrid
+            def children
+              buttons
+            end
+          end
+        end
+
+        # (see WidgetBuilder#initialize)
+        # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, buttons: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
+        # @param [Array<Array<int, int, Command, String, String>>] buttons An array of buttons to display.
+        #   Each element can be a hash with keyword arguments (see {Sitemaps::ButtongridBuilder#button}),
+        #   or an array with the following elements:
+        #   - row: 1-12
+        #   - column: 1-12
+        #   - click: The command to send when the button is pressed
+        #   - label: The label to display on the button (optional)
+        #   - icon: The icon to display on the button (optional)
+        #
+        # @example Create a buttongrid with buttons as an argument
+        #   # This creates a buttongrid to emulate a TV remote control
+        #   sitemaps.build do
+        #     sitemap "remote", label: "TV Remote Control" do
+        #       buttongrid item: LivingRoom_TV_RCButton, buttons: [
+        #         [1, 1, "BACK", "Back", "f7:return"],
+        #         [1, 2, "HOME", "Menu", "material:apps"],
+        #         [1, 3, "YELLOW", "Search", "f7:search"],
+        #         [2, 2, "UP", "Up", "f7:arrowtriangle_up"],
+        #         [4, 2, "DOWN", "Down", "f7:arrowtriangle_down"],
+        #         [3, 1, "LEFT", "Left", "f7:arrowtriangle_left"],
+        #         [3, 3, "RIGHT", "Right", "f7:arrowtriangle_right"],
+        #
+        #         # Using keyword arguments:
+        #         {row: 3, column: 2, click: "ENTER", label: "Enter", icon: "material:adjust" }
+        #       ]
+        #     end
+        #   end
+        #
+        # @example Create a buttongrid with button widgets
+        #   sitemaps.build do
+        #     sitemap "remote", label: "TV Remote Control" do
+        #       buttongrid item: LivingRoom_TV_RCButton do
+        #         button 1, 1, click: "BACK", icon: "f7:return"
+        #         button 1, 2, click: "HOME", icon: "material:apps"
+        #         button 1, 3, click: "YELLOW", icon: "f7:search"
+        #         button 2, 2, click: "UP", icon: "f7:arrowtriangle_up"
+        #         button 4, 2, click: "DOWN", icon: "f7:arrowtriangle_down"
+        #         button 3, 1, click: "LEFT", icon: "f7:arrowtriangle_left"
+        #         button 3, 3, click: "RIGHT", icon: "f7:arrowtriangle_right"
+        #         button 3, 2, click: "ENTER", icon: "material:adjust"
+        #       end
+        #
+        #       # The following buttons use widget features introduced in openHAB 4.2+
+        #       buttongrid item: LivingRoom_Curtain do
+        #         button 1, 1, click: "up", release: "stop", icon: "f7:arrowtriangle_up"
+        #         button 2, 1, click: "down", release: "stop", icon: "f7:arrowtriangle_up"
+        #       end
+        #     end
+        #   end
+        #
+        # @see https://www.openhab.org/docs/ui/sitemaps.html#element-type-buttongrid
+        # @!visibility private
+        def initialize(type, builder_proxy, buttons: [], **kwargs, &block)
+          super(type, builder_proxy, **kwargs, &block)
+
+          # Put the buttons given in the constructor before those added in the block
+          # We can't do this before calling the super constructor because `children` is initialized there
+          children.slice!(0..).then do |buttons_from_block|
+            buttons.each do |b|
+              if b.is_a?(Array)
+                button(*b)
+              else
+                button(**b)
+              end
+            end
+            children.concat(buttons_from_block)
+          end
+        end
+
+        #
+        # @!method button(row = nil, column = nil, click = nil, label = nil, icon = nil, item: nil, label: nil, icon: nil, static_icon: nil, row:, column:, click:, release: nil, stateless: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
+        # Adds a button inside the buttongrid
+        #
+        # - In openHAB 4.1, buttons are direct properties of the buttongrid.
+        #   Only `row`, `column`, `click`, `label` (optional), and `icon` (optional) are used.
+        #   All the other parameters are ignored.
+        #   All the buttons will send commands to the same item assigned to the buttongrid.
+        #
+        # - In openHAB 4.2+, buttons are widgets within the containing buttongrid, and they
+        #   support all the parameters listed in the method signature such as
+        #   `release`, `label_color`, `visibility`, etc.
+        #   Each Button element has an item associated with that button.
+        #   When an item is not specified for the button, it will default to the containing buttongrid's item.
+        #
+        # This method supports positional arguments and/or keyword arguments.
+        # Their use can be mixed, however, the keyword arguments will override the positional arguments
+        # when both are specified.
+        #
+        # @param (see ButtonBuilder#initialize)
+        # @return [ButtonBuilder]
+        #
+        # @example Adding buttons to a buttongrid with positional arguments
+        #   sitemaps.build do
+        #     sitemap "remote" do
+        #       buttongrid item: RCButton do
+        #         button 1, 1, "BACK", "Back", "f7:return"
+        #         button 1, 2, "HOME", "Menu", "material:apps"
+        #         button 1, 3, "YELLOW", "Search", "f7:search"
+        #         button 2, 2, "UP", "Up", "f7:arrowtriangle_up"
+        #         button 4, 2, "DOWN", "Down", "f7:arrowtriangle_down"
+        #         button 3, 1, "LEFT", "Left", "f7:arrowtriangle_left"
+        #         button 3, 3, "RIGHT", "Right", "f7:arrowtriangle_right"
+        #         button 3, 2, "ENTER", "Enter", "material:adjust"
+        #       end
+        #     end
+        #   end
+        #
+        # @example Adding buttons to a buttongrid with keyword arguments
+        #   sitemaps.build do
+        #     sitemap "remote" do
+        #       buttongrid item: RCButton do
+        #         # These buttons will use the default item assigned to the buttongrid (RCButton)
+        #         button row: 1, column: 1, click: "BACK", icon: "f7:return"
+        #         button row: 1, column: 2, click: "HOME", icon: "material:apps"
+        #         button row: 1, column: 3, click: "YELLOW", icon: "f7:search"
+        #         button row: 2, column: 2, click: "UP", icon: "f7:arrowtriangle_up"
+        #         button row: 4, column: 2, click: "DOWN", icon: "f7:arrowtriangle_down"
+        #         button row: 3, column: 1, click: "LEFT", icon: "f7:arrowtriangle_left"
+        #         button row: 3, column: 3, click: "RIGHT", icon: "f7:arrowtriangle_right"
+        #         button row: 3, column: 2, click: "ENTER", icon: "material:adjust"
+        #       end
+        #     end
+        #   end
+        #
+        # @example Mixing positional and keyword arguments
+        #   sitemaps.build do
+        #     sitemap "remote" do
+        #       buttongrid item: RCButton do
+        #         button 1, 1, click: "BACK", icon: "f7:return"
+        #         button 1, 2, click: "HOME", icon: "material:apps"
+        #         button 1, 3, click: "YELLOW", icon: "f7:search"
+        #         button 2, 2, click: "UP", icon: "f7:arrowtriangle_up"
+        #         button 4, 2, click: "DOWN", icon: "f7:arrowtriangle_down"
+        #         button 3, 1, click: "LEFT", icon: "f7:arrowtriangle_left"
+        #         button 3, 3, click: "RIGHT", icon: "f7:arrowtriangle_right"
+        #         button 3, 2, click: "ENTER", icon: "material:adjust"
+        #       end
+        #     end
+        #   end
+        #
+        # @example openHAB 4.2+ supports assigning different items to buttons, along with additional features
+        #   sitemaps.build do
+        #     sitemap "remote" do
+        #       buttongrid item: RCButton do
+        #         button 1, 1, click: "BACK", icon: "f7:return"
+        #         button 1, 2, click: "HOME", icon: "material:apps"
+        #         button 1, 3, click: "YELLOW", icon: "f7:search", icon_color: "yellow"
+        #         button 2, 2, click: "UP", icon: "f7:arrowtriangle_up"
+        #         button 4, 2, click: "DOWN", icon: "f7:arrowtriangle_down"
+        #         button 3, 1, click: "LEFT", icon: "f7:arrowtriangle_left"
+        #         button 3, 3, click: "RIGHT", icon: "f7:arrowtriangle_right"
+        #         button 3, 2, click: "ENTER", icon: "material:adjust", icon_color: "red"
+        #
+        #         # These buttons will use the specified item, only supported in openHAB 4.2+
+        #         button 4, 3, click: ON, static_icon: "switch-off", visibility: "TVPower!=ON", item: TVPower
+        #         button 4, 3, click: OFF, static_icon: "switch-on", visibility: "TVPower==ON", item: TVPower
+        #       end
+        #     end
+        #   end
+        #
+        def button(row = nil, column = nil, click = nil, label = nil, icon = nil, **kwargs, &block)
+          args = [row, column, click, label, icon].compact
+
+          args = args.first if args.first.is_a?(Array)
+          kwargs = %i[row column click label icon].zip(args).to_h.compact.merge(kwargs)
+
+          missing_args = (REQUIRED_BUTTON_ARGS - kwargs.keys).compact
+          unless missing_args.empty?
+            args = kwargs.map { |k, v| "#{k}: #{v.inspect}" }.join(", ")
+            missing_args = missing_args.map(&:to_s).join(", ")
+            raise ArgumentError, "button(#{args}) missing required parameters: #{missing_args}"
+          end
+
+          kwargs[:item] ||= item if item # default to the buttongrid's item
+          kwargs[:label] ||= kwargs[:click].to_s
+
+          ButtonBuilder.new(@builder_proxy, **kwargs, &block).tap do |b|
+            children << b
+          end
+        end
       end
 
       # Builds a `Sitemap`
