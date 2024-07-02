@@ -143,6 +143,25 @@ module OpenHAB
           self
         end
 
+        #
+        # @return [true, false] true if a timed command is active for the item
+        #
+        # @example
+        #   rule "Motion Detected" do
+        #     received_command Motion_Sensor, command: ON
+        #     run do
+        #       # Do not activate timer if the light was already turned on manually
+        #       next if FrontPorchLight.on? && !FrontPorchLight.timed_command?
+        #
+        #       # The timer extends when more motion is detected
+        #       FrontPorchLight.ensure.on for: 30.minutes
+        #     end
+        #   end
+        #
+        def timed_command?
+          TimedCommand.timed_commands.include?(self)
+        end
+
         private
 
         # Creates a new timed command and places it in the TimedCommand hash
