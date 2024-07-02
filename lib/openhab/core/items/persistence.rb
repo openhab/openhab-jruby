@@ -25,6 +25,31 @@ module OpenHAB
       #   UV_Index.average_since(1.hour.ago, :influxdb)
       #   Power_Usage.average_since(12.hours.ago, :rrd4j)
       #
+      # @example Time of day shortcuts
+      #   # Persistence methods accept any object that responds to #to_zoned_date_time, which includes
+      #   # LocalTime, LocalDate, and Ruby's Time, Date, and DateTime.
+      #   # This allows for easy querying of start of day
+      #   logger.info Power_Usage.average_since(LocalTime::MIDNIGHT)
+      #   logger.info Power_Usage.average_since(LocalDate.now)
+      #   # Ruby's Date can be used too
+      #   logger.info Power_Usage.average_since(Date.today)
+      #
+      #   # Yesterday
+      #   logger.info Power_Usage.average_between(Date.today - 1, Date.today)
+      #   # or
+      #   logger.info Power_Usage.average_between(LocalDate.now - 1, LocalDate.now)
+      #
+      #   # When passing the local time, today's date is assumed
+      #   logger.info Power_Usage.average_between(LocalTime.parse("4pm"), LocalTime.parse("9pm"))
+      #   # or
+      #   logger.info Power_Usage.average_between(Time.parse("4pm"), Time.parse("9pm"))
+      #
+      #   # Beware that Date, LocalDate, and LocalTime arithmetics will produce the same type, so
+      #   Power_Usage.average_between(LocalTime.parse("4pm") - 1.day, LocalTime.parse("9pm") - 1.day)
+      #   # Will still give you TODAY's data between 4pm and 9pm
+      #   # To get yesterday's data, use Time.parse, i.e.
+      #   Power_Usage.average_between(Time.parse("4pm") - 1.day, Time.parse("9pm") - 1.day)
+      #
       # @example Comparison using Quantity
       #   # Because Power_Usage has a unit, the return value
       #   # from average_since is a QuantityType
@@ -42,9 +67,16 @@ module OpenHAB
         #
         # A wrapper for {org.openhab.core.persistence.HistoricItem HistoricItem} that delegates to its state.
         #
+        # A {PersistedState} object can be directly used in arithmetic operations with {State} and
+        # other {PersistedState} objects.
+        #
         # @example
         #   max = Power_Usage.maximum_since(LocalTime::MIDNIGHT)
         #   logger.info "Highest power usage: #{max} occurred at #{max.timestamp}" if max > 5 | "kW"
+        #
+        # @example Arithmetic operations
+        #   todays_rate = Energy_Prices.persisted_state(Date.today) # Energy_Prices' unit is "<CURRENCY>/kWh"
+        #   todays_cost = Daily_Energy_Consumption.state * todays_rate
         #
         class PersistedState < SimpleDelegator
           extend Forwardable
@@ -64,6 +96,11 @@ module OpenHAB
           def initialize(historic_item, state = nil)
             @historic_item = historic_item
             super(state || historic_item.state)
+          end
+
+          # @!visibility private
+          def inspect
+            "#<#{self.class} #{state} at: #{timestamp} item: #{name}>"
           end
         end
 
