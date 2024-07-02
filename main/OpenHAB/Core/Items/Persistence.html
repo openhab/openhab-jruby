@@ -3535,6 +3535,34 @@ openHAB's Persistence feature. - Documentation for openhab-scripting JRuby helpe
 <span class="constant">Power_Usage</span>.average_since(<span class="integer">12</span>.hours.ago, <span class="symbol">:rrd4j</span>)</code></pre>
     
       
+        <p class="example_title"><div class='inline'><p>Time of day shortcuts</p>
+</div></p>
+      
+      <pre class="example code"><code><span class="comment"># Persistence methods accept any object that responds to #to_zoned_date_time, which includes</span>
+<span class="comment"># LocalTime, LocalDate, and Ruby's Time, Date, and DateTime.</span>
+<span class="comment"># This allows for easy querying of start of day</span>
+logger.info <span class="constant">Power_Usage</span>.average_since(<span class="constant">LocalTime</span>::<span class="constant">MIDNIGHT</span>)
+logger.info <span class="constant">Power_Usage</span>.average_since(<span class="constant">LocalDate</span>.now)
+<span class="comment"># Ruby's Date can be used too</span>
+logger.info <span class="constant">Power_Usage</span>.average_since(<span class="constant">Date</span>.today)
+
+<span class="comment"># Yesterday</span>
+logger.info <span class="constant">Power_Usage</span>.average_between(<span class="constant">Date</span>.today - <span class="integer">1</span>, <span class="constant">Date</span>.today)
+<span class="comment"># or</span>
+logger.info <span class="constant">Power_Usage</span>.average_between(<span class="constant">LocalDate</span>.now - <span class="integer">1</span>, <span class="constant">LocalDate</span>.now)
+
+<span class="comment"># When passing the local time, today's date is assumed</span>
+logger.info <span class="constant">Power_Usage</span>.average_between(<span class="constant">LocalTime</span>.parse(<span class="string"><span class="delimiter">&quot;</span><span class="content">4pm</span><span class="delimiter">&quot;</span></span>), <span class="constant">LocalTime</span>.parse(<span class="string"><span class="delimiter">&quot;</span><span class="content">9pm</span><span class="delimiter">&quot;</span></span>))
+<span class="comment"># or</span>
+logger.info <span class="constant">Power_Usage</span>.average_between(<span class="constant">Time</span>.parse(<span class="string"><span class="delimiter">&quot;</span><span class="content">4pm</span><span class="delimiter">&quot;</span></span>), <span class="constant">Time</span>.parse(<span class="string"><span class="delimiter">&quot;</span><span class="content">9pm</span><span class="delimiter">&quot;</span></span>))
+
+<span class="comment"># Beware that Date, LocalDate, and LocalTime arithmetics will produce the same type, so</span>
+<span class="constant">Power_Usage</span>.average_between(<span class="constant">LocalTime</span>.parse(<span class="string"><span class="delimiter">&quot;</span><span class="content">4pm</span><span class="delimiter">&quot;</span></span>) - <span class="integer">1</span>.day, <span class="constant">LocalTime</span>.parse(<span class="string"><span class="delimiter">&quot;</span><span class="content">9pm</span><span class="delimiter">&quot;</span></span>) - <span class="integer">1</span>.day)
+<span class="comment"># Will still give you TODAY's data between 4pm and 9pm</span>
+<span class="comment"># To get yesterday's data, use Time.parse, i.e.</span>
+<span class="constant">Power_Usage</span>.average_between(<span class="constant">Time</span>.parse(<span class="string"><span class="delimiter">&quot;</span><span class="content">4pm</span><span class="delimiter">&quot;</span></span>) - <span class="integer">1</span>.day, <span class="constant">Time</span>.parse(<span class="string"><span class="delimiter">&quot;</span><span class="content">9pm</span><span class="delimiter">&quot;</span></span>) - <span class="integer">1</span>.day)</code></pre>
+    
+      
         <p class="example_title"><div class='inline'><p>Comparison using Quantity</p>
 </div></p>
       
@@ -4938,7 +4966,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 390</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 427</span>
 
 </pre>
     </td>
@@ -5042,7 +5070,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 376</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 413</span>
 
 </pre>
     </td>
@@ -5146,7 +5174,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 383</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 420</span>
 
 </pre>
     </td>
@@ -5251,7 +5279,7 @@ or nil if no states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 88</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 125</span>
 
 </pre>
     </td>
@@ -5341,7 +5369,7 @@ or nil if no previous states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 110</span>
 
 </pre>
     </td>
@@ -5446,7 +5474,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 117</span>
 
 </pre>
     </td>
@@ -5550,7 +5578,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 201</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 238</span>
 
 </pre>
     </td>
@@ -5639,7 +5667,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 188</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 225</span>
 
 </pre>
     </td>
@@ -5743,7 +5771,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 194</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 231</span>
 
 </pre>
     </td>
@@ -5847,7 +5875,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 349</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 386</span>
 
 </pre>
     </td>
@@ -5936,7 +5964,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 336</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 373</span>
 
 </pre>
     </td>
@@ -6044,7 +6072,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 369</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 406</span>
 
 </pre>
     </td>
@@ -6137,7 +6165,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 356</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 393</span>
 
 </pre>
     </td>
@@ -6245,7 +6273,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 362</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 399</span>
 
 </pre>
     </td>
@@ -6349,7 +6377,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 342</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 379</span>
 
 </pre>
     </td>
@@ -6454,7 +6482,7 @@ or nil if no states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 148</span>
 
 </pre>
     </td>
@@ -6544,7 +6572,7 @@ or nil if no previous states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 133</span>
 
 </pre>
     </td>
@@ -6649,7 +6677,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 140</span>
 
 </pre>
     </td>
@@ -6754,7 +6782,7 @@ or nil if no states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 171</span>
 
 </pre>
     </td>
@@ -6844,7 +6872,7 @@ or nil if no previous states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 119</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 156</span>
 
 </pre>
     </td>
@@ -6949,7 +6977,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 163</span>
 
 </pre>
     </td>
@@ -6986,7 +7014,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 208</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 245</span>
 
 </pre>
     </td>
@@ -7106,7 +7134,7 @@ or nil if no states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 245</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 282</span>
 
 </pre>
     </td>
@@ -7211,7 +7239,7 @@ or nil if no previous states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 229</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 266</span>
 
 </pre>
     </td>
@@ -7316,7 +7344,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 237</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 274</span>
 
 </pre>
     </td>
@@ -7408,7 +7436,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 254</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 291</span>
 
 </pre>
     </td>
@@ -7497,7 +7525,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 510</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 547</span>
 
 </pre>
     </td>
@@ -7571,7 +7599,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 498</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 535</span>
 
 </pre>
     </td>
@@ -7676,7 +7704,7 @@ or nil if no states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 285</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 322</span>
 
 </pre>
     </td>
@@ -7766,7 +7794,7 @@ or nil if no previous states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 270</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 307</span>
 
 </pre>
     </td>
@@ -7871,7 +7899,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 277</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 314</span>
 
 </pre>
     </td>
@@ -7976,7 +8004,7 @@ or nil if no states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 308</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 345</span>
 
 </pre>
     </td>
@@ -8066,7 +8094,7 @@ or nil if no previous states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 293</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 330</span>
 
 </pre>
     </td>
@@ -8171,7 +8199,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 300</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 337</span>
 
 </pre>
     </td>
@@ -8264,24 +8292,24 @@ or nil if no future states could be found.</p>
       <pre class="lines">
 
 
-523
-524
-525
-526
-527
-528
-529
-530
-531
-532
-533
-534
-535
-536
-537</pre>
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 523</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 560</span>
 
 <span class="symbol"><span class="delimiter">%i[</span><span class="content">last_update next_update last_change next_change</span><span class="delimiter">]</span></span>.each <span class="keyword">do</span> |method|
   <span class="comment"># @deprecated OH 4.1 remove this guard when dropping OH 4.1</span>
@@ -8401,25 +8429,25 @@ does not refer to a valid service</p>
       <pre class="lines">
 
 
-563
-564
-565
-566
-567
-568
-569
-570
-571
-572
-573
-574
-575
-576
-577
-578</pre>
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 563</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 600</span>
 
 <span class="symbol"><span class="delimiter">%i[</span><span class="content">previous_state next_state</span><span class="delimiter">]</span></span>.each <span class="keyword">do</span> |method|
   <span class="comment"># @deprecated OH 4.1 remove this guard when dropping OH 4.1</span>
@@ -8530,7 +8558,7 @@ does not refer to a valid service</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 503</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 540</span>
 
 </pre>
     </td>
@@ -8760,43 +8788,6 @@ does not refer to a valid service</p>
       <pre class="lines">
 
 
-443
-444
-445
-446
-447
-448
-449
-450
-451
-452
-453
-454
-455
-456
-457
-458
-459
-460
-461
-462
-463
-464
-465
-466
-467
-468
-469
-470
-471
-472
-473
-474
-475
-476
-477
-478
-479
 480
 481
 482
@@ -8813,10 +8804,47 @@ does not refer to a valid service</p>
 493
 494
 495
-496</pre>
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 443</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 480</span>
 
 <span class="keyword">def</span> <span class="function">persist</span>(*args)
   <span class="comment"># @deprecated OH 4.1 this if block content can be removed when dropping OH 4.1 support</span>
@@ -8974,7 +9002,7 @@ or nil if no state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 262</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 299</span>
 
 </pre>
     </td>
@@ -9068,7 +9096,7 @@ does not refer to a valid service</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 539</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 576</span>
 
 </pre>
     </td>
@@ -9170,7 +9198,7 @@ does not refer to a valid service</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 412</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 449</span>
 
 </pre>
     </td>
@@ -9257,7 +9285,7 @@ does not refer to a valid service</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 398</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 435</span>
 
 </pre>
     </td>
@@ -9344,7 +9372,7 @@ does not refer to a valid service</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 405</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 442</span>
 
 </pre>
     </td>
@@ -9449,7 +9477,7 @@ or nil if no states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 157</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 194</span>
 
 </pre>
     </td>
@@ -9539,7 +9567,7 @@ or nil if no previous states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 142</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 179</span>
 
 </pre>
     </td>
@@ -9644,7 +9672,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 149</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 186</span>
 
 </pre>
     </td>
@@ -9748,7 +9776,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 329</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 366</span>
 
 </pre>
     </td>
@@ -9837,7 +9865,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 316</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 353</span>
 
 </pre>
     </td>
@@ -9941,7 +9969,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 322</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 359</span>
 
 </pre>
     </td>
@@ -10046,7 +10074,7 @@ or nil if no states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 180</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 217</span>
 
 </pre>
     </td>
@@ -10136,7 +10164,7 @@ or nil if no previous states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 165</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 202</span>
 
 </pre>
     </td>
@@ -10241,7 +10269,7 @@ or nil if no future states could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 172</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 209</span>
 
 </pre>
     </td>
@@ -10254,7 +10282,7 @@ or nil if no future states could be found.</p>
 </div>
 
         <footer>
-  Generated on Tue Jul  2 16:38:47 2024 by
+  Generated on Tue Jul  2 16:39:33 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
