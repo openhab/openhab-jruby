@@ -8,6 +8,51 @@ Also included is [openhab-scripting](https://openhab.github.io/openhab-jruby/), 
 It provides native Ruby access to common openHAB functionality within rules including items, things, actions, logging and more.
 If you're new to Ruby, you may want to check out [Ruby Basics](docs/ruby-basics.md).
 
+Quick Examples:
+
+```ruby
+rule "Motion Detected" do
+  received_command Motion_Sensor, command: ON
+  run do
+    # Do not activate timer if the light was already turned on manually
+    next if FrontPorchLight.on? && !FrontPorchLight.timed_command?
+
+    # A handy built in item timer that extends when called again
+    FrontPorchLight.ensure.on for: 30.minutes
+  end
+end
+```
+
+```ruby
+rule "Doorbell" do
+  received_command Doorbell, command: ON
+  run do
+    # Built-in rate limiting to prevent excessive notifications
+    only_every(2.minutes) do
+      Audio.play_sound("doorbell.mp3")
+      notify("Someone pressed the doorbell")
+    end
+  end
+end
+```
+
+```ruby
+rule "Repeating reminder" do
+  changed Garage_Door
+  run do |event|
+    if event.closed?
+      timers.cancel(Garage_Door) # built-in timer manager
+      next
+    end
+
+    after 5.minutes, id: Garage_Door do |timer|
+      Voice.say "The garage door is open!"
+      timer.reschedule unless timer.cancelled?
+    end
+  end
+end
+```
+
 - [Why Ruby?](#why-ruby)
 - [Installation](#installation)
 - [Configuration](#configuration)
@@ -1065,6 +1110,10 @@ end
 start_of_day = ZonedDateTime.now.with(LocalTime::MIDNIGHT)
 # or
 start_of_day = LocalTime::MIDNIGHT.to_zoned_date_time
+# or
+start_of_day = LocalDate.now.to_zoned_date_time
+# or using Ruby Date
+start_of_day = Date.today.to_zoned_date_time
 
 # Comparing ZonedDateTime against LocalTime with `<`
 max = Solar_Power.maximum_since(24.hours.ago)
