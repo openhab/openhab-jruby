@@ -79,6 +79,8 @@ module OpenHAB
                            when Core::Things::Thing,
                                 Core::Things::ThingUID
                              thing(thing: item, from: from, to: to)
+                           when Core::Things::Registry
+                             thing(thing: "*", from: from, to: to)
                            else
                              item(item: item, from: from, to: to)
                            end

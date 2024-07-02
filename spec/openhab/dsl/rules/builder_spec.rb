@@ -663,6 +663,27 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           thing.disable
           expect(triggered).to be true
         end
+
+        it "can trigger on any Thing" do
+          moon = things.build { thing "astro:moon:home", config: { "geolocation" => "0,0" } }
+          sun = thing
+
+          # When it's online to disabled, we are getting two events for each thing
+          # so we test from disabled to online instead
+          sun.disable
+          moon.disable
+
+          triggered = []
+          changed things, to: :online do |event|
+            triggered << event.thing
+          end
+          sun.enable
+          expect(triggered).to match([sun])
+
+          triggered = []
+          moon.enable
+          expect(triggered).to match([moon])
+        end
       end
     end
 
