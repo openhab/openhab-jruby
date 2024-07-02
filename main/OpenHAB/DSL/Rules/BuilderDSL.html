@@ -4695,13 +4695,13 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
       <pre class="lines">
 
 
-1784
-1785
-1786
-1787</pre>
+1794
+1795
+1796
+1797</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1784</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1794</span>
 
 <span class="keyword">def</span> <span class="function">at</span>(item)
   item = item.name <span class="keyword">if</span> item.is_a?(<span class="constant">Item</span>)
@@ -4973,6 +4973,17 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
 <span class="keyword">end</span></code></pre>
     
       
+        <p class="example_title"><div class='inline'><p>Trigger when any Thing changes status</p>
+</div></p>
+      
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Thing status monitoring</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+  changed things, <span class="key">to</span>: <span class="symbol">:offline</span>
+  run <span class="keyword">do</span> |event|
+    notify(<span class="string"><span class="delimiter">&quot;</span><span class="content">Thing </span><span class="inline"><span class="inline-delimiter">#{</span>event.thing.uid<span class="inline-delimiter">}</span></span><span class="content"> is offline</span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
+    
+      
         <p class="example_title"><div class='inline'><p>Real World Example</p>
 </div></p>
       
@@ -4990,7 +5001,7 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
         <span class='name'>items</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span></tt>, <tt><span class='object_link'><a href="../../Core/Items/GroupItem/Members.html" title="OpenHAB::Core::Items::GroupItem::Members (class)">GroupItem::Members</a></span></tt>, <tt>Thing</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span></tt>, <tt><span class='object_link'><a href="../../Core/Items/GroupItem/Members.html" title="OpenHAB::Core::Items::GroupItem::Members (class)">GroupItem::Members</a></span></tt>, <tt>Thing</tt>, <tt>ThingUID</tt>, <tt>Things::Registry</tt>)</span>
       
       
       
@@ -5078,14 +5089,6 @@ When a proc is provided, it will be called when the rule is triggered to get the
       <pre class="lines">
 
 
-1156
-1157
-1158
-1159
-1160
-1161
-1162
-1163
 1164
 1165
 1166
@@ -5106,10 +5109,20 @@ When a proc is provided, it will be called when the rule is triggered to get the
 1181
 1182
 1183
-1184</pre>
+1184
+1185
+1186
+1187
+1188
+1189
+1190
+1191
+1192
+1193
+1194</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1156</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1164</span>
 
 <span class="keyword">def</span> <span class="function">changed</span>(*items, <span class="key">to</span>: <span class="predefined-constant">nil</span>, <span class="key">from</span>: <span class="predefined-constant">nil</span>, <span class="key">for</span>: <span class="predefined-constant">nil</span>, <span class="key">attach</span>: <span class="predefined-constant">nil</span>)
   changed = <span class="constant">Changed</span>.new(<span class="key">rule_triggers</span>: <span class="instance-variable">@rule_triggers</span>)
@@ -5124,11 +5137,13 @@ When a proc is provided, it will be called when the rule is triggered to get the
     <span class="keyword">case</span> item
     <span class="keyword">when</span> <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Thing</span>,
          <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">ThingUID</span>,
+         <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Registry</span>,
          <span class="constant">Core</span>::<span class="constant">Items</span>::<span class="constant">Item</span>,
          <span class="constant">Core</span>::<span class="constant">Items</span>::<span class="constant">GroupItem</span>::<span class="constant">Members</span>
       <span class="predefined-constant">nil</span>
     <span class="keyword">else</span>
-      raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">items must be an Item, GroupItem::Members, Thing, or ThingUID</span><span class="delimiter">&quot;</span></span>
+      raise <span class="constant">ArgumentError</span>,
+            <span class="string"><span class="delimiter">&quot;</span><span class="content">items must be an Item, GroupItem::Members, Thing, ThingUID, or Things::Registry</span><span class="delimiter">&quot;</span></span>
     <span class="keyword">end</span>
 
     logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">Creating changed trigger for entity(</span><span class="inline"><span class="inline-delimiter">#{</span>item<span class="inline-delimiter">}</span></span><span class="content">), to(</span><span class="inline"><span class="inline-delimiter">#{</span>to.inspect<span class="inline-delimiter">}</span></span><span class="content">), from(</span><span class="inline"><span class="inline-delimiter">#{</span>from.inspect<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span> }
@@ -5899,22 +5914,22 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
       <pre class="lines">
 
 
-1252
-1253
-1254
-1255
-1256
-1257
-1258
-1259
-1260
-1261
 1262
 1263
-1264</pre>
+1264
+1265
+1266
+1267
+1268
+1269
+1270
+1271
+1272
+1273
+1274</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1252</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1262</span>
 
 <span class="keyword">def</span> <span class="function">cron</span>(expression = <span class="predefined-constant">nil</span>, <span class="key">attach</span>: <span class="predefined-constant">nil</span>, **fields)
   <span class="keyword">if</span> fields.any?
@@ -6501,22 +6516,22 @@ Default does not filter on event types.</p>
       <pre class="lines">
 
 
-1738
-1739
-1740
-1741
-1742
-1743
-1744
-1745
-1746
-1747
 1748
 1749
-1750</pre>
+1750
+1751
+1752
+1753
+1754
+1755
+1756
+1757
+1758
+1759
+1760</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1738</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1748</span>
 
 <span class="keyword">def</span> <span class="function">event</span>(topic, <span class="key">source</span>: <span class="predefined-constant">nil</span>, <span class="key">types</span>: <span class="predefined-constant">nil</span>, <span class="key">attach</span>: <span class="predefined-constant">nil</span>)
   types = types.join(<span class="string"><span class="delimiter">&quot;</span><span class="content">,</span><span class="delimiter">&quot;</span></span>) <span class="keyword">if</span> types.is_a?(<span class="constant">Enumerable</span>)
@@ -6706,16 +6721,6 @@ item. If the item is <span class='object_link'><a href="../../Core/Types/UnDefTy
       <pre class="lines">
 
 
-1356
-1357
-1358
-1359
-1360
-1361
-1362
-1363
-1364
-1365
 1366
 1367
 1368
@@ -6724,10 +6729,20 @@ item. If the item is <span class='object_link'><a href="../../Core/Types/UnDefTy
 1371
 1372
 1373
-1374</pre>
+1374
+1375
+1376
+1377
+1378
+1379
+1380
+1381
+1382
+1383
+1384</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1356</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1366</span>
 
 <span class="keyword">def</span> <span class="function">every</span>(value, <span class="key">at</span>: <span class="predefined-constant">nil</span>, <span class="key">attach</span>: <span class="predefined-constant">nil</span>)
   <span class="keyword">return</span> every(java.time.MonthDay.parse(value), <span class="key">at</span>: at, <span class="key">attach</span>: attach) <span class="keyword">if</span> value.is_a?(<span class="constant">String</span>)
@@ -6790,21 +6805,21 @@ item. If the item is <span class='object_link'><a href="../../Core/Types/UnDefTy
       <pre class="lines">
 
 
-2073
-2074
-2075
-2076
-2077
-2078
-2079
-2080
-2081
-2082
 2083
-2084</pre>
+2084
+2085
+2086
+2087
+2088
+2089
+2090
+2091
+2092
+2093
+2094</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 2073</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 2083</span>
 
 <span class="keyword">def</span> <span class="function">inspect</span>
   <span class="string"><span class="delimiter">&lt;&lt;~TEXT</span></span>.tr(<span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span>)<span class="string"><span class="content">
@@ -6915,13 +6930,13 @@ item. If the item is <span class='object_link'><a href="../../Core/Types/UnDefTy
       <pre class="lines">
 
 
-1600
-1601
-1602
-1603</pre>
+1610
+1611
+1612
+1613</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1600</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1610</span>
 
 <span class="keyword">def</span> <span class="function">item_added</span>(pattern = <span class="string"><span class="delimiter">&quot;</span><span class="content">*</span><span class="delimiter">&quot;</span></span>, <span class="key">attach</span>: <span class="predefined-constant">nil</span>)
   <span class="instance-variable">@ruby_triggers</span> &lt;&lt; [<span class="symbol">:item_added</span>, pattern]
@@ -7024,13 +7039,13 @@ item. If the item is <span class='object_link'><a href="../../Core/Types/UnDefTy
       <pre class="lines">
 
 
-1623
-1624
-1625
-1626</pre>
+1633
+1634
+1635
+1636</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1623</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1633</span>
 
 <span class="keyword">def</span> <span class="function">item_removed</span>(pattern = <span class="string"><span class="delimiter">&quot;</span><span class="content">*</span><span class="delimiter">&quot;</span></span>, <span class="key">attach</span>: <span class="predefined-constant">nil</span>)
   <span class="instance-variable">@ruby_triggers</span> &lt;&lt; [<span class="symbol">:item_removed</span>, pattern]
@@ -7118,13 +7133,13 @@ item. If the item is <span class='object_link'><a href="../../Core/Types/UnDefTy
       <pre class="lines">
 
 
-1645
-1646
-1647
-1648</pre>
+1655
+1656
+1657
+1658</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1645</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1655</span>
 
 <span class="keyword">def</span> <span class="function">item_updated</span>(pattern = <span class="string"><span class="delimiter">&quot;</span><span class="content">*</span><span class="delimiter">&quot;</span></span>, <span class="key">attach</span>: <span class="predefined-constant">nil</span>)
   <span class="instance-variable">@ruby_triggers</span> &lt;&lt; [<span class="symbol">:item_updated</span>, pattern]
@@ -7384,16 +7399,16 @@ When nil, execute immediately.</p>
       <pre class="lines">
 
 
-1402
-1403
-1404
-1405
-1406
-1407
-1408</pre>
+1412
+1413
+1414
+1415
+1416
+1417
+1418</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1402</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1412</span>
 
 <span class="keyword">def</span> <span class="function">on_load</span>(<span class="key">delay</span>: <span class="predefined-constant">nil</span>, <span class="key">attach</span>: <span class="predefined-constant">nil</span>)
   <span class="comment"># prevent overwriting @on_load</span>
@@ -7570,16 +7585,6 @@ because the rule engine needs to start up first before it can execute any rules<
       <pre class="lines">
 
 
-1457
-1458
-1459
-1460
-1461
-1462
-1463
-1464
-1465
-1466
 1467
 1468
 1469
@@ -7593,10 +7598,20 @@ because the rule engine needs to start up first before it can execute any rules<
 1477
 1478
 1479
-1480</pre>
+1480
+1481
+1482
+1483
+1484
+1485
+1486
+1487
+1488
+1489
+1490</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1457</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1467</span>
 
 <span class="keyword">def</span> <span class="function">on_start</span>(<span class="key">at_level</span>: <span class="predefined-constant">nil</span>, <span class="key">at_levels</span>: <span class="predefined-constant">nil</span>, <span class="key">attach</span>: <span class="predefined-constant">nil</span>)
   levels = <span class="constant">Array</span>.wrap(at_level) | <span class="constant">Array</span>.wrap(at_levels)
@@ -8095,16 +8110,6 @@ prop_array <span class="symbol">:otherwise</span>, <span class="key">array_name<
       <pre class="lines">
 
 
-1556
-1557
-1558
-1559
-1560
-1561
-1562
-1563
-1564
-1565
 1566
 1567
 1568
@@ -8119,10 +8124,20 @@ prop_array <span class="symbol">:otherwise</span>, <span class="key">array_name<
 1577
 1578
 1579
-1580</pre>
+1580
+1581
+1582
+1583
+1584
+1585
+1586
+1587
+1588
+1589
+1590</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1556</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1566</span>
 
 <span class="keyword">def</span> <span class="function">received_command</span>(*items, <span class="key">command</span>: <span class="predefined-constant">nil</span>, <span class="key">commands</span>: <span class="predefined-constant">nil</span>, <span class="key">attach</span>: <span class="predefined-constant">nil</span>)
   command_trigger = <span class="constant">Command</span>.new(<span class="key">rule_triggers</span>: <span class="instance-variable">@rule_triggers</span>)
@@ -8406,13 +8421,13 @@ prop <span class="symbol">:tags</span></pre>
       <pre class="lines">
 
 
-1668
-1669
-1670
-1671</pre>
+1678
+1679
+1680
+1681</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1668</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1678</span>
 
 <span class="keyword">def</span> <span class="function">thing_added</span>(pattern = <span class="string"><span class="delimiter">&quot;</span><span class="content">*</span><span class="delimiter">&quot;</span></span>, <span class="key">attach</span>: <span class="predefined-constant">nil</span>)
   <span class="instance-variable">@ruby_triggers</span> &lt;&lt; [<span class="symbol">:thing_added</span>, pattern]
@@ -8515,13 +8530,13 @@ prop <span class="symbol">:tags</span></pre>
       <pre class="lines">
 
 
-1691
-1692
-1693
-1694</pre>
+1701
+1702
+1703
+1704</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1691</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1701</span>
 
 <span class="keyword">def</span> <span class="function">thing_removed</span>(pattern = <span class="string"><span class="delimiter">&quot;</span><span class="content">*</span><span class="delimiter">&quot;</span></span>, <span class="key">attach</span>: <span class="predefined-constant">nil</span>)
   <span class="instance-variable">@ruby_triggers</span> &lt;&lt; [<span class="symbol">:thing_removed</span>, pattern]
@@ -8624,13 +8639,13 @@ prop <span class="symbol">:tags</span></pre>
       <pre class="lines">
 
 
-1715
-1716
-1717
-1718</pre>
+1725
+1726
+1727
+1728</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1715</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1725</span>
 
 <span class="keyword">def</span> <span class="function">thing_updated</span>(pattern = <span class="string"><span class="delimiter">&quot;</span><span class="content">*</span><span class="delimiter">&quot;</span></span>, <span class="key">attach</span>: <span class="predefined-constant">nil</span>)
   <span class="instance-variable">@ruby_triggers</span> &lt;&lt; [<span class="symbol">:thing_updated</span>, pattern]
@@ -8853,17 +8868,17 @@ executions.</p>
       <pre class="lines">
 
 
-1962
-1963
-1964
-1965
-1966
-1967
-1968
-1969</pre>
+1972
+1973
+1974
+1975
+1976
+1977
+1978
+1979</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1962</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1972</span>
 
 <span class="keyword">def</span> <span class="function">time_series_updated</span>(*items, <span class="key">attach</span>: <span class="predefined-constant">nil</span>)
   <span class="instance-variable">@ruby_triggers</span> &lt;&lt; [<span class="symbol">:time_series_updated</span>, items]
@@ -8992,14 +9007,14 @@ executions.</p>
       <pre class="lines">
 
 
-1825
-1826
-1827
-1828
-1829</pre>
+1835
+1836
+1837
+1838
+1839</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1825</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1835</span>
 
 <span class="keyword">def</span> <span class="function">trigger</span>(type, <span class="key">attach</span>: <span class="predefined-constant">nil</span>, **configuration)
   logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">Creating trigger (</span><span class="inline"><span class="inline-delimiter">#{</span>type<span class="inline-delimiter">}</span></span><span class="content">) with configuration(</span><span class="inline"><span class="inline-delimiter">#{</span>configuration<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span> }
@@ -9330,16 +9345,6 @@ symbols and strings that match
       <pre class="lines">
 
 
-1915
-1916
-1917
-1918
-1919
-1920
-1921
-1922
-1923
-1924
 1925
 1926
 1927
@@ -9349,10 +9354,20 @@ symbols and strings that match
 1931
 1932
 1933
-1934</pre>
+1934
+1935
+1936
+1937
+1938
+1939
+1940
+1941
+1942
+1943
+1944</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1915</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 1925</span>
 
 <span class="keyword">def</span> <span class="function">updated</span>(*items, <span class="key">to</span>: <span class="predefined-constant">nil</span>, <span class="key">attach</span>: <span class="predefined-constant">nil</span>)
   updated = <span class="constant">Updated</span>.new(<span class="key">rule_triggers</span>: <span class="instance-variable">@rule_triggers</span>)
@@ -9574,19 +9589,19 @@ rules.</p>
       <pre class="lines">
 
 
-2057
-2058
-2059
-2060
-2061
-2062
-2063
-2064
-2065
-2066</pre>
+2067
+2068
+2069
+2070
+2071
+2072
+2073
+2074
+2075
+2076</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 2057</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 2067</span>
 
 <span class="keyword">def</span> <span class="function">watch</span>(path, <span class="key">glob</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">*</span><span class="delimiter">&quot;</span></span>, <span class="key">for</span>: <span class="symbol"><span class="delimiter">%i[</span><span class="content">created deleted modified</span><span class="delimiter">]</span></span>, <span class="key">attach</span>: <span class="predefined-constant">nil</span>)
   types = [binding.local_variable_get(<span class="symbol">:for</span>)].flatten
@@ -9608,7 +9623,7 @@ rules.</p>
 </div>
 
         <footer>
-  Generated on Tue Jul  2 16:39:35 2024 by
+  Generated on Tue Jul  2 16:40:29 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
