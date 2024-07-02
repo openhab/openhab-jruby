@@ -898,6 +898,8 @@ module OpenHAB
         # supports one or more channels with one or more triggers. `thing` is an optional
         # parameter that makes it easier to set triggers on multiple channels on the same thing.
         #
+        # The `event` passed to run blocks will be a {Core::Events::ChannelTriggeredEvent}.
+        #
         # @param [String, Core::Things::Channel, Core::Things::ChannelUID] channels
         #   channels to create triggers for in form of 'binding_id:type_id:thing_id#channel_id'
         #   or 'channel_id' if thing is provided.
@@ -992,6 +994,8 @@ module OpenHAB
         #
         # Creates a channel linked trigger
         #
+        # The `event` passed to run blocks will be an {Core::Events::ItemChannelLinkAddedEvent}.
+        #
         # @param [Item, String, nil] item The item to create a trigger for. If nil, all items are matched.
         # @param [Core::Things::Channel, Core::Things::ChannelUID, String, nil] channel
         #   The channel to create a trigger for. If nil, all channels are matched.
@@ -1015,6 +1019,8 @@ module OpenHAB
 
         #
         # Creates a channel unlinked trigger
+        #
+        # The `event` passed to run blocks will be an {Core::Events::ItemChannelLinkRemovedEvent}.
         #
         # Note that the item or the thing it's linked to may no longer exist,
         # so if you try to access those objects they'll be nil.
@@ -1180,6 +1186,8 @@ module OpenHAB
         #
         # Create a cron trigger
         #
+        # The `event` passed to run blocks will be a {Core::Events::TimerEvent}.
+        #
         # @overload cron(expression, attach: nil)
         #   @param [String, nil] expression [openHAB style cron expression](https://www.openhab.org/docs/configuration/rules-dsl.html#time-based-triggers)
         #   @param [Object] attach object to be attached to the trigger
@@ -1257,6 +1265,8 @@ module OpenHAB
 
         #
         # Create a rule that executes at the specified interval.
+        #
+        # The `event` passed to run blocks will be a {Core::Events::TimerEvent}.
         #
         # @param [String,
         #   Duration,
@@ -1399,6 +1409,8 @@ module OpenHAB
 
         #
         # Creates a trigger that executes when openHAB reaches a certain start level
+        #
+        # The `event` passed to run blocks will be a {Core::Events::StartlevelEvent}.
         #
         # This will only trigger once during openHAB start up. It won't trigger on script reloads.
         #
@@ -1570,6 +1582,8 @@ module OpenHAB
         #
         # Creates an item added trigger
         #
+        # The `event` passed to run blocks will be an {Core::Events::ItemAddedEvent}.
+        #
         # @param [String, nil] pattern The pattern to match items against
         # @param [Object] attach object to be attached to the trigger
         # @return [void]
@@ -1590,6 +1604,8 @@ module OpenHAB
 
         #
         # Creates an item removed trigger
+        #
+        # The `event` passed to run blocks will be an {Core::Events::ItemRemovedEvent}.
         #
         # @param [String, nil] pattern The pattern to match items against
         # @param [Object] attach object to be attached to the trigger
@@ -1612,6 +1628,8 @@ module OpenHAB
         #
         # Creates an item updated trigger
         #
+        # The `event` passed to run blocks will be an {Core::Events::ItemUpdatedEvent}.
+        #
         # @param [String, nil] pattern The pattern to match items against
         # @param [Object] attach object to be attached to the trigger
         # @return [void]
@@ -1631,6 +1649,8 @@ module OpenHAB
 
         #
         # Creates a thing added trigger
+        #
+        # The `event` passed to run blocks will be a {Core::Events::ThingAddedEvent}.
         #
         # @param [String, nil] pattern The pattern to match things against
         # @param [Object] attach object to be attached to the trigger
@@ -1653,6 +1673,8 @@ module OpenHAB
         #
         # Creates a thing removed trigger
         #
+        # The `event` passed to run blocks will be a {Core::Events::ThingRemovedEvent}.
+        #
         # @param [String, nil] pattern The pattern to match things against
         # @param [Object] attach object to be attached to the trigger
         # @return [void]
@@ -1673,6 +1695,8 @@ module OpenHAB
 
         #
         # Creates a thing updated trigger
+        #
+        # The event passed to run blocks will be a {Core::Events::ThingUpdatedEvent}.
         #
         # @param [String, nil] pattern The pattern to match things against
         # @param [Object] attach object to be attached to the trigger
@@ -1733,6 +1757,8 @@ module OpenHAB
         #
         # To trigger just on the time portion of the item, use {every} instead, e.g.
         # `every :day, at: MyDateTimeItem`.
+        #
+        # The `event` passed to run blocks will be a {Core::Events::TimerEvent}.
         #
         # @param [Item, String, Symbol] item The item (or its name)
         # @return [void]

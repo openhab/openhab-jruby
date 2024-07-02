@@ -28,6 +28,9 @@ module OpenHAB
       # The {AbstractEvent} sent with a
       # {DSL::Rules::BuilderDSL#thing_updated thing_updated trigger}.
       #
+      # @!attribute [r] old_thing
+      #   @return [DTO::AbstractThingDTO] the old thing before the update.
+      #
       class ThingUpdatedEvent < AbstractThingRegistryEvent; end
 
       #
