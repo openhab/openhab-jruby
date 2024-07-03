@@ -116,7 +116,7 @@ module OpenHAB
       #   timers.schedule(item) do |timer|
       #     next timer.tap(&:reschedule) if timer
       #
-      #     notify("The lights were turned on")
+      #     Notification.send("The lights were turned on")
       #
       #     after(30.seconds) { item.off }
       #   end
