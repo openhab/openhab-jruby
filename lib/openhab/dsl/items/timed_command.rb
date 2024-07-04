@@ -89,6 +89,7 @@ module OpenHAB
         # @param [Command] command to send to object
         # @param [Duration] for duration for item to be in command state
         # @param [Command] on_expire Command to send when duration expires
+        # @param [true, false] only_when_ensured if true, only start the timed command if the command was ensured
         # @yield If a block is provided, `on_expire` is ignored and the block
         #   is expected to set the item to the desired state or carry out some
         #   other action.
@@ -104,27 +105,46 @@ module OpenHAB
         # @example
         #   Dimmer.on(for: 5.minutes) { |event| Dimmer.off if Light.on? }
         #
-        def command(command, for: nil, on_expire: nil, &block)
+        # @example Only start a timed command if the command was ensured
+        #   rule "Motion Detected" do
+        #     received_command Motion_Sensor, command: ON
+        #     run do
+        #       # Start the timer only if the command was ensured
+        #       # i.e. the light was off before the command was sent
+        #       # but if the timer was already started, extend it
+        #       FrontPorchLight.ensure.on for: 30.minutes, only_when_ensured: true
+        #     end
+        #   end
+        #
+        def command(command, for: nil, on_expire: nil, only_when_ensured: false, &block)
           duration = binding.local_variable_get(:for)
           return super(command) unless duration
 
           on_expire = block if block
 
+          create_ensured_timed_command = proc do
+            on_expire ||= default_on_expire(command)
+            if only_when_ensured
+              DSL.ensure_states do
+                create_timed_command(command, duration: duration, on_expire: on_expire) if super(command)
+              end
+            else
+              super(command)
+              create_timed_command(command, duration: duration, on_expire: on_expire)
+            end
+          end
+
           TimedCommand.timed_commands.compute(self) do |_key, timed_command_details|
             if timed_command_details.nil?
               # no prior timed command
-              on_expire ||= default_on_expire(command)
-              super(command)
-              create_timed_command(command, duration: duration, on_expire: on_expire)
+              create_ensured_timed_command.call
             else
               timed_command_details.mutex.synchronize do
                 if timed_command_details.resolution
                   # timed command that finished, but hadn't removed itself from the map yet
                   # (it doesn't do so under the mutex to prevent a deadlock).
                   # just create a new one
-                  on_expire ||= default_on_expire(command)
-                  super(command)
-                  create_timed_command(command, duration: duration, on_expire: on_expire)
+                  create_ensured_timed_command.call
                 else
                   # timed command still pending; reset it
                   logger.trace "Outstanding Timed Command #{timed_command_details} encountered - rescheduling"
@@ -132,7 +152,7 @@ module OpenHAB
                   timed_command_details.timer.reschedule(duration)
                   # disable the cancel rule while we send the new command
                   DSL.rules[timed_command_details.rule_uid].disable
-                  super(command)
+                  super(command) # This returns nil when "ensured"
                   DSL.rules[timed_command_details.rule_uid].enable
                   timed_command_details
                 end
