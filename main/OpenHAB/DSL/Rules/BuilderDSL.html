@@ -285,6 +285,19 @@
   
   <li class="">
     <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Actions/Notification.html" title="OpenHAB::Core::Actions::Notification (class)">Notification</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Actions/Ping.html" title="OpenHAB::Core::Actions::Ping (class)">Ping</a></span>
       
         &lt; Object
@@ -4979,7 +4992,7 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Thing status monitoring</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed things, <span class="key">to</span>: <span class="symbol">:offline</span>
   run <span class="keyword">do</span> |event|
-    notify(<span class="string"><span class="delimiter">&quot;</span><span class="content">Thing </span><span class="inline"><span class="inline-delimiter">#{</span>event.thing.uid<span class="inline-delimiter">}</span></span><span class="content"> is offline</span><span class="delimiter">&quot;</span></span>)
+    <span class="constant">Notification</span>.send(<span class="string"><span class="delimiter">&quot;</span><span class="content">Thing </span><span class="inline"><span class="inline-delimiter">#{</span>event.thing.uid<span class="inline-delimiter">}</span></span><span class="content"> is offline</span><span class="delimiter">&quot;</span></span>)
   <span class="keyword">end</span>
 <span class="keyword">end</span></code></pre>
     
@@ -6041,7 +6054,7 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
   changed <span class="constant">Door_State</span>
   debounce_for <span class="integer">10</span>.minutes
   only_if { <span class="constant">Door_State</span>.open? }
-  run { notify(<span class="string"><span class="delimiter">&quot;</span><span class="content">The Door has been open for 10 minutes!</span><span class="delimiter">&quot;</span></span>) }
+  run { <span class="constant">Notification</span>.send(<span class="string"><span class="delimiter">&quot;</span><span class="content">The Door has been open for 10 minutes!</span><span class="delimiter">&quot;</span></span>) }
 <span class="keyword">end</span></code></pre>
     
   </div>
@@ -9623,7 +9636,7 @@ rules.</p>
 </div>
 
         <footer>
-  Generated on Tue Jul  2 16:40:29 2024 by
+  Generated on Thu Jul  4 13:58:42 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

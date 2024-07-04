@@ -287,6 +287,19 @@ Note that all methods on this module are also availabe directly on OpenHAB::DSL.
   
   <li class="">
     <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Actions/Notification.html" title="OpenHAB::Core::Actions::Notification (class)">Notification</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Core/Actions/Ping.html" title="OpenHAB::Core::Actions::Ping (class)">Ping</a></span>
       
         &lt; Object
@@ -4334,7 +4347,7 @@ The context can be accessed from within the script's execution block as a "local
       <pre class="example code"><code><span class="comment"># return the script object into a variable</span>
 door_check = script <span class="string"><span class="delimiter">&quot;</span><span class="content">Check all doors</span><span class="delimiter">&quot;</span></span>, <span class="key">id</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">door_check</span><span class="delimiter">&quot;</span></span>, <span class="key">tags</span>: <span class="symbol">:security</span> <span class="keyword">do</span>
   open_doors = gDoors.members.select(&amp;<span class="symbol">:open?</span>).map(&amp;<span class="symbol">:label</span>).join(<span class="string"><span class="delimiter">&quot;</span><span class="content">, </span><span class="delimiter">&quot;</span></span>)
-  notify(<span class="string"><span class="delimiter">&quot;</span><span class="content">The following doors are open: </span><span class="inline"><span class="inline-delimiter">#{</span>open_doors<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>) <span class="keyword">unless</span> open_doors.empty?
+  <span class="constant">Notification</span>.send(<span class="string"><span class="delimiter">&quot;</span><span class="content">The following doors are open: </span><span class="inline"><span class="inline-delimiter">#{</span>open_doors<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>) <span class="keyword">unless</span> open_doors.empty?
 <span class="keyword">end</span>
 
 <span class="comment"># run is an alias of trigger</span>
@@ -4347,7 +4360,7 @@ door_check.run</code></pre>
       <pre class="example code"><code><span class="comment"># This script expects to be called with `message` as context/parameter</span>
 <span class="constant">DESTINATION_EMAIL</span> = <span class="string"><span class="delimiter">&quot;</span><span class="content">myemail@example.com</span><span class="delimiter">&quot;</span></span>
 script <span class="string"><span class="delimiter">&quot;</span><span class="content">Send Notifications</span><span class="delimiter">&quot;</span></span>, <span class="key">id</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">send_alert</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
-  notify(message)
+  <span class="constant">Notification</span>.send(message)
   things[<span class="string"><span class="delimiter">&quot;</span><span class="content">mail:smtp:local</span><span class="delimiter">&quot;</span></span>].send_mail(<span class="constant">DESTINATION_EMAIL</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">OpenHAB Alert</span><span class="delimiter">&quot;</span></span>, message)
 <span class="keyword">end</span>
 
@@ -4575,7 +4588,7 @@ rules.scripts[<span class="string"><span class="delimiter">&quot;</span><span cl
 </div>
 
         <footer>
-  Generated on Tue Jul  2 16:40:28 2024 by
+  Generated on Thu Jul  4 13:58:42 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
