@@ -138,6 +138,20 @@ module OpenHAB
             NotificationAction.__send__(:"hide_#{notification}_by_reference_id", *args, id) if id
             NotificationAction.__send__(:"hide_#{notification}_by_tag", *args, tag) if tag
           end
+
+          #
+          # Sends a log notification.
+          #
+          # Log notifications do not trigger a notification on the device.
+          #
+          # @param msg [String] The message to send.
+          # @param icon [String, Symbol, nil] The icon name
+          # @param tag [String, Symbol, nil] a name to group the type or severity of the notification.
+          # @return [void]
+          #
+          def log(msg, icon: nil, tag: nil)
+            NotificationAction.send_log_notification(msg.to_s, icon&.to_s, tag&.to_s)
+          end
         end
 
         Object.const_set(name.split("::").last, self)
