@@ -135,7 +135,7 @@ module OpenHAB
         #   # return the script object into a variable
         #   door_check = script "Check all doors", id: "door_check", tags: :security do
         #     open_doors = gDoors.members.select(&:open?).map(&:label).join(", ")
-        #     notify("The following doors are open: #{open_doors}") unless open_doors.empty?
+        #     Notification.send("The following doors are open: #{open_doors}") unless open_doors.empty?
         #   end
         #
         #   # run is an alias of trigger
@@ -145,7 +145,7 @@ module OpenHAB
         #   # This script expects to be called with `message` as context/parameter
         #   DESTINATION_EMAIL = "myemail@example.com"
         #   script "Send Notifications", id: "send_alert" do
-        #     notify(message)
+        #     Notification.send(message)
         #     things["mail:smtp:local"].send_mail(DESTINATION_EMAIL, "OpenHAB Alert", message)
         #   end
         #
@@ -744,7 +744,7 @@ module OpenHAB
         #     changed Door_State
         #     debounce_for 10.minutes
         #     only_if { Door_State.open? }
-        #     run { notify("The Door has been open for 10 minutes!") }
+        #     run { Notification.send("The Door has been open for 10 minutes!") }
         #   end
         #
         def debounce_for(debounce_time)
@@ -1151,7 +1151,7 @@ module OpenHAB
         #   rule "Thing status monitoring" do
         #     changed things, to: :offline
         #     run do |event|
-        #       notify("Thing #{event.thing.uid} is offline")
+        #       Notification.send("Thing #{event.thing.uid} is offline")
         #     end
         #   end
         #

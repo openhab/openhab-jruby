@@ -239,7 +239,7 @@ logger.info("Kitchen Light State: #{KitchenLight.state}")
 Sending a notification:
 
 ```ruby
-notify("romeo@montague.org", "Balcony door is open")
+Notification.send("romeo@montague.org", "Balcony door is open")
 ```
 
 Querying the status of a thing:
@@ -1154,7 +1154,7 @@ Time.now.between?("5am".."11pm")
 Time.now.holiday? # => false
 MonthDay.parse("12-25").holiday # => :christmas
 1.day.from_now.next_holiday # => :thanksgiving
-notify("It's #{Ephemeris.holiday_name(Date.today)}!") if Date.today.holiday?
+Notification.send("It's #{Ephemeris.holiday_name(Date.today)}!") if Date.today.holiday?
 
 Date.today.weekend? # => true
 Date.today.in_dayset?(:school) # => false
@@ -1686,7 +1686,7 @@ rule "Check for offline things 15 minutes after openHAB had started" do
   delay 15.minutes
   run do
     offline_things = things.select(&:offline?).map(&:uid).join(", ")
-    notify("Things that are still offline: #{offline_things}")
+    Notification.send("Things that are still offline: #{offline_things}")
   end
 end
 ```

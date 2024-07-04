@@ -11,29 +11,47 @@ module OpenHAB
             email,
             msg,
             icon,
-            severity,
+            tag,
             title = nil,
+            id = nil,
             on_click = nil,
             attachment = nil,
             button1 = nil,
             button2 = nil,
             button3 = nil
           )
-            logger.debug("send_notification: #{email}, #{msg}, #{icon}, #{severity}, #{title}, #{on_click}, #{attachment}, #{button1}, #{button2}, #{button3}") # rubocop:disable Layout/LineLength
+            logger.debug("send_notification: #{email}, #{msg}, #{icon}, #{tag}, #{title}, #{id}, #{on_click}, #{attachment}, #{button1}, #{button2}, #{button3}") # rubocop:disable Layout/LineLength
           end
 
           def send_broadcast_notification(
             msg,
             icon,
-            severity,
+            tag,
             title = nil,
+            id = nil,
             on_click = nil,
             attachment = nil,
             button1 = nil,
             button2 = nil,
             button3 = nil
           )
-            logger.debug("send_broadcast_notification: #{msg}, #{icon}, #{severity}, #{title}, #{on_click}, #{attachment}, #{button1}, #{button2}, #{button3}") # rubocop:disable Layout/LineLength
+            logger.debug("send_broadcast_notification: #{msg}, #{icon}, #{tag}, #{title}, #{id}, #{on_click}, #{attachment}, #{button1}, #{button2}, #{button3}") # rubocop:disable Layout/LineLength
+          end
+
+          def hide_notification_by_reference_id(email, id)
+            logger.debug("hide_notification_by_reference_id: #{email}, #{id}")
+          end
+
+          def hide_notification_by_tag(email, tag)
+            logger.debug("hide_notification_by_tag: #{email}, #{tag}")
+          end
+
+          def hide_broadcast_notification_by_reference_id(id)
+            logger.debug("hide_broadcast_notification_by_reference_id: #{id}")
+          end
+
+          def hide_broadcast_notification_by_tag(tag)
+            logger.debug("hide_broadcast_notification_by_tag: #{tag}")
           end
         end
       end
