@@ -15,9 +15,10 @@ module OpenHAB
     V4_2 = Gem::Version.new("4.2.0").freeze
 
     # @return [Gem::Version] Returns the current openHAB version as a Gem::Version object
+    #   Note, this strips off snapshots, milestones and RC versions and returns the release version.
     # @!visibility private
     def self.version
-      @version ||= Gem::Version.new(VERSION).freeze
+      @version ||= Gem::Version.new(VERSION).release.freeze
     end
 
     raise "`openhab-scripting` requires openHAB >= 3.4.0" unless version >= Gem::Version.new("3.4.0")
