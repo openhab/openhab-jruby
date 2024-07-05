@@ -1,5 +1,20 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.22.0](https://github.com/openhab/openhab-jruby/tree/v5.22.0) (2024-07-05)
+
+### Features
+
+- Persistence: support direct arithmetics against PersistedState by [@jimtng](https://github.com/jimtng) in [#288](https://github.com/openhab/openhab-jruby/pull/288)
+- Add `StartlevelEvent` by [@jimtng](https://github.com/jimtng) in [#294](https://github.com/openhab/openhab-jruby/pull/294)
+- Add `ItemChannelLinkAddedEvent` and `ItemChannelLinkRemoved` events by [@jimtng](https://github.com/jimtng) in [#293](https://github.com/openhab/openhab-jruby/pull/293)
+- Persistence: support multiplication with PersistedState by [@jimtng](https://github.com/jimtng) in [#289](https://github.com/openhab/openhab-jruby/pull/289)
+- Allow changed trigger on any Thing by [@jimtng](https://github.com/jimtng) in [#296](https://github.com/openhab/openhab-jruby/pull/296)
+- NotificationAction: replace `notify` with `Notification.send`, add `Notification.hide`, support reference id. by [@jimtng](https://github.com/jimtng) in [#297](https://github.com/openhab/openhab-jruby/pull/297)
+- Add TimedCommand parameter `only_when_ensured` by [@jimtng](https://github.com/jimtng) in [#290](https://github.com/openhab/openhab-jruby/pull/290)
+- NotificationAction: add `Notification.log` to send log notifications by [@jimtng](https://github.com/jimtng) in [#299](https://github.com/openhab/openhab-jruby/pull/299)
+
+**Full Changelog**: [v5.21.0...v5.22.0](https://github.com/openhab/openhab-jruby/compare/v5.21.0...v5.22.0)
+
 ## [v5.21.0](https://github.com/openhab/openhab-jruby/tree/v5.21.0) (2024-06-28)
 
 ### Features
