@@ -1470,7 +1470,7 @@ See {OpenHAB::DSL::Rules::BuilderDSL#updated #updated}
 rule "Received a command" do
   received_command DoorBell, command: ON
   run do |event|
-    notify "Someone pressed the door bell"
+    Notification.send "Someone pressed the door bell"
     play_sound "doorbell.mp3"
   end
 end
