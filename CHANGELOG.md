@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.22.1](https://github.com/openhab/openhab-jruby/tree/v5.22.1) (2024-07-06)
+
+### Bug Fixes
+
+- Support Milestones and RC versions by [@jimtng](https://github.com/jimtng) in [#302](https://github.com/openhab/openhab-jruby/pull/302)
+
+**Full Changelog**: [v5.22.0...v5.22.1](https://github.com/openhab/openhab-jruby/compare/v5.22.0...v5.22.1)
+
 ## [v5.22.0](https://github.com/openhab/openhab-jruby/tree/v5.22.0) (2024-07-05)
 
 ### Features
