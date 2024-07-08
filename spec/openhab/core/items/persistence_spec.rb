@@ -152,8 +152,9 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
       end
 
       it "accepts a TimeSeries" do
-        item.persist(TimeSeries.new)
-        item.persist(TimeSeries.new, :influxdb)
+        time_series = TimeSeries.new.add(Time.now, 0)
+        item.persist(time_series)
+        item.persist(time_series, :influxdb)
       end
     end
   end
