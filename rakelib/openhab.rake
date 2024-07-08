@@ -11,7 +11,7 @@ require "net/http"
 # Disabled due to part of buid / potentially refactor into classes
 # rubocop: disable Rake/MethodDefinitionInTask Legacy code
 namespace :openhab do
-  @openhab_version = ENV["OPENHAB_VERSION"] || "4.2.0-SNAPSHOT"
+  @openhab_version = ENV["OPENHAB_VERSION"] || "4.3.0-SNAPSHOT"
   @port_numbers = {
     ssh: { port: ENV["OPENHAB_SSH_PORT"] || 8101, config: "org.apache.karaf.shell:sshPort" },
     lsp: { port: ENV["OPENHAB_LSP_PORT"] || 5007, config: "org.openhab.lsp:port" }
