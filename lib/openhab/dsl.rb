@@ -666,7 +666,7 @@ module OpenHAB
     end
 
     #
-    # Global method that takes a block and for the duration of the block
+    # Global method that takes a block and for the duration of the block,
     # all commands sent will check if the item is in the command's state
     # before sending the command. This also applies to updates.
     #
@@ -715,6 +715,68 @@ module OpenHAB
       yield
     ensure
       ensure_states!(active: old)
+    end
+
+    #
+    # Permanently set the _default_ `only_when_ensured` to true for {Items::TimedCommand TimedCommand}s
+    # for the current thread.
+    #
+    # When `only_when_ensured` is true, the timer in a timed command will only be started if the item's
+    # current state is not the same as the command.
+    #
+    # The option `only_when_ensured` can still be overridden by passing the `only_when_ensured` argument to
+    # a timed command.
+    #
+    # @note This method is only intended for use at the top level of rule
+    #   scripts. If it's used within library methods, or hap-hazardly within
+    #   rules, things can get very confusing because the prior state won't be
+    #   properly restored.
+    #
+    # @param [Boolean] default Whether to set the default for `only_when_ensured` option to true.
+    # @return [Boolean] The previous ensure_timed_commands setting.
+    #
+    # @example Make `only_when_ensured`: true the default for the rest of the script
+    #   # The default is `only_when_ensured`: false, so the timer will start regardless of the item's current state
+    #   Item.ensure.command 50, for: 5.minutes
+    #
+    #   ensure_timed_commands!
+    #
+    #   # From now, the default is `only_when_ensured`: true,
+    #   # so the timer will only start if the item's current state is different
+    #   Item.command 50, for: 5.minutes
+    #
+    #   # It can still be overridden by passing `only_when_ensured: false`
+    #   Item.command 50, for: 5.minutes, only_when_ensured: false
+    #
+    # @see Items::TimedCommand TimedCommand
+    #
+    def ensure_timed_commands!(default: true)
+      old = Thread.current[:openhab_ensure_timed_commands]
+      Thread.current[:openhab_ensure_timed_commands] = default
+      old
+    end
+
+    #
+    # Global method that takes a block and for the duration of the block,
+    # all timed commands will default to `only_when_ensured`: true
+    #
+    # @example
+    #   ensure_timed_commands do
+    #     # `only_when_ensured` defaults to true for all timed commands inside the block
+    #     Item.on for: 5.minutes
+    #
+    #     # It does not affect non timed-commands
+    #     # so a call to {ensure} still needs to be done when required
+    #     Item2.ensure.on
+    #   end
+    #
+    # @see Items::TimedCommand TimedCommand
+    #
+    def ensure_timed_commands
+      old = ensure_timed_commands!
+      yield
+    ensure
+      ensure_timed_commands!(default: old)
     end
 
     #
@@ -1087,6 +1149,8 @@ module OpenHAB
     #
     # Provide access to the script context / variables
     # see OpenHAB::DSL::Rules::AutomationRule#execute!
+    #
+    #
     #
     # @!visibility private
     ruby2_keywords def method_missing(method, *args)
