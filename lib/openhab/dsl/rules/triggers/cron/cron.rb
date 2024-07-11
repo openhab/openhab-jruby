@@ -51,7 +51,9 @@ module OpenHAB
           private_constant :DAY_OF_WEEK_MAP
 
           # @return [Hash] Converts the DAY_OF_WEEK_MAP to map used by Cron Expression
-          DAY_OF_WEEK_EXPRESSION_MAP = DAY_OF_WEEK_MAP.transform_values { |v| CRON_EXPRESSION_MAP.merge(dow: v) }
+          DAY_OF_WEEK_EXPRESSION_MAP = DAY_OF_WEEK_MAP.transform_values do |v|
+            CRON_EXPRESSION_MAP.merge(second: 0, minute: 0, hour: 0, dow: v)
+          end.freeze
           private_constant :DAY_OF_WEEK_EXPRESSION_MAP
 
           # @return [Hash] Create a set of cron expressions based on different time intervals
