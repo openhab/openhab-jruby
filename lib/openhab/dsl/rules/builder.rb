@@ -1278,6 +1278,8 @@ module OpenHAB
         #
         # The `event` passed to run blocks will be a {Core::Events::TimerEvent}.
         #
+        # For a more complex schedule, use {cron}.
+        #
         # @param [String,
         #   Duration,
         #   java.time.MonthDay,
@@ -1294,8 +1296,8 @@ module OpenHAB
         #   :thursday,
         #   :friday,
         #   :saturday,
-        #   :sunday] value
-        #   When to execute rule.
+        #   :sunday] values
+        #   When to execute rule. Multiple day-of-week can be specified. Otherwise, only one value is allowed.
         # @param [LocalTime, String, Core::Items::DateTimeItem, nil] at What time of day to execute rule
         #   If `value` is `:day`, `at` can be a {Core::Items::DateTimeItem DateTimeItem}, and
         #   the trigger will run every day at the (time only portion of) current state of the
@@ -1304,6 +1306,7 @@ module OpenHAB
         # @return [void]
         #
         # @see at
+        # @see cron
         #
         # @example
         #   rule "Daily" do
@@ -1363,8 +1366,28 @@ module OpenHAB
         #     run { logger.info "Happy Valentine's Day!" }
         #   end
         #
-        def every(value, at: nil, attach: nil)
-          return every(java.time.MonthDay.parse(value), at: at, attach: attach) if value.is_a?(String)
+        # @example Multiple day-of-week
+        #   rule "Weekend" do
+        #     every :saturday, :sunday, at: "10:00"
+        #     run { logger.info "It's the weekend!" }
+        #   end
+        #
+        def every(*values, at: nil, attach: nil)
+          raise ArgumentError, "Missing values" if values.empty?
+
+          if Cron.all_dow_symbols?(values)
+            @ruby_triggers << [:every, values.join(", "), { at: at }]
+            return cron(Cron.from_dow_symbols(values, at), attach: attach)
+          end
+
+          if values.size != 1
+            raise ArgumentError,
+                  "Multiple values are only allowed for day-of-week. " \
+                  "Otherwise only one value is allowed, given: #{values.size}"
+          end
+
+          value = values.first
+          value = java.time.MonthDay.parse(value.to_str) if value.respond_to?(:to_str)
 
           @ruby_triggers << [:every, value, { at: at }]
 
