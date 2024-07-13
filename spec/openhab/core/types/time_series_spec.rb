@@ -70,6 +70,17 @@ RSpec.describe OpenHAB::Core::Types::TimeSeries do
     end
   end
 
+  describe "#<<" do
+    it "works" do
+      ts << [Time.at(3), 3]
+      expect(ts.size).to be 3
+      expect(ts.first.state).to eql DecimalType.new(1)
+      expect(ts.begin).to eql Instant.of_epoch_second(1)
+      expect(ts.last.state).to eql DecimalType.new(3)
+      expect(ts.end).to eql Instant.of_epoch_second(3)
+    end
+  end
+
   context "when accessed as an Array" do
     it "is frozen" do
       expect(ts.states).to be_frozen
