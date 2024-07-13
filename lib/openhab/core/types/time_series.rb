@@ -4,6 +4,7 @@
 return unless OpenHAB::Core.version >= OpenHAB::Core::V4_1
 
 require "forwardable"
+require "openhab/core/lazy_array"
 
 module OpenHAB
   module Core
@@ -30,7 +31,7 @@ module OpenHAB
       # @see DSL::Rules::BuilderDSL#time_series_updated #time_series_updated rule trigger
       #
       class TimeSeries
-        extend Forwardable
+        include LazyArray
 
         # @!attribute [r] policy
         #   Returns the persistence policy of this series.
@@ -81,12 +82,19 @@ module OpenHAB
             "size=#{size}>"
         end
 
+        # Explicit conversion to Array
+        #
+        # @return [Array]
+        def to_a
+          get_states.to_array.to_a.freeze
+        end
+
         #
         # Returns the content of this series.
         # @return [Array<org.openhab.core.types.TimeSeries.Entry>]
         #
         def states
-          get_states.to_array.to_a.freeze
+          to_a
         end
 
         # rename raw methods so we can overwrite them
@@ -100,29 +108,43 @@ module OpenHAB
         #
         # @note This method returns self so it can be chained, unlike the Java version.
         #
-        # @param [Instant, #to_zoned_date_time, #to_instant] instant An instant for the given state.
+        # @param [Instant, #to_zoned_date_time, #to_instant] timestamp An instant for the given state.
         # @param [State, String, Numeric] state The State at the given timestamp.
         #   If a String is given, it will be converted to {StringType}.
         #   If a {Numeric} is given, it will be converted to {DecimalType}.
         # @return [self]
         # @raise [ArgumentError] if state is not a {State}, String or {Numeric}
         #
-        def add(instant, state)
-          instant = instant.to_zoned_date_time if instant.respond_to?(:to_zoned_date_time)
-          instant = instant.to_instant if instant.respond_to?(:to_instant)
-          state = case state
-                  when State then state
-                  when String then StringType.new(state)
-                  when Numeric then DecimalType.new(state)
-                  else
-                    raise ArgumentError, "state must be a State, String or Numeric, but was #{state.class}"
-                  end
-          add_instant(instant, state)
+        def add(timestamp, state)
+          timestamp = to_instant(timestamp)
+          state = format_state(state)
+          add_instant(timestamp, state)
           self
         end
 
-        # any method that exists on Array gets forwarded to states
-        delegate (Array.instance_methods - instance_methods) => :states
+        private
+
+        def to_instant(timestamp)
+          if timestamp.is_a?(Instant)
+            timestamp
+          elsif timestamp.respond_to?(:to_instant)
+            timestamp.to_instant
+          elsif timestamp.respond_to?(:to_zoned_date_time)
+            timestamp.to_zoned_date_time.to_instant
+          else
+            raise ArgumentError, "timestamp must be an Instant, or convertible to one, but was #{timestamp.class}"
+          end
+        end
+
+        def format_state(state)
+          case state
+          when State then state
+          when String then StringType.new(state)
+          when Numeric then DecimalType.new(state)
+          else
+            raise ArgumentError, "state must be a State, String or Numeric, but was #{state.class}"
+          end
+        end
       end
     end
   end
