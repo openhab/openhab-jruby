@@ -122,6 +122,25 @@ module OpenHAB
           self
         end
 
+        #
+        # Appends an entry to self, returns self
+        #
+        # @param [Array<Instant, State>] entry a two-element array with the timestamp and state.
+        #   The timestamp can be an {Instant} or any object that responds to #to_zoned_date_time.
+        # @return [self]
+        #
+        # @example Append an entry
+        #   time_series << [Time.at(2), 2]
+        #
+        def <<(entry)
+          raise ArgumentError, "entry must be an Array, but was #{entry.class}" unless entry.respond_to?(:to_ary)
+
+          entry = entry.to_ary
+          raise ArgumentError, "entry must be an Array of size 2, but was #{entry.size}" unless entry.size == 2
+
+          add(entry[0], entry[1])
+        end
+
         private
 
         def to_instant(timestamp)
