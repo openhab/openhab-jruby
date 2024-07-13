@@ -117,15 +117,54 @@ RSpec.describe OpenHAB::DSL::Items::TimedCommand do
     end
   end
 
-  it "accepts expire blocks" do
-    executed = false
-    item.command(5, for: 5.seconds) do |timed_command|
-      executed = true
-      expect(timed_command).to be_expired
+  context "with expire blocks" do
+    it "works" do
+      executed = false
+      item.command(5, for: 5.seconds) do |timed_command|
+        executed = true
+        expect(timed_command).to be_expired
+      end
+      expect(executed).to be false
+      time_travel_and_execute_timers(10.seconds)
+      expect(executed).to be true
     end
-    expect(executed).to be false
-    time_travel_and_execute_timers(10.seconds)
-    expect(executed).to be true
+
+    it "can be resumed when interrupted by other commands" do
+      finalized = false
+      item.command(5, for: 2.seconds) do |timed_command|
+        if timed_command.cancelled?
+          timed_command.resume
+        else
+          finalized = true
+          item.command(7)
+        end
+      end
+      item.command(6)
+      expect(finalized).to be false
+      time_travel_and_execute_timers(3.seconds)
+      expect(finalized).to be true
+      expect(item.state).to eq 7
+    end
+
+    it "can be rescheduled" do
+      rescheduled = false
+      finalized = false
+      item.command(5, for: 2.seconds) do |timed_command|
+        if timed_command.expired? && !rescheduled
+          timed_command.reschedule
+          rescheduled = true
+          next
+        end
+
+        item.command(8)
+        finalized = true
+      end
+      time_travel_and_execute_timers(3.seconds)
+      expect(finalized).to be false
+      time_travel_and_execute_timers(2.seconds)
+      expect(finalized).to be true
+      expect(item.state).to eq 8
+    end
   end
 
   it "cancels implicit timers when item state changes before timer expires" do

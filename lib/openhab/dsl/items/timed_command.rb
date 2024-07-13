@@ -64,6 +64,29 @@ module OpenHAB
           def cancelled?
             resolution == :cancelled
           end
+
+          #
+          # Reschedule the timed command.
+          #
+          # If the timed command was cancelled, this will also resume it.
+          #
+          # @param [java.time.temporal.TemporalAmount, #to_zoned_date_time, Proc, nil] time
+          #   When to reschedule the timer for. If unspecified, the original time is used.
+          # @return [void]
+          #
+          def reschedule(time = nil)
+            self.resolution = nil
+            timer.reschedule(time)
+          end
+
+          #
+          # Resume a cancelled timed command to its original expiration time.
+          #
+          # @return [void]
+          #
+          def resume
+            self.resolution = nil
+          end
         end
 
         @timed_commands = java.util.concurrent.ConcurrentHashMap.new
@@ -82,7 +105,13 @@ module OpenHAB
         #
         # @note If a block is provided, and the timer is canceled because the
         #   item changed state while it was waiting, the block will still be
-        #   executed. Be sure to check {TimedCommandDetails#expired? #expired?}
+        #   executed. The timed command can be reinstated by calling {TimedCommandDetails#resume #resume} or
+        #   {TimedCommandDetails#reschedule #reschedule}.
+        #
+        #   If the timer expired, the timed command can be rescheduled from inside the block by calling
+        #   {TimedCommandDetails#reschedule #reschedule}.
+        #
+        #   Be sure to check {TimedCommandDetails#expired? #expired?}
         #   and/or {TimedCommandDetails#cancelled? #cancelled?} to determine why
         #   the block was called.
         #
@@ -181,25 +210,30 @@ module OpenHAB
         end
 
         # Creates the timer to handle changing the item state when timer expires or invoking user supplied block
-        # @param [TimedCommandDetailes] timed_command_details details about the timed command
+        # @param [TimedCommandDetails] timed_command_details details about the timed command
         # @return [Timer] Timer
         def timed_command_timer(timed_command_details, duration)
           DSL.after(duration) do
             timed_command_details.mutex.synchronize do
               logger.trace "Timed command expired - #{timed_command_details}"
-              DSL.rules.remove(timed_command_details.rule_uid)
               timed_command_details.resolution = :expired
               case timed_command_details.on_expire
               when Proc
                 logger.trace "Invoking block #{timed_command_details.on_expire} after timed command for #{name} expired"
                 timed_command_details.on_expire.call(timed_command_details)
+                if timed_command_details.resolution.nil?
+                  logger.trace { "Block rescheduled the timer to #{timed_command_details.timer.execution_time}" }
+                end
               when Core::Types::UnDefType
                 update(timed_command_details.on_expire)
               else
                 command(timed_command_details.on_expire)
               end
+              if timed_command_details.resolution
+                DSL.rules.remove(timed_command_details.rule_uid)
+                TimedCommand.timed_commands.delete(timed_command_details.item)
+              end
             end
-            TimedCommand.timed_commands.delete(timed_command_details.item)
           end
         end
 
@@ -250,17 +284,26 @@ module OpenHAB
           def execute(_mod = nil, inputs = nil)
             ThreadLocal.thread_local(**@thread_locals) do
               @timed_command_details.mutex.synchronize do
-                logger.trace "Canceling implicit timer #{@timed_command_details.timer} for " \
-                             "#{@timed_command_details.item.name}  because received event #{inputs}"
+                logger.trace do
+                  "Canceling implicit timer #{@timed_command_details.timer} for " \
+                    "#{@timed_command_details.item.name} because of received event #{inputs}"
+                end
+                original_execution_time = @timed_command_details.timer.execution_time
                 @timed_command_details.timer.cancel
-                DSL.rules.remove(@timed_command_details.rule_uid)
+                DSL.rules[@timed_command_details.rule_uid].disable
                 @timed_command_details.resolution = :cancelled
                 if @timed_command_details.on_expire.is_a?(Proc)
                   logger.trace "Executing user supplied block on timed command cancelation"
                   @timed_command_details.on_expire.call(@timed_command_details)
                 end
+                if @timed_command_details.resolution
+                  DSL.rules.remove(@timed_command_details.rule_uid)
+                  TimedCommand.timed_commands.delete(@timed_command_details.item)
+                else
+                  DSL.rules[@timed_command_details.rule_uid].enable
+                  @timed_command_details.timer.reschedule(original_execution_time)
+                end
               end
-              TimedCommand.timed_commands.delete(@timed_command_details.item)
             rescue Exception => e
               raise if defined?(::RSpec)
 
