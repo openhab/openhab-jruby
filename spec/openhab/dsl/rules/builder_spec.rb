@@ -1297,6 +1297,26 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           expect(triggered).to be true
         end
       end
+
+      # @deprecated OH 4.1 remove if guard when dropping OH 4.1 support
+      if OpenHAB::Core.version >= OpenHAB::Core::V4_2
+        { "Duration" => 2.hours + 1.seconds, "Integer" => 2.hours.to_i + 1 }.each do |type, offset|
+          it "supports #{type} offset" do
+            items.build { date_time_item MyDateTimeItem }
+
+            triggered = false
+            rule do
+              at MyDateTimeItem, offset: offset
+              run { triggered = true }
+            end
+
+            MyDateTimeItem.update(2.hours.ago) # without an offset, this would not have triggered the rule
+            wait(4.seconds) do
+              expect(triggered).to be true
+            end
+          end
+        end
+      end
     end
 
     describe "#every" do
@@ -1323,30 +1343,53 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       generate("can use MonthDay as a string", "0 0 12 17 11 ? *", "11-17", at: LocalTime.parse("12:00"))
       generate("can use LocalTime a string", "0 0 12 17 11 ? *", MonthDay.parse("11-17"), at: "12:00")
 
-      it "supports dynamic `at`" do
-        items.build { date_time_item MyDateTimeItem }
-
-        triggered = false
-        every(:day, id: "dynamic_at_rule", at: MyDateTimeItem) { triggered = true }
-
-        rule = rules["dynamic_at_rule"]
-        trigger = rule.triggers.first
-
-        handler = OpenHAB::Core::Rules.manager.get_module_handler_factory(trigger.type_uid)
-                                      .get_handler(trigger, rule.uid)
-
-        expect(handler.getTemporalAdjuster).not_to be_nil
-
-        MyDateTimeItem.update(Time.now + 2 - 2.days)
-        wait(4.seconds) do
-          expect(triggered).to be true
-        end
+      it "complains when using an offset for non-dynamic `at`" do
+        expect { every(:day, at: "1am", offset: 2.hours) { nil } }.to raise_error(ArgumentError, /offset/i)
       end
 
-      it "complains about dynamic at that's not daily" do
-        items.build { date_time_item MyDateTimeItem }
+      context "with dynamic `at`" do
+        it "works" do
+          items.build { date_time_item MyDateTimeItem }
 
-        expect { every :month, at: MyDateTimeItem }.to raise_error(ArgumentError)
+          triggered = false
+          every(:day, id: "dynamic_at_rule", at: MyDateTimeItem) { triggered = true }
+
+          rule = rules["dynamic_at_rule"]
+          trigger = rule.triggers.first
+
+          handler = OpenHAB::Core::Rules.manager.get_module_handler_factory(trigger.type_uid)
+                                        .get_handler(trigger, rule.uid)
+
+          expect(handler.getTemporalAdjuster).not_to be_nil
+
+          MyDateTimeItem.update(Time.now + 2 - 2.days)
+          wait(4.seconds) do
+            expect(triggered).to be true
+          end
+        end
+
+        it "complains about dynamic at that's not daily" do
+          items.build { date_time_item MyDateTimeItem }
+
+          expect { every :month, at: MyDateTimeItem }.to raise_error(ArgumentError)
+        end
+
+        # @deprecated OH 4.1 remove if guard when dropping OH 4.1 support
+        if OpenHAB::Core.version >= OpenHAB::Core::V4_2
+          { "Duration" => 2.hours + 1.second, "Integer" => 2.hours.to_i + 1 }.each do |type, offset|
+            it "supports #{type} offset" do
+              items.build { date_time_item MyDateTimeItem }
+
+              triggered = false
+              every(:day, at: MyDateTimeItem, offset: offset) { triggered = true }
+
+              MyDateTimeItem.update(2.hours.ago) # without an offset, this would not have triggered the rule
+              wait(4.seconds) do
+                expect(triggered).to be true
+              end
+            end
+          end
+        end
       end
     end
 
