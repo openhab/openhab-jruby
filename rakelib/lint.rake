@@ -16,7 +16,8 @@ namespace :lint do
 
   desc "YARD Docs"
   task :yard do
-    sh "yard stats -c --list-undoc"
+    sh("yard -c --no-cache --private --fail-on-warning --no-stats") &&
+      sh("yard stats -c --list-undoc")
   end
 
   desc "Execute all lint tests"
