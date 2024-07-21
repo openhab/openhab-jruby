@@ -146,7 +146,7 @@ module OpenHAB
           base_item.format_type(command)
         end
 
-        %w[color contact date_time dimmer image location number player rollershutter string switch].each do |type|
+        %w[call color contact date_time dimmer image location number player rollershutter string switch].each do |type|
           type_class = type.gsub(/(^[a-z]|_[a-z])/) { |letter| letter[-1].upcase }
           class_eval <<~RUBY, __FILE__, __LINE__ + 1
             def #{type}_item?                      # def date_time_item?
