@@ -3645,7 +3645,11 @@ command will reschedule the timed command for that new duration.</p>
     <strong>Note:</strong>
     <div class='inline'><p>If a block is provided, and the timer is canceled because the
 item changed state while it was waiting, the block will still be
-executed. Be sure to check <span class='object_link'><a href="TimedCommand/TimedCommandDetails.html#expired%3F-instance_method" title="OpenHAB::DSL::Items::TimedCommand::TimedCommandDetails#expired? (method)">#expired?</a></span>
+executed. The timed command can be reinstated by calling <span class='object_link'><a href="TimedCommand/TimedCommandDetails.html#resume-instance_method" title="OpenHAB::DSL::Items::TimedCommand::TimedCommandDetails#resume (method)">#resume</a></span> or
+<span class='object_link'><a href="TimedCommand/TimedCommandDetails.html#reschedule-instance_method" title="OpenHAB::DSL::Items::TimedCommand::TimedCommandDetails#reschedule (method)">#reschedule</a></span>.</p>
+<p>If the timer expired, the timed command can be rescheduled from inside the block by calling
+<span class='object_link'><a href="TimedCommand/TimedCommandDetails.html#reschedule-instance_method" title="OpenHAB::DSL::Items::TimedCommand::TimedCommandDetails#reschedule (method)">#reschedule</a></span>.</p>
+<p>Be sure to check <span class='object_link'><a href="TimedCommand/TimedCommandDetails.html#expired%3F-instance_method" title="OpenHAB::DSL::Items::TimedCommand::TimedCommandDetails#expired? (method)">#expired?</a></span>
 and/or <span class='object_link'><a href="TimedCommand/TimedCommandDetails.html#cancelled%3F-instance_method" title="OpenHAB::DSL::Items::TimedCommand::TimedCommandDetails#cancelled? (method)">#cancelled?</a></span> to determine why
 the block was called.</p>
 </div>
@@ -3814,35 +3818,6 @@ other action.</p>
       <pre class="lines">
 
 
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
 148
 149
 150
@@ -3859,10 +3834,39 @@ other action.</p>
 161
 162
 163
-164</pre>
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/timed_command.rb', line 119</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/timed_command.rb', line 148</span>
 
 <span class="keyword">def</span> <span class="function">command</span>(command, <span class="key">for</span>: <span class="predefined-constant">nil</span>, <span class="key">on_expire</span>: <span class="predefined-constant">nil</span>, <span class="key">only_when_ensured</span>: <span class="predefined-constant">false</span>, &amp;block)
   duration = binding.local_variable_get(<span class="symbol">:for</span>)
@@ -3920,7 +3924,7 @@ other action.</p>
 </div>
 
         <footer>
-  Generated on Sun Jul 21 16:47:43 2024 by
+  Generated on Sun Jul 21 16:50:00 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
