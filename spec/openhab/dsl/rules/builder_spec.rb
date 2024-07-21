@@ -1325,23 +1325,35 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       generate("can use day of week", "0 0 0 ? * MON *", :monday)
       generate("can use day of week", "0 0 7 ? * MON *", :monday, at: "7am")
 
-      it "supports dynamic `at`" do
-        items.build { date_time_item MyDateTimeItem }
+      context "with dynamic `at`" do
+        let(:item) { items.build { date_time_item MyDateTimeItem } }
 
-        triggered = false
-        every(:day, id: "dynamic_at_rule", at: MyDateTimeItem) { triggered = true }
+        it "works" do
+          triggered = false
+          every(:day, id: "dynamic_at_rule", at: item) { triggered = true }
 
-        rule = rules["dynamic_at_rule"]
-        trigger = rule.triggers.first
+          rule = rules["dynamic_at_rule"]
+          trigger = rule.triggers.first
 
-        handler = OpenHAB::Core::Rules.manager.get_module_handler_factory(trigger.type_uid)
-                                      .get_handler(trigger, rule.uid)
+          handler = OpenHAB::Core::Rules.manager.get_module_handler_factory(trigger.type_uid)
+                                        .get_handler(trigger, rule.uid)
 
-        expect(handler.getTemporalAdjuster).not_to be_nil
+          expect(handler.getTemporalAdjuster).not_to be_nil
 
-        MyDateTimeItem.update(Time.now + 2 - 2.days)
-        wait(4.seconds) do
-          expect(triggered).to be true
+          item.update(Time.now + 2 - 2.days)
+          wait(4.seconds) do
+            expect(triggered).to be true
+          end
+        end
+
+        it "supports attachments", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
+          triggered = nil
+          every(:day, id: "dynamic_at_rule", at: item, attach: 1) { |event| triggered = event.attachment }
+
+          item.update(Time.now + 2 - 2.days)
+          wait(4.seconds) do
+            expect(triggered).to be 1
+          end
         end
       end
 
