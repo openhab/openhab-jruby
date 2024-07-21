@@ -2760,13 +2760,48 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ButtongridBuilder.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder (class)">ButtongridBuilder</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ButtonBuilder.html" title="OpenHAB::DSL::Sitemaps::ButtonBuilder (class)">ButtonBuilder</a></span>
       
         &lt; WidgetBuilder
       
       
     </span>
     
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ButtongridBuilder.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder (class)">ButtongridBuilder</a></span>
+      
+        &lt; LinkableWidgetBuilder
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="ButtongridBuilder/Buttongrid.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder::Buttongrid (module)">Buttongrid</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+
+        
+      </ul>
     
   </li>
 
@@ -3544,7 +3579,7 @@
 
 </div><div id="subclasses">
   <h2>Direct Known Subclasses</h2>
-  <p class="children"><span class='object_link'><a href="FrameBuilder.html" title="OpenHAB::DSL::Sitemaps::FrameBuilder (class)">FrameBuilder</a></span>, <span class='object_link'><a href="GroupBuilder.html" title="OpenHAB::DSL::Sitemaps::GroupBuilder (class)">GroupBuilder</a></span>, <span class='object_link'><a href="ImageBuilder.html" title="OpenHAB::DSL::Sitemaps::ImageBuilder (class)">ImageBuilder</a></span>, <span class='object_link'><a href="SitemapBuilder.html" title="OpenHAB::DSL::Sitemaps::SitemapBuilder (class)">SitemapBuilder</a></span>, <span class='object_link'><a href="TextBuilder.html" title="OpenHAB::DSL::Sitemaps::TextBuilder (class)">TextBuilder</a></span></p>
+  <p class="children"><span class='object_link'><a href="ButtongridBuilder.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder (class)">ButtongridBuilder</a></span>, <span class='object_link'><a href="FrameBuilder.html" title="OpenHAB::DSL::Sitemaps::FrameBuilder (class)">FrameBuilder</a></span>, <span class='object_link'><a href="GroupBuilder.html" title="OpenHAB::DSL::Sitemaps::GroupBuilder (class)">GroupBuilder</a></span>, <span class='object_link'><a href="ImageBuilder.html" title="OpenHAB::DSL::Sitemaps::ImageBuilder (class)">ImageBuilder</a></span>, <span class='object_link'><a href="SitemapBuilder.html" title="OpenHAB::DSL::Sitemaps::SitemapBuilder (class)">SitemapBuilder</a></span>, <span class='object_link'><a href="TextBuilder.html" title="OpenHAB::DSL::Sitemaps::TextBuilder (class)">TextBuilder</a></span></p>
 </div>
 
 
@@ -4000,6 +4035,9 @@
     <p class="tag_title">Examples:</p>
     
       
+        <p class="example_title"><div class='inline'><p>Create a buttongrid with buttons as an argument</p>
+</div></p>
+      
       <pre class="example code"><code><span class="comment"># This creates a buttongrid to emulate a TV remote control</span>
 sitemaps.build <span class="keyword">do</span>
   sitemap <span class="string"><span class="delimiter">&quot;</span><span class="content">remote</span><span class="delimiter">&quot;</span></span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">TV Remote Control</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -4011,8 +4049,35 @@ sitemaps.build <span class="keyword">do</span>
       [<span class="integer">4</span>, <span class="integer">2</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">DOWN</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Down</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:arrowtriangle_down</span><span class="delimiter">&quot;</span></span>],
       [<span class="integer">3</span>, <span class="integer">1</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">LEFT</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Left</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:arrowtriangle_left</span><span class="delimiter">&quot;</span></span>],
       [<span class="integer">3</span>, <span class="integer">3</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">RIGHT</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Right</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:arrowtriangle_right</span><span class="delimiter">&quot;</span></span>],
-      [<span class="integer">3</span>, <span class="integer">2</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">ENTER</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Enter</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">material:adjust</span><span class="delimiter">&quot;</span></span>]
+
+      <span class="comment"># Using keyword arguments:</span>
+      {<span class="key">row</span>: <span class="integer">3</span>, <span class="key">column</span>: <span class="integer">2</span>, <span class="key">click</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">ENTER</span><span class="delimiter">&quot;</span></span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Enter</span><span class="delimiter">&quot;</span></span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">material:adjust</span><span class="delimiter">&quot;</span></span> }
     ]
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Create a buttongrid with button widgets</p>
+</div></p>
+      
+      <pre class="example code"><code>sitemaps.build <span class="keyword">do</span>
+  sitemap <span class="string"><span class="delimiter">&quot;</span><span class="content">remote</span><span class="delimiter">&quot;</span></span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">TV Remote Control</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+    buttongrid <span class="key">item</span>: <span class="constant">LivingRoom_TV_RCButton</span> <span class="keyword">do</span>
+      button <span class="integer">1</span>, <span class="integer">1</span>, <span class="key">click</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">BACK</span><span class="delimiter">&quot;</span></span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:return</span><span class="delimiter">&quot;</span></span>
+      button <span class="integer">1</span>, <span class="integer">2</span>, <span class="key">click</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">HOME</span><span class="delimiter">&quot;</span></span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">material:apps</span><span class="delimiter">&quot;</span></span>
+      button <span class="integer">1</span>, <span class="integer">3</span>, <span class="key">click</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">YELLOW</span><span class="delimiter">&quot;</span></span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:search</span><span class="delimiter">&quot;</span></span>
+      button <span class="integer">2</span>, <span class="integer">2</span>, <span class="key">click</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">UP</span><span class="delimiter">&quot;</span></span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:arrowtriangle_up</span><span class="delimiter">&quot;</span></span>
+      button <span class="integer">4</span>, <span class="integer">2</span>, <span class="key">click</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">DOWN</span><span class="delimiter">&quot;</span></span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:arrowtriangle_down</span><span class="delimiter">&quot;</span></span>
+      button <span class="integer">3</span>, <span class="integer">1</span>, <span class="key">click</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">LEFT</span><span class="delimiter">&quot;</span></span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:arrowtriangle_left</span><span class="delimiter">&quot;</span></span>
+      button <span class="integer">3</span>, <span class="integer">3</span>, <span class="key">click</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">RIGHT</span><span class="delimiter">&quot;</span></span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:arrowtriangle_right</span><span class="delimiter">&quot;</span></span>
+      button <span class="integer">3</span>, <span class="integer">2</span>, <span class="key">click</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">ENTER</span><span class="delimiter">&quot;</span></span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">material:adjust</span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
+
+    <span class="comment"># The following buttons use widget features introduced in openHAB 4.2+</span>
+    buttongrid <span class="key">item</span>: <span class="constant">LivingRoom_Curtain</span> <span class="keyword">do</span>
+      button <span class="integer">1</span>, <span class="integer">1</span>, <span class="key">click</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">up</span><span class="delimiter">&quot;</span></span>, <span class="key">release</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">stop</span><span class="delimiter">&quot;</span></span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:arrowtriangle_up</span><span class="delimiter">&quot;</span></span>
+      button <span class="integer">2</span>, <span class="integer">1</span>, <span class="key">click</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">down</span><span class="delimiter">&quot;</span></span>, <span class="key">release</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">stop</span><span class="delimiter">&quot;</span></span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">f7:arrowtriangle_up</span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
   <span class="keyword">end</span>
 <span class="keyword">end</span></code></pre>
     
@@ -4169,12 +4234,13 @@ sitemaps.build <span class="keyword">do</span>
       
         &mdash;
         <div class='inline'><p>An array of buttons to display.
-Each element is an array with the following elements:</p>
+Each element can be a hash with keyword arguments (see <span class='object_link'><a href="ButtongridBuilder.html#button-instance_method" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder#button (method)">ButtongridBuilder#button</a></span>),
+or an array with the following elements:</p>
 <ul>
 <li>row: 1-12</li>
 <li>column: 1-12</li>
-<li>command: The command to send when the button is pressed</li>
-<li>label: The label to display on the button</li>
+<li>click: The command to send when the button is pressed</li>
+<li>label: The label to display on the button (optional)</li>
 <li>icon: The icon to display on the button (optional)</li>
 </ul>
 </div>
@@ -7783,7 +7849,7 @@ How often to refresh the chart (in seconds) (see <span class='object_link'><a hr
 </div>
 
         <footer>
-  Generated on Sun Jul 21 16:50:06 2024 by
+  Generated on Sun Jul 21 23:39:12 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

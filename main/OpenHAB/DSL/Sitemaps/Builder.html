@@ -33,7 +33,7 @@
   <script type="text/javascript" charset="utf-8" src="../../../js/app.js"></script>
 
 
-    <meta property="og:description" name="description" content="Base sitemap builder DSL - Documentation for openhab-scripting JRuby helper library.">
+    <meta property="og:description" name="description" content="A sitemap builder allows you to dynamically create openHAB sitemaps at runtime. - Documentation for openhab-scripting JRuby helper library.">
     <meta property="og:image" content="https://raw.githubusercontent.com/jruby/collateral/master/logos/PNGs/circle-fill/full-color/jruby-logo-circle-logo-fill-outline-medium.png">
     <meta property="og:image:alt" content="The JRuby logo">
     <script type="text/javascript">
@@ -2760,13 +2760,48 @@
   
   <li class="">
     <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ButtongridBuilder.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder (class)">ButtongridBuilder</a></span>
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ButtonBuilder.html" title="OpenHAB::DSL::Sitemaps::ButtonBuilder (class)">ButtonBuilder</a></span>
       
         &lt; WidgetBuilder
       
       
     </span>
     
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ButtongridBuilder.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder (class)">ButtongridBuilder</a></span>
+      
+        &lt; LinkableWidgetBuilder
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="ButtongridBuilder/Buttongrid.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder::Buttongrid (module)">Buttongrid</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+
+        
+      </ul>
     
   </li>
 
@@ -3525,13 +3560,48 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Base sitemap builder DSL</p>
+    <p>A sitemap builder allows you to dynamically create openHAB sitemaps at runtime.</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>sitemaps.build <span class="keyword">do</span>
+  sitemap <span class="string"><span class="delimiter">&quot;</span><span class="content">demo</span><span class="delimiter">&quot;</span></span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">My home automation</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+    frame <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Date</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+      text <span class="key">item</span>: <span class="constant">Date</span>
+    <span class="keyword">end</span>
+    frame <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Demo</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+      switch <span class="key">item</span>: <span class="constant">Lights</span>, <span class="key">icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">light</span><span class="delimiter">&quot;</span></span>
+      text <span class="key">item</span>: <span class="constant">LR_Temperature</span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Livingroom [%.1f °C]</span><span class="delimiter">&quot;</span></span>
+      group <span class="key">item</span>: <span class="constant">Heating</span>
+      text <span class="key">item</span>: <span class="constant">LR_Multimedia_Summary</span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Multimedia [%s]</span><span class="delimiter">&quot;</span></span>, <span class="key">static_icon</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">video</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+        selection <span class="key">item</span>: <span class="constant">LR_TV_Channel</span>,
+                  <span class="key">mappings</span>: { <span class="integer">0</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">off</span><span class="delimiter">&quot;</span></span>, <span class="integer">1</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">DasErste</span><span class="delimiter">&quot;</span></span>, <span class="integer">2</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">BBC One</span><span class="delimiter">&quot;</span></span>, <span class="integer">3</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">Cartoon Network</span><span class="delimiter">&quot;</span></span> }
+        slider <span class="key">item</span>: <span class="constant">LR_TV_Volume</span>
+      <span class="keyword">end</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
+    
+  </div>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://www.openhab.org/docs/ui/sitemaps.html" target="_parent" title="https://www.openhab.org/docs/ui/sitemaps.html">https://www.openhab.org/docs/ui/sitemaps.html</a></li>
+    
+      <li><span class='object_link'><a href="../../DSL.html#sitemaps-class_method" title="OpenHAB::DSL.sitemaps (method)">OpenHAB::DSL.sitemaps</a></span></li>
+    
+      <li><span class='object_link'><a href="../../Core/Sitemaps/Provider.html#build-instance_method" title="OpenHAB::Core::Sitemaps::Provider#build (method)">sitemaps.build</a></span></li>
+    
+  </ul>
 
 </div>
 
@@ -3677,18 +3747,18 @@
       <pre class="lines">
 
 
-26
-27
-28
-29
-30
-31
-32
-33
-34</pre>
+51
+52
+53
+54
+55
+56
+57
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 51</span>
 
 <span class="keyword">def</span> <span class="function">sitemap</span>(name, <span class="key">label</span>: <span class="predefined-constant">nil</span>, <span class="key">icon</span>: <span class="predefined-constant">nil</span>, &amp;block)
   sitemap = <span class="constant">SitemapBuilder</span>.new(name, <span class="instance-variable">@builder_proxy</span>, <span class="key">label</span>: label, <span class="key">icon</span>: icon, &amp;block)
@@ -3709,7 +3779,7 @@
 </div>
 
         <footer>
-  Generated on Sun Jul 21 16:50:04 2024 by
+  Generated on Sun Jul 21 23:39:10 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
