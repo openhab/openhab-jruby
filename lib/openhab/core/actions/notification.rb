@@ -29,8 +29,11 @@ module OpenHAB
           # @param on_click [String, nil] The action to be performed when the user clicks on the notification.
           #   Specified using the {https://next.openhab.org/addons/integrations/openhabcloud/#action-syntax
           #   action syntax}.
-          # @param attachment [String, nil] The URL of the media attachment to be displayed with the notification.
-          #   This URL must be reachable by the push notification client.
+          # @param attachment [String, Item, nil] The URL of the media attachment to be displayed with the notification.
+          #   This can either be a fully qualified URL, prefixed with
+          #   `http://` or `https://` and reachable by the client device,
+          #   a relative path on the user's openHAB instance starting with `/`,
+          #   or an image item.
           # @param buttons [Array<String>, Hash<String, String>, nil] Buttons to include in the notification.
           #   - In array form, each element is specified as `Title=$action`, where `$action` follows the
           #   {https://next.openhab.org/addons/integrations/openhabcloud/#action-syntax action syntax}.
@@ -93,6 +96,8 @@ module OpenHAB
               buttons ||= []
               buttons = buttons.map { |title, action| "#{title}=#{action}" } if buttons.is_a?(Hash)
               raise ArgumentError, "buttons must contain (0..3) elements." unless (0..3).cover?(buttons.size)
+
+              attachment = "item:#{attachment.name}" if attachment.is_a?(Item) && attachment.image_item?
 
               args.push(title&.to_s,
                         id&.to_s,

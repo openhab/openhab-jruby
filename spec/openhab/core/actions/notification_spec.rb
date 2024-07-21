@@ -89,6 +89,22 @@ RSpec.describe OpenHAB::Core::Actions::Notification do
         Notification.send("Hello, world!",
                           buttons: { :title1 => "action1", :title2 => "action2", "title 3" => "action3" })
       end
+
+      it "accepts an Image item as an attachment" do
+        items.build { image_item MyImageItem }
+        expect(OpenHAB::Core::Actions::NotificationAction).to receive(:send_broadcast_notification)
+          .with("Hello, world!",
+                nil,
+                nil,
+                nil,
+                nil,
+                nil,
+                "item:MyImageItem",
+                nil,
+                nil,
+                nil)
+        Notification.send("Hello, world!", attachment: MyImageItem)
+      end
     end
   end
 
