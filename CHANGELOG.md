@@ -1,5 +1,23 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.23.0](https://github.com/openhab/openhab-jruby/tree/v5.23.0) (2024-07-22)
+
+### Features
+
+- Notification: support Image item as attachment by [@jimtng](https://github.com/jimtng) in [#315](https://github.com/openhab/openhab-jruby/pull/315)
+- Support attachment for `every` with dynamic datetime trigger by [@jimtng](https://github.com/jimtng) in [#307](https://github.com/openhab/openhab-jruby/pull/307)
+- TimeSeries: add `#<<` convenience method and refactor with LazyArray by [@jimtng](https://github.com/jimtng) in [#313](https://github.com/openhab/openhab-jruby/pull/313)
+- TimedCommand: support resuming and rescheduling timed commands by [@jimtng](https://github.com/jimtng) in [#312](https://github.com/openhab/openhab-jruby/pull/312)
+- Sitemaps: support Button widgets inside buttongrids by [@jimtng](https://github.com/jimtng) in [#272](https://github.com/openhab/openhab-jruby/pull/272)
+- Support `every` trigger with multiple days of week. by [@jimtng](https://github.com/jimtng) in [#309](https://github.com/openhab/openhab-jruby/pull/309)
+
+### Bug Fixes
+
+- Add `call_item?` predicate to GroupItem by [@jimtng](https://github.com/jimtng) in [#311](https://github.com/openhab/openhab-jruby/pull/311)
+- Fix `every` day-of-week trigger by [@jimtng](https://github.com/jimtng) in [#308](https://github.com/openhab/openhab-jruby/pull/308)
+
+**Full Changelog**: [v5.22.1...v5.23.0](https://github.com/openhab/openhab-jruby/compare/v5.22.1...v5.23.0)
+
 ## [v5.22.1](https://github.com/openhab/openhab-jruby/tree/v5.22.1) (2024-07-06)
 
 ### Bug Fixes
