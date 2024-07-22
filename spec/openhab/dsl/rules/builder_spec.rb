@@ -1322,8 +1322,20 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
                at: LocalTime.parse("12:00"))
       generate("can use MonthDay as a string", "0 0 12 17 11 ? *", "11-17", at: LocalTime.parse("12:00"))
       generate("can use LocalTime a string", "0 0 12 17 11 ? *", MonthDay.parse("11-17"), at: "12:00")
-      generate("can use day of week", "0 0 0 ? * MON *", :monday)
-      generate("can use day of week", "0 0 7 ? * MON *", :monday, at: "7am")
+      generate("can use day of week", "0 0 12 ? * MON *", :monday, at: "12:00")
+      generate("can use multiple days of week", "0 0 12 ? * MON,TUE,FRI *", :monday, :tuesday, :friday, at: "12:00")
+
+      it "complains when given multiple schedules other than day-of-week" do
+        expect do
+          every(:day, :week) { nil }
+        end.to raise_error(ArgumentError)
+      end
+
+      it "complains when given no schedule" do
+        expect do
+          every { nil }
+        end.to raise_error(ArgumentError)
+      end
 
       context "with dynamic `at`" do
         let(:item) { items.build { date_time_item MyDateTimeItem } }

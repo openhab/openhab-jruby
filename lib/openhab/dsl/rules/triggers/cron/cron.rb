@@ -50,6 +50,9 @@ module OpenHAB
           }.freeze
           private_constant :DAY_OF_WEEK_MAP
 
+          DAY_OF_WEEK = DAY_OF_WEEK_MAP.keys.freeze
+          private_constant :DAY_OF_WEEK
+
           # @return [Hash] Converts the DAY_OF_WEEK_MAP to map used by Cron Expression
           DAY_OF_WEEK_EXPRESSION_MAP = DAY_OF_WEEK_MAP.transform_values do |v|
             CRON_EXPRESSION_MAP.merge(second: 0, minute: 0, hour: 0, dow: v)
@@ -78,7 +81,7 @@ module OpenHAB
           # @param [Duration] duration
           # @param [Object] at LocalTime or String representing time of day
           #
-          # @return [Hash] map describing cron expression
+          # @return [String] cron expression
           #
           def self.from_duration(duration, at)
             raise ArgumentError, '"at" cannot be used with duration' if at
@@ -92,7 +95,7 @@ module OpenHAB
           # @param [MonthDay] monthday a {MonthDay} object
           # @param [Object] at LocalTime or String representing time of day
           #
-          # @return [Hash] map describing cron expression
+          # @return [String] cron expression
           #
           def self.from_monthday(monthday, at)
             expression_map = EXPRESSION_MAP[:day].merge(month: monthday.month_value, dom: monthday.day_of_month)
@@ -106,10 +109,36 @@ module OpenHAB
           # @param [Symbol] symbol
           # @param [Object] at LocalTime or String representing time of day
           #
-          # @return [Hash] map describing cron expression created from symbol
+          # @return [String] cron expression created from symbol
           #
           def self.from_symbol(symbol, at)
             expression_map = EXPRESSION_MAP[symbol]
+            expression_map = at_condition(expression_map, at) if at
+            map_to_cron(expression_map)
+          end
+
+          #
+          # Checks if all symbols are day-of-week symbols
+          #
+          # @param [Array<Symbol>] symbols
+          #
+          # @return [Boolean] true if all symbols are day-of-week symbols
+          #
+          def self.all_dow_symbols?(symbols)
+            (symbols & DAY_OF_WEEK) == symbols
+          end
+
+          #
+          # Create a cron map from a list of day-of-week symbols
+          #
+          # @param [Symbol] symbols
+          # @param [Object] at LocalTime or String representing time of day
+          #
+          # @return [String] cron expression created from symbols
+          #
+          def self.from_dow_symbols(symbols, at)
+            dow = DAY_OF_WEEK_MAP.fetch_values(*symbols).join(",")
+            expression_map = CRON_EXPRESSION_MAP.merge(dow: dow, hour: 0, minute: 0, second: 0)
             expression_map = at_condition(expression_map, at) if at
             map_to_cron(expression_map)
           end
@@ -119,7 +148,7 @@ module OpenHAB
           #
           # @param [Hash] fields Cron fields (second, minute, hour, dom, month, dow, year)
           #
-          # @return [Hash] map describing cron expression
+          # @return [String] cron expression
           #
           def self.from_fields(fields)
             extra_fields = fields.keys - CRON_EXPRESSION_MAP.keys
@@ -192,17 +221,14 @@ module OpenHAB
           #
           # If an at time is provided, parse that and merge the new fields into the expression.
           #
-          # @param [<Type>] expression_map <description>
-          # @param [<Type>] at_time <description>
+          # @param [Hash] expression_map
+          # @param [LocalTime,String] at_time
           #
-          # @return [<Type>] <description>
+          # @return [Hash] expression map with at time merged in
           #
           def self.at_condition(expression_map, at_time)
-            if at_time
-              tod = at_time.is_a?(LocalTime) ? at_time : LocalTime.parse(at_time)
-              expression_map = expression_map.merge(hour: tod.hour, minute: tod.minute, second: tod.second)
-            end
-            expression_map
+            tod = at_time.is_a?(LocalTime) ? at_time : LocalTime.parse(at_time)
+            expression_map.merge(hour: tod.hour, minute: tod.minute, second: tod.second)
           end
 
           #
