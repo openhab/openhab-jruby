@@ -21,6 +21,7 @@ module OpenHAB
         else
           include org.openhab.core.thing.profiles.StateProfile
         end
+        include org.openhab.core.thing.profiles.TriggerProfile
 
         def initialize(callback, context, uid, thread_locals, block)
           unless callback.class.ancestors.include?(Things::ProfileCallback)
@@ -69,6 +70,11 @@ module OpenHAB
           process_event(:state_from_item, state: state)
         end
 
+        # @!visibility private
+        def onTriggerFromHandler(event)
+          process_event(:trigger_from_handler, trigger: event)
+        end
+
         # @deprecated OH 4.0 guard is only needed for < OH 4.1
         if OpenHAB::Core.version >= OpenHAB::Core::V4_1
           # @!visibility private
@@ -90,6 +96,7 @@ module OpenHAB
           params[:channel_uid] = @callback.link.linked_uid
           params[:state] ||= nil
           params[:command] ||= nil
+          params[:trigger] ||= nil
           # @deprecated OH 4.0 guard is only needed for < OH 4.1
           params[:time_series] ||= nil if OpenHAB::Core.version >= OpenHAB::Core::V4_1
 
