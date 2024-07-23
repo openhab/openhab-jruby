@@ -167,6 +167,25 @@ RSpec.describe OpenHAB::DSL do
         profile(:test, label: "Test Profile", config_description: config_description) { |_event| true }
       end
     end
+
+    context "with trigger channels" do
+      before do
+        things.build { thing "astro:sun:home", config: { "geolocation" => "0,0" } }
+        items.build do
+          string_item "MyString" do
+            channel "astro:sun:home:rise#event", profile: "ruby:trigger_profile"
+          end
+        end
+      end
+
+      it "works" do
+        triggered_event = nil
+        profile(:trigger_profile) { |event, trigger:| triggered_event = trigger if event == :trigger_from_handler }
+        trigger_channel("astro:sun:home:rise#event", "START")
+
+        expect(triggered_event).to eql "START"
+      end
+    end
   end
 
   describe "#rule" do

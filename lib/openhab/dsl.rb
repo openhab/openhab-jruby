@@ -106,14 +106,16 @@ module OpenHAB
     # @param [String, nil] label The label for the profile. When nil, the profile will not be visible in the UI.
     # @param [org.openhab.core.config.core.ConfigDescription, nil] config_description
     #   The configuration description for the profile so that it can be configured in the UI.
-    # @yield [event, command: nil, state: nil, time_series: nil, callback:, link:, item:, channel_uid:, configuration:, context:]
+    # @yield [event, command: nil, state: nil, trigger: nil, time_series: nil, callback:, link:, item:, channel_uid:, configuration:, context:]
     #   All keyword params are optional. Any that aren't defined won't be passed.
-    # @yieldparam [:command_from_item, :state_from_item, :command_from_handler, :state_from_handler, :time_series_from_handler] event
+    # @yieldparam [:command_from_item, :state_from_item, :command_from_handler, :state_from_handler, :time_series_from_handler, :trigger_from_handler] event
     #   The event that needs to be processed.
     # @yieldparam [Command, nil] command
     #   The command being sent for `:command_from_item` and `:command_from_handler` events.
     # @yieldparam [State, nil] state
     #   The state being sent for `:state_from_item` and `:state_from_handler` events.
+    # @yieldparam [String] trigger
+    #   The event being sent for `:trigger_from_handler` events.
     # @yieldparam [TimeSeries] time_series
     #   The time series for `:time_series_from_handler` events.
     #   Only available since openHAB 4.1.
@@ -131,6 +133,7 @@ module OpenHAB
     # @see org.openhab.core.thing.profiles.Profile
     # @see org.openhab.core.thing.profiles.StateProfile
     # @see org.openhab.core.thing.profiles.TimeSeriesProfile
+    # @see org.openhab.core.thing.profiles.TriggerProfile
     #
     # @example Vetoing a command
     #   profile(:veto_closing_shades) do |event, item:, command:|
