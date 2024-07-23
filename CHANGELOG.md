@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.24.0](https://github.com/openhab/openhab-jruby/tree/v5.24.0) (2024-07-23)
+
+### Features
+
+- Support creating a trigger `profile` by [@jimtng](https://github.com/jimtng) in [#316](https://github.com/openhab/openhab-jruby/pull/316)
+
+**Full Changelog**: [v5.23.0...v5.24.0](https://github.com/openhab/openhab-jruby/compare/v5.23.0...v5.24.0)
+
 ## [v5.23.0](https://github.com/openhab/openhab-jruby/tree/v5.23.0) (2024-07-22)
 
 ### Features
