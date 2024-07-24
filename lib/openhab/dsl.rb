@@ -1094,15 +1094,20 @@ module OpenHAB
     # @!visibility private
     ruby2_keywords def method_missing(method, *args)
       return super unless args.empty? && !block_given?
-      return super unless (context = Thread.current[:openhab_context]) && context.key?(method)
 
-      logger.trace("DSL#method_missing found context variable: '#{method}'")
-      context[method]
+      if (context = Thread.current[:openhab_context]) && context.key?(method)
+        logger.trace("DSL#method_missing found context variable: '#{method}'")
+        return context[method]
+      elsif Core.ui_context&.key?(method)
+        logger.trace("DSL#method_missing found UI context variable: '#{method}'")
+        return Core.ui_context[method]
+      end
+      super
     end
 
     # @!visibility private
     def respond_to_missing?(method, include_private = false)
-      Thread.current[:openhab_context]&.key?(method) || super
+      Thread.current[:openhab_context]&.key?(method) || Core.ui_context&.key?(method) || super
     end
   end
 end

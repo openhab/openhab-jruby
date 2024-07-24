@@ -32,7 +32,7 @@ module OpenHAB
         # @since openHAB 4.1 for UI rules
         #
         def group
-          triggering_group = inputs&.[]("triggeringGroup") || $ctx&.[]("triggeringGroup")
+          triggering_group = inputs&.[]("triggeringGroup") || Core.ui_context&.[](:triggeringGroup)
           Items::Proxy.new(triggering_group) if triggering_group
         end
       end
