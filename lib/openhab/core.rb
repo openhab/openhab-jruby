@@ -98,6 +98,30 @@ module OpenHAB
           eval("#{key} = value unless defined?(#{key})", nil, __FILE__, __LINE__) # rubocop:disable Security/Eval
         end
       end
+
+      #
+      # Returns a hash of global context variable `$ctx` injected into UI based scripts.
+      #
+      # The keys in $ctx are prefixed with the trigger module id.
+      # This method strips them off and symbolizes them so they are accessible without the module id prefix.
+      #
+      # @!visibility private
+      # @return [Hash<Symbol, Object>, nil]
+      #
+      def ui_context
+        # $ctx is a java.util.HashMap and its #to_h doesn't take a block like Ruby's
+        # We cannot memoize this because the context can change between calls
+        $ctx&.to_hash&.to_h do |key, value|
+          [
+            key.split(".", 2).last.to_sym,
+            case value
+            when Items::Item then Items::Proxy.new(value)
+            when Things::Thing then Things::Proxy.new(value)
+            else value
+            end
+          ]
+        end.freeze
+      end
     end
 
     import_default_presets unless defined?($ir)
