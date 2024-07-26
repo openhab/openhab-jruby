@@ -1,5 +1,17 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.24.1](https://github.com/openhab/openhab-jruby/tree/v5.24.1) (2024-07-26)
+
+### Features
+
+- Prepend script name to logger calls within rules, scripts, and profiles by [@jimtng](https://github.com/jimtng) in [#317](https://github.com/openhab/openhab-jruby/pull/317)
+
+### Bug Fixes
+
+- Fix access to context variables in UI rules by [@jimtng](https://github.com/jimtng) in [#318](https://github.com/openhab/openhab-jruby/pull/318)
+
+**Full Changelog**: [v5.24.0...v5.24.1](https://github.com/openhab/openhab-jruby/compare/v5.24.0...v5.24.1)
+
 ## [v5.24.0](https://github.com/openhab/openhab-jruby/tree/v5.24.0) (2024-07-23)
 
 ### Features
