@@ -85,7 +85,7 @@ module OpenHAB
         when String
           name = object
         when :main
-          name = "#{Logger::PREFIX}.#{rules_file.tr_s(":", "_").gsub(/[^A-Za-z0-9_.-]/, "")}"
+          name = "#{Logger::PREFIX}.#{current_file}"
           name = "#{name}.#{$ctx["ruleUID"]}" if $ctx&.key?("ruleUID")
           return @loggers[name] ||= BiLogger.new(Logger.new(name))
         end
@@ -93,7 +93,22 @@ module OpenHAB
         @loggers[name] ||= Logger.new(name)
       end
 
+      #
+      # Figure out the file the current rule is loaded from.
+      #
+      # @return [String] Prefix for log messages
+      #
+      # @!visibility private
+      def top_level_file
+        caller_locations.find { |caller| caller.base_label == "<main>" }
+                        .then { |caller| cleanup_path(caller.path) }
+      end
+
       private
+
+      def cleanup_path(path)
+        File.basename(path, ".*").tr_s(":", "_").gsub(/[^A-Za-z0-9_.-]/, "") if path
+      end
 
       # Get the appropriate java class for the supplied klass if the supplied
       # class is a java class
@@ -112,13 +127,15 @@ module OpenHAB
       #
       # Figure out the log prefix
       #
+      # This returns the file in which `logger` is called, which can be different to the main rules file.
+      #
       # @return [String] Prefix for log messages
       #
-      def rules_file
+      def current_file
         caller_locations(3, 2).map(&:path)
                               .grep_v(%r{lib/openhab/log\.rb})
                               .first
-                              .then { |caller| File.basename(caller, ".*") if caller }
+                              .then { |path| cleanup_path(path) }
       end
     end
   end
@@ -348,7 +365,7 @@ module OpenHAB
         rule_type = Thread.current[:openhab_rule_type]
         full_id = "#{rule_type}:#{rule_uid}"
 
-        self.class.rule_loggers[full_id] ||= Logger.new("#{Logger::PREFIX}.#{rule_type}.#{rule_uid
+        self.class.rule_loggers[full_id] ||= Logger.new("#{Logger::PREFIX}.#{Log.top_level_file}.#{rule_type}.#{rule_uid
             .gsub(/[^A-Za-z0-9_.:-]/, "")}")
       end
 

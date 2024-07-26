@@ -47,10 +47,10 @@ RSpec.describe OpenHAB::Log do
     it "includes the rule id inside a rule" do
       rspec = self
       rule "log test", id: "log_test" do
-        rspec.expect(logger.name).to rspec.eql "org.openhab.automation.jrubyscripting.rule.log_test"
+        rspec.expect(logger.name).to rspec.eql "org.openhab.automation.jrubyscripting.log_spec.rule.log_test"
         on_load
         run do
-          expect(logger.name).to eql "org.openhab.automation.jrubyscripting.rule.log_test"
+          expect(logger.name).to eql "org.openhab.automation.jrubyscripting.log_spec.rule.log_test"
         end
       end
 
@@ -58,7 +58,7 @@ RSpec.describe OpenHAB::Log do
         uid "log_test2"
         on_load
         run do
-          expect(logger.name).to eql "org.openhab.automation.jrubyscripting.rule.log_test2"
+          expect(logger.name).to eql "org.openhab.automation.jrubyscripting.log_spec.rule.log_test2"
         end
       end
     end
@@ -76,7 +76,7 @@ RSpec.describe OpenHAB::Log do
         end
       end
       time_travel_and_execute_timers(5.seconds)
-      expect(logger_name).to match(/^org\.openhab\.automation\.jrubyscripting\.rule\.log_spec:(?:\d+)$/)
+      expect(logger_name).to match(/^org\.openhab\.automation\.jrubyscripting\.log_spec\.rule\.log_spec:(?:\d+)$/)
       expect(executed).to be true
     end
 
@@ -84,7 +84,7 @@ RSpec.describe OpenHAB::Log do
       executed = false
       script "my script", id: "my_script" do
         executed = true
-        expect(logger.name).to eql "org.openhab.automation.jrubyscripting.script.my_script"
+        expect(logger.name).to eql "org.openhab.automation.jrubyscripting.log_spec.script.my_script"
       end
       rules["my_script"].trigger
       expect(executed).to be true
@@ -100,7 +100,7 @@ RSpec.describe OpenHAB::Log do
       executed = false
       profile "use_a_different_state" do
         executed = true
-        expect(logger.name).to eql "org.openhab.automation.jrubyscripting.profile.use_a_different_state"
+        expect(logger.name).to eql "org.openhab.automation.jrubyscripting.log_spec.profile.use_a_different_state"
       end
 
       items.build do
@@ -138,6 +138,32 @@ RSpec.describe OpenHAB::Log do
           expect(MyClass.new.logger_name).to eql "org.openhab.automation.jrubyscripting.MyClass"
         end
       end
+    end
+
+    it "uses the external file prefix" do
+      require_relative "log_module"
+
+      expect(mylib_logger_name).to eql "org.openhab.automation.jrubyscripting.log_module"
+    end
+
+    it "uses the class name inside external libraries" do
+      require_relative "log_module"
+
+      expect(LogModule::MyClass.logger.name).to eql "org.openhab.automation.jrubyscripting.LogModule.MyClass"
+    end
+
+    it "uses the class name inside external libraries inside a rule" do
+      require_relative "log_module"
+
+      items.build { string_item "TestItem" }
+
+      logger_name = nil
+      received_command(TestItem) { |event| logger_name = event.logger_name }
+
+      TestItem << "foo"
+      expect(logger_name).to eql(
+        "org.openhab.automation.jrubyscripting.org.openhab.core.items.events.ItemCommandEvent"
+      )
     end
   end
 end
