@@ -3772,7 +3772,7 @@ logger.error(<span class="string"><span class="delimiter">'</span><span class="c
   <span class="keyword">when</span> <span class="constant">String</span>
     name = object
   <span class="keyword">when</span> <span class="symbol">:main</span>
-    name = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Logger</span>::<span class="constant">PREFIX</span><span class="inline-delimiter">}</span></span><span class="content">.</span><span class="inline"><span class="inline-delimiter">#{</span>rules_file.tr_s(<span class="string"><span class="delimiter">&quot;</span><span class="content">:</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">_</span><span class="delimiter">&quot;</span></span>).gsub(<span class="regexp"><span class="delimiter">/</span><span class="content">[^A-Za-z0-9_.-]</span><span class="delimiter">/</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    name = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Logger</span>::<span class="constant">PREFIX</span><span class="inline-delimiter">}</span></span><span class="content">.</span><span class="inline"><span class="inline-delimiter">#{</span>current_file<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
     name = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="content">.</span><span class="inline"><span class="inline-delimiter">#{</span><span class="global-variable">$ctx</span>[<span class="string"><span class="delimiter">&quot;</span><span class="content">ruleUID</span><span class="delimiter">&quot;</span></span>]<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> <span class="global-variable">$ctx</span>&amp;.key?(<span class="string"><span class="delimiter">&quot;</span><span class="content">ruleUID</span><span class="delimiter">&quot;</span></span>)
     <span class="keyword">return</span> <span class="instance-variable">@loggers</span>[name] ||= <span class="constant">BiLogger</span>.new(<span class="constant">Logger</span>.new(name))
   <span class="keyword">end</span>
@@ -3864,7 +3864,7 @@ logger.error(<span class="string"><span class="delimiter">'</span><span class="c
 </div>
 
         <footer>
-  Generated on Wed Jul 24 14:26:41 2024 by
+  Generated on Fri Jul 26 15:36:14 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
