@@ -3618,7 +3618,7 @@ inside of other classes, or include the module.</p>
 
 </div>
         </dt>
-        <dd><pre class="code"><span class="string"><span class="delimiter">&quot;</span><span class="content">5.24.0</span><span class="delimiter">&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class="string"><span class="delimiter">&quot;</span><span class="content">5.24.1</span><span class="delimiter">&quot;</span></span></pre></dd>
       
     </dl>
   
@@ -4487,17 +4487,27 @@ see OpenHAB::DSL::Rules::AutomationRule#execute!</p>
 1098
 1099
 1100
-1101</pre>
+1101
+1102
+1103
+1104
+1105
+1106</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 1095</span>
 
 ruby2_keywords <span class="keyword">def</span> <span class="function">method_missing</span>(method, *args)
   <span class="keyword">return</span> <span class="keyword">super</span> <span class="keyword">unless</span> args.empty? &amp;&amp; !block_given?
-  <span class="keyword">return</span> <span class="keyword">super</span> <span class="keyword">unless</span> (context = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_context</span>]) &amp;&amp; context.key?(method)
 
-  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">DSL#method_missing found context variable: '</span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="content">'</span><span class="delimiter">&quot;</span></span>)
-  context[method]
+  <span class="keyword">if</span> (context = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_context</span>]) &amp;&amp; context.key?(method)
+    logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">DSL#method_missing found context variable: '</span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="content">'</span><span class="delimiter">&quot;</span></span>)
+    <span class="keyword">return</span> context[method]
+  <span class="keyword">elsif</span> <span class="constant">Core</span>.ui_context&amp;.key?(method)
+    logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">DSL#method_missing found UI context variable: '</span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="content">'</span><span class="delimiter">&quot;</span></span>)
+    <span class="keyword">return</span> <span class="constant">Core</span>.ui_context[method]
+  <span class="keyword">end</span>
+  <span class="keyword">super</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -8784,7 +8794,7 @@ unit!
 </div>
 
         <footer>
-  Generated on Tue Jul 23 13:57:58 2024 by
+  Generated on Fri Jul 26 15:37:04 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
