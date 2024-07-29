@@ -112,6 +112,15 @@ module OpenHAB
         end
 
         #
+        # Check if the rule's status detail != `DISABLED`
+        #
+        # @return [true, false]
+        #
+        def enabled?
+          !disabled?
+        end
+
+        #
         # Checks if this rule has at least one of the given tags.
         #
         # (see Items::Item#tagged)
