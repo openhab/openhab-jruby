@@ -13,6 +13,7 @@ module OpenHAB
       KNOWN_KEYS = %i[
         openhab_context
         openhab_ensure_states
+        openhab_ensure_timed_commands
         openhab_holiday_file
         openhab_persistence_service
         openhab_providers
