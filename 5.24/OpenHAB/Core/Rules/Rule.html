@@ -3786,6 +3786,29 @@ met, enabling the core dynamic functionality of openHAB.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#enabled%3F-instance_method" title="#enabled? (instance method)">#<strong>enabled?</strong>  &#x21d2; true, false </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Check if the rule's status detail != <code>DISABLED</code>.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#expert%3F-instance_method" title="#expert? (instance method)">#<strong>expert?</strong>  &#x21d2; true, false </a>
     
 
@@ -4193,12 +4216,12 @@ met, enabling the core dynamic functionality of openHAB.</p>
       <pre class="lines">
 
 
-133
-134
-135</pre>
+142
+143
+144</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 133</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 142</span>
 
 <span class="keyword">def</span> <span class="function">status</span>
   <span class="constant">Rules</span>.manager&amp;.get_status(uid)
@@ -4247,12 +4270,12 @@ met, enabling the core dynamic functionality of openHAB.</p>
       <pre class="lines">
 
 
-141
-142
-143</pre>
+150
+151
+152</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 141</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 150</span>
 
 <span class="keyword">def</span> <span class="function">status_info</span>
   <span class="constant">Rules</span>.manager&amp;.get_status_info(uid)
@@ -4470,6 +4493,59 @@ met, enabling the core dynamic functionality of openHAB.</p>
 
 <span class="keyword">def</span> <span class="function">enable</span>(<span class="key">enabled</span>: <span class="predefined-constant">true</span>)
   <span class="constant">Rules</span>.manager.set_enabled(uid, enabled)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="enabled?-instance_method">
+  
+    #<strong>enabled?</strong>  &#x21d2; <tt>true</tt>, <tt>false</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Check if the rule's status detail != <code>DISABLED</code></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+119
+120
+121</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 119</span>
+
+<span class="keyword">def</span> <span class="function">enabled?</span>
+  !disabled?
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4733,20 +4809,20 @@ met, enabling the core dynamic functionality of openHAB.</p>
       <pre class="lines">
 
 
-146
-147
-148
-149
-150
-151
-152
-153
-154
 155
-156</pre>
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 146</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 155</span>
 
 <span class="keyword">def</span> <span class="function">inspect</span>
   r = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Rules::Rule </span><span class="inline"><span class="inline-delimiter">#{</span>uid<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
@@ -4875,15 +4951,15 @@ met, enabling the core dynamic functionality of openHAB.</p>
       <pre class="lines">
 
 
-122
-123
-124
-125
-126
-127</pre>
+131
+132
+133
+134
+135
+136</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 122</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 131</span>
 
 <span class="keyword">def</span> <span class="function">tagged?</span>(*tags)
   tags.map! <span class="keyword">do</span> |tag|
@@ -4933,12 +5009,12 @@ met, enabling the core dynamic functionality of openHAB.</p>
       <pre class="lines">
 
 
-159
-160
-161</pre>
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 159</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 168</span>
 
 <span class="keyword">def</span> <span class="function">to_s</span>
   uid
@@ -5047,22 +5123,22 @@ met, enabling the core dynamic functionality of openHAB.</p>
       <pre class="lines">
 
 
-171
-172
-173
-174
-175
-176
-177
-178
-179
 180
 181
 182
-183</pre>
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 171</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 180</span>
 
 <span class="keyword">def</span> <span class="function">trigger</span>(event = <span class="predefined-constant">nil</span>, <span class="key">consider_conditions</span>: <span class="predefined-constant">false</span>, **context)
   <span class="keyword">begin</span>
@@ -5191,7 +5267,7 @@ met, enabling the core dynamic functionality of openHAB.</p>
 </div>
 
         <footer>
-  Generated on Fri Jul 26 15:37:05 2024 by
+  Generated on Tue Jul 30 18:43:26 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
