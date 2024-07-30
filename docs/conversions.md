@@ -35,7 +35,7 @@ rule "Balcony Lights ON at 5pm" do
   uid "BalconyLightsOn"
   run do |event|
     BalconyLights.on
-    NotificationAction.send_notification(EMAIL, "Balcony lights are ON")
+    notify("Balcony lights are ON", email: EMAIL)
   end
 end
 ```
