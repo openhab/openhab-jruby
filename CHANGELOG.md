@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.24.2](https://github.com/openhab/openhab-jruby/tree/v5.24.2) (2024-07-30)
+
+### Features
+
+- Support creating a rule in an initially disabled state by [@jimtng](https://github.com/jimtng) in [#319](https://github.com/openhab/openhab-jruby/pull/319)
+
+**Full Changelog**: [v5.24.1...v5.24.2](https://github.com/openhab/openhab-jruby/compare/v5.24.1...v5.24.2)
+
 ## [v5.24.1](https://github.com/openhab/openhab-jruby/tree/v5.24.1) (2024-07-26)
 
 ### Features
