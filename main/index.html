@@ -4181,13 +4181,14 @@ Thing actions can be called directly on the <span class='object_link'><a href="O
 To log a message on <code>INFO</code> log level:</p>
 <pre class="code ruby"><code class="ruby">logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">The current time is </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Time</span>.now<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
 </code></pre>
-<p>The default logger name for UI rules is <code>org.openhab.automation.jrubyscripting.script</code>.
-For file-based rules, it's based on the rule's ID, such as <code>org.openhab.automation.jrubyscripting.rule.myrule.rb:15</code>.</p>
+<p>The main logger prefix is <code>org.openhab.automation.jrubyscripting</code>.
+The default logger name for UI rules includes the rule ID: <code>org.openhab.automation.jrubyscripting.script.&lt;RULE_ID&gt;</code>.
+The logger name for file-based rules includes the rule's filename and the rule ID: <code>org.openhab.automation.jrubyscripting.&lt;filename&gt;.rule.&lt;RULE_ID&gt;</code>.</p>
 <p>To use a custom logger name:</p>
 <pre class="code ruby"><code class="ruby">logger = <span class="constant">OpenHAB</span>::<span class="constant">Log</span>.logger(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.custom</span><span class="delimiter">&quot;</span></span>)
 </code></pre>
 <p>Please be aware that messages might not appear in the logs if the logger name does not start with <code>org.openhab</code>.
-This behaviour is due to <a href="https://logging.apache.org/log4j/2.x/">log4j2</a> requiring definition for each logger prefix.</p>
+This behavior is due to <a href="https://logging.apache.org/log4j/2.x/">log4j2</a> requiring definition for each logger prefix.</p>
 <p>The <span class='object_link'><a href="OpenHAB/Logger.html" title="OpenHAB::Logger (class)">logger</a></span> is similar to a standard <a href="https://docs.ruby-lang.org/en/master/Logger.html">Ruby Logger</a>.
 Supported logging functions include:</p>
 <ul>
@@ -4217,7 +4218,7 @@ This is available only on file-based rules.</p>
 <span class="keyword">end</span>
 </code></pre>
 <p>Alternatively a timer can be used in either a file-based rule or in a UI based rule using <span class='object_link'><a href="OpenHAB/DSL.html#after-class_method" title="OpenHAB::DSL.after (method)">after</a></span>.
-After takes a <a href="#durations">Duration</a>, e.g. <code>10.minutes</code> instead of using <span class='object_link'><a href="OpenHAB/CoreExt/Java/ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span>.</p>
+After takes a <a href="#durations">Duration</a> relative to <code>now</code>, e.g. <code>10.minutes</code>, or an absolute time with <span class='object_link'><a href="OpenHAB/CoreExt/Java/ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span> or <span class='object_link'><a href="Time.html" title="Time (class)">Time</a></span>.</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">simple timer</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="constant">Watering_System</span>, <span class="key">to</span>: <span class="constant">ON</span>
   run <span class="keyword">do</span>
@@ -4956,7 +4957,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Tue Jul 30 01:22:27 2024 by
+  Generated on Tue Jul 30 03:55:59 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
