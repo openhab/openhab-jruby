@@ -766,8 +766,9 @@ To log a message on `INFO` log level:
 logger.info("The current time is #{Time.now}")
 ```
 
-The default logger name for UI rules is `org.openhab.automation.jrubyscripting.script`.
-For file-based rules, it's based on the rule's ID, such as `org.openhab.automation.jrubyscripting.rule.myrule.rb:15`.
+The main logger prefix is `org.openhab.automation.jrubyscripting`.
+The default logger name for UI rules includes the rule ID: `org.openhab.automation.jrubyscripting.script.<RULE_ID>`.
+The logger name for file-based rules includes the rule's filename and the rule ID: `org.openhab.automation.jrubyscripting.<filename>.rule.<RULE_ID>`.
 
 To use a custom logger name:
 
@@ -776,7 +777,7 @@ logger = OpenHAB::Log.logger("org.openhab.custom")
 ```
 
 Please be aware that messages might not appear in the logs if the logger name does not start with `org.openhab`.
-This behaviour is due to [log4j2](https://logging.apache.org/log4j/2.x/) requiring definition for each logger prefix.
+This behavior is due to [log4j2](https://logging.apache.org/log4j/2.x/) requiring definition for each logger prefix.
 
 The {OpenHAB::Logger logger} is similar to a standard [Ruby Logger](https://docs.ruby-lang.org/en/master/Logger.html).
 Supported logging functions include:
@@ -815,7 +816,7 @@ end
 ```
 
 Alternatively a timer can be used in either a file-based rule or in a UI based rule using {OpenHAB::DSL.after after}.
-After takes a [Duration](#durations), e.g. `10.minutes` instead of using {ZonedDateTime}.
+After takes a [Duration](#durations) relative to `now`, e.g. `10.minutes`, or an absolute time with {ZonedDateTime} or {Time}.
 
 ```ruby
 rule "simple timer" do
