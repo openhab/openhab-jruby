@@ -13,10 +13,13 @@ module OpenHAB
   # Logging is available everywhere through the {#logger} object.
   #
   # The logging prefix is `org.openhab.automation.jrubyscripting`.
+  #
   # Logging within file-based rules will have the name of the file appended to
   # the logger name. Logging inside of a rule will have the id of the rule
-  # appended to the logger name. Any classes will have the full class anem
+  # appended to the logger name. Any classes will have the full class name
   # appended to the logger name.
+  #
+  # Logging within UI-based rules will have the rule UID appended to the logger.
   #
   # @example The following entries are in a file named 'log_test.rb'
   #   logger.trace('Test logging at trace') # 2020-12-03 18:05:20.903 [TRACE] [org.openhab.automation.jrubyscripting.log_test] - Test logging at trace
@@ -25,12 +28,22 @@ module OpenHAB
   #   logger.info('Test logging at info')   # 2020-12-03 18:05:41.817 [INFO ] [org.openhab.automation.jrubyscripting.log_test] - Test logging at info
   #   logger.error('Test logging at error') # 2020-12-03 18:06:02.021 [ERROR] [org.openhab.automation.jrubyscripting.log_test] - Test logging at error
   #
+  # @example From a UI-based rule with UID 'rule_uid'
+  #   logger.info('Test logging at info')   # 2020-12-03 18:05:41.817 [INFO ] [org.openhab.automation.jrubyscripting.script.rule_uid] - Test logging at info
+  #
   # @example The following entries are in a file named 'log_test.rb'
+  #   # Enable trace log level for all the rules in this file
+  #   logger.level = :trace
+  #
   #   rule 'foo' do
-  #     run { logger.trace('Test logging at trace') } # 2020-12-03 18:05:20.903 [TRACE] [org.openhab.automation.jrubyscripting.foo] - Test logging at trace
+  #     run { logger.trace('Test logging at trace') } # 2020-12-03 18:05:20.903 [TRACE] [org.openhab.automation.jrubyscripting.log_test.rule.log_test:1] - Test logging at trace
   #     on_load
   #   end
   #
+  #   rule 'foo with id', id: "foo_id" do
+  #     run { logger.trace('Test logging at trace') } # 2020-12-03 18:05:20.903 [TRACE] [org.openhab.automation.jrubyscripting.log_test.rule.foo_id] - Test logging at trace
+  #     on_load
+  #   end
   #
   # @example A log entry from inside a class
   #   class MyClass
