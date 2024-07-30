@@ -11,6 +11,25 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
     expect(spec_log_lines).to include(include("has no execution blocks, not creating rule"))
   end
 
+  it "can create a disabled rule" do
+    loaded = false
+    rule id: "disabled_rule" do
+      on_load
+      enabled false
+      run { loaded = true }
+    end
+
+    expect(loaded).to be false
+    expect(rules["disabled_rule"]).to be_disabled
+    rules["disabled_rule"].run
+    expect(loaded).to be false
+
+    rules["disabled_rule"].enable
+    rules["disabled_rule"].run
+    expect(loaded).to be true
+    expect(rules["disabled_rule"]).not_to be_disabled
+  end
+
   it "can access items from the rule block" do
     items.build do
       switch_item "lowerCaseSwitchItem"

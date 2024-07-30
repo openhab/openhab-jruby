@@ -2134,7 +2134,11 @@ module OpenHAB
           added_rule.actions.first.configuration.put("type", "application/x-ruby")
           added_rule.actions.first.configuration.put("script", script) if script
 
-          process_on_load { |module_id| rule.execute(nil, { "module" => module_id }) }
+          if enabled
+            process_on_load { |module_id| rule.execute(nil, { "module" => module_id }) }
+          else
+            added_rule.disable
+          end
 
           added_rule
         end
@@ -2181,8 +2185,6 @@ module OpenHAB
             logger.warn "Rule '#{uid}' has no triggers, not creating rule"
           elsif !execution_blocks?
             logger.warn "Rule '#{uid}' has no execution blocks, not creating rule"
-          elsif !enabled
-            logger.trace { "Rule '#{uid}' marked as disabled, not creating rule." }
           else
             return true
           end
