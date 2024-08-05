@@ -83,6 +83,26 @@ module OpenHAB
             @group = group_item
           end
 
+          #
+          # Adds a member to the group
+          #
+          # @param [Item, String] member The item to add to the group
+          # @return [Members] self
+          #
+          def add(member)
+            if member.is_a?(String)
+              member = items[member]
+              raise ArgumentError, "Item not found: #{member}" if member.nil?
+            end
+
+            member = member.__getobj__ if member.is_a?(Proxy)
+            raise ArgumentError, "Member must be an Item" unless member.is_a?(Item)
+
+            group.add_member(member)
+            self
+          end
+          alias_method :<<, :add
+
           # Explicit conversion to Array
           #
           # @return [Array]

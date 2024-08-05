@@ -72,6 +72,18 @@ RSpec.describe OpenHAB::Core::Items::GroupItem do
                                                                        Den_Temp,
                                                                        LivingRoom]
     end
+
+    describe "#add" do
+      it "can be used to add a new member" do
+        expect(Temperatures.members.count).to be 3
+        items.build do
+          number_item "Kitchen_Temp"
+        end
+        Temperatures.members.add Kitchen_Temp
+        expect(Temperatures.members.count).to be 4
+        expect(Temperatures.members).to include Kitchen_Temp
+      end
+    end
   end
 
   describe "#all_members" do
