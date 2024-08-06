@@ -83,6 +83,19 @@ module OpenHAB
             @group = group_item
           end
 
+          #
+          # Adds a member to the group
+          #
+          # @param [Item, String] member The item to add to the group
+          # @return [Members] self
+          #
+          def add(member)
+            member = items[member] if member.is_a?(String)
+            member = member.__getobj__ if member.is_a?(Proxy)
+            group.add_member(member)
+            self
+          end
+
           # Explicit conversion to Array
           #
           # @return [Array]
