@@ -71,4 +71,17 @@ RSpec.describe OpenHAB::Core::Things::Thing do
 
     expect(thing.elevation).to be 300
   end
+
+  describe "#bridge?" do
+    it "returns false for non-bridges" do
+      expect(thing).not_to be_bridge
+    end
+
+    it "returns true for bridges" do
+      install_addon "binding-mqtt", ready_markers: "openhab.xmlThingTypes"
+      things.build { bridge "mqtt:broker:mosquitto", "MQTT Broker" }
+
+      expect(things["mqtt:broker:mosquitto"]).to be_bridge
+    end
+  end
 end
