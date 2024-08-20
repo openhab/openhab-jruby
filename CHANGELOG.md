@@ -1,5 +1,14 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.25.0](https://github.com/openhab/openhab-jruby/tree/v5.25.0) (2024-08-20)
+
+### Features
+
+- Add `Thing#bridge?` by [@jimtng](https://github.com/jimtng) in [#324](https://github.com/openhab/openhab-jruby/pull/324)
+- Support adding group members with `GroupItem.members.add` by [@jimtng](https://github.com/jimtng) in [#322](https://github.com/openhab/openhab-jruby/pull/322)
+
+**Full Changelog**: [v5.24.2...v5.25.0](https://github.com/openhab/openhab-jruby/compare/v5.24.2...v5.25.0)
+
 ## [v5.24.2](https://github.com/openhab/openhab-jruby/tree/v5.24.2) (2024-07-30)
 
 ### Features
