@@ -171,6 +171,11 @@ module OpenHAB
           bridge_uid && EntityLookup.lookup_thing(bridge_uid)
         end
 
+        # @return [true,false] true if this Thing is a bridge
+        def bridge?
+          is_a?(org.openhab.core.thing.Bridge)
+        end
+
         # @return [String]
         def inspect
           r = "#<OpenHAB::Core::Things::Thing #{uid}"
