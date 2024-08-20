@@ -3626,6 +3626,31 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#add-instance_method" title="#add (instance method)">#<strong>add</strong>(member)  &#x21d2; Members </a>
+    
+
+    
+      (also: #&lt;&lt;)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Adds a member to the group.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#inspect-instance_method" title="#inspect (instance method)">#<strong>inspect</strong>  &#x21d2; String </a>
     
 
@@ -3806,7 +3831,118 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="inspect-instance_method">
+  <h3 class="signature first" id="add-instance_method">
+  
+    #<strong>add</strong>(member)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::Core::Items::GroupItem::Members (class)">Members</a></span></tt> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='<<-instance_method'>&lt;&lt;</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Adds a member to the group</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>member</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The item to add to the group</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="OpenHAB::Core::Items::GroupItem::Members (class)">Members</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>self</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/group_item.rb', line 92</span>
+
+<span class="keyword">def</span> <span class="function">add</span>(member)
+  <span class="keyword">if</span> member.is_a?(<span class="constant">String</span>)
+    member = items[member]
+    raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Item not found: </span><span class="inline"><span class="inline-delimiter">#{</span>member<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> member.nil?
+  <span class="keyword">end</span>
+
+  member = member.__getobj__ <span class="keyword">if</span> member.is_a?(<span class="constant">Proxy</span>)
+  raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Member must be an Item</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> member.is_a?(<span class="constant">Item</span>)
+
+  group.add_member(member)
+  <span class="predefined-constant">self</span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="inspect-instance_method">
   
     #<strong>inspect</strong>  &#x21d2; <tt>String</tt> 
   
@@ -3846,14 +3982,14 @@
       <pre class="lines">
 
 
-101
-102
-103
-104
-105</pre>
+121
+122
+123
+124
+125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/group_item.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/group_item.rb', line 121</span>
 
 <span class="keyword">def</span> <span class="function">inspect</span>
   r = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Items::GroupItems::Members </span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
@@ -3903,12 +4039,12 @@
       <pre class="lines">
 
 
-96
-97
-98</pre>
+116
+117
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/group_item.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/group_item.rb', line 116</span>
 
 <span class="keyword">def</span> <span class="function">name</span>
   group.name
@@ -3956,12 +4092,12 @@
       <pre class="lines">
 
 
-89
-90
-91</pre>
+109
+110
+111</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/group_item.rb', line 89</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/group_item.rb', line 109</span>
 
 <span class="keyword">def</span> <span class="function">to_a</span>
   group.get_members.map { |i| <span class="constant">Proxy</span>.new(i) }
@@ -3976,7 +4112,7 @@
 </div>
 
         <footer>
-  Generated on Tue Aug 20 15:58:29 2024 by
+  Generated on Tue Aug 20 16:58:07 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
