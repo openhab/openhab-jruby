@@ -30,6 +30,14 @@ module OpenHAB
       #   # replace ':' with '_' in thing uid
       #   mqtt_broker_mosquitto.online? # is mqtt:broker:mosquitto thing online?
       #
+      # @!attribute label
+      #   Return the thing label
+      #   @return [String]
+      #
+      # @!attribute location
+      #   Return the thing location
+      #   @return [String]
+      #
       # @!attribute [r] status
       #   Return the {https://www.openhab.org/docs/concepts/things.html#thing-status thing status}
       #   @return [org.openhab.core.thing.ThingStatus]
@@ -43,7 +51,7 @@ module OpenHAB
       #
       # @!attribute [r] bridge_uid
       #   Return the Bridge UID when available.
-      #   @return [ThingUID]
+      #   @return [ThingUID, nil]
       #
       # @!attribute [r] thing_type_uid
       #   @return [ThingTypeUID]
