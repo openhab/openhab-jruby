@@ -72,7 +72,7 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
     end
   end
 
-  numeric_methods = %i[average delta deviation maximum minimum sum variance]
+  numeric_methods = %i[average median delta deviation maximum minimum sum variance]
   variants = %i[since until between]
   %i[
     all_states
@@ -83,6 +83,7 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
     delta
     deviation
     evolution_rate
+    median
     maximum
     minimum
     remove_all_states
