@@ -176,6 +176,31 @@ module OpenHAB
         #   @return [DecimalType, QuantityType, nil] The standard deviation between `start` and `finish`,
         #     or nil if no states could be found.
 
+        # @!method median_since(timestamp, service = nil)
+        #   Returns the median of the item's state since the given time
+        #   @param [#to_zoned_date_time] timestamp The point in time from which to search
+        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @return [DecimalType, QuantityType, nil] The median since `timestamp`,
+        #     or nil if no previous states could be found.
+        #   @since openHAB 4.3
+
+        # @!method median_until(timestamp, service = nil)
+        #   Returns the median of the item's state beetween now until the given time
+        #   @param [#to_zoned_date_time] timestamp The point in time until which to search
+        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @return [DecimalType, QuantityType, nil] The median until `timestamp`,
+        #     or nil if no future states could be found.
+        #   @since openHAB 4.3
+
+        # @!method median_between(start, finish, service = nil)
+        #   Returns the median of the item's state between two points in time
+        #   @param [#to_zoned_date_time] start The point in time from which to search
+        #   @param [#to_zoned_date_time] finish The point in time to which to search
+        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @return [DecimalType, QuantityType, nil] The median between `start` and `finish`,
+        #     or nil if no states could be found.
+        #   @since openHAB 4.3
+
         # @!method sum_since(timestamp, service = nil)
         #   Returns the sum of the item's state since the given time
         #   @param [#to_zoned_date_time] timestamp The point in time from which to search
@@ -661,6 +686,7 @@ module OpenHAB
         end
 
         def_persistence_methods(:average, quantify: true)
+        def_persistence_methods(:median, quantify: true) if OpenHAB::Core.version >= OpenHAB::Core::V4_3
         def_persistence_methods(:delta, quantify: true)
         def_persistence_methods(:deviation, quantify: true)
         def_persistence_methods(:sum, quantify: true)
