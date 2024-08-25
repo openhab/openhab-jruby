@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.26.0](https://github.com/openhab/openhab-jruby/tree/v5.26.0) (2024-08-25)
+
+### Features
+
+- Add median persistence methods by [@jimtng](https://github.com/jimtng) in [#326](https://github.com/openhab/openhab-jruby/pull/326)
+
+**Full Changelog**: [v5.25.0...v5.26.0](https://github.com/openhab/openhab-jruby/compare/v5.25.0...v5.26.0)
+
 ## [v5.25.0](https://github.com/openhab/openhab-jruby/tree/v5.25.0) (2024-08-20)
 
 ### Features
