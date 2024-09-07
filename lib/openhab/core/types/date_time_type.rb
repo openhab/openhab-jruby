@@ -18,7 +18,13 @@ module OpenHAB
         remove_method :==
 
         extend Forwardable
-        include Comparable
+
+        # @deprecated OH 4.2 DateTimeType implements Java's Comparable interface in openHAB 4.3
+        if OpenHAB::Core.version >= OpenHAB::Core::V4_3
+          include ComparableType
+        else
+          include Comparable
+        end
 
         #
         # Regex expression to identify strings defining a time in hours, minutes and optionally seconds
