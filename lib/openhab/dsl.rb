@@ -1077,7 +1077,7 @@ module OpenHAB
       return string unless string.is_a?(String)
 
       exception = nil
-      [java.time.LocalTime, java.time.LocalDate, java.time.MonthDay, java.time.ZonedDateTime].each do |klass|
+      [java.time.LocalTime, java.time.LocalDate, java.time.MonthDay, java.time.ZonedDateTime, Time].each do |klass|
         return klass.parse(string)
       rescue ArgumentError => e
         exception ||= e

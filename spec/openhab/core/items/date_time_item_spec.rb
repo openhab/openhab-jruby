@@ -29,4 +29,14 @@ RSpec.describe OpenHAB::Core::Items::DateTimeItem do
     item.update("3:30pm")
     expect(item.state).to eq LocalTime.parse("3:30pm").to_zoned_date_time
   end
+
+  it "can be updated by a string that looks like a date" do
+    item.update("2021-01-01")
+    expect(item.state).to eq LocalDate.parse("2021-01-01").to_zoned_date_time
+  end
+
+  it "can be updated by a string that looks like a date and time" do
+    item.update("2021-01-01 15:40Z")
+    expect(item.state).to eq ZonedDateTime.parse("2021-01-01T15:40Z")
+  end
 end
