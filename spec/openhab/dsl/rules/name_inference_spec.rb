@@ -121,4 +121,68 @@ RSpec.describe OpenHAB::DSL::Rules::NameInference do
       expect(r.name).to eql "System Start Level reached 30 (states) or 40 (rules)"
     end
   end
+
+  context "with #every" do
+    it "generates a useful name" do
+      %i[second
+         minute
+         hour
+         day
+         week
+         month
+         year
+         monday
+         tuesday
+         wednesday
+         thursday
+         friday
+         saturday
+         sunday].each do |frequency|
+        r = rules.build { every(frequency) { nil } }
+        expect(r.name).to eql "Every #{frequency}"
+      end
+    end
+
+    it "generates a useful name with a duration" do
+      r = rules.build { every(5.minutes) { nil } }
+      expect(r.name).to eql "Every PT5M"
+    end
+
+    it "generates a useful name with an at:" do
+      r = rules.build { every(:week, at: "12:00") { nil } }
+      expect(r.name).to eql "Every week at 12:00"
+    end
+
+    it "generates a useful name with an offset" do
+      r = rules.build { every(:day, at: DateTimeItem1, offset: 5.minutes) { nil } }
+      expect(r.name).to eql "Every day at DateTimeItem1 +5m"
+
+      r = rules.build { every(:day, at: DateTimeItem1, offset: -5.minutes) { nil } }
+      expect(r.name).to eql "Every day at DateTimeItem1 -5m"
+    end
+  end
+
+  context "with #at" do
+    it "generates a useful name" do
+      r = rule do
+        at DateTimeItem1
+        run { nil }
+      end
+      expect(r.name).to eql "At DateTimeItem1"
+    end
+
+    it "generates a useful name with an offset" do
+      r = rule do
+        at DateTimeItem1, offset: 5.minutes
+        run { nil }
+      end
+      expect(r.name).to eql "At DateTimeItem1 +5m"
+
+      r = rule do
+        at DateTimeItem1, offset: -5.minutes
+        run { nil }
+      end
+      expect(r.name).to eql "At DateTimeItem1 -5m"
+    end
+  end
 end

@@ -1302,6 +1302,10 @@ module OpenHAB
         #   If `value` is `:day`, `at` can be a {Core::Items::DateTimeItem DateTimeItem}, and
         #   the trigger will run every day at the (time only portion of) current state of the
         #   item. If the item is {NULL} or {UNDEF}, the trigger will not run.
+        # @param [Duration, Integer, nil] offset Offset the execution time from the time specified in the item.
+        #   This can be a negative value to execute the rule before the time specified in the item.
+        #   A Duration will be converted to its total length in seconds, with any excess precision information dropped.
+        #   @since openHAB 4.3
         # @param [Object] attach Object to be attached to the trigger
         # @return [void]
         #
@@ -1320,12 +1324,6 @@ module OpenHAB
         #   rule "Daily" do
         #     every :day, at: LocalTime.of(5, 15)
         #     run { Light.on }
-        #   end
-        #
-        # @example Trigger at the time portion of a DateTime Item
-        #   rule "Every day at sunset" do
-        #     every :day, at: Sunset_Time
-        #     run { logger.info "It's getting dark" }
         #   end
         #
         # @example Specific day of the week
@@ -1372,8 +1370,21 @@ module OpenHAB
         #     run { logger.info "It's the weekend!" }
         #   end
         #
-        def every(*values, at: nil, attach: nil)
+        # @example Trigger at the time portion of a DateTime Item
+        #   rule "Every day at sunset" do
+        #     every :day, at: Sunset_Time
+        #     run { logger.info "It's sunset!" }
+        #   end
+        #
+        # @example Using DateTime trigger with offset
+        #   rule "Every day before sunset" do
+        #     every :day, at: Sunset_Time, offset: -20.minutes
+        #     run { logger.info "It's almost sunset!" }
+        #   end
+        #
+        def every(*values, at: nil, offset: nil, attach: nil)
           raise ArgumentError, "Missing values" if values.empty?
+          raise ArgumentError, "Offset can only be used when 'at' is given a DateTimeItem" if offset && !at.is_a?(Item)
 
           if Cron.all_dow_symbols?(values)
             @ruby_triggers << [:every, values.join(", "), { at: at }]
@@ -1397,7 +1408,10 @@ module OpenHAB
               raise ArgumentError, "Attachments are not supported with dynamic datetime triggers in openHAB 3.x"
             end
 
-            return trigger("timer.DateTimeTrigger", itemName: at.name, timeOnly: true, attach: attach)
+            offset ||= 0
+            offset = offset.to_i # Duration#to_i converts it to seconds, but we also want to convert float/string to int
+            @ruby_triggers.last[2][:offset] = offset
+            return trigger("timer.DateTimeTrigger", itemName: at.name, timeOnly: true, offset: offset, attach: attach)
           end
 
           cron_expression = case value
@@ -1797,6 +1811,10 @@ module OpenHAB
         # The `event` passed to run blocks will be a {Core::Events::TimerEvent}.
         #
         # @param [Item, String, Symbol] item The item (or its name)
+        # @param [Duration, Integer, nil] offset Offset the execution time from the time specified in the item.
+        #   This can be a negative value to execute the rule before the time specified in the item.
+        #   A Duration will be converted to its total length in seconds, with any excess precision information dropped.
+        #   @since openHAB 4.3
         # @return [void]
         #
         # @see every
@@ -1817,9 +1835,18 @@ module OpenHAB
         #     end
         #   end
         #
-        def at(item)
+        # @example Using an offset
+        #   rule "Turn on lights 15 minutes before sunset" do
+        #     at Sunset_Time, offset: -15.minutes
+        #     run { Lights.on }
+        #   end
+        #
+        def at(item, offset: nil)
           item = item.name if item.is_a?(Item)
-          trigger("timer.DateTimeTrigger", itemName: item.to_s)
+          offset ||= 0
+          offset = offset.to_i if offset.is_a?(Duration)
+          @ruby_triggers << [:at, item, { offset: offset }]
+          trigger("timer.DateTimeTrigger", itemName: item.to_s, offset: offset)
         end
 
         #

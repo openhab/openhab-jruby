@@ -98,6 +98,13 @@ module OpenHAB
         end
 
         # @return [String]
+        def to_s
+          return name if __getobj__.nil?
+
+          __getobj__.to_s
+        end
+
+        # @return [String]
         def inspect
           return super unless __getobj__.nil?
 
