@@ -71,4 +71,16 @@ RSpec.describe OpenHAB::Core::Types::DateTimeType do
     specify { expect(Time.parse("2021-01-01T00:00:00+00:00")).to eq date_one }
     specify { expect(Time.parse("2021-01-01T00:00:00+01:00") != date_one).to be true }
   end
+
+  describe "#parse" do
+    it "use local date and timezone for time only strings without a timezone" do
+      expect(DateTimeType.parse("3:30pm")).to eq LocalTime.parse("3:30pm").to_zoned_date_time
+      expect(DateTimeType.parse("03:30:00")).to eq LocalTime.parse("3:30").to_zoned_date_time
+    end
+
+    it "parses time only strings with a timezone" do
+      local_date_time = LocalTime.parse("3:30").at_date(LocalDate.now)
+      expect(DateTimeType.parse("3:30+1000")).to eq local_date_time.at_zone(ZoneId.of("+1000"))
+    end
+  end
 end
