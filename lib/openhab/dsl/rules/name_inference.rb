@@ -8,21 +8,6 @@ module OpenHAB
       # Contains helper methods for inferring a rule name from its triggers
       # @!visibility private
       module NameInference
-        # Trigger Type UIDs that we know how to generate a name for
-        KNOWN_TRIGGER_TYPES = [
-          "core.ChannelEventTrigger",
-          "core.GenericEventTrigger",
-          "core.GroupCommandTrigger",
-          "core.GroupStateChangeTrigger",
-          "core.GroupStateUpdateTrigger",
-          "core.ItemCommandTrigger",
-          "core.ItemStateChangeTrigger",
-          "core.ItemStateUpdateTrigger",
-          "core.SystemStartlevelTrigger",
-          Triggers::Cron::CRON_TRIGGER_MODULE_ID
-        ].freeze
-        private_constant :KNOWN_TRIGGER_TYPES
-
         class << self
           # get the block's source location, and simplify to a simple filename
           def infer_rule_id_from_block(block)
@@ -33,24 +18,14 @@ module OpenHAB
 
           # formulate a readable rule name such as "TestSwitch received command ON" if possible
           def infer_rule_name(config)
-            known_triggers, unknown_triggers = config.triggers.partition do |t|
-              KNOWN_TRIGGER_TYPES.include?(t.type_uid)
-            end
-            return nil unless unknown_triggers.empty?
-
-            cron_triggers = known_triggers.select { |t| t.type_uid == "jsr223.jruby.CronTrigger" }
-            ruby_every_triggers = config.ruby_triggers.select { |t| t.first == :every }
-
-            # makes sure there aren't any true cron triggers cause we can't format them
-            return nil unless cron_triggers.length == ruby_every_triggers.length
-            return nil unless config.ruby_triggers.length == 1
-
-            infer_rule_name_from_trigger(*config.ruby_triggers.first)
+            infer_rule_name_from_trigger(*config.ruby_triggers.first) if config.ruby_triggers.length == 1
           end
 
           # formulate a readable rule name from a single trigger if possible
           def infer_rule_name_from_trigger(trigger, items = nil, kwargs = {})
             case trigger
+            when :at
+              infer_rule_name_from_at_trigger(items, **kwargs)
             when :every
               infer_rule_name_from_every_trigger(items, **kwargs)
             when :channel
@@ -101,10 +76,18 @@ module OpenHAB
             name.freeze
           end
 
+          # formulate a readable rule name from an at-style cron trigger
+          def infer_rule_name_from_at_trigger(item, offset: nil)
+            name = "At #{item}"
+            name += format_offset(offset)
+            name
+          end
+
           # formulate a readable rule name from an every-style cron trigger
-          def infer_rule_name_from_every_trigger(value, at:)
+          def infer_rule_name_from_every_trigger(value, at:, offset: nil)
             name = "Every #{value}"
             name += " at #{at}" if at
+            name += format_offset(offset)
             name
           end
 
@@ -174,6 +157,12 @@ module OpenHAB
             return "#{array[0]} or #{array[1]}" if array.length == 2
 
             "#{array[0..-2].join(", ")}, or #{array[-1]}"
+          end
+
+          def format_offset(offset)
+            return "" unless offset&.nonzero?
+
+            " #{offset.positive? ? "+" : ""}#{offset.seconds.to_s.downcase[2..]}" # Remove "PT" from the ISO8601 string
           end
         end
       end

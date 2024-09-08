@@ -1316,6 +1316,26 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           expect(triggered).to be true
         end
       end
+
+      # @deprecated OH 4.1 remove if guard when dropping OH 4.1 support
+      if OpenHAB::Core.version >= OpenHAB::Core::V4_3
+        { "Duration" => 2.hours + 1.seconds, "Integer" => 2.hours.to_i + 1 }.each do |type, offset|
+          it "supports #{type} offset" do
+            items.build { date_time_item MyDateTimeItem }
+
+            triggered = false
+            rule do
+              at MyDateTimeItem, offset: offset
+              run { triggered = true }
+            end
+
+            MyDateTimeItem.update(2.hours.ago) # without an offset, this would not have triggered the rule
+            wait(4.seconds) do
+              expect(triggered).to be true
+            end
+          end
+        end
+      end
     end
 
     describe "#every" do
@@ -1356,6 +1376,10 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         end.to raise_error(ArgumentError)
       end
 
+      it "complains when using an offset for non-dynamic `at`" do
+        expect { every(:day, at: "1am", offset: 2.hours) { nil } }.to raise_error(ArgumentError, /offset/i)
+      end
+
       context "with dynamic `at`" do
         let(:item) { items.build { date_time_item MyDateTimeItem } }
 
@@ -1386,12 +1410,29 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
             expect(triggered).to be 1
           end
         end
-      end
 
-      it "complains about dynamic at that's not daily" do
-        items.build { date_time_item MyDateTimeItem }
+        it "complains about dynamic at that's not daily" do
+          items.build { date_time_item MyDateTimeItem }
 
-        expect { every :month, at: MyDateTimeItem }.to raise_error(ArgumentError)
+          expect { every :month, at: MyDateTimeItem }.to raise_error(ArgumentError)
+        end
+
+        # @deprecated OH 4.1 remove if guard when dropping OH 4.1 support
+        if OpenHAB::Core.version > OpenHAB::Core::V4_3
+          { "Duration" => 2.hours + 1.second, "Integer" => 2.hours.to_i + 1 }.each do |type, offset|
+            it "supports #{type} offset" do
+              items.build { date_time_item MyDateTimeItem }
+
+              triggered = false
+              every(:day, at: MyDateTimeItem, offset: offset) { triggered = true }
+
+              MyDateTimeItem.update(2.hours.ago) # without an offset, this would not have triggered the rule
+              wait(4.seconds) do
+                expect(triggered).to be true
+              end
+            end
+          end
+        end
       end
     end
 
