@@ -1,5 +1,19 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.27.0](https://github.com/openhab/openhab-jruby/tree/v5.27.0) (2024-09-08)
+
+### Features
+
+- Support offset in `at` and `every :day, at:` triggers by [@jimtng](https://github.com/jimtng) in [#278](https://github.com/openhab/openhab-jruby/pull/278)
+- Support space separator between date and time by [@jimtng](https://github.com/jimtng) in [#329](https://github.com/openhab/openhab-jruby/pull/329)
+
+### Bug Fixes
+
+- DateTimeType implements Java's Comparable in openHAB 4.3 by [@jimtng](https://github.com/jimtng) in [#328](https://github.com/openhab/openhab-jruby/pull/328)
+- Sitemap updates not propagated to listeners by [@jimtng](https://github.com/jimtng) in [#327](https://github.com/openhab/openhab-jruby/pull/327)
+
+**Full Changelog**: [v5.26.0...v5.27.0](https://github.com/openhab/openhab-jruby/compare/v5.26.0...v5.27.0)
+
 ## [v5.26.0](https://github.com/openhab/openhab-jruby/tree/v5.26.0) (2024-08-25)
 
 ### Features
