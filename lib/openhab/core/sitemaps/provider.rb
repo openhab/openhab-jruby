@@ -12,9 +12,8 @@ module OpenHAB
       # Provides sitemaps created in Ruby to openHAB
       #
       class Provider < Core::Provider
-        PREFIX = "jruby_"
         SUFFIX = ".sitemap"
-        private_constant :PREFIX, :SUFFIX
+        private_constant :SUFFIX
 
         class << self
           # @!visibility private
@@ -49,6 +48,7 @@ module OpenHAB
 
         # @!visibility private
         def unregister
+          clear
           @registration.unregister
         end
 
@@ -151,12 +151,29 @@ module OpenHAB
         end
 
         #
+        # Notify listeners about updated sitemap
+        #
+        # @param [String, org.openhab.core.model.sitemap.sitemap.Sitemap] sitemap The sitemap to update.
+        # @return [void]
+        #
+        def update(sitemap)
+          if sitemap.respond_to?(:to_str)
+            sitemap = get(sitemap).tap do |obj|
+              raise ArgumentError, "Sitemap #{sitemap} not found" unless obj
+            end
+          end
+          super
+        end
+
+        #
         # Remove a sitemap.
         #
-        # @param [String] sitemap_name
+        # @param [String, org.openhab.core.model.sitemap.sitemap.Sitemap] sitemap
         # @return [Boolean] If a sitemap was removed
-        def remove(sitemap_name)
-          super("#{PREFIX}#{sitemap_name}#{SUFFIX}")
+        #
+        def remove(sitemap)
+          sitemap = sitemap.uid if sitemap.respond_to?(:uid)
+          super
         end
 
         private
@@ -169,15 +186,24 @@ module OpenHAB
         end
 
         def notify_listeners_about_added_element(element)
-          @listeners.each { |l| l.model_changed(element.name, org.openhab.core.model.core.EventType::ADDED) }
+          model_name = "#{element.name}#{SUFFIX}"
+          @listeners.each do |l|
+            l.modelChanged(model_name, org.openhab.core.model.core.EventType::ADDED)
+            # Ensure that when a script is reloaded, the sitemap is updated.
+            # This is because our listener, org.openhab.core.io.rest.sitemap.SitemapSubscriptionService
+            # only handles MODIFIED events in its modelChanged() method.
+            l.modelChanged(model_name, org.openhab.core.model.core.EventType::MODIFIED)
+          end
         end
 
         def notify_listeners_about_removed_element(element)
-          @listeners.each { |l| l.model_changed(element.name, org.openhab.core.model.core.EventType::REMOVED) }
+          model_name = "#{element.name}#{SUFFIX}"
+          @listeners.each { |l| l.modelChanged(model_name, org.openhab.core.model.core.EventType::REMOVED) }
         end
 
         def notify_listeners_about_updated_element(_old_element, element)
-          @listeners.each { |l| l.model_changed(element.name, org.openhab.core.model.core.EventType::MODIFIED) }
+          model_name = "#{element.name}#{SUFFIX}"
+          @listeners.each { |l| l.modelChanged(model_name, org.openhab.core.model.core.EventType::MODIFIED) }
         end
       end
     end
