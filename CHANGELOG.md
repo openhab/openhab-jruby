@@ -1,5 +1,14 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.27.1](https://github.com/openhab/openhab-jruby/tree/v5.27.1) (2024-09-09)
+
+### Bug Fixes
+
+- Make all providers notify their listeners when the script is unloaded by [@jimtng](https://github.com/jimtng) in [#330](https://github.com/openhab/openhab-jruby/pull/330)
+- Make DateTimeType.parse use the local timezone when a time-only string doesn't specify a tz by [@jimtng](https://github.com/jimtng) in [#331](https://github.com/openhab/openhab-jruby/pull/331)
+
+**Full Changelog**: [v5.27.0...v5.27.1](https://github.com/openhab/openhab-jruby/compare/v5.27.0...v5.27.1)
+
 ## [v5.27.0](https://github.com/openhab/openhab-jruby/tree/v5.27.0) (2024-09-08)
 
 ### Features
