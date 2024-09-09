@@ -1072,6 +1072,16 @@ module OpenHAB
       Thread.current[:openhab_holiday_file] = file
     end
 
+    #
+    # @param [String] string Date/time string to parse.
+    #   The string can be in any format recognized by:
+    #   - {OpenHAB::CoreExt::Java::LocalTime.parse LocalTime.parse}
+    #   - {OpenHAB::CoreExt::Java::LocalDate.parse LocalDate.parse}
+    #   - {OpenHAB::CoreExt::Java::MonthDay.parse MonthDay.parse}, e.g. "12-25"
+    #   - {OpenHAB::CoreExt::Java::ZonedDateTime.parse ZonedDateTime.parse}
+    #   - [Time.parse](https://rubyapi.org/o/time#method-c-parse), e.g. "2021-01-01 12:00:", or "3:30pm"
+    # @return [LocalTime, LocalDate, MonthDay, ZonedDateTime, Time] the parsed date/time
+    #
     # @!visibility private
     def try_parse_time_like(string)
       return string unless string.is_a?(String)

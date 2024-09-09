@@ -26,36 +26,20 @@ module OpenHAB
           include Comparable
         end
 
-        #
-        # Regex expression to identify strings defining a time in hours, minutes and optionally seconds
-        #
-        TIME_ONLY_REGEX = /\A(?<hours>\d\d):(?<minutes>\d\d)(?<seconds>:\d\d)?\Z/.freeze
-
-        #
-        # Regex expression to identify strings defining a time in year, month, and day
-        #
-        DATE_ONLY_REGEX = /\A\d{4}-\d\d-\d\d\Z/.freeze
-        private_constant :TIME_ONLY_REGEX, :DATE_ONLY_REGEX
-
         class << self
           #
-          # Parses a String representing a time into a {DateTimeType}. First tries to parse it
-          #   using Java's parser, then falls back to the Ruby `Time.parse`.
+          # Parse a time string into a {DateTimeType}.
           #
-          # @param [String] time_string
+          # @note openHAB's DateTimeType.new(String) constructor will parse time-only strings and fill in `1970-01-01`
+          #   as the date, whereas this method will use the current date.
           #
+          # @param (see DSL#try_parse_time_like)
           # @return [DateTimeType]
           #
           def parse(time_string)
-            time_string = "#{time_string}Z" if TIME_ONLY_REGEX.match?(time_string)
-            DateTimeType.new(time_string)
-          rescue java.lang.StringIndexOutOfBoundsException, java.lang.IllegalArgumentException => e
-            # Try Ruby's Time.parse if DateTimeType parser fails
-            begin
-              DateTimeType.new(::Time.parse(time_string).to_zoned_date_time)
-            rescue ArgumentError
-              raise ArgumentError, e.message
-            end
+            DateTimeType.new(DSL.try_parse_time_like(time_string).to_zoned_date_time)
+          rescue ArgumentError
+            raise ArgumentError, e.message
           end
         end
 
