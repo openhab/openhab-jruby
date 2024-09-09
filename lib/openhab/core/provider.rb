@@ -214,7 +214,17 @@ module OpenHAB
       end
 
       # @!visibility private
+      def clear
+        elements = @elements
+        @elements = java.util.concurrent.ConcurrentHashMap.new
+        elements.each_value do |v|
+          notify_listeners_about_removed_element(v)
+        end
+      end
+
+      # @!visibility private
       def unregister
+        clear
         # @deprecated OH3.4 safe navigation only required for missing Semantics registry
         self.class.registry&.remove_provider(self)
       end

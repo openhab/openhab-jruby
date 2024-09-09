@@ -47,6 +47,7 @@ module OpenHAB
         # rubocop:enable Naming/MethodName
 
         # @!visibility private
+        # Override this because we don't have a registry
         def unregister
           clear
           @registration.unregister
@@ -137,16 +138,6 @@ module OpenHAB
             end
           else
             builder.instance_eval(&block)
-          end
-        end
-
-        # For use in specs
-        # @!visibility private
-        def clear
-          elements = @elements
-          @elements = java.util.concurrent.ConcurrentHashMap.new
-          elements.each_value do |v|
-            notify_listeners_about_removed_element(v)
           end
         end
 
