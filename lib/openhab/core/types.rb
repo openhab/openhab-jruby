@@ -55,7 +55,7 @@ module OpenHAB
           states = Types::PREDICATE_ALIASES[value.to_s]
 
           ([command] | states).each do |method|
-            logger.trace("Defining #{klass}##{method} for #{value}")
+            logger.trace { "Defining #{klass}##{method} for #{value}" }
             klass.class_eval <<~RUBY, __FILE__, __LINE__ + 1
               def #{method}                                                 # def on?
                 as(#{value.class.java_class.simple_name}).equal?(#{value})  #   as(OnOffType).equal?(ON)

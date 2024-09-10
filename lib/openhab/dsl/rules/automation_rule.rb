@@ -104,7 +104,7 @@ module OpenHAB
           @listener ||= org.openhab.core.common.registry.RegistryChangeListener.impl do |method, element|
             next unless method == :removed
 
-            logger.trace("Rule #{element.inspect} removed from registry")
+            logger.trace { "Rule #{element.inspect} removed from registry" }
             next unless element.uid == uid
 
             cleanup
@@ -225,7 +225,7 @@ module OpenHAB
 
           return true if @guard.should_run?(event)
 
-          logger.trace("Skipped execution of rule '#{name}' because of guard #{@guard}")
+          logger.trace { "Skipped execution of rule '#{name}' because of guard #{@guard}" }
           false
         end
 

@@ -140,7 +140,7 @@ module OpenHAB
               # Invoked by java super class to check if sub directories should be watched
               # @return [false] false
               def watchSubDirectories
-                logger.trace("watchSubDirectories returning #{@subdirs}")
+                logger.trace { "watchSubDirectories returning #{@subdirs}" }
                 @subdirs
               end
 

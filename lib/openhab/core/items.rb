@@ -44,7 +44,7 @@ module OpenHAB
             _command_predicate, state_predicate = Types::PREDICATE_ALIASES[state.to_s]
             next if klass.instance_methods.include?(state_predicate)
 
-            logger.trace("Defining #{klass}##{state_predicate} for #{state}")
+            logger.trace { "Defining #{klass}##{state_predicate} for #{state}" }
             klass.class_eval <<~RUBY, __FILE__, __LINE__ + 1
               def #{state_predicate}                                                  # def on?
                 raw_state.as(#{state.class.java_class.simple_name}).equal?(#{state})  #   raw_state.as(OnOffType) == ON
@@ -61,7 +61,7 @@ module OpenHAB
             next if klass.instance_methods.include?(command)
 
             if value.is_a?(Types::State)
-              logger.trace("Defining #{klass}/Enumerable##{command}/#{command}! for #{value}")
+              logger.trace { "Defining #{klass}/Enumerable##{command}/#{command}! for #{value}" }
 
               klass.class_eval <<~RUBY, __FILE__, __LINE__ + 1
                 ruby2_keywords def #{command}(*args, &block)   # ruby2_keywords def on(*args, &block)
@@ -83,7 +83,7 @@ module OpenHAB
                 end                    # end
               RUBY
             else
-              logger.trace("Defining #{klass}/Enumerable##{command} for #{value}")
+              logger.trace { "Defining #{klass}/Enumerable##{command} for #{value}" }
 
               klass.class_eval <<~RUBY, __FILE__, __LINE__ + 1
                 ruby2_keywords def #{command}(*args, &block)  # ruby2_keywords def refresh(*args, &block)
@@ -98,7 +98,7 @@ module OpenHAB
               RUBY
             end
 
-            logger.trace("Defining ItemCommandEvent##{command}? for #{value}")
+            logger.trace { "Defining ItemCommandEvent##{command}? for #{value}" }
             Events::ItemCommandEvent.class_eval <<~RUBY, __FILE__, __LINE__ + 1
               def #{command}?                                                       # def refresh?
                 command.as(#{value.class.java_class.simple_name}).equal?(#{value})  #   command.as(RefreshType).equal?(REFRESH)

@@ -37,7 +37,7 @@ module OpenHAB
         # @return [true,false] True if guard is satisfied, false otherwise
         #
         def should_run?(event)
-          logger.trace("Checking guards #{self}")
+          logger.trace { "Checking guards #{self}" }
           return false unless check_only_if(event)
           return false unless check_not_if(event)
 

@@ -30,7 +30,7 @@ module OpenHAB
             # @return [true, false] if the conditions passed (and therefore the block was run)
             #
             def process(mod:, inputs:)
-              logger.trace("Checking #{inputs} against condition trigger #{self}")
+              logger.trace { "Checking #{inputs} against condition trigger #{self}" }
               unless check_value(Conditions.old_state_from(inputs), @from) &&
                      check_value(Conditions.new_state_from(inputs), @to) &&
                      check_value(inputs["command"], @command)

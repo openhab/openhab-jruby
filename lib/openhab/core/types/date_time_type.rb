@@ -129,7 +129,7 @@ module OpenHAB
         #   `nil` is returned if the two values are incomparable.
         #
         def <=>(other)
-          logger.trace("(#{self.class}) #{self} <=> #{other} (#{other.class})")
+          logger.trace { "(#{self.class}) #{self} <=> #{other} (#{other.class})" }
           if other.is_a?(self.class)
             zoned_date_time <=> other.zoned_date_time
           elsif other.respond_to?(:to_time)
@@ -151,7 +151,7 @@ module OpenHAB
         # @return [[DateTimeType, DateTimeType], nil]
         #
         def coerce(other)
-          logger.trace("Coercing #{self} as a request from #{other.class}")
+          logger.trace { "Coercing #{self} as a request from #{other.class}" }
           return [other, zoned_date_time] if other.respond_to?(:to_zoned_date_time)
 
           [DateTimeType.new(other), self] if other.respond_to?(:to_time)

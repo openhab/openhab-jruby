@@ -45,7 +45,7 @@ module OpenHAB
               synchronized do
                 super(callback)
                 @schedule = @scheduler.schedule(self, @expression)
-                logger.trace("Scheduled cron job '#{@expression}' for trigger '#{@trigger.id}'.")
+                logger.trace { "Scheduled cron job '#{@expression}' for trigger '#{@trigger.id}'." }
               end
             end
 
@@ -76,7 +76,7 @@ module OpenHAB
                 @schedule.cancel(true)
                 @schedule = nil
               end
-              logger.trace("cancelled job for trigger '#{@trigger.id}'.")
+              logger.trace { "cancelled job for trigger '#{@trigger.id}'." }
             end
           end
 

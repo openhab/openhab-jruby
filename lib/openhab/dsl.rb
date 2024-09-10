@@ -1096,10 +1096,10 @@ module OpenHAB
       return super unless args.empty? && !block_given?
 
       if (context = Thread.current[:openhab_context]) && context.key?(method)
-        logger.trace("DSL#method_missing found context variable: '#{method}'")
+        logger.trace { "DSL#method_missing found context variable: '#{method}'" }
         return context[method]
       elsif Core.ui_context&.key?(method)
-        logger.trace("DSL#method_missing found UI context variable: '#{method}'")
+        logger.trace { "DSL#method_missing found UI context variable: '#{method}'" }
         return Core.ui_context[method]
       end
       super

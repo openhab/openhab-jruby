@@ -251,7 +251,7 @@ module OpenHAB
           #
           # @!visibility private
           def const_missing(sym)
-            logger.trace("const missing, performing Semantics Lookup for: #{sym}")
+            logger.trace { "const missing, performing Semantics Lookup for: #{sym}" }
             lookup(sym)&.tap { |tag| const_set(sym, tag) } || super
           end
         end

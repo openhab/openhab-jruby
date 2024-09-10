@@ -132,7 +132,7 @@ module OpenHAB
         #   `nil` is returned if the two values are incomparable.
         #
         def <=>(other)
-          logger.trace("(#{self.class}) #{self} <=> #{other} (#{other.class})")
+          logger.trace { "(#{self.class}) #{self} <=> #{other} (#{other.class})" }
           case other
           when self.class
             return unitize(other.unit).compare_to(other) if unit == Units::ONE
@@ -161,7 +161,7 @@ module OpenHAB
         #
         # @return [Array<(QuantityType, QuantityType)>, nil]
         def coerce(other)
-          logger.trace("Coercing #{self} as a request from #{other.class}")
+          logger.trace { "Coercing #{self} as a request from #{other.class}" }
           return unless other.respond_to?(:to_d)
 
           [QuantityType.new(other.to_d.to_java, Units::ONE), self]
@@ -178,7 +178,7 @@ module OpenHAB
 
           class_eval( # rubocop:disable Style/DocumentDynamicEvalDefinition https://github.com/rubocop/rubocop/issues/10179
             # def +(other)
-            #   logger.trace("#{self} + #{other} (#{other.class})")
+            #   logger.trace { "#{self} + #{other} (#{other.class})" }
             #   other = other.state if other.is_a?(Core::Items::Persistence::PersistedState)
             #   if other.is_a?(QuantityType)
             #     add_quantity(other)
@@ -203,7 +203,7 @@ module OpenHAB
             # end
             <<~RUBY, __FILE__, __LINE__ + 1
               def #{ruby_op}(other)
-                logger.trace("\#{self} #{ruby_op} \#{other} (\#{other.class})")
+                logger.trace { "\#{self} #{ruby_op} \#{other} (\#{other.class})" }
                 other = other.state if other.is_a?(Core::Items::Persistence::PersistedState)
                 if other.is_a?(QuantityType)
                   #{java_op}_quantity(other)
@@ -236,7 +236,7 @@ module OpenHAB
         }.each do |java_op, ruby_op|
           class_eval( # rubocop:disable Style/DocumentDynamicEvalDefinition https://github.com/rubocop/rubocop/issues/10179
             # def *(other)
-            #   logger.trace("#{self} * #{other} (#{other.class})")
+            #   logger.trace { "#{self} * #{other} (#{other.class})" }
             #   other = other.state if other.is_a?(Core::Items::Persistence::PersistedState)
             #   if other.is_a?(QuantityType)
             #     multiply_quantity(other)
@@ -254,7 +254,7 @@ module OpenHAB
             # end
             <<~RUBY, __FILE__, __LINE__ + 1
               def #{ruby_op}(other)
-                logger.trace("\#{self} #{ruby_op} \#{other} (\#{other.class})")
+                logger.trace { "\#{self} #{ruby_op} \#{other} (\#{other.class})" }
                 other = other.state if other.is_a?(Core::Items::Persistence::PersistedState)
                 if other.is_a?(QuantityType)
                   #{java_op}_quantity(other).unitize
@@ -279,7 +279,7 @@ module OpenHAB
         def unitize(other_unit = unit, relative: false)
           # prefer converting to the thread-specified unit if there is one
           other_unit = DSL.unit(dimension) || other_unit
-          logger.trace("Converting #{self} to #{other_unit}")
+          logger.trace { "Converting #{self} to #{other_unit}" }
 
           case unit
           when Units::ONE

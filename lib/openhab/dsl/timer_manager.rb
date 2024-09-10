@@ -45,7 +45,7 @@ module OpenHAB
       # Add a timer that is now active
       # @!visibility private
       def add(timer)
-        logger.trace("Adding #{timer} to timers")
+        logger.trace { "Adding #{timer} to timers" }
         @timers[timer] = 1
       end
 
@@ -54,7 +54,7 @@ module OpenHAB
       #
       # @!visibility private
       def delete(timer)
-        logger.trace("Removing #{timer} from timers")
+        logger.trace { "Removing #{timer} from timers" }
         return unless @timers.remove(timer) && timer.id
 
         @timers_by_id.remove(timer.id)
@@ -193,7 +193,7 @@ module OpenHAB
         logged = false
         # don't use #each, in case timers are scheduling more timers
         until @timers.empty?
-          logger.trace("Canceling #{@timers.length} timers") unless logged
+          logger.trace { "Canceling #{@timers.length} timers" } unless logged
           logged = true
           timer = @timers.keys.first
           timer.cancel

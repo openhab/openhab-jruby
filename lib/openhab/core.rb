@@ -38,7 +38,7 @@ module OpenHAB
       def wait_till_openhab_ready
         logger.trace("Checking readiness of openHAB")
         until automation_manager
-          logger.trace("Automation manager not loaded, checking again in #{CHECK_DELAY} seconds.")
+          logger.trace { "Automation manager not loaded, checking again in #{CHECK_DELAY} seconds." }
           sleep CHECK_DELAY
         end
         logger.trace "Automation manager instantiated, openHAB ready for rule processing."
