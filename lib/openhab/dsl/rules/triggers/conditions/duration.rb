@@ -22,8 +22,10 @@ module OpenHAB
               @conditions = Generic.new(to: to, from: from)
               @duration = duration
               @timers = {}
-              logger.trace "Created Duration Condition To(#{to}) From(#{from}) " \
-                           "Conditions(#{@conditions}) Duration(#{@duration})"
+              logger.trace do
+                "Created Duration Condition To(#{to}) From(#{from}) " \
+                  "Conditions(#{@conditions}) Duration(#{@duration})"
+              end
             end
 
             # Process rule
@@ -34,13 +36,13 @@ module OpenHAB
               if timer&.active?
                 process_active_timer(timer, inputs, mod, &block)
               elsif @conditions.process(mod: mod, inputs: inputs)
-                logger.trace("Trigger Guards Matched for #{self}, delaying rule execution")
+                logger.trace { "Trigger Guards Matched for #{self}, delaying rule execution" }
                 # Add timer and attach timer to delay object, and also state being tracked to so
                 # timer can be cancelled if state changes
                 # Also another timer should not be created if changed to same value again but instead rescheduled
                 create_trigger_delay_timer(inputs, mod, &block)
               else
-                logger.trace("Trigger Guards did not match for #{self}, ignoring trigger.")
+                logger.trace { "Trigger Guards did not match for #{self}, ignoring trigger." }
               end
             end
 
@@ -61,10 +63,10 @@ module OpenHAB
             #
             #
             def create_trigger_delay_timer(inputs, _mod)
-              logger.trace("Creating timer for trigger delay #{self}")
+              logger.trace { "Creating timer for trigger delay #{self}" }
               item_name = inputs["triggeringItem"]&.name
               @timers[item_name] = DSL.after(@duration) do
-                logger.trace("Delay Complete for #{self}, executing rule")
+                logger.trace { "Delay Complete for #{self}, executing rule" }
                 @timers.delete(item_name)
                 yield
               end
@@ -83,9 +85,9 @@ module OpenHAB
               new_state = Conditions.new_state_from(inputs)
               if @conditions.from? && new_state != @tracking_from &&
                  @conditions.process(mod: nil, inputs: { "state" => new_state })
-                logger.trace("Item changed from #{old_state} to #{new_state} for #{self}, keep waiting.")
+                logger.trace { "Item changed from #{old_state} to #{new_state} for #{self}, keep waiting." }
               else
-                logger.trace("Item changed from #{old_state} to #{new_state} for #{self}, canceling timer.")
+                logger.trace { "Item changed from #{old_state} to #{new_state} for #{self}, canceling timer." }
                 timer.cancel
                 # Reprocess trigger delay after canceling to track new state (if guards matched, etc)
                 process(mod: mod, inputs: inputs, &block)

@@ -65,7 +65,7 @@ module OpenHAB
               # in this case, HTML hex format for rgb
               if (match = value.match(/^#(\h{2})(\h{2})(\h{2})$/))
                 rgb = match.to_a[1..3].map { |v| v.to_i(16) }
-                logger.trace("creating from rgb #{rgb.inspect}")
+                logger.trace { "creating from rgb #{rgb.inspect}" }
                 return from_rgb(*rgb)
               end
             end
@@ -110,7 +110,7 @@ module OpenHAB
         #   `nil` is returned if the two values are incomparable.
         #
         def <=>(other)
-          logger.trace("(#{self.class}) #{self} <=> #{other} (#{other.class})")
+          logger.trace { "(#{self.class}) #{self} <=> #{other} (#{other.class})" }
           if other.is_a?(HSBType)
             [brightness, hue, saturation] <=> [other.brightness, other.hue, other.saturation]
           else

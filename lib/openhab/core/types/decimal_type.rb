@@ -91,7 +91,7 @@ module OpenHAB
         #   `nil` is returned if the two values are incomparable.
         #
         def <=>(other)
-          logger.trace("(#{self.class}) #{self} <=> #{other} (#{other.class})")
+          logger.trace { "(#{self.class}) #{self} <=> #{other} (#{other.class})" }
           if other.is_a?(QuantityType) || other.is_a?(HSBType)
             (other <=> self)&.-@
           elsif other.is_a?(self.class)
@@ -115,7 +115,7 @@ module OpenHAB
         # @return [Array<(DecimalType, DecimalType)>, nil]
         #
         def coerce(other)
-          logger.trace("Coercing #{self} as a request from #{other.class}")
+          logger.trace { "Coercing #{self} as a request from #{other.class}" }
           return unless other.respond_to?(:to_d)
 
           [self.class.new(other.to_d), self]

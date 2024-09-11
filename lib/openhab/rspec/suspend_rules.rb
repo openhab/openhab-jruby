@@ -9,7 +9,7 @@ module OpenHAB
       class ::OpenHAB::DSL::Rules::AutomationRule # rubocop:disable Style/ClassAndModuleChildren
         def execute(mod = nil, inputs = nil)
           if SuspendRules.suspended?
-            logger.trace("Skipping execution of #{uid} because rules are suspended.")
+            logger.trace { "Skipping execution of #{uid} because rules are suspended." }
             return
           end
           execute!(mod, inputs)

@@ -41,7 +41,7 @@ module OpenHAB
         #   `nil` is returned if the two values are incomparable.
         #
         def <=>(other)
-          logger.trace("(#{self.class}) #{self} <=> #{other} (#{other.class})")
+          logger.trace { "(#{self.class}) #{self} <=> #{other} (#{other.class})" }
           if other.respond_to?(:to_str)
             to_str <=> other.to_str
           elsif other.respond_to?(:coerce)
@@ -61,7 +61,7 @@ module OpenHAB
         # @return [[StringType, StringType], nil]
         #
         def coerce(other)
-          logger.trace("Coercing #{self} as a request from #{other.class}")
+          logger.trace { "Coercing #{self} as a request from #{other.class}" }
           [other.to_str, self] if other.respond_to?(:to_str)
         end
 

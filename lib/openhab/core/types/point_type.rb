@@ -103,7 +103,7 @@ module OpenHAB
         #
         # @return [QuantityType]
         def distance_from(other)
-          logger.trace("(#{self}).distance_from(#{other} (#{other.class})")
+          logger.trace { "(#{self}).distance_from(#{other} (#{other.class})" }
           raise TypeError, "#{other.class} can't be coerced into #{self.class}" unless other.is_a?(PointType)
 
           QuantityType.new(raw_distance_from(other), SIUnits::METRE)

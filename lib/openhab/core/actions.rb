@@ -37,7 +37,7 @@ module OpenHAB
                  else
                    (java_import action_class.ruby_class).first
                  end
-        logger.trace("Loaded ACTION: #{action_class}")
+        logger.trace { "Loaded ACTION: #{action_class}" }
         Object.const_set(module_name, action)
       end
 

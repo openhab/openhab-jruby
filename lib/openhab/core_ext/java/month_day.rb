@@ -20,7 +20,7 @@ module OpenHAB
           # @return [MonthDay]
           #
           def parse(string)
-            logger.trace("#{self.class}.parse #{string} (#{string.class})")
+            logger.trace { "#{self.class}.parse #{string} (#{string.class})" }
             java_send(:parse,
                       [java.lang.CharSequence, java.time.format.DateTimeFormatter],
                       string.to_s,

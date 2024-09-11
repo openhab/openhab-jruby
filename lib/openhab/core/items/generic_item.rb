@@ -276,7 +276,7 @@ module OpenHAB
               raise FrozenError, "Cannot modify item #{name} from provider #{provider.inspect}." unless force
 
               provider = nil
-              logger.debug("Forcing modifications to non-managed item #{name}")
+              logger.debug { "Forcing modifications to non-managed item #{name}" }
             end
             @modified = false
             @modifying = true

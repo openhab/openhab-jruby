@@ -35,7 +35,7 @@ module OpenHAB
         def handle_event_internal(type, payload, topic, source)
           event_factory = @typed_event_factories[type]
           unless event_factory
-            logger.debug("Could not find an Event Factory for the event type '#{type}'.")
+            logger.debug { "Could not find an Event Factory for the event type '#{type}'." }
             return
           end
 
@@ -78,6 +78,7 @@ module OpenHAB
                 )
               end
             else
+              # Changing this to block syntax will cause specs to fail, for some reason.
               logger.trace("Skip event subscriber (#{event_subscriber.class}) because of its filter.")
             end
           end

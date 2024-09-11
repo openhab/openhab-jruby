@@ -256,7 +256,7 @@ module OpenHAB
 
         # @!visibility private
         def respond_to_missing?(method_name, _include_private = false)
-          logger.trace("Checking if Thing #{uid} supports #{method_name} action")
+          logger.trace { "Checking if Thing #{uid} supports #{method_name} action" }
           return true if actions.respond_to?(method_name)
 
           super

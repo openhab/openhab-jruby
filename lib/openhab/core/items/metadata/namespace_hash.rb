@@ -73,7 +73,7 @@ module OpenHAB
               raise ArgumentError, "Wrong number of arguments (given #{default_value.length + 1}, expected 1..2)"
             end
 
-            logger.trace("Getting metadata for item: #{@item_name}, namespace '#{key}'")
+            logger.trace { "Getting metadata for item: #{@item_name}, namespace '#{key}'" }
             if (m = Provider.registry.get(MetadataKey.new(key, @item_name)))
               Hash.new(m)
             elsif block

@@ -86,7 +86,9 @@ module OpenHAB
         private
 
         def process_event(event, **params)
-          logger.trace("Handling event #{event.inspect} in profile #{@uid} with param #{params.values.first.inspect}.")
+          logger.trace do
+            "Handling event #{event.inspect} in profile #{@uid} with param #{params.values.first.inspect}."
+          end
 
           params[:callback] = @callback
           params[:context] = @context

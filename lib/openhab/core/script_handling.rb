@@ -119,7 +119,7 @@ module OpenHAB
       # Executed when openHAB loads a script file
       #
       def scriptLoaded(filename) # rubocop:disable Naming/MethodName method name dictated by openHAB
-        logger.trace("Script loaded: #{filename}")
+        logger.trace { "Script loaded: #{filename}" }
         ScriptHandlingCallbacks.script_loaded_hooks.each do |hook|
           hook.call
         rescue => e
