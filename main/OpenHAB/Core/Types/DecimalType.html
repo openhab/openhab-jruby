@@ -4016,7 +4016,7 @@ less than, equal to, or greater than self</p>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/decimal_type.rb', line 93</span>
 
 <span class="keyword">def</span> <span class="function">&lt;=&gt;</span>(other)
-  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span>.class<span class="inline-delimiter">}</span></span><span class="content">) </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> &lt;=&gt; </span><span class="inline"><span class="inline-delimiter">#{</span>other<span class="inline-delimiter">}</span></span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>)
+  logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span>.class<span class="inline-delimiter">}</span></span><span class="content">) </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> &lt;=&gt; </span><span class="inline"><span class="inline-delimiter">#{</span>other<span class="inline-delimiter">}</span></span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span> }
   <span class="keyword">if</span> other.is_a?(<span class="constant">QuantityType</span>) || other.is_a?(<span class="constant">HSBType</span>)
     (other &lt;=&gt; <span class="predefined-constant">self</span>)&amp;.-<span class="error">@</span>
   <span class="keyword">elsif</span> other.is_a?(<span class="predefined-constant">self</span>.class)
@@ -4103,7 +4103,7 @@ less than, equal to, or greater than self</p>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/decimal_type.rb', line 117</span>
 
 <span class="keyword">def</span> <span class="function">coerce</span>(other)
-  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Coercing </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> as a request from </span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+  logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">Coercing </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> as a request from </span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
   <span class="keyword">return</span> <span class="keyword">unless</span> other.respond_to?(<span class="symbol">:to_d</span>)
 
   [<span class="predefined-constant">self</span>.class.new(other.to_d), <span class="predefined-constant">self</span>]
@@ -4192,7 +4192,7 @@ less than, equal to, or greater than self</p>
 </div>
 
         <footer>
-  Generated on Mon Sep  9 20:51:17 2024 by
+  Generated on Wed Sep 11 13:06:09 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

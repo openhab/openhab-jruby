@@ -4509,10 +4509,10 @@ ruby2_keywords <span class="keyword">def</span> <span class="function">method_mi
   <span class="keyword">return</span> <span class="keyword">super</span> <span class="keyword">unless</span> args.empty? &amp;&amp; !block_given?
 
   <span class="keyword">if</span> (context = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_context</span>]) &amp;&amp; context.key?(method)
-    logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">DSL#method_missing found context variable: '</span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="content">'</span><span class="delimiter">&quot;</span></span>)
+    logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">DSL#method_missing found context variable: '</span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="content">'</span><span class="delimiter">&quot;</span></span> }
     <span class="keyword">return</span> context[method]
   <span class="keyword">elsif</span> <span class="constant">Core</span>.ui_context&amp;.key?(method)
-    logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">DSL#method_missing found UI context variable: '</span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="content">'</span><span class="delimiter">&quot;</span></span>)
+    logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">DSL#method_missing found UI context variable: '</span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="content">'</span><span class="delimiter">&quot;</span></span> }
     <span class="keyword">return</span> <span class="constant">Core</span>.ui_context[method]
   <span class="keyword">end</span>
   <span class="keyword">super</span>
@@ -8802,7 +8802,7 @@ unit!
 </div>
 
         <footer>
-  Generated on Mon Sep  9 20:51:06 2024 by
+  Generated on Wed Sep 11 13:05:58 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

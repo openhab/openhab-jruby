@@ -4251,7 +4251,7 @@ assumes a perfect sphere, so results are inexact.</p>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/point_type.rb', line 105</span>
 
 <span class="keyword">def</span> <span class="function">distance_from</span>(other)
-  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content">).distance_from(</span><span class="inline"><span class="inline-delimiter">#{</span>other<span class="inline-delimiter">}</span></span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>)
+  logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content">).distance_from(</span><span class="inline"><span class="inline-delimiter">#{</span>other<span class="inline-delimiter">}</span></span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span> }
   raise <span class="constant">TypeError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="content"> can't be coerced into </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span>.class<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> other.is_a?(<span class="constant">PointType</span>)
 
   <span class="constant">QuantityType</span>.new(raw_distance_from(other), <span class="constant">SIUnits</span>::<span class="constant">METRE</span>)
@@ -4328,7 +4328,7 @@ conversion</p>
 </div>
 
         <footer>
-  Generated on Mon Sep  9 20:51:15 2024 by
+  Generated on Wed Sep 11 13:06:07 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

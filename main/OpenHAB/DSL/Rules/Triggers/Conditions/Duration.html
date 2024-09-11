@@ -3782,7 +3782,9 @@
 24
 25
 26
-27</pre>
+27
+28
+29</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/conditions/duration.rb', line 21</span>
@@ -3791,8 +3793,10 @@
   <span class="instance-variable">@conditions</span> = <span class="constant">Generic</span>.new(<span class="key">to</span>: to, <span class="key">from</span>: from)
   <span class="instance-variable">@duration</span> = duration
   <span class="instance-variable">@timers</span> = {}
-  logger.trace <span class="string"><span class="delimiter">&quot;</span><span class="content">Created Duration Condition To(</span><span class="inline"><span class="inline-delimiter">#{</span>to<span class="inline-delimiter">}</span></span><span class="content">) From(</span><span class="inline"><span class="inline-delimiter">#{</span>from<span class="inline-delimiter">}</span></span><span class="content">) </span><span class="delimiter">&quot;</span></span> \
-               <span class="string"><span class="delimiter">&quot;</span><span class="content">Conditions(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@conditions</span><span class="inline-delimiter">}</span></span><span class="content">) Duration(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@duration</span><span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>
+  logger.trace <span class="keyword">do</span>
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">Created Duration Condition To(</span><span class="inline"><span class="inline-delimiter">#{</span>to<span class="inline-delimiter">}</span></span><span class="content">) From(</span><span class="inline"><span class="inline-delimiter">#{</span>from<span class="inline-delimiter">}</span></span><span class="content">) </span><span class="delimiter">&quot;</span></span> \
+      <span class="string"><span class="delimiter">&quot;</span><span class="content">Conditions(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@conditions</span><span class="inline-delimiter">}</span></span><span class="content">) Duration(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@duration</span><span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3879,12 +3883,12 @@
       <pre class="lines">
 
 
-50
-51
-52</pre>
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/conditions/duration.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/conditions/duration.rb', line 52</span>
 
 <span class="keyword">def</span> <span class="function">cleanup</span>
   <span class="instance-variable">@timers</span>.each_value(&amp;<span class="symbol">:cancel</span>)
@@ -3938,8 +3942,6 @@
       <pre class="lines">
 
 
-32
-33
 34
 35
 36
@@ -3951,23 +3953,25 @@
 42
 43
 44
-45</pre>
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/conditions/duration.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/conditions/duration.rb', line 34</span>
 
 <span class="keyword">def</span> <span class="function">process</span>(<span class="key">mod</span>:, <span class="key">inputs</span>:, &amp;block)
   timer = <span class="instance-variable">@timers</span>[inputs[<span class="string"><span class="delimiter">&quot;</span><span class="content">triggeringItem</span><span class="delimiter">&quot;</span></span>]&amp;.name]
   <span class="keyword">if</span> timer&amp;.active?
     process_active_timer(timer, inputs, mod, &amp;block)
   <span class="keyword">elsif</span> <span class="instance-variable">@conditions</span>.process(<span class="key">mod</span>: mod, <span class="key">inputs</span>: inputs)
-    logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Trigger Guards Matched for </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content">, delaying rule execution</span><span class="delimiter">&quot;</span></span>)
+    logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">Trigger Guards Matched for </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content">, delaying rule execution</span><span class="delimiter">&quot;</span></span> }
     <span class="comment"># Add timer and attach timer to delay object, and also state being tracked to so</span>
     <span class="comment"># timer can be cancelled if state changes</span>
     <span class="comment"># Also another timer should not be created if changed to same value again but instead rescheduled</span>
     create_trigger_delay_timer(inputs, mod, &amp;block)
   <span class="keyword">else</span>
-    logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Trigger Guards did not match for </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content">, ignoring trigger.</span><span class="delimiter">&quot;</span></span>)
+    logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">Trigger Guards did not match for </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content">, ignoring trigger.</span><span class="delimiter">&quot;</span></span> }
   <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
@@ -3980,7 +3984,7 @@
 </div>
 
         <footer>
-  Generated on Mon Sep  9 20:51:21 2024 by
+  Generated on Wed Sep 11 13:06:12 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

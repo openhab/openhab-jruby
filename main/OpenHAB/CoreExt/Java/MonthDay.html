@@ -3947,7 +3947,7 @@
       <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/month_day.rb', line 22</span>
 
 <span class="keyword">def</span> <span class="function">parse</span>(string)
-  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span>.class<span class="inline-delimiter">}</span></span><span class="content">.parse </span><span class="inline"><span class="inline-delimiter">#{</span>string<span class="inline-delimiter">}</span></span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>string.class<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span>)
+  logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span>.class<span class="inline-delimiter">}</span></span><span class="content">.parse </span><span class="inline"><span class="inline-delimiter">#{</span>string<span class="inline-delimiter">}</span></span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>string.class<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span> }
   java_send(<span class="symbol">:parse</span>,
             [java.lang.CharSequence, java.time.format.DateTimeFormatter],
             string.to_s,
@@ -4551,7 +4551,7 @@ during conversion. <span class='object_link'><a href="ZonedDateTime.html#now-cla
 </div>
 
         <footer>
-  Generated on Mon Sep  9 20:51:17 2024 by
+  Generated on Wed Sep 11 13:06:09 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
