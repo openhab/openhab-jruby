@@ -3856,7 +3856,7 @@
   logged = <span class="predefined-constant">false</span>
   <span class="comment"># don't use #each, in case timers are scheduling more timers</span>
   <span class="keyword">until</span> <span class="instance-variable">@timers</span>.empty?
-    logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Canceling </span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@timers</span>.length<span class="inline-delimiter">}</span></span><span class="content"> timers</span><span class="delimiter">&quot;</span></span>) <span class="keyword">unless</span> logged
+    logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">Canceling </span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@timers</span>.length<span class="inline-delimiter">}</span></span><span class="content"> timers</span><span class="delimiter">&quot;</span></span> } <span class="keyword">unless</span> logged
     logged = <span class="predefined-constant">true</span>
     timer = <span class="instance-variable">@timers</span>.keys.first
     timer.cancel
@@ -4252,7 +4252,7 @@ timer, or nil. If nil, any existing timer will be cancelled.</p>
 </div>
 
         <footer>
-  Generated on Mon Sep  9 20:51:09 2024 by
+  Generated on Wed Sep 11 13:06:50 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

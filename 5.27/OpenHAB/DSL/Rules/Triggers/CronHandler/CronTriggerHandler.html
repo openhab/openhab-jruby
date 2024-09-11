@@ -3863,7 +3863,7 @@ cancel the cron scheduled task</p>
     <span class="instance-variable">@schedule</span>.cancel(<span class="predefined-constant">true</span>)
     <span class="instance-variable">@schedule</span> = <span class="predefined-constant">nil</span>
   <span class="keyword">end</span>
-  logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">cancelled job for trigger '</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@trigger</span>.id<span class="inline-delimiter">}</span></span><span class="content">'.</span><span class="delimiter">&quot;</span></span>)
+  logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">cancelled job for trigger '</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@trigger</span>.id<span class="inline-delimiter">}</span></span><span class="content">'.</span><span class="delimiter">&quot;</span></span> }
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4022,7 +4022,7 @@ cancel the cron scheduled task</p>
   synchronized <span class="keyword">do</span>
     <span class="keyword">super</span>(callback)
     <span class="instance-variable">@schedule</span> = <span class="instance-variable">@scheduler</span>.schedule(<span class="predefined-constant">self</span>, <span class="instance-variable">@expression</span>)
-    logger.trace(<span class="string"><span class="delimiter">&quot;</span><span class="content">Scheduled cron job '</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@expression</span><span class="inline-delimiter">}</span></span><span class="content">' for trigger '</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@trigger</span>.id<span class="inline-delimiter">}</span></span><span class="content">'.</span><span class="delimiter">&quot;</span></span>)
+    logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">Scheduled cron job '</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@expression</span><span class="inline-delimiter">}</span></span><span class="content">' for trigger '</span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@trigger</span>.id<span class="inline-delimiter">}</span></span><span class="content">'.</span><span class="delimiter">&quot;</span></span> }
   <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
@@ -4035,7 +4035,7 @@ cancel the cron scheduled task</p>
 </div>
 
         <footer>
-  Generated on Mon Sep  9 20:51:17 2024 by
+  Generated on Wed Sep 11 13:06:58 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
