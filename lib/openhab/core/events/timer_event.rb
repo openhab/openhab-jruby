@@ -35,6 +35,29 @@ module OpenHAB
         end
 
         #
+        # @!attribute [r] time_only?
+        # @return [Boolean]
+        #   `true` when this event was triggered by a {Core::Items::DateTimeItem DateTimeItem} with `timeOnly` set.
+        #   `false` when this event wasn't triggered by a DateTimeItem or the `timeOnly` flag is not set.
+        # @see DSL::Rules::BuilderDSL::every #every trigger
+        # @see DSL::Rules::BuilderDSL::at #at trigger
+        # @since openHAB 4.3
+        #
+        def time_only?
+          !!payload&.[](:timeOnly)
+        end
+
+        #
+        # @!attribute [r] offset
+        # @return [Duration, nil] The offset from the configured time for this DateTime trigger event.
+        #   `nil` when this event wasn't triggered by a DateTime trigger.
+        # @since openHAB 4.3
+        #
+        def offset
+          payload&.[](:offset)&.seconds
+        end
+
+        #
         # @!attribute [r] time
         # @return [LocalTime, nil] The configured time for this TimeOfDay trigger event.
         #   `nil` when this event wasn't triggered by a TimeOfDay trigger.
