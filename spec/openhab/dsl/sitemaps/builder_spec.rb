@@ -169,6 +169,22 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
       expect(cond.state).to eq "ON"
     end
 
+    it "supports a condition with a literal state" do
+      s = sitemaps.build do
+        sitemap "default", label: "My Residence" do
+          switch item: "Switch1", visibility: ON
+        end
+      end
+
+      switch = s.children.first
+      cond = switch.visibility.first
+      # @deprecated OH 4.0
+      cond = cond.conditions.first if cond.respond_to?(:conditions)
+      expect(cond.item).to be_nil
+      expect(cond.condition).to be_nil
+      expect(cond.state).to eq "ON"
+    end
+
     it "supports a condition with operator and state" do
       s = sitemaps.build do
         sitemap "default", label: "My Residence" do

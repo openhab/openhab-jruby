@@ -127,7 +127,12 @@ module OpenHAB
         #   One or more value color rules (see {#value_color})
         # @param icon_color [String, Hash<String, String>, Hash<Array<String>, String>, nil]
         #   One or more icon color rules (see {#icon_color})
-        # @param visibility [String, Array<String>, Array<Array<String>>, nil]
+        # @param visibility [String,
+        #                    Core::Types::State,
+        #                    Array<String>,
+        #                    Array<Core::Types::State>,
+        #                    Array<Array<String>>,
+        #                    nil]
         #   One or more visibility rules (see {#visibility})
         # @!visibility private
         def initialize(type,
@@ -286,8 +291,12 @@ module OpenHAB
           supports_and_conditions = SitemapBuilder.factory.respond_to?(:create_condition)
 
           Array.wrap(conditions).each do |c|
+            c = c.to_s if c.is_a?(Core::Types::State)
+            unless c.is_a?(String) || c.is_a?(Symbol)
+              raise ArgumentError, "#{c.inspect} is not a valid condition data type for #{inspect}"
+            end
             unless (match = CONDITION_PATTERN.match(c))
-              raise ArgumentError, "Syntax error in condition #{c.inspect}"
+              raise ArgumentError, "Syntax error in condition #{c.inspect} for #{inspect}"
             end
 
             condition = supports_and_conditions ? SitemapBuilder.factory.create_condition : container
