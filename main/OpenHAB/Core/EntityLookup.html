@@ -3597,15 +3597,6 @@ things[<span class="string"><span class="delimiter">'</span><span class="content
   </div>
 
 
-  <p class="tag_title">See Also:</p>
-  <ul class="see">
-    
-      <li><span class='object_link'><a href="../DSL.html#items-class_method" title="OpenHAB::DSL.items (method)">items[]</a></span></li>
-    
-      <li><span class='object_link'><a href="../DSL.html#things-class_method" title="OpenHAB::DSL.things (method)">things[]</a></span></li>
-    
-  </ul>
-
 </div>
 
 
@@ -3626,6 +3617,29 @@ things[<span class="string"><span class="delimiter">'</span><span class="content
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#items-instance_method" title="#items (instance method)">#<strong>items</strong>  &#x21d2; Core::Items::Registry </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Fetches all items from the item registry.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#method_missing-instance_method" title="#method_missing (instance method)">#<strong>method_missing</strong>  &#x21d2; Item, ... </a>
     
 
@@ -3641,6 +3655,29 @@ things[<span class="string"><span class="delimiter">'</span><span class="content
 
   
     <span class="summary_desc"><div class='inline'><p>Automatically looks up openHAB items and things in appropriate registries.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#things-instance_method" title="#things (instance method)">#<strong>things</strong>  &#x21d2; Core::Things::Registry </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Get all things known to openHAB.</p>
 </div></span>
   
 </li>
@@ -3695,17 +3732,17 @@ things[<span class="string"><span class="delimiter">'</span><span class="content
       <pre class="lines">
 
 
-74
-75
-76
-77
-78
-79
-80
-81</pre>
+126
+127
+128
+129
+130
+131
+132
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/entity_lookup.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/entity_lookup.rb', line 126</span>
 
 ruby2_keywords <span class="keyword">def</span> <span class="function">method_missing</span>(method, *args)
   <span class="keyword">return</span> <span class="keyword">super</span> <span class="keyword">unless</span> args.empty? &amp;&amp; !block_given?
@@ -3723,10 +3760,170 @@ ruby2_keywords <span class="keyword">def</span> <span class="function">method_mi
 </div>
 
 
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="items-instance_method">
+  
+    #<strong>items</strong>  &#x21d2; <tt><span class='object_link'><a href="Items/Registry.html" title="OpenHAB::Core::Items::Registry (class)">Core::Items::Registry</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Fetches all items from the item registry</p>
+<p>The examples all assume the following items exist.</p>
+<pre class="code xtend"><code class="xtend">Dimmer DimmerTest &quot;Test Dimmer&quot;
+Switch SwitchTest &quot;Test Switch&quot;
+</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Item Count: </span><span class="inline"><span class="inline-delimiter">#{</span>items.count<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)  <span class="comment"># Item Count: 2</span>
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Items: </span><span class="inline"><span class="inline-delimiter">#{</span>items.map(&amp;<span class="symbol">:label</span>).sort.join(<span class="string"><span class="delimiter">'</span><span class="content">, </span><span class="delimiter">'</span></span>)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)  <span class="comment"># Items: Test Dimmer, Test Switch'</span>
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">DimmerTest exists? </span><span class="inline"><span class="inline-delimiter">#{</span>items.key?(<span class="string"><span class="delimiter">'</span><span class="content">DimmerTest</span><span class="delimiter">'</span></span>)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>) <span class="comment"># DimmerTest exists? true</span>
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">StringTest exists? </span><span class="inline"><span class="inline-delimiter">#{</span>items.key?(<span class="string"><span class="delimiter">'</span><span class="content">StringTest</span><span class="delimiter">'</span></span>)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>) <span class="comment"># StringTest exists? false</span></code></pre>
+    
+      
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Use dynamic item lookup to increase related dimmer brightness when switch is turned on</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  changed <span class="constant">SwitchTest</span>, <span class="key">to</span>: <span class="constant">ON</span>
+  triggered { |item| items[item.name.gsub(<span class="string"><span class="delimiter">'</span><span class="content">Switch</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">Dimmer</span><span class="delimiter">'</span></span>)].brighten(<span class="integer">10</span>) }
+<span class="keyword">end</span></code></pre>
+    
+      
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">search for a suitable item</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  on_load
+  triggered <span class="keyword">do</span>
+    <span class="comment"># Send ON to DimmerTest if it exists, otherwise send it to SwitchTest</span>
+    (items[<span class="string"><span class="delimiter">'</span><span class="content">DimmerTest</span><span class="delimiter">'</span></span>] || items[<span class="string"><span class="delimiter">'</span><span class="content">SwitchTest</span><span class="delimiter">'</span></span>])&amp;.on
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Items/Registry.html" title="OpenHAB::Core::Items::Registry (class)">Core::Items::Registry</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+99
+100
+101</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/entity_lookup.rb', line 99</span>
+
+<span class="keyword">def</span> <span class="function">items</span>
+  <span class="constant">Core</span>::<span class="constant">Items</span>::<span class="constant">Registry</span>.instance
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="things-instance_method">
+  
+    #<strong>things</strong>  &#x21d2; <tt><span class='object_link'><a href="Things/Registry.html" title="OpenHAB::Core::Things::Registry (class)">Core::Things::Registry</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Get all things known to openHAB</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>things.each { |thing| logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Thing: </span><span class="inline"><span class="inline-delimiter">#{</span>thing.uid<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)}
+logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Thing: </span><span class="inline"><span class="inline-delimiter">#{</span>things[<span class="string"><span class="delimiter">'</span><span class="content">astro:sun:home</span><span class="delimiter">'</span></span>].uid<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+homie_things = things.select { |t| t.thing_type_uid == <span class="string"><span class="delimiter">&quot;</span><span class="content">mqtt:homie300</span><span class="delimiter">&quot;</span></span> }
+zwave_things = things.select { |t| t.binding_id == <span class="string"><span class="delimiter">&quot;</span><span class="content">zwave</span><span class="delimiter">&quot;</span></span> }
+homeseer_dimmers = zwave_things.select { |t| t.thing_type_uid.id == <span class="string"><span class="delimiter">&quot;</span><span class="content">homeseer_hswd200_00_000</span><span class="delimiter">&quot;</span></span> }
+things[<span class="string"><span class="delimiter">'</span><span class="content">zwave:device:512:node90</span><span class="delimiter">'</span></span>].uid.bridge_ids <span class="comment"># =&gt; [&quot;512&quot;]</span>
+things[<span class="string"><span class="delimiter">'</span><span class="content">mqtt:topic:4</span><span class="delimiter">'</span></span>].uid.bridge_ids <span class="comment"># =&gt; []</span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Things/Registry.html" title="OpenHAB::Core::Things::Registry (class)">Core::Things::Registry</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>all Thing objects known to openHAB</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+117
+118
+119</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/entity_lookup.rb', line 117</span>
+
+<span class="keyword">def</span> <span class="function">things</span>
+  <span class="constant">Core</span>::<span class="constant">Things</span>::<span class="constant">Registry</span>.instance
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
 </div>
 
         <footer>
-  Generated on Sat Sep 14 23:34:47 2024 by
+  Generated on Sun Sep 15 02:47:49 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
