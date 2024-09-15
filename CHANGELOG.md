@@ -1,5 +1,14 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.28.0](https://github.com/openhab/openhab-jruby/tree/v5.28.0) (2024-09-15)
+
+### Features
+
+- Allow literal states for sitemap visibility rules by [@ccutrer](https://github.com/ccutrer) in [#335](https://github.com/openhab/openhab-jruby/pull/335)
+- Move #items and #things to EntityLookup by [@ccutrer](https://github.com/ccutrer) in [#336](https://github.com/openhab/openhab-jruby/pull/336)
+
+**Full Changelog**: [v5.27.2...v5.28.0](https://github.com/openhab/openhab-jruby/compare/v5.27.2...v5.28.0)
+
 ## [v5.27.2](https://github.com/openhab/openhab-jruby/tree/v5.27.2) (2024-09-11)
 
 **Full Changelog**: [v5.27.1...v5.27.2](https://github.com/openhab/openhab-jruby/compare/v5.27.1...v5.27.2)
