@@ -51,6 +51,8 @@ module OpenHAB
 
     @debouncers = java.util.concurrent.ConcurrentHashMap.new
 
+    module_function :items, :things
+
     module_function
 
     # @!group Rule Creation
@@ -229,6 +231,13 @@ module OpenHAB
 
     # @!group Object Access
 
+    # @!parse
+    #   # (see Core::EntityLookup#items)
+    #   def items; end
+    #
+    #   # (see Core::EntityLookup#things)
+    #   def things; end
+
     #
     # (see Core::ValueCache)
     #
@@ -249,64 +258,9 @@ module OpenHAB
       Core::Rules::Registry.instance
     end
 
-    #
-    # Fetches all items from the item registry
-    #
-    # @return [Core::Items::Registry]
-    #
-    # The examples all assume the following items exist.
-    #
-    # ```xtend
-    # Dimmer DimmerTest "Test Dimmer"
-    # Switch SwitchTest "Test Switch"
-    # ```
-    #
-    # @example
-    #   logger.info("Item Count: #{items.count}")  # Item Count: 2
-    #   logger.info("Items: #{items.map(&:label).sort.join(', ')}")  # Items: Test Dimmer, Test Switch'
-    #   logger.info("DimmerTest exists? #{items.key?('DimmerTest')}") # DimmerTest exists? true
-    #   logger.info("StringTest exists? #{items.key?('StringTest')}") # StringTest exists? false
-    #
-    # @example
-    #   rule 'Use dynamic item lookup to increase related dimmer brightness when switch is turned on' do
-    #     changed SwitchTest, to: ON
-    #     triggered { |item| items[item.name.gsub('Switch','Dimmer')].brighten(10) }
-    #   end
-    #
-    # @example
-    #   rule 'search for a suitable item' do
-    #     on_load
-    #     triggered do
-    #       # Send ON to DimmerTest if it exists, otherwise send it to SwitchTest
-    #       (items['DimmerTest'] || items['SwitchTest'])&.on
-    #     end
-    #   end
-    #
-    def items
-      Core::Items::Registry.instance
-    end
-
     # @return [Core::Sitemaps::Provider]
     def sitemaps
       Core::Sitemaps::Provider.instance
-    end
-
-    #
-    # Get all things known to openHAB
-    #
-    # @return [Core::Things::Registry] all Thing objects known to openHAB
-    #
-    # @example
-    #   things.each { |thing| logger.info("Thing: #{thing.uid}")}
-    #   logger.info("Thing: #{things['astro:sun:home'].uid}")
-    #   homie_things = things.select { |t| t.thing_type_uid == "mqtt:homie300" }
-    #   zwave_things = things.select { |t| t.binding_id == "zwave" }
-    #   homeseer_dimmers = zwave_things.select { |t| t.thing_type_uid.id == "homeseer_hswd200_00_000" }
-    #   things['zwave:device:512:node90'].uid.bridge_ids # => ["512"]
-    #   things['mqtt:topic:4'].uid.bridge_ids # => []
-    #
-    def things
-      Core::Things::Registry.instance
     end
 
     #

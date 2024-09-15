@@ -13,9 +13,6 @@ module OpenHAB
     #   it must be replaced with an underscore `_`. So to access `astro:sun:home`, use `astro_sun_home`
     #   as an alternative to `things["astro:sun:home"]`
     #
-    # @see OpenHAB::DSL.items items[]
-    # @see OpenHAB::DSL.things things[]
-    #
     # @example Accessing Items and Groups
     #   gAll_Lights       # Access the gAll_Lights group. It is the same as items["gAll_Lights"]
     #   Kitchen_Light.on  # The openHAB object for the Kitchen_Light item and send an ON command
@@ -64,6 +61,61 @@ module OpenHAB
           klass.create_dummy_items = ancestor.create_dummy_items?
           break
         end
+      end
+
+      #
+      # Fetches all items from the item registry
+      #
+      # @return [Core::Items::Registry]
+      #
+      # The examples all assume the following items exist.
+      #
+      # ```xtend
+      # Dimmer DimmerTest "Test Dimmer"
+      # Switch SwitchTest "Test Switch"
+      # ```
+      #
+      # @example
+      #   logger.info("Item Count: #{items.count}")  # Item Count: 2
+      #   logger.info("Items: #{items.map(&:label).sort.join(', ')}")  # Items: Test Dimmer, Test Switch'
+      #   logger.info("DimmerTest exists? #{items.key?('DimmerTest')}") # DimmerTest exists? true
+      #   logger.info("StringTest exists? #{items.key?('StringTest')}") # StringTest exists? false
+      #
+      # @example
+      #   rule 'Use dynamic item lookup to increase related dimmer brightness when switch is turned on' do
+      #     changed SwitchTest, to: ON
+      #     triggered { |item| items[item.name.gsub('Switch','Dimmer')].brighten(10) }
+      #   end
+      #
+      # @example
+      #   rule 'search for a suitable item' do
+      #     on_load
+      #     triggered do
+      #       # Send ON to DimmerTest if it exists, otherwise send it to SwitchTest
+      #       (items['DimmerTest'] || items['SwitchTest'])&.on
+      #     end
+      #   end
+      #
+      def items
+        Core::Items::Registry.instance
+      end
+
+      #
+      # Get all things known to openHAB
+      #
+      # @return [Core::Things::Registry] all Thing objects known to openHAB
+      #
+      # @example
+      #   things.each { |thing| logger.info("Thing: #{thing.uid}")}
+      #   logger.info("Thing: #{things['astro:sun:home'].uid}")
+      #   homie_things = things.select { |t| t.thing_type_uid == "mqtt:homie300" }
+      #   zwave_things = things.select { |t| t.binding_id == "zwave" }
+      #   homeseer_dimmers = zwave_things.select { |t| t.thing_type_uid.id == "homeseer_hswd200_00_000" }
+      #   things['zwave:device:512:node90'].uid.bridge_ids # => ["512"]
+      #   things['mqtt:topic:4'].uid.bridge_ids # => []
+      #
+      def things
+        Core::Things::Registry.instance
       end
 
       #

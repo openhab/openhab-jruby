@@ -17,6 +17,18 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
   end
 
+  it "can reference the items collection" do
+    items.build do
+      switch_item Switch1
+    end
+
+    sitemaps.build do
+      sitemap "default", label: "My Residence" do
+        text item: items["Switch1"]
+      end
+    end
+  end
+
   context "with proxy items" do
     it "automatically uses proxy items if the item doesn't exist" do
       sitemaps.build do
