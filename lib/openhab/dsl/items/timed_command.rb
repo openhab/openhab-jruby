@@ -85,7 +85,11 @@ module OpenHAB
           # @return [void]
           #
           def resume
-            self.resolution = nil
+            if expired?
+              logger.warn "Cannot resume a timed command that has expired. Use reschedule instead."
+            else
+              self.resolution = nil
+            end
           end
         end
 
@@ -216,22 +220,25 @@ module OpenHAB
           DSL.after(duration) do
             timed_command_details.mutex.synchronize do
               logger.trace "Timed command expired - #{timed_command_details}"
+              DSL.rules[timed_command_details.rule_uid].disable
               timed_command_details.resolution = :expired
               case timed_command_details.on_expire
               when Proc
                 logger.trace "Invoking block #{timed_command_details.on_expire} after timed command for #{name} expired"
                 timed_command_details.on_expire.call(timed_command_details)
-                if timed_command_details.resolution.nil?
-                  logger.trace { "Block rescheduled the timer to #{timed_command_details.timer.execution_time}" }
-                end
               when Core::Types::UnDefType
                 update(timed_command_details.on_expire)
               else
                 command(timed_command_details.on_expire)
               end
+              # The on_expire block can call timed_command_details.reschedule, which sets resolution to nil
+              # to prevent removal of the timed command
               if timed_command_details.resolution
                 DSL.rules.remove(timed_command_details.rule_uid)
                 TimedCommand.timed_commands.delete(timed_command_details.item)
+              else
+                DSL.rules[timed_command_details.rule_uid].enable
+                logger.trace { "Block rescheduled the timer to #{timed_command_details.timer.execution_time}" }
               end
             end
           end

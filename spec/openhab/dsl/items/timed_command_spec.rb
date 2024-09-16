@@ -146,6 +146,29 @@ RSpec.describe OpenHAB::DSL::Items::TimedCommand do
       expect(item.state).to eq 7
     end
 
+    it "cannot be resumed when expired" do
+      timed_command_rule_uid = nil
+      resume_called = false
+
+      item.command(5, for: 2.seconds) do |timed_command|
+        timed_command_rule_uid = timed_command.rule_uid
+        if timed_command.expired?
+          timed_command.resume
+          resume_called = true
+        end
+      end
+
+      expect(resume_called).to be false
+      expect(OpenHAB::DSL::Items::TimedCommand.timed_commands[item.__getobj__]).not_to be_nil
+
+      time_travel_and_execute_timers(3.seconds)
+
+      expect(resume_called).to be true
+      expect(timed_command_rule_uid).not_to be_nil
+      expect(rules[timed_command_rule_uid]).to be_nil
+      expect(OpenHAB::DSL::Items::TimedCommand.timed_commands[item.__getobj__]).to be_nil
+    end
+
     it "can be rescheduled" do
       rescheduled = false
       finalized = false
