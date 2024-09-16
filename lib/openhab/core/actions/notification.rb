@@ -91,7 +91,7 @@ module OpenHAB
             tag ||= severity
             args.push(msg.to_s, icon&.to_s, tag&.to_s)
 
-            # @!deprecated OH 4.1
+            # @deprecated OH 4.1
             if Core.version >= Core::V4_2
               buttons ||= []
               buttons = buttons.map { |title, action| "#{title}=#{action}" } if buttons.is_a?(Hash)

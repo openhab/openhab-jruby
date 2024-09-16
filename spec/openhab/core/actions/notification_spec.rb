@@ -50,7 +50,7 @@ RSpec.describe OpenHAB::Core::Actions::Notification do
       end
     end
 
-    # @!deprecated OH 4.1 remove condition/describe guard
+    # @deprecated OH 4.1 remove condition/describe guard
     describe "with enhanced parameters", if: OpenHAB::Core.version >= OpenHAB::Core::V4_2 do
       it "works" do
         expect(OpenHAB::Core::Actions::NotificationAction).to receive(:send_broadcast_notification)

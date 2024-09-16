@@ -1215,7 +1215,7 @@ module OpenHAB
         REQUIRED_BUTTON_ARGS = %i[row column click].freeze
         private_constant :REQUIRED_BUTTON_ARGS
 
-        # @!deprecated OH 4.1 in OH 4.1, Buttongrid is not a LinkableWidget.
+        # @deprecated OH 4.1 in OH 4.1, Buttongrid is not a LinkableWidget.
         # Pretend that the buttons property is its children so we can add to it in LinkableWidgetBuilder#build
         if (Core::V4_1...Core::V4_2).cover?(Core.version)
           java_import org.openhab.core.model.sitemap.sitemap.Buttongrid
