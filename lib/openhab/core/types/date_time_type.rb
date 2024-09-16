@@ -51,6 +51,17 @@ module OpenHAB
           zoned_date_time
         end
 
+        # @!visibility private
+        def to_instant(_context = nil)
+          # @deprecated OH 3.4 getInstant() was added in OH 4.0
+          return get_instant if respond_to?(:get_instant)
+
+          zoned_date_time.to_instant
+        end
+
+        # @!method to_instant
+        # @return [Instant]
+
         # act like a Ruby Time
         def_delegator :zoned_date_time, :month_value, :month
         def_delegator :zoned_date_time, :day_of_month, :mday

@@ -62,6 +62,18 @@ RSpec.describe java.time.LocalTime do
     end
   end
 
+  describe "#to_instant" do
+    it "takes on the date of the contextual time" do
+      context = ZonedDateTime.parse("1990-05-04T01:01:01Z")
+      expect(time.to_instant(context)).to eql Instant.parse("1990-05-04T03:22:01Z")
+    end
+
+    it "takes on the zone of the contextual time" do
+      context = ZonedDateTime.parse("1990-05-04T01:01:01+01:00")
+      expect(time.to_instant(context)).to eql Instant.parse("1990-05-04T02:22:01Z")
+    end
+  end
+
   describe "#succ" do
     it "works" do
       expect(time.succ).to eql LocalTime.parse("03:22:02")

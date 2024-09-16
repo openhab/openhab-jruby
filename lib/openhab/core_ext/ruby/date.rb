@@ -55,6 +55,14 @@ class Date
     java.time.MonthDay.of(month, day)
   end
 
+  # @!method yesterday?
+  #   (see OpenHAB::CoreExt::Java::ZonedDateTime#yesterday?)
+  # @!method today?
+  #   (see OpenHAB::CoreExt::Java::ZonedDateTime#today?)
+  # @!method tomorrow?
+  #   (see OpenHAB::CoreExt::Java::ZonedDateTime#tomorrow?)
+  def_delegators :to_zoned_date_time, :yesterday?, :today?, :tomorrow?
+
   # @param [ZonedDateTime, nil] context
   #   A {ZonedDateTime} used to fill in missing fields during conversion.
   #   {OpenHAB::CoreExt::Java::ZonedDateTime.now ZonedDateTime.now} is assumed
@@ -64,13 +72,15 @@ class Date
     to_local_date.to_zoned_date_time(context)
   end
 
-  # @!method yesterday?
-  #   (see OpenHAB::CoreExt::Java::ZonedDateTime#yesterday?)
-  # @!method today?
-  #   (see OpenHAB::CoreExt::Java::ZonedDateTime#today?)
-  # @!method tomorrow?
-  #   (see OpenHAB::CoreExt::Java::ZonedDateTime#tomorrow?)
-  def_delegators :to_zoned_date_time, :yesterday?, :today?, :tomorrow?
+  # @param [ZonedDateTime, nil] context
+  #   A {ZonedDateTime} used to fill in missing fields during conversion.
+  #   {OpenHAB::CoreExt::Java::ZonedDateTime.now ZonedDateTime.now} is assumed
+  #   if not given.
+  # @return [Instant]
+  def to_instant(context = nil)
+    context ||= Instant.now.to_zoned_date_time
+    to_zoned_date_time(context).to_instant
+  end
 
   # @return [Integer, nil]
   def compare_with_coercion(other)
@@ -94,6 +104,7 @@ class Date
   # @return [Array, nil]
   #
   def coerce(other)
+    logger.trace { "Coercing #{self} as a request from #{other.class}" }
     return nil unless other.respond_to?(:to_date)
     return [other.to_date, self] if other.method(:to_date).arity.zero?
 

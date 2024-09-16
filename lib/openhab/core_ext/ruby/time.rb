@@ -74,14 +74,6 @@ class Time
   #   @return [LocalTime]
   def_delegator :to_zoned_date_time, :to_local_time
 
-  # @!method yesterday?
-  #   (see OpenHAB::CoreExt::Java::ZonedDateTime#yesterday?)
-  # @!method today?
-  #   (see OpenHAB::CoreExt::Java::ZonedDateTime#today?)
-  # @!method tomorrow?
-  #   (see OpenHAB::CoreExt::Java::ZonedDateTime#tomorrow?)
-  def_delegators :to_zoned_date_time, :yesterday?, :today?, :tomorrow?
-
   # @return [Month]
   def to_month
     java.time.Month.of(month)
@@ -92,6 +84,14 @@ class Time
     java.time.MonthDay.of(month, day)
   end
 
+  # @!method yesterday?
+  #   (see OpenHAB::CoreExt::Java::ZonedDateTime#yesterday?)
+  # @!method today?
+  #   (see OpenHAB::CoreExt::Java::ZonedDateTime#today?)
+  # @!method tomorrow?
+  #   (see OpenHAB::CoreExt::Java::ZonedDateTime#tomorrow?)
+  def_delegators :to_zoned_date_time, :yesterday?, :today?, :tomorrow?
+
   # @param [ZonedDateTime, nil] context
   #   A {ZonedDateTime} used to fill in missing fields
   #   during conversion. Not used in this class.
@@ -100,8 +100,8 @@ class Time
     to_java(java.time.ZonedDateTime)
   end
 
-  # @return [java.time.Instant]
-  def to_instant
+  # @return [Instant]
+  def to_instant(_context = nil)
     to_java(java.time.Instant)
   end
 
@@ -113,6 +113,7 @@ class Time
   # @return [Array, nil]
   #
   def coerce(other)
+    logger.trace { "Coercing #{self} as a request from #{other.class}" }
     return unless other.respond_to?(:to_zoned_date_time)
 
     zdt = to_zoned_date_time

@@ -38,6 +38,7 @@ module OpenHAB
         #   less than, equal to, or greater than self
         #
         def <=>(other)
+          logger.trace { "(#{self.class}) #{self} <=> #{other} (#{other.class})" }
           if other.is_a?(self.class)
             compare_to(other)
           elsif other.respond_to?(:coerce)
@@ -50,6 +51,7 @@ module OpenHAB
         # Convert `other` to this class, if possible
         # @return [Array, nil]
         def coerce(other)
+          logger.trace { "Coercing #{self} as a request from #{other.class}" }
           coercion_method = self.class.coercion_method
           return unless other.respond_to?(coercion_method)
           return [other.send(coercion_method), self] if other.method(coercion_method).arity.zero?

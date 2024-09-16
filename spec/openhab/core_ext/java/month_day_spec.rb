@@ -66,6 +66,13 @@ RSpec.describe java.time.MonthDay do
     end
   end
 
+  describe "#to_instant" do
+    it "takes on the year of the contextual date" do
+      context = ZonedDateTime.parse("1990-05-04T03:02:01+03:00")
+      expect(date.to_instant(context)).to eql Instant.parse("1990-11-09T00:00:00Z")
+    end
+  end
+
   describe "#succ" do
     it "works" do
       expect(date.succ).to eql MonthDay.parse("11-10")

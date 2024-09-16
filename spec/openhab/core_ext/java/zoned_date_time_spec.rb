@@ -8,39 +8,46 @@ RSpec.describe java.time.ZonedDateTime do
     end
   end
 
+  describe "#to_f" do
+    it "returns epoch seconds as float" do
+      now = Time.now
+      expect(now.to_zoned_date_time.to_f).to be_within(1 / 1_000_000.0).of(now.to_f)
+    end
+  end
+
   describe "#+" do
     it "works with duration" do
-      now = ZonedDateTime.now
+      now = described_class.now
       expect((now + 5.seconds).to_i).to be(now.to_i + 5)
       expect((now + 2.minutes).to_i).to be(now.to_i + 120)
     end
 
     it "works with integers" do
-      now = ZonedDateTime.now
+      now = described_class.now
       expect((now + 5).to_i).to be(now.to_i + 5)
     end
   end
 
   describe "#-" do
     it "works with duration" do
-      now = ZonedDateTime.now
+      now = described_class.now
       expect((now - 5.seconds).to_i).to be(now.to_i - 5)
       expect((now - 2.minutes).to_i).to be(now.to_i - 120)
     end
 
     it "works with integers" do
-      now = ZonedDateTime.now
+      now = described_class.now
       expect((now - 5).to_i).to be(now.to_i - 5)
     end
 
     it "returns a duration for another ZonedDateTime instance" do
-      now = ZonedDateTime.now
+      now = described_class.now
       future = now + 5.seconds
       expect(future - now).to eql 5.seconds
     end
 
     it "returns a duration for a Time instance" do
-      now = ZonedDateTime.now
+      now = described_class.now
       future = (now + 5.seconds)
       expect(future - now.to_time).to eql 5.seconds
     end
@@ -48,39 +55,39 @@ RSpec.describe java.time.ZonedDateTime do
 
   describe "#to_date" do
     it "works" do
-      expect(ZonedDateTime.parse("2022-11-09T02:09:05+00:00").to_date).to eql Date.new(2022, 11, 9)
+      expect(described_class.parse("2022-11-09T02:09:05+00:00").to_date).to eql Date.new(2022, 11, 9)
     end
   end
 
   describe "#to_local_date" do
     it "works" do
-      expect(ZonedDateTime.parse("2022-11-09T02:09:05+00:00").to_local_date)
+      expect(described_class.parse("2022-11-09T02:09:05+00:00").to_local_date)
         .to eql java.time.LocalDate.parse("2022-11-09")
     end
   end
 
   describe "#to_local_time" do
     it "works" do
-      expect(ZonedDateTime.parse("2022-11-09T02:09:05+00:00").to_local_time)
+      expect(described_class.parse("2022-11-09T02:09:05+00:00").to_local_time)
         .to eql LocalTime.parse("02:09:05")
     end
   end
 
   describe "#to_month" do
     it "works" do
-      expect(ZonedDateTime.parse("2022-11-09T00:00:00+00:00").to_month).to eql java.time.Month::NOVEMBER
+      expect(described_class.parse("2022-11-09T00:00:00+00:00").to_month).to eql java.time.Month::NOVEMBER
     end
   end
 
   describe "#to_month_day" do
     it "works" do
-      expect(ZonedDateTime.parse("2022-11-09T00:00:00+00:00").to_month_day).to eql MonthDay.parse("11-09")
+      expect(described_class.parse("2022-11-09T00:00:00+00:00").to_month_day).to eql MonthDay.parse("11-09")
     end
   end
 
   describe "#to_zoned_date_time" do
     it "returns self" do
-      now = ZonedDateTime.now
+      now = described_class.now
       expect(now.to_zoned_date_time).to be now
     end
   end
@@ -121,7 +128,7 @@ RSpec.describe java.time.ZonedDateTime do
   end
 
   describe "#<=>" do
-    let(:zdt) { ZonedDateTime.parse("2022-11-09T02:09:05+00:00") }
+    let(:zdt) { described_class.parse("2022-11-09T02:09:05+00:00") }
 
     context "with a Time" do
       let(:time) { zdt.to_time }

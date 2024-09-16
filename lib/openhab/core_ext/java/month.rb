@@ -62,6 +62,16 @@ module OpenHAB
         def to_zoned_date_time(context = nil)
           to_local_date(context).to_zoned_date_time(context)
         end
+
+        # @param [ZonedDateTime, nil] context
+        #   A {ZonedDateTime} used to fill in the year during conversion,
+        #   with the date set to the first day of the month.
+        #   {Instant.now} is assumed if not given.
+        # @return [Instant]
+        def to_instant(context = nil)
+          context ||= Instant.now.to_zoned_date_time
+          to_local_date(context).to_instant
+        end
       end
     end
   end

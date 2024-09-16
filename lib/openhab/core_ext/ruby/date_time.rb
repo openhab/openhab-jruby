@@ -45,8 +45,14 @@ class DateTime < Date
     to_java(ZonedDateTime)
   end
 
+  # @return [Instant]
+  def to_instant(_context = nil)
+    to_java(Instant)
+  end
+
   # (see Time#coerce)
   def coerce(other)
+    logger.trace { "Coercing #{self} as a request from #{other.class}" }
     return unless other.respond_to?(:to_zoned_date_time)
 
     zdt = to_zoned_date_time

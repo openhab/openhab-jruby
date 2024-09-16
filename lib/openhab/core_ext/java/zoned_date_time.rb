@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "forwardable"
+
 require_relative "time"
 
 module OpenHAB
@@ -9,6 +11,7 @@ module OpenHAB
 
       # Extensions to {java.time.ZonedDateTime}
       class ZonedDateTime
+        extend Forwardable
         include Time
         include Between
 
@@ -60,20 +63,20 @@ module OpenHAB
         end
 
         #
+        # @!method to_i
         # The number of seconds since the Unix epoch.
         #
         # @return [Integer]
-        def to_i
-          to_instant.epoch_second
-        end
+        #
 
         #
+        # @!method to_f
         # The number of seconds since the Unix epoch.
         #
         # @return [Float]
-        def to_f
-          to_instant.to_epoch_milli / 1000.0
-        end
+        #
+
+        delegate %i[to_i to_f] => :to_instant
 
         # @return [Date]
         def to_date
@@ -226,6 +229,20 @@ module OpenHAB
           end
         end
 
+        # @!visibility private
+        alias_method :raw_to_instant, :to_instant
+
+        # @!visibility private
+        def to_instant(_context = nil)
+          raw_to_instant
+        end
+
+        #
+        # @!method to_instant
+        # Converts this object to an {Instant}
+        # @return [Instant]
+        #
+
         #
         # Converts `other` to {ZonedDateTime}, if possible
         #
@@ -233,6 +250,7 @@ module OpenHAB
         # @return [Array, nil]
         #
         def coerce(other)
+          logger.trace { "Coercing #{self} as a request from #{other.class}" }
           [other.to_zoned_date_time(self), self] if other.respond_to?(:to_zoned_date_time)
         end
       end

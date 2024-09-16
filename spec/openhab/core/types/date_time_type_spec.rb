@@ -82,4 +82,10 @@ RSpec.describe OpenHAB::Core::Types::DateTimeType do
       expect(DateTimeType.parse("3:30-1000")).to eq Time.parse("3:30-1000").to_zoned_date_time
     end
   end
+
+  describe "#to_instant" do
+    it "works" do
+      expect(date3.to_instant).to eq Instant.parse("2021-01-31T08:00:00Z")
+    end
+  end
 end
