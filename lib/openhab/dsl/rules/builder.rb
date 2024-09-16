@@ -1403,7 +1403,7 @@ module OpenHAB
           @ruby_triggers << [:every, value, { at: at }]
 
           if value == :day && at.is_a?(Item)
-            # @!deprecated OH 3.4 - attachments are supported in OH 4.0+
+            # @deprecated OH 3.4 - attachments are supported in OH 4.0+
             if Core.version <= Core::V4_0 && !attach.nil?
               raise ArgumentError, "Attachments are not supported with dynamic datetime triggers in openHAB 3.x"
             end
