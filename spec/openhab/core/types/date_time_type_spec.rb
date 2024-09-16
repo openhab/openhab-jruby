@@ -79,10 +79,7 @@ RSpec.describe OpenHAB::Core::Types::DateTimeType do
     end
 
     it "parses time only strings with a timezone" do
-      zone_id = ZoneId.of("+1000")
-      date_time_type = DateTimeType.parse("3:30+1000").to_zone(zone_id)
-      date_time = ZonedDateTime.now.with(LocalTime.parse("3:30")).with_zone_same_local(zone_id)
-      expect(date_time_type).to eq date_time
+      expect(DateTimeType.parse("3:30-1000")).to eq Time.parse("3:30-1000").to_zoned_date_time
     end
   end
 end
