@@ -74,6 +74,12 @@ RSpec.describe java.time.LocalDate do
     end
   end
 
+  describe "#to_instant" do
+    it "works" do
+      expect(date.to_instant).to eql Instant.parse("2022-11-09T00:00:00Z")
+    end
+  end
+
   describe "#succ" do
     it "works" do
       expect(date.succ).to eql java.time.LocalDate.parse("2022-11-10")

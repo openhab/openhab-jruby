@@ -111,6 +111,15 @@ module OpenHAB
           context ||= ZonedDateTime.now
           context.with(self)
         end
+
+        # @param [ZonedDateTime, nil] context
+        #   A {ZonedDateTime} used to fill in missing fields
+        #   during conversion. {ZonedDateTime.now} is assumed if not given.
+        # @return [Instant]
+        def to_instant(context = nil)
+          context ||= Instant.now.to_zoned_date_time
+          to_zoned_date_time(context).to_instant
+        end
       end
     end
   end

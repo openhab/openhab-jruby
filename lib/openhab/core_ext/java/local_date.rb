@@ -96,6 +96,15 @@ module OpenHAB
           zone = context&.zone || java.time.ZoneId.system_default
           at_start_of_day(zone)
         end
+
+        # @param [ZonedDateTime, nil] context
+        #   A {ZonedDateTime} used to fill in missing fields
+        #   during conversion. {ZonedDateTime.now} is assumed if not given.
+        # @return [Instant]
+        def to_instant(context = nil)
+          zone = context&.zone || java.time.ZoneOffset::UTC
+          at_start_of_day(zone).to_instant
+        end
       end
     end
   end

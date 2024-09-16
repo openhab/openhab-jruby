@@ -112,6 +112,15 @@ module OpenHAB
         def to_zoned_date_time(context = nil)
           to_local_date(context).to_zoned_date_time(context)
         end
+
+        # @param [ZonedDateTime, nil] context
+        #   A {ZonedDateTime} used to fill in missing year during conversion,
+        #   {ZonedDateTime.now} is assumed if not given.
+        # @return [Instant]
+        def to_instant(context = nil)
+          context ||= Instant.now.to_zoned_date_time
+          to_local_date(context).to_instant
+        end
       end
     end
   end
