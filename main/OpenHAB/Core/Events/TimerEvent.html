@@ -3662,6 +3662,34 @@ This event can be triggered by a `DateTimeTrigger`, `cron`, or `TimeOfDay` trigg
       <li class="public ">
   <span class="summary_signature">
     
+      <a href="#offset-instance_method" title="#offset (instance method)">#<strong>offset</strong>  &#x21d2; Duration<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The offset from the configured time for this DateTime trigger event.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#time-instance_method" title="#time (instance method)">#<strong>time</strong>  &#x21d2; LocalTime<sup>?</sup> </a>
     
 
@@ -3682,6 +3710,34 @@ This event can be triggered by a `DateTimeTrigger`, `cron`, or `TimeOfDay` trigg
 
   
     <span class="summary_desc"><div class='inline'><p>The configured time for this TimeOfDay trigger event.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#time_only%3F-instance_method" title="#time_only? (instance method)">#<strong>time_only?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p><code>true</code> when this event was triggered by a <span class='object_link'><a href="../Items/DateTimeItem.html" title="OpenHAB::Core::Items::DateTimeItem (class)">DateTimeItem</a></span> with <code>timeOnly</code> set.</p>
 </div></span>
   
 </li>
@@ -3868,6 +3924,82 @@ This event can be triggered by a `DateTimeTrigger`, `cron`, or `TimeOfDay` trigg
       
       <span id=""></span>
       <div class="method_details ">
+  <h3 class="signature " id="offset-instance_method">
+  
+    #<strong>offset</strong>  &#x21d2; <tt><span class='object_link'><a href="../../CoreExt/Java/Duration.html" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span></tt><sup>?</sup>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The offset from the configured time for this DateTime trigger event.
+<code>nil</code> when this event wasn't triggered by a DateTime trigger.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../CoreExt/Java/Duration.html" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The offset from the configured time for this DateTime trigger event.
+<code>nil</code> when this event wasn't triggered by a DateTime trigger.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.3</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+56
+57
+58</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/timer_event.rb', line 56</span>
+
+<span class="keyword">def</span> <span class="function">offset</span>
+  payload&amp;.[](<span class="symbol">:offset</span>)&amp;.seconds
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
   <h3 class="signature " id="time-instance_method">
   
     #<strong>time</strong>  &#x21d2; <tt><span class='object_link'><a href="../../CoreExt/Java/LocalTime.html" title="OpenHAB::CoreExt::Java::LocalTime (class)">LocalTime</a></span></tt><sup>?</sup>  <span class="extras">(readonly)</span>
@@ -3926,15 +4058,100 @@ This event can be triggered by a `DateTimeTrigger`, `cron`, or `TimeOfDay` trigg
       <pre class="lines">
 
 
-42
-43
-44</pre>
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/timer_event.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/timer_event.rb', line 65</span>
 
 <span class="keyword">def</span> <span class="function">time</span>
   payload&amp;.[](<span class="symbol">:time</span>)&amp;.<span class="keyword">then</span> { |time| <span class="constant">LocalTime</span>.parse(time) }
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="time_only?-instance_method">
+  
+    #<strong>time_only?</strong>  &#x21d2; <tt>Boolean</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code> when this event was triggered by a <span class='object_link'><a href="../Items/DateTimeItem.html" title="OpenHAB::Core::Items::DateTimeItem (class)">DateTimeItem</a></span> with <code>timeOnly</code> set.
+<code>false</code> when this event wasn't triggered by a DateTimeItem or the <code>timeOnly</code> flag is not set.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><code>true</code> when this event was triggered by a <span class='object_link'><a href="../Items/DateTimeItem.html" title="OpenHAB::Core::Items::DateTimeItem (class)">DateTimeItem</a></span> with <code>timeOnly</code> set.
+<code>false</code> when this event wasn't triggered by a DateTimeItem or the <code>timeOnly</code> flag is not set.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li>#every trigger</li>
+    
+      <li>#at trigger</li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.3</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+46
+47
+48</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/timer_event.rb', line 46</span>
+
+<span class="keyword">def</span> <span class="function">time_only?</span>
+  !!payload&amp;.[](<span class="symbol">:timeOnly</span>)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3947,7 +4164,7 @@ This event can be triggered by a `DateTimeTrigger`, `cron`, or `TimeOfDay` trigg
 </div>
 
         <footer>
-  Generated on Sun Sep 15 02:49:28 2024 by
+  Generated on Mon Sep 16 13:26:09 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
