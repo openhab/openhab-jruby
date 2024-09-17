@@ -4,14 +4,14 @@ module OpenHAB
   module Core
     module Actions
       #
-      # Provides methods for {https://next.openhab.org/addons/integrations/openhabcloud/#cloud-notification-actions
+      # Provides methods for {https://www.openhab.org/addons/integrations/openhabcloud/#cloud-notification-actions
       # openHAB Cloud Notification Actions}.
       #
       class Notification
         class << self
           #
           # Send a notification using
-          # {https://next.openhab.org/addons/integrations/openhabcloud/#cloud-notification-actions
+          # {https://www.openhab.org/addons/integrations/openhabcloud/#cloud-notification-actions
           # openHAB Cloud Notification Action}.
           #
           # @param msg [String] The message to send.
@@ -27,7 +27,7 @@ module OpenHAB
           #   Subsequent notifications using the same reference ID will
           #   update/overwrite the existing notification with the same ID.
           # @param on_click [String, nil] The action to be performed when the user clicks on the notification.
-          #   Specified using the {https://next.openhab.org/addons/integrations/openhabcloud/#action-syntax
+          #   Specified using the {https://www.openhab.org/addons/integrations/openhabcloud/#action-syntax
           #   action syntax}.
           # @param attachment [String, Item, nil] The URL of the media attachment to be displayed with the notification.
           #   This can either be a fully qualified URL, prefixed with
@@ -36,7 +36,7 @@ module OpenHAB
           #   or an image item.
           # @param buttons [Array<String>, Hash<String, String>, nil] Buttons to include in the notification.
           #   - In array form, each element is specified as `Title=$action`, where `$action` follows the
-          #   {https://next.openhab.org/addons/integrations/openhabcloud/#action-syntax action syntax}.
+          #   {https://www.openhab.org/addons/integrations/openhabcloud/#action-syntax action syntax}.
           #   - In hash form, the keys are the button titles and the values are the actions.
           #
           #   The maximum number of buttons is 3.
