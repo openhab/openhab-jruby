@@ -328,22 +328,22 @@ RSpec.describe OpenHAB::DSL::Things::Builder do
   end
 
   describe "#bridge" do
-    before { install_addon "binding-mqtt", ready_markers: "openhab.xmlThingTypes" }
+    before { install_addon "binding-dscalarm", ready_markers: "openhab.xmlThingTypes" }
 
     it "can create a bridge" do
       things.build do
-        bridge "mqtt:broker:mybroker", config: { host: "127.0.0.1" }
+        bridge "dscalarm:tcpserver:panel", config: { ipAddress: "127.0.0.1" }
       end
     end
 
     it "can create nested things" do
       things.build do
-        bridge "mqtt:broker:mybroker", config: { host: "127.0.0.1" } do
-          thing "mqtt:topic:mytopic", config: { stateTopic: "mything/mytopic" }
+        bridge "dscalarm:tcpserver:panel", config: { ipAddress: "127.0.0.1" } do
+          thing "dscalarm:zone:front_door", config: { zoneNumber: 1 }
         end
       end
 
-      expect(things["mqtt:topic:mytopic"].bridge_uid).to eq "mqtt:broker:mybroker"
+      expect(things["dscalarm:zone:front_door"].bridge_uid).to eq "dscalarm:tcpserver:panel"
     end
   end
 end

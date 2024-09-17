@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
-require "yard"
+begin
+  require "yard"
+rescue LoadError
+  return
+end
 
 namespace :docs do
   yard_dir = File.join("docs", "yard")
