@@ -103,6 +103,36 @@ module OpenHAB
           self
         end
 
+        #
+        # Returns true if the date, converted to the system time zone, is yesterday.
+        #
+        # @return [true, false]
+        #
+        def yesterday?
+          with_zone_same_instant(ZoneId.system_default).to_local_date == LocalDate.now - 1
+        end
+
+        #
+        # Returns true if the date, converted to the system time zone, is today.
+        #
+        # This is the equivalent of checking if the current datetime is between midnight and end of the day
+        # of the system time zone.
+        #
+        # @return [true, false]
+        #
+        def today?
+          with_zone_same_instant(ZoneId.system_default).to_local_date == LocalDate.now
+        end
+
+        #
+        # Returns true if the date, converted to the system time zone, is tomorrow.
+        #
+        # @return [true, false]
+        #
+        def tomorrow?
+          with_zone_same_instant(ZoneId.system_default).to_local_date == LocalDate.now + 1
+        end
+
         # @group Ephemeris Methods
         #   (see CoreExt::Ephemeris)
 

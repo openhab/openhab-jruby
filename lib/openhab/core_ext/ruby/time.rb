@@ -74,6 +74,14 @@ class Time
   #   @return [LocalTime]
   def_delegator :to_zoned_date_time, :to_local_time
 
+  # @!method yesterday?
+  #   (see OpenHAB::CoreExt::Java::ZonedDateTime#yesterday?)
+  # @!method today?
+  #   (see OpenHAB::CoreExt::Java::ZonedDateTime#today?)
+  # @!method tomorrow?
+  #   (see OpenHAB::CoreExt::Java::ZonedDateTime#tomorrow?)
+  def_delegators :to_zoned_date_time, :yesterday?, :today?, :tomorrow?
+
   # @return [Month]
   def to_month
     java.time.Month.of(month)

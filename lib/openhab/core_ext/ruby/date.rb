@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
+require "forwardable"
 require "date"
 
 # Extensions to Date
 class Date
+  extend Forwardable
   include OpenHAB::CoreExt::Between
   include OpenHAB::CoreExt::Ephemeris
 
@@ -61,6 +63,14 @@ class Date
   def to_zoned_date_time(context = nil)
     to_local_date.to_zoned_date_time(context)
   end
+
+  # @!method yesterday?
+  #   (see OpenHAB::CoreExt::Java::ZonedDateTime#yesterday?)
+  # @!method today?
+  #   (see OpenHAB::CoreExt::Java::ZonedDateTime#today?)
+  # @!method tomorrow?
+  #   (see OpenHAB::CoreExt::Java::ZonedDateTime#tomorrow?)
+  def_delegators :to_zoned_date_time, :yesterday?, :today?, :tomorrow?
 
   # @return [Integer, nil]
   def compare_with_coercion(other)
