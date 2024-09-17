@@ -85,6 +85,41 @@ RSpec.describe java.time.ZonedDateTime do
     end
   end
 
+  describe "#yesterday?" do
+    it "returns true if the date is yesterday" do
+      now = ZonedDateTime.now
+      expect(now.yesterday?).to be false
+      expect((now + 1.day).yesterday?).to be false
+      expect((now - 1.day).yesterday?).to be true
+      expect((now - 1.day).with(LocalTime::MIDNIGHT).yesterday?).to be true
+      expect((now - 1.day).with(LocalTime::NOON).yesterday?).to be true
+      expect((now - 1.day).with(LocalTime.parse("23:59:59")).yesterday?).to be true
+    end
+  end
+
+  describe "#today?" do
+    it "returns true if the date is today" do
+      -12.upto(12) do |offset|
+        now = ZonedDateTime.now.with_zone_same_instant(java.time.ZoneOffset.of_hours(offset))
+        expect(now.today?).to be true
+        expect((now + 1.day).today?).to be false
+        expect((now - 1.day).today?).to be false
+      end
+    end
+  end
+
+  describe "#tomorrow?" do
+    it "returns true if the date is tomorrow" do
+      now = ZonedDateTime.now
+      expect(now.tomorrow?).to be false
+      expect((now + 1.day).tomorrow?).to be true
+      expect((now - 1.day).tomorrow?).to be false
+      expect((now + 1.day).with(LocalTime::MIDNIGHT).tomorrow?).to be true
+      expect((now + 1.day).with(LocalTime::NOON).tomorrow?).to be true
+      expect((now + 1.day).with(LocalTime.parse("23:59:59")).tomorrow?).to be true
+    end
+  end
+
   describe "#<=>" do
     let(:zdt) { ZonedDateTime.parse("2022-11-09T02:09:05+00:00") }
 
