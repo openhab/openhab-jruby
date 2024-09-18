@@ -78,10 +78,10 @@ RSpec.describe OpenHAB::Core::Things::Thing do
     end
 
     it "returns true for bridges" do
-      install_addon "binding-mqtt", ready_markers: "openhab.xmlThingTypes"
-      things.build { bridge "mqtt:broker:mosquitto", "MQTT Broker" }
+      install_addon "binding-dscalarm", ready_markers: "openhab.xmlThingTypes"
+      things.build { bridge "dscalarm:tcpserver:panel", "Alarm Panel" }
 
-      expect(things["mqtt:broker:mosquitto"]).to be_bridge
+      expect(things["dscalarm:tcpserver:panel"]).to be_bridge
     end
   end
 end
