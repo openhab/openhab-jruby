@@ -1,5 +1,19 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.29.0](https://github.com/openhab/openhab-jruby/tree/v5.29.0) (2024-09-19)
+
+### Features
+
+- Add `#time_only?` and `#offset` to TimerEvent by [@jimtng](https://github.com/jimtng) in [#333](https://github.com/openhab/openhab-jruby/pull/333)
+- Add `#yesterday?`, `#today?`, and `#tomorrow?` to ZonedDateTime, Date, and Time classes. by [@jimtng](https://github.com/jimtng) in [#341](https://github.com/openhab/openhab-jruby/pull/341)
+- Make working with Instant easier by [@jimtng](https://github.com/jimtng) in [#338](https://github.com/openhab/openhab-jruby/pull/338)
+
+### Bug Fixes
+
+- Fix timed command expire by [@jimtng](https://github.com/jimtng) in [#337](https://github.com/openhab/openhab-jruby/pull/337)
+
+**Full Changelog**: [v5.28.0...v5.29.0](https://github.com/openhab/openhab-jruby/compare/v5.28.0...v5.29.0)
+
 ## [v5.28.0](https://github.com/openhab/openhab-jruby/tree/v5.28.0) (2024-09-15)
 
 ### Features
