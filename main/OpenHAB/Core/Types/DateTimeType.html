@@ -3821,6 +3821,28 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#to_instant-instance_method" title="#to_instant (instance method)">#<strong>to_instant</strong>  &#x21d2; Instant </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#to_zoned_date_time-instance_method" title="#to_zoned_date_time (instance method)">#<strong>to_zoned_date_time</strong>(context = nil)  &#x21d2; ZonedTimeTime </a>
     
 
@@ -4022,17 +4044,6 @@
       <pre class="lines">
 
 
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
 83
 84
 85
@@ -4042,10 +4053,21 @@
 89
 90
 91
-92</pre>
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 83</span>
 
 <span class="keyword">def</span> <span class="function">initialize</span>(value = <span class="predefined-constant">nil</span>)
   <span class="keyword">if</span> value.nil?
@@ -4107,15 +4129,15 @@ object representing the same instant</p>
       <pre class="lines">
 
 
-201
-202
-203
-204
-205
-206</pre>
+212
+213
+214
+215
+216
+217</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 201</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 212</span>
 
 <span class="keyword">def</span> <span class="function">method_missing</span>(method, *args, &amp;block)
   <span class="keyword">return</span> zoned_date_time.send(method, *args, &amp;block) <span class="keyword">if</span> zoned_date_time.respond_to?(method)
@@ -4286,20 +4308,20 @@ The string can be in any format recognized by:</p>
       <pre class="lines">
 
 
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223</pre>
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 213</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 224</span>
 
 <span class="keyword">def</span> <span class="function">+</span>(other)
   <span class="keyword">if</span> other.is_a?(<span class="constant">Duration</span>)
@@ -4374,22 +4396,22 @@ representing how long between the two instants in time.</p>
       <pre class="lines">
 
 
-236
-237
-238
-239
-240
-241
-242
-243
-244
-245
-246
 247
-248</pre>
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 236</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 247</span>
 
 <span class="keyword">def</span> <span class="function">-</span>(other)
   <span class="keyword">if</span> other.is_a?(<span class="constant">Duration</span>)
@@ -4472,21 +4494,21 @@ less than, equal to, or greater than self</p>
       <pre class="lines">
 
 
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126</pre>
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 115</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 126</span>
 
 <span class="keyword">def</span> <span class="function">&lt;=&gt;</span>(other)
   logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span>.class<span class="inline-delimiter">}</span></span><span class="content">) </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> &lt;=&gt; </span><span class="inline"><span class="inline-delimiter">#{</span>other<span class="inline-delimiter">}</span></span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span> }
@@ -4563,15 +4585,15 @@ less than, equal to, or greater than self</p>
       <pre class="lines">
 
 
-137
-138
-139
-140
-141
-142</pre>
+148
+149
+150
+151
+152
+153</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 137</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 148</span>
 
 <span class="keyword">def</span> <span class="function">coerce</span>(other)
   logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">Coercing </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> as a request from </span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
@@ -4627,14 +4649,14 @@ conversion</p>
       <pre class="lines">
 
 
-99
-100
-101
-102
-103</pre>
+110
+111
+112
+113
+114</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 110</span>
 
 <span class="keyword">def</span> <span class="function">eql?</span>(other)
   <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> other.instance_of?(<span class="predefined-constant">self</span>.class)
@@ -4688,15 +4710,73 @@ conversion</p>
       <pre class="lines">
 
 
-149
-150
-151</pre>
+160
+161
+162</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 149</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 160</span>
 
 <span class="keyword">def</span> <span class="function">to_f</span>
   zoned_date_time.to_epoch_second + (zoned_date_time.nano / <span class="integer">1_000_000_000</span>)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_instant-instance_method">
+  
+    #<strong>to_instant</strong>  &#x21d2; <tt><span class='object_link'><a href="../../CoreExt/Java/Instant.html" title="OpenHAB::CoreExt::Java::Instant (class)">Instant</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../CoreExt/Java/Instant.html" title="OpenHAB::CoreExt::Java::Instant (class)">Instant</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+55
+56
+57
+58
+59
+60</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 55</span>
+
+<span class="keyword">def</span> <span class="function">to_instant</span>(_context = <span class="predefined-constant">nil</span>)
+  <span class="comment"># @deprecated OH 3.4 getInstant() was added in OH 4.0</span>
+  <span class="keyword">return</span> get_instant <span class="keyword">if</span> respond_to?(<span class="symbol">:get_instant</span>)
+
+  zoned_date_time.to_instant
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4819,12 +4899,12 @@ fields during conversion. Not used in this class.</p>
       <pre class="lines">
 
 
-167
-168
-169</pre>
+178
+179
+180</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 167</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 178</span>
 
 <span class="keyword">def</span> <span class="function">utc?</span>
   utc_offset.zero?
@@ -4876,12 +4956,12 @@ fields during conversion. Not used in this class.</p>
       <pre class="lines">
 
 
-158
-159
-160</pre>
+169
+170
+171</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 158</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 169</span>
 
 <span class="keyword">def</span> <span class="function">utc_offset</span>
   zoned_date_time.offset.total_seconds
@@ -4933,12 +5013,12 @@ fields during conversion. Not used in this class.</p>
       <pre class="lines">
 
 
-176
-177
-178</pre>
+187
+188
+189</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 187</span>
 
 <span class="keyword">def</span> <span class="function">wday</span>
   zoned_date_time.day_of_week.value % <span class="integer">7</span>
@@ -4990,12 +5070,12 @@ fields during conversion. Not used in this class.</p>
       <pre class="lines">
 
 
-185
-186
-187</pre>
+196
+197
+198</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 185</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 196</span>
 
 <span class="keyword">def</span> <span class="function">zone</span>
   zoned_date_time.zone.id
@@ -5010,7 +5090,7 @@ fields during conversion. Not used in this class.</p>
 </div>
 
         <footer>
-  Generated on Wed Sep 18 13:18:12 2024 by
+  Generated on Thu Sep 19 00:46:51 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

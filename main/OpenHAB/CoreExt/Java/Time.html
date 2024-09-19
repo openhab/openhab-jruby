@@ -3543,7 +3543,7 @@
   
   <dl>
     <dt>Included in:</dt>
-    <dd><span class='object_link'><a href="LocalDate.html" title="OpenHAB::CoreExt::Java::LocalDate (class)">LocalDate</a></span>, <span class='object_link'><a href="Month.html" title="OpenHAB::CoreExt::Java::Month (class)">Month</a></span>, <span class='object_link'><a href="MonthDay.html" title="OpenHAB::CoreExt::Java::MonthDay (class)">MonthDay</a></span>, <span class='object_link'><a href="ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span></dd>
+    <dd><span class='object_link'><a href="Instant.html" title="OpenHAB::CoreExt::Java::Instant (class)">Instant</a></span>, <span class='object_link'><a href="LocalDate.html" title="OpenHAB::CoreExt::Java::LocalDate (class)">LocalDate</a></span>, <span class='object_link'><a href="Month.html" title="OpenHAB::CoreExt::Java::Month (class)">Month</a></span>, <span class='object_link'><a href="MonthDay.html" title="OpenHAB::CoreExt::Java::MonthDay (class)">MonthDay</a></span>, <span class='object_link'><a href="ZonedDateTime.html" title="OpenHAB::CoreExt::Java::ZonedDateTime (class)">ZonedDateTime</a></span></dd>
   </dl>
   
 
@@ -3714,12 +3714,14 @@ less than, equal to, or greater than self</p>
 45
 46
 47
-48</pre>
+48
+49</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/time.rb', line 40</span>
 
 <span class="keyword">def</span> <span class="function">&lt;=&gt;</span>(other)
+  logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span>.class<span class="inline-delimiter">}</span></span><span class="content">) </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> &lt;=&gt; </span><span class="inline"><span class="inline-delimiter">#{</span>other<span class="inline-delimiter">}</span></span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span> }
   <span class="keyword">if</span> other.is_a?(<span class="predefined-constant">self</span>.class)
     compare_to(other)
   <span class="keyword">elsif</span> other.respond_to?(<span class="symbol">:coerce</span>)
@@ -3771,18 +3773,20 @@ less than, equal to, or greater than self</p>
       <pre class="lines">
 
 
-52
 53
 54
 55
 56
 57
-58</pre>
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/time.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/time.rb', line 53</span>
 
 <span class="keyword">def</span> <span class="function">coerce</span>(other)
+  logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">Coercing </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> as a request from </span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
   coercion_method = <span class="predefined-constant">self</span>.class.coercion_method
   <span class="keyword">return</span> <span class="keyword">unless</span> other.respond_to?(coercion_method)
   <span class="keyword">return</span> [other.send(coercion_method), <span class="predefined-constant">self</span>] <span class="keyword">if</span> other.method(coercion_method).arity.zero?
@@ -3799,7 +3803,7 @@ less than, equal to, or greater than self</p>
 </div>
 
         <footer>
-  Generated on Wed Sep 18 13:18:02 2024 by
+  Generated on Thu Sep 19 00:46:41 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
