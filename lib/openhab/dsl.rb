@@ -1087,4 +1087,4 @@ singleton_class.include(OpenHAB::DSL)
 Object.extend(OpenHAB::CoreExt::Ruby::Object::ClassMethods)
 OpenHAB::CoreExt::Ruby::Object.instance_variable_set(:@top_self, self)
 
-logger.debug "openHAB JRuby Scripting Library Version #{OpenHAB::DSL::VERSION} Loaded"
+logger.debug { "openHAB JRuby Scripting Library Version #{OpenHAB::DSL::VERSION} Loaded" }

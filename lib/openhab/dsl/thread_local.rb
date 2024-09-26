@@ -41,7 +41,7 @@ module OpenHAB
       def thread_local(**values)
         old_values = values.to_h { |key, _value| [key, Thread.current[key]] }
         values.each { |key, value| Thread.current[key] = value }
-        logger.trace "Executing block with thread local context: #{values} - old context: #{old_values}"
+        logger.trace { "Executing block with thread local context: #{values} - old context: #{old_values}" }
         yield
       ensure
         old_values.each { |key, value| Thread.current[key] = value }
