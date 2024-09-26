@@ -122,12 +122,17 @@ module OpenHAB
         # @param [Command] command to send to object
         # @param [Duration] for duration for item to be in command state
         # @param [Command] on_expire Command to send when duration expires
-        # @param [true, false] only_when_ensured if true, only start the timed command if the command was ensured
+        # @param [true, false, nil] only_when_ensured
+        #   - When `true`, only start the timed command if the command was ensured.
+        #   - When `false`, the timed command will be started regardless of the prior state of the item, even when
+        #     {OpenHAB::DSL.ensure_timed_commands ensure_timed_commands} is in effect.
+        #   - When `nil`, the timed command will be started unless
+        #     {OpenHAB::DSL.ensure_timed_commands ensure_timed_commands} is in effect.
         # @yield If a block is provided, `on_expire` is ignored and the block
         #   is expected to set the item to the desired state or carry out some
         #   other action.
         # @yieldparam [TimedCommandDetails] timed_command
-        # @return [self]
+        # @return [self, nil] self if the timer was started or extended, nil if the timer was not started.
         #
         # @example
         #   Switch.command(ON, for: 5.minutes)
@@ -149,7 +154,10 @@ module OpenHAB
         #     end
         #   end
         #
-        def command(command, for: nil, on_expire: nil, only_when_ensured: false, &block)
+        # @see DSL.ensure_timed_commands
+        # @see DSL.ensure_timed_commands!
+        #
+        def command(command, for: nil, on_expire: nil, only_when_ensured: nil, &block)
           duration = binding.local_variable_get(:for)
           return super(command) unless duration
 
@@ -157,6 +165,7 @@ module OpenHAB
 
           create_ensured_timed_command = proc do
             on_expire ||= default_on_expire(command)
+            only_when_ensured ||= Thread.current[:openhab_ensure_timed_commands]
             if only_when_ensured
               DSL.ensure_states do
                 create_timed_command(command, duration: duration, on_expire: on_expire) if super(command)
@@ -167,7 +176,7 @@ module OpenHAB
             end
           end
 
-          TimedCommand.timed_commands.compute(self) do |_key, timed_command_details|
+          timed_command = TimedCommand.timed_commands.compute(self) do |_key, timed_command_details|
             if timed_command_details.nil?
               # no prior timed command
               create_ensured_timed_command.call
@@ -193,7 +202,7 @@ module OpenHAB
             end
           end
 
-          self
+          Core::Items::Proxy.new(self) if timed_command
         end
 
         private
