@@ -4162,7 +4162,7 @@ interface.</p>
 
 <span class="keyword">def</span> <span class="function">services</span>(name, <span class="key">filter</span>: <span class="predefined-constant">nil</span>)
   (bundle_context.get_service_references(name, filter) || []).map <span class="keyword">do</span> |reference|
-    logger.trace <span class="string"><span class="delimiter">&quot;</span><span class="content">OSGi service found for '</span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="content">' using OSGi Service Reference </span><span class="inline"><span class="inline-delimiter">#{</span>reference<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">OSGi service found for '</span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="content">' using OSGi Service Reference </span><span class="inline"><span class="inline-delimiter">#{</span>reference<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
     bundle_context.get_service(reference)
   <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
@@ -4176,7 +4176,7 @@ interface.</p>
 </div>
 
         <footer>
-  Generated on Thu Sep 19 00:47:30 2024 by
+  Generated on Thu Sep 26 14:19:16 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
