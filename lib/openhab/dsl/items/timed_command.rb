@@ -180,7 +180,7 @@ module OpenHAB
                   create_ensured_timed_command.call
                 else
                   # timed command still pending; reset it
-                  logger.trace "Outstanding Timed Command #{timed_command_details} encountered - rescheduling"
+                  logger.trace { "Outstanding Timed Command #{timed_command_details} encountered - rescheduling" }
                   timed_command_details.on_expire = on_expire unless on_expire.nil?
                   timed_command_details.timer.reschedule(duration)
                   # disable the cancel rule while we send the new command
@@ -209,7 +209,7 @@ module OpenHAB
           unmanaged_rule = Core.automation_manager.add_unmanaged_rule(cancel_rule)
           timed_command_details.rule_uid = unmanaged_rule.uid
           Core::Rules::Provider.current.add(unmanaged_rule)
-          logger.trace "Created Timed Command #{timed_command_details}"
+          logger.trace { "Created Timed Command #{timed_command_details}" }
           timed_command_details
         end
 
@@ -219,12 +219,14 @@ module OpenHAB
         def timed_command_timer(timed_command_details, duration)
           DSL.after(duration) do
             timed_command_details.mutex.synchronize do
-              logger.trace "Timed command expired - #{timed_command_details}"
+              logger.trace { "Timed command expired - #{timed_command_details}" }
               DSL.rules[timed_command_details.rule_uid].disable
               timed_command_details.resolution = :expired
               case timed_command_details.on_expire
               when Proc
-                logger.trace "Invoking block #{timed_command_details.on_expire} after timed command for #{name} expired"
+                logger.trace do
+                  "Invoking block #{timed_command_details.on_expire} after timed command for #{name} expired"
+                end
                 timed_command_details.on_expire.call(timed_command_details)
               when Core::Types::UnDefType
                 update(timed_command_details.on_expire)

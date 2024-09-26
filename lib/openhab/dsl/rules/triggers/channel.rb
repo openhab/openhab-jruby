@@ -20,7 +20,7 @@ module OpenHAB
           # @param [Object] thing to combine with channels and iterate over
           # @return [Enumerable] enumerable channel ids to trigger on
           def self.channels(channels:, thing:)
-            logger.trace "Creating Channel/Thing Pairs for channels #{channels.inspect} and things #{thing.inspect}"
+            logger.trace { "Creating Channel/Thing Pairs for channels #{channels.inspect} and things #{thing.inspect}" }
             channels.flatten.product([thing].flatten)
                     .map { |channel_thing| channel_id(*channel_thing) }
           end
@@ -47,7 +47,7 @@ module OpenHAB
           def trigger(channel:, trigger:, attach:)
             config = { "channelUID" => channel }
             config["event"] = trigger.to_s unless trigger.nil?
-            logger.trace "Creating Channel Trigger for channels #{channel.inspect} and config #{config.inspect}"
+            logger.trace { "Creating Channel Trigger for channels #{channel.inspect} and config #{config.inspect}" }
             append_trigger(type: CHANNEL_EVENT, config: config, attach: attach)
           end
         end

@@ -24,7 +24,7 @@ module OpenHAB
       #
       def services(name, filter: nil)
         (bundle_context.get_service_references(name, filter) || []).map do |reference|
-          logger.trace "OSGi service found for '#{name}' using OSGi Service Reference #{reference}"
+          logger.trace { "OSGi service found for '#{name}' using OSGi Service Reference #{reference}" }
           bundle_context.get_service(reference)
         end
       end
