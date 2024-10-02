@@ -22,7 +22,7 @@ lockfile active: RUBY_VERSION >= "2.7" do
 end
 
 lockfile "ruby-2.6", active: RUBY_VERSION < "2.7" do
-  # no additional gems
+  gem "nokogiri", "~> 1.13.0"
 end
 
 gem "coderay", "~> 1.1.3", require: false, platform: :mri
