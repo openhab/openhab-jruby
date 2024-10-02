@@ -569,6 +569,7 @@
   </li>
 
   
+  
   <li class="">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ItemRemovedEvent.html" title="OpenHAB::Core::Events::ItemRemovedEvent (class)">ItemRemovedEvent</a></span>
@@ -3637,6 +3638,34 @@
 </li>
 
     
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#source-instance_method" title="#source (instance method)">#<strong>source</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The component that sent the event.</p>
+</div></span>
+  
+</li>
+
+    
   </ul>
 
 
@@ -3813,6 +3842,61 @@
 </table>
 </div>
     
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="source-instance_method">
+  
+    #<strong>source</strong>  &#x21d2; <tt>String</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The component that sent the event.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The component that sent the event.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/abstract_event.rb', line 16</span>
+
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 
@@ -3857,12 +3941,20 @@
       <pre class="lines">
 
 
-17</pre>
+31
+32
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/abstract_event.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/abstract_event.rb', line 31</span>
 
-alias_method <span class="symbol">:inspect</span>, <span class="symbol">:to_s</span></pre>
+<span class="keyword">def</span> <span class="function">inspect</span>
+  s = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Events::</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span>.class.simple_name<span class="inline-delimiter">}</span></span><span class="content"> topic=</span><span class="inline"><span class="inline-delimiter">#{</span>topic<span class="inline-delimiter">}</span></span><span class="content"> payload=</span><span class="inline"><span class="inline-delimiter">#{</span>payload.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+  s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> source=</span><span class="inline"><span class="inline-delimiter">#{</span>source.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> source
+  <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>s<span class="inline-delimiter">}</span></span><span class="content">&gt;</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3933,7 +4025,7 @@ alias_method <span class="symbol">:inspect</span>, <span class="symbol">:to_s</s
 </div>
 
         <footer>
-  Generated on Wed Oct  2 22:44:56 2024 by
+  Generated on Wed Oct  2 22:56:27 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
