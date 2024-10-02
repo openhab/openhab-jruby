@@ -149,9 +149,9 @@ module OpenHAB
         #     end
         #   end
         #
-        def command(command, for: nil, on_expire: nil, only_when_ensured: false, &block)
+        def command(command, for: nil, on_expire: nil, only_when_ensured: false, **kwargs, &block)
           duration = binding.local_variable_get(:for)
-          return super(command) unless duration
+          return super(command, **kwargs) unless duration
 
           on_expire = block if block
 
@@ -159,10 +159,10 @@ module OpenHAB
             on_expire ||= default_on_expire(command)
             if only_when_ensured
               DSL.ensure_states do
-                create_timed_command(command, duration: duration, on_expire: on_expire) if super(command)
+                create_timed_command(command, duration: duration, on_expire: on_expire) if super(command, **kwargs)
               end
             else
-              super(command)
+              super(command, **kwargs)
               create_timed_command(command, duration: duration, on_expire: on_expire)
             end
           end
@@ -185,7 +185,7 @@ module OpenHAB
                   timed_command_details.timer.reschedule(duration)
                   # disable the cancel rule while we send the new command
                   DSL.rules[timed_command_details.rule_uid].disable
-                  super(command) # This returns nil when "ensured"
+                  super(command, **kwargs) # This returns nil when "ensured"
                   DSL.rules[timed_command_details.rule_uid].enable
                   timed_command_details
                 end

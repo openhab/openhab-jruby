@@ -131,6 +131,24 @@ RSpec.describe OpenHAB::Core::Items::Item do
     it "returns `self` (wrapped in a proxy)" do
       expect(LightSwitch.on).to be LightSwitch
     end
+
+    it "accepts a source" do
+      items.build { switch_item LightSwitch2 }
+      source = nil
+      rule do
+        received_command LightSwitch2
+        run do |event|
+          source = event.source
+        end
+      end
+      LightSwitch2.command(ON, source: "one")
+      expect(source).to eql "one"
+      # command aliases work
+      LightSwitch2.on(source: "two")
+      expect(source).to eql "two"
+      LightSwitch2.refresh(source: "three")
+      expect(source).to eql "three"
+    end
   end
 
   describe "#update" do

@@ -24,6 +24,13 @@ module OpenHAB
 
         # @!attribute [r] event
         # @return [String] The event data
+
+        # @return [String]
+        def inspect
+          s = "#<OpenHAB::Core::Events::ChannelTriggeredEvent channel=#{channel} event=#{event.inspect}"
+          s += " source=#{source.inspect}" if source
+          "#{s}>"
+        end
       end
     end
   end

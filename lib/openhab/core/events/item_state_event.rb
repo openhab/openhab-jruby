@@ -68,6 +68,13 @@ module OpenHAB
         def state
           item_state if state?
         end
+
+        # @return [String]
+        def inspect
+          s = "#<OpenHAB::Core::Events::#{self.class.simple_name} item=#{item_name} state=#{item_state.inspect}"
+          s += " source=#{source.inspect}" if source
+          "#{s}>"
+        end
       end
 
       # {AbstractEvent} sent when an item's state is updated (regardless of if it changed or not).

@@ -35,10 +35,12 @@ module OpenHAB
           # check if this item is in the command's state before actually
           # sending the command
           %i[command update].each do |ensured_method|
-            # def command(state)
+            # rubocop:disable Style/IfUnlessModifier
+
+            # def command(state, **kwargs)
             #   # immediately send the command if it's a command, but not a state (like REFRESH)
-            #   return super(state) if state.is_a?(Command) && !state.is_a?(State)
-            #   return super(state) unless Thread.current[:openhab_ensure_states]
+            #   return super(state, **kwargs) if state.is_a?(Command) && !state.is_a?(State)
+            #   return super(state, **kwargs) unless Thread.current[:openhab_ensure_states]
             #
             #   formatted_state = format_command(state)
             #   logger.trace do
@@ -46,13 +48,13 @@ module OpenHAB
             #   end
             #   return if raw_state == formatted_state
             #
-            #   super(formatted_state)
+            #   super(formatted_state, **kwargs)
             # end
             class_eval <<~RUBY, __FILE__, __LINE__ + 1 # rubocop:disable Style/DocumentDynamicEvalDefinition
-              def #{ensured_method}(state)
+              def #{ensured_method}(state, **kwargs)
                 # immediately send the command if it's a command, but not a state (like REFRESH)
-                #{"return super(state) if state.is_a?(Command) && !state.is_a?(State)" if ensured_method == :command}
-                return super(state) unless Thread.current[:openhab_ensure_states]
+                #{"return super(state, **kwargs) if state.is_a?(Command) && !state.is_a?(State)" if ensured_method == :command}
+                return super(state, **kwargs) unless Thread.current[:openhab_ensure_states]
 
                 formatted_state = format_#{ensured_method}(state)
                 logger.trace do
@@ -60,9 +62,10 @@ module OpenHAB
                 end
                 return if raw_state.as(formatted_state.class) == formatted_state
 
-                super(formatted_state)
+                super(formatted_state, **kwargs)
               end
             RUBY
+            # rubocop:enable Style/IfUnlessModifier
           end
         end
 

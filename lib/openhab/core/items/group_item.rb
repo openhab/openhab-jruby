@@ -131,10 +131,10 @@ module OpenHAB
 
         # Override because we want to send them to the base item if possible
         %i[command update].each do |method|
-          define_method(method) do |command|
-            return base_item.__send__(method, command) if base_item
+          define_method(method) do |command, **kwargs|
+            return base_item.__send__(method, command, **kwargs) if base_item
 
-            super(command)
+            super(command, **kwargs)
           end
         end
 

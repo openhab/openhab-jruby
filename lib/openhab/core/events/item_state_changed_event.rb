@@ -69,6 +69,14 @@ module OpenHAB
         def was
           old_item_state if was?
         end
+
+        # @return [String]
+        def inspect
+          s = "#<OpenHAB::Core::Events::ItemStateChangedEvent item=#{item_name} " \
+              "state=#{item_state.inspect} was=#{old_item_state.inspect}"
+          s += " source=#{source.inspect}" if source
+          "#{s}>"
+        end
       end
     end
   end
