@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.30.0](https://github.com/openhab/openhab-jruby/tree/v5.30.0) (2024-10-02)
+
+### Features
+
+- Allow sending source with commands by [@ccutrer](https://github.com/ccutrer) in [#344](https://github.com/openhab/openhab-jruby/pull/344)
+
+**Full Changelog**: [v5.29.0...v5.30.0](https://github.com/openhab/openhab-jruby/compare/v5.29.0...v5.30.0)
+
 ## [v5.29.0](https://github.com/openhab/openhab-jruby/tree/v5.29.0) (2024-09-19)
 
 ### Features
