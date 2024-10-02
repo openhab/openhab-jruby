@@ -27,6 +27,14 @@ module OpenHAB
         def thing
           EntityLookup.lookup_thing(uid)
         end
+
+        # @return [String]
+        def inspect
+          s = "#<OpenHAB::Core::Events::ThingStatusInfoChangedEvent thing=#{uid} " \
+              "status=#{status.inspect} was=#{was.inspect}"
+          s += " source=#{source.inspect}" if source
+          "#{s}>"
+        end
       end
 
       # The {AbstractEvent} sent when a {Things::Thing}'s status is set.
@@ -48,6 +56,14 @@ module OpenHAB
         #
         def thing
           EntityLookup.lookup_thing(uid)
+        end
+
+        # @return [String]
+        def inspect
+          s = "#<OpenHAB::Core::Events::ThingStatusInfoEvent thing=#{uid} " \
+              "status=#{status.inspect}"
+          s += " source=#{source.inspect}" if source
+          "#{s}>"
         end
       end
     end

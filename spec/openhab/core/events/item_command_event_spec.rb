@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 RSpec.describe OpenHAB::Core::Events::ItemCommandEvent do
+  it "is inspectable" do
+    event = OpenHAB::Core::Events::ItemEventFactory.create_command_event("item", REFRESH, nil)
+    expect(event.inspect).to eql "#<OpenHAB::Core::Events::ItemCommandEvent item=item command=REFRESH>"
+
+    event = OpenHAB::Core::Events::ItemEventFactory.create_command_event("item", REFRESH, "source")
+    expect(event.inspect).to eql '#<OpenHAB::Core::Events::ItemCommandEvent item=item command=REFRESH source="source">'
+  end
+
   describe "predicates" do # rubocop:disable RSpec/EmptyExampleGroup examples are dynamically generated
     before do
       stub_const("PREDICATES",
@@ -24,7 +32,7 @@ RSpec.describe OpenHAB::Core::Events::ItemCommandEvent do
     def self.test_command_predicate(command)
       it "has a predicate for #{command}" do
         predicate_method = PREDICATES.find { |pr| pr.to_s[0..3].delete("?").upcase == command.to_s[0..3] }
-        event = org.openhab.core.items.events.ItemEventFactory.create_command_event("item", command, nil)
+        event = OpenHAB::Core::Events::ItemEventFactory.create_command_event("item", command, nil)
 
         expect(event.send(predicate_method)).to be true
         other_predicates = PREDICATES - [predicate_method]

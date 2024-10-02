@@ -72,6 +72,13 @@ module OpenHAB
         # @!method previous?
         #   Check if {#command} is {PREVIOUS}
         #   @return [true, false]
+
+        # @return [String]
+        def inspect
+          s = "#<OpenHAB::Core::Events::ItemCommandEvent item=#{itemName} command=#{command.inspect}"
+          s += " source=#{source.inspect}" if source
+          "#{s}>"
+        end
       end
     end
   end

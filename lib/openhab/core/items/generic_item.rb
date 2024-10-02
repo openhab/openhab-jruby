@@ -137,6 +137,7 @@ module OpenHAB
         # @param [Command, #to_s] command command to send to the item.
         #   When given a {Command} argument, it will be passed directly.
         #   Otherwise, the result of `#to_s` will be parsed into a {Command}.
+        # @param [String, nil] source Optional string to identify what sent the event.
         # @return [self, nil] nil when `ensure` is in effect and the item was already in the same state,
         #   otherwise the item.
         #
@@ -156,10 +157,14 @@ module OpenHAB
         # @example Sending a string to a dimensioned {NumberItem}
         #   SetTemperature.command("22.5 °C") # The string will be parsed and converted to a QuantityType
         #
-        def command(command)
+        def command(command, source: nil)
           command = format_command(command)
           logger.trace { "Sending Command #{command} to #{name}" }
-          $events.send_command(self, command)
+          if source
+            Events.publisher.post(Events::ItemEventFactory.create_command_event(name, command, source.to_s))
+          else
+            $events.send_command(self, command)
+          end
           Proxy.new(self)
         end
         alias_method :command!, :command
