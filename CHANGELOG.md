@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.31.0](https://github.com/openhab/openhab-jruby/tree/v5.31.0) (2024-10-03)
+
+### Features
+
+- Add CCT helpers for HSBType by [@ccutrer](https://github.com/ccutrer) in [#347](https://github.com/openhab/openhab-jruby/pull/347)
+
+**Full Changelog**: [v5.30.1...v5.31.0](https://github.com/openhab/openhab-jruby/compare/v5.30.1...v5.31.0)
+
 ## [v5.30.1](https://github.com/openhab/openhab-jruby/tree/v5.30.1) (2024-10-03)
 
 ### Features
