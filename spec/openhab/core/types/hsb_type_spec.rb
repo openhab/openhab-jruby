@@ -1,6 +1,33 @@
 # frozen_string_literal: true
 
 RSpec.describe OpenHAB::Core::Types::HSBType do
+  describe ".from_cct", if: OpenHAB::Core.version >= OpenHAB::Core::V4_3 do
+    it "works with an integer" do
+      warm_white = HSBType.from_cct(2700)
+      expect(warm_white.hue.to_f).to be_within(0.01).of(38.51)
+      expect(warm_white.saturation.to_f).to be_within(0.01).of(53.86)
+      expect(warm_white.brightness).to eq 100
+      # slight loss in the round-trip
+      expect(warm_white.cct.to_i).to be 2699
+    end
+
+    it "works with a K quantity" do
+      warm_white = HSBType.from_cct(2700 | "K")
+      expect(warm_white.hue.to_f).to be_within(0.01).of(38.51)
+      expect(warm_white.saturation.to_f).to be_within(0.01).of(53.86)
+      expect(warm_white.brightness).to eq 100
+      expect(warm_white.cct.to_i).to be 2699
+    end
+
+    it "works with a mired quantity" do
+      warm_white = HSBType.from_cct(370 | "mired")
+      expect(warm_white.hue.to_f).to be_within(0.01).of(38.51)
+      expect(warm_white.saturation.to_f).to be_within(0.01).of(53.86)
+      expect(warm_white.brightness).to eq 100
+      expect(warm_white.cct.to_i).to be 2699
+    end
+  end
+
   it "is inspectable" do
     expect(HSBType.new.inspect).to eql "0 °,0%,0%"
   end

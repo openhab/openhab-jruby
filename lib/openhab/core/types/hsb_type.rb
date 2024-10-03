@@ -12,6 +12,11 @@ module OpenHAB
       # {HSBType} is a complex type with constituents for hue, saturation and
       #  brightness and can be used for color items.
       class HSBType < PercentType
+        if OpenHAB::Core.version >= OpenHAB::Core::V4_0
+          java_import org.openhab.core.util.ColorUtil
+          private_constant :ColorUtil
+        end
+
         # @!constant BLACK
         #   @return [HSBType]
         # @!constant WHITE
@@ -96,6 +101,14 @@ module OpenHAB
 
             super(*args)
           end
+
+          # Create HSBType from a color temperature
+          # @param cct [QuantityType, Number] The color temperature (assumed in Kelvin, if not a QuantityType)
+          # @return [HSBType]
+          # @since openHAB 4.3
+          def from_cct(cct)
+            from_xy(*ColorUtil.kelvin_to_xy((cct | "K").double_value))
+          end
         end
 
         #
@@ -175,6 +188,13 @@ module OpenHAB
         # @!method to_xy
         #   Convert to the xyY values representing this object's color in CIE XY color model
         #   @return [[PercentType, PercentType, PercentType]]
+
+        # @!attribute [r] cct
+        # @return [QuantityType] The color temperature in Kelvin
+        # @since openHAB 4.3
+        def cct
+          ColorUtil.xy_to_kelvin(to_xy[0..1].map { |x| x.double_value / 100 }) | "K"
+        end
       end
     end
   end
