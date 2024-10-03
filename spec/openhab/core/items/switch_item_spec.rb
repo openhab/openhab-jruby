@@ -51,6 +51,20 @@ RSpec.describe OpenHAB::Core::Items::SwitchItem do
       item.update(NULL).toggle
       expect(item.state).to be ON
     end
+
+    it "accepts a source" do
+      source = nil
+      received_command(item) { |event| source = event.source }
+
+      item.update(UNDEF).toggle(source: "undef")
+      expect(source).to eq "undef"
+
+      item.on.toggle(source: "on")
+      expect(source).to eq "on"
+
+      item.off.toggle(source: "off")
+      expect(source).to eq "off"
+    end
   end
 
   it "works with grep" do
