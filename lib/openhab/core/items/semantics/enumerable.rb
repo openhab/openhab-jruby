@@ -103,10 +103,10 @@ module Enumerable
 
   # Send a command to every item in the collection, even when {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.
   # @return [self]
-  def command!(command)
+  def command!(command, **kwargs)
     # We cannot alias this to #command above, otherwise it will call
     # DSL::Items::Ensure::Item#command which checks for ensure_states
-    each { |i| i.command!(command) }
+    each { |i| i.command!(command, **kwargs) }
     self
   end
 
@@ -198,7 +198,7 @@ module Enumerable
   # Send a toggle command to every item in the collection
   # @return [self]
   #
-  def toggle
-    each(&:toggle)
+  def toggle(source: nil)
+    each { |i| i.toggle(source: source) }
   end
 end

@@ -164,6 +164,13 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
         expect(triggered).to be true
         expect(LivingRoom_Light1_Custom).to be_on
       end
+
+      it "accepts a source" do
+        source = nil
+        received_command(LivingRoom_Light1_Custom) { |event| source = event.source }
+        [LivingRoom_Light1_Custom].toggle(source: "source")
+        expect(source).to eq "source"
+      end
     end
 
     describe "#points" do

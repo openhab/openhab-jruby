@@ -49,10 +49,10 @@ module OpenHAB
         #
         # @return [self]
         #
-        def toggle
-          return on! unless state?
+        def toggle(source: nil)
+          return on!(source: source) unless state?
 
-          command!(!state)
+          command!(!state, source: source)
         end
 
         # @!method on?
