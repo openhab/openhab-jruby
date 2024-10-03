@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.30.1](https://github.com/openhab/openhab-jruby/tree/v5.30.1) (2024-10-03)
+
+### Features
+
+- Support `source` in `command!` and `toggle` by [@jimtng](https://github.com/jimtng) in [#346](https://github.com/openhab/openhab-jruby/pull/346)
+
+**Full Changelog**: [v5.30.0...v5.30.1](https://github.com/openhab/openhab-jruby/compare/v5.30.0...v5.30.1)
+
 ## [v5.30.0](https://github.com/openhab/openhab-jruby/tree/v5.30.0) (2024-10-02)
 
 ### Features
