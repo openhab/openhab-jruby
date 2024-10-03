@@ -3793,6 +3793,34 @@ brightness and can be used for color items.</p>
       <li class="public ">
   <span class="summary_signature">
     
+      <a href="#cct-instance_method" title="#cct (instance method)">#<strong>cct</strong>  &#x21d2; QuantityType </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The color temperature in Kelvin.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#green-instance_method" title="#green (instance method)">#<strong>green</strong>  &#x21d2; PercentType </a>
     
 
@@ -3913,6 +3941,29 @@ brightness and can be used for color items.</p>
     
 
     <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#from_cct-class_method" title="from_cct (class method)">.<strong>from_cct</strong>(cct)  &#x21d2; HSBType </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create HSBType from a color temperature.</p>
+</div></span>
+  
+</li>
+
       
         <li class="public ">
   <span class="summary_signature">
@@ -4227,7 +4278,7 @@ brightness and can be used for color items.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 168</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 181</span>
 
 </pre>
     </td>
@@ -4277,9 +4328,83 @@ brightness and can be used for color items.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 159</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 172</span>
 
 </pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="cct-instance_method">
+  
+    #<strong>cct</strong>  &#x21d2; <tt><span class='object_link'><a href="QuantityType.html" title="OpenHAB::Core::Types::QuantityType (class)">QuantityType</a></span></tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The color temperature in Kelvin.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="QuantityType.html" title="OpenHAB::Core::Types::QuantityType (class)">QuantityType</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The color temperature in Kelvin</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.3</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+195
+196
+197</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 195</span>
+
+<span class="keyword">def</span> <span class="function">cct</span>
+  <span class="constant">ColorUtil</span>.xy_to_kelvin(to_xy[<span class="integer">0</span>..<span class="integer">1</span>].map { |x| x.double_value / <span class="integer">100</span> }) | <span class="string"><span class="delimiter">&quot;</span><span class="content">K</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -4327,7 +4452,7 @@ brightness and can be used for color items.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 165</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 178</span>
 
 </pre>
     </td>
@@ -4379,12 +4504,12 @@ brightness and can be used for color items.</p>
       <pre class="lines">
 
 
-127
-128
-129</pre>
+140
+141
+142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 140</span>
 
 <span class="keyword">def</span> <span class="function">hue</span>
   <span class="constant">QuantityType</span>.new(raw_hue.to_big_decimal, <span class="constant">Units</span>::<span class="constant">DEGREE_ANGLE</span>)
@@ -4436,7 +4561,7 @@ brightness and can be used for color items.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 175</span>
 
 </pre>
     </td>
@@ -4486,7 +4611,7 @@ brightness and can be used for color items.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 156</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 169</span>
 
 </pre>
     </td>
@@ -4502,7 +4627,94 @@ brightness and can be used for color items.</p>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="from_hsb-class_method">
+  <h3 class="signature first" id="from_cct-class_method">
+  
+    .<strong>from_cct</strong>(cct)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::Core::Types::HSBType (class)">HSBType</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create HSBType from a color temperature</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>cct</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="QuantityType.html" title="OpenHAB::Core::Types::QuantityType (class)">QuantityType</a></span></tt>, <tt>Number</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The color temperature (assumed in Kelvin, if not a QuantityType)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="OpenHAB::Core::Types::HSBType (class)">HSBType</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.3</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+109
+110
+111</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 109</span>
+
+<span class="keyword">def</span> <span class="function">from_cct</span>(cct)
+  from_xy(*<span class="constant">ColorUtil</span>.kelvin_to_xy((cct | <span class="string"><span class="delimiter">&quot;</span><span class="content">K</span><span class="delimiter">&quot;</span></span>).double_value))
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="from_hsb-class_method">
   
     .<strong>from_hsb</strong>(hue, saturation, brightness)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::Core::Types::HSBType (class)">HSBType</a></span></tt> 
   
@@ -4588,12 +4800,12 @@ brightness and can be used for color items.</p>
       <pre class="lines">
 
 
-54
-55
-56</pre>
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 59</span>
 
 <span class="keyword">def</span> <span class="function">from_hsb</span>(hue, saturation, brightness)
   new(hue, saturation, brightness)
@@ -4693,7 +4905,7 @@ brightness and can be used for color items.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 41</span>
 
 </pre>
     </td>
@@ -4768,7 +4980,7 @@ brightness and can be used for color items.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 48</span>
 
 </pre>
     </td>
@@ -4845,17 +5057,17 @@ less than, equal to, or greater than self</p>
       <pre class="lines">
 
 
-112
-113
-114
-115
-116
-117
-118
-119</pre>
+125
+126
+127
+128
+129
+130
+131
+132</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 112</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 125</span>
 
 <span class="keyword">def</span> <span class="function">&lt;=&gt;</span>(other)
   logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span>.class<span class="inline-delimiter">}</span></span><span class="content">) </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> &lt;=&gt; </span><span class="inline"><span class="inline-delimiter">#{</span>other<span class="inline-delimiter">}</span></span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span> }
@@ -4909,10 +5121,10 @@ less than, equal to, or greater than self</p>
       <pre class="lines">
 
 
-136</pre>
+149</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 149</span>
 
 alias_method <span class="symbol">:argb</span>, <span class="symbol">:rgb</span></pre>
     </td>
@@ -4958,12 +5170,12 @@ alias_method <span class="symbol">:argb</span>, <span class="symbol">:rgb</span>
       <pre class="lines">
 
 
-140
-141
-142</pre>
+153
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 140</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 153</span>
 
 <span class="keyword">def</span> <span class="function">rgb</span>
   argb &amp; <span class="integer">0xffffff</span>
@@ -5015,12 +5227,12 @@ alias_method <span class="symbol">:argb</span>, <span class="symbol">:rgb</span>
       <pre class="lines">
 
 
-146
-147
-148</pre>
+159
+160
+161</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 146</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 159</span>
 
 <span class="keyword">def</span> <span class="function">to_hex</span>
   <span class="constant">Kernel</span>.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">#%06x</span><span class="delimiter">&quot;</span></span>, rgb)
@@ -5071,7 +5283,7 @@ alias_method <span class="symbol">:argb</span>, <span class="symbol">:rgb</span>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 171</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 184</span>
 
 </pre>
     </td>
@@ -5120,7 +5332,7 @@ alias_method <span class="symbol">:argb</span>, <span class="symbol">:rgb</span>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 175</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 188</span>
 
 </pre>
     </td>
@@ -5133,7 +5345,7 @@ alias_method <span class="symbol">:argb</span>, <span class="symbol">:rgb</span>
 </div>
 
         <footer>
-  Generated on Thu Oct  3 14:10:58 2024 by
+  Generated on Thu Oct  3 22:58:48 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
