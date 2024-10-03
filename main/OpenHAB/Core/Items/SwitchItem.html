@@ -3839,7 +3839,7 @@ Useful for normal lights, presence detection etc.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#toggle-instance_method" title="#toggle (instance method)">#<strong>toggle</strong>  &#x21d2; self </a>
+      <a href="#toggle-instance_method" title="#toggle (instance method)">#<strong>toggle</strong>(source: nil)  &#x21d2; self </a>
     
 
     
@@ -4040,10 +4040,10 @@ Useful for normal lights, presence detection etc.</p>
   <span class="comment">#</span>
   <span class="comment"># @return [self]</span>
   <span class="comment">#</span>
-  <span class="keyword">def</span> <span class="function">toggle</span>
-    <span class="keyword">return</span> on! <span class="keyword">unless</span> state?
+  <span class="keyword">def</span> <span class="function">toggle</span>(<span class="key">source</span>: <span class="predefined-constant">nil</span>)
+    <span class="keyword">return</span> on!(<span class="key">source</span>: source) <span class="keyword">unless</span> state?
 
-    command!(!state)
+    command!(!state, <span class="key">source</span>: source)
   <span class="keyword">end</span>
 
   <span class="comment"># @!method on?</span>
@@ -4395,7 +4395,7 @@ Useful for normal lights, presence detection etc.</p>
       <div class="method_details ">
   <h3 class="signature " id="toggle-instance_method">
   
-    #<strong>toggle</strong>  &#x21d2; <tt>self</tt> 
+    #<strong>toggle</strong>(source: nil)  &#x21d2; <tt>self</tt> 
   
 
   
@@ -4439,10 +4439,10 @@ Useful for normal lights, presence detection etc.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/switch_item.rb', line 52</span>
 
-<span class="keyword">def</span> <span class="function">toggle</span>
-  <span class="keyword">return</span> on! <span class="keyword">unless</span> state?
+<span class="keyword">def</span> <span class="function">toggle</span>(<span class="key">source</span>: <span class="predefined-constant">nil</span>)
+  <span class="keyword">return</span> on!(<span class="key">source</span>: source) <span class="keyword">unless</span> state?
 
-  command!(!state)
+  command!(!state, <span class="key">source</span>: source)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4454,7 +4454,7 @@ Useful for normal lights, presence detection etc.</p>
 </div>
 
         <footer>
-  Generated on Wed Oct  2 22:57:22 2024 by
+  Generated on Thu Oct  3 14:10:12 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
