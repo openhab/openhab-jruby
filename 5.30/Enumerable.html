@@ -3875,7 +3875,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#command!-instance_method" title="#command! (instance method)">#<strong>command!</strong>(command)  &#x21d2; self </a>
+      <a href="#command!-instance_method" title="#command! (instance method)">#<strong>command!</strong>(command, **kwargs)  &#x21d2; self </a>
     
 
     
@@ -4220,7 +4220,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#toggle-instance_method" title="#toggle (instance method)">#<strong>toggle</strong>  &#x21d2; self </a>
+      <a href="#toggle-instance_method" title="#toggle (instance method)">#<strong>toggle</strong>(source: nil)  &#x21d2; self </a>
     
 
     
@@ -4486,7 +4486,7 @@ otherwise self</p>
       <div class="method_details ">
   <h3 class="signature " id="command!-instance_method">
   
-    #<strong>command!</strong>(command)  &#x21d2; <tt>self</tt> 
+    #<strong>command!</strong>(command, **kwargs)  &#x21d2; <tt>self</tt> 
   
 
   
@@ -4531,10 +4531,10 @@ otherwise self</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 106</span>
 
-<span class="keyword">def</span> <span class="function">command!</span>(command)
+<span class="keyword">def</span> <span class="function">command!</span>(command, **kwargs)
   <span class="comment"># We cannot alias this to #command above, otherwise it will call</span>
   <span class="comment"># DSL::Items::Ensure::Item#command which checks for ensure_states</span>
-  each { |i| i.command!(command) }
+  each { |i| i.command!(command, **kwargs) }
   <span class="predefined-constant">self</span>
 <span class="keyword">end</span></pre>
     </td>
@@ -5911,7 +5911,7 @@ before calling <span class='object_link'><a href="#points-instance_method" title
       <div class="method_details ">
   <h3 class="signature " id="toggle-instance_method">
   
-    #<strong>toggle</strong>  &#x21d2; <tt>self</tt> 
+    #<strong>toggle</strong>(source: nil)  &#x21d2; <tt>self</tt> 
   
 
   
@@ -5953,8 +5953,8 @@ before calling <span class='object_link'><a href="#points-instance_method" title
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/semantics/enumerable.rb', line 201</span>
 
-<span class="keyword">def</span> <span class="function">toggle</span>
-  each(&amp;<span class="symbol">:toggle</span>)
+<span class="keyword">def</span> <span class="function">toggle</span>(<span class="key">source</span>: <span class="predefined-constant">nil</span>)
+  each { |i| i.toggle(<span class="key">source</span>: source) }
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -6133,7 +6133,7 @@ otherwise self</p>
 </div>
 
         <footer>
-  Generated on Wed Oct  2 22:57:12 2024 by
+  Generated on Thu Oct  3 14:10:52 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
