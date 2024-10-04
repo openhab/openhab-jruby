@@ -308,7 +308,7 @@ module OpenHAB
         end
 
         # @!attribute [rw] category
-        # The item's category.
+        # The item's category (icon).
         # @return [String]
         def category=(value)
           modify do
@@ -319,6 +319,8 @@ module OpenHAB
             set_category(value)
           end
         end
+        alias_method :icon, :category
+        alias_method :icon=, :category=
 
         # @!attribute [rw] tags
         #   The item's tags
