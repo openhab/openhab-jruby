@@ -582,6 +582,7 @@ module OpenHAB
         def unit=(unit)
           @unit = unit
 
+          self.dimension ||= "Temperature" if unit&.to_s == "mired"
           self.dimension ||= unit && org.openhab.core.types.util.UnitUtils.parse_unit(unit)&.then do |u|
             org.openhab.core.types.util.UnitUtils.get_dimension_name(u)
           end
