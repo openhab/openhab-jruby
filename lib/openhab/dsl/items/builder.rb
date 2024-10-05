@@ -222,6 +222,24 @@ module OpenHAB
         #
         # @return [String, nil]
         attr_accessor :format
+        # The valid range for a number item
+        # @return [Range, nil]
+        attr_accessor :range
+        # The step size for a number item
+        # @return [Number, nil]
+        attr_accessor :step
+        # If the item is read-only, and does not accept commands
+        # @return [true, false, nil]
+        attr_accessor :read_only
+        alias_method :read_only?, :read_only
+        # A list of valid commands
+        # If a hash, keys are commands, and values are labels
+        # @return [Hash, Array, nil]
+        attr_accessor :command_options
+        # A list of valid states
+        # If a hash, keys are commands, and values are labels
+        # @return [Hash, Array, nil]
+        attr_accessor :state_options
         # The icon to be associated with the item
         # @return [Symbol, String, nil]
         attr_accessor :icon
@@ -321,6 +339,11 @@ module OpenHAB
                        dimension: nil,
                        unit: nil,
                        format: nil,
+                       range: nil,
+                       step: nil,
+                       read_only: nil,
+                       command_options: nil,
+                       state_options: nil,
                        icon: nil,
                        group: nil,
                        groups: nil,
@@ -358,6 +381,11 @@ module OpenHAB
           @label = label
           @dimension = dimension
           @format = format
+          @range = range
+          @step = step
+          @read_only = read_only
+          @command_options = command_options
+          @state_options = state_options
           self.unit = unit
           @icon = icon
           @groups = []
@@ -591,7 +619,35 @@ module OpenHAB
           end
           metadata["autoupdate"] = autoupdate.to_s unless autoupdate.nil?
           metadata["expire"] = expire if expire
-          metadata["stateDescription"] = { "pattern" => format } if format
+          if format || range || step || !read_only.nil? || state_options
+            sd = {}
+            sd["pattern"] = format if format
+            sd["min"] = range.begin&.to_d if range&.begin
+            sd["max"] = range.end&.to_d if range&.end
+            sd["step"] = step if step
+            sd["readOnly"] = read_only unless read_only.nil?
+            if state_options
+              sd["options"] = if state_options.respond_to?(:to_hash)
+                                state_options.to_hash.map { |k, v| "#{k}=#{v}" }.join(",")
+                              elsif state_options.respond_to?(:to_ary)
+                                state_options.to_ary.join(",")
+                              else
+                                state_options.to_s
+                              end
+            end
+
+            metadata["stateDescription"] = sd
+          end
+          if command_options
+            options = if command_options.respond_to?(:to_hash)
+                        command_options.to_hash.map { |k, v| "#{k}=#{v}" }.join(",")
+                      elsif command_options.respond_to?(:to_ary)
+                        command_options.to_ary.join(",")
+                      else
+                        command_options.to_s
+                      end
+            metadata["commandDescription"] = { "options" => options }
+          end
           metadata["unit"] = unit if unit
           item
         end

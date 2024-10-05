@@ -366,6 +366,72 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
     expect(MyNumberItem.state_description.pattern).to eql "something %d else"
   end
 
+  it "can set a range on a number item" do
+    items.build do
+      number_item "Number1", range: 5..10
+      number_item "Number2", range: 2..10, step: 2
+      number_item "Number3", range: Range.new(nil, 50) if RUBY_VERSION >= "2.7"
+      number_item "Number4", range: 50..
+    end
+
+    expect(Number1.state_description.minimum.to_i).to be 5
+    expect(Number1.state_description.maximum.to_i).to be 10
+    expect(Number1.state_description.step).to be_nil
+    expect(Number2.state_description.minimum.to_i).to be 2
+    expect(Number2.state_description.maximum.to_i).to be 10
+    expect(Number2.state_description.step.to_i).to be 2
+    if RUBY_VERSION >= "2.7"
+      expect(Number3.state_description.minimum).to be_nil
+      expect(Number3.state_description.maximum.to_i).to be 50
+    end
+    expect(Number4.state_description.minimum.to_i).to be 50
+    expect(Number4.state_description.maximum).to be_nil
+  end
+
+  it "can set read only" do
+    items.build do
+      switch_item "Switch1", read_only: true
+      switch_item "Switch2", read_only: false
+      switch_item "Switch3"
+    end
+
+    expect(Switch1.state_description).to be_read_only
+    expect(Switch2.state_description).not_to be_read_only
+    expect(Switch3.state_description).to be_nil
+  end
+
+  it "can set state options" do
+    items.build do
+      string_item "Text1", state_options: %w[LOCKED UNLOCKED]
+      switch_item "Lock1", state_options: { ON => "LOCKED", OFF => "UNLOCKED" }
+    end
+
+    expect(Text1.state_description.options.to_h { |o| [o.value, o.label] }).to eql({
+                                                                                     "LOCKED" => nil,
+                                                                                     "UNLOCKED" => nil
+                                                                                   })
+    expect(Lock1.state_description.options.to_h { |o| [o.value, o.label] }).to eql({
+                                                                                     "ON" => "LOCKED",
+                                                                                     "OFF" => "UNLOCKED"
+                                                                                   })
+  end
+
+  it "can set command options" do
+    items.build do
+      string_item "Text1", command_options: %w[LOCKED UNLOCKED]
+      switch_item "Lock1", command_options: { ON => "LOCKED", OFF => "UNLOCKED" }
+    end
+
+    expect(Text1.command_description.command_options.to_h { |o| [o.command, o.label] }).to eql({
+                                                                                                 "LOCKED" => nil,
+                                                                                                 "UNLOCKED" => nil
+                                                                                               })
+    expect(Lock1.command_description.command_options.to_h { |o| [o.command, o.label] }).to eql({
+                                                                                                 "ON" => "LOCKED",
+                                                                                                 "OFF" => "UNLOCKED"
+                                                                                               })
+  end
+
   it "does not overwrite an explicit format with the unit" do
     items.build do
       number_item "MyNumberItem", format: "something %d else", unit: "W"
