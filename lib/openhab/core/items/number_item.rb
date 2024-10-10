@@ -53,6 +53,30 @@ module OpenHAB
           super && dimension == other.dimension
         end
 
+        # @!attribute [r] range
+        # Returns the range of values allowed for this item, as defined by its
+        # state description.
+        #
+        # If this item has a {#unit}, it will be applied to the result, returning
+        # a range of {QuantityType} instead of BigDecimal.
+        # @return [Range, nil]
+        # @note State descriptions can be provided by bindings, defined in
+        #   metadata, or theoretically come from other sources.
+        def range
+          return unless (sd = state_description)
+
+          # check if we have a unit, even if the item's metadata doesn't declare
+          # it properly
+          unit = self.unit || ((s = state) && s.is_a?(QuantityType) && s.unit)
+          min = sd.minimum&.to_d
+          max = sd.maximum&.to_d
+          return nil unless min || max
+
+          min |= unit if min && unit
+          max |= unit if max && unit
+          min..max
+        end
+
         protected
 
         # Adds the unit dimension
