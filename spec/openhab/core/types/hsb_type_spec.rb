@@ -28,6 +28,47 @@ RSpec.describe OpenHAB::Core::Types::HSBType do
     end
   end
 
+  describe "#planckian_cct", if: OpenHAB::Core.version >= OpenHAB::Core::V4_3 do
+    it "returns a value for a pure 'white'" do
+      warm_white = HSBType.from_cct(2700)
+      expect(warm_white.planckian_cct.to_i).to be 2699
+    end
+
+    it "returns a value if in range (bare range)" do
+      warm_white = HSBType.from_cct(2700)
+      expect(warm_white.planckian_cct(range: 2000..6000).to_i).to be 2699
+    end
+
+    it "returns a value if in range (K range)" do
+      warm_white = HSBType.from_cct(2700)
+      expect(warm_white.planckian_cct(range: (2000 | "K")..(6000 | "K")).to_i).to be 2699
+    end
+
+    it "returns a value if in range (mired range)" do
+      warm_white = HSBType.from_cct(2700)
+      expect(warm_white.planckian_cct(range: (167 | "mired")..(500 | "mired")).to_i).to be 370
+    end
+
+    it "returns nil for red" do
+      expect(HSBType::RED.planckian_cct).to be_nil
+    end
+
+    it "returns nil if the CCT is out of range (bare range)" do
+      color = HSBType.from_cct(2000)
+      expect(color.planckian_cct(range: 2700..6000)).to be_nil
+    end
+
+    it "returns nil if the CCT is out of range (K range)" do
+      color = HSBType.from_cct(2000)
+      expect(color.planckian_cct(range: (2700 | "K")..(6000 | "K"))).to be_nil
+    end
+
+    it "returns nil if the CCT is out of range (mired range)" do
+      color = HSBType.from_cct(2000)
+      expect(color.planckian_cct(range: (167 | "mired")..(370 | "mired"))).to be_nil
+    end
+  end
+
   it "is inspectable" do
     expect(HSBType.new.inspect).to eql "0 °,0%,0%"
   end
