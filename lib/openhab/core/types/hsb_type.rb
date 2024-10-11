@@ -190,10 +190,77 @@ module OpenHAB
         #   @return [[PercentType, PercentType, PercentType]]
 
         # @!attribute [r] cct
-        # @return [QuantityType] The color temperature in Kelvin
+        # @return [QuantityType] The correlated color temperature in Kelvin
         # @since openHAB 4.3
+        # @see https://en.wikipedia.org/wiki/Planckian_locus Planckian Locus
         def cct
           ColorUtil.xy_to_kelvin(to_xy[0..1].map { |x| x.double_value / 100 }) | "K"
+        end
+
+        # @!attribute [r] duv
+        #   The distance that this color is from the planckian locus
+        #
+        # @return [Float] The delta u, v
+        #
+        # @see planckian?
+        # @see planckian_cct
+        # @see https://en.wikipedia.org/wiki/Planckian_locus Planckian Locus
+        # @since openHAB 4.3
+        def duv
+          ColorUtil.xy_to_duv(to_xy[0..1].map { |x| x.double_value / 100 })
+        end
+
+        # Checks if this color is within a certain tolerance of the planckian locus
+        #
+        # @param [Float] duv_tolerance The maximum allowed distance from the planckian locus
+        # @param [Numeric, PercentType] maximum_saturation The maximum allowed saturation.
+        #   Some colors (bright green for example) may be close to the planckian locus,
+        #   but you don't want to treat them as "white" because they are very saturated.
+        # @return [true, false]
+        #
+        # @note The parameters and defaults for this method are subject to change in future
+        #   releases of this library, and should be considered beta. For now, the default
+        #   parameters should be sufficient to detect most colors that Apple's HomeKit color
+        #   temperature color chooser uses as planckian, without detecting most other "real"
+        #   colors as planckian.
+        # @see duv
+        # @see planckian_cct
+        # @see https://en.wikipedia.org/wiki/Planckian_locus Planckian Locus
+        # @since openHAB 4.3
+        def planckian?(duv_tolerance: 0.015, maximum_saturation: 75)
+          duv.abs < duv_tolerance && saturation < maximum_saturation
+        end
+
+        # Returns the color temperature of this color _if_ it is within a certain tolerance
+        # of the planckian locus.
+        #
+        # @param [Range, NumberItem] range An allowed range to additionally restrict
+        #   if the CCT should be returned. A NumberItem that represents a CCT channel
+        #   may be provided, and {NumberItem#range NumberItem#Range} will be used instead. If the range
+        #   does not have units (is {QuantityType}), it should be in Kelvin.
+        # @return [QuantityType, nil] The color temperature in Kelvin
+        #   (unless the range is in mireds; then it will be in mireds)
+        #
+        # @note Additional parameters are forwarded to {#planckian?}
+        # @see planckian?
+        # @see https://en.wikipedia.org/wiki/Planckian_locus Planckian Locus
+        # @since openHAB 4.3
+        def planckian_cct(range: nil, **kwargs)
+          return unless planckian?(**kwargs)
+
+          range = range.range if range.is_a?(NumberItem)
+          cct = self.cct
+          if range
+            range_type = range.begin || range.end
+            if !range_type.is_a?(QuantityType)
+              range = Range.new(range.begin | "K", range.end | "K")
+            elsif range_type.unit.to_s == "mired"
+              cct |= "mired"
+            end
+          end
+          return nil if range && !range.cover?(cct)
+
+          cct
         end
       end
     end
