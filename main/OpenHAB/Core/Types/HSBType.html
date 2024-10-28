@@ -3812,7 +3812,35 @@ brightness and can be used for color items.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>The color temperature in Kelvin.</p>
+    <span class="summary_desc"><div class='inline'><p>The correlated color temperature in Kelvin.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#duv-instance_method" title="#duv (instance method)">#<strong>duv</strong>  &#x21d2; Float </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The delta u, v.</p>
 </div></span>
   
 </li>
@@ -4094,6 +4122,56 @@ brightness and can be used for color items.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#planckian%3F-instance_method" title="#planckian? (instance method)">#<strong>planckian?</strong>(duv_tolerance: 0.015, maximum_saturation: 75)  &#x21d2; true, false </a>
+    
+
+    
+      (also: #white_cct?)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Checks if this color is within a certain tolerance of the planckian locus ("white").</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#planckian_cct-instance_method" title="#planckian_cct (instance method)">#<strong>planckian_cct</strong>(range: nil, **kwargs)  &#x21d2; QuantityType<sup>?</sup> </a>
+    
+
+    
+      (also: #white_cct)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the color temperature of this color <em>if</em> it is within a certain tolerance of the planckian locus ("white"), otherwise returns <code>nil</code>.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#rgb-instance_method" title="#rgb (instance method)">#<strong>rgb</strong>  &#x21d2; Integer </a>
     
 
@@ -4349,7 +4427,7 @@ brightness and can be used for color items.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns The color temperature in Kelvin.</p>
+    <p>Returns The correlated color temperature in Kelvin.</p>
 
 
   </div>
@@ -4367,12 +4445,19 @@ brightness and can be used for color items.</p>
       
       
         &mdash;
-        <div class='inline'><p>The color temperature in Kelvin</p>
+        <div class='inline'><p>The correlated color temperature in Kelvin</p>
 </div>
       
     </li>
   
 </ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://en.wikipedia.org/wiki/Planckian_locus" target="_parent" title="Planckian Locus">Planckian Locus</a></li>
+    
+  </ul>
 <p class="tag_title">Since:</p>
 <ul class="since">
   
@@ -4395,15 +4480,100 @@ brightness and can be used for color items.</p>
       <pre class="lines">
 
 
-195
 196
-197</pre>
+197
+198</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 195</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 196</span>
 
 <span class="keyword">def</span> <span class="function">cct</span>
   <span class="constant">ColorUtil</span>.xy_to_kelvin(to_xy[<span class="integer">0</span>..<span class="integer">1</span>].map { |x| x.double_value / <span class="integer">100</span> }) | <span class="string"><span class="delimiter">&quot;</span><span class="content">K</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="duv-instance_method">
+  
+    #<strong>duv</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Float.html" title="Float (class)">Float</a></span></tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns The delta u, v.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Float.html" title="Float (class)">Float</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The delta u, v</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#planckian%3F-instance_method" title="OpenHAB::Core::Types::HSBType#planckian? (method)">#planckian?</a></span></li>
+    
+      <li><span class='object_link'><a href="#planckian_cct-instance_method" title="OpenHAB::Core::Types::HSBType#planckian_cct (method)">#planckian_cct</a></span></li>
+    
+      <li><a href="https://en.wikipedia.org/wiki/Planckian_locus" target="_parent" title="Planckian Locus">Planckian Locus</a></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.3</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+209
+210
+211</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 209</span>
+
+<span class="keyword">def</span> <span class="function">duv</span>
+  <span class="constant">ColorUtil</span>.xy_to_duv(to_xy[<span class="integer">0</span>..<span class="integer">1</span>].map { |x| x.double_value / <span class="integer">100</span> })
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -5133,6 +5303,286 @@ alias_method <span class="symbol">:argb</span>, <span class="symbol">:rgb</span>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="planckian?-instance_method">
+  
+    #<strong>planckian?</strong>(duv_tolerance: 0.015, maximum_saturation: 75)  &#x21d2; <tt>true</tt>, <tt>false</tt> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='white_cct?-instance_method'>white_cct?</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>The parameters and defaults for this method are subject to change in future
+releases of this library, and should be considered beta. For now, the default
+parameters should be sufficient to detect most colors that Apple's HomeKit color
+temperature color chooser uses as planckian, without detecting most other "real"
+colors as planckian.</p>
+</div>
+  </div>
+
+<p>Checks if this color is within a certain tolerance of the planckian locus ("white")</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>duv_tolerance</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Float.html" title="Float (class)">Float</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>0.015</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The maximum allowed distance from the planckian locus</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>maximum_saturation</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Numeric.html" title="Numeric (class)">Numeric</a></span></tt>, <tt><span class='object_link'><a href="PercentType.html" title="OpenHAB::Core::Types::PercentType (class)">PercentType</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>75</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The maximum allowed saturation.
+Some colors (bright green for example) may be close to the planckian locus,
+but you don't want to treat them as "white" because they are very saturated.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#duv-instance_method" title="OpenHAB::Core::Types::HSBType#duv (method)">#duv</a></span></li>
+    
+      <li><span class='object_link'><a href="#planckian_cct-instance_method" title="OpenHAB::Core::Types::HSBType#planckian_cct (method)">#planckian_cct</a></span></li>
+    
+      <li><a href="https://en.wikipedia.org/wiki/Planckian_locus" target="_parent" title="Planckian Locus">Planckian Locus</a></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.3</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+230
+231
+232</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 230</span>
+
+<span class="keyword">def</span> <span class="function">planckian?</span>(<span class="key">duv_tolerance</span>: <span class="float">0.015</span>, <span class="key">maximum_saturation</span>: <span class="integer">75</span>)
+  duv.abs &lt; duv_tolerance &amp;&amp; saturation &lt; maximum_saturation
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="planckian_cct-instance_method">
+  
+    #<strong>planckian_cct</strong>(range: nil, **kwargs)  &#x21d2; <tt><span class='object_link'><a href="QuantityType.html" title="OpenHAB::Core::Types::QuantityType (class)">QuantityType</a></span></tt><sup>?</sup> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='white_cct-instance_method'>white_cct</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>Additional parameters are forwarded to <span class='object_link'><a href="#planckian%3F-instance_method" title="OpenHAB::Core::Types::HSBType#planckian? (method)">#planckian?</a></span></p>
+</div>
+  </div>
+
+<p>Returns the color temperature of this color <em>if</em> it is within a certain tolerance
+of the planckian locus ("white"), otherwise returns <code>nil</code>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>range</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Range.html" title="Range (class)">Range</a></span></tt>, <tt><span class='object_link'><a href="../Items/NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>An allowed range to additionally restrict
+if the CCT should be returned. A NumberItem that represents a CCT channel
+may be provided, and <span class='object_link'><a href="../Items/NumberItem.html#range-instance_method" title="OpenHAB::Core::Items::NumberItem#range (method)">NumberItem#range</a></span> will be used instead. If the range
+does not have units (is <span class='object_link'><a href="QuantityType.html" title="OpenHAB::Core::Types::QuantityType (class)">QuantityType</a></span>), it is interpreted as being in Kelvin.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="QuantityType.html" title="OpenHAB::Core::Types::QuantityType (class)">QuantityType</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The color temperature in Kelvin
+(unless the range is in mireds; then it will be in mireds)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#planckian%3F-instance_method" title="OpenHAB::Core::Types::HSBType#planckian? (method)">#planckian?</a></span></li>
+    
+      <li><a href="https://en.wikipedia.org/wiki/Planckian_locus" target="_parent" title="Planckian Locus">Planckian Locus</a></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 4.3</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/types/hsb_type.rb', line 249</span>
+
+<span class="keyword">def</span> <span class="function">planckian_cct</span>(<span class="key">range</span>: <span class="predefined-constant">nil</span>, **kwargs)
+  <span class="keyword">return</span> <span class="keyword">unless</span> planckian?(**kwargs)
+
+  range = range.range <span class="keyword">if</span> range.is_a?(<span class="constant">NumberItem</span>)
+  cct = <span class="predefined-constant">self</span>.cct
+  <span class="keyword">if</span> range
+    range_type = range.begin || range.end
+    <span class="keyword">if</span> !range_type.is_a?(<span class="constant">QuantityType</span>)
+      range = <span class="constant">Range</span>.new(range.begin | <span class="string"><span class="delimiter">&quot;</span><span class="content">K</span><span class="delimiter">&quot;</span></span>, range.end | <span class="string"><span class="delimiter">&quot;</span><span class="content">K</span><span class="delimiter">&quot;</span></span>)
+    <span class="keyword">elsif</span> range_type.unit.to_s == <span class="string"><span class="delimiter">&quot;</span><span class="content">mired</span><span class="delimiter">&quot;</span></span>
+      cct |= <span class="string"><span class="delimiter">&quot;</span><span class="content">mired</span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+  <span class="keyword">return</span> <span class="predefined-constant">nil</span> <span class="keyword">if</span> range &amp;&amp; !range.cover?(cct)
+
+  cct
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="rgb-instance_method">
   
     #<strong>rgb</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Integer.html" title="Integer (class)">Integer</a></span></tt> 
@@ -5345,7 +5795,7 @@ alias_method <span class="symbol">:argb</span>, <span class="symbol">:rgb</span>
 </div>
 
         <footer>
-  Generated on Fri Oct 11 16:32:49 2024 by
+  Generated on Mon Oct 28 22:38:58 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
