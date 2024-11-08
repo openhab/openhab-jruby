@@ -114,7 +114,7 @@ module OpenHAB
       # @!visibility private
       def top_level_file
         caller_locations.find { |caller| caller.base_label == "<main>" }
-                        .then { |caller| cleanup_path(caller.path) }
+                        &.then { |caller| cleanup_path(caller.path) }
       end
 
       private
@@ -376,9 +376,10 @@ module OpenHAB
         return @file_logger unless (rule_uid = Thread.current[:openhab_rule_uid])
 
         rule_type = Thread.current[:openhab_rule_type]
+        top_level_file = Log.top_level_file&.then { |file| "#{file}." }
         full_id = "#{rule_type}:#{rule_uid}"
 
-        self.class.rule_loggers[full_id] ||= Logger.new("#{Logger::PREFIX}.#{Log.top_level_file}.#{rule_type}.#{rule_uid
+        self.class.rule_loggers[full_id] ||= Logger.new("#{Logger::PREFIX}.#{top_level_file}#{rule_type}.#{rule_uid
             .gsub(/[^A-Za-z0-9_.:-]/, "")}")
       end
 
