@@ -80,10 +80,10 @@ RSpec.describe OpenHAB::Core::Items::Proxy do
   # rubocop:enable Lint/UselessAssignment
 
   context "without a backing item" do
-    let(:item) { described_class.new(:MySwitch) }
+    let(:item) { described_class.new("MySwitch") }
 
     it "supports #name" do
-      expect(item.name).to eq "MySwitch"
+      expect(item.name).to eql "MySwitch"
     end
 
     it "pretends to be an item" do
@@ -95,8 +95,10 @@ RSpec.describe OpenHAB::Core::Items::Proxy do
     end
 
     it "doesn't respond to other Item methods" do
-      expect(item).not_to respond_to(:command)
-      expect { item.command }.to raise_error(NoMethodError)
+      expect(item).to respond_to(:command)
+      expect(item).not_to respond_to(:bogus)
+      expect { item.command }.to raise_error(OpenHAB::Core::Items::Proxy::StaleProxyError)
+      expect { item.bogus }.to raise_error(NoMethodError)
     end
 
     it "disappears when calling semantic predicates on an array" do

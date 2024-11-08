@@ -29,7 +29,7 @@ module OpenHAB
         module Item
           include Ensurable
 
-          Core::Items::GenericItem.prepend(self)
+          Core::Items::Item.prepend(self)
 
           # If `ensure_states` is active (by block or chained method), then
           # check if this item is in the command's state before actually
