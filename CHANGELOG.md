@@ -810,7 +810,7 @@ Here is a non-exhaustive list of significant departures from the original gem:
 - {OpenHAB::Core::Events::ItemStateEvent} and {OpenHAB::Core::Events::ItemStateChangedEvent} now have full sets of predicate methods.
 - {OpenHAB::DSL::Rules::Terse terse rules} now have an `on_load` parameter.
 - {Item#all_groups Item#all_groups}, {Enumerable#all_members}, {Enumerable#groups}, {Enumerable#all_groups}.
-- {GenericItem#formatted_state GenericItem#formatted_state}.
+- {Item#formatted_state Item#formatted_state}.
 - {OpenHAB::DSL.transform} now available at top-level, like Rules DSL.
 - {Item#member_of? Item#member_of?}, {Item#tagged? Item#tagged?}.
 - {OpenHAB::DSL::Rules::BuilderDSL.watch watch} can now be used to monitor subdirectories

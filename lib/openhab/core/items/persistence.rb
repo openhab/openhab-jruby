@@ -62,7 +62,7 @@ module OpenHAB
       #   logger.info("Max power usage today: #{max}, at: #{max.timestamp})
       #
       module Persistence
-        GenericItem.prepend(self)
+        Item.prepend(self)
 
         #
         # A wrapper for {org.openhab.core.persistence.HistoricItem HistoricItem} that delegates to its state.

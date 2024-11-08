@@ -170,7 +170,7 @@ module OpenHAB
       # For more information, see {add}
       #
       module Semantics
-        GenericItem.include(self)
+        Item.include(self)
         GroupItem.extend(Forwardable)
         GroupItem.def_delegators :members, :equipments, :locations
 

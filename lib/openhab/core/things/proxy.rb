@@ -3,6 +3,9 @@
 require "delegate"
 require "forwardable"
 
+require_relative "thing"
+require_relative "thing_uid"
+
 module OpenHAB
   module Core
     module Things
@@ -18,8 +21,13 @@ module OpenHAB
                   Events::ThingRemovedEvent::TYPE].freeze
         # @!visibility private
         UID_METHOD = :uid
+        # @!visibility private
+        UID_TYPE = ThingUID
 
         include Core::Proxy
+
+        # @return [ThingUID]
+        attr_reader :uid
 
         # Returns the list of channels associated with this Thing
         #
@@ -41,57 +49,6 @@ module OpenHAB
         # @return [Thing::Properties] properties map
         def properties
           Thing::Properties.new(self)
-        end
-
-        #
-        # Set the proxy item (called by super)
-        #
-        def __setobj__(thing)
-          @uid = thing.uid
-        end
-
-        #
-        # Lookup thing from thing registry
-        #
-        def __getobj__
-          $things.get(@uid)
-        end
-
-        #
-        # Need to check if `self` _or_ the delegate is an instance of the
-        # given class
-        #
-        # So that {#==} can work
-        #
-        # @return [true, false]
-        #
-        # @!visibility private
-        def instance_of?(klass)
-          __getobj__.instance_of?(klass) || super
-        end
-
-        #
-        # Check if delegates are equal for comparison
-        #
-        # Otherwise items can't be used in Java maps
-        #
-        # @return [true, false]
-        #
-        # @!visibility private
-        def ==(other)
-          return __getobj__ == other.__getobj__ if other.instance_of?(Proxy)
-
-          super
-        end
-
-        #
-        # Non equality comparison
-        #
-        # @return [true, false]
-        #
-        # @!visibility private
-        def !=(other)
-          !(self == other) # rubocop:disable Style/InverseMethods
         end
       end
     end
