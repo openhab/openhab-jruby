@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "nokogiri"
+require "uri"
 
 module OpenHAB
   module YARD
