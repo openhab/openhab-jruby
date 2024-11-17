@@ -98,6 +98,10 @@ RSpec.describe OpenHAB::Core::Items::Proxy do
       expect(item).not_to respond_to(:command)
       expect { item.command }.to raise_error(NoMethodError)
     end
+
+    it "disappears when calling semantic predicates on an array" do
+      expect([item].locations).to eql []
+    end
   end
 
   it "does not respond to GroupItem#members if it's backed by a non-GroupItem" do
