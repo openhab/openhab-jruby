@@ -599,6 +599,14 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
   end
 
+  it "can add a colortemperaturepicker", if: OpenHAB::Core.version >= OpenHAB::Core::V4_3 do
+    sitemaps.build do
+      sitemap "default" do
+        colortemperaturepicker label: "My Colorpicker"
+      end
+    end
+  end
+
   # @deprecated OH 4.0 guard is only needed for < OH 4.1
   describe "#buttongrid", if: OpenHAB::Core.version >= OpenHAB::Core::V4_1 do
     it "works" do

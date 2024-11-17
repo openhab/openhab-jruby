@@ -689,6 +689,33 @@ module OpenHAB
         end
       end
 
+      # Builds a `Colortemperaturepicker` element
+      # @since openHAB 4.3
+      # @see org.openhab.core.model.sitemap.sitemap.Colortemperaturepicker
+      class ColortemperaturepickerBuilder < WidgetBuilder
+        # Allowed range of the value
+        # @return [Range, nil]
+        attr_accessor :range
+
+        # (see WidgetBuilder#initialize)
+        # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, range: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
+        # @param range [Range, nil] Allowed range of the value (see {ColortemperaturepickerBuilder#range})
+        # @!visibility private
+        def initialize(type, builder_proxy, range: nil, **kwargs, &block)
+          super(type, builder_proxy, **kwargs, &block)
+
+          @range = range
+        end
+
+        # @!visibility private
+        def build
+          widget = super
+          widget.min_value = range&.begin&.to_d
+          widget.max_value = range&.end&.to_d
+          widget
+        end
+      end
+
       # Builds a `Mapview` element
       # @see https://www.openhab.org/docs/ui/sitemaps.html#element-type-mapview
       # @see org.openhab.core.model.sitemap.sitemap.Mapview
@@ -1084,6 +1111,23 @@ module OpenHAB
         #                   visibility: nil)
         #   end
         #
+        #   # (see ColortemperaturepickerBuilder#initialize)
+        #   # Create a new `Colortemperaturepicker` element.
+        #   # @since openHAB 4.3
+        #   # @yield Block executed in the context of a {ColortemperaturepickerBuilder}
+        #   # @return [ColortemperaturepickerBuilder]
+        #   # @!visibility public
+        #   def colortemperaturepicker(item: nil,
+        #                              label: nil,
+        #                              icon: nil,
+        #                              static_icon: nil,
+        #                              range: nil,
+        #                              label_color: nil,
+        #                              value_color: nil,
+        #                              icon_color: nil,
+        #                              visibility: nil)
+        #   end
+        #
         #   # (see DefaultBuilder#initialize)
         #   # Create a new `Default` element.
         #   # @yield Block executed in the context of a {DefaultBuilder}
@@ -1116,6 +1160,7 @@ module OpenHAB
            buttongrid
            setpoint
            colorpicker
+           colortemperaturepicker
            default].each do |method|
           class_eval <<~RUBY, __FILE__, __LINE__ + 1
             def #{method}(*args, **kwargs, &block)                         # def frame(*args, **kwargs, &block)
