@@ -1,5 +1,25 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.32.0](https://github.com/openhab/openhab-jruby/tree/v5.32.0) (2024-11-25)
+
+### Features
+
+- alias GenericItem#category to GenericItem#icon by [@ccutrer](https://github.com/ccutrer) in [#350](https://github.com/openhab/openhab-jruby/pull/350)
+- Add all state and command descriptions options to items builder by [@ccutrer](https://github.com/ccutrer) in [#351](https://github.com/openhab/openhab-jruby/pull/351)
+- Add NumberItem#range by [@ccutrer](https://github.com/ccutrer) in [#352](https://github.com/openhab/openhab-jruby/pull/352)
+- Add planckian helpers for HSBType by [@ccutrer](https://github.com/ccutrer) in [#353](https://github.com/openhab/openhab-jruby/pull/353)
+- support sitemap colortemperaturepicker by [@ccutrer](https://github.com/ccutrer) in [#357](https://github.com/openhab/openhab-jruby/pull/357)
+
+### Bug Fixes
+
+- special case mired unit dimension inference in items builder by [@ccutrer](https://github.com/ccutrer) in [#349](https://github.com/openhab/openhab-jruby/pull/349)
+- Fix logger error when no toplevel file is found by [@jimtng](https://github.com/jimtng) in [#348](https://github.com/openhab/openhab-jruby/pull/348)
+- Use Units::MIRED instead of "mired" in HSBType by [@jimtng](https://github.com/jimtng) in [#360](https://github.com/openhab/openhab-jruby/pull/360)
+- fix mired detection in OH 4.3 by [@ccutrer](https://github.com/ccutrer) in [#359](https://github.com/openhab/openhab-jruby/pull/359)
+- fix race condition when using semantic methods by [@ccutrer](https://github.com/ccutrer) in [#356](https://github.com/openhab/openhab-jruby/pull/356)
+
+**Full Changelog**: [v5.31.0...v5.32.0](https://github.com/openhab/openhab-jruby/compare/v5.31.0...v5.32.0)
+
 ## [v5.31.0](https://github.com/openhab/openhab-jruby/tree/v5.31.0) (2024-10-03)
 
 ### Features
