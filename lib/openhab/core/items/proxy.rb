@@ -97,6 +97,35 @@ module OpenHAB
           __getobj__.members
         end
 
+        # Several methods can just return nil when it's a dummy item
+        # This helps when you're doing something like `items.locations.select {}`
+        # when items are getting created and removed in a concurrent thread to
+        # not have errors because an item disappeared
+        %i[
+          equipment
+          equipment?
+          equipment_type
+          location
+          location?
+          location_type
+          member_of?
+          point?
+          point_type
+          property_type
+          semantic?
+          semantic_type
+          tagged?
+        ].each do |m|
+          class_eval <<~RUBY, __FILE__, __LINE__ + 1
+            def #{m}(*args)              # def equipment(*args)
+              target = __getobj__        #   target = __getobj__
+              return nil if target.nil?  #   return nil if target.nil?
+                                         #
+              target.#{m}(*args)         #   target.equipment(*args)
+            end                          # end
+          RUBY
+        end
+
         # @return [String]
         def to_s
           return name if __getobj__.nil?
