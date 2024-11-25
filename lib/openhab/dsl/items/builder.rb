@@ -582,9 +582,9 @@ module OpenHAB
         def unit=(unit)
           @unit = unit
 
-          self.dimension ||= "Temperature" if unit&.to_s == "mired"
-          self.dimension ||= unit && org.openhab.core.types.util.UnitUtils.parse_unit(unit)&.then do |u|
-            org.openhab.core.types.util.UnitUtils.get_dimension_name(u)
+          if (openhab_unit = unit && org.openhab.core.types.util.UnitUtils.parse_unit(unit))
+            self.dimension ||= "Temperature" if openhab_unit == Units::MIRED
+            self.dimension ||= org.openhab.core.types.util.UnitUtils.get_dimension_name(openhab_unit)
           end
           self.format ||= unit && (if Gem::Version.new(Core::VERSION) >= Gem::Version.new("4.0.0.M3")
                                      "%s %unit%"
