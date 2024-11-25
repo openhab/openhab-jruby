@@ -13,129 +13,97 @@ module OpenHAB
         # @!parse include Item
 
         # @!visibility private
-        EVENTS = [Events::ItemAddedEvent::TYPE, Events::ItemUpdatedEvent::TYPE, Events::ItemRemovedEvent::TYPE].freeze
+        EVENTS = [Events::ItemAddedEvent::TYPE,
+                  Events::ItemUpdatedEvent::TYPE,
+                  Events::ItemRemovedEvent::TYPE].freeze
         # @!visibility private
         UID_METHOD = :name
+        # @!visibility private
+        UID_TYPE = String
 
         include Core::Proxy
 
         # @return [String]
         attr_reader :name
 
-        #
-        # Set the proxy item (called by super)
-        #
-        def __setobj__(item)
-          @item = item.is_a?(Item) ? item : nil
-          @name ||= item.name if item
-        end
-
-        #
-        # @return [Item, nil]
-        #
-        def __getobj__
-          @item
-        end
-
         # @return [Module]
         def class
-          return Item if __getobj__.nil?
+          target = __getobj__
+          return Item if target.nil?
 
-          __getobj__.class
+          target.class
         end
 
         # @return [true, false]
         def is_a?(klass)
-          obj = __getobj__
+          target = __getobj__
           # only claim to be a Delegator if we're backed by an actual item at the moment
-          klass == Item || obj.is_a?(klass) || klass == Proxy || (!obj.nil? && super)
+          klass == Item || target.is_a?(klass) || klass == Proxy || (target.nil? && super)
         end
         alias_method :kind_of?, :is_a?
 
-        #
-        # Need to check if `self` _or_ the delegate is an instance of the
-        # given class
-        #
-        # So that {#==} can work
-        #
-        # @return [true, false]
-        #
-        # @!visibility private
-        def instance_of?(klass)
-          __getobj__.instance_of?(klass) || super
-        end
-
-        #
-        # Check if delegates are equal for comparison
-        #
-        # Otherwise items can't be used in Java maps
-        #
-        # @return [true, false]
-        #
-        # @!visibility private
-        def ==(other)
-          return __getobj__ == other.__getobj__ if other.instance_of?(Proxy)
-
-          super
-        end
-
-        #
-        # Non equality comparison
-        #
-        # @return [true, false]
-        #
-        # @!visibility private
-        def !=(other)
-          !(self == other) # rubocop:disable Style/InverseMethods
-        end
-
         # @return [GroupItem::Members]
-        # @raise [NoMethodError] if item is not a GroupItem, or a dummy.
+        # @raise [NoMethodError] if item is neither a GroupItem, nor a dummy.
         def members
-          return GroupItem::Members.new(self) if __getobj__.nil?
+          target = __getobj__
+          return GroupItem::Members.new(self) if target.nil?
 
-          __getobj__.members
+          target.members
         end
 
-        # @return [String]
-        def to_s
-          return name if __getobj__.nil?
-
-          __getobj__.to_s
+        # Several methods can just return nil when it's a dummy item
+        # This helps when you're doing something like `items.locations.select {}`
+        # when items are getting created and removed in a concurrent thread to
+        # not have errors because an item disappeared
+        %i[
+          equipment
+          equipment?
+          equipment_type
+          location
+          location?
+          location_type
+          member_of?
+          point?
+          point_type
+          property_type
+          semantic?
+          semantic_type
+          tagged?
+        ].each do |m|
+          class_eval <<~RUBY, __FILE__, __LINE__ + 1
+            def #{m}(*args)              # def equipment(*args)
+              target = __getobj__        #   target = __getobj__
+              return nil if target.nil?  #   return nil if target.nil?
+                                         #
+              target.#{m}(*args)         #   target.equipment(*args)
+            end                          # end
+          RUBY
         end
 
-        # @return [String]
-        def inspect
-          return super unless __getobj__.nil?
+        # needs to return `true` for dummies for #members, false
+        # for non-dummies that aren't actually groups
+        def respond_to?(method, include_private = false) # rubocop:disable Style/OptionalBooleanParameter
+          target = __getobj__
+          if target.nil?
+            return true if Item.method_defined?(method)
+          elsif method.to_sym == :members
+            return target.respond_to?(method)
+          end
 
-          "#<OpenHAB::Core::Items::Proxy #{name}>"
+          target.respond_to?(method, include_private) || super
         end
 
-        #
-        # Supports inspect from IRB when we're a dummy item.
-        #
-        # @return [void]
-        # @!visibility private
-        def pretty_print(printer)
-          return super unless __getobj__.nil?
+        private
 
-          printer.text(inspect)
-        end
+        # ditto
+        def target_respond_to?(target, method, include_private)
+          if method.to_sym == :members
+            return true if target.nil?
 
-        # needs to return `false` if we know we're not a {GroupItem}
-        def respond_to?(method, *args)
-          obj = __getobj__
-          return obj.respond_to?(method, *args) if method.to_sym == :members && !obj.nil?
+            return target.respond_to?(method, include_private)
+          end
 
-          super
-        end
-
-        # needs to return `false` if we know we're not a {GroupItem}
-        def respond_to_missing?(method, *args)
-          obj = __getobj__
-          return obj.respond_to_missing?(method, *args) if method.to_sym == :members && !obj.nil?
-
-          super
+          target.respond_to?(method, include_private)
         end
       end
     end

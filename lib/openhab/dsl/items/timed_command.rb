@@ -100,7 +100,7 @@ module OpenHAB
           attr_reader :timed_commands
         end
 
-        Core::Items::GenericItem.prepend(self)
+        Core::Items::Item.prepend(self)
         Core::Items::GroupItem.prepend(self)
 
         #
