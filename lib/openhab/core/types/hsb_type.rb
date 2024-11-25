@@ -255,8 +255,8 @@ module OpenHAB
             range_type = range.begin || range.end
             if !range_type.is_a?(QuantityType)
               range = Range.new(range.begin | "K", range.end | "K")
-            elsif range_type.unit.to_s == "mired"
-              cct |= "mired"
+            elsif range_type.unit == Units::MIRED
+              cct |= Units::MIRED
             end
           end
           return nil if range && !range.cover?(cct)
