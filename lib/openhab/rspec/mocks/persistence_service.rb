@@ -19,12 +19,13 @@ module OpenHAB
         class HistoricItem
           include org.openhab.core.persistence.HistoricItem
 
-          attr_reader :timestamp, :state, :name
+          attr_reader :timestamp, :instant, :state, :name
 
           def initialize(timestamp, state, name)
             @timestamp = timestamp
             @state = state
             @name = name
+            @instant = @timestamp.to_instant
           end
         end
 

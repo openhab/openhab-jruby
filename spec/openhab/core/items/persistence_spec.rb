@@ -189,6 +189,8 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
       expect(max).to be_a described_class::PersistedState
       expect(max).to eql max.state
       expect(max.timestamp).to be_a ZonedDateTime
+      # @deprecated OH 4.2 - Remove if guard when dropping oh 4.2 support
+      expect(max.instant).to be_a Instant if OpenHAB::Core.version >= OpenHAB::Core::V4_3
     end
 
     it "is inspectable" do
