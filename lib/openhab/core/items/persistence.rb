@@ -88,10 +88,14 @@ module OpenHAB
           # @!attribute [r] timestamp
           # @return [ZonedDateTime]
 
+          # @!attribute [r] instant
+          # @return [Instant] The timestamp as an Instant
+          # @since openHAB 4.3
+
           # @!attribute [r] name
           # @return [String] Item name
 
-          delegate %i[timestamp name] => :@historic_item
+          delegate %i[timestamp instant name] => :@historic_item
 
           def initialize(historic_item, state = nil)
             @historic_item = historic_item
