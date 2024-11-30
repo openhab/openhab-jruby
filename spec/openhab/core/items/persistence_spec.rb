@@ -8,23 +8,38 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
   end
 
   # Call the given method with one timestamp argument
-  def call_with_one_arg(method, item)
+  def call_with_one_arg(method, item, with_riemann_type: false)
     timestamp = method.to_s.include?("until") ? 2.seconds.from_now : 2.seconds.ago
+
+    if with_riemann_type
+      %i[left midpoint right trapezoidal].each do |riemann_type|
+        item.public_send(method, timestamp, riemann_type:)
+        item.public_send(method, timestamp, :influxdb, riemann_type:)
+      end
+    end
+
     item.public_send(method, timestamp, :influxdb)
     item.public_send(method, timestamp)
   end
 
   # Call the given method with two timestamp arguments
-  def call_with_two_args(method, item)
+  def call_with_two_args(method, item, with_riemann_type: false)
+    if with_riemann_type
+      %i[left midpoint right trapezoidal].each do |riemann_type|
+        item.public_send(method, 2.seconds.ago, Time.now, :influxdb, riemann_type:)
+        item.public_send(method, 2.seconds.ago, Time.now, riemann_type:)
+      end
+    end
+
     item.public_send(method, 2.seconds.ago, Time.now, :influxdb)
     item.public_send(method, 2.seconds.ago, Time.now)
   end
 
-  def call_method(method, item)
+  def call_method(method, item, with_riemann_type: false)
     if method.to_s.include?("between")
-      call_with_two_args(method, item)
+      call_with_two_args(method, item, with_riemann_type:)
     else
-      call_with_one_arg(method, item)
+      call_with_one_arg(method, item, with_riemann_type:)
     end
   end
 
@@ -72,7 +87,9 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
     end
   end
 
+  # riemann_sum methods were added in OH 5.0, so we don't need to test their quantification
   numeric_methods = %i[average median delta deviation maximum minimum sum variance]
+  supports_riemann_arg = %i[average deviation variance riemann_sum]
   variants = %i[since until between]
   %i[
     all_states
@@ -87,6 +104,7 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
     maximum
     minimum
     remove_all_states
+    riemann_sum
     sum
     updated?
     variance
@@ -97,7 +115,7 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
     next unless OpenHAB::Core::Items::Persistence.instance_methods.include?(method)
 
     describe "##{method}" do
-      # @deprecate OH 4.1 - OH 4.2+ core returns QuantityType when applicable, so we don't have to quantify
+      # @deprecated OH 4.1 - OH 4.2+ core returns QuantityType when applicable, so we don't have to quantify
       if OpenHAB::Core.version < OpenHAB::Core::V4_2 && numeric_methods.include?(name)
         it "returns a QuantityType on a dimensioned NumberItem" do
           result = call_method(method, dimensioned_item)
@@ -112,7 +130,7 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
         end
       else
         it "works" do
-          call_method(method, dimensionless_item)
+          call_method(method, dimensionless_item, with_riemann_type: supports_riemann_arg.include?(name))
         end
       end
 
