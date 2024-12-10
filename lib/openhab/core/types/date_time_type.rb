@@ -193,6 +193,7 @@ module OpenHAB
         #
         # @return [String] The timezone in `[+-]hh:mm(:ss)` format (`Z` for UTC)
         #
+        # @deprecated This method has been deprecated in openHAB 4.3.
         def zone
           zoned_date_time.zone.id
         end

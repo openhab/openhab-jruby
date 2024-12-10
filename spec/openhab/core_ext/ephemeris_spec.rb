@@ -17,7 +17,7 @@ RSpec.describe OpenHAB::CoreExt::Ephemeris do
     end
 
     it "returns nil for a non-holiday" do
-      expect(LocalDate.parse("2022-12-26").holiday).to be_nil
+      expect(LocalDate.parse("2022-12-27").holiday).to be_nil
     end
   end
 
