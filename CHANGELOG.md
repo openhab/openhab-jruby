@@ -1,5 +1,14 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.33.0](https://github.com/openhab/openhab-jruby/tree/v5.33.0) (2024-12-14)
+
+### Features
+
+- Add PersistedState#instant by [@jimtng](https://github.com/jimtng) in [#361](https://github.com/openhab/openhab-jruby/pull/361)
+- Add shorter aliases for HTTP actions: `HTTP.get`, `HTTP.post`, `HTTP.put`, `HTTP.delete` by [@jimtng](https://github.com/jimtng) in [#367](https://github.com/openhab/openhab-jruby/pull/367)
+
+**Full Changelog**: [v5.32.0...v5.33.0](https://github.com/openhab/openhab-jruby/compare/v5.32.0...v5.33.0)
+
 ## [v5.32.0](https://github.com/openhab/openhab-jruby/tree/v5.32.0) (2024-11-25)
 
 ### Features
