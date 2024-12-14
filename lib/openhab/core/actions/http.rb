@@ -12,7 +12,7 @@ module OpenHAB
       #     "User-Agent": "JRuby/1.2.3", # enclose in quotes if the key contains dashes
       #     Accept: "application/json",
       #   }
-      #   response = HTTP.send_http_get_request("http://example.com/list", headers: headers)
+      #   response = HTTP.get("http://example.com/list", headers: headers)
       #
       # @see https://www.openhab.org/docs/configuration/actions.html#http-actions HTTP Actions
       class HTTP
@@ -33,6 +33,7 @@ module OpenHAB
 
             sendHttpGetRequest(url, headers.transform_keys(&:to_s), timeout)
           end
+          alias_method :get, :send_http_get_request
 
           #
           # Sends an HTTP PUT request and returns the result as a String.
@@ -52,6 +53,7 @@ module OpenHAB
 
             sendHttpPutRequest(url, content_type, content, headers.transform_keys(&:to_s), timeout)
           end
+          alias_method :put, :send_http_put_request
 
           #
           # Sends an HTTP POST request and returns the result as a String.
@@ -71,6 +73,7 @@ module OpenHAB
 
             sendHttpPostRequest(url, content_type, content, headers.transform_keys(&:to_s), timeout)
           end
+          alias_method :post, :send_http_post_request
 
           #
           # Sends an HTTP DELETE request and returns the result as a String.
@@ -89,6 +92,7 @@ module OpenHAB
 
             sendHttpDeleteRequest(url, headers.transform_keys(&:to_s), timeout)
           end
+          alias_method :delete, :send_http_delete_request
         end
       end
     end
