@@ -3598,7 +3598,7 @@ headers = {
   <span class="key"><span class="delimiter">&quot;</span><span class="content">User-Agent</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">JRuby/1.2.3</span><span class="delimiter">&quot;</span></span>, <span class="comment"># enclose in quotes if the key contains dashes</span>
   <span class="key">Accept</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>,
 }
-response = <span class="constant">HTTP</span>.send_http_get_request(<span class="string"><span class="delimiter">&quot;</span><span class="content">http://example.com/list</span><span class="delimiter">&quot;</span></span>, <span class="key">headers</span>: headers)</code></pre>
+response = <span class="constant">HTTP</span>.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">http://example.com/list</span><span class="delimiter">&quot;</span></span>, <span class="key">headers</span>: headers)</code></pre>
     
   </div>
 
@@ -3634,6 +3634,8 @@ response = <span class="constant">HTTP</span>.send_http_get_request(<span class=
     
 
     
+      (also: delete)
+    
   </span>
   
   
@@ -3656,6 +3658,8 @@ response = <span class="constant">HTTP</span>.send_http_get_request(<span class=
       <a href="#send_http_get_request-class_method" title="send_http_get_request (class method)">.<strong>send_http_get_request</strong>(url, headers: {}, timeout: nil)  &#x21d2; String<sup>?</sup> </a>
     
 
+    
+      (also: get)
     
   </span>
   
@@ -3680,6 +3684,8 @@ response = <span class="constant">HTTP</span>.send_http_get_request(<span class=
     
 
     
+      (also: post)
+    
   </span>
   
   
@@ -3702,6 +3708,8 @@ response = <span class="constant">HTTP</span>.send_http_get_request(<span class=
       <a href="#send_http_put_request-class_method" title="send_http_put_request (class method)">.<strong>send_http_put_request</strong>(url, content_type = nil, content = nil, headers: {}, timeout: nil)  &#x21d2; String<sup>?</sup> </a>
     
 
+    
+      (also: put)
     
   </span>
   
@@ -3735,6 +3743,10 @@ response = <span class="constant">HTTP</span>.send_http_get_request(<span class=
     .<strong>send_http_delete_request</strong>(url, headers: {}, timeout: nil)  &#x21d2; <tt>String</tt><sup>?</sup> 
   
 
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='delete-class_method'>delete</span></span>
+    </span>
   
 
   
@@ -3834,15 +3846,15 @@ Underscores in symbolic keys are replaced with dashes.</p>
       <pre class="lines">
 
 
-86
-87
-88
 89
 90
-91</pre>
+91
+92
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/http.rb', line 86</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/http.rb', line 89</span>
 
 <span class="keyword">def</span> <span class="function">send_http_delete_request</span>(url, <span class="key">headers</span>: {}, <span class="key">timeout</span>: <span class="predefined-constant">nil</span>)
   timeout ||= <span class="integer">1_000</span>
@@ -3861,6 +3873,10 @@ Underscores in symbolic keys are replaced with dashes.</p>
     .<strong>send_http_get_request</strong>(url, headers: {}, timeout: nil)  &#x21d2; <tt>String</tt><sup>?</sup> 
   
 
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='get-class_method'>get</span></span>
+    </span>
   
 
   
@@ -3987,6 +4003,10 @@ Underscores in symbolic keys are replaced with dashes.</p>
   
 
   
+    <span class="aliases">Also known as:
+    <span class="names"><span id='post-class_method'>post</span></span>
+    </span>
+  
 
   
 </h3><div class="docstring">
@@ -4110,15 +4130,15 @@ Underscores in symbolic keys are replaced with dashes.</p>
       <pre class="lines">
 
 
-68
-69
 70
 71
 72
-73</pre>
+73
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/http.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/http.rb', line 70</span>
 
 <span class="keyword">def</span> <span class="function">send_http_post_request</span>(url, content_type = <span class="predefined-constant">nil</span>, content = <span class="predefined-constant">nil</span>, <span class="key">headers</span>: {}, <span class="key">timeout</span>: <span class="predefined-constant">nil</span>)
   timeout ||= <span class="integer">1_000</span>
@@ -4137,6 +4157,10 @@ Underscores in symbolic keys are replaced with dashes.</p>
     .<strong>send_http_put_request</strong>(url, content_type = nil, content = nil, headers: {}, timeout: nil)  &#x21d2; <tt>String</tt><sup>?</sup> 
   
 
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='put-class_method'>put</span></span>
+    </span>
   
 
   
@@ -4261,15 +4285,15 @@ Underscores in symbolic keys are replaced with dashes.</p>
       <pre class="lines">
 
 
-49
 50
 51
 52
 53
-54</pre>
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/http.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/http.rb', line 50</span>
 
 <span class="keyword">def</span> <span class="function">send_http_put_request</span>(url, content_type = <span class="predefined-constant">nil</span>, content = <span class="predefined-constant">nil</span>, <span class="key">headers</span>: {}, <span class="key">timeout</span>: <span class="predefined-constant">nil</span>)
   timeout ||= <span class="integer">1_000</span>
@@ -4287,7 +4311,7 @@ Underscores in symbolic keys are replaced with dashes.</p>
 </div>
 
         <footer>
-  Generated on Tue Dec 10 20:26:51 2024 by
+  Generated on Sat Dec 14 15:05:29 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
