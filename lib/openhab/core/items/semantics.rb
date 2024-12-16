@@ -230,7 +230,9 @@ module OpenHAB
 
             # @deprecated OH3.4 missing registry
             if Provider.registry
-              tag_class = service.get_by_label_or_synonym(id, locale).first ||
+              tag = service.get_by_label_or_synonym(id, locale)
+              tag = nil if tag&.empty?
+              tag_class = tag&.first ||
                           Provider.registry.get_tag_class_by_id(id)
               return unless tag_class
 
