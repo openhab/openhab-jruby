@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.33.1](https://github.com/openhab/openhab-jruby/tree/v5.33.1) (2024-12-16)
+
+### Bug Fixes
+
+- Fix semantic tag lookup on Java 21 by [@ccutrer](https://github.com/ccutrer) in [#370](https://github.com/openhab/openhab-jruby/pull/370)
+
+**Full Changelog**: [v5.33.0...v5.33.1](https://github.com/openhab/openhab-jruby/compare/v5.33.0...v5.33.1)
+
 ## [v5.33.0](https://github.com/openhab/openhab-jruby/tree/v5.33.0) (2024-12-14)
 
 ### Features
