@@ -43,13 +43,21 @@ module OpenHAB
           end
         end
 
-        # @param [ZonedDateTime, nil] context
-        #   A {ZonedDateTime} used to fill in missing
-        #   fields during conversion. Not used in this class.
-        # @return [ZonedTimeTime]
-        def to_zoned_date_time(context = nil) # rubocop:disable Lint/UnusedMethodArgument
-          zoned_date_time
+        # @deprecated OH 4.2 Just call zoned_date_time(ZoneId.system_default) in OH 4.3
+        if OpenHAB::Core.version >= OpenHAB::Core::V4_3
+          def to_zoned_date_time(context = nil) # rubocop:disable Lint/UnusedMethodArgument
+            zoned_date_time(ZoneId.system_default)
+          end
+        else
+          def to_zoned_date_time(context = nil) # rubocop:disable Lint/UnusedMethodArgument
+            zoned_date_time
+          end
         end
+
+        # @!method to_zoned_date_time(context = nil)
+        # @param [ZonedDateTime, nil] context
+        #   A {ZonedDateTime} used to fill in missing fields during conversion. Not used in this class.
+        # @return [ZonedDateTime]
 
         # @!visibility private
         def to_instant(_context = nil)
@@ -62,6 +70,7 @@ module OpenHAB
         # @!method to_instant
         # @return [Instant]
 
+        # @deprecated These methods have been deprecated in openHAB 4.3.
         # act like a Ruby Time
         def_delegator :zoned_date_time, :month_value, :month
         def_delegator :zoned_date_time, :day_of_month, :mday
@@ -69,8 +78,13 @@ module OpenHAB
         def_delegator :zoned_date_time, :minute, :min
         def_delegator :zoned_date_time, :second, :sec
         def_delegator :zoned_date_time, :nano, :nsec
-        def_delegator :zoned_date_time, :to_epoch_second, :to_i
         def_delegator :zoned_date_time, :to_time
+
+        # NOTE: to_i is supported by both Instant and ZonedDateTime in #method_missing
+
+        # @!method to_i
+        # Returns the value of time as an integer number of seconds since the Epoch
+        # @return [Integer] Number of seconds since the Epoch
 
         # @!visibility private
         alias_method :day, :mday
@@ -83,6 +97,9 @@ module OpenHAB
         def initialize(value = nil)
           if value.nil?
             super()
+            return
+          elsif OpenHAB::Core.version >= OpenHAB::Core::V4_3 && value.respond_to?(:to_instant)
+            super(value.to_instant)
             return
           elsif value.respond_to?(:to_zoned_date_time)
             super(value.to_zoned_date_time)
@@ -110,6 +127,9 @@ module OpenHAB
         def eql?(other)
           return false unless other.instance_of?(self.class)
 
+          # @deprecated OH 4.2 Call compare_to(other).zero? in OH 4.3 to avoid the deprecated getZonedDateTime()
+          return compare_to(other).zero? if OpenHAB::Core.version >= OpenHAB::Core::V4_3
+
           zoned_date_time.compare_to(other.zoned_date_time).zero?
         end
 
@@ -126,6 +146,9 @@ module OpenHAB
         def <=>(other)
           logger.trace { "(#{self.class}) #{self} <=> #{other} (#{other.class})" }
           if other.is_a?(self.class)
+            # @deprecated OH 4.2 Call compare_to(other) in OH 4.3 to avoid the deprecated getZonedDateTime()
+            return compare_to(other) if OpenHAB::Core.version >= OpenHAB::Core::V4_3
+
             zoned_date_time <=> other.zoned_date_time
           elsif other.respond_to?(:to_time)
             to_time <=> other.to_time
@@ -147,6 +170,7 @@ module OpenHAB
         #
         def coerce(other)
           logger.trace { "Coercing #{self} as a request from #{other.class}" }
+          return [other, to_instant] if other.respond_to?(:to_instant)
           return [other, zoned_date_time] if other.respond_to?(:to_zoned_date_time)
 
           [DateTimeType.new(other), self] if other.respond_to?(:to_time)
@@ -158,7 +182,7 @@ module OpenHAB
         # @return [Float] Number of seconds since the Epoch, with nanosecond presicion
         #
         def to_f
-          zoned_date_time.to_epoch_second + (zoned_date_time.nano / 1_000_000_000)
+          to_instant.then { |instant| instant.epoch_second + (instant.nano / 1_000_000_000) }
         end
 
         #
@@ -166,6 +190,7 @@ module OpenHAB
         #
         # @return [Integer] The offset from UTC, in seconds
         #
+        # @deprecated This method has been deprecated in openHAB 4.3.
         def utc_offset
           zoned_date_time.offset.total_seconds
         end
@@ -175,6 +200,7 @@ module OpenHAB
         #
         # @return [true,false] true if utc_offset == 0, false otherwise
         #
+        # @deprecated This method has been deprecated in openHAB 4.3.
         def utc?
           utc_offset.zero?
         end
@@ -184,6 +210,7 @@ module OpenHAB
         #
         # @return [Integer] The day of week
         #
+        # @deprecated This method has been deprecated in openHAB 4.3.
         def wday
           zoned_date_time.day_of_week.value % 7
         end
@@ -200,6 +227,8 @@ module OpenHAB
 
         # @!visibility private
         def respond_to_missing?(method, _include_private = false)
+          # @deprecated OH 4.2 Remove version check when dropping OH 4.2
+          return true if OpenHAB::Core.version >= OpenHAB::Core::V4_3 && to_instant.respond_to?(method)
           return true if zoned_date_time.respond_to?(method)
           return true if ::Time.instance_methods.include?(method.to_sym)
 
@@ -211,6 +240,11 @@ module OpenHAB
         # object representing the same instant
         #
         def method_missing(method, *args, &block)
+          # @deprecated OH 4.2 Remove version check when dropping OH 4.2
+          if OpenHAB::Core.version >= OpenHAB::Core::V4_3 && to_instant.respond_to?(method)
+            return to_instant.send(method, *args, &block)
+          end
+
           return zoned_date_time.send(method, *args, &block) if zoned_date_time.respond_to?(method)
           return to_time.send(method, *args, &block) if ::Time.instance_methods.include?(method.to_sym)
 
