@@ -142,7 +142,7 @@ module OpenHAB
       end
 
       # @!visibility private
-      def register(id, block, label: nil, config_description: nil)
+      def register(id, block, label: nil, type: :state, config_description: nil)
         uid = org.openhab.core.thing.profiles.ProfileTypeUID.new("ruby", id)
         uri = java.net.URI.new("profile", uid.to_s, nil)
         if config_description && config_description.uid != uri
@@ -155,6 +155,7 @@ module OpenHAB
         @profiles[uid] = {
           thread_locals: DSL::ThreadLocal.persist,
           label: label,
+          type: type,
           config_description: config_description,
           block: block
         }
@@ -177,7 +178,11 @@ module OpenHAB
         @profiles.map do |uid, profile|
           next if profile[:label].nil?
 
-          org.openhab.core.thing.profiles.ProfileTypeBuilder.new_state(uid, "RUBY #{profile[:label]}").build
+          if profile[:type] == :trigger
+            org.openhab.core.thing.profiles.ProfileTypeBuilder.new_trigger(uid, "RUBY #{profile[:label]}").build
+          else
+            org.openhab.core.thing.profiles.ProfileTypeBuilder.new_state(uid, "RUBY #{profile[:label]}").build
+          end
         end.compact
       end
 
