@@ -106,6 +106,7 @@ module OpenHAB
     #
     # @param [String, Symbol] id The id for the profile.
     # @param [String, nil] label The label for the profile. When nil, the profile will not be visible in the UI.
+    # @param [:state, :trigger] type The type of profile.
     # @param [org.openhab.core.config.core.ConfigDescription, nil] config_description
     #   The configuration description for the profile so that it can be configured in the UI.
     # @yield [event, command: nil, state: nil, trigger: nil, time_series: nil, callback:, link:, item:, channel_uid:, configuration:, context:]
@@ -191,13 +192,13 @@ module OpenHAB
     #     (configuration["min"]..configuration["max"]).cover?(state)
     #   end
     #
-    def profile(id, label: nil, config_description: nil, &block)
+    def profile(id, label: nil, type: :state, config_description: nil, &block)
       raise ArgumentError, "Block is required" unless block
 
       id = id.to_s
 
       ThreadLocal.thread_local(openhab_rule_type: "profile", openhab_rule_uid: id) do
-        Core::ProfileFactory.instance.register(id, block, label: label, config_description: config_description)
+        Core::ProfileFactory.instance.register(id, block, label: label, type: type, config_description: config_description)
       end
     end
 
