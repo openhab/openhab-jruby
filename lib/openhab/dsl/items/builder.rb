@@ -98,8 +98,6 @@ module OpenHAB
           result
         end
 
-        include DSL
-
         private
 
         def item(*args, **kwargs, &block)
@@ -159,10 +157,11 @@ module OpenHAB
 
             # make sure to add the item to the registry before linking it
             channel_uids = builder.channels.to_set do |(channel, config)|
-              # fill in partial channel names from group's thing id
+              channel = channel.to_s
+              # fill in partial channel names from item's or group's thing id
               if !channel.include?(":") &&
-                 (group = builder.groups.find { |g| g.is_a?(GroupItemBuilder) && g.thing })
-                thing = group.thing
+                 (thing = builder.thing ||
+                  thing = builder.groups.find { |g| g.is_a?(GroupItemBuilder) && g.thing }&.thing)
                 channel = "#{thing}:#{channel}"
               end
 
@@ -243,18 +242,12 @@ module OpenHAB
         # The icon to be associated with the item
         # @return [Symbol, String, nil]
         attr_accessor :icon
-        # Groups to which this item should be added
-        # @return [Array<String, GroupItem>]
-        attr_reader :groups
-        # Tags to apply to this item
-        # @return [Array<String, Semantics::Tag>]
-        attr_reader :tags
         # Autoupdate setting
         # @return [true, false, nil]
         attr_accessor :autoupdate
-        # {Core::Things::ChannelUID Channel} to link the item to
-        # @return [String, Core::Things::ChannelUID, nil]
-        attr_accessor :channels
+        # @return [String, Core::Things::Thing, Core::Things::ThingUID, nil]
+        #   {Core::Things::ThingUID Thing} from which to resolve relative channel ids
+        attr_accessor :thing
         # @return [Core::Items::Metadata::NamespaceHash]
         attr_reader :metadata
         # Initial state
@@ -264,6 +257,19 @@ module OpenHAB
         # @return [Core::Types::State]
         attr_reader :state
 
+        attr_writer :channels, :groups, :tags
+
+        # @!attribute [rw] channels
+        # @return [Array<String, Symbol, Core::Things::ChannelUID, Core::Things::Channel, Array>]
+        #   {Core::Things::ChannelUID Channel} to link the item to
+
+        # @!attribute [rw] groups
+        # @return [Array<String, GroupItem>] Groups to which this item should be added
+
+        # @!attribute [rw] tags
+        # @return [Array<String>] Tags to apply to this item
+
+        # This comment needs to exist otherwise YARD thinks the above attribute should apply to the metaclass
         class << self
           # @!visibility private
           def item_factory
@@ -352,6 +358,7 @@ module OpenHAB
                        autoupdate: nil,
                        thing: nil,
                        channel: nil,
+                       channels: nil,
                        expire: nil,
                        alexa: nil,
                        ga: nil, # rubocop:disable Naming/MethodParameterName
@@ -408,12 +415,13 @@ module OpenHAB
           self.state = state
 
           self.group(*group)
-          self.group(*groups)
+          self.groups(*groups)
 
           self.tag(*tag)
-          self.tag(*tags)
+          self.tags(*tags)
 
-          self.channel(*channel) if channel
+          self.channel(*channel)
+          self.channels(*channels)
         end
 
         #
@@ -428,20 +436,45 @@ module OpenHAB
         #
         # Tag item
         #
-        # @param tags [String, Symbol, Semantics::Tag]
-        # @return [void]
+        # @return [Array<String>]
+        #
+        # @overload tag(tag)
+        #   @param tag [String, Symbol, Semantics::Tag]
+        #   @return [Array<String>]
+        #
+        # @overload tags
+        #   @return [Array<String>]
+        #
+        # @overload tags(*tags)
+        #   @param tags [String, Symbol, Semantics::Tag]
+        #   @return [Array<String>]
         #
         def tag(*tags)
-          @tags += self.class.normalize_tags(*tags)
+          return @tags if tags.empty?
+
+          @tags.concat(self.class.normalize_tags(*tags))
         end
+        alias_method :tags, :tag
 
         #
         # Add this item to a group
         #
-        # @param groups [String, GroupItemBuilder, GroupItem]
-        # @return [void]
+        # @return [Array<String, GroupItemBulder, GroupItem>]
+        #
+        # @overload group(group)
+        #   @param group [String, GroupItemBuilder, GroupItem]
+        #   @return [Array<String, GroupItemBulder, GroupItem>]
+        #
+        # @overload groups
+        #   @return [Array<String, GroupItemBulder, GroupItem>]
+        #
+        # @overload groups(*groups)
+        #   @param groups [String, GroupItemBuilder, GroupItem]
+        #   @return [Array<String, GroupItemBulder, GroupItem>]
         #
         def group(*groups)
+          return @groups if groups.empty?
+
           unless groups.all? do |group|
                    group.is_a?(String) || group.is_a?(Core::Items::GroupItem) || group.is_a?(GroupItemBuilder)
                  end
@@ -450,6 +483,7 @@ module OpenHAB
 
           @groups.concat(groups)
         end
+        alias_method :groups, :group
 
         #
         # @!method alexa(value, config = nil)
@@ -494,10 +528,23 @@ module OpenHAB
         #
         # Add a channel link to this item.
         #
-        # @param channel [String, Symbol, Core::Things::ChannelUID, Core::Things::Channel]
-        #   Channel to link the item to. When thing is set, this can be a relative channel name.
-        # @param config [Hash] Additional configuration, such as profile
-        # @return [void]
+        # @return [Array<String, Symbol, Core::Things::ChannelUID, Core::Things::Channel, Array>]
+        #
+        # @overload channel(channel, config = {})
+        #   @param channel [String, Symbol, Core::Things::ChannelUID, Core::Things::Channel]
+        #     Channel to link the item to. When {thing} is set, this can be a relative channel name.
+        #   @param config [Hash] Additional configuration, such as profile
+        #   @return [Array<String, Symbol, Core::Things::ChannelUID, Core::Things::Channel, Array>]
+        #
+        # @overload channels
+        #   @return [Array<String, Symbol, Core::Things::ChannelUID, Core::Things::Channel, Array>]
+        #
+        # @overload channels(*channels)
+        #   @param channels [String, Symbol, Core::Things::ChannelUID, Core::Things::Channel, Array]
+        #     Channels to link the item to. When {thing} is set, these can be relative channel names.
+        #     Each array element can also be a two element array with the first element being the
+        #     channel, and the second element being a config hash.
+        #   @return [Array<String, Symbol, Core::Things::ChannelUID, Core::Things::Channel, Array>]
         #
         # @example
         #   items.build do
@@ -511,11 +558,46 @@ module OpenHAB
         #     switch_item Bedroom_Light, thing: "mqtt:topic:bedroom-light", channel: :power
         #   end
         #
-        def channel(channel, config = {})
-          channel = channel.to_s
-          channel = "#{@thing}:#{channel}" if @thing && !channel.include?(":")
-          @channels << [channel, config]
+        # @example Multiple channels
+        #   items.build do
+        #     dimmer_item DemoDimmer, channels: ["hue:0210:bridge:1:color", "knx:device:bridge:generic:controlDimmer"]
+        #   end
+        #
+        # @example Multiple channels in a block
+        #   items.build do
+        #     dimmer_item DemoDimmer do
+        #       channel "hue:0210:bridge:1:color"
+        #       channel "knx:device:bridge:generic:controlDimmer"
+        #     end
+        #   end
+        #
+        # @example Multiple channels with config
+        #   items.build do
+        #     dimmer_item DemoDimmer, channels: [["hue:0210:bridge:1:color", profile: "system:follow"],
+        #                                        "knx:device:bridge:generic:controlDimmer"]
+        #   end
+        #
+        def channel(*channels)
+          return @channels if channels.empty?
+
+          channels = [channels] if channels.length == 2 && channels[1].is_a?(Hash)
+
+          channels.each do |channel|
+            orig_channel = channel
+            channel = channel.first if channel.is_a?(Array)
+            next if channel.is_a?(String) ||
+                    channel.is_a?(Symbol) ||
+                    channel.is_a?(Core::Things::ChannelUID) ||
+                    channel.is_a?(Core::Things::Channel)
+
+            raise ArgumentError, "channel #{orig_channel.inspect} must be a `String`, `Symbol`, `ChannelUID`, or " \
+                                 "`Channel`, or a two element array with the first element those types, and the " \
+                                 "second element a Hash"
+          end
+
+          @channels.concat(channels)
         end
+        alias_method :channels, :channel
 
         #
         # @!method expire(duration, command: nil, state: nil, ignore_state_updates: nil, ignore_commands: nil)

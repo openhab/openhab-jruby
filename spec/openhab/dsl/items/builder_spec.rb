@@ -675,6 +675,7 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
       install_addon "binding-astro", ready_markers: "openhab.xmlThingTypes"
       things.build do
         thing "astro:sun:home", "Astro Sun Data", config: { "geolocation" => "0,0" }
+        thing "astro:moon:home", "Astro Moon Data", config: { "geolocation" => "0,0" }
       end
     end
 
@@ -689,11 +690,30 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
       end
       items.build do
         date_time_item "DateTime1" do
-          channel  "astro:sun:home:rise#start"
-          channel  "astro:moon:home:rise#start"
+          channel "astro:sun:home:rise#start"
+          channel "astro:moon:home:rise#start"
         end
       end
       expect(DateTime1.things).to match_array([things["astro:sun:home"], things["astro:moon:home"]])
+    end
+
+    it "accepts multiple channels in an immediate argument" do
+      items.build { string_item "StringItem1", channels: ["astro:sun:home:season#name", "astro:moon:home:season#name"] }
+      expect(StringItem1.things).to match [things["astro:sun:home"], things["astro:moon:home"]]
+    end
+
+    it "accepts multiple channels with config in an immediate argument" do
+      items.build do
+        string_item "StringItem1",
+                    channels: [["astro:sun:home:season#name", { config: 1 }], "astro:moon:home:season#name"]
+      end
+      expect(StringItem1.things).to match [things["astro:sun:home"], things["astro:moon:home"]]
+    end
+
+    it "rejects invalid channel data" do
+      expect do
+        items.build { string_item "StringItem1", channels: 1 }
+      end.to raise_error(ArgumentError)
     end
 
     it "can link to an item channel with a profile" do
