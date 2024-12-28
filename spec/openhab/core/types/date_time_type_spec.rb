@@ -7,7 +7,7 @@ RSpec.describe OpenHAB::Core::Types::DateTimeType do
 
   describe "#initialize" do
     it "initializes to `now` if no argument is given" do
-      expect(DateTimeType.new.zoned_date_time.to_epoch_second).to be_within(1).of(ZonedDateTime.now.to_epoch_second)
+      expect(DateTimeType.new.to_zoned_date_time.to_epoch_second).to be_within(1).of(ZonedDateTime.now.to_epoch_second)
     end
   end
 
