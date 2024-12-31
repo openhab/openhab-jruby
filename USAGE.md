@@ -3,10 +3,54 @@
 
 # JRuby Scripting <!-- omit from toc -->
 
-This add-on provides [JRuby](https://www.jruby.org/) scripting language for automation rules.
-Also included is [openhab-scripting](https://openhab.github.io/openhab-jruby/), a fairly high-level Ruby gem to support automation in openHAB.
-It provides native Ruby access to common openHAB functionality within rules including items, things, actions, logging and more.
+This add-on provides Ruby scripting language for automation rules.
+It includes the [openhab-scripting](https://openhab.github.io/openhab-jruby/) helper library, a comprehensive Ruby gem designed to enhance automation in openHAB.
+This library offers a streamlined syntax for writing file-based and UI-based rules, making it easier and more intuitive than RulesDSL, while delivering the full features of the Ruby language.
+
 If you're new to Ruby, you may want to check out [Ruby Basics](docs/ruby-basics.md).
+
+Example file-based rules:
+
+```ruby
+rule "Turn on light when sensor changed to open" do
+  changed Door_Sensor # a Contact item
+  run do |event|
+    if event.open?
+      Cupboard_Light.on for: 3.minutes # Automatically turn it off after 3 minutes
+    else
+      Cupboard_Light.off # This will automatically cancel the timer set above
+    end
+  end
+end
+```
+
+```ruby
+rule "Door open reminder" do
+  changed Doors.members, to: OPEN
+  run do |event|
+    # Create a timer using the triggering item as the timer id
+    # If a timer with the given id already exists, it will be rescheduled
+    after 5.minutes, id: event.item do |timer|
+      next if timer.cancelled? || event.item.closed?
+
+      Voice.say "The #{event.item} is open"
+
+      timer.reschedule # Use the original duration by default
+    end
+  end
+end
+```
+
+Example UI-based rules:
+
+```ruby
+only_every(2.minutes) do # apply rate-limiting
+  Audio.play_sound("doorbell.mp3")
+  Notification.send("Someone pressed the doorbell")
+end
+```
+
+Additional [example rules are available](docs/examples.md), as well as examples of [conversions from RulesDSL, JavaScript, and Python rules](docs/conversions.md).
 
 - [Why Ruby?](#why-ruby)
 - [Installation](#installation)
@@ -66,14 +110,12 @@ If you're new to Ruby, you may want to check out [Ruby Basics](docs/ruby-basics.
 - [Calling Java From JRuby](#calling-java-from-jruby)
 - [Full Documentation](#full-documentation)
 
-Additional [example rules are available](docs/examples.md), as well as examples of [conversions from DSL and Python rules](docs/conversions.md).
-
 ## Why Ruby?
 
 - Ruby is designed for programmers' productivity with the idea that programming should be fun for programmers.
 - Ruby emphasizes the necessity for software to be understood by humans first and computers second.
-- Ruby makes writing automation enjoyable without having to fight with compilers and interpreters.
-- Rich ecosystem of tools, including things like Rubocop to help developers write clean code and RSpec to test the libraries.
+- Ruby makes writing automation enjoyable with its readable syntax and a rich collection of useful methods in its built-in classes.
+- Rich ecosystem of tools and libraries, including things like Rubocop to help developers write clean code and RSpec to test the libraries.
 - Ruby is really good at letting one express intent and create a DSL to make that expression easier.
 
 ### Design points <!-- omit from toc -->
@@ -88,40 +130,26 @@ Additional [example rules are available](docs/examples.md), as well as examples 
   - Designed and tested using [Test-Driven Development](https://en.wikipedia.org/wiki/Test-driven_development) with [RSpec](https://rspec.info/)
 - Extensible.
   - Anyone should be able to customize and add/remove core language features
-- Easy access to the Ruby ecosystem in rules through Ruby gems.
+- Easy access to the Ruby ecosystem in rules through [Ruby Gems](https://rubygems.org/).
 
 ## Installation
 
-### Prerequisites <!-- omit from toc -->
-
-1. openHAB 3.4+
-1. The JRuby Scripting Language Addon
-
 ### From the User Interface <!-- omit from toc -->
 
-1. Go to `Settings -> Add-ons -> Automation` and install the jrubyscripting automation addon following the [openHAB instructions](https://www.openhab.org/docs/configuration/addons.html).
-   In openHAB 4.0+ the defaults are set so the next step can be skipped.
-1. Go to `Settings -> Add-on Settings -> JRuby Scripting`:
-   - **Ruby Gems**: `openhab-scripting=~>5.0`
-   - **Require Scripts**: `openhab/dsl` (not required, but recommended)
+- Go to `Settings -> Add-ons -> Automation` and install the jrubyscripting automation addon following the [openHAB instructions](https://www.openhab.org/docs/configuration/addons.html).
 
 ### Using Files <!-- omit from toc -->
 
-1. Edit `<OPENHAB_CONF>/services/addons.cfg` and ensure that `jrubyscripting` is included in an uncommented `automation=` list of automations to install.
-   In openHAB 4.0+ the defaults are set so the next step can be skipped.
-1. Configure JRuby openHAB services
-
-   Create a file called `jruby.cfg` in `<OPENHAB_CONF>/services/` with the following content:
-
-   ```ini
-   org.openhab.automation.jrubyscripting:gems=openhab-scripting=~>5.0
-   org.openhab.automation.jrubyscripting:require=openhab/dsl
-   ```
+- Edit `<OPENHAB_CONF>/services/addons.cfg` and ensure that `jrubyscripting` is included in an uncommented `automation=` list of automations to install.
 
 ## Configuration
 
 After installing this add-on, you will find configuration options in the openHAB portal under _Settings -> Add-on Settings -> JRuby Scripting_.
 Alternatively, JRuby configuration parameters may be set by creating a `jruby.cfg` file in `conf/services/`.
+
+> **_NOTE:_**
+> In openHAB 3.4.x, the `gems` and `require` settings must be manually configured to the value given in the table below.
+Starting from openHAB 4.0, the correct defaults were added, so manual configurations are no longer necessary.
 
 By default this add-on includes the [openhab-scripting](https://github.com/openhab/openhab-jruby) Ruby gem and automatically `require`s it.
 This allows the use of {OpenHAB::DSL.items items}, {OpenHAB::DSL.rules rules}, {OpenHAB::DSL.shared_cache shared_cache} and other objects in your scripts.
@@ -1066,6 +1094,10 @@ end
 start_of_day = ZonedDateTime.now.with(LocalTime::MIDNIGHT)
 # or
 start_of_day = LocalTime::MIDNIGHT.to_zoned_date_time
+# or
+start_of_day = LocalDate.now.to_zoned_date_time
+# or using Ruby Date
+start_of_day = Date.today.to_zoned_date_time
 
 # Comparing ZonedDateTime against LocalTime with `<`
 max = Solar_Power.maximum_since(24.hours.ago)
