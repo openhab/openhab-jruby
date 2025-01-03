@@ -1,5 +1,20 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.34.0](https://github.com/openhab/openhab-jruby/tree/v5.34.0) (2025-01-03)
+
+### Features
+
+- Support creating a trigger profile for the UI by [@jimtng](https://github.com/jimtng) in [#373](https://github.com/openhab/openhab-jruby/pull/373)
+- Support TimedCommand on GroupItem and Enumerable by [@jimtng](https://github.com/jimtng) in [#377](https://github.com/openhab/openhab-jruby/pull/377)
+- Allow passing an array of channels to item builder by [@ccutrer](https://github.com/ccutrer) in [#375](https://github.com/openhab/openhab-jruby/pull/375)
+
+### Bug Fixes
+
+- Adapt DateTimeType internal switch from ZonedDateTime to Instant in openHAB 4.3 by [@jimtng](https://github.com/jimtng) in [#369](https://github.com/openhab/openhab-jruby/pull/369)
+- Fix #toggle on dimmer items by [@ccutrer](https://github.com/ccutrer) in [#378](https://github.com/openhab/openhab-jruby/pull/378)
+
+**Full Changelog**: [v5.33.1...v5.34.0](https://github.com/openhab/openhab-jruby/compare/v5.33.1...v5.34.0)
+
 ## [v5.33.1](https://github.com/openhab/openhab-jruby/tree/v5.33.1) (2024-12-16)
 
 ### Bug Fixes
