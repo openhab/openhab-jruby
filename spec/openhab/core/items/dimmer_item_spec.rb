@@ -89,6 +89,28 @@ RSpec.describe OpenHAB::Core::Items::DimmerItem do
     end
   end
 
+  describe "#toggle" do
+    specify do
+      item.on.toggle
+      expect(item.state).to eq 0
+    end
+
+    specify do
+      item.off.toggle
+      expect(item.state).to eq 100
+    end
+
+    specify do
+      item.update(UNDEF).toggle
+      expect(item.state).to eq 100
+    end
+
+    specify do
+      item.update(NULL).toggle
+      expect(item.state).to eq 100
+    end
+  end
+
   it "works with grep" do
     items.build { switch_item "Switch1" }
     expect(items.grep(DimmerItem)).to match_array [DimmerOne, DimmerTwo]
