@@ -3984,58 +3984,6 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../../DSL/Items/Ensure/Ensurable.html" title="OpenHAB::DSL::Items::Ensure::Ensurable (module)">DSL::Items::Ensure::Ensurable</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../../DSL/Items/Ensure/Ensurable.html#ensure-instance_method" title="OpenHAB::DSL::Items::Ensure::Ensurable#ensure (method)">#ensure</a></span></p>
-<div id="method_missing_details" class="method_details_list">
-  <h2>Dynamic Method Handling</h2>
-  <p class="notice this">
-    This class handles dynamic methods through the <tt>method_missing</tt> method
-    
-  </p>
-  
-    <div class="method_details first">
-  <h3 class="signature first" id="method_missing-instance_method">
-  
-    #<strong>method_missing</strong>(method, *args, &amp;block)  &#x21d2; <tt><span class='object_link'>Object</span></tt>  <span class="extras">(private)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Delegate missing methods to <span class='object_link'><a href="#base_item-instance_method" title="OpenHAB::Core::Items::GroupItem#base_item (method)">#base_item</a></span> if possible</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-202
-203
-204
-205
-206</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/group_item.rb', line 202</span>
-
-<span class="keyword">def</span> <span class="function">method_missing</span>(method, *args, &amp;block)
-  <span class="keyword">return</span> base_item.__send__(method, *args, &amp;block) <span class="keyword">if</span> base_item&amp;.respond_to?(method) <span class="comment"># rubocop:disable Lint/RedundantSafeNavigation nil responds to :to_a</span>
-
-  <span class="keyword">super</span>
-<span class="keyword">end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-  
-</div>
 
   <div id="instance_attr_details" class="attr_details">
     <h2>Instance Attribute Details</h2>
@@ -4292,7 +4240,10 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 210
 211
 212
-213</pre>
+213
+214
+215
+216</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/group_item.rb', line 71</span>
@@ -4428,7 +4379,10 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
   <span class="keyword">end</span>
 
   <span class="comment"># Delegate missing methods to {base_item} if possible</span>
-  <span class="keyword">def</span> <span class="function">method_missing</span>(method, *args, &amp;block)
+  <span class="comment"># Command methods and predicate methods for GroupItem are performed here</span>
+  <span class="comment"># instead of being statically defined in items.rb</span>
+  <span class="comment"># because base_item is needed to determine the command/data types but is not available in the static context</span>
+  ruby2_keywords <span class="keyword">def</span> <span class="function">method_missing</span>(method, *args, &amp;block)
     <span class="keyword">return</span> base_item.__send__(method, *args, &amp;block) <span class="keyword">if</span> base_item&amp;.respond_to?(method) <span class="comment"># rubocop:disable Lint/RedundantSafeNavigation nil responds to :to_a</span>
 
     <span class="keyword">super</span>
@@ -4688,7 +4642,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 </div>
 
         <footer>
-  Generated on Sat Dec 28 15:50:36 2024 by
+  Generated on Fri Jan  3 15:19:34 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
