@@ -291,13 +291,49 @@ RSpec.describe OpenHAB::DSL::Items::TimedCommand do
     expect(manualitem.state).to eq OFF
   end
 
-  it "works with GroupItem" do
-    items.build { group_item "Group1", type: "Switch", autoupdate: true }
-    Group1.update(OFF)
-    Group1.command(ON, for: 1.second)
-    expect(Group1).to be_on
-    time_travel_and_execute_timers(2.seconds)
-    expect(Group1).to be_off
+  context "with GroupItem" do
+    it "works" do
+      items.build do
+        group_item "Group1", type: :switch do
+          switch_item "Switch1"
+        end
+      end
+      Group1.command(ON, for: 1.second)
+      expect(Group1).to be_on
+      time_travel_and_execute_timers(2.seconds)
+      expect(Group1).to be_off
+    end
+
+    it "works in command methods" do
+      items.build do
+        group_item "Group1", type: :switch do
+          switch_item "Switch1"
+        end
+      end
+      Group1.on for: 1.second
+      expect(Group1).to be_on
+      time_travel_and_execute_timers(2.seconds)
+      expect(Group1).to be_off
+    end
+
+    it "cancels implicit timer when its group member received a command" do
+      items.build do
+        group_item "Group1", type: :number, function: "AVG" do
+          number_item "Number1", state: 0
+        end
+      end
+      Group1.update(0)
+      Group1.command(1, for: 1.second)
+      expect(Group1.state).to eq 1
+      time_travel_and_execute_timers(2.seconds)
+      expect(Group1.state).to eq 0
+
+      Group1.command(1, for: 1.second)
+      Number1.command(2)
+      expect(Group1.state).to eq 2
+      time_travel_and_execute_timers(2.seconds)
+      expect(Group1.state).to eq 2
+    end
   end
 
   context "with Enumerable" do
@@ -310,6 +346,15 @@ RSpec.describe OpenHAB::DSL::Items::TimedCommand do
 
     it "works" do
       [Switch1, Switch2].command(ON, for: 1.second)
+      expect(Switch1).to be_on
+      expect(Switch2).to be_on
+      time_travel_and_execute_timers(2.seconds)
+      expect(Switch1).to be_off
+      expect(Switch2).to be_off
+    end
+
+    it "works with command methods" do
+      [Switch1, Switch2].on for: 1.second
       expect(Switch1).to be_on
       expect(Switch2).to be_on
       time_travel_and_execute_timers(2.seconds)

@@ -122,6 +122,16 @@ RSpec.describe OpenHAB::Core::Items::GroupItem do
     end
   end
 
+  it "supports command methods" do
+    items.build do
+      group_item "Switches", type: :switch do
+        switch_item "SwitchOne"
+      end
+    end
+
+    Switches.on
+  end
+
   describe "#method_missing" do
     it "has command methods for the group type" do
       items.build do

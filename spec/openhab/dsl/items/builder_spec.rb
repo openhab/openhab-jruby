@@ -604,7 +604,7 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
   end
 
   it "sets initial state on a group item" do
-    items.build { group_item "GroupItem1", type: "Switch", state: ON }
+    items.build { group_item "GroupItem1", type: :switch, state: ON }
     expect(GroupItem1.state).to be ON
   end
 
