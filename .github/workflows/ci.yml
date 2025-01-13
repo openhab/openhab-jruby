@@ -17,7 +17,7 @@ env:
 
 jobs:
   rubocop:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'ci skip')"
     steps:
       - uses: actions/checkout@v4
@@ -29,7 +29,7 @@ jobs:
         run: bin/rubocop
 
   cucumber-lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'ci skip')"
     steps:
       - uses: actions/checkout@v4
@@ -41,7 +41,7 @@ jobs:
         run: bin/cuke_linter -p features/
 
   markdown-lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - name: Run markdownlint-cli
@@ -51,7 +51,7 @@ jobs:
           config_file: .markdownlint.yaml
 
   yard-coverage:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'ci skip')"
     steps:
       - uses: actions/checkout@v4
@@ -67,7 +67,7 @@ jobs:
           bin/validate_yard_links
 
   openhab-snapshot-date:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'ci skip')"
     outputs:
       openhab_matrix: |
@@ -82,7 +82,7 @@ jobs:
 
   openhab-setup:
     needs: openhab-snapshot-date
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'ci skip')"
     strategy:
       matrix:
@@ -136,7 +136,7 @@ jobs:
 
   rspec:
     needs: [openhab-snapshot-date, openhab-setup]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'ci skip')"
     strategy:
       matrix:
@@ -197,7 +197,7 @@ jobs:
 
   cucumber:
     needs: [openhab-snapshot-date, openhab-setup]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'ci skip')"
     strategy:
       matrix:
