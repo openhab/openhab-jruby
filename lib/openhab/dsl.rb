@@ -157,7 +157,7 @@ module OpenHAB
     #   profile(:set_uom) do |event, callback:, configuration:, state:, command:|
     #     unless configuration["unit"]
     #       logger.warn("Unit configuration not provided for set_uom profile")
-    #        next true
+    #       next true
     #     end
     #
     #     case event
@@ -187,7 +187,7 @@ module OpenHAB
     #   end
     #
     #   profile(:range_filter, label: "Range Filter", config_description: config_description) do |event, state:, configuration:|
-    #     return true unless event == :state_from_handler
+    #     next true unless event == :state_from_handler
     #
     #     (configuration["min"]..configuration["max"]).cover?(state)
     #   end
