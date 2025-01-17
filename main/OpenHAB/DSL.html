@@ -6214,7 +6214,7 @@ items.build <span class="keyword">do</span>
       <pre class="example code"><code>profile(<span class="symbol">:set_uom</span>) <span class="keyword">do</span> |event, <span class="key">callback</span>:, <span class="key">configuration</span>:, <span class="key">state</span>:, <span class="key">command</span>:|
   <span class="keyword">unless</span> configuration[<span class="string"><span class="delimiter">&quot;</span><span class="content">unit</span><span class="delimiter">&quot;</span></span>]
     logger.warn(<span class="string"><span class="delimiter">&quot;</span><span class="content">Unit configuration not provided for set_uom profile</span><span class="delimiter">&quot;</span></span>)
-     <span class="keyword">next</span> <span class="predefined-constant">true</span>
+    <span class="keyword">next</span> <span class="predefined-constant">true</span>
   <span class="keyword">end</span>
 
   <span class="keyword">case</span> event
@@ -6247,7 +6247,7 @@ items.build <span class="keyword">do</span>
 <span class="keyword">end</span>
 
 profile(<span class="symbol">:range_filter</span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Range Filter</span><span class="delimiter">&quot;</span></span>, <span class="key">config_description</span>: config_description) <span class="keyword">do</span> |event, <span class="key">state</span>:, <span class="key">configuration</span>:|
-  <span class="keyword">return</span> <span class="predefined-constant">true</span> <span class="keyword">unless</span> event == <span class="symbol">:state_from_handler</span>
+  <span class="keyword">next</span> <span class="predefined-constant">true</span> <span class="keyword">unless</span> event == <span class="symbol">:state_from_handler</span>
 
   (configuration[<span class="string"><span class="delimiter">&quot;</span><span class="content">min</span><span class="delimiter">&quot;</span></span>]..configuration[<span class="string"><span class="delimiter">&quot;</span><span class="content">max</span><span class="delimiter">&quot;</span></span>]).cover?(state)
 <span class="keyword">end</span></code></pre>
@@ -8825,7 +8825,7 @@ unit!
 </div>
 
         <footer>
-  Generated on Mon Jan 13 03:31:46 2025 by
+  Generated on Fri Jan 17 00:43:11 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
