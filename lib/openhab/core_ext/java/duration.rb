@@ -5,7 +5,15 @@ module OpenHAB
     module Java
       Duration = java.time.Duration
 
+      #
       # Extensions to {java.time.Duration Java Duration}
+      #
+      # Ruby's {Integer} and {Float} classes are extended to allow convenient creation of {Duration} instances.
+      #
+      # @example
+      #   5.seconds # => #<Duration PT5S>
+      #   2.5.hours # => #<Duration PT2H30M>
+      #
       class Duration
         include Between
         # @!parse include TemporalAmount
