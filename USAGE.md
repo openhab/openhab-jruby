@@ -78,7 +78,7 @@ Additional [example rules are available](docs/examples.md), as well as examples 
   - [Time](#time)
   - [Ephemeris](#ephemeris)
   - [Rules, Scripts, and Scenes](#rules-scripts-and-scenes)
-  - [Gems](#gems)
+  - [Gems with Inline Bundler](#gems-with-inline-bundler)
   - [Shared Code](#shared-code)
   - [Transformations](#transformations)
   - [Profile](#profile)
@@ -1286,7 +1286,7 @@ The above script can be executed, passing it the `maxTemperature` argument from 
 rules["check_temp"].trigger(maxTemperature: 80 | "°C")
 ```
 
-### Gems
+### Gems with Inline Bundler
 
 [Bundler](https://bundler.io/) is integrated, enabling any [Ruby gem](https://rubygems.org/) compatible with JRuby to be used within rules.
 This permits easy access to the vast ecosystem of libraries within the Ruby community.
