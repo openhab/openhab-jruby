@@ -9,7 +9,7 @@ return unless Plugin.installed?("bundler-multilock")
 
 Plugin.send(:load_plugin, "bundler-multilock")
 
-lockfile active: RUBY_VERSION >= "2.7" do
+lockfile active: RUBY_VERSION >= "2.7" && !Object.const_defined?(:JRUBY_VERSION) do
   # these gems are not compatible with Ruby 2.6/JRuby 9.3, but we don't need them to actually
   # run tests
 
@@ -19,6 +19,10 @@ lockfile active: RUBY_VERSION >= "2.7" do
   gem "rubocop-inst", "~> 1.0"
   gem "rubocop-rake", "~> 0.6"
   gem "rubocop-rspec", "~> 2.11"
+end
+
+lockfile "jruby", active: RUBY_VERSION >= "2.7" && Object.const_defined?(:JRUBY_VERSION) do
+  gem "nokogiri", "~> 1.15"
 end
 
 lockfile "ruby-2.6", active: RUBY_VERSION < "2.7" do
