@@ -78,6 +78,10 @@ RSpec.describe java.time.LocalDate do
     it "works" do
       expect(date.to_instant).to eql Instant.parse("2022-11-09T00:00:00Z")
     end
+
+    it "takes on the system zone if no context" do
+      expect(date.to_instant).to eql ZonedDateTime.now.with(LocalTime.parse("00:00")).with(date).to_instant
+    end
   end
 
   describe "#succ" do
