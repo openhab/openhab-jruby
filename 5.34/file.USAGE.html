@@ -3615,7 +3615,7 @@ This library offers a streamlined syntax for writing file-based and UI-based rul
 <li><a href="#time">Time</a></li>
 <li><a href="#ephemeris">Ephemeris</a></li>
 <li><a href="#rules-scripts-and-scenes">Rules, Scripts, and Scenes</a></li>
-<li><a href="#gems">Gems</a></li>
+<li><a href="#gems-with-inline-bundler">Gems with Inline Bundler</a></li>
 <li><a href="#shared-code">Shared Code</a></li>
 <li><a href="#transformations">Transformations</a></li>
 <li><a href="#profile">Profile</a></li>
@@ -3842,8 +3842,8 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 </span></span></code></pre>
 <p>Theoretically you could even use a system start trigger with a UI rule, and then use the <a href="#file-based-rules">syntax</a> mostly developed for file based rules to create multiple rules.</p>
 <h3 id="file-based-scripts"><a href="#file-based-scripts" class="header-anchor">#</a>File Based Scripts</h3>
-<p>The JRuby Scripting addon will load scripts from <code>automation/ruby</code> in the user configuration directory.
-The system will automatically reload scripts when changes are detected to files.
+<p>The JRuby Scripting addon will load Ruby script files with <code>.rb</code> extension from <code>automation/ruby</code> in the user configuration directory.
+The system will automatically reload scripts when changes to files are detected.
 Local variable state is not persisted among reloads, see using the <a href="#cache">cache</a> for a convenient way to persist objects.
 See <a href="#file-based-rules">File Based Rules</a> for examples of creating rules within your scripts.</p>
 <h3 id="event-object"><a href="#event-object" class="header-anchor">#</a>Event Object</h3>
@@ -4603,7 +4603,7 @@ This is applicable to both UI rules and file-based rules.</p>
 <p>The above script can be executed, passing it the <code>maxTemperature</code> argument from any supported scripting language, e.g.:</p>
 <pre class="code ruby"><code class="ruby">rules[<span class="string"><span class="delimiter">&quot;</span><span class="content">check_temp</span><span class="delimiter">&quot;</span></span>].trigger(<span class="key">maxTemperature</span>: <span class="integer">80</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)
 </code></pre>
-<h3 id="gems"><a href="#gems" class="header-anchor">#</a>Gems</h3>
+<h3 id="gems-with-inline-bundler"><a href="#gems-with-inline-bundler" class="header-anchor">#</a>Gems with Inline Bundler</h3>
 <p><a href="https://bundler.io/">Bundler</a> is integrated, enabling any <a href="https://rubygems.org/">Ruby gem</a> compatible with JRuby to be used within rules.
 This permits easy access to the vast ecosystem of libraries within the Ruby community.
 Gems are available using the <a href="https://bundler.io/guides/bundler_in_a_single_file_ruby_script.html">inline bundler syntax</a>.
@@ -4999,7 +4999,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Fri Jan  3 21:26:57 2025 by
+  Generated on Tue Feb  4 23:03:01 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
