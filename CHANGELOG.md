@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.34.1](https://github.com/openhab/openhab-jruby/tree/v5.34.1) (2025-02-04)
+
+### Bug Fixes
+
+- Use system timezone when converting from LocalDate/LocalTime to instant by [@jimtng](https://github.com/jimtng) in [#386](https://github.com/openhab/openhab-jruby/pull/386)
+
+**Full Changelog**: [v5.34.0...v5.34.1](https://github.com/openhab/openhab-jruby/compare/v5.34.0...v5.34.1)
+
 ## [v5.34.0](https://github.com/openhab/openhab-jruby/tree/v5.34.0) (2025-01-03)
 
 ### Features
