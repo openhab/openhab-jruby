@@ -72,6 +72,10 @@ RSpec.describe java.time.LocalTime do
       context = ZonedDateTime.parse("1990-05-04T01:01:01+01:00")
       expect(time.to_instant(context)).to eql Instant.parse("1990-05-04T02:22:01Z")
     end
+
+    it "takes on the system zone if no context" do
+      expect(time.to_instant).to eql ZonedDateTime.now.with(time).to_instant
+    end
   end
 
   describe "#succ" do

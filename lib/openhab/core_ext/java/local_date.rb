@@ -102,8 +102,7 @@ module OpenHAB
         #   during conversion. {ZonedDateTime.now} is assumed if not given.
         # @return [Instant]
         def to_instant(context = nil)
-          zone = context&.zone || java.time.ZoneOffset::UTC
-          at_start_of_day(zone).to_instant
+          to_zoned_date_time(context).to_instant
         end
       end
     end
