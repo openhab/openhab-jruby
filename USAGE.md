@@ -280,8 +280,8 @@ Theoretically you could even use a system start trigger with a UI rule, and then
 
 ### File Based Scripts
 
-The JRuby Scripting addon will load scripts from `automation/ruby` in the user configuration directory.
-The system will automatically reload scripts when changes are detected to files.
+The JRuby Scripting addon will load Ruby script files with `.rb` extension from `automation/ruby` in the user configuration directory.
+The system will automatically reload scripts when changes to files are detected.
 Local variable state is not persisted among reloads, see using the [cache](#cache) for a convenient way to persist objects.
 See [File Based Rules](#file-based-rules) for examples of creating rules within your scripts.
 
