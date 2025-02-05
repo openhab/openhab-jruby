@@ -14,11 +14,11 @@ lockfile active: RUBY_VERSION >= "2.7" do
   # run tests
 
   gem "debug", "~> 1.9", require: false, platform: :mri
-  gem "irb", "~> 1.6"
+  gem "irb", "~> 1.6", platform: :mri
   gem "nokogiri", "~> 1.15"
-  gem "rubocop-inst", "~> 1.0"
-  gem "rubocop-rake", "~> 0.6"
-  gem "rubocop-rspec", "~> 2.11"
+  gem "rubocop-inst", "~> 1.0", platform: :mri
+  gem "rubocop-rake", "~> 0.6", platform: :mri
+  gem "rubocop-rspec", "~> 2.11", platform: :mri
 end
 
 lockfile "ruby-2.6", active: RUBY_VERSION < "2.7" do
