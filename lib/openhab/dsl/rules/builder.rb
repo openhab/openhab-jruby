@@ -2162,6 +2162,7 @@ module OpenHAB
           added_rule.actions.first.configuration.put("script", script) if script
 
           if enabled
+            added_rule.enable unless added_rule.enabled?
             process_on_load { |module_id| rule.execute(nil, { "module" => module_id }) }
           else
             added_rule.disable
