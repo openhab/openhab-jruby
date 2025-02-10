@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.34.2](https://github.com/openhab/openhab-jruby/tree/v5.34.2) (2025-02-10)
+
+### Bug Fixes
+
+- Fix disabled rule remains disabled by [@jimtng](https://github.com/jimtng) in [#388](https://github.com/openhab/openhab-jruby/pull/388)
+
+**Full Changelog**: [v5.34.1...v5.34.2](https://github.com/openhab/openhab-jruby/compare/v5.34.1...v5.34.2)
+
 ## [v5.34.1](https://github.com/openhab/openhab-jruby/tree/v5.34.1) (2025-02-04)
 
 ### Bug Fixes
