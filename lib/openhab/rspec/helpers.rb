@@ -365,7 +365,7 @@ module OpenHAB
       def install_addon(addon_id, wait: true, ready_markers: nil)
         service_filter = "(component.name=org.openhab.core.karafaddons)"
         addon_service = OSGi.service("org.openhab.core.addon.AddonService", filter: service_filter)
-        addon_service.install(addon_id)
+        addon_service.install(addon_id) unless addon_service.get_addon(addon_id, nil)&.installed?
         return unless wait
 
         addon = nil
