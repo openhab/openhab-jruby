@@ -113,7 +113,7 @@ module OpenHAB
       alias_method :update, :merge!
 
       # @!visibility private
-      def replace
+      def replace(hash)
         raise NotImplementedError
       end
 

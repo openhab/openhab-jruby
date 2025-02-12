@@ -32,6 +32,17 @@ module OpenHAB
           Thing::ChannelsArray.new(self, super.to_a)
         end
 
+        # Returns the properties of this Thing
+        #
+        # @note This is defined on this class, and not on {Thing}, because
+        #   that's the interface and if you define it there, it will be hidden
+        #   by the method on ThingImpl.
+        #
+        # @return [Thing::Properties] properties map
+        def properties
+          Thing::Properties.new(self)
+        end
+
         #
         # Set the proxy item (called by super)
         #
