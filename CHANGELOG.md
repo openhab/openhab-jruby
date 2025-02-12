@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.35.0](https://github.com/openhab/openhab-jruby/tree/v5.35.0) (2025-02-12)
+
+### Features
+
+- Support setting Thing property using hash-like syntax `[]=` by [@jimtng](https://github.com/jimtng) in [#391](https://github.com/openhab/openhab-jruby/pull/391)
+
+**Full Changelog**: [v5.34.2...v5.35.0](https://github.com/openhab/openhab-jruby/compare/v5.34.2...v5.35.0)
+
 ## [v5.34.2](https://github.com/openhab/openhab-jruby/tree/v5.34.2) (2025-02-10)
 
 ### Bug Fixes
