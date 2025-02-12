@@ -84,4 +84,21 @@ RSpec.describe OpenHAB::Core::Things::Thing do
       expect(things["dscalarm:tcpserver:panel"]).to be_bridge
     end
   end
+
+  describe "#properties" do
+    it "works" do
+      expect(thing.properties).to be_empty
+    end
+
+    it "supports setting properties" do
+      logger.warn thing.properties.class
+      thing.properties["test"] = "value"
+      expect(thing.properties["test"]).to eq "value"
+    end
+
+    it "supports indifferent keys" do
+      thing.properties["symbolic"] = "value"
+      expect(thing.properties[:symbolic]).to eq "value"
+    end
+  end
 end

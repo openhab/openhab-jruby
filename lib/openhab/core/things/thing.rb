@@ -62,14 +62,21 @@ module OpenHAB
       #
       #   @example
       #     logger.info things["smtp:mail:local"].configuration["hostname"]
-      #     logger.info things["ipcamera:dahua:frontporch"].configuration["ipAddress"]
+      #     logger.info things["ipcamera:dahua:frontporch"].configuration[:ipAddress]
+      #
+      #   @example Changing Thing configuration
+      #     things["smtp:mail:local"].configuration[:hostname] = "smtp.gmail.com"
       #
       # @!attribute [r] properties
       #   Return the properties when available.
-      #   @return [Hash]
+      #   @return [Properties]
       #
       #   @example
       #     logger.info things["fronius:meter:mybridge:mymeter"].properties["modelId"]
+      #     logger.info things["fronius:meter:mybridge:mymeter"].properties[:modelId]
+      #
+      #   @example Changing Thing properties
+      #     things["lgwebos:WebOSTV:livingroom"].properties[:deviceId] = "e57ae675-aea0-4397-97bc-c39bea30c2ee"
       #
       module Thing
         # Array wrapper class to allow searching a list of channels
@@ -89,6 +96,30 @@ module OpenHAB
             return @thing.get_channel(index.to_str) if index.respond_to?(:to_str)
 
             super
+          end
+        end
+
+        # Properties wrapper class to allow setting Thing's properties with hash-like syntax
+        class Properties
+          include EmulateHash
+
+          def initialize(thing)
+            @thing = thing
+          end
+
+          # @!visibility private
+          def store(key, value)
+            @thing.set_property(key, value)
+          end
+
+          # @!visibility private
+          def replace(hash)
+            @thing.set_properties(hash)
+          end
+
+          # @!visibility private
+          def to_map
+            @thing.get_properties
           end
         end
 
