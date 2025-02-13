@@ -62,6 +62,16 @@ module OpenHAB
       #     end
       #   end
       #
+      # @example Create a Thing with specific properties
+      #   things.build do
+      #     thing "lgwebos:WebOSTV:livingroom", "Living Room TV", config: {
+      #       host: "192.168.1.30",
+      #       key: "xxxxxxxx",
+      #       macAddress: "xx:yy:zz:aa:bb",
+      #       deviceId: "36f94411-28f1-2a3b-84fc-60e733884c02" # This is a property
+      #     }
+      #   end
+      #
       # @see ThingBuilder#initialize ThingBuilder#initialize for #thing's parameters
       # @see ChannelBuilder#initialize ChannelBuilder#initialize for #channel's parameters
       # @see Items::Builder
@@ -184,7 +194,12 @@ module OpenHAB
         # @param [String, BridgeBuilder] bridge The bridge uid, if the Thing should belong to a bridge.
         # @param [String, Item] location The location of this Thing.
         #   When given an Item, use the item's label as the location.
-        # @param [Hash] config The Thing's configuration, as required by the binding. The key can be strings or symbols.
+        # @param [Hash] config The Thing's configuration and properties, as required by the binding.
+        #   The key can be strings or symbols.
+        #   The configuration keys are inferred from the ThingType's config description.
+        #   If the config description doesn't include the given key, it will be added as Thing's property.
+        #   This can be used to set a Thing's Representation Property that is an actual property
+        #   as opposed to a Thing configuration.
         # @param [true,false] enabled Whether the Thing should be enabled or disabled.
         #
         def initialize(uid, label = nil, binding: nil, type: nil, bridge: nil, location: nil, config: {}, enabled: nil)
@@ -235,13 +250,30 @@ module OpenHAB
 
         # @!visibility private
         def build
-          configuration = Core::Configuration.new(config)
+          properties = nil
+
           if thing_type
+            config_keys = thing_type.config_description_uri&.then do |uri|
+              self.class.config_description_registry.get_config_description(uri)&.parameters&.map(&:name)
+            end
+
+            # Split the configuration into configuration and properties
+            # The rationale for not having a separate `properties` parameter:
+            # - This is how it's done in the acceptance of discovery results in core
+            # - The binding implementation can move properties to configuration and vice versa if needed,
+            #   and it will not affect us.
+            configuration, properties = config.partition { |key, _value| config_keys.include?(key) }
+            configuration = configuration.to_h
+            properties = properties.to_h
+            configuration = Core::Configuration.new(configuration)
+
             self.class.thing_factory_helper.apply_default_configuration(
               configuration,
               thing_type,
               self.class.config_description_registry
             )
+
+            properties = thing_type.properties.ruby_merge(properties)
 
             predefined_channels = self.class.thing_factory_helper
                                       .create_channels(thing_type, uid, self.class.config_description_registry)
@@ -252,6 +284,8 @@ module OpenHAB
               predefined_channel
             end
             @channels = merged_channels.values
+          else
+            configuration = Core::Configuration.new(config)
           end
 
           builder = @builder.create(thing_type_uid, uid)
@@ -261,7 +295,7 @@ module OpenHAB
                             .with_bridge(bridge_uid)
                             .with_channels(channels)
 
-          builder.with_properties(thing_type.properties) if thing_type
+          builder.with_properties(properties) if properties
 
           builder.build
         end
