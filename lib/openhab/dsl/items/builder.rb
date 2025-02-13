@@ -10,7 +10,7 @@ module OpenHAB
       # This can be useful either to create items as soon as the script loads,
       # or even later based on a rule executing.
       #
-      # @example
+      # @example Create/update JRuby-provided items at runtime
       #   items.build do
       #     switch_item MySwitch, "My Switch"
       #     switch_item NotAutoupdating, autoupdate: false, channel: "mqtt:topic:1#light"
@@ -29,6 +29,13 @@ module OpenHAB
       #     # unit lx, dimension Illuminance, format "%s %unit%" inferred
       #     number_item OutdoorBrightness, state: 10_000 | "lx"
       #   end
+      #
+      # @example Create/update persistent managed-items that are stored in the JSONDB and are editable in the MainUI
+      #   items.build(:persistent) do
+      #     switch_item MySwitch, "My Switch"
+      #   end
+      #
+      # @see OpenHAB::Core::Items::Registry#build items.build for the arguments to this method
       #
       module Builder
         include Core::EntityLookup
