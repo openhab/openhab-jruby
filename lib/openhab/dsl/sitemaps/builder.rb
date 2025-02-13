@@ -546,7 +546,7 @@ module OpenHAB
         # @return [String, nil]
         # @example
         #   "#.##" # => formats a number with two decimals.
-        # @see https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/text/DecimalFormat.html DecimalFormat
+        # @see java.text.DecimalFormat DecimalFormat
         attr_accessor :y_axis_pattern
 
         # (see WidgetBuilder#initialize)
@@ -809,7 +809,6 @@ module OpenHAB
                        stateless: nil,
                        **kwargs,
                        &block)
-
           super(:button, builder_proxy, **kwargs, &block)
 
           @row = row
