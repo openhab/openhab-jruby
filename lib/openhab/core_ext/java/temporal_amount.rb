@@ -28,6 +28,11 @@ module OpenHAB
         def inspect
           to_s
         end
+
+        # @return [self]
+        def to_temporal_amount
+          self
+        end
       end
     end
   end
