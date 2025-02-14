@@ -51,7 +51,7 @@ module OpenHAB
         # @raise [FrozenError] if `update` is true but the existing item with the same name
         #   wasn't created by the current provider.
         #
-        # @see DSL::Items::Builder
+        # @see DSL::Items::Builder DSL::Items::Builder for more details and examples
         #
         def build(preferred_provider = nil, update: true, &block)
           DSL::Items::BaseBuilderDSL.new(preferred_provider, update: update)
