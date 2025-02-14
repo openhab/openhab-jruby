@@ -15,7 +15,7 @@ class DateTime < Date
 
   # (see Time#plus_with_temporal)
   def plus_with_temporal(other)
-    return to_zoned_date_time + other if other.is_a?(java.time.temporal.TemporalAmount)
+    return to_zoned_date_time + other.to_temporal_amount if other.respond_to?(:to_temporal_amount)
 
     plus_without_temporal(other)
   end
@@ -24,7 +24,7 @@ class DateTime < Date
 
   # (see Time#minus_with_temporal)
   def minus_with_temporal(other)
-    return to_zoned_date_time - other if other.is_a?(java.time.temporal.TemporalAmount)
+    return to_zoned_date_time - other.to_temporal_amount if other.respond_to?(:to_temporal_amount)
 
     # Exclude subtracting against the same class
     if other.respond_to?(:to_zoned_date_time) && !other.is_a?(self.class)

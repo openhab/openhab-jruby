@@ -18,7 +18,7 @@ class Time
   # @return [Time] If other is a Numeric
   #
   def plus_with_temporal(other)
-    return to_zoned_date_time + other if other.is_a?(java.time.temporal.TemporalAmount)
+    return to_zoned_date_time + other.to_temporal_amount if other.respond_to?(:to_temporal_amount)
 
     plus_without_temporal(other)
   end
@@ -53,7 +53,7 @@ class Time
   # @return [Float] If other is a Time
   #
   def minus_with_temporal(other)
-    return to_zoned_date_time - other if other.is_a?(java.time.temporal.TemporalAmount)
+    return to_zoned_date_time - other.to_temporal_amount if other.respond_to?(:to_temporal_amount)
 
     # Exclude subtracting against the same class
     if other.respond_to?(:to_zoned_date_time) && !other.is_a?(self.class)

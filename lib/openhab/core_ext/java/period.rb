@@ -36,6 +36,7 @@ module OpenHAB
         # @return [Integer, nil]
         def <=>(other)
           return to_i <=> other if other.is_a?(Numeric)
+          return to_i <=> other.to_i if other.is_a?(Duration)
 
           super
         end
@@ -43,11 +44,13 @@ module OpenHAB
         #
         # Convert `self` and `other` to {Duration}, if `other` is a Numeric
         #
-        # @param [Numeric] other
+        # @param [Numeric, Duration] other
         # @return [Array, nil]
         #
         def coerce(other)
-          [other.seconds, to_i.seconds] if other.is_a?(Numeric)
+          return [other.seconds, to_i.seconds] if other.is_a?(Numeric)
+
+          [other, to_i.seconds] if other.is_a?(Duration)
         end
 
         {
@@ -55,11 +58,11 @@ module OpenHAB
           minus: :-
         }.each do |java_op, ruby_op|
           # def +(other)
-          #   if other.is_a?(Period)
+          #   if other.is_a?(Period) || other.is_a?(Duration)
           #     plus(other)
           #   elsif other.is_a?(Numeric)
           #     self + other.seconds
-          #   elsif other.respond_to?(:coerce) && (rhs, lhs = other.coerce(self))
+          #   elsif other.respond_to?(:coerce) && (lhs, rhs = other.coerce(self))
           #     lhs + rhs
           #   else
           #     raise TypeError, "#{other.class} can't be coerced into Period"
@@ -71,7 +74,7 @@ module OpenHAB
                 #{java_op}(other)
               elsif other.is_a?(Numeric)
                 self #{ruby_op} other.seconds
-              elsif other.respond_to?(:coerce) && (rhs, lhs = other.coerce(self))
+              elsif other.respond_to?(:coerce) && (lhs, rhs = other.coerce(self))
                 lhs #{ruby_op} rhs
               else
                 raise TypeError, "\#{other.class} can't be coerced into Period"
@@ -84,7 +87,7 @@ module OpenHAB
         def *(other)
           if other.is_a?(Integer)
             multipliedBy(other)
-          elsif other.respond_to?(:coerce) && (rhs, lhs = other.coerce(self))
+          elsif other.respond_to?(:coerce) && (lhs, rhs = other.coerce(self))
             lhs * rhs
           else
             raise TypeError, "#{other.class} can't be coerced into Period"

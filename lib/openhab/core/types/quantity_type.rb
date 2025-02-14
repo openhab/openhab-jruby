@@ -209,6 +209,9 @@ module OpenHAB
             #     else
             #       raise TypeError, "#{other.class} can't be coerced into #{self.class}"
             #     end
+            #   elsif !other.is_a?(Numeric) && !other.is_a?(java.lang.Number) &&
+            #     other.respond_to?(:coerce) && (lhs, rhs = other.coerce(self))
+            #     return lhs + rhs
             #   else
             #     raise TypeError,
             #       "#{self.class} can only be added with another #{self.class} outside a unit block"
@@ -234,6 +237,9 @@ module OpenHAB
                   else
                     raise TypeError, "\#{other.class} can't be coerced into \#{self.class}"
                   end
+                elsif !other.is_a?(Numeric) && !other.is_a?(java.lang.Number) &&
+                  other.respond_to?(:coerce) && (lhs, rhs = other.coerce(self))
+                  return lhs #{ruby_op} rhs
                 else
                   raise TypeError,
                     "\#{self.class} can only be #{java_op}ed with another \#{self.class} outside a unit block"
@@ -285,6 +291,20 @@ module OpenHAB
               end
             RUBY
           )
+        end
+
+        #
+        # Convert this {QuantityType} into a {Duration} if the unit is time-based.
+        #
+        # @return [Duration] a {Duration} if the unit is time-based
+        # @raise [TypeError] if the unit is not time-based
+        #
+        # @see CoreExt::Java::TemporalAmount#to_temporal_amount
+        #
+        def to_temporal_amount
+          return Duration.of_nanos(to_unit("ns").to_i) if unit.compatible?(Units::SECOND)
+
+          raise TypeError, "#{self} is not a time-based Quantity"
         end
 
         # if it's a dimensionless quantity, change the unit to match other_unit
