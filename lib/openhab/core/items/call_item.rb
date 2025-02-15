@@ -13,6 +13,10 @@ module OpenHAB
       # @!attribute [r] state
       #   @return [StringListType, nil]
       #
+      # @!attribute [r] was
+      #   @return [StringListType, nil]
+      #   @since openHAB 5.0
+      #
       class CallItem < GenericItem
         # @!visibility private
         def format_type(command)

@@ -49,6 +49,10 @@ module OpenHAB
               def #{state_predicate}                                                  # def on?
                 raw_state.as(#{state.class.java_class.simple_name}).equal?(#{state})  #   raw_state.as(OnOffType) == ON
               end                                                                     # end
+
+              def was_#{state_predicate}                                              # def was_on?
+                last_state.as(#{state.class.java_class.simple_name}).equal?(#{state}) #   last_state.as(OnOffType) == ON
+              end                                                                     # end
             RUBY
           end
         end

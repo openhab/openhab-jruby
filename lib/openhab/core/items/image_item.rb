@@ -18,7 +18,11 @@ module OpenHAB
       # @!attribute [r] state
       #   @return [RawType, nil]
       #
-      # @example Update from a base 64 encode image string
+      # @!attribute [r] was
+      #   @return [RawType, nil]
+      #   @since openHAB 5.0
+      #
+      # @example Update from a base 64 encoded image string
       #   Image.update("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII=")
       #
       # @example Update from image bytes and mime type

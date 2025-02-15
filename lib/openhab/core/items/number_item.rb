@@ -25,6 +25,9 @@ module OpenHAB
       #   @return [javax.measure.Unit, nil]
       # @!attribute [r] state
       #   @return [DecimalType, QuantityType, nil]
+      # @!attribute [r] was
+      #   @return [DecimalType, QuantityType, nil]
+      #   @since openHAB 5.0
       #
       # @example Number Items can be selected in an enumerable with grep.
       #   # Get all NumberItems

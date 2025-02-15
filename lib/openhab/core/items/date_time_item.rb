@@ -13,6 +13,10 @@ module OpenHAB
       # @!attribute [r] state
       #   @return [DateTimeType, nil]
       #
+      # @!attribute [r] was
+      #   @return [DateTimeType, nil]
+      #   @since openHAB 5.0
+      #
       # @example DateTime items can be updated and commanded with Ruby Time objects or Java ZonedDateTime objects
       #   Example_DateTimeItem << Time.now
       #   Example_DateTimeItem << ZonedDateTime.now

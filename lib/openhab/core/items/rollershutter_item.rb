@@ -16,6 +16,10 @@ module OpenHAB
       # @!attribute [r] state
       #   @return [PercentType, UpDownType, nil]
       #
+      # @!attribute [r] was
+      #   @return [PercentType, UpDownType, nil]
+      #   @since openHAB 5.0
+      #
       # @example Roll up all Rollershutters in a group
       #   Shutters.up
       #
@@ -36,6 +40,14 @@ module OpenHAB
         # @!method down?
         #   Check if the item state == {DOWN}
         #   @return [true,false]
+
+        # @!method was_up?
+        #   Check if {#was} is {UP}
+        #   @return [true, false]
+
+        # @!method was_down?
+        #   Check if {#was} is {DOWN}
+        #   @return [true, false]
 
         # @!method up
         #   Send the {UP} command to the item

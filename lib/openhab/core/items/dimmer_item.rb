@@ -15,6 +15,10 @@ module OpenHAB
       # @!attribute [r] state
       #   @return [PercentType, nil]
       #
+      # @!attribute [r] was
+      #   @return [PercentType, nil]
+      #   @since openHAB 5.0
+      #
       # @example
       #   DimmerOne << DimmerOne.state - 5
       #   DimmerOne << 100 - DimmerOne.state
