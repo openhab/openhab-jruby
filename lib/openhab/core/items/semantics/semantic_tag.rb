@@ -86,7 +86,7 @@ module OpenHAB
 
           # @return [String]
           def inspect
-            parent = "(#{parent_uid})" unless parent_uid.empty?
+            parent = " (#{parent_uid})" unless parent_uid.empty?
             "#<OpenHAB::Core::Items::Semantics::#{name}#{parent} " \
               "label=#{label.inspect} " \
               "description=#{description.inspect} " \
