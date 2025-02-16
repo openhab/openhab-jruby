@@ -71,6 +71,7 @@ Additional [example rules are available](docs/examples.md), as well as examples 
     - [Linked Things](#linked-things)
     - [Item Builder](#item-builder)
   - [Things](#things)
+    - [Thing Builder](#thing-builder)
   - [Actions](#actions)
   - [Logging](#logging)
   - [Timers](#timers)
@@ -94,6 +95,7 @@ Additional [example rules are available](docs/examples.md), as well as examples 
     - [openHAB System Started](#openhab-system-started)
     - [Cron Trigger](#cron-trigger)
     - [DateTimeItem Trigger](#datetimeitem-trigger)
+    - [File and Directory Change Trigger](#file-and-directory-change-trigger)
     - [Other Triggers](#other-triggers)
     - [Combining Multiple Triggers](#combining-multiple-triggers)
     - [Combining Multiple Conditions](#combining-multiple-conditions)
@@ -698,7 +700,7 @@ items.build do
 
   # dimension Temperature inferred
   number_item OutdoorTemp, format: "%.1f %unit%", unit: "°F"
-    
+
   # unit lx, dimension Illuminance, format "%s %unit%" inferred
   number_item OutdoorBrightness, state: 10_000 | "lx"
 end
@@ -753,6 +755,29 @@ Get Thing's property:
 ```ruby
 model_id = things["fronius:meter:mybridge:mymeter"].properties["modelId"]
 logger.info "Fronius Smart Meter model: #{model_id}"
+```
+
+#### Thing Builder
+
+New Things can be created via {OpenHAB::Core::Things::Registry#build things.build}.
+
+```ruby
+thing_config = {
+  availabilityTopic: "my-switch/status",
+  payloadAvailable: "online",
+  payloadNotAvailable: "offline"
+}
+things.build do
+  # Use an existing bridge "mqtt:broker:mosquitto"
+  thing "mqtt:topic:my-switch", "My Switch", bridge: "mqtt:broker:mosquitto", config: thing_config do
+    channel "switch1", "switch", config: {
+      stateTopic: "stat/my-switch/switch1/state", commandTopic: "cmnd/my-switch/switch1/command"
+    }
+    channel "button1", "string", config: {
+      stateTopic: "stat/my-switch/button1/state", commandTopic: "cmnd/my-switch/button1/command"
+    }
+  end
+end
 ```
 
 ### Actions
@@ -1615,6 +1640,20 @@ rule "TimeOnly Trigger" do
   every :day, at: My_DateTimeItem
   run do |event|
     logger.info "Triggered by #{event.item} at #{event.item.state}"
+  end
+end
+```
+
+#### File and Directory Change Trigger
+
+To trigger a rule when a file or directory was created, modified, or deleted, use {OpenHAB::DSL::Rules::BuilderDSL#watch watch path}.
+
+```ruby
+rule "Send notification when a new image was created" do
+  watch OpenHAB::Core.config_folder / "html/snapshots/*.jpg", for: :created
+  run do |event|
+    Snapshot_Image_Item.update_from_file(event.path)
+    Notification.send "A new snapshot was created!", title: "New Snapshot!", attachment: Snapshot_Image_Item
   end
 end
 ```
