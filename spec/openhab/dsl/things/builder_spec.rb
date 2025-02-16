@@ -178,6 +178,13 @@ RSpec.describe OpenHAB::DSL::Things::Builder do
     expect(home.configuration.get("geolocation")).to eq "0,0"
   end
 
+  it "can set Thing properties" do
+    things.build do
+      thing "astro:sun:home", "Astro Sun Data", config: { property: "value" }
+    end
+    expect(things["astro:sun:home"].properties["property"]).to eql "value"
+  end
+
   context "with channels" do
     it "works" do
       things.build do
