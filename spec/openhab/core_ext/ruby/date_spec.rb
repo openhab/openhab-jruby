@@ -2,9 +2,16 @@
 
 RSpec.describe Date do
   describe "#+" do
-    it "works with Period" do
+    it "works with Period and returns a LocalDate" do
       now = described_class.today
       expect(now + 1.day).to eq(now + 1)
+      expect(now + 1.day).to be_a(java.time.LocalDate)
+    end
+
+    it "works with Time QuantityType and returns a LocalDate" do
+      now = described_class.today
+      expect(now + QuantityType.new("1 d")).to eq(now + 1)
+      expect(now + QuantityType.new("1 d")).to be_a(java.time.LocalDate)
     end
   end
 
@@ -22,6 +29,13 @@ RSpec.describe Date do
       result = now - ld
       expect(result).to eq(1.day)
       expect(result).to be_a(java.time.Period)
+    end
+
+    it "works with Time QuantityType and returns a LocalDate" do
+      now = described_class.today
+      result = now - QuantityType.new("1 d")
+      expect(result).to eq(now - 1)
+      expect(result).to be_a(java.time.LocalDate)
     end
 
     it "works with Numeric and returns a Date" do

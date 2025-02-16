@@ -12,11 +12,11 @@ class Date
   #
   # Extends {#+} to allow adding a {java.time.temporal.TemporalAmount TemporalAmount}
   #
-  # @param [java.time.temporal.TemporalAmount] other
-  # @return [LocalDate] If other is a {java.time.temporal.TemporalAmount TemporalAmount}
+  # @param [java.time.temporal.TemporalAmount, QuantityType] other
+  # @return [LocalDate] If other is a {java.time.temporal.TemporalAmount TemporalAmount} or a Time {QuantityType}
   #
   def plus_with_temporal(other)
-    return to_local_date + other if other.is_a?(java.time.temporal.TemporalAmount)
+    return to_local_date + other.to_temporal_amount if other.respond_to?(:to_temporal_amount)
 
     plus_without_temporal(other)
   end
@@ -26,13 +26,14 @@ class Date
   #
   # Extends {#-} to allow subtracting a {java.time.temporal.TemporalAmount TemporalAmount}
   #
-  # @param [java.time.temporal.TemporalAmount] other
-  # @return [LocalDate] If other is a {java.time.temporal.TemporalAmount TemporalAmount}
+  # @param [java.time.temporal.TemporalAmount, QuantityType] other
+  # @return [LocalDate] If other is a {java.time.temporal.TemporalAmount TemporalAmount} or a Time {QuantityType}
   #
   def minus_with_temporal(other)
-    case other
-    when java.time.temporal.TemporalAmount, java.time.LocalDate
+    if other.instance_of?(java.time.LocalDate)
       to_local_date - other
+    elsif other.respond_to?(:to_temporal_amount)
+      to_local_date - other.to_temporal_amount
     else
       minus_without_temporal(other)
     end

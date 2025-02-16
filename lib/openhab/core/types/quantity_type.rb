@@ -180,50 +180,70 @@ module OpenHAB
             # def +(other)
             #   logger.trace { "#{self} + #{other} (#{other.class})" }
             #   other = other.state if other.is_a?(Core::Items::Persistence::PersistedState)
-            #   if other.is_a?(QuantityType)
+            #   case other
+            #   when QuantityType
             #     add_quantity(other)
-            #   elsif (thread_unit = DSL.unit(dimension))
-            #     if other.is_a?(DecimalType)
-            #       other = other.to_big_decimal
-            #       add_quantity(self.class.new(other, thread_unit))
-            #     elsif other.is_a?(java.math.BigDecimal)
-            #       add_quantity(self.class.new(other, thread_unit))
-            #     elsif other.respond_to?(:to_d)
-            #       other = other.to_d.to_java
-            #       add_quantity(self.class.new(other, thread_unit))
-            #     elsif other.respond_to?(:coerce) && (lhs, rhs = other.coerce(to_d))
-            #       lhs + rhs
+            #   when java.lang.Number, Numeric
+            #     if (thread_unit = DSL.unit(dimension))
+            #       if other.is_a?(DecimalType)
+            #         other = other.to_big_decimal
+            #         add_quantity(self.class.new(other, thread_unit))
+            #       elsif other.is_a?(java.math.BigDecimal)
+            #         add_quantity(self.class.new(other, thread_unit))
+            #       elsif other.respond_to?(:to_d)
+            #         other = other.to_d.to_java
+            #         add_quantity(self.class.new(other, thread_unit))
+            #       elsif other.respond_to?(:coerce) && (lhs, rhs = other.coerce(to_d))
+            #         lhs + rhs
+            #       else
+            #         raise TypeError, "#{other.class} can't be coerced into #{self.class}"
+            #       end
             #     else
-            #       raise TypeError, "#{other.class} can't be coerced into #{self.class}"
+            #       raise TypeError,
+            #         "#{self.class} can only be added with #{other.class} inside a unit block"
             #     end
             #   else
+            #     if other.respond_to?(:coerce) && (lhs, rhs = other.coerce(self))
+            #       return lhs + rhs
+            #     end
+            #
             #     raise TypeError,
-            #       "#{self.class} can only be added with another #{self.class} outside a unit block"
+            #       "#{self.class} cannot be added with #{other.class}"
             #   end
             # end
             <<~RUBY, __FILE__, __LINE__ + 1
               def #{ruby_op}(other)
                 logger.trace { "\#{self} #{ruby_op} \#{other} (\#{other.class})" }
                 other = other.state if other.is_a?(Core::Items::Persistence::PersistedState)
-                if other.is_a?(QuantityType)
+                case other
+                when QuantityType
                   #{java_op}_quantity(other)
-                elsif (thread_unit = DSL.unit(dimension))
-                  if other.is_a?(DecimalType)
-                    other = other.to_big_decimal
-                    #{java_op}_quantity(#{convert})
-                  elsif other.is_a?(java.math.BigDecimal)
-                    #{java_op}_quantity(#{convert})
-                  elsif other.respond_to?(:to_d)
-                    other = other.to_d.to_java
-                    #{java_op}_quantity(#{convert})
-                  elsif other.respond_to?(:coerce) && (lhs, rhs = other.coerce(to_d))
-                    lhs #{ruby_op} rhs
+                when java.lang.Number, Numeric
+                  if (thread_unit = DSL.unit(dimension))
+                    if other.is_a?(DecimalType)
+                      other = other.to_big_decimal
+                      #{java_op}_quantity(#{convert})
+                    elsif other.is_a?(java.math.BigDecimal)
+                      #{java_op}_quantity(#{convert})
+                    elsif other.respond_to?(:to_d)
+                      other = other.to_d.to_java
+                      #{java_op}_quantity(#{convert})
+                    elsif other.respond_to?(:coerce) && (lhs, rhs = other.coerce(to_d))
+                      lhs #{ruby_op} rhs
+                    else
+                      raise TypeError, "\#{other.class} can't be coerced into \#{self.class}"
+                    end
                   else
-                    raise TypeError, "\#{other.class} can't be coerced into \#{self.class}"
+                    raise TypeError,
+                      "\#{self.class} can only be #{java_op}ed with \#{other.class} inside a unit block"
                   end
                 else
+                  if other.respond_to?(:coerce) && (lhs, rhs = other.coerce(self))
+                    return lhs #{ruby_op} rhs
+                  end
+
                   raise TypeError,
-                    "\#{self.class} can only be #{java_op}ed with another \#{self.class} outside a unit block"
+                    "\#{self.class} cannot be #{java_op}ed with \#{other.class}"
                 end
               end
             RUBY
@@ -272,6 +292,26 @@ module OpenHAB
               end
             RUBY
           )
+        end
+
+        #
+        # @return [Duration] a {Duration} if the unit is time-based
+        # @return [nil] if the unit is not time-based
+        #
+        def to_duration
+          Duration.of_nanos(to_unit("ns").to_i) if unit.compatible?(Units::SECOND)
+        end
+
+        #
+        # @return [Duration] a {Duration} if the unit is time-based
+        # @raise [TypeError] if the unit is not time-based
+        #
+        # @see CoreExt::Java::TemporalAmount#to_temporal_amount
+        #
+        # @!visibility private
+        #
+        def to_temporal_amount
+          to_duration || (raise TypeError, "#{self} is not a time-based Quantity")
         end
 
         # if it's a dimensionless quantity, change the unit to match other_unit
