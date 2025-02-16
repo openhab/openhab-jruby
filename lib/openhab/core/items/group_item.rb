@@ -120,7 +120,7 @@ module OpenHAB
           # @return [String]
           def inspect
             r = "#<OpenHAB::Core::Items::GroupItems::Members #{name}"
-            r += " #{map(&:name).inspect}>" unless @group.__getobj__.nil?
+            r += " #{map(&:name).inspect}" unless @group.__getobj__.nil?
             "#{r}>"
           end
           alias_method :to_s, :inspect
