@@ -46,6 +46,18 @@ module OpenHAB
         # @!attribute [r] accepted_data_types
         #   @return [Array<Class>] An array of {State}s that can be sent as commands to this item
 
+        # @!attribute [r] last_state
+        #   @return [State] The previous state of the item.
+        #   @since openHAB 5.0
+
+        # @!attribute [r] last_state_change
+        #   @return [ZonedDateTime] The time of the last state change.
+        #   @since openHAB 5.0
+
+        # @!attribute [r] last_state_update
+        #   @return [ZonedDateTime] The time of the last state update.
+        #   @since openHAB 5.0
+
         #
         # The item's {GenericItem#label label} if one is defined, otherwise its {#name}.
         #
