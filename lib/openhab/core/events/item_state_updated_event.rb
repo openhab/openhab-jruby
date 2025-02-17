@@ -17,6 +17,10 @@ module OpenHAB
       #
       class ItemStateUpdatedEvent < ItemEvent
         include ItemState
+
+        # @!attribute [r] last_state_update
+        #   @return [ZonedDateTime] the time the previous state update occurred
+        #   @since openHAB 5.0
       end
     end
   end
