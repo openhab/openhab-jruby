@@ -117,6 +117,19 @@ module OpenHAB
         alias_method :|, :to_invertible_unit
 
         #
+        # Check equality without unit inversion
+        #
+        # @return [true,false] if the same value is represented, without unit inversion
+        #
+        def eql?(other)
+          return false unless other.instance_of?(self.class)
+          # compare_to in OH5 will throw an IAE if the units are not compatible
+          return false unless unit.compatible?(other.unit)
+
+          super
+        end
+
+        #
         # Comparison
         #
         # Comparisons against Numeric and DecimalType are allowed only within a

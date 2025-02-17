@@ -115,6 +115,12 @@ RSpec.describe OpenHAB::Core::Types::QuantityType do
     expect((0 | "W")..(10 | "W")).to cover(10 | "W")
   end
 
+  describe "#eql?" do
+    it "returns false for invertible units" do
+      expect(1 | "W").not_to eql(1 | "/W")
+    end
+  end
+
   describe "comparisons" do
     let(:ten_c) { QuantityType.new("10 °C") }
     let(:five_c) { QuantityType.new("5 °C") }

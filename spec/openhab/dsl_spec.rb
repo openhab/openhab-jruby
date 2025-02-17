@@ -483,8 +483,9 @@ RSpec.describe OpenHAB::DSL do
         expect(2 * w).to eql 10 | "W"
         expect((2 * kw).to_i).to eq 10_000
         expect(2 * w == 10).to be true
-        expect(5 / w).to eql 1 | "W"
-        expect((2 * w / 2)).to eql w
+        expect(5 / w).to eql 1 | "/W"
+        expect(2 * w / 2).to eql w
+        expect(2 * w / 2).not_to eql(kw)
       end
     end
 
