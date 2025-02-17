@@ -13,6 +13,14 @@ module OpenHAB
       class ItemStateChangedEvent < ItemEvent
         include ItemState
 
+        # @!attribute [r] last_state_update
+        #   @return [ZonedDateTime] the time the previous state update occurred
+        #   @since openHAB 5.0
+
+        # @!attribute [r] last_state_change
+        #   @return [ZonedDateTime] the time the previous state change occurred
+        #   @since openHAB 5.0
+
         # @!method was_undef?
         #   Check if {#was} is {UNDEF}
         #   @return [true, false]
