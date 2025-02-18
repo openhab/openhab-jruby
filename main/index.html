@@ -3620,7 +3620,11 @@ This library offers a streamlined syntax for writing file-based and UI-based rul
 <li><a href="#item-builder">Item Builder</a></li>
 </ul>
 </li>
-<li><a href="#things">Things</a></li>
+<li><a href="#things">Things</a>
+<ul>
+<li><a href="#thing-builder">Thing Builder</a></li>
+</ul>
+</li>
 <li><a href="#actions">Actions</a></li>
 <li><a href="#logging">Logging</a></li>
 <li><a href="#timers">Timers</a></li>
@@ -3648,6 +3652,7 @@ This library offers a streamlined syntax for writing file-based and UI-based rul
 <li><a href="#openhab-system-started">openHAB System Started</a></li>
 <li><a href="#cron-trigger">Cron Trigger</a></li>
 <li><a href="#datetimeitem-trigger">DateTimeItem Trigger</a></li>
+<li><a href="#file-and-directory-change-trigger">File and Directory Change Trigger</a></li>
 <li><a href="#other-triggers">Other Triggers</a></li>
 <li><a href="#combining-multiple-triggers">Combining Multiple Triggers</a></li>
 <li><a href="#combining-multiple-conditions">Combining Multiple Conditions</a></li>
@@ -4175,7 +4180,7 @@ Note that by default items are not persisted to storage, and will be removed whe
 
   <span class="comment"># dimension Temperature inferred</span>
   number_item <span class="constant">OutdoorTemp</span>, <span class="key">format</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">%.1f %unit%</span><span class="delimiter">&quot;</span></span>, <span class="key">unit</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>
-    
+
   <span class="comment"># unit lx, dimension Illuminance, format &quot;%s %unit%&quot; inferred</span>
   number_item <span class="constant">OutdoorBrightness</span>, <span class="key">state</span>: <span class="integer">10_000</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">lx</span><span class="delimiter">&quot;</span></span>
 <span class="keyword">end</span>
@@ -4210,6 +4215,25 @@ logger.info <span class="string"><span class="delimiter">&quot;</span><span clas
 <p>Get Thing's property:</p>
 <pre class="code ruby"><code class="ruby">model_id = things[<span class="string"><span class="delimiter">&quot;</span><span class="content">fronius:meter:mybridge:mymeter</span><span class="delimiter">&quot;</span></span>].properties[<span class="string"><span class="delimiter">&quot;</span><span class="content">modelId</span><span class="delimiter">&quot;</span></span>]
 logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">Fronius Smart Meter model: </span><span class="inline"><span class="inline-delimiter">#{</span>model_id<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+</code></pre>
+<h4 id="thing-builder"><a href="#thing-builder" class="header-anchor">#</a>Thing Builder</h4>
+<p>New Things can be created via <span class='object_link'><a href="OpenHAB/Core/Things/Registry.html#build-instance_method" title="OpenHAB::Core::Things::Registry#build (method)">things.build</a></span>.</p>
+<pre class="code ruby"><code class="ruby">thing_config = {
+  <span class="key">availabilityTopic</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">my-switch/status</span><span class="delimiter">&quot;</span></span>,
+  <span class="key">payloadAvailable</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">online</span><span class="delimiter">&quot;</span></span>,
+  <span class="key">payloadNotAvailable</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">offline</span><span class="delimiter">&quot;</span></span>
+}
+things.build <span class="keyword">do</span>
+  <span class="comment"># Use an existing bridge &quot;mqtt:broker:mosquitto&quot;</span>
+  thing <span class="string"><span class="delimiter">&quot;</span><span class="content">mqtt:topic:my-switch</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">My Switch</span><span class="delimiter">&quot;</span></span>, <span class="key">bridge</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">mqtt:broker:mosquitto</span><span class="delimiter">&quot;</span></span>, <span class="key">config</span>: thing_config <span class="keyword">do</span>
+    channel <span class="string"><span class="delimiter">&quot;</span><span class="content">switch1</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">switch</span><span class="delimiter">&quot;</span></span>, <span class="key">config</span>: {
+      <span class="key">stateTopic</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">stat/my-switch/switch1/state</span><span class="delimiter">&quot;</span></span>, <span class="key">commandTopic</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">cmnd/my-switch/switch1/command</span><span class="delimiter">&quot;</span></span>
+    }
+    channel <span class="string"><span class="delimiter">&quot;</span><span class="content">button1</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">string</span><span class="delimiter">&quot;</span></span>, <span class="key">config</span>: {
+      <span class="key">stateTopic</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">stat/my-switch/button1/state</span><span class="delimiter">&quot;</span></span>, <span class="key">commandTopic</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">cmnd/my-switch/button1/command</span><span class="delimiter">&quot;</span></span>
+    }
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
 </code></pre>
 <h3 id="actions"><a href="#actions" class="header-anchor">#</a>Actions</h3>
 <p><a href="https://www.openhab.org/docs/configuration/actions.html">openHAB built-in actions</a> are available as children of the <span class='object_link'><a href="OpenHAB/Core/Actions.html" title="OpenHAB::Core::Actions (module)">Actions</a></span> module.
@@ -4839,6 +4863,16 @@ end
   <span class="keyword">end</span>
 <span class="keyword">end</span>
 </code></pre>
+<h4 id="file-and-directory-change-trigger"><a href="#file-and-directory-change-trigger" class="header-anchor">#</a>File and Directory Change Trigger</h4>
+<p>To trigger a rule when a file or directory was created, modified, or deleted, use <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#watch-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#watch (method)">watch path</a></span>.</p>
+<pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Send notification when a new image was created</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+  watch <span class="constant">OpenHAB</span>::<span class="constant">Core</span>.config_folder / <span class="string"><span class="delimiter">&quot;</span><span class="content">html/snapshots/*.jpg</span><span class="delimiter">&quot;</span></span>, <span class="key">for</span>: <span class="symbol">:created</span>
+  run <span class="keyword">do</span> |event|
+    <span class="constant">Snapshot_Image_Item</span>.update_from_file(event.path)
+    <span class="constant">Notification</span>.send <span class="string"><span class="delimiter">&quot;</span><span class="content">A new snapshot was created!</span><span class="delimiter">&quot;</span></span>, <span class="key">title</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">New Snapshot!</span><span class="delimiter">&quot;</span></span>, <span class="key">attachment</span>: <span class="constant">Snapshot_Image_Item</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</code></pre>
 <h4 id="other-triggers"><a href="#other-triggers" class="header-anchor">#</a>Other Triggers</h4>
 <p>There are more triggers supported by this library.
 See the <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#Triggers-group" title="group::OpenHAB::DSL::Rules::BuilderDSL::Triggers (group)">full list of supported triggers</a></span>.</p>
@@ -5012,7 +5046,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Tue Feb 18 23:36:25 2025 by
+  Generated on Tue Feb 18 23:37:11 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
