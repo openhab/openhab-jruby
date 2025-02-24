@@ -3726,12 +3726,12 @@
       <pre class="lines">
 
 
-43
-44
-45</pre>
+30
+31
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/registry.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/registry.rb', line 30</span>
 
 <span class="keyword">def</span> <span class="function">providers</span>
   providerToElements.keys
@@ -3807,41 +3807,15 @@
 23
 24
 25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39</pre>
+26</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/registry.rb', line 20</span>
 
 <span class="keyword">def</span> <span class="function">provider_for</span>(key)
   elementReadLock.lock
-  <span class="keyword">if</span> key.is_a?(org.openhab.core.common.registry.Identifiable)
-    <span class="keyword">return</span> <span class="keyword">unless</span> (provider = elementToProvider[key])
-
-    <span class="comment"># The HashMap lookup above uses java's hashCode() which has been overridden</span>
-    <span class="comment"># by GenericItem and ThingImpl to return object's uid, e.g. item's name, thing uid</span>
-    <span class="comment"># so it will return a provider even for an unmanaged object having the same uid</span>
-    <span class="comment"># as an existing managed object.</span>
-
-    <span class="comment"># So take an extra step to verify that the provider really holds the given instance.</span>
-    <span class="comment"># by using equal? to compare the object's identity.</span>
-    <span class="comment"># Only ManagedProviders have a #get method to look up the object by uid.</span>
-    provider <span class="keyword">if</span> !provider.is_a?(<span class="constant">ManagedProvider</span>) || provider.get(key.uid).equal?(key)
-  <span class="keyword">elsif</span> (element = identifierToElement[key])
-    elementToProvider[element]
-  <span class="keyword">end</span>
+  element = key.is_a?(org.openhab.core.common.registry.Identifiable) ? key : identifierToElement[key]
+  elementToProvider[element] <span class="keyword">if</span> element
 <span class="keyword">ensure</span>
   elementReadLock.unlock
 <span class="keyword">end</span></pre>
@@ -3855,7 +3829,7 @@
 </div>
 
         <footer>
-  Generated on Tue Feb 18 23:37:17 2025 by
+  Generated on Mon Feb 24 20:12:59 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
