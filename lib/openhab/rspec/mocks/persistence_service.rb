@@ -79,7 +79,7 @@ module OpenHAB
           item_history.insert(insert_index, new_item)
         end
 
-        def remove(filter)
+        def remove(filter, _alias = nil)
           query_internal(filter) do |item_history, index|
             historic_item = item_history.delete_at(index)
             @data.delete(historic_item.name) if item_history.empty?
@@ -87,7 +87,7 @@ module OpenHAB
           true
         end
 
-        def query(filter)
+        def query(filter, _alias = nil)
           result = []
 
           query_internal(filter) do |item_history, index|
