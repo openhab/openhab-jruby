@@ -19,21 +19,8 @@ module OpenHAB
       #
       def provider_for(key)
         elementReadLock.lock
-        if key.is_a?(org.openhab.core.common.registry.Identifiable)
-          return unless (provider = elementToProvider[key])
-
-          # The HashMap lookup above uses java's hashCode() which has been overridden
-          # by GenericItem and ThingImpl to return object's uid, e.g. item's name, thing uid
-          # so it will return a provider even for an unmanaged object having the same uid
-          # as an existing managed object.
-
-          # So take an extra step to verify that the provider really holds the given instance.
-          # by using equal? to compare the object's identity.
-          # Only ManagedProviders have a #get method to look up the object by uid.
-          provider if !provider.is_a?(ManagedProvider) || provider.get(key.uid).equal?(key)
-        elsif (element = identifierToElement[key])
-          elementToProvider[element]
-        end
+        element = key.is_a?(org.openhab.core.common.registry.Identifiable) ? key : identifierToElement[key]
+        elementToProvider[element] if element
       ensure
         elementReadLock.unlock
       end
