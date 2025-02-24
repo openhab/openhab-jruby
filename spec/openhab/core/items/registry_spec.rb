@@ -29,10 +29,11 @@ RSpec.describe OpenHAB::Core::Items::Registry do
       expect(SwitchTwo.provider).to be_a OpenHAB::Core::Items::Provider
     end
 
-    it "returns nil for items that aren't registered" do
-      expect(SwitchTwo.provider).not_to be_nil
-      unmanaged_item = OpenHAB::DSL::Items::ItemBuilder.item_factory.create_item("Switch", "SwitchTwo")
-      expect(unmanaged_item.provider).to be_nil
+    it "works on managed providers" do
+      items.build(:persistent) { switch_item "ManagedItem1" }
+      expect(ManagedItem1.provider).to be_a org.openhab.core.items.ManagedItemProvider
+    ensure
+      items.remove("ManagedItem1")
     end
   end
 end

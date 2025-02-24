@@ -180,7 +180,6 @@ module OpenHAB
             provider.all.each do |link|
               provider.remove(link.uid) if link.item_name == item.name && !channel_uids.include?(link.linked_uid)
             end
-
             item
           end
         end
@@ -698,8 +697,8 @@ module OpenHAB
         # @!visibility private
         def build
           item = create_item
-          item.label = label
-          item.category = icon.to_s if icon
+          item.set_label(label) # Don't use item#label= because it triggers a provider.update
+          item.set_category(icon.to_s) if icon # ditto here
           groups.each do |group|
             group = group.name if group.respond_to?(:name)
             item.add_group_name(group.to_s)

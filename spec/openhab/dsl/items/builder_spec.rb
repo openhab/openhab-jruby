@@ -91,34 +91,28 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
       #
       # @param [Hash] org_config Config to create the original item
       # @param [Hash] new_config Config to create the new item
-      # @param [:new_item,:old_item] item_to_keep Whether the new item should replace the old item or not
+      # @param [true,false] update_expected Whether the provider should update the item with the new config
       # @return [Array<OpenHAB::Core::Items::Item, OpenHAB::Core::Items::Item>]
       #   An array of [original item, updated item]. These are unproxied raw items
       #
-      def build_and_update(org_config, new_config, item_to_keep: :new_item, &block)
+      def build_and_update(org_config, new_config, update_expected: true, &block)
         org_config = org_config.dup
         new_config = new_config.dup
         org_item = items.build do
           send("#{org_config.delete(:type) || "number"}_item", "Built", org_config.delete(:label), **org_config)
         end
-        # The proxy is cached based on uid, so when the proxy for the new item with the same uid/name is "created",
-        # it will reuse the existing proxy for the old item to hold the new item, overwriting the underlying object.
-        # So we must unwrap the actual item here before the new item is created.
-        org_item = org_item.__getobj__
-        expect(Built.__getobj__).to be org_item
         yield :original, org_item if block
+
+        if update_expected
+          expect(org_item.provider).to receive(:update).and_call_original
+        else
+          expect(org_item.provider).not_to receive(:update)
+        end
 
         new_item = items.build do
           send("#{new_config.delete(:type) || "number"}_item", "Built", new_config.delete(:label), **new_config)
         end
-        new_item = new_item.__getobj__
-        expect(Built.__getobj__).to be new_item
         yield :updated, new_item if block
-
-        case item_to_keep
-        when :new_item then expect(new_item).not_to be org_item
-        when :old_item then expect(new_item).to be org_item
-        end
 
         [org_item, new_item]
       end
@@ -178,7 +172,7 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
               channel "new", "number"
             end
           end
-          build_and_update({ channel: "a:b:c:old" }, { channel: "a:b:c:new" }, item_to_keep: :old_item)
+          build_and_update({ channel: "a:b:c:old" }, { channel: "a:b:c:new" }, update_expected: false)
           expect(item.links.map(&:linked_uid)).to match_array(things["a:b:c"].channels["new"].uid)
         end
 
@@ -190,7 +184,7 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
           end
           build_and_update({ channel: ["a:b:c:d", { foo: "bar" }] },
                            { channel: ["a:b:c:d", { foo: "qux" }] },
-                           item_to_keep: :old_item)
+                           update_expected: false)
           link = item.links.first
           expect(link.linked_uid).to eql things["a:b:c"].channels["d"].uid
           expect(link.configuration).to eq({ "foo" => "qux" })
@@ -211,14 +205,14 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
         end
 
         it "keeps the old item but delete its metadata when the new item has no metadata" do
-          build_and_update({ metadata: { foo: "baz" } }, {}, item_to_keep: :old_item)
+          build_and_update({ metadata: { foo: "baz" } }, {}, update_expected: false)
           expect(item.metadata.key?(:foo)).to be false
         end
 
         it "keeps the old item but reset to the new metadata" do
           build_and_update({ metadata: { foo: "bar", moo: "cow" } },
                            { metadata: { foo: "baz", qux: "quux" } },
-                           item_to_keep: :old_item)
+                           update_expected: false)
           expect(item.metadata[:foo].value).to eq "baz"
           expect(item.metadata[:qux].value).to eq "quux"
           expect(item.metadata.key?(:moo)).to be false
@@ -227,7 +221,7 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
         it "works when there's a special semantics (unmanaged) metadata" do
           build_and_update({ tags: "Lightbulb", metadata: { qux: "quux" } },
                            { tags: "Lightbulb", metadata: { foo: "bar" } },
-                           item_to_keep: :old_item) do |type, item|
+                           update_expected: false) do |type, item|
             expect(item.metadata[:semantics]).not_to be_nil if type == :original
           end
           expect(item.metadata.key?(:qux)).to be false
@@ -235,22 +229,22 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
         end
 
         it "keeps the old item when only the format (state description metadata) is different" do
-          build_and_update({ format: "OLD %s" }, { format: "NEW %s" }, item_to_keep: :old_item)
+          build_and_update({ format: "OLD %s" }, { format: "NEW %s" }, update_expected: false)
           expect(item.state_description.pattern).to eql "NEW %s"
         end
 
         it "keeps the old item when autoupdate (metadata) is different" do
-          build_and_update({ autoupdate: true }, { autoupdate: false }, item_to_keep: :old_item)
+          build_and_update({ autoupdate: true }, { autoupdate: false }, update_expected: false)
           expect(item.metadata[:autoupdate].value).to eql "false"
         end
 
         it "keeps the old item but remove autoupdate (metadata)" do
-          build_and_update({ autoupdate: true }, {}, item_to_keep: :old_item)
+          build_and_update({ autoupdate: true }, {}, update_expected: false)
           expect(item.metadata.key?(:autoupdate)).to be false
         end
 
         it "keeps the old item but add expire (metadata)" do
-          build_and_update({}, { expire: "5s" }, item_to_keep: :old_item)
+          build_and_update({}, { expire: "5s" }, update_expected: false)
           expect(item.metadata[:expire].value).to eql "5s"
         end
       end
@@ -270,11 +264,11 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
             channel: "a:b:c:old"
           }.freeze
 
-          build_and_update(properties, properties, item_to_keep: :old_item)
+          build_and_update(properties, properties, update_expected: false)
         end
 
         it "keeps the old item but updates to the new state" do
-          build_and_update({ state: 1 }, { state: 2 }, item_to_keep: :old_item)
+          build_and_update({ state: 1 }, { state: 2 }, update_expected: false)
           expect(item.state).to eq 2
         end
       end
