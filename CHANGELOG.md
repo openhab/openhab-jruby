@@ -1,5 +1,16 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.35.1](https://github.com/openhab/openhab-jruby/tree/v5.35.1) (2025-02-25)
+
+### Bug Fixes
+
+- Fix GroupItem::Members#inspect double `>>` by [@jimtng](https://github.com/jimtng) in [#398](https://github.com/openhab/openhab-jruby/pull/398)
+- Add a space between semantic name and its parent in #inspect by [@jimtng](https://github.com/jimtng) in [#399](https://github.com/openhab/openhab-jruby/pull/399)
+- Fix QuantityType#eql? raising exception on incompatible QuantityType unit by [@jimtng](https://github.com/jimtng) in [#400](https://github.com/openhab/openhab-jruby/pull/400)
+- Fix problem in getting the provider for entities of ManagedProvider by [@jimtng](https://github.com/jimtng) in [#402](https://github.com/openhab/openhab-jruby/pull/402)
+
+**Full Changelog**: [v5.35.0...v5.35.1](https://github.com/openhab/openhab-jruby/compare/v5.35.0...v5.35.1)
+
 ## [v5.35.0](https://github.com/openhab/openhab-jruby/tree/v5.35.0) (2025-02-12)
 
 ### Features
