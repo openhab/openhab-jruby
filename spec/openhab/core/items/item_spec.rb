@@ -479,6 +479,15 @@ RSpec.describe OpenHAB::Core::Items::Item do
         LightSwitch.label = "Light Switch"
       end
     end
+
+    it "passes self to the block" do
+      LightSwitch.modify do |item|
+        expect(item).to be LightSwitch
+        item.modify do |item2|
+          expect(item2).to be LightSwitch
+        end
+      end
+    end
   end
 
   describe "entity lookup" do

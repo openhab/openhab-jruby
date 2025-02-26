@@ -263,6 +263,7 @@ module OpenHAB
         #   knowingly and intentionally though, so an escape hatch is provided to allow runtime
         #   modifications.
         # @yield
+        # @yieldparam [Item] self The item
         # @return [Object] the block's return value
         #
         # @example Modify label and tags for an item
@@ -271,9 +272,19 @@ module OpenHAB
         #     MySwitch.tags = :labeled
         #   end
         #
+        # @example Using the block argument to access the item
+        #   MySwitch.modify do |item|
+        #     item.label = "New Label"
+        #     item.icon = :switch
+        #     item.tags = Semantics::Switch, Semantics::Light
+        #   end
+        #
         def modify(force: false)
           raise ArgumentError, "you must pass a block to modify" unless block_given?
-          return yield if instance_variable_defined?(:@modifying) && @modifying
+
+          proxied_self = Proxy.new(self)
+
+          return yield(proxied_self) if instance_variable_defined?(:@modifying) && @modifying
 
           begin
             provider = self.provider
@@ -286,7 +297,7 @@ module OpenHAB
             @modified = false
             @modifying = true
 
-            r = yield
+            r = yield(proxied_self)
 
             provider&.update(self) if @modified
             r
