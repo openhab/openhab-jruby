@@ -26,7 +26,7 @@ module OpenHAB
 
         # @!scope instance
 
-        # @param [TemporalAmount, LocalDate, Numeric] other
+        # @param [TemporalAmount, LocalDate, Numeric, QuantityType] other
         #   If other is a Numeric, it's interpreted as days.
         # @return [LocalDate] If other is a TemporalAmount or Numeric
         # @return [Period] If other is a LocalDate
@@ -42,12 +42,14 @@ module OpenHAB
             minus_days(other.to_days)
           when Numeric
             minus_days(other.ceil)
+          when QuantityType
+            minus_days(other.to_temporal_amount.to_days)
           else
             minus(other)
           end
         end
 
-        # @param [TemporalAmount, Numeric] other
+        # @param [TemporalAmount, Numeric, QuantityType] other
         #   If other is a Numeric, it's interpreted as days.
         # @return [LocalDate]
         def +(other)
@@ -56,6 +58,8 @@ module OpenHAB
             plus_days(other.to_days)
           when Numeric
             plus_days(other.to_i)
+          when QuantityType
+            plus_days(other.to_temporal_amount.to_days)
           else
             plus(other)
           end

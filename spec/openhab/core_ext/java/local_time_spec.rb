@@ -34,6 +34,10 @@ RSpec.describe java.time.LocalTime do
       expect(time + 2.hours).to eql LocalTime.parse("05:22:01")
     end
 
+    it "works with a Time QuantityType" do
+      expect(time + QuantityType.new("2 h")).to eql LocalTime.parse("05:22:01")
+    end
+
     it "works with integers" do
       expect(time + 1).to eql LocalTime.parse("03:22:02")
     end
@@ -47,6 +51,10 @@ RSpec.describe java.time.LocalTime do
 
     it "works with a Duration" do
       expect(time - 2.hours).to eql LocalTime.parse("01:22:01")
+    end
+
+    it "works with a Time QuantityType" do
+      expect(time - QuantityType.new("2 h")).to eql LocalTime.parse("01:22:01")
     end
 
     it "works with integers" do

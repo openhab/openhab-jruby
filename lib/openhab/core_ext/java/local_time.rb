@@ -67,23 +67,25 @@ module OpenHAB
           end
         end
 
-        # @param [TemporalAmount, Numeric] other
+        # @param [TemporalAmount, Numeric, QuantityType] other
         #   If other is a Numeric, it's interpreted as seconds.
         # @return [LocalTime]
         def -(other)
           return minus(other.seconds) if other.is_a?(Numeric)
           return self if other.is_a?(Period)
 
+          other = other.to_temporal_amount if other.is_a?(QuantityType)
           minus(other)
         end
 
-        # @param [TemporalAmount, Numeric] other
+        # @param [TemporalAmount, Numeric, QuantityType] other
         #   If other is a Numeric, it's interpreted as seconds.
         # @return [LocalTime]
         def +(other)
           return plus(other.seconds) if other.is_a?(Numeric)
           return self if other.is_a?(Period)
 
+          other = other.to_temporal_amount if other.is_a?(QuantityType)
           plus(other)
         end
 

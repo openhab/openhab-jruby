@@ -39,27 +39,33 @@ module OpenHAB
         # @return [Month]
         alias_method :to_month, :month
 
-        # @param [TemporalAmount, #to_zoned_date_time, Numeric] other
+        # @param [TemporalAmount, #to_zoned_date_time, Numeric, QuantityType] other
         #   If other is a Numeric, it's interpreted as seconds.
         # @return [Duration] If other responds to #to_zoned_date_time
-        # @return [ZonedDateTime] If other is a TemporalAmount
+        # @return [ZonedDateTime] If other is a TemporalAmount or a Time QuantityType
         def -(other)
           if other.respond_to?(:to_zoned_date_time)
             java.time.Duration.between(other.to_zoned_date_time, self)
           elsif other.is_a?(Numeric)
             minus(other.seconds)
+          elsif other.is_a?(QuantityType)
+            minus(other.to_temporal_amount)
           else
             minus(other)
           end
         end
 
-        # @param [TemporalAmount, Numeric] other
+        # @param [TemporalAmount, Numeric, QuantityType] other
         #   If other is a Numeric, it's interpreted as seconds.
         # @return [ZonedDateTime]
         def +(other)
-          return plus(other.seconds) if other.is_a?(Numeric)
-
-          plus(other)
+          if other.is_a?(Numeric)
+            plus(other.seconds)
+          elsif other.is_a?(QuantityType)
+            plus(other.to_temporal_amount)
+          else
+            plus(other)
+          end
         end
 
         #
