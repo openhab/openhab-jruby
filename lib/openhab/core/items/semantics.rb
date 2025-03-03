@@ -230,9 +230,10 @@ module OpenHAB
 
             # @deprecated OH3.4 missing registry
             if Provider.registry
-              tag = service.get_by_label_or_synonym(id, locale)
-              tag = nil if tag&.empty?
-              tag_class = tag&.first ||
+              # Java21 added #first method, which overrides Ruby's #first.
+              # It throws an error if the list is Empty instead of returning nil.
+              # So we use #ruby_first to ensure we get Ruby's behaviour
+              tag_class = service.get_by_label_or_synonym(id, locale).ruby_first ||
                           Provider.registry.get_tag_class_by_id(id)
               return unless tag_class
 
