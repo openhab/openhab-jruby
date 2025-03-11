@@ -66,6 +66,29 @@ module OpenHAB
         end
       end
       ::IRB::ReadlineInputMethod.prepend(ReadlineInputMethod)
+
+      module EntityCompletor
+        VALID_ENTITY_PREFIXES = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_"
+
+        def completion_candidates(_preposing, target, _postposing, bind:)
+          return super unless defined?(OpenHAB::Core::EntityLookup)
+          return super unless VALID_ENTITY_PREFIXES.include?(target[0])
+
+          this = bind.eval("self")
+          return super unless this.is_a?(OpenHAB::Core::EntityLookup)
+
+          matching_items = OpenHAB::DSL.items.filter_map do |item|
+            item.name if item.name.start_with?(target)
+          end
+          matching_things = OpenHAB::DSL.things.filter_map do |thing|
+            id = thing.uid.to_s.tr(":", "_")
+            id if id.start_with?(target)
+          end
+          matching_items | matching_things | super
+        end
+      end
+      ::IRB::RegexpCompletor.prepend(EntityCompletor) if defined?(::IRB::RegexpCompletor)
+      ::IRB::TypeCompletor.prepend(EntityCompletor) if defined?(::IRB::TypeCompletor)
     end
   end
 end
