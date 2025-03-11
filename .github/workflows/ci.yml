@@ -107,7 +107,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Cache openHAB setup
         id: cache
-        uses: actions/cache@v4.1.2
+        uses: actions/cache@v4
         with:
           path: tmp/
           key: openHAB-setup-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.snapshot_date || '' }}-java-${{ matrix.java_version }}
@@ -179,7 +179,7 @@ jobs:
           ruby-version: ${{ matrix.jruby_version }}
           bundler-cache: true
       - name: Restore openHAB setup
-        uses: actions/cache@v4.1.2
+        uses: actions/cache@v4
         with:
           path: tmp/
           key: openHAB-setup-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.snapshot_date || '' }}-java-${{ matrix.java_version }}
@@ -234,7 +234,7 @@ jobs:
           bundler-cache: true
           rubygems: 3.4.22
       - name: Restore openHAB setup
-        uses: actions/cache@v4.1.2
+        uses: actions/cache@v4
         with:
           path: tmp/
           key: openHAB-setup-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.snapshot_date || '' }}-java-${{ matrix.java_version }}
