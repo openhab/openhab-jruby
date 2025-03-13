@@ -257,7 +257,9 @@ namespace :openhab do
       "KARAF_REDIRECT" => karaf_log,
       "EXTRA_JAVA_OPTS" => "-Xmx4g",
       "OPENHAB_HTTP_PORT" => ENV["OPENHAB_HTTP_PORT"] || "8080",
-      "OPENHAB_HTTPS_PORT" => ENV["OPENHAB_HTTPS_PORT"] || "8443"
+      "OPENHAB_HTTPS_PORT" => ENV["OPENHAB_HTTPS_PORT"] || "8443",
+      "HOME" => OPENHAB_DIR,
+      "PATH" => ENV.fetch("PATH", nil)
     }
   end
 
