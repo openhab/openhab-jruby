@@ -13,6 +13,7 @@ concurrency:
 env:
   RUBY_VERSION: 3.1.4
   GITHUB_TOKEN: ${{ github.token }}
+  RUBYOPT: "-r${{ github.workspace }}/lib/openhab/core/gem"
 
 jobs:
   rubocop:
@@ -123,7 +124,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         env:
           OPENHAB_VERSION: ${{ matrix.openhab_version }}
-        run: bin/rake openhab:setup
+        run: BUNDLE_FROZEN=false OPENHAB_NO_RUNTIME_DEP=1 bin/rake openhab:setup
       - name: Upload openHAB Logs
         uses: actions/upload-artifact@v4
         if: steps.cache.outputs.cache-hit != 'true' && failure()
@@ -235,7 +236,7 @@ jobs:
           key: openHAB-setup-2-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.snapshot_date || '' }}-java-${{ matrix.java_version }}
           fail-on-cache-miss: true
       - name: Cucumber
-        run: bin/rake features
+        run: BUNDLE_FROZEN=false OPENHAB_NO_RUNTIME_DEP=1 bin/rake features
         timeout-minutes: 4
       - name: Upload openHAB Logs
         uses: actions/upload-artifact@v4

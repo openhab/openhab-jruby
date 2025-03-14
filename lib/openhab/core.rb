@@ -159,6 +159,10 @@ end
 require_relative "core/provider"
 
 Dir[File.expand_path("core/**/*.rb", __dir__)].each do |f|
+  # already been run by either a binstub, or the addon
+  next if f.end_with?("gem.rb")
   # metadata is autoloaded
-  require f unless f.include?("/metadata/")
+  next if f.include?("/metadata/")
+
+  require f
 end
