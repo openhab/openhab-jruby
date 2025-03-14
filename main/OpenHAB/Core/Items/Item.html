@@ -1883,6 +1883,17 @@
   
   <li class="">
     <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/CommandDescription.html" title="OpenHAB::Core::Types::CommandDescription (module)">CommandDescription</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/DateTimeType.html" title="OpenHAB::Core::Types::DateTimeType (class)">DateTimeType</a></span>
       
         &lt; Object
@@ -2077,6 +2088,19 @@
   <li class="">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/State.html" title="OpenHAB::Core::Types::State (module)">State</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Types/StateDescription.html" title="OpenHAB::Core::Types::StateDescription (class)">StateDescription</a></span>
+      
+        &lt; Object
       
       
     </span>
@@ -3798,6 +3822,33 @@
       <li class="public ">
   <span class="summary_signature">
     
+      <a href="#command_description-instance_method" title="#command_description (instance method)">#<strong>command_description</strong>  &#x21d2; Types::CommandDescription<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#groups-instance_method" title="#groups (instance method)">#<strong>groups</strong>  &#x21d2; Array&lt;GroupItem&gt; </a>
     
 
@@ -3931,6 +3982,33 @@
   
     <span class="summary_desc"><div class='inline'><p>Returns the provider for this item.</p>
 </div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#state_description-instance_method" title="#state_description (instance method)">#<strong>state_description</strong>  &#x21d2; Types::StateDescription<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -4603,22 +4681,22 @@
       <pre class="lines">
 
 
-92
-93
-94
-95
-96
-97
 98
 99
 100
 101
 102
 103
-104</pre>
+104
+105
+106
+107
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 98</span>
 
 <span class="keyword">def</span> <span class="function">all_groups</span>
   result = []
@@ -4679,12 +4757,12 @@ this method only returns the first channel.</p>
       <pre class="lines">
 
 
-295
-296
-297</pre>
+301
+302
+303</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 295</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 301</span>
 
 <span class="keyword">def</span> <span class="function">channel</span>
   channel_uids.first&amp;.channel
@@ -4735,12 +4813,12 @@ this method only returns the first channel.</p>
       <pre class="lines">
 
 
-278
-279
-280</pre>
+284
+285
+286</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 278</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 284</span>
 
 <span class="keyword">def</span> <span class="function">channel_uid</span>
   channel_uids.first
@@ -4790,12 +4868,12 @@ this method only returns the first channel.</p>
       <pre class="lines">
 
 
-286
-287
-288</pre>
+292
+293
+294</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 286</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 292</span>
 
 <span class="keyword">def</span> <span class="function">channel_uids</span>
   <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_bound_channels(name)
@@ -4845,16 +4923,66 @@ this method only returns the first channel.</p>
       <pre class="lines">
 
 
-303
-304
-305</pre>
+309
+310
+311</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 303</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 309</span>
 
 <span class="keyword">def</span> <span class="function">channels</span>
   channel_uids.map(&amp;<span class="symbol">:channel</span>)
 <span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="command_description-instance_method">
+  
+    #<strong>command_description</strong>  &#x21d2; <tt><span class='object_link'><a href="../Types/CommandDescription.html" title="OpenHAB::Core::Types::CommandDescription (module)">Types::CommandDescription</a></span></tt><sup>?</sup>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Types/CommandDescription.html" title="OpenHAB::Core::Types::CommandDescription (module)">Types::CommandDescription</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 52</span>
+
+</pre>
     </td>
   </tr>
 </table>
@@ -4904,12 +5032,12 @@ this method only returns the first channel.</p>
       <pre class="lines">
 
 
-65
-66
-67</pre>
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 71</span>
 
 <span class="keyword">def</span> <span class="function">groups</span>
   group_names.map { |name| <span class="constant">EntityLookup</span>.lookup_item(name) }.compact
@@ -4989,12 +5117,12 @@ this method only returns the first channel.</p>
       <pre class="lines">
 
 
-322
-323
-324</pre>
+328
+329
+330</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 322</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 328</span>
 
 <span class="keyword">def</span> <span class="function">links</span>
   <span class="constant">ItemChannelLinks</span>.new(name, <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_links(name))
@@ -5227,12 +5355,12 @@ String StringItem1
       <pre class="lines">
 
 
-223
-224
-225</pre>
+229
+230
+231</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 223</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 229</span>
 
 <span class="keyword">def</span> <span class="function">metadata</span>
   <span class="instance-variable">@metadata</span> ||= <span class="constant">Metadata</span>::<span class="constant">NamespaceHash</span>.new(name)
@@ -5337,16 +5465,66 @@ String StringItem1
       <pre class="lines">
 
 
-409
-410
-411</pre>
+415
+416
+417</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 409</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 415</span>
 
 <span class="keyword">def</span> <span class="function">provider</span>
   <span class="constant">Provider</span>.registry.provider_for(<span class="predefined-constant">self</span>)
 <span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="state_description-instance_method">
+  
+    #<strong>state_description</strong>  &#x21d2; <tt><span class='object_link'><a href="../Types/StateDescription.html" title="OpenHAB::Core::Types::StateDescription (class)">Types::StateDescription</a></span></tt><sup>?</sup>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Types/StateDescription.html" title="OpenHAB::Core::Types::StateDescription (class)">Types::StateDescription</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 49</span>
+
+</pre>
     </td>
   </tr>
 </table>
@@ -5397,12 +5575,12 @@ this method only returns the first thing.</p>
       <pre class="lines">
 
 
-259
-260
-261</pre>
+265
+266
+267</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 259</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 265</span>
 
 <span class="keyword">def</span> <span class="function">thing</span>
   all_linked_things.first
@@ -5460,12 +5638,12 @@ this method only returns the first thing.</p>
       <pre class="lines">
 
 
-268
-269
-270</pre>
+274
+275
+276</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 268</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 274</span>
 
 <span class="keyword">def</span> <span class="function">things</span>
   <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_bound_things(name).map { |thing| <span class="constant">Things</span>::<span class="constant">Proxy</span>.new(thing) }
@@ -5527,10 +5705,10 @@ this method only returns the first thing.</p>
       <pre class="lines">
 
 
-430</pre>
+436</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 430</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 436</span>
 
 def_type_predicate(<span class="symbol">:call</span>)</pre>
     </td>
@@ -5583,10 +5761,10 @@ def_type_predicate(<span class="symbol">:call</span>)</pre>
       <pre class="lines">
 
 
-431</pre>
+437</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 431</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 437</span>
 
 def_type_predicate(<span class="symbol">:color</span>)</pre>
     </td>
@@ -5639,10 +5817,10 @@ def_type_predicate(<span class="symbol">:color</span>)</pre>
       <pre class="lines">
 
 
-432</pre>
+438</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 432</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 438</span>
 
 def_type_predicate(<span class="symbol">:contact</span>)</pre>
     </td>
@@ -5695,10 +5873,10 @@ def_type_predicate(<span class="symbol">:contact</span>)</pre>
       <pre class="lines">
 
 
-433</pre>
+439</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 433</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 439</span>
 
 def_type_predicate(<span class="symbol">:date_time</span>)</pre>
     </td>
@@ -5757,10 +5935,10 @@ def_type_predicate(<span class="symbol">:date_time</span>)</pre>
       <pre class="lines">
 
 
-435</pre>
+441</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 435</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 441</span>
 
 def_type_predicate(<span class="symbol">:dimmer</span>)</pre>
     </td>
@@ -5813,10 +5991,10 @@ def_type_predicate(<span class="symbol">:dimmer</span>)</pre>
       <pre class="lines">
 
 
-436</pre>
+442</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 436</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 442</span>
 
 def_type_predicate(<span class="symbol">:group</span>)</pre>
     </td>
@@ -5869,10 +6047,10 @@ def_type_predicate(<span class="symbol">:group</span>)</pre>
       <pre class="lines">
 
 
-437</pre>
+443</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 437</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 443</span>
 
 def_type_predicate(<span class="symbol">:image</span>)</pre>
     </td>
@@ -5917,18 +6095,18 @@ def_type_predicate(<span class="symbol">:image</span>)</pre>
       <pre class="lines">
 
 
-397
-398
-399
-400
-401
-402
 403
 404
-405</pre>
+405
+406
+407
+408
+409
+410
+411</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 397</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 403</span>
 
 <span class="keyword">def</span> <span class="function">inspect</span>
   s = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Items::</span><span class="inline"><span class="inline-delimiter">#{</span>type<span class="inline-delimiter">}</span></span><span class="content">Item</span><span class="inline"><span class="inline-delimiter">#{</span>type_details<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>label.inspect<span class="inline-delimiter">}</span></span><span class="content"> state=</span><span class="inline"><span class="inline-delimiter">#{</span>raw_state.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
@@ -6125,22 +6303,22 @@ this method only returns the first link.</p>
       <pre class="lines">
 
 
-360
-361
-362
-363
-364
-365
 366
 367
 368
 369
 370
 371
-372</pre>
+372
+373
+374
+375
+376
+377
+378</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 360</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 366</span>
 
 <span class="keyword">def</span> <span class="function">link</span>(channel = <span class="predefined-constant">nil</span>, config = <span class="predefined-constant">nil</span>)
   <span class="keyword">return</span> <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.get_links(name).first <span class="keyword">if</span> channel.nil? &amp;&amp; config.nil?
@@ -6205,10 +6383,10 @@ this method only returns the first link.</p>
       <pre class="lines">
 
 
-438</pre>
+444</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 438</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 444</span>
 
 def_type_predicate(<span class="symbol">:location</span>)</pre>
     </td>
@@ -6281,15 +6459,15 @@ def_type_predicate(<span class="symbol">:location</span>)</pre>
       <pre class="lines">
 
 
-78
-79
-80
-81
-82
-83</pre>
+84
+85
+86
+87
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 78</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 84</span>
 
 <span class="keyword">def</span> <span class="function">member_of?</span>(*groups)
   groups.map! <span class="keyword">do</span> |group|
@@ -6347,10 +6525,10 @@ def_type_predicate(<span class="symbol">:location</span>)</pre>
       <pre class="lines">
 
 
-439</pre>
+445</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 439</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 445</span>
 
 def_type_predicate(<span class="symbol">:number</span>)</pre>
     </td>
@@ -6403,10 +6581,10 @@ def_type_predicate(<span class="symbol">:number</span>)</pre>
       <pre class="lines">
 
 
-440</pre>
+446</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 440</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 446</span>
 
 def_type_predicate(<span class="symbol">:player</span>)</pre>
     </td>
@@ -6459,10 +6637,10 @@ def_type_predicate(<span class="symbol">:player</span>)</pre>
       <pre class="lines">
 
 
-441</pre>
+447</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 441</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 447</span>
 
 def_type_predicate(<span class="symbol">:rollershutter</span>)</pre>
     </td>
@@ -6515,10 +6693,10 @@ def_type_predicate(<span class="symbol">:rollershutter</span>)</pre>
       <pre class="lines">
 
 
-442</pre>
+448</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 442</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 448</span>
 
 def_type_predicate(<span class="symbol">:string</span>)</pre>
     </td>
@@ -6577,10 +6755,10 @@ def_type_predicate(<span class="symbol">:string</span>)</pre>
       <pre class="lines">
 
 
-444</pre>
+450</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 444</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 450</span>
 
 def_type_predicate(<span class="symbol">:switch</span>)</pre>
     </td>
@@ -6656,22 +6834,22 @@ def_type_predicate(<span class="symbol">:switch</span>)</pre>
       <pre class="lines">
 
 
-240
-241
-242
-243
-244
-245
 246
 247
 248
 249
 250
 251
-252</pre>
+252
+253
+254
+255
+256
+257
+258</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 240</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 246</span>
 
 <span class="keyword">def</span> <span class="function">tagged?</span>(*tags)
   tags.map! <span class="keyword">do</span> |tag|
@@ -6729,12 +6907,12 @@ def_type_predicate(<span class="symbol">:switch</span>)</pre>
       <pre class="lines">
 
 
-54
-55
-56</pre>
+60
+61
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 60</span>
 
 <span class="keyword">def</span> <span class="function">to_s</span>
   label || name
@@ -6831,19 +7009,19 @@ def_type_predicate(<span class="symbol">:switch</span>)</pre>
       <pre class="lines">
 
 
-385
-386
-387
-388
-389
-390
 391
 392
 393
-394</pre>
+394
+395
+396
+397
+398
+399
+400</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 385</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 391</span>
 
 <span class="keyword">def</span> <span class="function">unlink</span>(channel)
   link_to_delete = <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.create_link(<span class="predefined-constant">self</span>, channel, {})
@@ -6865,7 +7043,7 @@ def_type_predicate(<span class="symbol">:switch</span>)</pre>
 </div>
 
         <footer>
-  Generated on Thu Mar 13 05:27:02 2025 by
+  Generated on Fri Mar 14 13:07:16 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
