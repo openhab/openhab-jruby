@@ -2,12 +2,12 @@
 
 source "https://rubygems.org"
 
-gemspec
-
 plugin "bundler-multilock", "1.3.1"
 return unless Plugin.installed?("bundler-multilock")
 
 Plugin.send(:load_plugin, "bundler-multilock")
+
+gemspec name: "rspec-openhab-scripting"
 
 lockfile active: RUBY_VERSION >= "2.7" do
   # these gems are not compatible with Ruby 2.6/JRuby 9.3, but we don't need them to actually
