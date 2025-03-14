@@ -139,7 +139,7 @@ module OpenHAB
           remainder: :%,
           pow: :**
         }.each do |java_op, ruby_op|
-          class_eval( # rubocop:disable Style/DocumentDynamicEvalDefinition https://github.com/rubocop/rubocop/issues/10179
+          class_eval( # rubocop:disable Style/DocumentDynamicEvalDefinition -- https://github.com/rubocop/rubocop/issues/10179
             # def +(other)
             #   if other.is_a?(DecimalType)
             #     self.class.new(to_big_decimal.add(other.to_big_decimal))

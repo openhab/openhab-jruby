@@ -31,7 +31,7 @@ module OpenHAB
             end
           end
 
-          super(*args)
+          super
         end
 
         #

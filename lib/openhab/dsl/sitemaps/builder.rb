@@ -240,7 +240,7 @@ module OpenHAB
 
         # @!visibility private
         def inspect
-          s = +"#<OpenHAB::DSL::Sitemaps::#{@type.capitalize}Builder "
+          s = "#<OpenHAB::DSL::Sitemaps::#{@type.capitalize}Builder "
           s << (instance_variables - [:@children]).map do |iv|
             "#{iv}=#{instance_variable_get(iv).inspect}"
           end.join(" ")
@@ -807,7 +807,6 @@ module OpenHAB
                        stateless: nil,
                        **kwargs,
                        &block)
-
           super(:button, builder_proxy, **kwargs, &block)
 
           @row = row

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable RSpec/NamedSubject I need to use the implicit subject
+# rubocop:disable RSpec/NamedSubject -- I need to use the implicit subject
 RSpec.describe OpenHAB::RSpec::Helpers do
   describe "load_rules" do
     it "respects start levels" do

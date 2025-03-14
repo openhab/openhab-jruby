@@ -203,7 +203,7 @@ module OpenHAB
         # instead of being statically defined in items.rb
         # because base_item is needed to determine the command/data types but is not available in the static context
         def method_missing(method, ...)
-          return base_item.__send__(method, ...) if base_item&.respond_to?(method) # rubocop:disable Lint/RedundantSafeNavigation nil responds to :to_a
+          return base_item.__send__(method, ...) if base_item&.respond_to?(method) # rubocop:disable Lint/RedundantSafeNavigation -- nil responds to :to_a
 
           super
         end

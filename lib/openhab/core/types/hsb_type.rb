@@ -99,7 +99,7 @@ module OpenHAB
               end
             end
 
-            super(*args)
+            super
           end
 
           # Create HSBType from a color temperature

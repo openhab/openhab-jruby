@@ -90,7 +90,7 @@ module OpenHAB
       #
       # Executed when openHAB unloads a script file
       #
-      def scriptUnloaded # rubocop:disable Naming/MethodName method name dictated by openHAB
+      def scriptUnloaded # rubocop:disable Naming/MethodName -- method name dictated by openHAB
         logger.trace("Script unloaded")
         ScriptHandlingCallbacks.script_unloaded_hooks.sort_by(&:first).flat_map(&:last).each do |hook|
           hook.call
@@ -118,7 +118,7 @@ module OpenHAB
       #
       # Executed when openHAB loads a script file
       #
-      def scriptLoaded(filename) # rubocop:disable Naming/MethodName method name dictated by openHAB
+      def scriptLoaded(filename) # rubocop:disable Naming/MethodName -- method name dictated by openHAB
         logger.trace { "Script loaded: #{filename}" }
         ScriptHandlingCallbacks.script_loaded_hooks.each do |hook|
           hook.call

@@ -37,7 +37,7 @@ class OpenHABClient
   private
 
   def reopen
-    close if @io&.wait_readable(0) && @io&.eof?
+    close if @io&.wait_readable(0) && @io.eof?
     return if @io
 
     @io = IO.popen(@command, "r+")

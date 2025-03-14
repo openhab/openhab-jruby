@@ -107,7 +107,7 @@ module OpenHAB
                       verify: false)
           # Extract the named arguments into a hash
           @parameters << method(__method__).parameters
-                                           .select { |param_type, _| param_type == :key }
+                                           .select { |param_type, _| param_type == :key } # rubocop:disable Style/HashSlice
                                            .to_h { |_, key| [key, binding.local_variable_get(key)] }
                                            .then do |p|
             p[:options] = p[:options].map do |opt_value, opt_label|

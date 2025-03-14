@@ -37,7 +37,7 @@ module OpenHAB
           if defined?(Java::OrgOsgiFramework::Bundle) && loader.is_a?(org.osgi.framework.Bundle)
             loader = OSGiBundleClassLoader.new(loader)
           end
-          super(loader)
+          super
         end
       end
       org.jruby.RubyInstanceConfig.prepend(InstanceConfig)

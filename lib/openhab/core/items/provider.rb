@@ -27,7 +27,7 @@ module OpenHAB
         # @param [true, false] recursive
         # @return [Item, nil] The removed item, if found.
         #
-        def remove(item_name, recursive = false) # rubocop:disable Style/OptionalBooleanParameter matches Java method
+        def remove(item_name, recursive = false) # rubocop:disable Style/OptionalBooleanParameter -- matches Java method
           return nil unless @elements.key?(item_name)
 
           item = super(item_name)

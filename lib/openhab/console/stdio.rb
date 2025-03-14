@@ -138,7 +138,7 @@ module OpenHAB
         @byte_stream.synchronized do
           return true if @byte_stream.readBuffer.has_remaining?
 
-          timeout = timeout ? 0 : timeout * 1000.to_i
+          timeout = timeout ? 0 : timeout * 1000
           r = @wait_method.invoke(@byte_stream, @byte_stream.readBuffer, timeout)
           return nil if r.negative?
 

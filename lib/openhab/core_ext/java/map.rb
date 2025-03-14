@@ -20,7 +20,7 @@ module Java::JavaUtil::Map # rubocop:disable Style/ClassAndModuleChildren
   end
 
   def slice(*keys)
-    select { |k, _v| keys.include?(k) }
+    select { |k, _v| keys.include?(k) } # rubocop:disable Style/HashSlice
   end
 
   def transform_keys(hash2 = nil)

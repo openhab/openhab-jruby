@@ -34,7 +34,7 @@ module OpenHAB
               @scheduler = OSGi.service("org.openhab.core.scheduler.CronScheduler")
               @schedule = nil
               @expression = trigger.configuration.get("cronExpression")
-              super(trigger)
+              super
             end
 
             #

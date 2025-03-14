@@ -471,7 +471,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
               expect(triggered_item).to eql "Alarm_Mode1"
             end
 
-            context "when state changes more than once" do # rubocop:disable RSpec/EmptyExampleGroup examples are dynamically generated
+            context "when state changes more than once" do # rubocop:disable RSpec/EmptyExampleGroup -- examples are dynamically generated
               test_changed_trigger(from: 8) do
                 Alarm_Mode1.update(10)
                 time_travel_and_execute_timers(4.seconds)
@@ -495,7 +495,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
               end
             end
 
-            context "when state changes back to the from state" do # rubocop:disable RSpec/EmptyExampleGroup examples are dynamically generated
+            context "when state changes back to the from state" do # rubocop:disable RSpec/EmptyExampleGroup -- examples are dynamically generated
               test_changed_trigger(from: 8) do
                 Alarm_Mode1.update(10)
                 time_travel_and_execute_timers(4.seconds)
@@ -569,7 +569,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
             end
           end
 
-          context "with a switch group item" do # rubocop:disable RSpec/EmptyExampleGroup examples are dynamically generated
+          context "with a switch group item" do # rubocop:disable RSpec/EmptyExampleGroup -- examples are dynamically generated
             before do
               items.build do
                 switch_item "Switch2", group: Switches
@@ -706,7 +706,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       end
     end
 
-    describe "#channel" do # rubocop:disable RSpec/EmptyExampleGroup examples are dynamically generated
+    describe "#channel" do # rubocop:disable RSpec/EmptyExampleGroup -- examples are dynamically generated
       before do
         things.build { thing "astro:sun:home", config: { "geolocation" => "0,0" } }
       end
@@ -1275,7 +1275,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           end.to raise_error(ArgumentError, "unknown keywords: :made_up, :stuff")
         end
 
-        context "when fields are omitted" do # rubocop:disable RSpec/EmptyExampleGroup examples are dynamically generated
+        context "when fields are omitted" do # rubocop:disable RSpec/EmptyExampleGroup -- examples are dynamically generated
           test_cron_fields("0 12 * ? * ? *", minute: 12)
           test_cron_fields("0 0 12 ? * ? *", hour: 12)
           test_cron_fields("0 0 0 ? * MON-THU *", dow: "MON-THU")

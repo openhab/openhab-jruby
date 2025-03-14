@@ -47,7 +47,7 @@ module OpenHAB
         klass.remove_method(:==)
 
         # dynamically define predicate methods
-        klass.values.each do |value| # rubocop:disable Style/HashEachMethods this isn't a Ruby hash
+        klass.values.each do |value| # rubocop:disable Style/HashEachMethods -- this isn't a Ruby hash
           # include all the aliases that we define for items both command and
           # state aliases (since types can be interrogated as an incoming
           # command, or as the state of an item)

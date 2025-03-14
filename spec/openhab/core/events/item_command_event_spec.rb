@@ -9,7 +9,7 @@ RSpec.describe OpenHAB::Core::Events::ItemCommandEvent do
     expect(event.inspect).to eql '#<OpenHAB::Core::Events::ItemCommandEvent item=item command=REFRESH source="source">'
   end
 
-  describe "predicates" do # rubocop:disable RSpec/EmptyExampleGroup examples are dynamically generated
+  describe "predicates" do # rubocop:disable RSpec/EmptyExampleGroup -- examples are dynamically generated
     before do
       stub_const("PREDICATES",
                  %i[refresh?

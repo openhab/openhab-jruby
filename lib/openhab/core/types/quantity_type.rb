@@ -189,7 +189,7 @@ module OpenHAB
         }.each do |java_op, ruby_op|
           convert = "self.class.new(other, thread_unit)"
 
-          class_eval( # rubocop:disable Style/DocumentDynamicEvalDefinition https://github.com/rubocop/rubocop/issues/10179
+          class_eval( # rubocop:disable Style/DocumentDynamicEvalDefinition -- https://github.com/rubocop/rubocop/issues/10179
             # def +(other)
             #   logger.trace { "#{self} + #{other} (#{other.class})" }
             #   other = other.state if other.is_a?(Core::Items::Persistence::PersistedState)
@@ -247,7 +247,7 @@ module OpenHAB
           multiply: :*,
           divide: :/
         }.each do |java_op, ruby_op|
-          class_eval( # rubocop:disable Style/DocumentDynamicEvalDefinition https://github.com/rubocop/rubocop/issues/10179
+          class_eval( # rubocop:disable Style/DocumentDynamicEvalDefinition -- https://github.com/rubocop/rubocop/issues/10179
             # def *(other)
             #   logger.trace { "#{self} * #{other} (#{other.class})" }
             #   other = other.state if other.is_a?(Core::Items::Persistence::PersistedState)

@@ -125,7 +125,7 @@ module OpenHAB
           # @return [Boolean] true if all symbols are day-of-week symbols
           #
           def self.all_dow_symbols?(symbols)
-            (symbols & DAY_OF_WEEK) == symbols
+            (symbols - DAY_OF_WEEK).empty?
           end
 
           #

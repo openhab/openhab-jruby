@@ -4,7 +4,7 @@ RSpec.describe OpenHAB::Core::Types::QuantityType do
   it "is constructible with | from numeric" do
     expect(50 | "°F").to eql QuantityType.new("50.0 °F")
     expect(50.0 | "°F").to eql QuantityType.new("50.0 °F")
-    expect(50.to_d | "°F").to eql QuantityType.new("50.0 °F") # rubocop:disable Performance/BigDecimalWithNumericArgument
+    expect(50.to_d | "°F").to eql QuantityType.new("50.0 °F")
   end
 
   describe "math operations" do

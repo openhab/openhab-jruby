@@ -26,7 +26,7 @@ module OpenHAB
       end
 
       def html_markup_markdown(text)
-        result = super(text)
+        result = super
 
         html = Nokogiri::HTML5.fragment(result)
         # re-link files in docs/*.md. They're written so they work on github without any
