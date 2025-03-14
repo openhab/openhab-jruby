@@ -68,6 +68,11 @@ jobs:
       - uses: rubygems/release-gem@v1
         with:
           await-release: false
+      - uses: rubygems/release-gem@v1
+        env:
+          OPENHAB_SCRIPTING_RELEASE_GEM_NAME: rspec-openhab-scripting
+        with:
+          await-release: false
       - name: Create Github Release
         env:
           GH_TOKEN: ${{ github.token }}

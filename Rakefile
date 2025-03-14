@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
+require "rake/clean"
 require "rake/packagetask"
 
-require "bundler/gem_tasks"
+CLOBBER.include "pkg"
+require "bundler/gem_helper"
+Bundler::GemHelper.install_tasks(name: ENV["OPENHAB_SCRIPTING_RELEASE_GEM_NAME"] || "openhab-scripting")
 
 require "English"
 require "time"
