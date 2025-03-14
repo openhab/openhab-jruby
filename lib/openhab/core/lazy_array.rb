@@ -21,8 +21,8 @@ module OpenHAB
       # parameter. Returns self.
       #
       # If no block is given, an Enumerator is returned.
-      def each(&block)
-        to_a.each(&block)
+      def each(&)
+        to_a.each(&)
         self
       end
 
@@ -35,8 +35,8 @@ module OpenHAB
       end
 
       # Delegate any other methods to the actual array, exclude mutating methods
-      def method_missing(method, *args, &block)
-        return to_a.send(method, *args, &block) if method[-1] != "!" && Array.instance_methods.include?(method)
+      def method_missing(method, ...)
+        return to_a.send(method, ...) if method[-1] != "!" && Array.instance_methods.include?(method)
 
         super
       end

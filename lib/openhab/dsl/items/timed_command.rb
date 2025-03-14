@@ -159,11 +159,11 @@ module OpenHAB
             on_expire ||= default_on_expire(command)
             if only_when_ensured
               DSL.ensure_states do
-                create_timed_command(command, duration: duration, on_expire: on_expire) if super(command, **kwargs)
+                create_timed_command(command, duration:, on_expire:) if super(command, **kwargs)
               end
             else
               super(command, **kwargs)
-              create_timed_command(command, duration: duration, on_expire: on_expire)
+              create_timed_command(command, duration:, on_expire:)
             end
           end
 
@@ -201,7 +201,7 @@ module OpenHAB
         # Creates a new timed command and places it in the TimedCommand hash
         def create_timed_command(command, duration:, on_expire:)
           timed_command_details = TimedCommandDetails.new(item: self,
-                                                          on_expire: on_expire,
+                                                          on_expire:,
                                                           mutex: Mutex.new)
 
           timed_command_details.timer = timed_command_timer(timed_command_details, duration)

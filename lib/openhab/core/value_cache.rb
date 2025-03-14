@@ -57,8 +57,8 @@ module OpenHAB
       # @yieldreturn [Object] new value
       # @return [Object] new value or current value
       #
-      def compute_if_absent(key, &block)
-        get(key.to_s, &block)
+      def compute_if_absent(key, &)
+        get(key.to_s, &)
       end
 
       # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-5B-5D-3D Hash#[]=
@@ -97,7 +97,7 @@ module OpenHAB
             end
           else
             get(key) do
-              raise KeyError.new("key not found: #{key.inspect}", key: key)
+              raise KeyError.new("key not found: #{key.inspect}", key:)
             end
           end
         else

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "ruby2_keywords"
-
 module OpenHAB
   module Core
     #

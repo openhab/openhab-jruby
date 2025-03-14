@@ -199,6 +199,6 @@ module Enumerable
   # @return [self]
   #
   def toggle(source: nil)
-    each { |i| i.toggle(source: source) }
+    each { |i| i.toggle(source:) }
   end
 end

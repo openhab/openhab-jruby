@@ -130,7 +130,7 @@ module OpenHAB
         #
         def build(update: true, &block)
           builder_proxy = SimpleDelegator.new(nil) if block.arity == 1
-          builder = DSL::Sitemaps::Builder.new(self, builder_proxy, update: update)
+          builder = DSL::Sitemaps::Builder.new(self, builder_proxy, update:)
           if block.arity == 1
             builder_proxy.__setobj__(builder)
             DSL::ThreadLocal.thread_local(openhab_create_dummy_items: true) do

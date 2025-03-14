@@ -19,7 +19,7 @@ module OpenHAB
             # @param [java.time.temporal.TemporalAmount] duration to state must stay at specific value before triggering
             #
             def initialize(to:, from:, duration:)
-              @conditions = Generic.new(to: to, from: from)
+              @conditions = Generic.new(to:, from:)
               @duration = duration
               @timers = {}
               logger.trace do
@@ -35,7 +35,7 @@ module OpenHAB
               timer = @timers[inputs["triggeringItem"]&.name]
               if timer&.active?
                 process_active_timer(timer, inputs, mod, &block)
-              elsif @conditions.process(mod: mod, inputs: inputs)
+              elsif @conditions.process(mod:, inputs:)
                 logger.trace { "Trigger Guards Matched for #{self}, delaying rule execution" }
                 # Add timer and attach timer to delay object, and also state being tracked to so
                 # timer can be cancelled if state changes
@@ -80,7 +80,7 @@ module OpenHAB
             # @param [Hash] inputs rule trigger inputs
             # @param [Hash] mod rule trigger mods
             #
-            def process_active_timer(timer, inputs, mod, &block)
+            def process_active_timer(timer, inputs, mod, &)
               old_state = Conditions.old_state_from(inputs)
               new_state = Conditions.new_state_from(inputs)
               if @conditions.from? && new_state != @tracking_from &&
@@ -90,7 +90,7 @@ module OpenHAB
                 logger.trace { "Item changed from #{old_state} to #{new_state} for #{self}, canceling timer." }
                 timer.cancel
                 # Reprocess trigger delay after canceling to track new state (if guards matched, etc)
-                process(mod: mod, inputs: inputs, &block)
+                process(mod:, inputs:, &)
               end
             end
           end

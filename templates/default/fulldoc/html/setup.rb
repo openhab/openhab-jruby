@@ -75,8 +75,8 @@ def generate_index
   end
 
   asset("index.json", {
-    classes: classes,
-    methods: methods
+    classes:,
+    methods:
   }.to_json)
 end
 alias_method :generate_index_list, :generate_index

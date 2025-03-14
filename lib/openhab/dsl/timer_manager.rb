@@ -35,11 +35,11 @@ module OpenHAB
               old_timer.cancel!
               @timers.remove(old_timer)
             end
-            Core::Timer.new(duration, id: id, thread_locals: thread_locals, block: block)
+            Core::Timer.new(duration, id:, thread_locals:, block:)
           end
         end
 
-        Core::Timer.new(duration, id: id, thread_locals: thread_locals, block: block)
+        Core::Timer.new(duration, id:, thread_locals:, block:)
       end
 
       # Add a timer that is now active

@@ -43,7 +43,7 @@ module OpenHAB
 
         # @!visibility private
         def onCommandFromItem(command)
-          return unless process_event(:command_from_item, command: command) == true
+          return unless process_event(:command_from_item, command:) == true
 
           logger.trace("Forwarding original command")
           @callback.handle_command(command)
@@ -51,7 +51,7 @@ module OpenHAB
 
         # @!visibility private
         def onStateUpdateFromHandler(state)
-          return unless process_event(:state_from_handler, state: state) == true
+          return unless process_event(:state_from_handler, state:) == true
 
           logger.trace("Forwarding original update")
           @callback.send_update(state)
@@ -59,7 +59,7 @@ module OpenHAB
 
         # @!visibility private
         def onCommandFromHandler(command)
-          return unless process_event(:command_from_handler, command: command) == true
+          return unless process_event(:command_from_handler, command:) == true
 
           logger.trace("Forwarding original command")
           callback.send_command(command)
@@ -67,7 +67,7 @@ module OpenHAB
 
         # @!visibility private
         def onStateUpdateFromItem(state)
-          process_event(:state_from_item, state: state)
+          process_event(:state_from_item, state:)
         end
 
         # @!visibility private
@@ -79,7 +79,7 @@ module OpenHAB
         if OpenHAB::Core.version >= OpenHAB::Core::V4_1
           # @!visibility private
           def onTimeSeriesFromHandler(time_series)
-            process_event(:time_series_from_handler, time_series: time_series)
+            process_event(:time_series_from_handler, time_series:)
           end
         end
 
@@ -154,10 +154,10 @@ module OpenHAB
 
         @profiles[uid] = {
           thread_locals: DSL::ThreadLocal.persist,
-          label: label,
-          type: type,
-          config_description: config_description,
-          block: block
+          label:,
+          type:,
+          config_description:,
+          block:
         }
         @uri_to_uid[uri] = uid
       end
@@ -175,7 +175,7 @@ module OpenHAB
 
       # @!visibility private
       def getProfileTypes(_locale)
-        @profiles.map do |uid, profile|
+        @profiles.filter_map do |uid, profile|
           next if profile[:label].nil?
 
           if profile[:type] == :trigger
@@ -183,12 +183,12 @@ module OpenHAB
           else
             org.openhab.core.thing.profiles.ProfileTypeBuilder.new_state(uid, "RUBY #{profile[:label]}").build
           end
-        end.compact
+        end
       end
 
       # @!visibility private
       def getConfigDescriptions(_locale)
-        @profiles.values.map { |profile| profile[:config_description] if profile[:label] }.compact
+        @profiles.values.filter_map { |profile| profile[:config_description] if profile[:label] }
       end
 
       # @!visibility private

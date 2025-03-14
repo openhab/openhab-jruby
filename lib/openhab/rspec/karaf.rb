@@ -548,7 +548,7 @@ module OpenHAB
 
       def wait_for_service(service_name, filter: nil, &block)
         if defined?(OSGi) &&
-           (services = OSGi.services(service_name, filter: filter))
+           (services = OSGi.services(service_name, filter:))
           services.each(&block)
         end
 

@@ -115,14 +115,14 @@ module OpenHAB
 
         private
 
-        def query_internal(filter, &block)
+        def query_internal(filter, &)
           if filter.item_name
             return unless @data.key?(filter.item_name)
 
-            query_item_internal(@data[filter.item_name], filter, &block)
+            query_item_internal(@data[filter.item_name], filter, &)
           else
             @data.each_value do |item_history|
-              query_item_internal(item_history, filter, &block)
+              query_item_internal(item_history, filter, &)
             end
           end
         end

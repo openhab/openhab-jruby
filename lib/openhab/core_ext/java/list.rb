@@ -217,7 +217,7 @@ module Java::JavaUtil::List # rubocop:disable Style/ClassAndModuleChildren
   end
 
   def intersect?(other_ary)
-    !(self & other_ary).empty?
+    !(self & other_ary).empty? # rubocop:disable Style/ArrayIntersect
   end
 
   def keep_if?

@@ -7,7 +7,7 @@ require_relative "guard"
 require_relative "rule_triggers"
 require_relative "terse"
 
-Dir[File.expand_path("triggers/*.rb", __dir__)].sort.each do |f|
+Dir[File.expand_path("triggers/*.rb", __dir__)].each do |f|
   require f
 end
 
@@ -749,7 +749,7 @@ module OpenHAB
         #
         def debounce_for(debounce_time)
           idle_time = debounce_time.is_a?(Range) ? debounce_time.begin : debounce_time
-          debounce(for: debounce_time, idle_time: idle_time)
+          debounce(for: debounce_time, idle_time:)
         end
         # rubocop:enable Layout/LineLength
 
@@ -981,12 +981,12 @@ module OpenHAB
         #
         def channel(*channels, thing: nil, triggered: nil, attach: nil)
           channel_trigger = Channel.new(rule_triggers: @rule_triggers)
-          flattened_channels = Channel.channels(channels: channels, thing: thing)
+          flattened_channels = Channel.channels(channels:, thing:)
           triggers = [triggered].flatten
-          @ruby_triggers << [:channel, flattened_channels, { triggers: triggers }]
+          @ruby_triggers << [:channel, flattened_channels, { triggers: }]
           flattened_channels.each do |channel|
             triggers.each do |trigger|
-              channel_trigger.trigger(channel: channel, trigger: trigger, attach: attach)
+              channel_trigger.trigger(channel:, trigger:, attach:)
             end
           end
         end
@@ -1014,7 +1014,7 @@ module OpenHAB
         def channel_linked(item: nil, channel: nil, attach: nil)
           pattern = (item.nil? && channel.nil?) ? "*" : "#{item || "*"}-#{channel || "*"}"
           @ruby_triggers << [:channel_linked, pattern]
-          event("openhab/links/#{pattern}/added", types: "ItemChannelLinkAddedEvent", attach: attach)
+          event("openhab/links/#{pattern}/added", types: "ItemChannelLinkAddedEvent", attach:)
         end
 
         #
@@ -1043,7 +1043,7 @@ module OpenHAB
         def channel_unlinked(item: nil, channel: nil, attach: nil)
           pattern = (item.nil? && channel.nil?) ? "*" : "#{item || "*"}-#{channel || "*"}"
           @ruby_triggers << [:channel_unlinked, pattern]
-          event("openhab/links/#{pattern}/removed", types: "ItemChannelLinkRemovedEvent", attach: attach)
+          event("openhab/links/#{pattern}/removed", types: "ItemChannelLinkRemovedEvent", attach:)
         end
 
         #
@@ -1166,7 +1166,7 @@ module OpenHAB
           # for is a reserved word in ruby, so use local_variable_get :for
           duration = binding.local_variable_get(:for)
 
-          @ruby_triggers << [:changed, items, { to: to, from: from, duration: duration }]
+          @ruby_triggers << [:changed, items, { to:, from:, duration: }]
 
           from = [nil] if from.nil?
           to = [nil] if to.nil?
@@ -1187,7 +1187,7 @@ module OpenHAB
 
             Array.wrap(from).each do |from_state|
               Array.wrap(to).each do |to_state|
-                changed.trigger(item: item, from: from_state, to: to_state, duration: duration, attach: attach)
+                changed.trigger(item:, from: from_state, to: to_state, duration:, attach:)
               end
             end
           end
@@ -1264,13 +1264,13 @@ module OpenHAB
             raise ArgumentError, "Cron elements cannot be used with a cron expression" if expression
 
             cron_expression = Cron.from_fields(fields)
-            return cron(cron_expression, attach: attach)
+            return cron(cron_expression, attach:)
           end
 
           raise ArgumentError, "Missing cron expression or elements" unless expression
 
           cron = Cron.new(rule_triggers: @rule_triggers)
-          cron.trigger(config: { "cronExpression" => expression }, attach: attach)
+          cron.trigger(config: { "cronExpression" => expression }, attach:)
         end
 
         #
@@ -1387,8 +1387,8 @@ module OpenHAB
           raise ArgumentError, "Offset can only be used when 'at' is given a DateTimeItem" if offset && !at.is_a?(Item)
 
           if Cron.all_dow_symbols?(values)
-            @ruby_triggers << [:every, values.join(", "), { at: at }]
-            return cron(Cron.from_dow_symbols(values, at), attach: attach)
+            @ruby_triggers << [:every, values.join(", "), { at: }]
+            return cron(Cron.from_dow_symbols(values, at), attach:)
           end
 
           if values.size != 1
@@ -1400,7 +1400,7 @@ module OpenHAB
           value = values.first
           value = java.time.MonthDay.parse(value.to_str) if value.respond_to?(:to_str)
 
-          @ruby_triggers << [:every, value, { at: at }]
+          @ruby_triggers << [:every, value, { at: }]
 
           if value == :day && at.is_a?(Item)
             # @deprecated OH 3.4 - attachments are supported in OH 4.0+
@@ -1411,7 +1411,7 @@ module OpenHAB
             offset ||= 0
             offset = offset.to_i # Duration#to_i converts it to seconds, but we also want to convert float/string to int
             @ruby_triggers.last[2][:offset] = offset
-            return trigger("timer.DateTimeTrigger", itemName: at.name, timeOnly: true, offset: offset, attach: attach)
+            return trigger("timer.DateTimeTrigger", itemName: at.name, timeOnly: true, offset:, attach:)
           end
 
           cron_expression = case value
@@ -1420,7 +1420,7 @@ module OpenHAB
                             when java.time.MonthDay then Cron.from_monthday(value, at)
                             else raise ArgumentError, "Unknown interval"
                             end
-          cron(cron_expression, attach: attach)
+          cron(cron_expression, attach:)
         end
 
         #
@@ -1453,7 +1453,7 @@ module OpenHAB
           # prevent overwriting @on_load
           raise ArgumentError, "on_load can only be used once within a rule" if @on_load
 
-          @on_load = { module: SecureRandom.uuid, delay: delay }
+          @on_load = { module: SecureRandom.uuid, delay: }
           attachments[@on_load[:module]] = attach
         end
 
@@ -1525,7 +1525,7 @@ module OpenHAB
             config = { startlevel: level }
             logger.trace { "Creating a SystemStartlevelTrigger with startlevel=#{level}" }
             Triggers::Trigger.new(rule_triggers: @rule_triggers)
-                             .append_trigger(type: "core.SystemStartlevelTrigger", config: config, attach: attach)
+                             .append_trigger(type: "core.SystemStartlevelTrigger", config:, attach:)
           end
         end
 
@@ -1624,7 +1624,7 @@ module OpenHAB
             commands.each do |cmd|
               logger.trace { "Creating received command trigger for items #{item.inspect} and commands #{cmd.inspect}" }
 
-              command_trigger.trigger(item: item, command: cmd, attach: attach)
+              command_trigger.trigger(item:, command: cmd, attach:)
             end
           end
         end
@@ -1649,7 +1649,7 @@ module OpenHAB
         #    end
         def item_added(pattern = "*", attach: nil)
           @ruby_triggers << [:item_added, pattern]
-          event("openhab/items/#{pattern}/added", types: "ItemAddedEvent", attach: attach)
+          event("openhab/items/#{pattern}/added", types: "ItemAddedEvent", attach:)
         end
 
         #
@@ -1672,7 +1672,7 @@ module OpenHAB
         #    end
         def item_removed(pattern = "*", attach: nil)
           @ruby_triggers << [:item_removed, pattern]
-          event("openhab/items/#{pattern}/removed", types: "ItemRemovedEvent", attach: attach)
+          event("openhab/items/#{pattern}/removed", types: "ItemRemovedEvent", attach:)
         end
 
         #
@@ -1694,7 +1694,7 @@ module OpenHAB
         #
         def item_updated(pattern = "*", attach: nil)
           @ruby_triggers << [:item_updated, pattern]
-          event("openhab/items/#{pattern}/updated", types: "ItemUpdatedEvent", attach: attach)
+          event("openhab/items/#{pattern}/updated", types: "ItemUpdatedEvent", attach:)
         end
 
         #
@@ -1717,7 +1717,7 @@ module OpenHAB
         #    end
         def thing_added(pattern = "*", attach: nil)
           @ruby_triggers << [:thing_added, pattern]
-          event("openhab/things/#{pattern}/added", types: "ThingAddedEvent", attach: attach)
+          event("openhab/things/#{pattern}/added", types: "ThingAddedEvent", attach:)
         end
 
         #
@@ -1740,7 +1740,7 @@ module OpenHAB
         #    end
         def thing_removed(pattern = "*", attach: nil)
           @ruby_triggers << [:thing_removed, pattern]
-          event("openhab/things/#{pattern}/removed", types: "ThingRemovedEvent", attach: attach)
+          event("openhab/things/#{pattern}/removed", types: "ThingRemovedEvent", attach:)
         end
 
         #
@@ -1764,7 +1764,7 @@ module OpenHAB
         #
         def thing_updated(pattern = "*", attach: nil)
           @ruby_triggers << [:thing_updated, pattern]
-          event("openhab/things/#{pattern}/updated", types: "ThingUpdatedEvent", attach: attach)
+          event("openhab/things/#{pattern}/updated", types: "ThingUpdatedEvent", attach:)
         end
 
         #
@@ -1793,10 +1793,10 @@ module OpenHAB
                   eventTopic: topic,
                   eventSource: source,
                   eventTypes: types, # @deprecated OH3.4
-                  topic: topic,
-                  source: source,
-                  types: types,
-                  attach: attach)
+                  topic:,
+                  source:,
+                  types:,
+                  attach:)
         end
 
         #
@@ -1845,8 +1845,8 @@ module OpenHAB
           item = item.name if item.is_a?(Item)
           offset ||= 0
           offset = offset.to_i if offset.is_a?(Duration)
-          @ruby_triggers << [:at, item, { offset: offset }]
-          trigger("timer.DateTimeTrigger", itemName: item.to_s, offset: offset)
+          @ruby_triggers << [:at, item, { offset: }]
+          trigger("timer.DateTimeTrigger", itemName: item.to_s, offset:)
         end
 
         #
@@ -1888,7 +1888,7 @@ module OpenHAB
         def trigger(type, attach: nil, **configuration)
           logger.trace { "Creating trigger (#{type}) with configuration(#{configuration})" }
           Triggers::Trigger.new(rule_triggers: @rule_triggers)
-                           .append_trigger(type: type, config: configuration, attach: attach)
+                           .append_trigger(type:, config: configuration, attach:)
         end
 
         #
@@ -1977,7 +1977,7 @@ module OpenHAB
         #
         def updated(*items, to: nil, attach: nil)
           updated = Updated.new(rule_triggers: @rule_triggers)
-          @ruby_triggers << [:updated, items, { to: to }]
+          @ruby_triggers << [:updated, items, { to: }]
           items.map do |item|
             case item
             when Core::Things::Thing,
@@ -1991,7 +1991,7 @@ module OpenHAB
 
             logger.trace { "Creating updated trigger for item(#{item}) to(#{to})" }
             [to].flatten.map do |to_state|
-              updated.trigger(item: item, to: to_state, attach: attach)
+              updated.trigger(item:, to: to_state, attach:)
             end
           end.flatten
         end
@@ -2027,7 +2027,7 @@ module OpenHAB
           items.map do |item|
             raise ArgumentError, "items must be an Item or GroupItem::Members" unless item.is_a?(Core::Items::Item)
 
-            event("openhab/items/#{item.name}/timeseriesupdated", types: "ItemTimeSeriesUpdatedEvent", attach: attach)
+            event("openhab/items/#{item.name}/timeseriesupdated", types: "ItemTimeSeriesUpdatedEvent", attach:)
           end
         end
 
@@ -2125,7 +2125,7 @@ module OpenHAB
                   path: path.to_s,
                   types: types.map(&:to_s),
                   glob: glob.to_s,
-                  attach: attach)
+                  attach:)
         end
 
         # @!endgroup
@@ -2207,7 +2207,7 @@ module OpenHAB
         #
         def create_rule?
           @tags = DSL::Items::ItemBuilder.normalize_tags(*tags)
-          return true unless (tags & %w[Script Scene]).empty?
+          return true if tags.intersect?(%w[Script Scene])
 
           if !triggers?
             logger.warn "Rule '#{uid}' has no triggers, not creating rule"
@@ -2279,7 +2279,7 @@ module OpenHAB
 
           interval = binding.local_variable_get(:for)
           # This hash structure must match the parameter signature for Debouncer.new
-          @debounce_settings = { for: interval, leading: leading, idle_time: idle_time }
+          @debounce_settings = { for: interval, leading:, idle_time: }
         end
       end
     end

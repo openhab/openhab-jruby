@@ -86,16 +86,16 @@ module OpenHAB
       # java.util.Map#merge is incompatible to Ruby's, but JRuby provides #ruby_merge for it
       #
       # @!visibility private
-      def merge(*others, &block)
+      def merge(*others, &)
         return self if others.empty?
 
         others.map! { |hash| hash.transform_keys(&:to_s) }
         map = to_map
         if map.respond_to?(:ruby_merge)
-          map.ruby_merge(*others, &block)
+          map.ruby_merge(*others, &)
         else
           # fall back to #merge in case #to_map returns a Ruby Hash
-          map.merge(*others, &block)
+          map.merge(*others, &)
         end
       end
 
@@ -123,8 +123,8 @@ module OpenHAB
       end
 
       # @!visibility private
-      def fetch(key, *default, &block)
-        to_map.fetch(key.to_s, *default, &block)
+      def fetch(key, *default, &)
+        to_map.fetch(key.to_s, *default, &)
       end
 
       # @!visibility private
@@ -170,8 +170,8 @@ module OpenHAB
       end
 
       # @!visibility private
-      def keep_if(&block)
-        select!(&block)
+      def keep_if(&)
+        select!(&)
         self
       end
 
@@ -191,13 +191,13 @@ module OpenHAB
       end
 
       # @!visibility private
-      def fetch_values(*keys, &block)
-        to_map.fetch_values(*keys.map(&:to_s), &block)
+      def fetch_values(*keys, &)
+        to_map.fetch_values(*keys.map(&:to_s), &)
       end
 
       # @!visibility private
-      def transform_keys!(*args, &block)
-        replace(transform_keys(*args, &block))
+      def transform_keys!(...)
+        replace(transform_keys(...))
       end
 
       # @!visibility private

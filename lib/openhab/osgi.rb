@@ -13,7 +13,7 @@ module OpenHAB
       # @return [Object]
       #
       def service(name, filter: nil)
-        services(name, filter: filter).first
+        services(name, filter:).first
       end
 
       #

@@ -96,7 +96,7 @@ module OpenHAB
         # @yieldparam [GroupItemBuilder] builder Item for further customization
         # @return [GroupItem]
         def group_item(*args, **kwargs, &block)
-          item = GroupItemBuilder.new(*args, provider: provider, **kwargs)
+          item = GroupItemBuilder.new(*args, provider:, **kwargs)
           item.instance_eval(&block) if block
           result = provider.add(item)
           item.members.each do |i|
@@ -108,7 +108,7 @@ module OpenHAB
         private
 
         def item(*args, **kwargs, &block)
-          item = ItemBuilder.new(*args, provider: provider, **kwargs)
+          item = ItemBuilder.new(*args, provider:, **kwargs)
           item.instance_eval(&block) if block
           r = provider.add(item)
           return Core::Items::Proxy.new(r) if r.is_a?(Item)
@@ -189,7 +189,7 @@ module OpenHAB
         attr_reader :provider
 
         def initialize(provider, update:)
-          @provider = ProviderWrapper.new(Core::Items::Provider.current(provider), update: update)
+          @provider = ProviderWrapper.new(Core::Items::Provider.current(provider), update:)
         end
       end
 
@@ -793,7 +793,7 @@ module OpenHAB
           RUBY
         end
 
-        FUNCTION_REGEX = /^([a-z]+)(?:\((.*)\))?/i.freeze
+        FUNCTION_REGEX = /^([a-z]+)(?:\((.*)\))?/i
         private_constant :FUNCTION_REGEX
 
         # The combiner function for this group

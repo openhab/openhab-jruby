@@ -69,7 +69,7 @@ module OpenHAB
         # @return [Array<GroupItem>] All groups that this item is part of
         #
         def groups
-          group_names.map { |name| EntityLookup.lookup_item(name) }.compact
+          group_names.filter_map { |name| EntityLookup.lookup_item(name) }
         end
 
         #
@@ -85,7 +85,7 @@ module OpenHAB
           groups.map! do |group|
             group.is_a?(GroupItem) ? group.name : group
           end
-          !(group_names & groups).empty?
+          !!group_names.intersect?(groups)
         end
 
         #
@@ -254,7 +254,7 @@ module OpenHAB
               tag
             end
           end
-          !(self.tags.to_a & tags).empty?
+          !!self.tags.to_a.intersect?(tags)
         end
 
         # @!attribute thing [r]

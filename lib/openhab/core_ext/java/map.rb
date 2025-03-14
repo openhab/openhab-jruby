@@ -16,7 +16,7 @@ module Java::JavaUtil::Map # rubocop:disable Style/ClassAndModuleChildren
   end
 
   def except(*keys)
-    reject { |k, _v| keys.include?(k) }
+    reject { |k, _v| keys.include?(k) } # rubocop:disable Style/HashExcept
   end
 
   def slice(*keys)

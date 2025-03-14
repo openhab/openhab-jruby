@@ -279,8 +279,8 @@ module OpenHAB
         # @example
         #   things['mail:smtp:local'].send_email('me@example.com', 'subject', 'message')
         #
-        def method_missing(method, *args, &block)
-          return actions.public_send(method, *args, &block) if actions.respond_to?(method)
+        def method_missing(method, ...)
+          return actions.public_send(method, ...) if actions.respond_to?(method)
 
           super
         end

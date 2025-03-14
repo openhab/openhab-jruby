@@ -20,7 +20,7 @@ RSpec.describe OpenHAB::Core::Things::Channel do
       it "returns its linked item" do
         channel = self.channel
         items.build do
-          string_item PhaseName, channel: channel
+          string_item PhaseName, channel:
         end
 
         expect(channel.item).to eql PhaseName
@@ -30,8 +30,8 @@ RSpec.describe OpenHAB::Core::Things::Channel do
       it "returns all linked items" do
         channel = self.channel
         items.build do
-          string_item PhaseName1, channel: channel
-          string_item PhaseName2, channel: channel
+          string_item(PhaseName1, channel:)
+          string_item PhaseName2, channel:
         end
 
         expect(channel.items).to match_array [PhaseName1, PhaseName2]
@@ -47,7 +47,7 @@ RSpec.describe OpenHAB::Core::Things::Channel do
       it "returns the link" do
         channel = self.channel
         items.build do
-          string_item PhaseName, channel: channel
+          string_item PhaseName, channel:
         end
 
         expect(channel.link).not_to be_nil
@@ -63,8 +63,8 @@ RSpec.describe OpenHAB::Core::Things::Channel do
       it "returns its linked channels" do
         channel = self.channel
         items.build do
-          string_item PhaseName1, channel: channel
-          string_item PhaseName2, channel: channel
+          string_item(PhaseName1, channel:)
+          string_item PhaseName2, channel:
         end
         expect(channel.links.map(&:item)).to match_array [PhaseName1, PhaseName2]
       end
@@ -72,7 +72,7 @@ RSpec.describe OpenHAB::Core::Things::Channel do
       it "can clear all links" do
         channel = self.channel
         items.build do
-          string_item PhaseName, channel: channel
+          string_item PhaseName, channel:
         end
 
         channel.links.clear

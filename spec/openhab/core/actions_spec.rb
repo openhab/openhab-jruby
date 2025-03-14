@@ -21,7 +21,7 @@ RSpec.describe OpenHAB::Core::Actions do
                                                                          hash_including("Cookies" => "foo=bar",
                                                                                         "User-Agent" => "JRuby/1.2.3"),
                                                                          anything)
-      described_class::HTTP.send_http_get_request("http://example.com", headers: headers)
+      described_class::HTTP.send_http_get_request("http://example.com", headers:)
     end
   end
 end

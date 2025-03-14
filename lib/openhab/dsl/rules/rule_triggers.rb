@@ -43,7 +43,7 @@ module OpenHAB
         #
         def append_trigger(type:, config:, attach: nil, conditions: nil, label: nil)
           config.transform_keys!(&:to_s)
-          RuleTriggers.trigger(type: type, config: config, label: label).tap do |trigger|
+          RuleTriggers.trigger(type:, config:, label:).tap do |trigger|
             logger.trace { "Appending trigger (#{trigger.inspect}) attach (#{attach}) conditions(#{conditions})" }
             @triggers << trigger
             @attachments[trigger.id] = attach if attach

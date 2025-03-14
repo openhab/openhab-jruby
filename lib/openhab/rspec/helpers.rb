@@ -147,8 +147,8 @@ module OpenHAB
       #
       # @return [Object] The return value from the block.
       #
-      def suspend_rules(&block)
-        SuspendRules.suspend_rules(&block)
+      def suspend_rules(&)
+        SuspendRules.suspend_rules(&)
       end
 
       #
@@ -444,7 +444,7 @@ module OpenHAB
         50
       end
 
-      EMACS_MODELINE_REGEXP = /# -\*-(.+)-\*-/.freeze
+      EMACS_MODELINE_REGEXP = /# -\*-(.+)-\*-/
       private_constant :EMACS_MODELINE_REGEXP
 
       def parse_emacs_modeline(line)
