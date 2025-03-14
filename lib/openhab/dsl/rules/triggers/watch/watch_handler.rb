@@ -112,14 +112,14 @@ module OpenHAB
               java_import java.nio.file.StandardWatchEventKinds
 
               # Hash of event symbols as strings to map to NIO events
-              STRING_TO_EVENT = {
+              STRING_TO_EVENT = { # rubocop:disable Lint/ConstantReassignment
                 created: StandardWatchEventKinds::ENTRY_CREATE,
                 deleted: StandardWatchEventKinds::ENTRY_DELETE,
                 modified: StandardWatchEventKinds::ENTRY_MODIFY
               }.transform_keys(&:to_s).freeze
 
               # Hash of NIO event kinds to ruby symbols
-              EVENT_TO_SYMBOL = STRING_TO_EVENT.invert.transform_values(&:to_sym).freeze
+              EVENT_TO_SYMBOL = STRING_TO_EVENT.invert.transform_values(&:to_sym).freeze # rubocop:disable Lint/ConstantReassignment
 
               # Creates a new Watch Service
               def initialize(path, subdirs, types, &block)

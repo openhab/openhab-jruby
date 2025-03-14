@@ -13,7 +13,7 @@ module OpenHAB
       class GenericItem
         # @!parse include Item
 
-        # rubocop:disable Naming/MethodName these mimic Java fields, which are
+        # rubocop:disable Naming/MethodName -- these mimic Java fields, which are
         # actually methods
         class << self
           # manually define this, since the Java side doesn't

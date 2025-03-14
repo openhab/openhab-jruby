@@ -103,13 +103,13 @@ module OpenHAB
           result
         end
 
-        def get_item_info # rubocop:disable Naming/AccessorMethodName must match Java interface
+        def get_item_info # rubocop:disable Naming/AccessorMethodName -- must match Java interface
           @data.to_set do |(n, entries)|
             [n, entries.length, entries.first.timestamp, entries.last.timestamp]
           end
         end
 
-        def get_default_strategies # rubocop:disable Naming/AccessorMethodName must match Java interface
+        def get_default_strategies # rubocop:disable Naming/AccessorMethodName -- must match Java interface
           [org.openhab.core.persistence.strategy.PersistenceStrategy::Globals::CHANGE]
         end
 

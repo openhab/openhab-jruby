@@ -198,7 +198,7 @@ RSpec.describe java.time.MonthDay do
 
     # other types
     specify { expect((yesterday..tomorrow).cover?(Time.now)).to be true }
-    specify { expect((yesterday..tomorrow).cover?(DateTime.now)).to be true }
+    specify { expect((yesterday..tomorrow).cover?(DateTime.now)).to be true } # rubocop:disable Style/DateTime
     specify { expect((yesterday..tomorrow).cover?(MonthDay.now)).to be true }
   end
 

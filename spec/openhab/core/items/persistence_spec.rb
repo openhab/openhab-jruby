@@ -230,7 +230,7 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
         [Number1, Qty1].each do |item|
           max = item.maximum_since(10.seconds.ago)
           expect(max + max).to be_a(State)
-          expect(max - max).to be_a(State) # rubocop:disable Lint/BinaryOperatorWithIdenticalOperands
+          expect(max - max).to be_a(State)
         end
       end
 

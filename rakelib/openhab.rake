@@ -9,7 +9,7 @@ require "digest/md5"
 require "net/http"
 
 # Disabled due to part of buid / potentially refactor into classes
-# rubocop: disable Rake/MethodDefinitionInTask Legacy code
+# rubocop: disable Rake/MethodDefinitionInTask -- Legacy code
 namespace :openhab do
   @openhab_version = ENV["OPENHAB_VERSION"] || "5.0.0-SNAPSHOT"
   @port_numbers = {

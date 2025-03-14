@@ -18,7 +18,7 @@ module OpenHAB
             @dummy_channel_item = DSL::Items::ItemBuilder.item_factory.create_item(link.channel.accepted_item_type, "")
           end
           command = @dummy_channel_item.format_command(command) if @dummy_channel_item
-          super(command)
+          super
         end
 
         #
@@ -28,7 +28,7 @@ module OpenHAB
         #
         def send_command(command)
           command = link.item.format_command(command)
-          super(command)
+          super
         end
 
         #
@@ -38,7 +38,7 @@ module OpenHAB
         #
         def send_update(state)
           state = link.item.format_update(state)
-          super(state)
+          super
         end
 
         # @!method send_time_series(time_series)

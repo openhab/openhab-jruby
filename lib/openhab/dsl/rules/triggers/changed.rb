@@ -50,14 +50,15 @@ module OpenHAB
             end
           end
 
+          # @!visibility private
+          # @return [String] An item state change trigger
+          ITEM_STATE_CHANGE = "core.ItemStateChangeTrigger"
+
           private
 
           # @return [String] A thing status Change trigger
           THING_CHANGE = "core.ThingStatusChangeTrigger"
           private_constant :THING_CHANGE
-
-          # @return [String] An item state change trigger
-          ITEM_STATE_CHANGE = "core.ItemStateChangeTrigger"
 
           # @return [String] A group state change trigger for items in the group
           GROUP_STATE_CHANGE = "core.GroupStateChangeTrigger"

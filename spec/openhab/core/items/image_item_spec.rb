@@ -17,6 +17,7 @@ RSpec.describe OpenHAB::Core::Items::ImageItem do
     expect(item).not_to be_a_group_item
   end
 
+  # rubocop:disable Performance/StringBytesize
   it "provides access to underlying raw type" do
     item.update(image_base64)
     expect(item.state.mime_type).to eql "image/png"
@@ -52,4 +53,5 @@ RSpec.describe OpenHAB::Core::Items::ImageItem do
     expect(item.state.mime_type).to eql "image/png"
     expect(item.state.bytes.length).to be 95
   end
+  # rubocop:enable Performance/StringBytesize
 end

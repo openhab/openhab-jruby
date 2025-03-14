@@ -3,7 +3,7 @@ inherit_gem:
   - rubocop.yml
   - rubocop-rspec.yml
 
-require:
+plugins:
   - rubocop-rake
   - rubocop-rspec
 
@@ -29,9 +29,6 @@ Bundler/GemFilename:
   Exclude:
     - lib/openhab/dsl/gems.rb
 
-FactoryBot:
-  Enabled: false
-
 Layout/LineLength:
   AllowedPatterns:
     - "# @!method" # Some YARD tags can't be broken up onto multiple lines
@@ -51,8 +48,6 @@ RSpec/DescribeClass:
 RSpec/ExpectActual:
   Exclude:
     - spec/openhab/core/types/*_spec.rb
-RSpec/FilePath:
-  Enabled: false  # superceded by RSpec/SpecFilePathSuffix and RSpec/SpecFilePathFormat
 RSpec/SpecFilePathFormat:
   CustomTransform:
     OpenHAB: openhab
