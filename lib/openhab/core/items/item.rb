@@ -46,6 +46,12 @@ module OpenHAB
         # @!attribute [r] accepted_data_types
         #   @return [Array<Class>] An array of {State}s that can be sent as commands to this item
 
+        # @!attribute [r] state_description
+        #   @return [Types::StateDescription, nil]
+
+        # @!attribute [r] command_description
+        #   @return [Types::CommandDescription, nil]
+
         #
         # The item's {GenericItem#label label} if one is defined, otherwise its {#name}.
         #
