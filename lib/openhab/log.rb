@@ -166,13 +166,13 @@ module OpenHAB
     #
     # Regex for matching internal calls in a stack trace
     #
-    INTERNAL_CALL_REGEX = %r{(openhab-scripting-.*/lib)|org[./]jruby}.freeze
+    INTERNAL_CALL_REGEX = %r{(openhab-scripting-.*/lib)|org[./]jruby}
     private_constant :INTERNAL_CALL_REGEX
 
     #
     # Regex for matching internal calls in a java stack trace
     #
-    EXCLUDED_JAVA_PACKAGES = /jdk\.internal\.reflect|java\.lang\.reflect|org\.openhab|java\.lang\.Thread\.run/.freeze
+    EXCLUDED_JAVA_PACKAGES = /jdk\.internal\.reflect|java\.lang\.reflect|org\.openhab|java\.lang\.Thread\.run/
     private_constant :EXCLUDED_JAVA_PACKAGES
 
     #
@@ -228,7 +228,7 @@ module OpenHAB
       #
       def def_level_method(level)
         define_method(level) do |msg = nil, &block|
-          log(severity: level, msg: msg, &block)
+          log(severity: level, msg:, &block)
         end
       end
 

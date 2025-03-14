@@ -71,8 +71,8 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           end
         end
 
-        rule "Execute rule when thing is #{trigger}", id: id do
-          kwargs = { to: to }
+        rule("Execute rule when thing is #{trigger}", id:) do
+          kwargs = { to: }
           kwargs[:from] = from if from
           kwargs[:for] = duration if duration
 
@@ -215,7 +215,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           description += " to: #{to.inspect}" if to
           description += " for: #{duration.inspect}" if duration
 
-          it description, caller: caller do
+          it(description, caller:) do
             # this is the only way to make this accessible to both
             # the rule where it's set, and to the block given to the
             # definition method
@@ -228,7 +228,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
             trigger_items = eval("[#{item}]", nil, __FILE__, __LINE__) # rubocop:disable Security/Eval
             trigger_items.first.update(initial_state) if initial_state
             rule "Execute rule when item changes" do
-              changed(*trigger_items, from: from, to: to, for: duration)
+              changed(*trigger_items, from:, to:, for: duration)
               run { |event| self.triggered_item = event.item.name }
             end
             if block
@@ -402,7 +402,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
             end
 
             kwargs[:caller] ||= caller
-            super(item, initial_state: initial_state, duration: duration, **kwargs, &block)
+            super(item, initial_state:, duration:, **kwargs, &block)
           end
 
           test_changed_trigger(duration: -> { Alarm_Delay.state.to_i.seconds })
@@ -531,7 +531,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
             end
 
             def self.test_changed_trigger(item, new_state: 14, expect_triggered: "Alarm_Mode4", **kwargs)
-              super(item, caller: caller, **kwargs) do
+              super(item, caller:, **kwargs) do
                 Alarm_Mode4.update(new_state)
                 execute_timers
                 expect(triggered_item).to be_nil
@@ -582,7 +582,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
                                           new_state: ON,
                                           expect_triggered: "Switches",
                                           **kwargs)
-              super(item, initial_state: initial_state, caller: caller, **kwargs) do
+              super(item, initial_state:, caller:, **kwargs) do
                 Switch2.update(new_state)
                 execute_timers
                 expect(triggered_item).to be_nil
@@ -718,7 +718,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         description += "with args #{block.source.sub(/.*(?:{|do)\s+\[(.*)\]\s+(?:}|end)/, '\\1')}"
 
         channel ||= "astro:sun:home:rise#event"
-        it description, caller: caller do
+        it(description, caller:) do
           channels = instance_exec(&block)
           triggered = false
           trigger = nil
@@ -852,12 +852,12 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         description += ".members" if members
         description += " with command #{command.inspect}" if command
 
-        it description, caller: caller do
+        it(description, caller:) do
           triggered = false
           item = items[item]
           item = item.members if members
           rule "execute rule when item received command" do
-            received_command item, command: command
+            received_command(item, command:)
             run { triggered = true }
           end
           instance_eval(&block)
@@ -1257,7 +1257,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       context "with field specifiers" do
         def self.test_cron_fields(expected, description: nil, caller: Kernel.caller, **kwargs)
           description ||= "works with '#{kwargs.inspect}'"
-          it description, caller: caller do
+          it(description, caller:) do
             cron_trigger = instance_double(OpenHAB::DSL::Rules::Triggers::Cron)
             allow(OpenHAB::DSL::Rules::Triggers::Cron).to receive(:new).and_return(cron_trigger)
             expect(cron_trigger).to receive(:trigger).with(config: { "cronExpression" => expected }, attach: nil)
@@ -1325,7 +1325,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
 
             triggered = false
             rule do
-              at MyDateTimeItem, offset: offset
+              at(MyDateTimeItem, offset:)
               run { triggered = true }
             end
 
@@ -1340,12 +1340,12 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
 
     describe "#every" do
       def self.generate(name, cron_expression, *every_args, attach: nil, **kwargs)
-        it name, caller: caller do
+        it(name, caller:) do
           rspec = self
           executed = false
           rule do
-            rspec.expect(self).to rspec.receive(:cron).with(cron_expression, attach: attach)
-            every(*every_args, attach: attach, **kwargs)
+            rspec.expect(self).to rspec.receive(:cron).with(cron_expression, attach:)
+            every(*every_args, attach:, **kwargs)
             executed = true
           end
           expect(executed).to be true
@@ -1424,7 +1424,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
               items.build { date_time_item MyDateTimeItem }
 
               triggered = false
-              every(:day, at: MyDateTimeItem, offset: offset) { triggered = true }
+              every(:day, at: MyDateTimeItem, offset:) { triggered = true }
 
               MyDateTimeItem.update(2.hours.ago) # without an offset, this would not have triggered the rule
               wait(4.seconds) do
@@ -1744,7 +1744,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       end
 
       def self.test_event(trigger)
-        it "is passed `event` from #{trigger}", caller: caller do
+        it("is passed `event` from #{trigger}", caller:) do
           items.build { switch_item "Switch1" }
           item = nil
           rule do
@@ -1755,7 +1755,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           expect(item).to be Switch1
         end
 
-        it "has an implicit `event`", caller: caller do
+        it("has an implicit `event`", caller:) do
           items.build { switch_item "Switch1" }
           item = nil
           rule do
@@ -2020,7 +2020,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       end
 
       def self.test_combo(only_if_value, not_if_value, result)
-        it "#{result ? "runs" : "doesn't run"} for only_if #{only_if_value} and #{not_if_value}", caller: caller do
+        it("#{result ? "runs" : "doesn't run"} for only_if #{only_if_value} and #{not_if_value}", caller:) do
           ran = false
           rule do
             on_load
@@ -2069,7 +2069,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
 
       describe "#between" do # rubocop:disable RSpec/EmptyExampleGroup
         def self.test_it(range, expected)
-          it "works with #{range.inspect} (#{range.begin.class})", caller: caller do
+          it("works with #{range.inspect} (#{range.begin.class})", caller:) do
             ran = false
             rule do
               on_load
@@ -2230,7 +2230,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
     end
 
     def self.test_it(*trigger, &block)
-      it "passes through attachment for #{trigger.first}", caller: caller do
+      it("passes through attachment for #{trigger.first}", caller:) do
         attachment = nil
         trigger[1] = binding.eval(trigger[1]) if trigger.length == 2 # rubocop:disable Security/Eval
         kwargs = {}

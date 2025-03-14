@@ -48,7 +48,7 @@ module OpenHAB
             config = { "channelUID" => channel }
             config["event"] = trigger.to_s unless trigger.nil?
             logger.trace { "Creating Channel Trigger for channels #{channel.inspect} and config #{config.inspect}" }
-            append_trigger(type: CHANNEL_EVENT, config: config, attach: attach)
+            append_trigger(type: CHANNEL_EVENT, config:, attach:)
           end
         end
       end

@@ -22,7 +22,7 @@ module OpenHAB
           #
           def trigger(item:, command:, attach:)
             unless Conditions.state?(command)
-              conditions = Conditions::Generic.new(command: command)
+              conditions = Conditions::Generic.new(command:)
               command = nil
             end
 
@@ -32,7 +32,7 @@ module OpenHAB
                              [ITEM_COMMAND, { "itemName" => item.name }]
                            end
             config["command"] = command.to_s unless command.nil?
-            append_trigger(type: type, config: config, attach: attach, conditions: conditions)
+            append_trigger(type:, config:, attach:, conditions:)
           end
 
           # @return [String] item command trigger

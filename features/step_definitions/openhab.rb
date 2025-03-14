@@ -30,7 +30,7 @@ Then(/^It should log '([^']*)' within (\d+) seconds$/) do |string, seconds|
 end
 
 Then("It should not log {string} within {int} seconds") do |string, seconds|
-  not_for(seconds: seconds, msg: "'#{string}'' found in log file (#{openhab_log}) within #{seconds} seconds") do
+  not_for(seconds:, msg: "'#{string}'' found in log file (#{openhab_log}) within #{seconds} seconds") do
     check_log(string)
   end
 end
@@ -52,7 +52,7 @@ Given(/(?: I add)?items:/) do |table|
   items = []
   table.hashes.each do |row|
     item = Item.new(type: row["type"], name: row["name"])
-    add_item(item: item)
+    add_item(item:)
     items << item
   end
   check_items(added: items)

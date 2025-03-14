@@ -74,7 +74,7 @@ end
 
 Given("code in a shared file named {string}(:)") do |file, doc_string|
   code = doc_string_to_rule(doc_string)
-  deploy_shared_file(filename: file, code: code)
+  deploy_shared_file(filename: file, code:)
 end
 
 When("I deploy the rules file") do

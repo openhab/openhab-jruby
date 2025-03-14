@@ -50,7 +50,7 @@ module OpenHAB
         # @return [self]
         #
         def toggle(source: nil)
-          command!(!on?, source: source)
+          command!(!on?, source:)
         end
 
         # @!method on?

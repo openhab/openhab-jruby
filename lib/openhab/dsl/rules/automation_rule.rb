@@ -9,7 +9,7 @@ module OpenHAB
       # @!visibility private
       class AutomationRule < org.openhab.core.automation.module.script.rulesupport.shared.simple.SimpleRule
         # @!visibility private
-        INPUT_KEY_PATTERN = /^[a-z_]+[a-zA-Z0-9_]*$/.freeze
+        INPUT_KEY_PATTERN = /^[a-z_]+[a-zA-Z0-9_]*$/
 
         class << self
           #
@@ -83,7 +83,7 @@ module OpenHAB
               logger.trace("Execute called with mod (#{mod&.to_string}) and inputs (#{inputs.inspect})")
               logger.trace("Event details #{inputs["event"].inspect}") if inputs&.key?("event")
             end
-            trigger_conditions(inputs).process(mod: mod, inputs: inputs) do
+            trigger_conditions(inputs).process(mod:, inputs:) do
               event = extract_event(inputs)
               @debouncer.call { process_queue(create_queue(event), mod, event) }
             end
@@ -120,7 +120,7 @@ module OpenHAB
         # @return [Queue] <description>
         #
         def create_queue(event)
-          case check_guards(event: event)
+          case check_guards(event:)
           when true
             @run_queue.dup.grep_v(BuilderDSL::Otherwise)
           when false

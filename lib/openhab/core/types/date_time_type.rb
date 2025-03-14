@@ -239,14 +239,14 @@ module OpenHAB
         # Forward missing methods to the `ZonedDateTime` object or a ruby `Time`
         # object representing the same instant
         #
-        def method_missing(method, *args, &block)
+        def method_missing(method, ...)
           # @deprecated OH 4.2 Remove version check when dropping OH 4.2
           if OpenHAB::Core.version >= OpenHAB::Core::V4_3 && to_instant.respond_to?(method)
-            return to_instant.send(method, *args, &block)
+            return to_instant.send(method, ...)
           end
 
-          return zoned_date_time.send(method, *args, &block) if zoned_date_time.respond_to?(method)
-          return to_time.send(method, *args, &block) if ::Time.instance_methods.include?(method.to_sym)
+          return zoned_date_time.send(method, ...) if zoned_date_time.respond_to?(method)
+          return to_time.send(method, ...) if ::Time.instance_methods.include?(method.to_sym)
 
           super
         end

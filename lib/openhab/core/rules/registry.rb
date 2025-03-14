@@ -41,8 +41,8 @@ module OpenHAB
         # @yield Block executed in the context of a {DSL::Rules::Builder}.
         # @return [Object] The result of the block.
         #
-        def build(preferred_provider = nil, &block)
-          DSL::Rules::Builder.new(preferred_provider).instance_eval_with_dummy_items(&block)
+        def build(preferred_provider = nil, &)
+          DSL::Rules::Builder.new(preferred_provider).instance_eval_with_dummy_items(&)
         end
 
         #

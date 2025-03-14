@@ -49,7 +49,7 @@ module OpenHAB
         # @return [SitemapBuilder]
         # @!visibility public
         def sitemap(name, label: nil, icon: nil, &block)
-          sitemap = SitemapBuilder.new(name, @builder_proxy, label: label, icon: icon, &block)
+          sitemap = SitemapBuilder.new(name, @builder_proxy, label:, icon:, &block)
           sitemap = sitemap.build
           if @update && @provider.get(sitemap.uid)
             @provider.update(sitemap)
@@ -67,9 +67,7 @@ module OpenHAB
         # This is copied out of UIComponentSitemapProvider.java
         # The original pattern will match plain state e.g. "ON" as item="O" and state="N"
         # this pattern is modified so it matches as item=nil and state="ON" by using atomic grouping `(?>subexpression)`
-        # rubocop:disable Layout/LineLength
-        CONDITION_PATTERN = /(?>(?<item>[A-Za-z]\w*)?\s*(?<condition>==|!=|<=|>=|<|>))?\s*(?<sign>\+|-)?(?<state>.+)/.freeze
-        # rubocop:enable Layout/LineLength
+        CONDITION_PATTERN = /(?>(?<item>[A-Za-z]\w*)?\s*(?<condition>==|!=|<=|>=|<|>))?\s*(?<sign>\+|-)?(?<state>.+)/
         private_constant :CONDITION_PATTERN
 
         # @return [String, nil]
@@ -1483,7 +1481,7 @@ module OpenHAB
         # @param icon [String, nil]
         # @!visibility private
         def initialize(name, builder_proxy, label: nil, icon: nil)
-          super(:sitemap, builder_proxy, label: label, icon: icon)
+          super(:sitemap, builder_proxy, label:, icon:)
 
           @name = name
         end

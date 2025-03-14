@@ -122,7 +122,7 @@ def check_log_regexp(regexp)
 end
 
 def add_item(item:)
-  Rest.add_item(item: item)
+  Rest.add_item(item:)
 end
 
 def install_feature(feature)

@@ -22,20 +22,20 @@ module OpenHAB
           #
           def trigger(item:, to:, attach:)
             unless Conditions.state?(to)
-              conditions = Conditions::Generic.new(to: to)
+              conditions = Conditions::Generic.new(to:)
               to = nil
             end
 
             type, config = case item
                            when GroupItem::Members
-                             group_update(item: item, to: to)
+                             group_update(item:, to:)
                            when Core::Things::Thing,
                  Core::Things::ThingUID
-                             thing_update(thing: item, to: to)
+                             thing_update(thing: item, to:)
                            else
-                             item_update(item: item, to: to)
+                             item_update(item:, to:)
                            end
-            append_trigger(type: type, config: config, attach: attach, conditions: conditions)
+            append_trigger(type:, config:, attach:, conditions:)
           end
 
           private
@@ -92,7 +92,7 @@ module OpenHAB
           #  second element is a Hash configuring trigger
           #
           def thing_update(thing:, to:)
-            trigger_for_thing(thing: thing, type: THING_UPDATE, to: to)
+            trigger_for_thing(thing:, type: THING_UPDATE, to:)
           end
         end
       end

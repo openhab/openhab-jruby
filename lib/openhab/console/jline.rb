@@ -27,7 +27,7 @@ module OpenHAB
       NUMBER = BOLD + BLUE
       OBJECT = BOLD + GREEN
       SIMPLE_CLASS = BOLD + CYAN
-      PROMPT = "#{BOLD}JRuby> #{RESET}"
+      PROMPT = "#{BOLD}JRuby> #{RESET}".freeze
 
       class << self
         def start

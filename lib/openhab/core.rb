@@ -23,7 +23,7 @@ module OpenHAB
       @version ||= Gem::Version.new(VERSION).release.freeze
     end
 
-    raise "`openhab-scripting` requires openHAB >= 3.4.0" unless version >= Gem::Version.new("3.4.0")
+    raise "`openhab-scripting` requires openHAB >= 4.0.0" unless version >= V4_0
 
     # @return [Integer] Number of seconds to wait between checks for automation manager
     CHECK_DELAY = 10
@@ -133,6 +133,6 @@ end
 # several classes rely on this, so force it to load earlier
 require_relative "core/provider"
 
-Dir[File.expand_path("core/**/*.rb", __dir__)].sort.each do |f|
+Dir[File.expand_path("core/**/*.rb", __dir__)].each do |f|
   require f
 end

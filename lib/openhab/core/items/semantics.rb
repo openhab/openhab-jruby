@@ -309,7 +309,7 @@ module OpenHAB
 
               synonyms = Array.wrap(synonyms).map { |s| s.to_s.strip }
 
-              tags.map do |name, parent|
+              tags.filter_map do |name, parent|
                 if (existing_tag = lookup(name))
                   logger.warn("Tag already exists: #{existing_tag.inspect}")
                   next
@@ -328,7 +328,7 @@ module OpenHAB
                                                                          synonyms)
                 Provider.instance.add(new_tag)
                 lookup(name)
-              end.compact
+              end
             end
 
             #
@@ -360,7 +360,7 @@ module OpenHAB
                     next unless existing_tag.parent_uid == tag.uid
                     raise ArgumentError, "Cannot remove #{tag} because it has children" unless recursive
 
-                    children += remove(existing_tag, recursive: recursive)
+                    children += remove(existing_tag, recursive:)
                   end
                 end
 

@@ -164,7 +164,7 @@ RSpec.describe OpenHAB::DSL do
           parameter "test", :text, label: "Test", description: "Test"
         end
 
-        profile(:test, label: "Test Profile", config_description: config_description) { |_event| true }
+        profile(:test, label: "Test Profile", config_description:) { |_event| true }
       end
     end
 
@@ -198,7 +198,7 @@ RSpec.describe OpenHAB::DSL do
       end
       expect(created_rules.compact.size).to eq 2
       expect(created_rules.map(&:uid).uniq.size).to eq 2
-      expect(created_rules.map { |r| rules[r.uid] }.compact.size).to eq 2
+      expect(created_rules.filter_map { |r| rules[r.uid] }.size).to eq 2
     end
 
     it "fails and returns nil when an an existing id is given" do

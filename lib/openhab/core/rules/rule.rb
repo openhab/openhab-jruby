@@ -132,7 +132,7 @@ module OpenHAB
           tags.map! do |tag|
             tag.is_a?(::Module) ? tag.simple_name : tag # ::Module to distinguish against Rule::Module!
           end
-          !(self.tags.to_a & tags).empty?
+          !!self.tags.to_a.intersect?(tags)
         end
 
         #

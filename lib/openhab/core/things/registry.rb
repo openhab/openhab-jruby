@@ -49,7 +49,7 @@ module OpenHAB
         #   wasn't created by the current provider.
         #
         def build(preferred_provider = nil, update: true, &block)
-          DSL::Things::Builder.new(preferred_provider, update: update).instance_eval(&block)
+          DSL::Things::Builder.new(preferred_provider, update:).instance_eval(&block)
         end
 
         #

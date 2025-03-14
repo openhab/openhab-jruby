@@ -138,7 +138,7 @@ module OpenHAB
           #
           def self.from_dow_symbols(symbols, at)
             dow = DAY_OF_WEEK_MAP.fetch_values(*symbols).join(",")
-            expression_map = CRON_EXPRESSION_MAP.merge(dow: dow, hour: 0, minute: 0, second: 0)
+            expression_map = CRON_EXPRESSION_MAP.merge(dow:, hour: 0, minute: 0, second: 0)
             expression_map = at_condition(expression_map, at) if at
             map_to_cron(expression_map)
           end
@@ -243,7 +243,7 @@ module OpenHAB
             if OpenHAB::Core.version < OpenHAB::Core::V4_0
               CronHandler::CronTriggerHandlerFactory.instance # ensure it's registered
             end
-            append_trigger(type: CRON_TRIGGER_MODULE_ID, config: config, attach: attach)
+            append_trigger(type: CRON_TRIGGER_MODULE_ID, config:, attach:)
           end
         end
       end

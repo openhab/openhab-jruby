@@ -667,10 +667,10 @@ module OpenHAB
             method = method.to_s.dup
             suffix = method.delete_suffix!("?") && "?"
 
-            def_persistence_method("#{method}_since#{suffix}", quantify: quantify)
+            def_persistence_method("#{method}_since#{suffix}", quantify:)
             # @deprecated OH 4.1 remove if guard, keeping the content, when dropping OH 4.1
             if OpenHAB::Core.version >= OpenHAB::Core::V4_2
-              def_persistence_method("#{method}_until#{suffix}", quantify: quantify)
+              def_persistence_method("#{method}_until#{suffix}", quantify:)
             end
 
             method = "#{method}_between"
@@ -791,7 +791,7 @@ module OpenHAB
           when org.openhab.core.persistence.HistoricItem
             PersistedState.new(result, quantify ? quantify(result.state) : nil)
           when java.util.Collection, Array
-            result.to_a.map { |historic_item| wrap_result(historic_item, quantify: quantify) }
+            result.to_a.map { |historic_item| wrap_result(historic_item, quantify:) }
           else
             return quantify(result) if quantify
 

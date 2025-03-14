@@ -95,7 +95,7 @@ RSpec.describe OpenHAB::DSL::Items::TimedCommand do
     let(:item) { items.build { switch_item "Switch1" } }
 
     def self.test_it(initial_state, command)
-      it "expires to the inverse of #{command} even when starting with #{initial_state}", caller: caller do
+      it("expires to the inverse of #{command} even when starting with #{initial_state}", caller:) do
         item.update(initial_state)
         item.command(command, for: 5.seconds)
         expect(item.state).to eq command

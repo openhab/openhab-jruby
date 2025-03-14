@@ -68,7 +68,7 @@ module OpenHAB
                          end
 
                 start = Time.now
-                sleep 0.1 until (@watch_service = OSGi.service(service_name, filter: filter)) || Time.now - start > 2
+                sleep 0.1 until (@watch_service = OSGi.service(service_name, filter:)) || Time.now - start > 2
 
                 unless @watch_service
                   logger.warn("Watch service is not ready in time. #{@path} will not be monitored!")

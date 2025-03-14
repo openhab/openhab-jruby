@@ -2,7 +2,6 @@
 
 require "java"
 require "method_source"
-require "ruby2_keywords"
 
 require "bundler/inline"
 
@@ -10,7 +9,7 @@ require_relative "log"
 require_relative "osgi"
 require_relative "core"
 
-Dir[File.expand_path("dsl/**/*.rb", __dir__)].sort.each do |f|
+Dir[File.expand_path("dsl/**/*.rb", __dir__)].each do |f|
   require f
 end
 
@@ -59,38 +58,38 @@ module OpenHAB
 
     # (see Rules::Builder#rule)
     def rule(name = nil, id: nil, **kwargs, &block)
-      rules.build { rule(name, id: id, **kwargs, &block) }
+      rules.build { rule(name, id:, **kwargs, &block) }
     end
 
     # Creates a rule that will remove existing rules with the same id, even when the id has been inferred.
     # @see rule
     def rule!(name = nil, id: nil, **kwargs, &block)
-      rules.build { rule(name, id: id, replace: true, **kwargs, &block) }
+      rules.build { rule(name, id:, replace: true, **kwargs, &block) }
     end
 
     # (see Rules::Builder#scene)
     def scene(name = nil, description: nil, id: nil, tag: nil, tags: nil, **kwargs, &block)
-      rules.build { scene(name, description: description, id: id, tag: tag, tags: tags, **kwargs, &block) }
+      rules.build { scene(name, description:, id:, tag:, tags:, **kwargs, &block) }
     end
 
     # Creates a scene that will remove existing rules/scenes with the same id, even when the id has been inferred.
     # @see scene
     def scene!(name = nil, description: nil, id: nil, tag: nil, tags: nil, **kwargs, &block)
       rules.build do
-        scene(name, description: description, id: id, tag: tag, tags: tags, replace: true, **kwargs, &block)
+        scene(name, description:, id:, tag:, tags:, replace: true, **kwargs, &block)
       end
     end
 
     # (see Rules::Builder#script)
     def script(name = nil, description: nil, id: nil, tag: nil, tags: nil, **kwargs, &block)
-      rules.build { script(name, description: description, id: id, tag: tag, tags: tags, **kwargs, &block) }
+      rules.build { script(name, description:, id:, tag:, tags:, **kwargs, &block) }
     end
 
     # Creates a script that will remove existing rules/scripts with the same id, even when the id has been inferred.
     # @see script
     def script!(name = nil, description: nil, id: nil, tag: nil, tags: nil, **kwargs, &block)
       rules.build do
-        script(name, description: description, id: id, tag: tag, tags: tags, replace: true, **kwargs, &block)
+        script(name, description:, id:, tag:, tags:, replace: true, **kwargs, &block)
       end
     end
 
@@ -198,7 +197,7 @@ module OpenHAB
       id = id.to_s
 
       ThreadLocal.thread_local(openhab_rule_type: "profile", openhab_rule_uid: id) do
-        Core::ProfileFactory.instance.register(id, block, label: label, type: type, config_description: config_description)
+        Core::ProfileFactory.instance.register(id, block, label:, type:, config_description:)
       end
     end
 
@@ -383,7 +382,7 @@ module OpenHAB
 
       # Carry rule name to timer
       thread_locals = ThreadLocal.persist
-      timers.create(duration, id: id, reschedule: reschedule, thread_locals: thread_locals, block: block)
+      timers.create(duration, id:, reschedule:, thread_locals:, block:)
     end
 
     #
@@ -444,7 +443,7 @@ module OpenHAB
       interval = binding.local_variable_get(:for)
       id ||= block.source_location
       DSL.debouncers.compute(id) do |_key, debouncer|
-        debouncer ||= Debouncer.new(for: interval, leading: leading, idle_time: idle_time)
+        debouncer ||= Debouncer.new(for: interval, leading:, idle_time:)
         debouncer.call(&block)
         debouncer
       end
@@ -482,7 +481,7 @@ module OpenHAB
     #
     def debounce_for(debounce_time, id: nil, &block)
       idle_time = debounce_time.is_a?(Range) ? debounce_time.begin : debounce_time
-      debounce(for: debounce_time, idle_time: idle_time, id: id, &block)
+      debounce(for: debounce_time, idle_time:, id:, &block)
     end
 
     #
@@ -514,7 +513,7 @@ module OpenHAB
     # @see Rules::BuilderDSL#throttle_for
     #
     def throttle_for(duration, id: nil, &block)
-      debounce(for: duration, id: id, &block)
+      debounce(for: duration, id:, &block)
     end
 
     # (see Core::Actions::Transformation.transform)
@@ -545,7 +544,7 @@ module OpenHAB
     #
     def only_every(interval, id: nil, &block)
       interval = 1.send(interval) if %i[second minute hour day].include?(interval)
-      debounce(for: interval, leading: true, id: id, &block)
+      debounce(for: interval, leading: true, id:, &block)
     end
 
     #

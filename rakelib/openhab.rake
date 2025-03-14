@@ -94,7 +94,7 @@ namespace :openhab do
 
   def fail_on_error(command, env = {})
     cmd = TTY::Command.new
-    out, = cmd.run(command, env: env, only_output_on_error: true)
+    out, = cmd.run(command, env:, only_output_on_error: true)
     out
   end
 

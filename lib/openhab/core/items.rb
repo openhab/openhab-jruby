@@ -2,7 +2,7 @@
 
 require_relative "types"
 
-Dir[File.expand_path("items/*.rb", __dir__)].sort.each do |f|
+Dir[File.expand_path("items/*.rb", __dir__)].each do |f|
   require f
 end
 

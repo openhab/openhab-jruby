@@ -31,14 +31,14 @@ module OpenHAB
                 logger.trace("Creating Changed Wait Change Trigger for Item(#{item_name}) Duration(#{duration}) " \
                              "To(#{to}) From(#{from}) Attach(#{attach})")
               end
-              conditions = Conditions::Duration.new(to: to, from: from, duration: duration)
+              conditions = Conditions::Duration.new(to:, from:, duration:)
               label = NameInference.infer_rule_name_from_trigger(:changed,
                                                                  [item],
-                                                                 from: from,
-                                                                 to: to,
-                                                                 duration: duration)
+                                                                 from:,
+                                                                 to:,
+                                                                 duration:)
 
-              changed_trigger(item: item, from: nil, to: nil, attach: attach, conditions: conditions, label: label)
+              changed_trigger(item:, from: nil, to: nil, attach:, conditions:, label:)
             else
               # swap from/to w/ nil if from/to need to be processed in Ruby
               # rubocop:disable Style/ParallelAssignment
@@ -46,7 +46,7 @@ module OpenHAB
               to_proc, to = to, nil unless Conditions.state?(to)
               # rubocop:enable Style/ParallelAssignment
               conditions = Conditions::Generic.new(from: from_proc, to: to_proc) unless from_proc.nil? && to_proc.nil?
-              changed_trigger(item: item, from: from, to: to, attach: attach, conditions: conditions)
+              changed_trigger(item:, from:, to:, attach:, conditions:)
             end
           end
 
@@ -75,16 +75,16 @@ module OpenHAB
           def changed_trigger(item:, from:, to:, attach: nil, conditions: nil, label: nil)
             type, config = case item
                            when GroupItem::Members
-                             group(group: item, from: from, to: to)
+                             group(group: item, from:, to:)
                            when Core::Things::Thing,
                                 Core::Things::ThingUID
-                             thing(thing: item, from: from, to: to)
+                             thing(thing: item, from:, to:)
                            when Core::Things::Registry
-                             thing(thing: "*", from: from, to: to)
+                             thing(thing: "*", from:, to:)
                            else
-                             item(item: item, from: from, to: to)
+                             item(item:, from:, to:)
                            end
-            append_trigger(type: type, config: config, attach: attach, conditions: conditions, label: label)
+            append_trigger(type:, config:, attach:, conditions:, label:)
           end
 
           #
@@ -98,7 +98,7 @@ module OpenHAB
           #  second element is a Hash configuring trigger
           #
           def thing(thing:, from:, to:)
-            trigger_for_thing(thing: thing, type: THING_CHANGE, to: to, from: from)
+            trigger_for_thing(thing:, type: THING_CHANGE, to:, from:)
           end
 
           #

@@ -144,8 +144,8 @@ module OpenHAB
       end
 
       # @!visibility private
-      def each(&block)
-        @elements.each_value(&block)
+      def each(&)
+        @elements.each_value(&)
       end
 
       # @return [String]

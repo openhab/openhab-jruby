@@ -77,14 +77,14 @@ module OpenHAB
 
         # Create a new Bridge
         # @see BridgeBuilder#initialize
-        def bridge(*args, **kwargs, &block)
-          build(BridgeBuilder, *args, **kwargs, &block)
+        def bridge(...)
+          build(BridgeBuilder, ...)
         end
 
         # Create a new Thing
         # @see ThingBuilder#initialize
-        def thing(*args, **kwargs, &block)
-          build(ThingBuilder, *args, **kwargs, &block)
+        def thing(...)
+          build(ThingBuilder, ...)
         end
 
         private
@@ -287,14 +287,14 @@ module OpenHAB
 
         # Create a new Bridge with this Bridge as its Bridge
         # @see BridgeBuilder#initialize
-        def bridge(*args, **kwargs, &block)
-          parent_builder.bridge(*args, bridge: self, **kwargs, &block)
+        def bridge(*args, **kwargs, &)
+          parent_builder.bridge(*args, bridge: self, **kwargs, &)
         end
 
         # Create a new Thing with this Bridge as its Bridge
         # @see ThingBuilder#initialize
-        def thing(*args, **kwargs, &block)
-          parent_builder.thing(*args, bridge: self, **kwargs, &block)
+        def thing(*args, **kwargs, &)
+          parent_builder.thing(*args, bridge: self, **kwargs, &)
         end
       end
 
