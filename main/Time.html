@@ -3680,7 +3680,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Extends <span class='object_link'><a href="#--instance_method" title="Time#- (method)">#-</a></span> to allow subtracting a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/temporal/TemporalAmount.html" target="_parent" title="TemporalAmount">TemporalAmount</a> or any other date/time class that responds to #to_zoned_date_time.</p>
+    <span class="summary_desc"><div class='inline'><p>Extends <span class='object_link'><a href="#--instance_method" title="Time#- (method)">#-</a></span> to allow subtracting a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/temporal/TemporalAmount.html" target="_parent" title="TemporalAmount">TemporalAmount</a> or any other date/time class that responds to #to_zoned_date_time.</p>
 </div></span>
   
 </li>
@@ -3705,7 +3705,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Extends <span class='object_link'><a href="#%2B-instance_method" title="Time#+ (method)">#+</a></span> to allow adding a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/temporal/TemporalAmount.html" target="_parent" title="TemporalAmount">TemporalAmount</a>.</p>
+    <span class="summary_desc"><div class='inline'><p>Extends <span class='object_link'><a href="#%2B-instance_method" title="Time#+ (method)">#+</a></span> to allow adding a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/temporal/TemporalAmount.html" target="_parent" title="TemporalAmount">TemporalAmount</a>.</p>
 </div></span>
   
 </li>
@@ -4042,7 +4042,7 @@ is also convertible to a ZonedDateTime.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Extends <span class='object_link'><a href="#--instance_method" title="Time#- (method)">#-</a></span> to allow subtracting a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/temporal/TemporalAmount.html" target="_parent" title="TemporalAmount">TemporalAmount</a>
+    <p>Extends <span class='object_link'><a href="#--instance_method" title="Time#- (method)">#-</a></span> to allow subtracting a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/temporal/TemporalAmount.html" target="_parent" title="TemporalAmount">TemporalAmount</a>
 or any other date/time class that responds to #to_zoned_date_time.</p>
 <p>Subtractions with another object of the same class (e.g. Time - Other Time, or DateTime - Other DateTime)
 remains unchanged from its original behavior.</p>
@@ -4088,7 +4088,7 @@ remains unchanged from its original behavior.</p>
         <span class='name'>other</span>
       
       
-        <span class='type'>(<tt><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/temporal/TemporalAmount.html" target="_parent" title="java.time.temporal.TemporalAmount">java.time.temporal.TemporalAmount</a></tt>, <tt>#<span class='object_link'><a href="#to_zoned_date_time-instance_method" title="Time#to_zoned_date_time (method)">to_zoned_date_time</a></span></tt>)</span>
+        <span class='type'>(<tt><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/temporal/TemporalAmount.html" target="_parent" title="java.time.temporal.TemporalAmount">java.time.temporal.TemporalAmount</a></tt>, <tt>#<span class='object_link'><a href="#to_zoned_date_time-instance_method" title="Time#to_zoned_date_time (method)">to_zoned_date_time</a></span></tt>)</span>
       
       
       
@@ -4107,7 +4107,7 @@ remains unchanged from its original behavior.</p>
       
       
         &mdash;
-        <div class='inline'><p>If other is a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/temporal/TemporalAmount.html" target="_parent" title="TemporalAmount">TemporalAmount</a></p>
+        <div class='inline'><p>If other is a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/temporal/TemporalAmount.html" target="_parent" title="TemporalAmount">TemporalAmount</a></p>
 </div>
       
     </li>
@@ -4174,7 +4174,7 @@ remains unchanged from its original behavior.</p>
       <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/time.rb', line 55</span>
 
 <span class="keyword">def</span> <span class="function">minus_with_temporal</span>(other)
-  <span class="keyword">return</span> to_zoned_date_time - other <span class="keyword">if</span> other.is_a?(java.time.temporal.TemporalAmount)
+  <span class="keyword">return</span> to_zoned_date_time - other.to_temporal_amount <span class="keyword">if</span> other.respond_to?(<span class="symbol">:to_temporal_amount</span>)
 
   <span class="comment"># Exclude subtracting against the same class</span>
   <span class="keyword">if</span> other.respond_to?(<span class="symbol">:to_zoned_date_time</span>) &amp;&amp; !other.is_a?(<span class="predefined-constant">self</span>.class)
@@ -4203,7 +4203,7 @@ remains unchanged from its original behavior.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Extends <span class='object_link'><a href="#%2B-instance_method" title="Time#+ (method)">#+</a></span> to allow adding a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/temporal/TemporalAmount.html" target="_parent" title="TemporalAmount">TemporalAmount</a></p>
+    <p>Extends <span class='object_link'><a href="#%2B-instance_method" title="Time#+ (method)">#+</a></span> to allow adding a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/temporal/TemporalAmount.html" target="_parent" title="TemporalAmount">TemporalAmount</a></p>
 
 
   </div>
@@ -4217,7 +4217,7 @@ remains unchanged from its original behavior.</p>
         <span class='name'>other</span>
       
       
-        <span class='type'>(<tt><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/temporal/TemporalAmount.html" target="_parent" title="java.time.temporal.TemporalAmount">java.time.temporal.TemporalAmount</a></tt>)</span>
+        <span class='type'>(<tt><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/temporal/TemporalAmount.html" target="_parent" title="java.time.temporal.TemporalAmount">java.time.temporal.TemporalAmount</a></tt>)</span>
       
       
       
@@ -4236,7 +4236,7 @@ remains unchanged from its original behavior.</p>
       
       
         &mdash;
-        <div class='inline'><p>If other is a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/temporal/TemporalAmount.html" target="_parent" title="TemporalAmount">TemporalAmount</a></p>
+        <div class='inline'><p>If other is a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/temporal/TemporalAmount.html" target="_parent" title="TemporalAmount">TemporalAmount</a></p>
 </div>
       
     </li>
@@ -4272,7 +4272,7 @@ remains unchanged from its original behavior.</p>
       <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/time.rb', line 20</span>
 
 <span class="keyword">def</span> <span class="function">plus_with_temporal</span>(other)
-  <span class="keyword">return</span> to_zoned_date_time + other <span class="keyword">if</span> other.is_a?(java.time.temporal.TemporalAmount)
+  <span class="keyword">return</span> to_zoned_date_time + other.to_temporal_amount <span class="keyword">if</span> other.respond_to?(<span class="symbol">:to_temporal_amount</span>)
 
   plus_without_temporal(other)
 <span class="keyword">end</span></pre>
@@ -4765,9 +4765,9 @@ def_delegators <span class="symbol">:to_zoned_date_time</span>, <span class="sym
 </div>
 
         <footer>
-  Generated on Sat Mar 15 01:59:16 2025 by
+  Generated on Sat Mar 15 21:43:16 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.3).
+  0.9.28 (ruby-3.1.4).
 </footer>
 
       </main>

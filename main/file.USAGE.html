@@ -4545,7 +4545,16 @@ elapsed_time = <span class="constant">ZonedDateTime</span>.now - <span class="co
 <span class="comment"># Convert Epoch second to ZonedDateTime</span>
 <span class="constant">Time</span>.at(<span class="integer">1669684403</span>).to_zoned_date_time
 <span class="comment"># or</span>
-java.time.Instant.of_epoch_second(<span class="integer">1669684403</span>).at_zone(<span class="constant">ZoneId</span>.system_default)
+<span class="constant">Instant</span>.of_epoch_second(<span class="integer">1669684403</span>).at_zone(<span class="constant">ZoneId</span>.system_default)
+</code></pre>
+<h5 id="time-based-quantitytype"><a href="#time-based-quantitytype" class="header-anchor">#</a>Time-based QuantityType <!-- raw HTML omitted --></h5>
+<p>QuantityType objects with time dimension work like a Duration in arithmetic operations.
+They can be compared, added, and subtracted against Duration objects, and added/subtracted from Ruby and Java Date/Time-like objects.</p>
+<pre class="code java"><code class="java"><span class="predefined-type">Number</span>:<span class="predefined-type">Time</span> Pump_Total_Runtime <span class="string"><span class="delimiter">&quot;</span><span class="content">Total Pump runtime today</span><span class="delimiter">&quot;</span></span>
+</code></pre>
+<pre class="code ruby"><code class="ruby"><span class="keyword">if</span> <span class="constant">Pump_Total_Runtime</span>.state &gt;= <span class="integer">8</span>.hours
+  logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">The Pump has been running for 8 hours or more today</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span>
 </code></pre>
 <h4 id="ranges"><a href="#ranges" class="header-anchor">#</a>Ranges <!-- raw HTML omitted --></h4>
 <p>Ranges of date time objects work as expected.
@@ -5059,9 +5068,9 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Sat Mar 15 01:59:10 2025 by
+  Generated on Sat Mar 15 21:43:09 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.3).
+  0.9.28 (ruby-3.1.4).
 </footer>
 
       </main>

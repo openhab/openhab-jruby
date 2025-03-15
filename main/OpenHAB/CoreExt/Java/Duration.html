@@ -3615,7 +3615,7 @@ Ruby's Integer and Float classes are extended to allow convenient creation of Du
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Extensions to <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html" target="_parent" title="Java Duration">Java Duration</a></p>
+    <p>Extensions to <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Duration.html" target="_parent" title="Java Duration">Java Duration</a></p>
 <p>Ruby's <span class='object_link'><a href="../../../Integer.html" title="Integer (class)">Integer</a></span> and <span class='object_link'><a href="../../../Float.html" title="Float (class)">Float</a></span> classes are extended to allow convenient creation of <span class='object_link'><a href="" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span> instances.</p>
 
 
@@ -3653,7 +3653,7 @@ Ruby's Integer and Float classes are extended to allow convenient creation of Du
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#<=>-instance_method" title="#&lt;=&gt; (instance method)">#<strong>&lt;=&gt;</strong>(other)  &#x21d2; Integer<sup>?</sup> </a>
+      <a href="#<=>-instance_method" title="#&lt;=&gt; (instance method)">#<strong>&lt;=&gt;</strong>(other)  &#x21d2; Numeric, ... </a>
     
 
     
@@ -3667,7 +3667,8 @@ Ruby's Integer and Float classes are extended to allow convenient creation of Du
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>Comparisons against other types may be done if supported by that type's coercion.</p>
+</div></span>
   
 </li>
 
@@ -3801,7 +3802,7 @@ Ruby's Integer and Float classes are extended to allow convenient creation of Du
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="TemporalAmount.html" title="OpenHAB::CoreExt::Java::TemporalAmount (module)">TemporalAmount</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="TemporalAmount.html#-@-instance_method" title="OpenHAB::CoreExt::Java::TemporalAmount#-@ (method)">#-@</a></span>, <span class='object_link'><a href="TemporalAmount.html#ago-instance_method" title="OpenHAB::CoreExt::Java::TemporalAmount#ago (method)">#ago</a></span>, <span class='object_link'><a href="TemporalAmount.html#from_now-instance_method" title="OpenHAB::CoreExt::Java::TemporalAmount#from_now (method)">#from_now</a></span>, <span class='object_link'><a href="TemporalAmount.html#inspect-instance_method" title="OpenHAB::CoreExt::Java::TemporalAmount#inspect (method)">#inspect</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="TemporalAmount.html#-@-instance_method" title="OpenHAB::CoreExt::Java::TemporalAmount#-@ (method)">#-@</a></span>, <span class='object_link'><a href="TemporalAmount.html#ago-instance_method" title="OpenHAB::CoreExt::Java::TemporalAmount#ago (method)">#ago</a></span>, <span class='object_link'><a href="TemporalAmount.html#from_now-instance_method" title="OpenHAB::CoreExt::Java::TemporalAmount#from_now (method)">#from_now</a></span>, <span class='object_link'><a href="TemporalAmount.html#inspect-instance_method" title="OpenHAB::CoreExt::Java::TemporalAmount#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="TemporalAmount.html#to_temporal_amount-instance_method" title="OpenHAB::CoreExt::Java::TemporalAmount#to_temporal_amount (method)">#to_temporal_amount</a></span></p>
 
   
   
@@ -3822,7 +3823,7 @@ Ruby's Integer and Float classes are extended to allow convenient creation of Du
       <div class="method_details first">
   <h3 class="signature first" id="<=>-instance_method">
   
-    #<strong>&lt;=&gt;</strong>(other)  &#x21d2; <tt><span class='object_link'><a href="../../../Integer.html" title="Integer (class)">Integer</a></span></tt><sup>?</sup> 
+    #<strong>&lt;=&gt;</strong>(other)  &#x21d2; <tt><span class='object_link'><a href="../../../Numeric.html" title="Numeric (class)">Numeric</a></span></tt>, ... 
   
 
   
@@ -3830,7 +3831,8 @@ Ruby's Integer and Float classes are extended to allow convenient creation of Du
   
 </h3><div class="docstring">
   <div class="discussion">
-    
+    <p>Comparisons against other types may be done if supported by that type's coercion.</p>
+
 
   </div>
 </div>
@@ -3842,7 +3844,7 @@ Ruby's Integer and Float classes are extended to allow convenient creation of Du
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../Integer.html" title="Integer (class)">Integer</a></span></tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Numeric.html" title="Numeric (class)">Numeric</a></span></tt>, <tt><span class='object_link'><a href="../../Core/Types/QuantityType.html" title="OpenHAB::Core::Types::QuantityType (class)">QuantityType</a></span></tt>, <tt>nil</tt>)</span>
       
       
       
@@ -3856,21 +3858,39 @@ Ruby's Integer and Float classes are extended to allow convenient creation of Du
       <pre class="lines">
 
 
-59
-60
-61
-62
 63
 64
-65</pre>
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/duration.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/duration.rb', line 63</span>
 
 <span class="keyword">def</span> <span class="function">&lt;=&gt;</span>(other)
-  <span class="keyword">return</span> to_f &lt;=&gt; other <span class="keyword">if</span> other.is_a?(<span class="constant">Numeric</span>)
-
-  <span class="keyword">super</span>
+  logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span>.class<span class="inline-delimiter">}</span></span><span class="content">) </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> &lt;=&gt; </span><span class="inline"><span class="inline-delimiter">#{</span>other<span class="inline-delimiter">}</span></span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span> }
+  <span class="keyword">case</span> other
+  <span class="keyword">when</span> <span class="constant">Duration</span> <span class="keyword">then</span> <span class="keyword">super</span>
+  <span class="keyword">when</span> <span class="constant">Numeric</span> <span class="keyword">then</span> to_f &lt;=&gt; other
+  <span class="keyword">when</span> <span class="constant">QuantityType</span> <span class="keyword">then</span> <span class="predefined-constant">self</span> &lt;=&gt; other.to_temporal_amount
+  <span class="keyword">else</span>
+    <span class="keyword">if</span> other.respond_to?(<span class="symbol">:coerce</span>) &amp;&amp; (lhs, rhs = other.coerce(<span class="predefined-constant">self</span>))
+      lhs &lt;=&gt; rhs
+    <span class="keyword">else</span>
+      <span class="keyword">super</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
 <span class="keyword">rescue</span> <span class="constant">TypeError</span>
   <span class="predefined-constant">nil</span>
 <span class="keyword">end</span></pre>
@@ -3932,17 +3952,21 @@ Ruby's Integer and Float classes are extended to allow convenient creation of Du
       <pre class="lines">
 
 
-73
-74
-75
-76
-77</pre>
+86
+87
+88
+89
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/duration.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/duration.rb', line 86</span>
 
 <span class="keyword">def</span> <span class="function">coerce</span>(other)
   <span class="keyword">return</span> [other.seconds, <span class="predefined-constant">self</span>] <span class="keyword">if</span> other.is_a?(<span class="constant">Numeric</span>)
+  <span class="comment"># We want to return the same type as other, e.g. QuantityType + Duration = QuantityType</span>
+  <span class="keyword">return</span> [other, to_nanos | <span class="string"><span class="delimiter">&quot;</span><span class="content">ns</span><span class="delimiter">&quot;</span></span>] <span class="keyword">if</span> other.is_a?(<span class="constant">QuantityType</span>) &amp;&amp; other.unit.compatible?(<span class="constant">Units</span>::<span class="constant">SECOND</span>)
 
   [other.to_i.seconds, <span class="predefined-constant">self</span>] <span class="keyword">if</span> other.is_a?(<span class="constant">Period</span>)
 <span class="keyword">end</span></pre>
@@ -4168,9 +4192,9 @@ alias_method <span class="symbol">:to_i</span>, <span class="symbol">:seconds</s
 </div>
 
         <footer>
-  Generated on Sat Mar 15 01:59:21 2025 by
+  Generated on Sat Mar 15 21:43:21 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.3).
+  0.9.28 (ruby-3.1.4).
 </footer>
 
       </main>

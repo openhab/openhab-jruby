@@ -3613,7 +3613,7 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Extensions to <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Period.html" target="_parent" title="java.time.Period">java.time.Period</a></p>
+    <p>Extensions to <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Period.html" target="_parent" title="java.time.Period">java.time.Period</a></p>
 
 
   </div>
@@ -3743,7 +3743,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="TemporalAmount.html" title="OpenHAB::CoreExt::Java::TemporalAmount (module)">TemporalAmount</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="TemporalAmount.html#-@-instance_method" title="OpenHAB::CoreExt::Java::TemporalAmount#-@ (method)">#-@</a></span>, <span class='object_link'><a href="TemporalAmount.html#ago-instance_method" title="OpenHAB::CoreExt::Java::TemporalAmount#ago (method)">#ago</a></span>, <span class='object_link'><a href="TemporalAmount.html#from_now-instance_method" title="OpenHAB::CoreExt::Java::TemporalAmount#from_now (method)">#from_now</a></span>, <span class='object_link'><a href="TemporalAmount.html#inspect-instance_method" title="OpenHAB::CoreExt::Java::TemporalAmount#inspect (method)">#inspect</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="TemporalAmount.html#-@-instance_method" title="OpenHAB::CoreExt::Java::TemporalAmount#-@ (method)">#-@</a></span>, <span class='object_link'><a href="TemporalAmount.html#ago-instance_method" title="OpenHAB::CoreExt::Java::TemporalAmount#ago (method)">#ago</a></span>, <span class='object_link'><a href="TemporalAmount.html#from_now-instance_method" title="OpenHAB::CoreExt::Java::TemporalAmount#from_now (method)">#from_now</a></span>, <span class='object_link'><a href="TemporalAmount.html#inspect-instance_method" title="OpenHAB::CoreExt::Java::TemporalAmount#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="TemporalAmount.html#to_temporal_amount-instance_method" title="OpenHAB::CoreExt::Java::TemporalAmount#to_temporal_amount (method)">#to_temporal_amount</a></span></p>
 
 
   <div id="instance_method_details" class="method_details_list">
@@ -3791,13 +3791,15 @@
 38
 39
 40
-41</pre>
+41
+42</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/period.rb', line 37</span>
 
 <span class="keyword">def</span> <span class="function">&lt;=&gt;</span>(other)
   <span class="keyword">return</span> to_i &lt;=&gt; other <span class="keyword">if</span> other.is_a?(<span class="constant">Numeric</span>)
+  <span class="keyword">return</span> to_i &lt;=&gt; other.to_i <span class="keyword">if</span> other.is_a?(<span class="constant">Duration</span>)
 
   <span class="keyword">super</span>
 <span class="keyword">end</span></pre>
@@ -3831,7 +3833,7 @@
         <span class='name'>other</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../Numeric.html" title="Numeric (class)">Numeric</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Numeric.html" title="Numeric (class)">Numeric</a></span></tt>, <tt><span class='object_link'><a href="Duration.html" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span></tt>)</span>
       
       
       
@@ -3859,15 +3861,19 @@
       <pre class="lines">
 
 
-49
 50
-51</pre>
+51
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/period.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/period.rb', line 50</span>
 
 <span class="keyword">def</span> <span class="function">coerce</span>(other)
-  [other.seconds, to_i.seconds] <span class="keyword">if</span> other.is_a?(<span class="constant">Numeric</span>)
+  <span class="keyword">return</span> [other.seconds, to_i.seconds] <span class="keyword">if</span> other.is_a?(<span class="constant">Numeric</span>)
+
+  [other, to_i.seconds] <span class="keyword">if</span> other.is_a?(<span class="constant">Duration</span>)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -3993,9 +3999,9 @@
 </div>
 
         <footer>
-  Generated on Sat Mar 15 01:59:18 2025 by
+  Generated on Sat Mar 15 21:43:17 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.3).
+  0.9.28 (ruby-3.1.4).
 </footer>
 
       </main>

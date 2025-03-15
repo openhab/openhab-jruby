@@ -3680,7 +3680,7 @@ things[<span class="string"><span class="delimiter">'</span><span class="content
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#method_missing-instance_method" title="#method_missing (instance method)">#<strong>method_missing</strong>  &#x21d2; Item, ... </a>
+      <a href="#method_missing-instance_method" title="#method_missing (instance method)">#<strong>method_missing</strong>(method, *args)  &#x21d2; Item, ... </a>
     
 
     
@@ -3737,7 +3737,7 @@ things[<span class="string"><span class="delimiter">'</span><span class="content
     <div class="method_details first">
   <h3 class="signature first" id="method_missing-instance_method">
   
-    #<strong>method_missing</strong>  &#x21d2; <tt><span class='object_link'><a href="Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span></tt>, ... 
+    #<strong>method_missing</strong>(method, *args)  &#x21d2; <tt><span class='object_link'><a href="Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span></tt>, ... 
   
 
   
@@ -3784,7 +3784,7 @@ things[<span class="string"><span class="delimiter">'</span><span class="content
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/entity_lookup.rb', line 124</span>
 
-ruby2_keywords <span class="keyword">def</span> <span class="function">method_missing</span>(method, *args)
+<span class="keyword">def</span> <span class="function">method_missing</span>(method, *args)
   <span class="keyword">return</span> <span class="keyword">super</span> <span class="keyword">unless</span> args.empty? &amp;&amp; !block_given?
 
   logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">method missing, performing openHAB Lookup for: </span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
@@ -3963,9 +3963,9 @@ things[<span class="string"><span class="delimiter">'</span><span class="content
 </div>
 
         <footer>
-  Generated on Sat Mar 15 01:59:12 2025 by
+  Generated on Sat Mar 15 21:43:12 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.3).
+  0.9.28 (ruby-3.1.4).
 </footer>
 
       </main>

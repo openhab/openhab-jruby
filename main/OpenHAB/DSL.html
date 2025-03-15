@@ -4506,7 +4506,7 @@ to reduce repetitions</p>
     <div class="method_details first">
   <h3 class="signature first" id="method_missing-instance_method">
   
-    #<strong>method_missing</strong>  &#x21d2; <tt><span class='object_link'>Object</span></tt>  <span class="extras">(private)</span>
+    #<strong>method_missing</strong>(method, *args)  &#x21d2; <tt><span class='object_link'>Object</span></tt>  <span class="extras">(private)</span>
   
 
   
@@ -4545,7 +4545,7 @@ see OpenHAB::DSL::Rules::AutomationRule#execute!</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl.rb', line 1059</span>
 
-ruby2_keywords <span class="keyword">def</span> <span class="function">method_missing</span>(method, *args)
+<span class="keyword">def</span> <span class="function">method_missing</span>(method, *args)
   <span class="keyword">return</span> <span class="keyword">super</span> <span class="keyword">unless</span> args.empty? &amp;&amp; !block_given?
 
   <span class="keyword">if</span> (context = <span class="constant">Thread</span>.current[<span class="symbol">:openhab_context</span>]) &amp;&amp; context.key?(method)
@@ -4707,7 +4707,7 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
         <span class='name'>duration</span>
       
       
-        <span class='type'>(<tt><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/temporal/TemporalAmount.html" target="_parent" title="java.time.temporal.TemporalAmount">java.time.temporal.TemporalAmount</a></tt>, <tt>#to_zoned_date_time</tt>, <tt>Proc</tt>)</span>
+        <span class='type'>(<tt><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/temporal/TemporalAmount.html" target="_parent" title="java.time.temporal.TemporalAmount">java.time.temporal.TemporalAmount</a></tt>, <tt>#to_zoned_date_time</tt>, <tt>Proc</tt>)</span>
       
       
       
@@ -5011,7 +5011,7 @@ depending on the format of the string.</p>
         <span class='name'>uri</span>
       
       
-        <span class='type'>(<tt>String</tt>, <tt><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html" target="_parent" title="java.net.URI">java.net.URI</a></tt>)</span>
+        <span class='type'>(<tt>String</tt>, <tt><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/URI.html" target="_parent" title="java.net.URI">java.net.URI</a></tt>)</span>
       
       
         <em class="default">(defaults to: <tt>nil</tt>)</em>
@@ -7789,7 +7789,7 @@ For a private cache, simply use an instance variable. See
     <div class='inline'><p>Because every script or UI rule gets its own JRuby engine instance,
 you cannot rely on being able to access Ruby objects between them. Only
 objects that implement a Java interface that's part of Java or openHAB
-Core (such as Hash implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" target="_parent" title="java.util.Map">java.util.Map</a>, or other basic
+Core (such as Hash implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" target="_parent" title="java.util.Map">java.util.Map</a>, or other basic
 datatypes) can be reliably stored and accessed from the shared cache.
 Likewise, you can use the cache to access data from other scripting
 languages, but they'll be all but useless in Ruby. It's best to stick
@@ -8851,9 +8851,9 @@ unit!
 </div>
 
         <footer>
-  Generated on Sat Mar 15 01:59:11 2025 by
+  Generated on Sat Mar 15 21:43:10 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.3).
+  0.9.28 (ruby-3.1.4).
 </footer>
 
       </main>
