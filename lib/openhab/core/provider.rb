@@ -225,8 +225,7 @@ module OpenHAB
       # @!visibility private
       def unregister
         clear
-        # @deprecated OH3.4 safe navigation only required for missing Semantics registry
-        self.class.registry&.remove_provider(self)
+        self.class.registry.remove_provider(self)
       end
 
       private

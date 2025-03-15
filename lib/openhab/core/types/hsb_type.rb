@@ -12,10 +12,8 @@ module OpenHAB
       # {HSBType} is a complex type with constituents for hue, saturation and
       #  brightness and can be used for color items.
       class HSBType < PercentType
-        if OpenHAB::Core.version >= OpenHAB::Core::V4_0
-          java_import org.openhab.core.util.ColorUtil
-          private_constant :ColorUtil
-        end
+        java_import org.openhab.core.util.ColorUtil
+        private_constant :ColorUtil
 
         # @!constant BLACK
         #   @return [HSBType]

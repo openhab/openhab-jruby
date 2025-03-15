@@ -334,7 +334,7 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
     end
     expect(MyNumberItem.dimension.ruby_class).to be javax.measure.quantity.Power
     expect(MyNumberItem.metadata["unit"].value).to eql "kW"
-    expect(MyNumberItem.unit.to_s).to eql "kW" if OpenHAB::Core.version >= OpenHAB::Core::V4_0
+    expect(MyNumberItem.unit.to_s).to eql "kW"
   end
 
   it "can infer the dimension from the explicit unit for a number item" do
@@ -346,12 +346,8 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
     expect(MyNumberItem.metadata["unit"].value).to eql "kW"
     expect(ColorTempItem.dimension.ruby_class).to be javax.measure.quantity.Temperature
     expect(ColorTempItem.metadata["unit"].value).to eql "mired"
-    if OpenHAB::Core.version >= OpenHAB::Core::V4_0
-      expect(MyNumberItem.unit.to_s).to eql "kW"
-      expect(MyNumberItem.state_description.pattern).to eql "%s %unit%"
-    else
-      expect(MyNumberItem.state_description.pattern).to eql "%s kW"
-    end
+    expect(MyNumberItem.unit.to_s).to eql "kW"
+    expect(MyNumberItem.state_description.pattern).to eql "%s %unit%"
   end
 
   it "can format a number item" do

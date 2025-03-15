@@ -710,12 +710,10 @@ module OpenHAB
         def_persistence_methods(:minimum, quantify: true)
         def_persistence_methods(:updated?)
 
-        if OpenHAB::Core.version >= OpenHAB::Core::V4_0
-          def_persistence_methods(:get_all_states, quantify: true)
-          alias_method :all_states_since, :get_all_states_since
-          alias_method :all_states_until, :get_all_states_until if OpenHAB::Core.version >= OpenHAB::Core::V4_2
-          alias_method :all_states_between, :get_all_states_between
-        end
+        def_persistence_methods(:get_all_states, quantify: true)
+        alias_method :all_states_since, :get_all_states_since
+        alias_method :all_states_until, :get_all_states_until if OpenHAB::Core.version >= OpenHAB::Core::V4_2
+        alias_method :all_states_between, :get_all_states_between
 
         if OpenHAB::Core.version >= OpenHAB::Core::V4_2
           def_persistence_method(:persisted_state) # already quantified in core

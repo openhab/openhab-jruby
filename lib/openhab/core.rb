@@ -3,7 +3,7 @@
 module OpenHAB
   # Contains classes and modules that wrap actual openHAB objects
   module Core
-    # The openHAB Version. >= 3.4.0 is required.
+    # The openHAB Version. >= 4.0 is required.
     # @return [String]
     VERSION = org.openhab.core.OpenHAB.version.freeze
 

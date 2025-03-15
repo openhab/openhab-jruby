@@ -315,8 +315,7 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
     end
   end
 
-  # @deprecated OH3.4 - if context guard is only needed with OH3.4
-  context "with custom semantics", if: Semantics.respond_to?(:add) do
+  context "with custom semantics" do
     describe "#add" do
       it "works" do
         Semantics.add(SecretRoom: Semantics::Room)
@@ -491,11 +490,9 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
       expect(Semantics.tags).to include(Semantics::Light)
     end
 
-    if Semantics.respond_to?(:add) # @deprecated OH3.4 - if guard only needed with OH3.4
-      it "includes newly added tags" do
-        Semantics.add(TagsTest1: Semantics::Outdoor, TagsTest2: Semantics::Property)
-        expect(Semantics.tags).to include(Semantics::TagsTest2, Semantics::TagsTest2)
-      end
+    it "includes newly added tags" do
+      Semantics.add(TagsTest1: Semantics::Outdoor, TagsTest2: Semantics::Property)
+      expect(Semantics.tags).to include(Semantics::TagsTest2, Semantics::TagsTest2)
     end
   end
 
@@ -511,16 +508,13 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
       end
     end
 
-    # @deprecated OH3.4 -  guard can be removed in OH4
-    unless OpenHAB::Core.version < OpenHAB::Core::V4_0
-      it "has a synonyms attribute" do
-        expect(Semantics::LivingRoom.synonyms).to include("Living Rooms")
-      end
+    it "has a synonyms attribute" do
+      expect(Semantics::LivingRoom.synonyms).to include("Living Rooms")
+    end
 
-      it "has a description attribute" do
-        Semantics.add(TestDescAttr: Semantics::Room, description: "Test Description Attribute")
-        expect(Semantics::TestDescAttr.description).to eq "Test Description Attribute"
-      end
+    it "has a description attribute" do
+      Semantics.add(TestDescAttr: Semantics::Room, description: "Test Description Attribute")
+      expect(Semantics::TestDescAttr.description).to eq "Test Description Attribute"
     end
   end
 end
