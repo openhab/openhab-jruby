@@ -176,34 +176,6 @@ module OpenHAB
 
           provider.remove(link_to_delete.uid)
         end
-
-        # @deprecated OH3.4 this whole section is not needed in OH4+. Also see Thing#config_eql?
-        if Core.version < Core::V4_0
-          # @!visibility private
-          module ChannelComparable
-            # @!visibility private
-            # This is only needed in OH3 because it is implemented in OH4 core
-            def ==(other)
-              return true if equal?(other)
-              return false unless other.is_a?(Channel)
-
-              %i[class
-                 uid
-                 label
-                 description
-                 kind
-                 channel_type_uid
-                 configuration
-                 properties
-                 default_tags
-                 auto_update_policy
-                 accepted_item_type].all? do |attr|
-                send(attr) == other.send(attr)
-              end
-            end
-          end
-          org.openhab.core.thing.binding.builder.ChannelBuilder.const_get(:ChannelImpl).prepend(ChannelComparable)
-        end
       end
     end
   end

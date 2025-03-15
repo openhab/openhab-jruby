@@ -60,12 +60,7 @@ module OpenHAB
         # @return [ZonedDateTime]
 
         # @!visibility private
-        def to_instant(_context = nil)
-          # @deprecated OH 3.4 getInstant() was added in OH 4.0
-          return get_instant if respond_to?(:get_instant)
-
-          zoned_date_time.to_instant
-        end
+        alias_method :to_instant, :get_instant
 
         # @!method to_instant
         # @return [Instant]

@@ -573,9 +573,6 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
   end
 
   it "can add an input" do
-    # @deprecated OH 3.4
-    skip unless OpenHAB::Core.version >= OpenHAB::Core::V4_0
-
     sitemaps.build do
       sitemap "default" do
         input label: "My Input"

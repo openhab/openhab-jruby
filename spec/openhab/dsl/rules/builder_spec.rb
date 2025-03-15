@@ -365,20 +365,17 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
                              from: 4,
                              to: proc { true })
 
-        # @deprecated OH3.4 the context wrapper is needed for OH3
-        context "with openHAB >= 4.0.0", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
-          it "reports the triggering group" do
-            triggering_group = nil
-            Switch1.update(ON)
+        it "reports the triggering group" do
+          triggering_group = nil
+          Switch1.update(ON)
 
-            rule do
-              changed Switches.members
-              run { |event| triggering_group = event.group }
-            end
-
-            Switch1.update(OFF)
-            expect(triggering_group).to eql Switches
+          rule do
+            changed Switches.members
+            run { |event| triggering_group = event.group }
           end
+
+          Switch1.update(OFF)
+          expect(triggering_group).to eql Switches
         end
 
         describe "duration" do
@@ -445,21 +442,18 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
             expect(triggered_item).to be_nil
           end
 
-          # @deprecated OH3.4 the if guard for OH3
-          context "with openHAB >= 4.0.0", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
-            it "reports the triggering group" do
-              triggering_group = nil
-              Switch1.update(ON)
+          it "reports the triggering group" do
+            triggering_group = nil
+            Switch1.update(ON)
 
-              rule do
-                changed Switches.members, for: 0.5.seconds
-                run { |event| triggering_group = event.group }
-              end
-
-              Switch1.update(OFF)
-              time_travel_and_execute_timers(1.second)
-              expect(triggering_group).to eql Switches
+            rule do
+              changed Switches.members, for: 0.5.seconds
+              run { |event| triggering_group = event.group }
             end
+
+            Switch1.update(OFF)
+            time_travel_and_execute_timers(1.second)
+            expect(triggering_group).to eql Switches
           end
 
           context "without to state" do
@@ -782,7 +776,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         expect(linked_thing).to be things["astro:sun:home"]
       end
 
-      context "with filtering", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
+      context "with filtering" do
         it "filters by item" do
           linked_item = linked_thing = nil
           channel_linked(item: "StringItem1") do |event|
@@ -891,18 +885,15 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         Alarm_Mode << 10
       end
 
-      # @deprecated OH3.4 the if guard for OH3
-      context "with openHAB >= 4.0.0", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
-        it "reports the triggering group" do
-          triggering_group = nil
-          rule do
-            received_command AlarmModes.members
-            run { |event| triggering_group = event.group }
-          end
-
-          Alarm_Mode.command(1)
-          expect(triggering_group).to eql AlarmModes
+      it "reports the triggering group" do
+        triggering_group = nil
+        rule do
+          received_command AlarmModes.members
+          run { |event| triggering_group = event.group }
         end
+
+        Alarm_Mode.command(1)
+        expect(triggering_group).to eql AlarmModes
       end
     end
 
@@ -931,7 +922,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         expect(new_item.name).to eql "Item1"
       end
 
-      it "supports pattern filter", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
+      it "supports pattern filter" do
         new_item = nil
         item_added("Item1") do |event|
           new_item = event.item
@@ -959,7 +950,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         expect(removed_item.name).to eql "Item1"
       end
 
-      it "supports pattern filter", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
+      it "supports pattern filter" do
         removed_item = nil
         item_removed("Item1") do |event|
           removed_item = event.item
@@ -988,7 +979,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         expect(new_thing.uid).to eql "astro:sun:home"
       end
 
-      it "supports pattern filter", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
+      it "supports pattern filter" do
         new_thing = nil
         thing_added("astro:sun:home") do |event|
           new_thing = event.thing
@@ -1016,7 +1007,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         expect(removed_thing.uid).to eql "astro:sun:home"
       end
 
-      it "supports pattern filter", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
+      it "supports pattern filter" do
         removed_thing = nil
         thing_removed("astro:sun:home") do |event|
           removed_thing = event.thing
@@ -1158,18 +1149,15 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           expect(items).to eql [Alarm_Mode, Alarm_Mode]
         end
 
-        # @deprecated OH3.4 the if guard for OH3
-        context "with openHAB >= 4.0.0", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
-          it "reports the triggering group" do
-            triggering_group = nil
-            rule do
-              updated AlarmModes.members
-              run { |event| triggering_group = event.group }
-            end
-
-            Alarm_Mode.update(1)
-            expect(triggering_group).to eql AlarmModes
+        it "reports the triggering group" do
+          triggering_group = nil
+          rule do
+            updated AlarmModes.members
+            run { |event| triggering_group = event.group }
           end
+
+          Alarm_Mode.update(1)
+          expect(triggering_group).to eql AlarmModes
         end
 
         it "triggers when updated to a range of values" do
@@ -1401,7 +1389,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           end
         end
 
-        it "supports attachments", if: OpenHAB::Core.version >= OpenHAB::Core::V4_0 do
+        it "supports attachments" do
           triggered = nil
           every(:day, id: "dynamic_at_rule", at: item, attach: 1) { |event| triggered = event.attachment }
 
@@ -1513,16 +1501,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
 
           logger.trace("Creating directory: #{created_subdir}")
 
-          # We need to create the dir one by one instead of using FileUtils.mkdir_p.
-          # OH3 will only watch the first level subdir otherwise
-          # see https://github.com/openhab/openhab-core/pull/3435
-          # @deprecated OH3.4 - on OH4 this can be replaced with `FileUtils.mkdir_p(created_subdir)`
-          created_subdir.descend do |dir|
-            next if dir.directory?
-
-            FileUtils.mkdir(dir)
-            sleep 0.1 # @deprecated OH3.4 let OH3's thread run so it can add this directory
-          end
+          FileUtils.mkdir_p(created_subdir)
           expect(filename.dirname).to be_directory
           logger.trace("Directory created: #{created_subdir}")
         else
@@ -1645,13 +1624,9 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           test_it(test_file, check: %i[modified created], watch_args: [@temp_dir, { for: %i[modified created] }])
         end
 
-        # @deprecated OH3.4 remove this wrapper
-        if OpenHAB::Core.version >= OpenHAB::Core::V4_0
-          # do not remove this test in OH4
-          it "uses the built in configWatcher to monitor inside openHAB config folder" do
-            expect(OpenHAB::DSL::Rules::Triggers::WatchHandler.factory).not_to receive(:create_watch_service)
-            test_it(config_folder / "scripts" / test_file, watch_args: [config_folder / "scripts"])
-          end
+        it "uses the built in configWatcher to monitor inside openHAB config folder" do
+          expect(OpenHAB::DSL::Rules::Triggers::WatchHandler.factory).not_to receive(:create_watch_service)
+          test_it(config_folder / "scripts" / test_file, watch_args: [config_folder / "scripts"])
         end
 
         it "doesn't monitor changes inside subdirectories" do

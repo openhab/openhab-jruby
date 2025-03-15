@@ -1402,11 +1402,6 @@ module OpenHAB
           @ruby_triggers << [:every, value, { at: }]
 
           if value == :day && at.is_a?(Item)
-            # @deprecated OH 3.4 - attachments are supported in OH 4.0+
-            if Core.version <= Core::V4_0 && !attach.nil?
-              raise ArgumentError, "Attachments are not supported with dynamic datetime triggers in openHAB 3.x"
-            end
-
             offset ||= 0
             offset = offset.to_i # Duration#to_i converts it to seconds, but we also want to convert float/string to int
             @ruby_triggers.last[2][:offset] = offset
@@ -1786,12 +1781,7 @@ module OpenHAB
         #
         def event(topic, source: nil, types: nil, attach: nil)
           types = types.join(",") if types.is_a?(Enumerable)
-          # @deprecated OH3.4 - OH3 config uses eventXXX vs OH4 uses `topic`, `source`, and `types`
-          # See https://github.com/openhab/openhab-core/pull/3299
           trigger("core.GenericEventTrigger",
-                  eventTopic: topic,
-                  eventSource: source,
-                  eventTypes: types, # @deprecated OH3.4
                   topic:,
                   source:,
                   types:,

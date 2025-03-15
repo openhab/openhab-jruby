@@ -61,11 +61,8 @@ module OpenHAB
       # and {#property_type}. They can even be used with
       # {DSL::Items::ItemBuilder#tag}.
       #
-      # In openHAB 4.0, all of the tag objects implement {SemanticTag}.
+      # All of the tag objects implement {SemanticTag}.
       #
-      # In openHAB 3.4, the constants in the {Semantics} module are enhanced with {TagClassMethods}
-      # to provide easy access to the tags' additional attributes: {TagClassMethods#label label},
-      # {TagClassMethods#synonyms synonyms}, and {TagClassMethods#description description}.
       # For example, to get the synonyms for `Semantics::Lightbulb` in German:
       # `Semantics::Lightbulb.synonyms(java.util.Locale::GERMAN)`
       #
@@ -198,17 +195,7 @@ module OpenHAB
           # @return [Array<SemanticTag>] an array containing all the Semantic tags
           #
           def tags
-            # @deprecated OH3.4 missing registry
-            if Provider.registry
-              Provider.registry.all.to_a
-            else
-              java.util.stream.Stream.of(
-                org.openhab.core.semantics.model.point.Points.stream,
-                org.openhab.core.semantics.model.property.Properties.stream,
-                org.openhab.core.semantics.model.equipment.Equipments.stream,
-                org.openhab.core.semantics.model.location.Locations.stream
-              ).flat_map(&:itself).map(&:ruby_class).iterator.to_a
-            end
+            Provider.registry.all.to_a
           end
 
           #
@@ -217,35 +204,18 @@ module OpenHAB
           # @param [String,Symbol] id The tag name, label, or synonym to look up
           # @param [java.util.Locale] locale The locale of the given label or synonym
           #
-          # @return [SemanticTag, Module, nil] The semantic tag class if found, or nil if not found.
-          #   In openHAB 4.0, a SemanticTag instance will be returned. In openHAB 3.4, it will be
-          #   a Module.
+          # @return [SemanticTag, nil] The semantic tag class if found, or nil if not found.
           #
           def lookup(id, locale = java.util.Locale.default)
             id = id.to_s
 
-            # @deprecated OH3.4 - the Property tag had an ID of "MeasurementProperty" in OH3.4.
-            # This was corrected in OH4.
-            id = "MeasurementProperty" if id == "Property" && Core.version < Core::V4_0
+            tag = service.get_by_label_or_synonym(id, locale)
+            tag = nil if tag&.empty?
+            tag_class = tag&.first ||
+                        Provider.registry.get_tag_class_by_id(id)
+            return unless tag_class
 
-            # @deprecated OH3.4 missing registry
-            if Provider.registry
-              tag = service.get_by_label_or_synonym(id, locale)
-              tag = nil if tag&.empty?
-              tag_class = tag&.first ||
-                          Provider.registry.get_tag_class_by_id(id)
-              return unless tag_class
-
-              Provider.registry.get(Provider.registry.class.build_id(tag_class))
-            else
-              tag = org.openhab.core.semantics.SemanticTags.get_by_label_or_synonym(id, locale).first ||
-                    org.openhab.core.semantics.SemanticTags.get_by_id(id)
-              return unless tag
-
-              tag = tag.ruby_class
-              tag.singleton_class.include(TagClassMethods)
-              tag
-            end
+            Provider.registry.get(Provider.registry.class.build_id(tag_class))
           end
 
           #
@@ -256,118 +226,111 @@ module OpenHAB
             logger.trace { "const missing, performing Semantics Lookup for: #{sym}" }
             lookup(sym)&.tap { |tag| const_set(sym, tag) } || super
           end
-        end
 
-        # @deprecated OH3.4 cannot add a tag
-        # this not in the class << self block above because YARD doesn't figure out
-        # it's a class method with the conditional
-        if Provider.registry
-          class << self
-            #
-            # Adds custom semantic tags.
-            #
-            # @since openHAB 4.0
-            # @return [Array<SemanticTag>] An array of tags successfully added.
-            #
-            # @overload add(**tags)
-            #   Quickly add one or more semantic tags using the default label, empty synonyms and descriptions.
-            #
-            #   @param [kwargs] **tags Pairs of `tag` => `parent` where tag is either a `Symbol` or a `String`
-            #     for the tag to be added, and parent is either a {SemanticTag}, a `Symbol` or a `String` of an
-            #     existing tag.
-            #   @return [Array<SemanticTag>] An array of tags successfully added.
-            #
-            #   @example Add one semantic tag `Balcony` whose parent is `Semantics::Outdoor` (Location)
-            #     Semantics.add(Balcony: Semantics::Outdoor)
-            #
-            #   @example Add multiple semantic tags
-            #     Semantics.add(Balcony: Semantics::Outdoor,
-            #                   SecretRoom: Semantics::Room,
-            #                   Motion: Semantics::Property)
-            #
-            # @overload add(label: nil, synonyms: "", description: "", **tags)
-            #   Add a custom semantic tag with extra details.
-            #
-            #   @example
-            #     Semantics.add(SecretRoom: Semantics::Room, label: "My Secret Room",
-            #       synonyms: "HidingPlace", description: "A room that requires a special trick to enter")
-            #
-            #   @param [String,nil] label Optional label. When `nil`, infer the label from the tag name,
-            #     converting `CamelCase` to `Camel Case`
-            #   @param [String,Symbol,Array<String,Symbol>] synonyms Additional synonyms to refer to this tag.
-            #   @param [String] description A longer description of the tag.
-            #   @param [kwargs] **tags Exactly one pair of `tag` => `parent` where tag is either a `Symbol` or a
-            #     `String` for the tag to be added, and parent is either a {SemanticTag}, a `Symbol` or a
-            #     `String` of an existing tag.
-            #   @return [Array<SemanticTag>] An array of tags successfully added.
-            #
-            def add(label: nil, synonyms: "", description: "", **tags)
-              raise ArgumentError, "Tags must be specified" if tags.empty?
-              if (tags.length > 1) && !(label.nil? && synonyms.empty? && description.empty?)
-                raise ArgumentError, "Additional options can only be specified when creating one tag"
-              end
-
-              synonyms = Array.wrap(synonyms).map { |s| s.to_s.strip }
-
-              tags.filter_map do |name, parent|
-                if (existing_tag = lookup(name))
-                  logger.warn("Tag already exists: #{existing_tag.inspect}")
-                  next
-                end
-
-                unless parent.is_a?(SemanticTag)
-                  parent_tag = lookup(parent)
-                  raise ArgumentError, "Unknown parent: #{parent}" unless parent_tag
-
-                  parent = parent_tag
-                end
-
-                new_tag = org.openhab.core.semantics.SemanticTagImpl.new("#{parent.uid}_#{name}",
-                                                                         label,
-                                                                         description,
-                                                                         synonyms)
-                Provider.instance.add(new_tag)
-                lookup(name)
-              end
+          #
+          # Adds custom semantic tags.
+          #
+          # @since openHAB 4.0
+          # @return [Array<SemanticTag>] An array of tags successfully added.
+          #
+          # @overload add(**tags)
+          #   Quickly add one or more semantic tags using the default label, empty synonyms and descriptions.
+          #
+          #   @param [kwargs] **tags Pairs of `tag` => `parent` where tag is either a `Symbol` or a `String`
+          #     for the tag to be added, and parent is either a {SemanticTag}, a `Symbol` or a `String` of an
+          #     existing tag.
+          #   @return [Array<SemanticTag>] An array of tags successfully added.
+          #
+          #   @example Add one semantic tag `Balcony` whose parent is `Semantics::Outdoor` (Location)
+          #     Semantics.add(Balcony: Semantics::Outdoor)
+          #
+          #   @example Add multiple semantic tags
+          #     Semantics.add(Balcony: Semantics::Outdoor,
+          #                   SecretRoom: Semantics::Room,
+          #                   Motion: Semantics::Property)
+          #
+          # @overload add(label: nil, synonyms: "", description: "", **tags)
+          #   Add a custom semantic tag with extra details.
+          #
+          #   @example
+          #     Semantics.add(SecretRoom: Semantics::Room, label: "My Secret Room",
+          #       synonyms: "HidingPlace", description: "A room that requires a special trick to enter")
+          #
+          #   @param [String,nil] label Optional label. When `nil`, infer the label from the tag name,
+          #     converting `CamelCase` to `Camel Case`
+          #   @param [String,Symbol,Array<String,Symbol>] synonyms Additional synonyms to refer to this tag.
+          #   @param [String] description A longer description of the tag.
+          #   @param [kwargs] **tags Exactly one pair of `tag` => `parent` where tag is either a `Symbol` or a
+          #     `String` for the tag to be added, and parent is either a {SemanticTag}, a `Symbol` or a
+          #     `String` of an existing tag.
+          #   @return [Array<SemanticTag>] An array of tags successfully added.
+          #
+          def add(label: nil, synonyms: "", description: "", **tags)
+            raise ArgumentError, "Tags must be specified" if tags.empty?
+            if (tags.length > 1) && !(label.nil? && synonyms.empty? && description.empty?)
+              raise ArgumentError, "Additional options can only be specified when creating one tag"
             end
 
-            #
-            # Removes custom semantic tags.
-            #
-            # @param [SemanticTag, String, Symbol] tags Custom Semantic Tags to remove.
-            #   The built in Semantic Tags cannot be removed.
-            # @param [true, false] recursive Remove all children of the given tags.
-            #
-            # @return [Array<SemanticTag>] An array of tags successfully removed.
-            # @raise [ArgumentError] if any of the tags have children
-            # @raise [FrozenError] if any of the tags are not custom tags
-            #
-            # @since openHAB 4.0
-            #
-            def remove(*tags, recursive: false)
-              tags.flat_map do |tag|
-                tag = lookup(tag) unless tag.is_a?(SemanticTag)
-                next unless tag
+            synonyms = Array.wrap(synonyms).map { |s| s.to_s.strip }
 
-                provider = Provider.registry.provider_for(tag)
-                unless provider.is_a?(ManagedProvider)
-                  raise FrozenError, "Cannot remove item #{tag} from non-managed provider #{provider.inspect}"
-                end
+            tags.filter_map do |name, parent|
+              if (existing_tag = lookup(name))
+                logger.warn("Tag already exists: #{existing_tag.inspect}")
+                next
+              end
 
-                children = []
-                Provider.registry.providers.grep(ManagedProvider).each do |managed_provider|
-                  managed_provider.all.each do |existing_tag|
-                    next unless existing_tag.parent_uid == tag.uid
-                    raise ArgumentError, "Cannot remove #{tag} because it has children" unless recursive
+              unless parent.is_a?(SemanticTag)
+                parent_tag = lookup(parent)
+                raise ArgumentError, "Unknown parent: #{parent}" unless parent_tag
 
-                    children += remove(existing_tag, recursive:)
-                  end
-                end
+                parent = parent_tag
+              end
 
-                remove_const(tag.name) if provider.remove(tag.uid) && const_defined?(tag.name)
-                [tag] + children
-              end.compact
+              new_tag = org.openhab.core.semantics.SemanticTagImpl.new("#{parent.uid}_#{name}",
+                                                                       label,
+                                                                       description,
+                                                                       synonyms)
+              Provider.instance.add(new_tag)
+              lookup(name)
             end
+          end
+
+          #
+          # Removes custom semantic tags.
+          #
+          # @param [SemanticTag, String, Symbol] tags Custom Semantic Tags to remove.
+          #   The built in Semantic Tags cannot be removed.
+          # @param [true, false] recursive Remove all children of the given tags.
+          #
+          # @return [Array<SemanticTag>] An array of tags successfully removed.
+          # @raise [ArgumentError] if any of the tags have children
+          # @raise [FrozenError] if any of the tags are not custom tags
+          #
+          # @since openHAB 4.0
+          #
+          def remove(*tags, recursive: false)
+            tags.flat_map do |tag|
+              tag = lookup(tag) unless tag.is_a?(SemanticTag)
+              next unless tag
+
+              provider = Provider.registry.provider_for(tag)
+              unless provider.is_a?(ManagedProvider)
+                raise FrozenError, "Cannot remove item #{tag} from non-managed provider #{provider.inspect}"
+              end
+
+              children = []
+              Provider.registry.providers.grep(ManagedProvider).each do |managed_provider|
+                managed_provider.all.each do |existing_tag|
+                  next unless existing_tag.parent_uid == tag.uid
+                  raise ArgumentError, "Cannot remove #{tag} because it has children" unless recursive
+
+                  children += remove(existing_tag, recursive:)
+                end
+              end
+
+              remove_const(tag.name) if provider.remove(tag.uid) && const_defined?(tag.name)
+              [tag] + children
+            end.compact
           end
         end
 

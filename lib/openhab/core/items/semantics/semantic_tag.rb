@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# @deprecated OH3.4
-return unless OpenHAB::Core::Items::Semantics::Provider.registry
-
 module OpenHAB
   module Core
     module Items

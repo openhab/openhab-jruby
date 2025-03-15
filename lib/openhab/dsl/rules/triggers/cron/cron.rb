@@ -12,13 +12,7 @@ module OpenHAB
         #
         class Cron < Trigger
           # Trigger ID for Cron Triggers
-          # @deprecated OH 3.4
-          CRON_TRIGGER_MODULE_ID = if OpenHAB::Core.version >= OpenHAB::Core::V4_0
-                                     "timer.GenericCronTrigger"
-                                   else
-                                     # @deprecated OH3.4 We need to use a custom CronTrigger handler
-                                     "jsr223.jruby.CronTrigger"
-                                   end
+          CRON_TRIGGER_MODULE_ID = "timer.GenericCronTrigger"
 
           #
           # Returns a default map for cron expressions that fires every second
@@ -239,10 +233,6 @@ module OpenHAB
           #
           #
           def trigger(config:, attach:)
-            # @deprecated OH3.4 needs a custom CronTriggerHandlerFactory
-            if OpenHAB::Core.version < OpenHAB::Core::V4_0
-              CronHandler::CronTriggerHandlerFactory.instance # ensure it's registered
-            end
             append_trigger(type: CRON_TRIGGER_MODULE_ID, config:, attach:)
           end
         end

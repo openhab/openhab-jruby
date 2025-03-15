@@ -216,9 +216,6 @@ module OpenHAB
         attr_accessor :dimension
         # Unit (for number items only)
         #
-        # Due to {format} inference, setting the unit is cross-compatible with
-        # openHAB 3.4 and 4.0.
-        #
         # @return [String, nil]
         attr_reader :unit
         # The formatting pattern for the item's state
@@ -294,15 +291,10 @@ module OpenHAB
           #
           # @!visibility private
           def normalize_tags(*tags)
-            # @deprecated OH3.4 didn't have SemanticTag
-            old_semantics = proc { |tag| tag.is_a?(Module) && tag < Semantics::Tag }
-            # @deprecated OH3.4 defined? check is unnecessary
-            semantics = proc { |tag| defined?(Semantics::SemanticTag) && tag.is_a?(Semantics::SemanticTag) }
-
             tags.compact.map do |tag|
               case tag
               when String then tag
-              when Symbol, semantics, old_semantics then tag.to_s
+              when Symbol, Semantics::SemanticTag then tag.to_s
               else raise ArgumentError, "`#{tag}` must be a subclass of Semantics::Tag, a `Symbol`, or a `String`."
               end
             end
