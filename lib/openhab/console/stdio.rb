@@ -11,7 +11,7 @@ module OpenHAB
 
       def initialize(terminal)
         @terminal = terminal
-        @external_encoding = Encoding.find(@terminal.encoding.to_s)
+        @external_encoding = Encoding.find(@terminal.encoding.name)
       end
 
       def set_encoding(_external, internal = nil, _options = {})
@@ -38,9 +38,6 @@ module OpenHAB
         super
 
         @byte_stream = terminal.input
-        @byte_stream.class.field_reader :readBuffer
-        @wait_method = @byte_stream.java_class.get_declared_method("wait", java.nio.ByteBuffer, Java::long)
-        @wait_method.accessible = true
         @buffer = StringIO.new.set_encoding(external_encoding)
       end
 
@@ -98,7 +95,7 @@ module OpenHAB
             break
           end
 
-          if c == "\x04" && result.empty?
+          if c == "\x04" && result.empty? # ^D
             return nil
           elsif c == "\x7f"
             result.slice(0...-1)
@@ -135,15 +132,14 @@ module OpenHAB
       alias_method :read_nonblock, :readpartial
 
       def wait_readable(timeout = nil)
-        @byte_stream.synchronized do
-          return true if @byte_stream.readBuffer.has_remaining?
+        return true if (@buffer.size - @buffer.tell).positive?
 
-          timeout = timeout ? 0 : timeout * 1000
-          r = @wait_method.invoke(@byte_stream, @byte_stream.readBuffer, timeout)
-          return nil if r.negative?
+        timeout = timeout ? 0 : timeout * 1000
+        char = @byte_stream.read(timeout)
+        return nil if char.negative? # timeout
 
-          self
-        end
+        ungetc(char.chr(external_encoding))
+        self
       end
 
       def raw(*)
