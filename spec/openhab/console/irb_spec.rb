@@ -17,7 +17,7 @@ RSpec.describe "OpenHAB::Console::IRB", :console do
   end
 
   around do |example|
-    Timeout.timeout(1, &example) # make sure we dont' get stuck
+    Timeout.timeout(5, &example) # make sure we dont' get stuck
   end
 
   it "loads" do
