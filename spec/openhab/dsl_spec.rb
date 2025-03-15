@@ -104,8 +104,7 @@ RSpec.describe OpenHAB::DSL do
       SeasonColor << "0,100,100"
     end
 
-    # @deprecated OH 4 guard needed prior to OH 4.1
-    context "with time series", if: OpenHAB::Core.version >= OpenHAB::Core::V4_1 do
+    context "with time series" do
       it "supports sending a time series" do
         profile :send_as_time_series do |event, callback:, command:|
           next unless event == :command_from_item

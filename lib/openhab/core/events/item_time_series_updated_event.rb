@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# @deprecated OH4.0 guard not needed in OH 4.1
-return unless OpenHAB::Core.version >= OpenHAB::Core::V4_1
-
 module OpenHAB
   module Core
     module Events

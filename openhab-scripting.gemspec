@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "JRuby Helper Libraries for openHAB Scripting"
   spec.homepage      = "https://openhab.github.io/openhab-jruby/"
-  spec.required_ruby_version = Gem::Requirement.new(">= 3.1.0")
+  spec.required_ruby_version = Gem::Requirement.new(">= 3.1.4")
 
   spec.metadata = {
     "homepage_uri" => spec.homepage,
