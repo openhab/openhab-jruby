@@ -5136,7 +5136,7 @@ converting <code>CamelCase</code> to <code>Camel Case</code></p>
 
   synonyms = <span class="constant">Array</span>.wrap(synonyms).map { |s| s.to_s.strip }
 
-  tags.map <span class="keyword">do</span> |name, parent|
+  tags.filter_map <span class="keyword">do</span> |name, parent|
     <span class="keyword">if</span> (existing_tag = lookup(name))
       logger.warn(<span class="string"><span class="delimiter">&quot;</span><span class="content">Tag already exists: </span><span class="inline"><span class="inline-delimiter">#{</span>existing_tag.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
       <span class="keyword">next</span>
@@ -5155,7 +5155,7 @@ converting <code>CamelCase</code> to <code>Camel Case</code></p>
                                                              synonyms)
     <span class="constant">Provider</span>.instance.add(new_tag)
     lookup(name)
-  <span class="keyword">end</span>.compact
+  <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -5471,7 +5471,7 @@ The built in Semantic Tags cannot be removed.</p>
         <span class="keyword">next</span> <span class="keyword">unless</span> existing_tag.parent_uid == tag.uid
         raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot remove </span><span class="inline"><span class="inline-delimiter">#{</span>tag<span class="inline-delimiter">}</span></span><span class="content"> because it has children</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> recursive
 
-        children += remove(existing_tag, <span class="key">recursive</span>: recursive)
+        children += remove(existing_tag, <span class="key">recursive</span>:)
       <span class="keyword">end</span>
     <span class="keyword">end</span>
 
@@ -5914,7 +5914,7 @@ So if you search for [Control], you'll get items tagged with [Switch].</p>
 </div>
 
         <footer>
-  Generated on Fri Mar 14 14:58:57 2025 by
+  Generated on Sat Mar 15 01:45:07 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

@@ -3648,7 +3648,7 @@ the lookup method</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#each-instance_method" title="#each (instance method)">#<strong>each</strong>(&amp;block)  &#x21d2; Object </a>
+      <a href="#each-instance_method" title="#each (instance method)">#<strong>each</strong>  &#x21d2; Object </a>
     
 
     
@@ -3671,7 +3671,7 @@ the lookup method</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#method_missing-instance_method" title="#method_missing (instance method)">#<strong>method_missing</strong>(method, *args, &amp;block)  &#x21d2; Object </a>
+      <a href="#method_missing-instance_method" title="#method_missing (instance method)">#<strong>method_missing</strong>(method)  &#x21d2; Object </a>
     
 
     
@@ -3739,7 +3739,7 @@ the lookup method</p>
     <div class="method_details first">
   <h3 class="signature first" id="method_missing-instance_method">
   
-    #<strong>method_missing</strong>(method, *args, &amp;block)  &#x21d2; <tt><span class='object_link'>Object</span></tt> 
+    #<strong>method_missing</strong>(method)  &#x21d2; <tt><span class='object_link'>Object</span></tt> 
   
 
   
@@ -3770,8 +3770,8 @@ the lookup method</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/lazy_array.rb', line 38</span>
 
-<span class="keyword">def</span> <span class="function">method_missing</span>(method, *args, &amp;block)
-  <span class="keyword">return</span> to_a.send(method, *args, &amp;block) <span class="keyword">if</span> method[<span class="integer">-1</span>] != <span class="string"><span class="delimiter">&quot;</span><span class="content">!</span><span class="delimiter">&quot;</span></span> &amp;&amp; <span class="constant">Array</span>.instance_methods.include?(method)
+<span class="keyword">def</span> <span class="function">method_missing</span>(method, ...)
+  <span class="keyword">return</span> to_a.send(method, ...) <span class="keyword">if</span> method[<span class="integer">-1</span>] != <span class="string"><span class="delimiter">&quot;</span><span class="content">!</span><span class="delimiter">&quot;</span></span> &amp;&amp; <span class="constant">Array</span>.instance_methods.include?(method)
 
   <span class="keyword">super</span>
 <span class="keyword">end</span></pre>
@@ -3790,7 +3790,7 @@ the lookup method</p>
       <div class="method_details first">
   <h3 class="signature first" id="each-instance_method">
   
-    #<strong>each</strong>(&amp;block)  &#x21d2; <tt><span class='object_link'>Object</span></tt> 
+    #<strong>each</strong>  &#x21d2; <tt><span class='object_link'>Object</span></tt> 
   
 
   
@@ -3822,8 +3822,8 @@ parameter. Returns self.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/lazy_array.rb', line 24</span>
 
-<span class="keyword">def</span> <span class="function">each</span>(&amp;block)
-  to_a.each(&amp;block)
+<span class="keyword">def</span> <span class="function">each</span>(&amp;)
+  to_a.each(&amp;)
   <span class="predefined-constant">self</span>
 <span class="keyword">end</span></pre>
     </td>
@@ -3889,7 +3889,7 @@ parameter. Returns self.</p>
 </div>
 
         <footer>
-  Generated on Fri Mar 14 14:58:56 2025 by
+  Generated on Sat Mar 15 01:45:06 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

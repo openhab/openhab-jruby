@@ -3756,7 +3756,7 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#compute_if_absent-instance_method" title="#compute_if_absent (instance method)">#<strong>compute_if_absent</strong>(key, &amp;block)  &#x21d2; Object </a>
+      <a href="#compute_if_absent-instance_method" title="#compute_if_absent (instance method)">#<strong>compute_if_absent</strong>(key)  &#x21d2; Object </a>
     
 
     
@@ -4141,7 +4141,7 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <div class="method_details ">
   <h3 class="signature " id="compute_if_absent-instance_method">
   
-    #<strong>compute_if_absent</strong>(key, &amp;block)  &#x21d2; <tt><span class='object_link'>Object</span></tt> 
+    #<strong>compute_if_absent</strong>(key)  &#x21d2; <tt><span class='object_link'>Object</span></tt> 
   
 
   
@@ -4219,8 +4219,8 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 60</span>
 
-<span class="keyword">def</span> <span class="function">compute_if_absent</span>(key, &amp;block)
-  get(key.to_s, &amp;block)
+<span class="keyword">def</span> <span class="function">compute_if_absent</span>(key, &amp;)
+  get(key.to_s, &amp;)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4411,7 +4411,7 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <span class="keyword">end</span>
     <span class="keyword">else</span>
       get(key) <span class="keyword">do</span>
-        raise <span class="constant">KeyError</span>.new(<span class="string"><span class="delimiter">&quot;</span><span class="content">key not found: </span><span class="inline"><span class="inline-delimiter">#{</span>key.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>, <span class="key">key</span>: key)
+        raise <span class="constant">KeyError</span>.new(<span class="string"><span class="delimiter">&quot;</span><span class="content">key not found: </span><span class="inline"><span class="inline-delimiter">#{</span>key.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>, <span class="key">key</span>:)
       <span class="keyword">end</span>
     <span class="keyword">end</span>
   <span class="keyword">else</span>
@@ -4787,7 +4787,7 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
 </div>
 
         <footer>
-  Generated on Fri Mar 14 14:58:56 2025 by
+  Generated on Sat Mar 15 01:45:06 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

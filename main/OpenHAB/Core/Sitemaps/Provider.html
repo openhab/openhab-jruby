@@ -3932,7 +3932,7 @@ sitemaps.build <span class="keyword">do</span> |builder|
 
 <span class="keyword">def</span> <span class="function">build</span>(<span class="key">update</span>: <span class="predefined-constant">true</span>, &amp;block)
   builder_proxy = <span class="constant">SimpleDelegator</span>.new(<span class="predefined-constant">nil</span>) <span class="keyword">if</span> block.arity == <span class="integer">1</span>
-  builder = <span class="constant">DSL</span>::<span class="constant">Sitemaps</span>::<span class="constant">Builder</span>.new(<span class="predefined-constant">self</span>, builder_proxy, <span class="key">update</span>: update)
+  builder = <span class="constant">DSL</span>::<span class="constant">Sitemaps</span>::<span class="constant">Builder</span>.new(<span class="predefined-constant">self</span>, builder_proxy, <span class="key">update</span>:)
   <span class="keyword">if</span> block.arity == <span class="integer">1</span>
     builder_proxy.__setobj__(builder)
     <span class="constant">DSL</span>::<span class="constant">ThreadLocal</span>.thread_local(<span class="key">openhab_create_dummy_items</span>: <span class="predefined-constant">true</span>) <span class="keyword">do</span>
@@ -4095,7 +4095,7 @@ sitemaps.build <span class="keyword">do</span> |builder|
 </div>
 
         <footer>
-  Generated on Fri Mar 14 14:59:05 2025 by
+  Generated on Sat Mar 15 01:45:15 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

@@ -4012,7 +4012,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
   <span class="keyword">def</span> <span class="function">update_from_file</span>(file, <span class="key">mime_type</span>: <span class="predefined-constant">nil</span>)
     file_data = <span class="constant">File</span>.binread(file)
     mime_type ||= <span class="constant">Marcel</span>::<span class="constant">MimeType</span>.for(<span class="constant">Pathname</span>.new(file)) || <span class="constant">Marcel</span>::<span class="constant">MimeType</span>.for(file_data)
-    update_from_bytes(file_data, <span class="key">mime_type</span>: mime_type)
+    update_from_bytes(file_data, <span class="key">mime_type</span>:)
   <span class="keyword">end</span>
 
   <span class="comment">#</span>
@@ -4026,8 +4026,8 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
     response = <span class="constant">Net</span>::<span class="constant">HTTP</span>.get_response(URI(uri))
     mime_type = response[<span class="string"><span class="delimiter">&quot;</span><span class="content">content-type</span><span class="delimiter">&quot;</span></span>]
     bytes = response.body
-    mime_type ||= detect_mime_from_bytes(<span class="key">bytes</span>: bytes)
-    update_from_bytes(bytes, <span class="key">mime_type</span>: mime_type)
+    mime_type ||= detect_mime_from_bytes(<span class="key">bytes</span>:)
+    update_from_bytes(bytes, <span class="key">mime_type</span>:)
   <span class="keyword">end</span>
 
   <span class="comment">#</span>
@@ -4038,8 +4038,8 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
   <span class="comment">#</span>
   <span class="comment">#</span>
   <span class="keyword">def</span> <span class="function">update_from_bytes</span>(bytes, <span class="key">mime_type</span>: <span class="predefined-constant">nil</span>)
-    mime_type ||= detect_mime_from_bytes(<span class="key">bytes</span>: bytes)
-    base_64_image = encode_image(<span class="key">mime_type</span>: mime_type, <span class="key">bytes</span>: bytes)
+    mime_type ||= detect_mime_from_bytes(<span class="key">bytes</span>:)
+    base_64_image = encode_image(<span class="key">mime_type</span>:, <span class="key">bytes</span>:)
     update(base_64_image)
   <span class="keyword">end</span>
 
@@ -4152,8 +4152,8 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/image_item.rb', line 73</span>
 
 <span class="keyword">def</span> <span class="function">update_from_bytes</span>(bytes, <span class="key">mime_type</span>: <span class="predefined-constant">nil</span>)
-  mime_type ||= detect_mime_from_bytes(<span class="key">bytes</span>: bytes)
-  base_64_image = encode_image(<span class="key">mime_type</span>: mime_type, <span class="key">bytes</span>: bytes)
+  mime_type ||= detect_mime_from_bytes(<span class="key">bytes</span>:)
+  base_64_image = encode_image(<span class="key">mime_type</span>:, <span class="key">bytes</span>:)
   update(base_64_image)
 <span class="keyword">end</span></pre>
     </td>
@@ -4234,7 +4234,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 <span class="keyword">def</span> <span class="function">update_from_file</span>(file, <span class="key">mime_type</span>: <span class="predefined-constant">nil</span>)
   file_data = <span class="constant">File</span>.binread(file)
   mime_type ||= <span class="constant">Marcel</span>::<span class="constant">MimeType</span>.for(<span class="constant">Pathname</span>.new(file)) || <span class="constant">Marcel</span>::<span class="constant">MimeType</span>.for(file_data)
-  update_from_bytes(file_data, <span class="key">mime_type</span>: mime_type)
+  update_from_bytes(file_data, <span class="key">mime_type</span>:)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4302,8 +4302,8 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
   response = <span class="constant">Net</span>::<span class="constant">HTTP</span>.get_response(URI(uri))
   mime_type = response[<span class="string"><span class="delimiter">&quot;</span><span class="content">content-type</span><span class="delimiter">&quot;</span></span>]
   bytes = response.body
-  mime_type ||= detect_mime_from_bytes(<span class="key">bytes</span>: bytes)
-  update_from_bytes(bytes, <span class="key">mime_type</span>: mime_type)
+  mime_type ||= detect_mime_from_bytes(<span class="key">bytes</span>:)
+  update_from_bytes(bytes, <span class="key">mime_type</span>:)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4315,7 +4315,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 </div>
 
         <footer>
-  Generated on Fri Mar 14 14:59:04 2025 by
+  Generated on Sat Mar 15 01:45:14 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

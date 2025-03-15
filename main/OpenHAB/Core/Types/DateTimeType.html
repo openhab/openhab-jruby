@@ -3826,7 +3826,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#method_missing-instance_method" title="#method_missing (instance method)">#<strong>method_missing</strong>(method, *args, &amp;block)  &#x21d2; Object </a>
+      <a href="#method_missing-instance_method" title="#method_missing (instance method)">#<strong>method_missing</strong>(method)  &#x21d2; Object </a>
     
 
     
@@ -4186,7 +4186,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="method_missing-instance_method">
   
-    #<strong>method_missing</strong>(method, *args, &amp;block)  &#x21d2; <tt><span class='object_link'>Object</span></tt> 
+    #<strong>method_missing</strong>(method)  &#x21d2; <tt><span class='object_link'>Object</span></tt> 
   
 
   
@@ -4224,14 +4224,14 @@ object representing the same instant</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/types/date_time_type.rb', line 242</span>
 
-<span class="keyword">def</span> <span class="function">method_missing</span>(method, *args, &amp;block)
+<span class="keyword">def</span> <span class="function">method_missing</span>(method, ...)
   <span class="comment"># @deprecated OH 4.2 Remove version check when dropping OH 4.2</span>
   <span class="keyword">if</span> <span class="constant">OpenHAB</span>::<span class="constant">Core</span>.version &gt;= <span class="constant">OpenHAB</span>::<span class="constant">Core</span>::<span class="constant">V4_3</span> &amp;&amp; to_instant.respond_to?(method)
-    <span class="keyword">return</span> to_instant.send(method, *args, &amp;block)
+    <span class="keyword">return</span> to_instant.send(method, ...)
   <span class="keyword">end</span>
 
-  <span class="keyword">return</span> zoned_date_time.send(method, *args, &amp;block) <span class="keyword">if</span> zoned_date_time.respond_to?(method)
-  <span class="keyword">return</span> to_time.send(method, *args, &amp;block) <span class="keyword">if</span> ::<span class="constant">Time</span>.instance_methods.include?(method.to_sym)
+  <span class="keyword">return</span> zoned_date_time.send(method, ...) <span class="keyword">if</span> zoned_date_time.respond_to?(method)
+  <span class="keyword">return</span> to_time.send(method, ...) <span class="keyword">if</span> ::<span class="constant">Time</span>.instance_methods.include?(method.to_sym)
 
   <span class="keyword">super</span>
 <span class="keyword">end</span></pre>
@@ -5254,7 +5254,7 @@ conversion</p>
 </div>
 
         <footer>
-  Generated on Fri Mar 14 14:59:07 2025 by
+  Generated on Sat Mar 15 01:45:17 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

@@ -5040,7 +5040,7 @@ this method only returns the first channel.</p>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 71</span>
 
 <span class="keyword">def</span> <span class="function">groups</span>
-  group_names.map { |name| <span class="constant">EntityLookup</span>.lookup_item(name) }.compact
+  group_names.filter_map { |name| <span class="constant">EntityLookup</span>.lookup_item(name) }
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -6473,7 +6473,7 @@ def_type_predicate(<span class="symbol">:location</span>)</pre>
   groups.map! <span class="keyword">do</span> |group|
     group.is_a?(<span class="constant">GroupItem</span>) ? group.name : group
   <span class="keyword">end</span>
-  !(group_names &amp; groups).empty?
+  !!group_names.intersect?(groups)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -6862,7 +6862,7 @@ def_type_predicate(<span class="symbol">:switch</span>)</pre>
       tag
     <span class="keyword">end</span>
   <span class="keyword">end</span>
-  !(<span class="predefined-constant">self</span>.tags.to_a &amp; tags).empty?
+  !!<span class="predefined-constant">self</span>.tags.to_a.intersect?(tags)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -7043,7 +7043,7 @@ def_type_predicate(<span class="symbol">:switch</span>)</pre>
 </div>
 
         <footer>
-  Generated on Fri Mar 14 14:58:55 2025 by
+  Generated on Sat Mar 15 01:45:06 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
