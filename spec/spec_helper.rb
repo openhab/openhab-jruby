@@ -38,6 +38,33 @@ RSpec.configure do |config|
   config.before(:suite) do
     OpenHAB::Logger.gem_root.level = :trace
     OpenHAB::Log.logger("org.openhab.automation.jrubyscripting.internal").level = :warn
+
+    # set up stdio streams for console specs here, since we can only do it once
+    # per process
+    $terminal = Object.new
+    def $terminal.type; end
+    require "openhab/console"
+  end
+
+  config.around(console: true) do |example|
+    stdin, stdout, stderr = $stdin, $stdout, $stderr # rubocop:disable Style/ParallelAssignment
+
+    example.run
+  ensure
+    $stdin, $stdout, $stderr = stdin, stdout, stderr # rubocop:disable Style/ParallelAssignment
+  end
+
+  config.before(console: true) do
+    input = instance_double(org.jline.utils.NonBlockingInputStream)
+    writer = instance_double(java.io.PrintWriter, print: nil, flush: nil)
+    encoding = instance_double(java.nio.charset.Charset, name: "UTF-8")
+    $terminal = double("org.jline.terminal.Terminal", encoding:, input:, writer:) # rubocop:disable RSpec/VerifiedDoubles -- this is an interface, so non-default methods don't exist from Ruby's perspective
+
+    require "openhab/console/stdio"
+
+    # recreate these each time, so that they're using the current mock
+    $stdin = OpenHAB::Console::Stdin.new($terminal)
+    $stdout = $stderr = OpenHAB::Console::Stdout.new($terminal)
   end
 
   Kernel.srand config.seed
