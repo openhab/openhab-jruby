@@ -1211,7 +1211,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       end
     end
 
-    describe "#time_series_updated", if: OpenHAB::Core.version >= OpenHAB::Core::V4_1 do
+    describe "#time_series_updated" do
       it "triggers" do
         items.build { number_item "MyNumberItem" }
 
@@ -2229,10 +2229,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
     end
     test_it(:on_load)
     test_it(:trigger, "core.ItemStateUpdateTrigger", itemName: "Item1") { item.on }
-    # @deprecated OH4.0 Guard not needed in OH 4.1
-    if OpenHAB::Core.version >= OpenHAB::Core::V4_1
-      test_it(:time_series_updated, "item") { item.time_series = TimeSeries.new }
-    end
+    test_it(:time_series_updated, "item") { item.time_series = TimeSeries.new }
 
     it "passes through attachment for watch" do
       Dir.mktmpdir("openhab-rspec") do |temp_dir|

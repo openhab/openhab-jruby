@@ -104,7 +104,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
       expect(switch.icon).to eq "light"
     end
 
-    it "supports dynamic icons", if: OpenHAB::Core.version >= OpenHAB::Core::V4_1 do
+    it "supports dynamic icons" do
       s = sitemaps.build do
         sitemap "default" do
           switch item: Switch1, icon: { "ON" => "f7:lightbulb_fill", "OFF" => "f7:lightbulb_slash_fill" }
@@ -125,7 +125,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
   end
 
-  context "with static_icon", if: OpenHAB::Core.version >= OpenHAB::Core::V4_1 do
+  context "with static_icon" do
     it "works" do
       s = sitemaps.build do
         sitemap "default" do
@@ -158,8 +158,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
 
       switch = s.children.first
       cond = switch.visibility.first
-      # @deprecated OH 4.0
-      cond = cond.conditions.first if cond.respond_to?(:conditions)
+      cond = cond.conditions.first
       expect(cond.item).to eq "Switch1"
       expect(cond.condition.to_s).to eq "=="
       expect(cond.state).to eq "ON"
@@ -174,8 +173,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
 
       switch = s.children.first
       cond = switch.visibility.first
-      # @deprecated OH 4.0
-      cond = cond.conditions.first if cond.respond_to?(:conditions)
+      cond = cond.conditions.first
       expect(cond.item).to be_nil
       expect(cond.condition).to be_nil
       expect(cond.state).to eq "ON"
@@ -190,8 +188,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
 
       switch = s.children.first
       cond = switch.visibility.first
-      # @deprecated OH 4.0
-      cond = cond.conditions.first if cond.respond_to?(:conditions)
+      cond = cond.conditions.first
       expect(cond.item).to be_nil
       expect(cond.condition).to be_nil
       expect(cond.state).to eq "ON"
@@ -206,8 +203,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
 
       switch = s.children.first
       cond = switch.visibility.first
-      # @deprecated OH 4.0
-      cond = cond.conditions.first if cond.respond_to?(:conditions)
+      cond = cond.conditions.first
       expect(cond.item).to be_nil
       expect(cond.condition.to_s).to eq "=="
       expect(cond.state).to eq "ON"
@@ -225,15 +221,13 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
       expect(switch.visibility.size).to eq 2
 
       cond = switch.visibility.first
-      # @deprecated OH 4.0
-      cond = cond.conditions.first if cond.respond_to?(:conditions)
+      cond = cond.conditions.first
       expect(cond.item).to eq "Switch1"
       expect(cond.condition.to_s).to eq "=="
       expect(cond.state).to eq "ON"
 
       cond = switch.visibility.last
-      # @deprecated OH 4.0
-      cond = cond.conditions.first if cond.respond_to?(:conditions)
+      cond = cond.conditions.first
       expect(cond.item).to eq "Switch2"
       expect(cond.condition.to_s).to eq "=="
       expect(cond.state).to eq "ON"
@@ -250,8 +244,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
 
       switch = s.children.first
       cond = rule = switch.label_color.first
-      # @deprecated OH 4.0
-      cond = cond.conditions.first if cond.respond_to?(:conditions)
+      cond = cond.conditions.first
       expect(cond.item).to eq "Switch1"
       expect(cond.condition.to_s).to eq "=="
       expect(cond.state).to eq "ON"
@@ -270,12 +263,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
       expect(rules.size).to eq 2
 
       default = rules.last
-      # @deprecated OH 4.0
-      if default.respond_to?(:conditions)
-        expect(default.conditions).to be_empty
-      else
-        expect(default.condition.to_s).to be_empty
-      end
+      expect(default.conditions).to be_empty
       expect(default.arg).to eq "red"
     end
 
@@ -308,56 +296,33 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
   end
 
-  # @deprecated OH 4.0
-  if OpenHAB::Core.version >= OpenHAB::Core::V4_1
-    it "supports AND conditions on visibility" do
-      sitemaps.build do
-        sitemap "default", label: "My Residence" do
-          switch item: "Switch1", visibility: [["Switch1 == ON"]]
-        end
+  it "supports AND conditions on visibility" do
+    sitemaps.build do
+      sitemap "default", label: "My Residence" do
+        switch item: "Switch1", visibility: [["Switch1 == ON"]]
+      end
+    end
+  end
+
+  it "supports AND conditions on colors" do
+    s = sitemaps.build do
+      sitemap "default", label: "My Residence" do
+        switch item: "Switch1", label_color: { ["Switch1 == ON", "Switch2 == OFF"] => "green" }
       end
     end
 
-    it "supports AND conditions on colors" do
-      s = sitemaps.build do
-        sitemap "default", label: "My Residence" do
-          switch item: "Switch1", label_color: { ["Switch1 == ON", "Switch2 == OFF"] => "green" }
-        end
-      end
+    switch = s.children.first
+    rule = switch.label_color.first
+    cond = rule.conditions.first
+    expect(cond.item).to eq "Switch1"
+    expect(cond.condition.to_s).to eq "=="
+    expect(cond.state).to eq "ON"
 
-      switch = s.children.first
-      rule = switch.label_color.first
-      cond = rule.conditions.first
-      expect(cond.item).to eq "Switch1"
-      expect(cond.condition.to_s).to eq "=="
-      expect(cond.state).to eq "ON"
-
-      cond = rule.conditions.last
-      expect(cond.item).to eq "Switch2"
-      expect(cond.condition.to_s).to eq "=="
-      expect(cond.state).to eq "OFF"
-      expect(rule.arg).to eq "green"
-    end
-  else
-    it "does not support AND conditions on visibility" do
-      expect do
-        sitemaps.build do
-          sitemap "default", label: "My Residence" do
-            switch item: "Switch1", visibility: [["Switch1 == ON"]]
-          end
-        end
-      end.to raise_error(ArgumentError)
-    end
-
-    it "does not support AND conditions on colors" do
-      expect do
-        sitemaps.build do
-          sitemap "default", label: "My Residence" do
-            switch item: "Switch1", label_color: { ["Switch1 == ON", "Switch2 == OFF"] => "green" }
-          end
-        end
-      end.to raise_error(ArgumentError)
-    end
+    cond = rule.conditions.last
+    expect(cond.item).to eq "Switch2"
+    expect(cond.condition.to_s).to eq "=="
+    expect(cond.state).to eq "OFF"
+    expect(rule.arg).to eq "green"
   end
 
   it "can add a frame" do
@@ -448,23 +413,15 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     it "can contain arrays of command, label, and an optional icon" do
       sitemaps.build do
         sitemap "default" do
-          # @deprecated OH 4.1
-          if OpenHAB::Core.version >= OpenHAB::Core::V4_1
-            switch label: "My Switch", mappings: [%w[OFF off], %w[COOL cool f7:snow], %w[HEAT heat f7:flame]]
-          else
-            switch label: "My Switch", mappings: [%w[OFF off], %w[COOL cool], %w[HEAT heat]]
-          end
+          switch label: "My Switch", mappings: [%w[OFF off], %w[COOL cool f7:snow], %w[HEAT heat f7:flame]]
         end
       end
       switch = sitemaps["default"].children.first
       expect(switch.mappings.map(&:cmd)).to eq %w[OFF COOL HEAT]
       expect(switch.mappings.map(&:label)).to eq %w[off cool heat]
-      # @deprecated OH 4.1 - the if check is not needed in OH4.1+
-      if OpenHAB::Core.version >= OpenHAB::Core::V4_1
-        expect(switch.mappings.map(&:icon)).to eq [nil,
-                                                   "f7:snow",
-                                                   "f7:flame"]
-      end
+      expect(switch.mappings.map(&:icon)).to eq [nil,
+                                                 "f7:snow",
+                                                 "f7:flame"]
     end
 
     it "supports release command in a hash element", if: OpenHAB::Core.version >= OpenHAB::Core::V4_2 do
@@ -483,29 +440,17 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     it "can contain hashes of command, label, and an optional icon" do
       sitemaps.build do
         sitemap "default" do
-          # @deprecated OH 4.0
-          if OpenHAB::Core.version >= OpenHAB::Core::V4_1
-            switch label: "My Switch", mappings: [
-              { command: "OFF", label: "off" },
-              { command: "COOL", label: "cool", icon: "f7:snow" },
-              { command: "HEAT", label: "heat", icon: "f7:flame" }
-            ]
-          else
-            switch label: "My Switch", mappings: [
-              { command: "OFF", label: "off" },
-              { command: "COOL", label: "cool" },
-              { command: "HEAT", label: "heat" }
-            ]
-          end
+          switch label: "My Switch", mappings: [
+            { command: "OFF", label: "off" },
+            { command: "COOL", label: "cool", icon: "f7:snow" },
+            { command: "HEAT", label: "heat", icon: "f7:flame" }
+          ]
         end
       end
       switch = sitemaps["default"].children.first
       expect(switch.mappings.map(&:cmd)).to eq %w[OFF COOL HEAT]
       expect(switch.mappings.map(&:label)).to eq %w[off cool heat]
-      # @deprecated OH 4.0 - the if check is not needed in OH4.1+
-      if OpenHAB::Core.version >= OpenHAB::Core::V4_1
-        expect(switch.mappings.map(&:icon)).to eq [nil, "f7:snow", "f7:flame"]
-      end
+      expect(switch.mappings.map(&:icon)).to eq [nil, "f7:snow", "f7:flame"]
     end
 
     it "can contain a mix of scalar, arrays, and hashes" do
@@ -604,8 +549,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
   end
 
-  # @deprecated OH 4.0 guard is only needed for < OH 4.1
-  describe "#buttongrid", if: OpenHAB::Core.version >= OpenHAB::Core::V4_1 do
+  describe "#buttongrid" do
     it "works" do
       s = sitemaps.build do
         sitemap "default" do

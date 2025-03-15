@@ -15,12 +15,7 @@ module OpenHAB
       include Singleton
 
       class Profile
-        # @deprecated OH 4.0 only include TimeSeriesProfile in OH 4.1, because it extends StateProfile
-        if OpenHAB::Core.version >= OpenHAB::Core::V4_1
-          include org.openhab.core.thing.profiles.TimeSeriesProfile
-        else
-          include org.openhab.core.thing.profiles.StateProfile
-        end
+        include org.openhab.core.thing.profiles.TimeSeriesProfile
         include org.openhab.core.thing.profiles.TriggerProfile
 
         def initialize(callback, context, uid, thread_locals, block)
@@ -75,12 +70,9 @@ module OpenHAB
           process_event(:trigger_from_handler, trigger: event)
         end
 
-        # @deprecated OH 4.0 guard is only needed for < OH 4.1
-        if OpenHAB::Core.version >= OpenHAB::Core::V4_1
-          # @!visibility private
-          def onTimeSeriesFromHandler(time_series)
-            process_event(:time_series_from_handler, time_series:)
-          end
+        # @!visibility private
+        def onTimeSeriesFromHandler(time_series)
+          process_event(:time_series_from_handler, time_series:)
         end
 
         private
@@ -99,8 +91,7 @@ module OpenHAB
           params[:state] ||= nil
           params[:command] ||= nil
           params[:trigger] ||= nil
-          # @deprecated OH 4.0 guard is only needed for < OH 4.1
-          params[:time_series] ||= nil if OpenHAB::Core.version >= OpenHAB::Core::V4_1
+          params[:time_series] ||= nil
 
           kwargs = {}
           @block.parameters.each do |(param_type, name)|

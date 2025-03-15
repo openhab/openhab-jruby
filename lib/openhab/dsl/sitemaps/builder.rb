@@ -270,10 +270,6 @@ module OpenHAB
           return if conditions.empty?
 
           object = widget.send(method)
-          # @deprecated OH 4.0
-          if conditions.any?(Array) && !SitemapBuilder.factory.respond_to?(:create_condition)
-            raise ArgumentError, "AND conditions not supported prior to openHAB 4.1"
-          end
 
           conditions.each do |sub_conditions|
             container = SitemapBuilder.factory.send(container_method)
@@ -285,9 +281,6 @@ module OpenHAB
         end
 
         def add_conditions_to_container(container, conditions)
-          # @deprecated OH 4.0
-          supports_and_conditions = SitemapBuilder.factory.respond_to?(:create_condition)
-
           Array.wrap(conditions).each do |c|
             c = c.to_s if c.is_a?(Core::Types::State)
             unless c.is_a?(String) || c.is_a?(Symbol)
@@ -297,12 +290,12 @@ module OpenHAB
               raise ArgumentError, "Syntax error in condition #{c.inspect} for #{inspect}"
             end
 
-            condition = supports_and_conditions ? SitemapBuilder.factory.create_condition : container
+            condition = SitemapBuilder.factory.create_condition
             condition.item = match["item"]
             condition.condition = match["condition"]
             condition.sign = match["sign"]
             condition.state = match["state"]
-            container.conditions.add(condition) if supports_and_conditions
+            container.conditions.add(condition)
           end
         end
       end

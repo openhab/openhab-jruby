@@ -3,12 +3,10 @@
 module OpenHAB
   # Contains classes and modules that wrap actual openHAB objects
   module Core
-    # The openHAB Version. >= 4.0 is required.
+    # The openHAB Version. >= 4.1 is required.
     # @return [String]
     VERSION = org.openhab.core.OpenHAB.version.freeze
 
-    # @!visibility private
-    V4_0 = Gem::Version.new("4.0.0").freeze
     # @!visibility private
     V4_1 = Gem::Version.new("4.1.0").freeze
     # @!visibility private
@@ -23,7 +21,7 @@ module OpenHAB
       @version ||= Gem::Version.new(VERSION).release.freeze
     end
 
-    raise "`openhab-scripting` requires openHAB >= 4.0.0" unless version >= V4_0
+    raise "`openhab-scripting` requires openHAB >= 4.1.0" unless version >= V4_1
 
     # @return [Integer] Number of seconds to wait between checks for automation manager
     CHECK_DELAY = 10

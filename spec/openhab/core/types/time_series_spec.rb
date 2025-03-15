@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# @deprecated OH 4.0 guard not needed in OH 4.1
-return unless OpenHAB::Core.version >= OpenHAB::Core::V4_1
-
 RSpec.describe OpenHAB::Core::Types::TimeSeries do
   let(:ts) do
     described_class.new(:add).tap do |ts|

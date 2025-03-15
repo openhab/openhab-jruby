@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# @deprecated OH4.0 this guard is not needed on OH4.1
-return unless OpenHAB::Core.version >= OpenHAB::Core::V4_1
-
 require "forwardable"
 require "openhab/core/lazy_array"
 
