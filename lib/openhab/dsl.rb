@@ -1056,7 +1056,7 @@ module OpenHAB
     # see OpenHAB::DSL::Rules::AutomationRule#execute!
     #
     # @!visibility private
-    ruby2_keywords def method_missing(method, *args)
+    def method_missing(method, *args)
       return super unless args.empty? && !block_given?
 
       if (context = Thread.current[:openhab_context]) && context.key?(method)

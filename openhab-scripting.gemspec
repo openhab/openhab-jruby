@@ -24,7 +24,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "bundler", "~> 2.2"
   spec.add_dependency "marcel", "~> 1.0"
   spec.add_dependency "method_source", "~> 1.0"
-  spec.add_dependency "ruby2_keywords", "~> 0.0"
 
   spec.add_development_dependency "cucumber", "~> 8.0"
   spec.add_development_dependency "cuke_linter", "~> 1.2"
