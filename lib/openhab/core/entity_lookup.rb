@@ -121,7 +121,7 @@ module OpenHAB
       #
       # @return [Item, Things::Thing, nil]
       #
-      ruby2_keywords def method_missing(method, *args)
+      def method_missing(method, *args)
         return super unless args.empty? && !block_given?
 
         logger.trace { "method missing, performing openHAB Lookup for: #{method}" }
