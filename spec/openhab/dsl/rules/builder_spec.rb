@@ -183,7 +183,6 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
             nil
           end
         end.to raise_error(ArgumentError)
-        expect { changed("StringItemName") { nil } }.to raise_error(ArgumentError)
         expect { changed(5) { nil } }.to raise_error(ArgumentError)
       end
 
@@ -638,6 +637,40 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
             expect(triggered).to be true
           end
         end
+
+        # @deprecated OH4.3 remove guard when dropping support for OH4.3
+        context "with wildcard", if: OpenHAB::Core.full_version > Gem::Version.new("5.0.0.M1") do
+          it "works" do
+            triggered_item = nil
+            changed("*") { |event| triggered_item = event.item }
+
+            Alarm_Mode1.update(14)
+            expect(triggered_item).to be Alarm_Mode1
+
+            triggered_item = nil
+            Alarm_Mode2.update(14)
+            expect(triggered_item).to be Alarm_Mode2
+
+            triggered_item = nil
+            Switch1.update(ON)
+            expect(triggered_item).to be Switch1
+          end
+
+          it "allows partial match" do
+            triggered_item = nil
+            changed("Alarm_*") { |event| triggered_item = event.item }
+
+            Switch1.update(ON)
+            expect(triggered_item).to be_nil
+
+            Alarm_Mode1.update(10)
+            expect(triggered_item).to be Alarm_Mode1
+
+            triggered_item = nil
+            Alarm_Mode2.update(10)
+            expect(triggered_item).to be Alarm_Mode2
+          end
+        end
       end
 
       context "with things" do
@@ -677,25 +710,54 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           expect(triggered).to be true
         end
 
-        it "can trigger on any Thing" do
-          moon = things.build { thing "astro:moon:home", config: { "geolocation" => "0,0" } }
-          sun = thing
-
-          # When it's online to disabled, we are getting two events for each thing
-          # so we test from disabled to online instead
-          sun.disable
-          moon.disable
-
-          triggered = []
-          changed things, to: :online do |event|
-            triggered << event.thing
+        # @deprecated OH4.3 remove guard when dropping support for OH4.3
+        context "with wildcard", if: OpenHAB::Core.full_version > Gem::Version.new("5.0.0.M1") do
+          let!(:moon) do
+            things.build { thing "astro:moon:home", config: { "geolocation" => "0,0" } }
           end
-          sun.enable
-          expect(triggered).to match([sun])
 
-          triggered = []
-          moon.enable
-          expect(triggered).to match([moon])
+          let(:sun) { thing }
+
+          it "works" do
+            triggered_thing = nil
+            changed("*:*") { |event| triggered_thing = event.thing }
+
+            sun.disable
+            expect(triggered_thing).to be sun
+
+            triggered_thing = nil
+            moon.disable
+            expect(triggered_thing).to be moon
+          end
+
+          it "supports partial match" do
+            triggered_thing = nil
+            changed("astro:su*") { |event| triggered_thing = event.thing }
+
+            moon.disable
+            expect(triggered_thing).to be_nil
+
+            sun.disable
+            expect(triggered_thing).to be sun
+          end
+
+          it "can trigger on DSL.things" do
+            # When it's online to disabled, we are getting two events for each thing
+            # so we test from disabled to online instead
+            sun.disable
+            moon.disable
+
+            triggered = []
+            changed things, to: :online do |event|
+              triggered << event.thing
+            end
+            sun.enable
+            expect(triggered).to match([sun])
+
+            triggered = []
+            moon.enable
+            expect(triggered).to match([moon])
+          end
         end
       end
     end
@@ -832,7 +894,6 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
 
       it "complains about invalid data type" do
         expect { received_command([Alarm_Mode]) { nil } }.to raise_error(ArgumentError)
-        expect { received_command("StringItemName") { nil } }.to raise_error(ArgumentError)
         expect { received_command(5) { nil } }.to raise_error(ArgumentError)
         expect do
           received_command(OpenHAB::Core::Things::ThingUID.new("astro:sun:home")) do
@@ -894,6 +955,34 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
 
         Alarm_Mode.command(1)
         expect(triggering_group).to eql AlarmModes
+      end
+
+      # @deprecated OH4.3 remove guard when dropping support for OH4.3
+      context "with wildcard", if: OpenHAB::Core.full_version > Gem::Version.new("5.0.0.M1") do
+        it "works" do
+          puts OpenHAB::Core.version
+          triggered_item = nil
+          received_command("*") { |event| triggered_item = event.item }
+
+          Alarm_Mode.command(14)
+          expect(triggered_item).to be Alarm_Mode
+
+          triggered_item = nil
+          Alarm_Mode_Other.command(14)
+          expect(triggered_item).to be Alarm_Mode_Other
+        end
+
+        it "supports partial match" do
+          triggered_item = nil
+          received_command("Alarm_*_Other") { |event| triggered_item = event.item }
+
+          Alarm_Mode.command(14)
+          expect(triggered_item).to be_nil
+
+          triggered_item = nil
+          Alarm_Mode_Other.command(14)
+          expect(triggered_item).to be Alarm_Mode_Other
+        end
       end
     end
 
@@ -1031,7 +1120,6 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
             nil
           end
         end.to raise_error(ArgumentError)
-        expect { updated("StringItemName") { nil } }.to raise_error(ArgumentError)
         expect { updated(5) { nil } }.to raise_error(ArgumentError)
       end
 
@@ -1207,6 +1295,33 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
 
           MyStringItem.update("plumbob")
           expect(executed).to be 2
+        end
+
+        # @deprecated OH4.3 remove guard when dropping support for OH4.3
+        context "with wildcard", if: OpenHAB::Core.full_version > Gem::Version.new("5.0.0.M1") do
+          it "works" do
+            triggered_item = nil
+            updated("*") { |event| triggered_item = event.item }
+
+            Alarm_Mode.update(14)
+            expect(triggered_item).to be Alarm_Mode
+
+            triggered_item = nil
+            Alarm_Mode_Other.update(14)
+            expect(triggered_item).to be Alarm_Mode_Other
+          end
+
+          it "supports partial match" do
+            triggered_item = nil
+            updated("Alarm_*_Other") { |event| triggered_item = event.item }
+
+            Alarm_Mode.update(14)
+            expect(triggered_item).to be_nil
+
+            triggered_item = nil
+            Alarm_Mode_Other.update(14)
+            expect(triggered_item).to be Alarm_Mode_Other
+          end
         end
       end
     end

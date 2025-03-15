@@ -1059,7 +1059,11 @@ module OpenHAB
         # {Core::Events::ThingStatusInfoChangedEvent} depending on if the
         # triggering element was an item or a thing.
         #
-        # @param [Item, GroupItem::Members, Thing, ThingUID, Things::Registry] items Objects to create trigger for.
+        # @param [Item, GroupItem::Members, Thing, ThingUID, Things::Registry, String] items
+        #   Objects to create trigger for.
+        #   When a String is provided, it is assumed to be an item or group name, unless when it
+        #   contains a colon, in which case it is assumed to be a thing UID.
+        #   The String may contain `*` and `?` wildcards since openHAB 5.0.
         # @param [State, Array<State>, #===, nil] from
         #   Only execute rule if previous state matches `from` state(s).
         # @param [State, Array<State>, #===, nil] to
@@ -1149,9 +1153,23 @@ module OpenHAB
         # @example Trigger when any Thing changes status
         #   rule "Thing status monitoring" do
         #     changed things, to: :offline
+        #     # Alternatively, you can use the following:
+        #     # changed "*:*", to: :offline
         #     run do |event|
         #       Notification.send("Thing #{event.thing.uid} is offline")
         #     end
+        #   end
+        #
+        # @example Use Item wildcards (since openHAB 5.0)
+        #   rule "Execute rule when the state of a matching item changed" do
+        #     changed "*_Door", to: OPEN
+        #     run { |event| logger.info("Item #{event.item.name} changed to #{event.state}") }
+        #   end
+        #
+        # @example Use Thing wildcards (since openHAB 5.0)
+        #   rule "Execute rule when a matching thing changed status" do
+        #     changed "mqtt:topic:*light*", to: :online
+        #     run { |event| logger.info("Thing #{event.thing.uid} changed to #{event.status}") }
         #   end
         #
         # @example Real World Example
@@ -1175,11 +1193,12 @@ module OpenHAB
                  Core::Things::ThingUID,
                  Core::Things::Registry,
                  Core::Items::Item,
-                 Core::Items::GroupItem::Members
+                 Core::Items::GroupItem::Members,
+                 String
               nil
             else
               raise ArgumentError,
-                    "items must be an Item, GroupItem::Members, Thing, ThingUID, or Things::Registry"
+                    "items must be an Item, GroupItem::Members, Thing, ThingUID, Things::Registry, or a String"
             end
 
             logger.trace { "Creating changed trigger for entity(#{item}), to(#{to.inspect}), from(#{from.inspect})" }
@@ -1531,7 +1550,10 @@ module OpenHAB
         # The `event` passed to run blocks will be an
         # {Core::Events::ItemCommandEvent}.
         #
-        # @param [Item, GroupItem::Members] items Items to create trigger for
+        # @param [Item, GroupItem::Members, String] items
+        #   Items to create trigger for.
+        #   When a String is provided, it is assumed to be an item or group name.
+        #   The String may contain `*` and `?` wildcards since openHAB 5.0.
         # @param [Core::Types::Command, Array<Core::Types::Command>, #===, nil] command commands to match for trigger
         # @param [Array<Core::Types::Command>, #===, nil] commands Fluent alias for `command`
         # @param [Object] attach object to be attached to the trigger
@@ -1597,6 +1619,12 @@ module OpenHAB
         #     run { |event| logger.info("Item received command: #{event.command}" ) }
         #   end
         #
+        # @example Use Item wildcards (since openHAB 5.0)
+        #   rule 'Execute rule when the matching item received command' do
+        #     received_command '*_Light', command: ON
+        #     run { |event| logger.info("Item received command: #{event.command}") }
+        #   end
+        #
         def received_command(*items, command: nil, commands: nil, attach: nil)
           command_trigger = Command.new(rule_triggers: @rule_triggers)
 
@@ -1610,10 +1638,11 @@ module OpenHAB
           items.each do |item|
             case item
             when Core::Items::Item,
-                 Core::Items::GroupItem::Members
+                 Core::Items::GroupItem::Members,
+                 String
               nil
             else
-              raise ArgumentError, "items must be an Item or GroupItem::Members"
+              raise ArgumentError, "items must be an Item, GroupItem::Members, or a String"
             end
             commands.each do |cmd|
               logger.trace { "Creating received command trigger for items #{item.inspect} and commands #{cmd.inspect}" }
@@ -1888,8 +1917,11 @@ module OpenHAB
         # {Core::Events::ThingStatusInfoEvent} depending on if the triggering
         # element was an item or a thing.
         #
-        # @param [Item, GroupItem::Members, Thing] items
+        # @param [Item, GroupItem::Members, Thing, String] items
         #   Objects to create trigger for.
+        #   When a String is provided, it is assumed to be an item or group name, unless when it
+        #   contains a colon, in which case it is assumed to be a thing UID.
+        #   The String may contain `*` and `?` wildcards since openHAB 5.0.
         # @param [State, Array<State>, Symbol, String, #===, nil] to
         #   Only execute rule if the state matches `to` state(s). If the
         #   updated element is a {Core::Things::Thing}, the `to` accepts
@@ -1964,6 +1996,19 @@ module OpenHAB
         #      run { |event| logger.info("Thing #{event.uid} status <trigger> to #{event.status}") }
         #   end
         #
+        # @example Use Item wildcards (since openHAB 5.0)
+        #   rule 'Execute rule when the state of a matching item is updated' do
+        #     updated '*_Door', to: OPEN
+        #     run { |event| logger.info("Item #{event.item.name} updated to #{event.state}") }
+        #   end
+        #
+        # @example Use Thing wildcards (since openHAB 5.0)
+        #   rule 'Execute rule when the status of a matching thing is updated' do
+        #     updated 'mqtt:topic:*light*', to: :online
+        #     # to match all things, use "*:*" as the pattern
+        #     run { |event| logger.info("Thing #{event.thing.uid} updated to #{event.status}") }
+        #   end
+        #
         def updated(*items, to: nil, attach: nil)
           updated = Updated.new(rule_triggers: @rule_triggers)
           @ruby_triggers << [:updated, items, { to: }]
@@ -1972,10 +2017,11 @@ module OpenHAB
             when Core::Things::Thing,
                  Core::Things::ThingUID,
                  Core::Items::Item,
-                 Core::Items::GroupItem::Members
+                 Core::Items::GroupItem::Members,
+                 String
               nil
             else
-              raise ArgumentError, "items must be an Item, GroupItem::Members, Thing, or ThingUID"
+              raise ArgumentError, "items must be an Item, GroupItem::Members, Thing, ThingUID, or a String"
             end
 
             logger.trace { "Creating updated trigger for item(#{item}) to(#{to})" }

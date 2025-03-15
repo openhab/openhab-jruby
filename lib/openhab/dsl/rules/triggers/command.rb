@@ -26,10 +26,13 @@ module OpenHAB
               command = nil
             end
 
-            type, config = if item.is_a?(GroupItem::Members)
+            type, config = case item
+                           when GroupItem::Members
                              [GROUP_COMMAND, { "groupName" => item.group.name }]
-                           else
+                           when Item
                              [ITEM_COMMAND, { "itemName" => item.name }]
+                           else
+                             [ITEM_COMMAND, { "itemName" => item.to_s }]
                            end
             config["command"] = command.to_s unless command.nil?
             append_trigger(type:, config:, attach:, conditions:)
