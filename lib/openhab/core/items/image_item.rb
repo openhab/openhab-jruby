@@ -41,7 +41,6 @@ module OpenHAB
         # @param [String] file location
         # @param [String] mime_type of image
         #
-        #
         def update_from_file(file, mime_type: nil)
           file_data = File.binread(file)
           mime_type ||= Marcel::MimeType.for(Pathname.new(file)) || Marcel::MimeType.for(file_data)
@@ -52,7 +51,6 @@ module OpenHAB
         # Update image from image at URL
         #
         # @param [String] uri location of image
-        #
         #
         def update_from_url(uri)
           logger.trace { "Downloading image from #{uri}" }
@@ -69,26 +67,12 @@ module OpenHAB
         # @param [String] mime_type of image
         # @param [Object] bytes image data
         #
-        #
         def update_from_bytes(bytes, mime_type: nil)
           mime_type ||= detect_mime_from_bytes(bytes:)
-          base_64_image = encode_image(mime_type:, bytes:)
-          update(base_64_image)
+          update(RawType.new(bytes.to_java_bytes, mime_type))
         end
 
         private
-
-        #
-        # Encode image information in the format required by openHAB
-        #
-        # @param [String] mime_type for image
-        # @param [Object] bytes image data
-        #
-        # @return [String] openHAB image format with image data Base64 encoded
-        #
-        def encode_image(mime_type:, bytes:)
-          "data:#{mime_type};base64,#{Base64.strict_encode64(bytes)}"
-        end
 
         #
         # Detect the mime type based on bytes
