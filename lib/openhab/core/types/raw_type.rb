@@ -10,14 +10,20 @@ module OpenHAB
       #
       # This type can be used for all binary data such as images, documents, sounds etc.
       #
-      class RawType # rubocop:disable Lint/EmptyClass
+      class RawType
         # @!parse include State
 
-        # @!method mime_type
+        # @attribute [r] mime_type
         #   @return [String]
 
-        # @!method bytes
-        #   @return [String]
+        # @attribute[r] bytes
+        #   @return [byte[]]
+
+        # @attribute [r] bytesize
+        # @return [Integer]
+        def bytesize
+          bytes.size
+        end
       end
     end
   end
