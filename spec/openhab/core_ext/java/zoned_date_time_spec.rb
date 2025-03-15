@@ -26,6 +26,11 @@ RSpec.describe java.time.ZonedDateTime do
       now = described_class.now
       expect((now + 5).to_i).to be(now.to_i + 5)
     end
+
+    it "works with Time QuantityType" do
+      now = described_class.now
+      expect((now + QuantityType.new("5 s")).to_i).to be(now.to_i + 5)
+    end
   end
 
   describe "#-" do
@@ -38,6 +43,12 @@ RSpec.describe java.time.ZonedDateTime do
     it "works with integers" do
       now = described_class.now
       expect((now - 5).to_i).to be(now.to_i - 5)
+    end
+
+    it "works with Time QuantityType" do
+      now = described_class.now
+      expect((now - QuantityType.new("5 s"))).to be_a described_class
+      expect((now - QuantityType.new("5 s")).to_i).to be(now.to_i - 5)
     end
 
     it "returns a duration for another ZonedDateTime instance" do

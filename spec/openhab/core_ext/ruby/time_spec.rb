@@ -2,9 +2,25 @@
 
 RSpec.describe Time do
   describe "#+" do
-    it "works with Duration" do
+    it "works with Duration and returns a ZonedDateTime" do
       now = described_class.now
-      expect(now + 1.minute).to eq(now + 60)
+      result = now + 1.minute
+      expect(result).to eq(now + 60)
+      expect(result).to be_a(java.time.ZonedDateTime)
+    end
+
+    it "works with Time QuantityType and returns a ZonedDateTime" do
+      now = described_class.now
+      result = now + QuantityType.new("1 min")
+      expect(result).to eq(now + 60)
+      expect(result).to be_a(java.time.ZonedDateTime)
+    end
+
+    it "works with Numeric and returns a Time" do
+      Timecop.freeze
+      result = described_class.now + 60
+      expect(result).to eq 60.seconds.from_now
+      expect(result).to be_a(described_class)
     end
   end
 
@@ -12,6 +28,13 @@ RSpec.describe Time do
     it "works with Duration and returns a ZonedDateTime" do
       now = described_class.now
       result = now - 1.minute
+      expect(result).to eq(now - 60)
+      expect(result).to be_a(java.time.ZonedDateTime)
+    end
+
+    it "works with Time QuantityType and returns a ZonedDateTime" do
+      now = described_class.now
+      result = now - QuantityType.new("1 min")
       expect(result).to eq(now - 60)
       expect(result).to be_a(java.time.ZonedDateTime)
     end

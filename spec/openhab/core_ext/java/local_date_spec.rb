@@ -13,6 +13,10 @@ RSpec.describe java.time.LocalDate do
       expect(date + 24.hours).to eql java.time.LocalDate.parse("2022-11-10")
     end
 
+    it "works with a Time QuantityType" do
+      expect(date + QuantityType.new("1 d")).to eql java.time.LocalDate.parse("2022-11-10")
+    end
+
     it "works with integers" do
       expect(date + 1).to eql java.time.LocalDate.parse("2022-11-10")
     end
@@ -26,6 +30,10 @@ RSpec.describe java.time.LocalDate do
 
     it "works with Duration" do
       expect(date - 24.hours).to eql java.time.LocalDate.parse("2022-11-08")
+    end
+
+    it "works with a Time QuantityType" do
+      expect(date - QuantityType.new("1 d")).to eql java.time.LocalDate.parse("2022-11-08")
     end
 
     it "works with integers" do
@@ -76,7 +84,8 @@ RSpec.describe java.time.LocalDate do
 
   describe "#to_instant" do
     it "works" do
-      expect(date.to_instant).to eql Instant.parse("2022-11-09T00:00:00Z")
+      context = ZonedDateTime.parse("1990-05-04T00:00:00Z")
+      expect(date.to_instant(context)).to eql Instant.parse("2022-11-09T00:00:00Z")
     end
 
     it "takes on the system zone if no context" do

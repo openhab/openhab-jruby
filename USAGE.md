@@ -1163,7 +1163,22 @@ Time.at(1669684403)
 # Convert Epoch second to ZonedDateTime
 Time.at(1669684403).to_zoned_date_time
 # or
-java.time.Instant.of_epoch_second(1669684403).at_zone(ZoneId.system_default)
+Instant.of_epoch_second(1669684403).at_zone(ZoneId.system_default)
+```
+
+##### Time-based QuantityType <!-- omit from toc -->
+
+QuantityType objects with time dimension work like a Duration in arithmetic operations.
+They can be compared, added, and subtracted against Duration objects, and added/subtracted from Ruby and Java Date/Time-like objects.
+
+```java
+Number:Time Pump_Total_Runtime "Total Pump runtime today"
+```
+
+```ruby
+if Pump_Total_Runtime.state >= 8.hours
+  logger.info "The Pump has been running for 8 hours or more today"
+end
 ```
 
 #### Ranges <!-- omit from toc -->
