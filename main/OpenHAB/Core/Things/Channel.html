@@ -1226,17 +1226,6 @@ Therefore Items can be linked a to a channel. - Documentation for openhab-script
 
   
   
-  <li class="">
-    <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../Items/Semantics/TagClassMethods.html" title="OpenHAB::Core::Items::Semantics::TagClassMethods (module)">TagClassMethods</a></span>
-      
-      
-    </span>
-    
-    
-  </li>
-
-  
   
   
   
@@ -4000,12 +3989,6 @@ Therefore <span class='object_link'><a href="../Items/Item.html" title="OpenHAB:
   
   
   
-  
-  
-  
-  
-  
-  
   <div id="instance_attr_details" class="attr_details">
     <h2>Instance Attribute Details</h2>
     
@@ -4252,35 +4235,7 @@ Therefore <span class='object_link'><a href="../Items/Item.html" title="OpenHAB:
 176
 177
 178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207</pre>
+179</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/channel.rb', line 29</span>
@@ -4434,34 +4389,6 @@ Therefore <span class='object_link'><a href="../Items/Item.html" title="OpenHAB:
     <span class="keyword">end</span>
 
     provider.remove(link_to_delete.uid)
-  <span class="keyword">end</span>
-
-  <span class="comment"># @deprecated OH3.4 this whole section is not needed in OH4+. Also see Thing#config_eql?</span>
-  <span class="keyword">if</span> <span class="constant">Core</span>.version &lt; <span class="constant">Core</span>::<span class="constant">V4_0</span>
-    <span class="comment"># @!visibility private</span>
-    <span class="keyword">module</span> <span class="class">ChannelComparable</span>
-      <span class="comment"># @!visibility private</span>
-      <span class="comment"># This is only needed in OH3 because it is implemented in OH4 core</span>
-      <span class="keyword">def</span> <span class="function">==</span>(other)
-        <span class="keyword">return</span> <span class="predefined-constant">true</span> <span class="keyword">if</span> equal?(other)
-        <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> other.is_a?(<span class="constant">Channel</span>)
-
-        <span class="symbol"><span class="delimiter">%i[</span><span class="content">class
-           uid
-           label
-           description
-           kind
-           channel_type_uid
-           configuration
-           properties
-           default_tags
-           auto_update_policy
-           accepted_item_type</span><span class="delimiter">]</span></span>.all? <span class="keyword">do</span> |attr|
-          send(attr) == other.send(attr)
-        <span class="keyword">end</span>
-      <span class="keyword">end</span>
-    <span class="keyword">end</span>
-    org.openhab.core.thing.binding.builder.ChannelBuilder.const_get(<span class="symbol">:ChannelImpl</span>).prepend(<span class="constant">ChannelComparable</span>)
   <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
@@ -4660,35 +4587,7 @@ this method only returns the first item.</p>
 176
 177
 178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207</pre>
+179</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/channel.rb', line 29</span>
@@ -4842,34 +4741,6 @@ this method only returns the first item.</p>
     <span class="keyword">end</span>
 
     provider.remove(link_to_delete.uid)
-  <span class="keyword">end</span>
-
-  <span class="comment"># @deprecated OH3.4 this whole section is not needed in OH4+. Also see Thing#config_eql?</span>
-  <span class="keyword">if</span> <span class="constant">Core</span>.version &lt; <span class="constant">Core</span>::<span class="constant">V4_0</span>
-    <span class="comment"># @!visibility private</span>
-    <span class="keyword">module</span> <span class="class">ChannelComparable</span>
-      <span class="comment"># @!visibility private</span>
-      <span class="comment"># This is only needed in OH3 because it is implemented in OH4 core</span>
-      <span class="keyword">def</span> <span class="function">==</span>(other)
-        <span class="keyword">return</span> <span class="predefined-constant">true</span> <span class="keyword">if</span> equal?(other)
-        <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> other.is_a?(<span class="constant">Channel</span>)
-
-        <span class="symbol"><span class="delimiter">%i[</span><span class="content">class
-           uid
-           label
-           description
-           kind
-           channel_type_uid
-           configuration
-           properties
-           default_tags
-           auto_update_policy
-           accepted_item_type</span><span class="delimiter">]</span></span>.all? <span class="keyword">do</span> |attr|
-          send(attr) == other.send(attr)
-        <span class="keyword">end</span>
-      <span class="keyword">end</span>
-    <span class="keyword">end</span>
-    org.openhab.core.thing.binding.builder.ChannelBuilder.const_get(<span class="symbol">:ChannelImpl</span>).prepend(<span class="constant">ChannelComparable</span>)
   <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
@@ -5178,35 +5049,7 @@ this method only returns the first item.</p>
 176
 177
 178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207</pre>
+179</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/channel.rb', line 29</span>
@@ -5360,34 +5203,6 @@ this method only returns the first item.</p>
     <span class="keyword">end</span>
 
     provider.remove(link_to_delete.uid)
-  <span class="keyword">end</span>
-
-  <span class="comment"># @deprecated OH3.4 this whole section is not needed in OH4+. Also see Thing#config_eql?</span>
-  <span class="keyword">if</span> <span class="constant">Core</span>.version &lt; <span class="constant">Core</span>::<span class="constant">V4_0</span>
-    <span class="comment"># @!visibility private</span>
-    <span class="keyword">module</span> <span class="class">ChannelComparable</span>
-      <span class="comment"># @!visibility private</span>
-      <span class="comment"># This is only needed in OH3 because it is implemented in OH4 core</span>
-      <span class="keyword">def</span> <span class="function">==</span>(other)
-        <span class="keyword">return</span> <span class="predefined-constant">true</span> <span class="keyword">if</span> equal?(other)
-        <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> other.is_a?(<span class="constant">Channel</span>)
-
-        <span class="symbol"><span class="delimiter">%i[</span><span class="content">class
-           uid
-           label
-           description
-           kind
-           channel_type_uid
-           configuration
-           properties
-           default_tags
-           auto_update_policy
-           accepted_item_type</span><span class="delimiter">]</span></span>.all? <span class="keyword">do</span> |attr|
-          send(attr) == other.send(attr)
-        <span class="keyword">end</span>
-      <span class="keyword">end</span>
-    <span class="keyword">end</span>
-    org.openhab.core.thing.binding.builder.ChannelBuilder.const_get(<span class="symbol">:ChannelImpl</span>).prepend(<span class="constant">ChannelComparable</span>)
   <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
@@ -5670,35 +5485,7 @@ this method only returns the first item.</p>
 176
 177
 178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207</pre>
+179</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/channel.rb', line 29</span>
@@ -5852,34 +5639,6 @@ this method only returns the first item.</p>
     <span class="keyword">end</span>
 
     provider.remove(link_to_delete.uid)
-  <span class="keyword">end</span>
-
-  <span class="comment"># @deprecated OH3.4 this whole section is not needed in OH4+. Also see Thing#config_eql?</span>
-  <span class="keyword">if</span> <span class="constant">Core</span>.version &lt; <span class="constant">Core</span>::<span class="constant">V4_0</span>
-    <span class="comment"># @!visibility private</span>
-    <span class="keyword">module</span> <span class="class">ChannelComparable</span>
-      <span class="comment"># @!visibility private</span>
-      <span class="comment"># This is only needed in OH3 because it is implemented in OH4 core</span>
-      <span class="keyword">def</span> <span class="function">==</span>(other)
-        <span class="keyword">return</span> <span class="predefined-constant">true</span> <span class="keyword">if</span> equal?(other)
-        <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> other.is_a?(<span class="constant">Channel</span>)
-
-        <span class="symbol"><span class="delimiter">%i[</span><span class="content">class
-           uid
-           label
-           description
-           kind
-           channel_type_uid
-           configuration
-           properties
-           default_tags
-           auto_update_policy
-           accepted_item_type</span><span class="delimiter">]</span></span>.all? <span class="keyword">do</span> |attr|
-          send(attr) == other.send(attr)
-        <span class="keyword">end</span>
-      <span class="keyword">end</span>
-    <span class="keyword">end</span>
-    org.openhab.core.thing.binding.builder.ChannelBuilder.const_get(<span class="symbol">:ChannelImpl</span>).prepend(<span class="constant">ChannelComparable</span>)
   <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
@@ -6076,35 +5835,7 @@ this method only returns the first item.</p>
 176
 177
 178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207</pre>
+179</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/things/channel.rb', line 29</span>
@@ -6258,34 +5989,6 @@ this method only returns the first item.</p>
     <span class="keyword">end</span>
 
     provider.remove(link_to_delete.uid)
-  <span class="keyword">end</span>
-
-  <span class="comment"># @deprecated OH3.4 this whole section is not needed in OH4+. Also see Thing#config_eql?</span>
-  <span class="keyword">if</span> <span class="constant">Core</span>.version &lt; <span class="constant">Core</span>::<span class="constant">V4_0</span>
-    <span class="comment"># @!visibility private</span>
-    <span class="keyword">module</span> <span class="class">ChannelComparable</span>
-      <span class="comment"># @!visibility private</span>
-      <span class="comment"># This is only needed in OH3 because it is implemented in OH4 core</span>
-      <span class="keyword">def</span> <span class="function">==</span>(other)
-        <span class="keyword">return</span> <span class="predefined-constant">true</span> <span class="keyword">if</span> equal?(other)
-        <span class="keyword">return</span> <span class="predefined-constant">false</span> <span class="keyword">unless</span> other.is_a?(<span class="constant">Channel</span>)
-
-        <span class="symbol"><span class="delimiter">%i[</span><span class="content">class
-           uid
-           label
-           description
-           kind
-           channel_type_uid
-           configuration
-           properties
-           default_tags
-           auto_update_policy
-           accepted_item_type</span><span class="delimiter">]</span></span>.all? <span class="keyword">do</span> |attr|
-          send(attr) == other.send(attr)
-        <span class="keyword">end</span>
-      <span class="keyword">end</span>
-    <span class="keyword">end</span>
-    org.openhab.core.thing.binding.builder.ChannelBuilder.const_get(<span class="symbol">:ChannelImpl</span>).prepend(<span class="constant">ChannelComparable</span>)
   <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
@@ -6755,7 +6458,7 @@ this method only returns the first link.</p>
 </div>
 
         <footer>
-  Generated on Sat Mar 15 01:47:33 2025 by
+  Generated on Sat Mar 15 01:59:17 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

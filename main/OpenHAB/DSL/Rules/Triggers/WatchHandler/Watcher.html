@@ -33,10 +33,8 @@
   <script type="text/javascript" charset="utf-8" src="../../../../../js/app.js"></script>
 
 
-    <meta property="og:description" name="description" content="Extends the openHAB3 watch service to watch directories
-
-Must match java method name style
-rubocop:disable Naming/MethodName - Documentation for openhab-scripting JRuby helper library.">
+    <meta property="og:description" name="description" content="A class that implements openHAB4's WatchEventListener
+and also creates and removes a unique WatchService for each instance - Documentation for openhab-scripting JRuby helper library.">
     <meta property="og:image" content="https://raw.githubusercontent.com/jruby/collateral/master/logos/PNGs/circle-fill/full-color/jruby-logo-circle-logo-fill-outline-medium.png">
     <meta property="og:image:alt" content="The JRuby logo">
     <script type="text/javascript">
@@ -1227,17 +1225,6 @@ rubocop:disable Naming/MethodName - Documentation for openhab-scripting JRuby he
   </li>
 
   
-  
-  <li class="">
-    <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../../../Core/Items/Semantics/TagClassMethods.html" title="OpenHAB::Core::Items::Semantics::TagClassMethods (module)">TagClassMethods</a></span>
-      
-      
-    </span>
-    
-    
-  </li>
-
   
   
   
@@ -3582,7 +3569,7 @@ rubocop:disable Naming/MethodName - Documentation for openhab-scripting JRuby he
       <main class="page">
         <div class="content"><h1>Class: OpenHAB::DSL::Rules::Triggers::WatchHandler::Watcher
   
-  <span class="deprecated note title">Deprecated</span>
+  
   
 </h1>
 <div class="box_info">
@@ -3590,12 +3577,10 @@ rubocop:disable Naming/MethodName - Documentation for openhab-scripting JRuby he
   <dl>
     <dt>Inherits:</dt>
     <dd>
-      <span class="inheritName"><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/service/AbstractWatchService.html" target="_parent" title="org.openhab.core.service.AbstractWatchService">org.openhab.core.service.AbstractWatchService</a></span>
+      <span class="inheritName"><span class='object_link'>Object</span></span>
       
         <ul class="fullTree">
           <li><span class='object_link'>Object</span></li>
-          
-            <li class="next"><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/service/AbstractWatchService.html" target="_parent" title="org.openhab.core.service.AbstractWatchService">org.openhab.core.service.AbstractWatchService</a></li>
           
             <li class="next">OpenHAB::DSL::Rules::Triggers::WatchHandler::Watcher</li>
           
@@ -3622,20 +3607,15 @@ rubocop:disable Naming/MethodName - Documentation for openhab-scripting JRuby he
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/openhab/dsl/rules/triggers/watch/watch_handler.rb<span class="defines">,<br />
-  lib/openhab/dsl/rules/triggers/watch/watch_handler.rb</span>
-</dd>
+    <dd>lib/openhab/dsl/rules/triggers/watch/watch_handler.rb</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>OH3.4</p>
-</div></div>
-<p>Extends the openHAB3 watch service to watch directories</p>
-<p>Must match java method name style
-rubocop:disable Naming/MethodName</p>
+    <p>A class that implements openHAB4's WatchEventListener
+and also creates and removes a unique WatchService for each instance</p>
 
 
   </div>
@@ -3660,7 +3640,7 @@ rubocop:disable Naming/MethodName</p>
         <dt id="STRING_TO_EVENT-constant" class="">STRING_TO_EVENT =
           <div class="docstring">
   <div class="discussion">
-    <p>Hash of event symbols as strings to map to NIO events</p>
+    <p>Hash of event symbols as strings to map to WatchService events</p>
 
 
   </div>
@@ -3670,16 +3650,16 @@ rubocop:disable Naming/MethodName</p>
 
 </div>
         </dt>
-        <dd><pre class="code">{ <span class="comment"># rubocop:disable Lint/ConstantReassignment</span>
-  <span class="key">created</span>: <span class="constant">StandardWatchEventKinds</span>::<span class="constant">ENTRY_CREATE</span>,
-  <span class="key">deleted</span>: <span class="constant">StandardWatchEventKinds</span>::<span class="constant">ENTRY_DELETE</span>,
-  <span class="key">modified</span>: <span class="constant">StandardWatchEventKinds</span>::<span class="constant">ENTRY_MODIFY</span>
+        <dd><pre class="code">{
+  <span class="key">created</span>: <span class="constant">WatchService</span>::<span class="constant">Kind</span>::<span class="constant">CREATE</span>,
+  <span class="key">deleted</span>: <span class="constant">WatchService</span>::<span class="constant">Kind</span>::<span class="constant">DELETE</span>,
+  <span class="key">modified</span>: <span class="constant">WatchService</span>::<span class="constant">Kind</span>::<span class="constant">MODIFY</span>
 }.transform_keys(&amp;<span class="symbol">:to_s</span>).freeze</pre></dd>
       
         <dt id="EVENT_TO_SYMBOL-constant" class="">EVENT_TO_SYMBOL =
           <div class="docstring">
   <div class="discussion">
-    <p>Hash of NIO event kinds to ruby symbols</p>
+    <p>Hash of WatchService event kinds to ruby symbols</p>
 
 
   </div>
@@ -3690,11 +3670,6 @@ rubocop:disable Naming/MethodName</p>
 </div>
         </dt>
         <dd><pre class="code"><span class="constant">STRING_TO_EVENT</span>.invert.transform_values(&amp;<span class="symbol">:to_sym</span>).freeze</pre></dd>
-      
-        <dt id="StandardWatchEventKinds-constant" class="">StandardWatchEventKinds =
-          
-        </dt>
-        <dd><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/StandardWatchEventKinds.html" target="_parent" title="java.nio.file.StandardWatchEventKinds">java.nio.file.StandardWatchEventKinds</a></dd>
       
     </dl>
   
@@ -3764,29 +3739,6 @@ rubocop:disable Naming/MethodName</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#getWatchEventKinds-instance_method" title="#getWatchEventKinds (instance method)">#<strong>getWatchEventKinds</strong>(_path)  &#x21d2; Array </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Invoked by java super class to get type of events to watch for.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(path, subdirs, types, &amp;block)  &#x21d2; Watcher </a>
     
 
@@ -3803,7 +3755,7 @@ rubocop:disable Naming/MethodName</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Creates a new Watch Service.</p>
+    <span class="summary_desc"><div class='inline'><p>constructor.</p>
 </div></span>
   
 </li>
@@ -3812,7 +3764,7 @@ rubocop:disable Naming/MethodName</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#processWatchEvent-instance_method" title="#processWatchEvent (instance method)">#<strong>processWatchEvent</strong>(_event, kind, path)  &#x21d2; Object </a>
+      <a href="#processWatchEvent-instance_method" title="#processWatchEvent (instance method)">#<strong>processWatchEvent</strong>(kind, path)  &#x21d2; Object </a>
     
 
     
@@ -3826,30 +3778,7 @@ rubocop:disable Naming/MethodName</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Invoked by java super class when a watch event occurs.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#watchSubDirectories-instance_method" title="#watchSubDirectories (instance method)">#<strong>watchSubDirectories</strong>  &#x21d2; false </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Invoked by java super class to check if sub directories should be watched.</p>
+    <span class="summary_desc"><div class='inline'><p>Invoked by the WatchService when a watch event occurs.</p>
 </div></span>
   
 </li>
@@ -3860,12 +3789,6 @@ rubocop:disable Naming/MethodName</p>
 
 
 
-  
-  
-  
-  
-  
-  
   <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -3880,7 +3803,7 @@ rubocop:disable Naming/MethodName</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Creates a new Watch Service</p>
+    <p>constructor</p>
 
 
   </div>
@@ -3894,6 +3817,8 @@ rubocop:disable Naming/MethodName</p>
       <pre class="lines">
 
 
+42
+43
 44
 45
 46
@@ -3901,12 +3826,10 @@ rubocop:disable Naming/MethodName</p>
 48
 49
 50
-51
-52
-53</pre>
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 42</span>
 
 <span class="keyword">def</span> <span class="function">initialize</span>(path, subdirs, types, &amp;block)
   <span class="instance-variable">@types</span> = types.map { |type| <span class="constant">STRING_TO_EVENT</span>[type] }
@@ -3956,6 +3879,8 @@ This isn't an OSGi service, but it's called by <span class='object_link'><a href
       <pre class="lines">
 
 
+55
+56
 57
 58
 59
@@ -3977,12 +3902,10 @@ This isn't an OSGi service, but it's called by <span class='object_link'><a href
 75
 76
 77
-78
-79
-80</pre>
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 55</span>
 
 <span class="keyword">def</span> <span class="function">activate</span>
   java_path = java.nio.file.Path.of(<span class="instance-variable">@path</span>.to_s)
@@ -4038,16 +3961,16 @@ This isn't an OSGi service, but it's called by <span class='object_link'><a href
       <pre class="lines">
 
 
+81
+82
 83
 84
 85
 86
-87
-88
-89</pre>
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 81</span>
 
 <span class="keyword">def</span> <span class="function">deactivate</span>
   <span class="instance-variable">@watch_service</span>&amp;.unregister_listener(<span class="predefined-constant">self</span>)
@@ -4062,85 +3985,9 @@ This isn't an OSGi service, but it's called by <span class='object_link'><a href
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="getWatchEventKinds-instance_method">
-  
-    #<strong>getWatchEventKinds</strong>(_path)  &#x21d2; <tt><span class='object_link'><a href="../../../../../Array.html" title="Array (class)">Array</a></span></tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Invoked by java super class to get type of events to watch for</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>_path</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>ignored</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../../../../../Array.html" title="Array (class)">Array</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>array of NIO event kinds</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-136
-137
-138</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 136</span>
-
-<span class="keyword">def</span> <span class="function">getWatchEventKinds</span>(_path)
-  <span class="instance-variable">@types</span>
-<span class="keyword">end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
   <h3 class="signature " id="processWatchEvent-instance_method">
   
-    #<strong>processWatchEvent</strong>(_event, kind, path)  &#x21d2; <tt><span class='object_link'>Object</span></tt> 
+    #<strong>processWatchEvent</strong>(kind, path)  &#x21d2; <tt><span class='object_link'>Object</span></tt> 
   
 
   
@@ -4148,7 +3995,7 @@ This isn't an OSGi service, but it's called by <span class='object_link'><a href
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Invoked by java super class when a watch event occurs</p>
+    <p>Invoked by the WatchService when a watch event occurs</p>
 
 
   </div>
@@ -4156,33 +4003,18 @@ This isn't an OSGi service, but it's called by <span class='object_link'><a href
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
-  
-    <li>
-      
-        <span class='name'>_event</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>ignored</p>
-</div>
-      
-    </li>
   
     <li>
       
         <span class='name'>kind</span>
       
       
-        <span class='type'>(<tt>StandardWatchEventKind</tt>)</span>
+        <span class='type'>(<tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/service/WatchService.Kind.html" target="_parent" title="org.openhab.core.service.WatchService.Kind">org.openhab.core.service.WatchService.Kind</a></tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><p>NIO watch event kind</p>
+        <div class='inline'><p>WatchService event kind</p>
 </div>
       
     </li>
@@ -4197,7 +4029,7 @@ This isn't an OSGi service, but it's called by <span class='object_link'><a href
       
       
         &mdash;
-        <div class='inline'><p>that had an event</p>
+        <div class='inline'><p>The path that had an event</p>
 </div>
       
     </li>
@@ -4211,18 +4043,18 @@ This isn't an OSGi service, but it's called by <span class='object_link'><a href
       <pre class="lines">
 
 
+92
+93
 94
 95
 96
 97
 98
 99
-100
-101
-102</pre>
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 92</span>
 
 <span class="keyword">def</span> <span class="function">processWatchEvent</span>(kind, path) <span class="comment"># rubocop:disable Naming/MethodName</span>
   logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">processWatchEvent triggered </span><span class="inline"><span class="inline-delimiter">#{</span>path<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>kind<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@types</span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
@@ -4238,71 +4070,12 @@ This isn't an OSGi service, but it's called by <span class='object_link'><a href
 </table>
 </div>
     
-      <div class="method_details ">
-  <h3 class="signature " id="watchSubDirectories-instance_method">
-  
-    #<strong>watchSubDirectories</strong>  &#x21d2; <tt>false</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Invoked by java super class to check if sub directories should be watched</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>false</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>false</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-142
-143
-144
-145</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 142</span>
-
-<span class="keyword">def</span> <span class="function">watchSubDirectories</span>
-  logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">watchSubDirectories returning </span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@subdirs</span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
-  <span class="instance-variable">@subdirs</span>
-<span class="keyword">end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
   </div>
 
 </div>
 
         <footer>
-  Generated on Sat Mar 15 01:47:41 2025 by
+  Generated on Sat Mar 15 01:59:25 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
