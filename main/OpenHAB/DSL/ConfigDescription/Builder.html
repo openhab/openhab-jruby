@@ -4586,7 +4586,7 @@ When nil, it will be inferred when this method is called inside a <span class='o
               <span class="key">verify</span>: <span class="predefined-constant">false</span>)
   <span class="comment"># Extract the named arguments into a hash</span>
   <span class="instance-variable">@parameters</span> &lt;&lt; method(__method__).parameters
-                                   .select { |param_type, _| param_type == <span class="symbol">:key</span> }
+                                   .select { |param_type, _| param_type == <span class="symbol">:key</span> } <span class="comment"># rubocop:disable Style/HashSlice</span>
                                    .to_h { |_, key| [key, binding.local_variable_get(key)] }
                                    .then <span class="keyword">do</span> |p|
     p[<span class="symbol">:options</span>] = p[<span class="symbol">:options</span>].map <span class="keyword">do</span> |opt_value, opt_label|
@@ -4619,7 +4619,7 @@ When nil, it will be inferred when this method is called inside a <span class='o
 </div>
 
         <footer>
-  Generated on Sat Mar 15 01:45:18 2025 by
+  Generated on Sat Mar 15 01:47:40 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>

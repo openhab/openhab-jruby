@@ -4066,7 +4066,7 @@ because base_item is needed to determine the command/data types but is not avail
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/group_item.rb', line 205</span>
 
 <span class="keyword">def</span> <span class="function">method_missing</span>(method, ...)
-  <span class="keyword">return</span> base_item.__send__(method, ...) <span class="keyword">if</span> base_item&amp;.respond_to?(method) <span class="comment"># rubocop:disable Lint/RedundantSafeNavigation nil responds to :to_a</span>
+  <span class="keyword">return</span> base_item.__send__(method, ...) <span class="keyword">if</span> base_item&amp;.respond_to?(method) <span class="comment"># rubocop:disable Lint/RedundantSafeNavigation -- nil responds to :to_a</span>
 
   <span class="keyword">super</span>
 <span class="keyword">end</span></pre>
@@ -4475,7 +4475,7 @@ because base_item is needed to determine the command/data types but is not avail
   <span class="comment"># instead of being statically defined in items.rb</span>
   <span class="comment"># because base_item is needed to determine the command/data types but is not available in the static context</span>
   <span class="keyword">def</span> <span class="function">method_missing</span>(method, ...)
-    <span class="keyword">return</span> base_item.__send__(method, ...) <span class="keyword">if</span> base_item&amp;.respond_to?(method) <span class="comment"># rubocop:disable Lint/RedundantSafeNavigation nil responds to :to_a</span>
+    <span class="keyword">return</span> base_item.__send__(method, ...) <span class="keyword">if</span> base_item&amp;.respond_to?(method) <span class="comment"># rubocop:disable Lint/RedundantSafeNavigation -- nil responds to :to_a</span>
 
     <span class="keyword">super</span>
   <span class="keyword">end</span>
@@ -4734,7 +4734,7 @@ because base_item is needed to determine the command/data types but is not avail
 </div>
 
         <footer>
-  Generated on Sat Mar 15 01:45:14 2025 by
+  Generated on Sat Mar 15 01:47:36 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </footer>
