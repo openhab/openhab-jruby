@@ -2051,8 +2051,7 @@ module OpenHAB
         # @param [String] path Path to watch. Can be a directory or a file.
         # @param [String] glob
         #   Limit events to paths matching this glob. Globs are matched using `glob`
-        #   [PathMatcher](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/file/FileSystem.html#getPathMatcher(java.lang.String))
-        #   rules.
+        #   {java.nio.file.FileSystem#getPathMatcher(java.lang.String) PathMatcher} rules.
         # @param [Array<:created, :deleted, :modified>, :created, :deleted, :modified] for
         #   Types of changes to watch for.
         # @param [Object] attach object to be attached to the trigger
