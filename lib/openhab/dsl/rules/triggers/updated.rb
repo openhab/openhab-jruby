@@ -29,11 +29,16 @@ module OpenHAB
             type, config = case item
                            when GroupItem::Members
                              group_update(item:, to:)
-                           when Core::Things::Thing,
-                 Core::Things::ThingUID
+                           when Core::Things::Thing, Core::Things::ThingUID
                              thing_update(thing: item, to:)
-                           else
+                           when Core::Items::Item
                              item_update(item:, to:)
+                           else
+                             if item.to_s.include?(":")
+                               thing_update(thing: item, to:)
+                             else
+                               item_update(item:, to:)
+                             end
                            end
             append_trigger(type:, config:, attach:, conditions:)
           end
@@ -62,7 +67,7 @@ module OpenHAB
           #  second element is a Hash configuring trigger
           #
           def item_update(item:, to:)
-            config = { "itemName" => item.name }
+            config = { "itemName" => item.is_a?(Item) ? item.name : item.to_s }
             config["state"] = to.to_s unless to.nil?
             [ITEM_STATE_UPDATE, config]
           end
