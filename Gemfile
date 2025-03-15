@@ -2,6 +2,11 @@
 
 source "https://rubygems.org"
 
+# see https://github.com/jruby/jruby/issues/8606
+# once we no longer support a JRuby < 9.4.12.0 (openHAB 5.0+), this can be removed
+# @deprecated OH 5.0
+gem "jar-dependencies", "0.4.1", platform: :jruby, require: false
+
 gemspec
 
 gem "debug", "~> 1.9", require: false, platform: :mri
