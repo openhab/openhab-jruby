@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 require "openhab/console/stdio"
+
+gem "irb", "~> 1.15"
+
 require "irb"
 
 module OpenHAB
@@ -46,16 +49,8 @@ module OpenHAB
         end
       end
       ::IRB::StdioInputMethod.prepend(StdioInputMethod)
-      # As of IRB 1.8.0, Readline and Reline inherit from StdioInputMethod, so
-      # we just need to `include` it in those classes. For older versions, we
-      # prepend so that we can overwrite @stdin after it has been initialized
-      include_method = if Gem::Version.new(::IRB::VERSION) >= Gem::Version.new("1.8.0")
-                         :include
-                       else
-                         :prepend
-                       end
       [::IRB::ReadlineInputMethod, ::IRB::RelineInputMethod].each do |klass|
-        klass.__send__(include_method, StdioInputMethod)
+        klass.include(StdioInputMethod)
       end
 
       module ReadlineInputMethod
@@ -87,8 +82,8 @@ module OpenHAB
           matching_items | matching_things | super
         end
       end
-      ::IRB::RegexpCompletor.prepend(EntityCompletor) if defined?(::IRB::RegexpCompletor)
-      ::IRB::TypeCompletor.prepend(EntityCompletor) if defined?(::IRB::TypeCompletor)
+      ::IRB::RegexpCompletor.prepend(EntityCompletor)
+      ::IRB::TypeCompletor.prepend(EntityCompletor)
     end
   end
 end
