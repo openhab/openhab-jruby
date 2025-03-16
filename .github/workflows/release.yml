@@ -62,8 +62,7 @@ jobs:
 
           bin/rake changelog[${{ env.OLD_VERSION }},${{ env.NEW_VERSION }},new_changes.md]
 
-          # @deprecated OH3.4 Gemfile.ruby-2.6 is only for OH3
-          git add Gemfile.lock Gemfile.ruby-2.6.lock CHANGELOG.md USAGE.md templates .known_good_references
+          git add Gemfile.lock CHANGELOG.md USAGE.md templates .known_good_references
           git commit --amend --no-edit
       - uses: rubygems/release-gem@v1
         with:
