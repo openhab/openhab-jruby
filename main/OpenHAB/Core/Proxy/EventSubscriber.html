@@ -3810,30 +3810,36 @@ if it has changed.</p>
       <pre class="lines">
 
 
-39
-40
-41
-42
-43
-44
-45
-46
 47
 48
-49</pre>
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/proxy.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/proxy.rb', line 47</span>
 
 <span class="keyword">def</span> <span class="function">initialize</span>
   <span class="instance-variable">@proxies</span> = java.util.concurrent.ConcurrentHashMap.new
   <span class="instance-variable">@parent_module</span> = <span class="constant">Object</span>.const_get(<span class="predefined-constant">self</span>.class.name.split(<span class="string"><span class="delimiter">&quot;</span><span class="content">::</span><span class="delimiter">&quot;</span></span>)[<span class="integer">0</span>..<span class="integer">-3</span>].join(<span class="string"><span class="delimiter">&quot;</span><span class="content">::</span><span class="delimiter">&quot;</span></span>), <span class="predefined-constant">false</span>)
-  <span class="instance-variable">@object_type</span> = <span class="instance-variable">@parent_module</span>.name.split(<span class="string"><span class="delimiter">&quot;</span><span class="content">::</span><span class="delimiter">&quot;</span></span>).last.downcase[<span class="integer">0</span>..<span class="integer">-2</span>].to_sym
+  object_type = <span class="instance-variable">@parent_module</span>.name.split(<span class="string"><span class="delimiter">&quot;</span><span class="content">::</span><span class="delimiter">&quot;</span></span>).last[<span class="integer">0</span>...<span class="integer">-1</span>]
+  <span class="instance-variable">@object_type</span> = object_type.downcase.to_sym
+  <span class="instance-variable">@type</span> = <span class="instance-variable">@parent_module</span>.const_get(object_type, <span class="predefined-constant">false</span>)
 
   <span class="instance-variable">@event_types</span> = <span class="instance-variable">@parent_module</span>::<span class="constant">Proxy</span>::<span class="constant">EVENTS</span>
   <span class="instance-variable">@uid_method</span> = <span class="instance-variable">@parent_module</span>::<span class="constant">Proxy</span>::<span class="constant">UID_METHOD</span>
+  <span class="instance-variable">@uid_type</span> = <span class="instance-variable">@parent_module</span>::<span class="constant">Proxy</span>::<span class="constant">UID_TYPE</span>
   <span class="instance-variable">@registry</span> = <span class="instance-variable">@parent_module</span>::<span class="constant">Provider</span>.registry
-  <span class="instance-variable">@registration</span> = <span class="constant">OSGi</span>.register_service(<span class="predefined-constant">self</span>, <span class="key"><span class="delimiter">&quot;</span><span class="content">event.topics</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">openhab/*</span><span class="delimiter">&quot;</span></span>)
+  <span class="instance-variable">@registration</span> = <span class="constant">OSGi</span>.register_service(<span class="predefined-constant">self</span>)
   <span class="constant">ScriptHandling</span>.script_unloaded { <span class="instance-variable">@registration</span>.unregister }
 <span class="keyword">end</span></pre>
     </td>
@@ -3885,12 +3891,12 @@ if it has changed.</p>
       <pre class="lines">
 
 
-55
-56
-57</pre>
+66
+67
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/proxy.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/proxy.rb', line 66</span>
 
 <span class="keyword">def</span> <span class="function">subscribed_event_types</span>
   <span class="instance-variable">@event_types</span>.to_set
@@ -3944,12 +3950,12 @@ if it has changed.</p>
       <pre class="lines">
 
 
-60
-61
-62</pre>
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/proxy.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/proxy.rb', line 71</span>
 
 <span class="keyword">def</span> <span class="function">event_filter</span>
   <span class="predefined-constant">nil</span>
@@ -3984,27 +3990,37 @@ if it has changed.</p>
       <pre class="lines">
 
 
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96</pre>
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/proxy.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/proxy.rb', line 96</span>
 
 <span class="keyword">def</span> <span class="function">fetch</span>(object)
   result = <span class="predefined-constant">nil</span>
 
-  <span class="instance-variable">@proxies</span>.compute(object.__send__(<span class="instance-variable">@uid_method</span>)) <span class="keyword">do</span> |_k, proxy_ref|
+  uid = <span class="keyword">if</span> object.is_a?(<span class="instance-variable">@type</span>)
+          object.__send__(<span class="instance-variable">@uid_method</span>)
+        <span class="keyword">else</span>
+          object
+        <span class="keyword">end</span>
+  <span class="instance-variable">@proxies</span>.compute(uid) <span class="keyword">do</span> |_k, proxy_ref|
     result = resolve_ref(proxy_ref)
     proxy_ref = <span class="predefined-constant">nil</span> <span class="keyword">unless</span> result
     result ||= <span class="keyword">yield</span>
@@ -4058,27 +4074,29 @@ if it has changed.</p>
       <pre class="lines">
 
 
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79</pre>
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/proxy.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/proxy.rb', line 79</span>
 
 <span class="keyword">def</span> <span class="function">receive</span>(event)
   uid = event.__send__(<span class="instance-variable">@object_type</span>).__send__(<span class="instance-variable">@uid_method</span>)
-  object = <span class="instance-variable">@registry</span>.get(uid) <span class="keyword">unless</span> event.class.simple_name == <span class="instance-variable">@event_types</span>.last
+  uid = <span class="instance-variable">@uid_type</span>.new(uid) <span class="keyword">unless</span> <span class="instance-variable">@uid_type</span> == <span class="constant">String</span>
 
   <span class="instance-variable">@proxies</span>.compute_if_present(uid) <span class="keyword">do</span> |_, proxy_ref|
+    object = <span class="instance-variable">@registry</span>.get(uid) <span class="keyword">unless</span> event.class.simple_name == <span class="instance-variable">@event_types</span>.last
     proxy = resolve_ref(proxy_ref)
     <span class="keyword">next</span> <span class="predefined-constant">nil</span> <span class="keyword">unless</span> proxy
 
@@ -4096,7 +4114,7 @@ if it has changed.</p>
 </div>
 
         <footer>
-  Generated on Sat Mar 15 21:43:14 2025 by
+  Generated on Sun Mar 16 01:03:41 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.4).
 </footer>
