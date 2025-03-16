@@ -1,5 +1,25 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.36.0](https://github.com/openhab/openhab-jruby/tree/v5.36.0) (2025-03-16)
+
+### Features
+
+- Pass self to Item#modify block by [@jimtng](https://github.com/jimtng) in [#404](https://github.com/openhab/openhab-jruby/pull/404)
+- Add helpful #inspect (and docs) for CommandDescription and StateDescription by [@ccutrer](https://github.com/ccutrer) in [#407](https://github.com/openhab/openhab-jruby/pull/407)
+- Add console scripts for Karaf console by [@jimtng](https://github.com/jimtng) in [#405](https://github.com/openhab/openhab-jruby/pull/405)
+- Drop openHAB 3.4 support by [@ccutrer](https://github.com/ccutrer) in [#98](https://github.com/openhab/openhab-jruby/pull/98)
+- Drop openHAB 4.0 Support by [@ccutrer](https://github.com/ccutrer) in [#411](https://github.com/openhab/openhab-jruby/pull/411)
+- Support Date/Time operations against Time QuantityType by [@jimtng](https://github.com/jimtng) in [#396](https://github.com/openhab/openhab-jruby/pull/396)
+- Add RawType#bytesize by [@ccutrer](https://github.com/ccutrer) in [#416](https://github.com/openhab/openhab-jruby/pull/416)
+- Update javadocs links to Java 21 by [@jimtng](https://github.com/jimtng) in [#395](https://github.com/openhab/openhab-jruby/pull/395)
+- Improve errors when an item no longer exists by [@ccutrer](https://github.com/ccutrer) in [#354](https://github.com/openhab/openhab-jruby/pull/354)
+
+### Bug Fixes
+
+- Use #ruby_first to solve Java21's List#first incompatibility by [@jimtng](https://github.com/jimtng) in [#383](https://github.com/openhab/openhab-jruby/pull/383)
+
+**Full Changelog**: [v5.35.1...v5.36.0](https://github.com/openhab/openhab-jruby/compare/v5.35.1...v5.36.0)
+
 ## [v5.35.1](https://github.com/openhab/openhab-jruby/tree/v5.35.1) (2025-02-25)
 
 ### Bug Fixes
