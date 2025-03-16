@@ -19,6 +19,24 @@ module OpenHAB
             other.is_a?(self)
           end
 
+          # @!visibility private
+          def item_states_event_builder
+            @item_states_event_builder ||=
+              OpenHAB::OSGi.service("org.openhab.core.io.rest.sse.internal.SseItemStatesEventBuilder")&.tap do |builder|
+                m = builder.class.java_class.get_declared_method("getDisplayState", Item, java.util.Locale)
+                m.accessible = true
+                builder.instance_variable_set(:@getDisplayState, m)
+                # Disable "singleton on non-persistent Java type"
+                original_verbose = $VERBOSE
+                $VERBOSE = nil
+                def builder.get_display_state(item)
+                  @getDisplayState.invoke(self, item, nil)
+                end
+              ensure
+                $VERBOSE = original_verbose
+              end
+          end
+
           private
 
           # @!macro def_type_predicate
@@ -59,6 +77,139 @@ module OpenHAB
         #
         def to_s
           label || name
+        end
+
+        # @!attribute [r] formatted_state
+        #
+        # Format the item's state according to its state description
+        #
+        # This may include running a transformation.
+        #
+        # @return [String] The formatted state
+        #
+        # @example
+        #   logger.info(Exterior_WindDirection.formatted_state) # => "NE (36°)"
+        #
+        def formatted_state
+          Item.item_states_event_builder.get_display_state(self)
+        end
+
+        #
+        # Send a command to this item
+        #
+        # When this method is chained after the {OpenHAB::DSL::Items::Ensure::Ensurable#ensure ensure}
+        # method, or issued inside an {OpenHAB::DSL.ensure_states ensure_states} block, or after
+        # {OpenHAB::DSL.ensure_states! ensure_states!} have been called,
+        # the command will only be sent if the item is not already in the same state.
+        #
+        # The similar method `command!`, however, will always send the command regardless of the item's state.
+        #
+        # @param [Command, #to_s] command command to send to the item.
+        #   When given a {Command} argument, it will be passed directly.
+        #   Otherwise, the result of `#to_s` will be parsed into a {Command}.
+        # @param [String, nil] source Optional string to identify what sent the event.
+        # @return [self, nil] nil when `ensure` is in effect and the item was already in the same state,
+        #   otherwise the item.
+        #
+        # @see DSL::Items::TimedCommand#command Timed Command
+        # @see OpenHAB::DSL.ensure_states ensure_states
+        # @see OpenHAB::DSL.ensure_states! ensure_states!
+        # @see DSL::Items::Ensure::Ensurable#ensure ensure
+        #
+        # @example Sending a {Command} to an item
+        #   MySwitch.command(ON) # The preferred method is `MySwitch.on`
+        #   Garage_Door.command(DOWN) # The preferred method is `Garage_Door.down`
+        #   SetTemperature.command 20 | "°C"
+        #
+        # @example Sending a plain number to a {NumberItem}
+        #   SetTemperature.command(22.5) # if it accepts a DecimalType
+        #
+        # @example Sending a string to a dimensioned {NumberItem}
+        #   SetTemperature.command("22.5 °C") # The string will be parsed and converted to a QuantityType
+        #
+        def command(command, source: nil)
+          command = format_command(command)
+          logger.trace { "Sending Command #{command} to #{name}" }
+          if source
+            Events.publisher.post(Events::ItemEventFactory.create_command_event(name, command, source.to_s))
+          else
+            $events.send_command(self, command)
+          end
+          Proxy.new(self)
+        end
+        alias_method :command!, :command
+
+        # not an alias to allow easier stubbing and overriding
+        def <<(command)
+          command(command)
+        end
+
+        # @!parse alias_method :<<, :command
+
+        # @!method refresh
+        #   Send the {REFRESH} command to the item
+        #   @return [Item] `self`
+
+        #
+        # Send an update to this item
+        #
+        # @param [State, #to_s, nil] state the state to update the item.
+        #   When given a {State} argument, it will be passed directly.
+        #   Otherwise, the result of `#to_s` will be parsed into a {State} first.
+        #   If `nil` is passed, the item will be updated to {NULL}.
+        # @return [self, nil] nil when `ensure` is in effect and the item was already in the same state,
+        #   otherwise the item.
+        #
+        # @example Updating to a {State}
+        #   DoorStatus.update(OPEN)
+        #   InsideTemperature.update 20 | "°C"
+        #
+        # @example Updating to {NULL}, the two following are equivalent:
+        #   DoorStatus.update(nil)
+        #   DoorStatus.update(NULL)
+        #
+        # @example Updating with a plain number
+        #   PeopleCount.update(5) # A plain NumberItem
+        #
+        # @example Updating with a string to a dimensioned {NumberItem}
+        #   InsideTemperature.update("22.5 °C") # The string will be parsed and converted to a QuantityType
+        #
+        def update(state)
+          state = format_update(state)
+          logger.trace { "Sending Update #{state} to #{name}" }
+          $events.post_update(self, state)
+          Proxy.new(self)
+        end
+        alias_method :update!, :update
+
+        # @!visibility private
+        def format_command(command)
+          command = format_type(command)
+          return command if command.is_a?(Types::Command)
+
+          command = command.to_s
+          org.openhab.core.types.TypeParser.parse_command(getAcceptedCommandTypes, command) || command
+        end
+
+        # @!visibility private
+        def format_update(state)
+          state = format_type(state)
+          return state if state.is_a?(Types::State)
+
+          state = state.to_s
+          org.openhab.core.types.TypeParser.parse_state(getAcceptedDataTypes, state) || StringType.new(state)
+        end
+
+        # formats a {Types::Type} to send to the event bus
+        # @!visibility private
+        def format_type(type)
+          # actual Type types can be sent directly without conversion
+          # make sure to use Type, because this method is used for both
+          # #update and #command
+          return type if type.is_a?(Types::Type)
+          return NULL if type.nil?
+
+          type.to_s
         end
 
         #

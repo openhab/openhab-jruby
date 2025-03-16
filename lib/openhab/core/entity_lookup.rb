@@ -158,7 +158,7 @@ module OpenHAB
         def lookup_entity(name, create_dummy_items: false)
           # make sure we have a nil return
           create_dummy_items = nil if create_dummy_items == false
-          lookup_item(name) || lookup_thing_const(name) || (create_dummy_items && Items::Proxy.new(name.to_sym))
+          lookup_item(name) || lookup_thing_const(name) || (create_dummy_items && Items::Proxy.new(name.to_s))
         end
 
         #

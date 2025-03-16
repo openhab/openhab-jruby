@@ -24,6 +24,14 @@ module OpenHAB
     # @!visibility private
     #
     module Proxy
+      # Error raised when an item is attempted to be accessed, but no longer
+      # exists
+      class StaleProxyError < RuntimeError
+        def initialize(type, uid)
+          super("#{type} #{uid} does not currently exist")
+        end
+      end
+
       #
       # Registers and listens to openHAB bus events for objects getting
       # added/updated/removed, and updates references from proxy objects
@@ -39,12 +47,15 @@ module OpenHAB
         def initialize
           @proxies = java.util.concurrent.ConcurrentHashMap.new
           @parent_module = Object.const_get(self.class.name.split("::")[0..-3].join("::"), false)
-          @object_type = @parent_module.name.split("::").last.downcase[0..-2].to_sym
+          object_type = @parent_module.name.split("::").last[0...-1]
+          @object_type = object_type.downcase.to_sym
+          @type = @parent_module.const_get(object_type, false)
 
           @event_types = @parent_module::Proxy::EVENTS
           @uid_method = @parent_module::Proxy::UID_METHOD
+          @uid_type = @parent_module::Proxy::UID_TYPE
           @registry = @parent_module::Provider.registry
-          @registration = OSGi.register_service(self, "event.topics": "openhab/*")
+          @registration = OSGi.register_service(self)
           ScriptHandling.script_unloaded { @registration.unregister }
         end
 
@@ -67,9 +78,10 @@ module OpenHAB
         #
         def receive(event)
           uid = event.__send__(@object_type).__send__(@uid_method)
-          object = @registry.get(uid) unless event.class.simple_name == @event_types.last
+          uid = @uid_type.new(uid) unless @uid_type == String
 
           @proxies.compute_if_present(uid) do |_, proxy_ref|
+            object = @registry.get(uid) unless event.class.simple_name == @event_types.last
             proxy = resolve_ref(proxy_ref)
             next nil unless proxy
 
@@ -84,7 +96,12 @@ module OpenHAB
         def fetch(object)
           result = nil
 
-          @proxies.compute(object.__send__(@uid_method)) do |_k, proxy_ref|
+          uid = if object.is_a?(@type)
+                  object.__send__(@uid_method)
+                else
+                  object
+                end
+          @proxies.compute(uid) do |_k, proxy_ref|
             result = resolve_ref(proxy_ref)
             proxy_ref = nil unless result
             result ||= yield
@@ -119,11 +136,150 @@ module OpenHAB
         klass.singleton_class.prepend(ClassMethods)
         # define a sub-class of EventSubscriber as a child class of the including class
         klass.const_set(:EventSubscriber, Class.new(EventSubscriber))
+        parent_module = Object.const_get(klass.name.split("::")[0..-2].join("::"), false)
+        object_type = parent_module.name.split("::").last[0...-1].to_sym
+        klass.const_set(:Type, parent_module.const_get(object_type, false))
       end
 
       # @!visibility private
       def to_java
         __getobj__
+      end
+
+      KERNEL_CLASS = ::Kernel.instance_method(:class)
+      KERNEL_IVAR_SET = ::Kernel.instance_method(:instance_variable_set)
+      private_constant :KERNEL_CLASS, :KERNEL_IVAR_SET
+
+      # @!visibility private
+
+      def initialize(target)
+        @klass = KERNEL_CLASS.bind_call(self)
+
+        if target.is_a?(@klass::Type)
+          super
+          KERNEL_IVAR_SET.bind_call(self, :"@#{@klass::UID_METHOD}", target&.__send__(@klass::UID_METHOD))
+        else
+          # dummy items; we were just passed the item name
+          super(nil)
+          KERNEL_IVAR_SET.bind_call(self, :"@#{@klass::UID_METHOD}", target)
+        end
+      end
+
+      # @!visibility private
+      def __setobj__(target)
+        @target = target
+      end
+
+      # @!visibility private
+      def __getobj__
+        @target
+      end
+
+      # overwrite these methods to handle "dummy" items:
+      # if it's a dummy item, and the method exists on Item,
+      # raise a StaleProxyError when you try to call it.
+      # if it doesn't exist on item, just let it raise NoMethodError
+      # as usual
+      # @!visibility private
+      def method_missing(method, ...)
+        target = __getobj__
+        if target.nil? && @klass::Type.method_defined?(method)
+          __raise__ StaleProxyError.new(@klass.name.split("::")[-2][0...-1], __send__(@klass::UID_METHOD))
+        end
+
+        if target_respond_to?(target, method, false)
+          target.__send__(method, ...)
+        elsif ::Kernel.method_defined?(method) || ::Kernel.private_method_defined?(method)
+          ::Kernel.instance_method(method).bind_call(self, ...)
+        else
+          super
+        end
+      end
+
+      # @!visibility private
+      def respond_to_missing?(method, include_private)
+        target = __getobj__
+        return true if target.nil? && @klass::Type.method_defined?(method)
+
+        r = target_respond_to?(target, method, include_private)
+        if r && include_private && !target_respond_to?(target, method, false)
+          warn "delegator does not forward private method ##{method}", uplevel: 3
+          return false
+        end
+        r
+      end
+
+      # @!visibility private
+      def respond_to?(method, include_private = false) # rubocop:disable Style/OptionalBooleanParameter
+        target = __getobj__
+        return true if target.nil? && @klass::Type.method_defined?(method)
+
+        target_respond_to?(target, method, include_private) || super
+      end
+
+      #
+      # Need to check if `self` _or_ the delegate is an instance of the
+      # given class
+      #
+      # So that {#==} can work
+      #
+      # @return [true, false]
+      #
+      # @!visibility private
+      def instance_of?(klass)
+        __getobj__.instance_of?(klass) || super
+      end
+
+      #
+      # Check if delegates are equal for comparison
+      #
+      # Otherwise items can't be used in Java maps
+      #
+      # @return [true, false]
+      #
+      # @!visibility private
+      def ==(other)
+        return __getobj__ == other.__getobj__ if other.instance_of?(@klass)
+
+        super
+      end
+
+      #
+      # Non equality comparison
+      #
+      # @return [true, false]
+      #
+      # @!visibility private
+      def !=(other)
+        !(self == other) # rubocop:disable Style/InverseMethods
+      end
+
+      # @return [String]
+      def to_s
+        target = __getobj__
+        return __send__(@klass::UID_METHOD) if target.nil?
+
+        target.to_s
+      end
+
+      # @return [String]
+      def inspect
+        target = __getobj__
+        return target.inspect unless target.nil?
+
+        "#<#{self.class.name} #{__send__(@klass::UID_METHOD)}>"
+      end
+
+      #
+      # Supports inspect from IRB when we're a dummy
+      #
+      # @return [void]
+      # @!visibility private
+      def pretty_print(printer)
+        target = __getobj__
+        return target.pretty_print(printer) unless target.nil?
+
+        printer.text(inspect)
       end
     end
   end
