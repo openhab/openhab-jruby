@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.36.1](https://github.com/openhab/openhab-jruby/tree/v5.36.1) (2025-03-18)
+
+### Bug Fixes
+
+- remove direct irb dependency by [@ccutrer](https://github.com/ccutrer) in [#422](https://github.com/openhab/openhab-jruby/pull/422)
+
+**Full Changelog**: [v5.36.0...v5.36.1](https://github.com/openhab/openhab-jruby/compare/v5.36.0...v5.36.1)
+
 ## [v5.36.0](https://github.com/openhab/openhab-jruby/tree/v5.36.0) (2025-03-16)
 
 ### Features
