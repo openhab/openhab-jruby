@@ -187,13 +187,10 @@ module OpenHAB
           __raise__ StaleProxyError.new(@klass.name.split("::")[-2][0...-1], __send__(@klass::UID_METHOD))
         end
 
-        if target_respond_to?(target, method, false)
-          target.__send__(method, ...)
-        elsif ::Kernel.method_defined?(method) || ::Kernel.private_method_defined?(method)
-          ::Kernel.instance_method(method).bind_call(self, ...)
-        else
-          super
-        end
+        super
+
+        # do _not_ attempt to inline the rest of Delegator#method_missing.
+        # see spec/openhab/core/items/proxy_spec.rb for the result
       end
 
       # @!visibility private
