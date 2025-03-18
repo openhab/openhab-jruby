@@ -5,7 +5,7 @@
 
 This add-on provides Ruby scripting language for automation rules.
 It includes the [openhab-scripting](https://openhab.github.io/openhab-jruby/) helper library, a comprehensive Ruby gem designed to enhance automation in openHAB.
-This library offers a streamlined syntax for writing file-based and UI-based rules, making it easier and more intuitive than RulesDSL, while delivering the full features of the Ruby language.
+This library offers a streamlined syntax for writing file-based and UI-based rules, making it easier and more intuitive than Rules DSL, while delivering the full features of the Ruby language.
 
 If you're new to Ruby, you may want to check out [Ruby Basics](docs/ruby-basics.md).
 
@@ -50,7 +50,7 @@ only_every(2.minutes) do # apply rate-limiting
 end
 ```
 
-Additional [example rules are available](docs/examples.md), as well as examples of [conversions from RulesDSL, JavaScript, and Python rules](docs/conversions.md).
+Additional [example rules are available](docs/examples.md), as well as examples of [conversions from Rules DSL, JavaScript, and Python rules](docs/conversions.md).
 
 - [Why Ruby?](#why-ruby)
 - [Installation](#installation)
