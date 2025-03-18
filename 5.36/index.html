@@ -3732,11 +3732,6 @@ This library offers a streamlined syntax for writing file-based and UI-based rul
 <h2 id="configuration"><a href="#configuration" class="header-anchor">#</a>Configuration</h2>
 <p>After installing this add-on, you will find configuration options in the openHAB portal under <em>Settings -&gt; Add-on Settings -&gt; JRuby Scripting</em>.
 Alternatively, JRuby configuration parameters may be set by creating a <code>jruby.cfg</code> file in <code>conf/services/</code>.</p>
-<blockquote>
-<p><strong><em>NOTE:</em></strong>
-In openHAB 3.4.x, the <code>gems</code> and <code>require</code> settings must be manually configured to the value given in the table below.
-Starting from openHAB 4.0, the correct defaults were added, so manual configurations are no longer necessary.</p>
-</blockquote>
 <p>By default this add-on includes the <a href="https://github.com/openhab/openhab-jruby">openhab-scripting</a> Ruby gem and automatically <code>require</code>s it.
 This allows the use of <span class='object_link'><a href="OpenHAB/DSL.html#items-class_method" title="OpenHAB::DSL.items (method)">items</a></span>, <span class='object_link'><a href="OpenHAB/DSL.html#rules-class_method" title="OpenHAB::DSL.rules (method)">rules</a></span>, <span class='object_link'><a href="OpenHAB/DSL.html#shared_cache-class_method" title="OpenHAB::DSL.shared_cache (method)">shared_cache</a></span> and other objects in your scripts.
 This functionality can be disabled for users who prefer to manage their own gems and <code>require</code>s via the add-on configuration options.
@@ -4702,9 +4697,6 @@ logger.info transform(<span class="symbol">:map</span>, <span class="string"><sp
 <p>This add-on also provides the necessary infrastructure to use Ruby for writing <a href="https://www.openhab.org/docs/configuration/transformations.html">transformations</a>.</p>
 <p>The main value to be transformed is given to the script in a variable called <code>input</code>.
 Note that the values are passed to the transformation as Strings even for numeric items and data types.</p>
-<p><strong>Note</strong>: In openHAB 3.4, due to an <a href="https://github.com/jruby/jruby/issues/5876">issue</a> in the current version of JRuby, you will need to begin your script with <code>input ||= nil</code> (and <code>a ||= nil</code> etc. for additional query variables) so that JRuby will recognize the variables as variables--rather than method calls--when it's parsing the script.
-Otherwise you will get errors like <code>(NameError) undefined local variable or method 'input' for main:Object</code>.
-This is not necessary in openHAB 4.0+.</p>
 <h4 id="file-based-transformations"><a href="#file-based-transformations" class="header-anchor">#</a>File Based Transformations <!-- raw HTML omitted --></h4>
 <p>Once the addon is installed, you can create a Ruby file in the <code>$OPENHAB_CONF/transform</code> directory, with the extension <code>.rb</code>.
 When referencing the file, you need to specify the <code>RB</code> transform: <code>RB(mytransform.rb):%s</code>.</p>
@@ -5068,7 +5060,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Tue Mar 18 00:57:03 2025 by
+  Generated on Tue Mar 18 22:04:13 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.4).
 </footer>
