@@ -25,6 +25,23 @@ RSpec.describe OpenHAB::Core::Items::Proxy do
     expect(hash[Switch1]).to be 1
   end
 
+  it "accessing as a hash key doesn't break subsequent kwargs method calls" do
+    items.build { switch_item "Switch1" }
+
+    hash = { Switch1 => 1 }
+    def m(_arg1, kwarg1: nil)
+      kwarg1
+    end
+
+    # this is the key to this spec. if this is called immediately
+    # before another method call with kwargs, that method call will be treated
+    # as if it has ruby2_keywords, and you get
+    # `wrong number of arguments (given 2, expected 1)`
+    # it seems like a JRuby bug, but it's worked around for now
+    hash[Switch1]
+    expect(m(:dummy, kwarg1: 1)).to be 1
+  end
+
   it "can be used in a Set" do
     set = Set.new
     set << Switch1
