@@ -149,10 +149,6 @@ Additional [example rules are available](docs/examples.md), as well as examples 
 After installing this add-on, you will find configuration options in the openHAB portal under _Settings -> Add-on Settings -> JRuby Scripting_.
 Alternatively, JRuby configuration parameters may be set by creating a `jruby.cfg` file in `conf/services/`.
 
-> **_NOTE:_**
-> In openHAB 3.4.x, the `gems` and `require` settings must be manually configured to the value given in the table below.
-Starting from openHAB 4.0, the correct defaults were added, so manual configurations are no longer necessary.
-
 By default this add-on includes the [openhab-scripting](https://github.com/openhab/openhab-jruby) Ruby gem and automatically `require`s it.
 This allows the use of {OpenHAB::DSL.items items}, {OpenHAB::DSL.rules rules}, {OpenHAB::DSL.shared_cache shared_cache} and other objects in your scripts.
 This functionality can be disabled for users who prefer to manage their own gems and `require`s via the add-on configuration options.
@@ -1385,10 +1381,6 @@ This add-on also provides the necessary infrastructure to use Ruby for writing [
 
 The main value to be transformed is given to the script in a variable called `input`.
 Note that the values are passed to the transformation as Strings even for numeric items and data types.
-
-**Note**: In openHAB 3.4, due to an [issue](https://github.com/jruby/jruby/issues/5876) in the current version of JRuby, you will need to begin your script with `input ||= nil` (and `a ||= nil` etc. for additional query variables) so that JRuby will recognize the variables as variables--rather than method calls--when it's parsing the script.
-Otherwise you will get errors like `(NameError) undefined local variable or method 'input' for main:Object`.
-This is not necessary in openHAB 4.0+.
 
 #### File Based Transformations <!-- omit from toc -->
 
