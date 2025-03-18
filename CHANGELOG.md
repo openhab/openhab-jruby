@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.36.2](https://github.com/openhab/openhab-jruby/tree/v5.36.2) (2025-03-18)
+
+### Bug Fixes
+
+- Fix issue with kwargs methods being treated as ruby2_keywords sometimes by [@ccutrer](https://github.com/ccutrer) in [#423](https://github.com/openhab/openhab-jruby/pull/423)
+
+**Full Changelog**: [v5.36.1...v5.36.2](https://github.com/openhab/openhab-jruby/compare/v5.36.1...v5.36.2)
+
 ## [v5.36.1](https://github.com/openhab/openhab-jruby/tree/v5.36.1) (2025-03-18)
 
 ### Bug Fixes
