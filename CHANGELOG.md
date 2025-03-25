@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.37.0](https://github.com/openhab/openhab-jruby/tree/v5.37.0) (2025-03-25)
+
+### Features
+
+- Persistence: support riemann_sum methods by [@jimtng](https://github.com/jimtng) in [#362](https://github.com/openhab/openhab-jruby/pull/362)
+
+**Full Changelog**: [v5.36.2...v5.37.0](https://github.com/openhab/openhab-jruby/compare/v5.36.2...v5.37.0)
+
 ## [v5.36.2](https://github.com/openhab/openhab-jruby/tree/v5.36.2) (2025-03-18)
 
 ### Bug Fixes
