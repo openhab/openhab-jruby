@@ -623,6 +623,7 @@ module OpenHAB
         #   Returns the time the item was last updated.
         #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
         #   @return [ZonedDateTime, nil] The timestamp of the last update
+        #   @see Item#last_state_update
 
         # @!method next_update(service = nil)
         #   Returns the first future update time of the item.
@@ -636,6 +637,7 @@ module OpenHAB
         #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
         #   @return [ZonedDateTime, nil] The timestamp of the last update
         #   @since openHAB 4.2
+        #   @see Item#last_state_change
 
         # @!method next_change(service = nil)
         #   Returns the first future change time of the item.
@@ -670,6 +672,8 @@ module OpenHAB
         #   @return [PersistedState, nil] the previous state or nil if no previous state could be found,
         #           or if the default persistence service is not configured or
         #           does not refer to a valid service
+        #
+        #   @see Item#last_state
 
         # @!method next_state(service = nil, skip_equal: false)
         #   Return the next state of the item
