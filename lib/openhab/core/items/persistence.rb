@@ -111,28 +111,37 @@ module OpenHAB
         # @deprecated Use {PersistedState} instead
         HistoricState = PersistedState
 
-        # @!method average_since(timestamp, service = nil)
+        # @!method average_since(timestamp, service = nil, riemann_type: nil)
         #   Returns the average value of the item's state since the given time
         #   @param [#to_zoned_date_time] timestamp The point in time from which to search
         #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann sum.
+        #     If nil, :left is used.
         #   @return [DecimalType, QuantityType, nil] The average value since `timestamp`,
         #     or nil if no previous states could be found.
+        #   @since openHAB 5.0 riemann_type parameter added
 
-        # @!method average_until(timestamp, service = nil)
+        # @!method average_until(timestamp, service = nil, riemann_type: nil)
         #   Returns the average value of the item's state between now until the given time
         #   @param [#to_zoned_date_time] timestamp The point in time until which to search
         #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann sum.
+        #     If nil, :left is used.
         #   @return [DecimalType, QuantityType, nil] The average value until `timestamp`,
         #     or nil if no future states could be found.
         #   @since openHAB 4.2
+        #   @since openHAB 5.0 riemann_type parameter added
 
-        # @!method average_between(start, finish, service = nil)
+        # @!method average_between(start, finish, service = nil, riemann_type: nil)
         #   Returns the average value of the item's state between two points in time
         #   @param [#to_zoned_date_time] start The point in time from which to search
         #   @param [#to_zoned_date_time] finish The point in time to which to search
         #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann sum.
+        #     If nil, :left is used.
         #   @return [DecimalType, QuantityType, nil] The average value between `start` and `finish`,
         #     or nil if no states could be found.
+        #   @since openHAB 5.0 riemann_type parameter added
 
         # @!method delta_since(timestamp, service = nil)
         #   Returns the difference value of the item's state since the given time
@@ -157,28 +166,37 @@ module OpenHAB
         #   @return [DecimalType, QuantityType, nil] The difference value between `start` and `finish`,
         #     or nil if no states could be found.
 
-        # @!method deviation_since(timestamp, service = nil)
+        # @!method deviation_since(timestamp, service = nil, riemann_type: nil)
         #   Returns the standard deviation of the item's state since the given time
         #   @param [#to_zoned_date_time] timestamp The point in time from which to search
         #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann sum.
+        #     If nil, :left is used.
         #   @return [DecimalType, QuantityType, nil] The standard deviation since `timestamp`,
         #     or nil if no previous states could be found.
+        #   @since openHAB 5.0 riemann_type parameter added
 
-        # @!method deviation_until(timestamp, service = nil)
+        # @!method deviation_until(timestamp, service = nil, riemann_type: nil)
         #   Returns the standard deviation of the item's state beetween now until the given time
         #   @param [#to_zoned_date_time] timestamp The point in time until which to search
         #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann sum.
+        #     If nil, :left is used.
         #   @return [DecimalType, QuantityType, nil] The standard deviation until `timestamp`,
         #     or nil if no future states could be found.
         #   @since openHAB 4.2
+        #   @since openHAB 5.0 riemann_type parameter added
 
-        # @!method deviation_between(start, finish, service = nil)
+        # @!method deviation_between(start, finish, service = nil, riemann_type: nil)
         #   Returns the standard deviation of the item's state between two points in time
         #   @param [#to_zoned_date_time] start The point in time from which to search
         #   @param [#to_zoned_date_time] finish The point in time to which to search
         #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann sum.
+        #     If nil, :left is used.
         #   @return [DecimalType, QuantityType, nil] The standard deviation between `start` and `finish`,
         #     or nil if no states could be found.
+        #   @since openHAB 5.0 riemann_type parameter added
 
         # @!method median_since(timestamp, service = nil)
         #   Returns the median of the item's state since the given time
@@ -228,28 +246,37 @@ module OpenHAB
         #   @return [DecimalType, QuantityType, nil] The sum between `start` and `finish`,
         #     or nil if no states could be found.
 
-        # @!method variance_since(timestamp, service = nil)
+        # @!method variance_since(timestamp, service = nil, riemann_type: nil)
         #   Returns the variance of the item's state since the given time
         #   @param [#to_zoned_date_time] timestamp The point in time from which to search
         #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann sum.
+        #     If nil, :left is used.
         #   @return [DecimalType, QuantityType, nil] The variance since `timestamp`,
         #     or nil if no previous states could be found.
+        #   @since openHAB 5.0 riemann_type parameter added
 
-        # @!method variance_until(timestamp, service = nil)
+        # @!method variance_until(timestamp, service = nil, riemann_type: nil)
         #   Returns the variance of the item's state between now until the given time
         #   @param [#to_zoned_date_time] timestamp The point in time until which to search
         #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann sum.
+        #     If nil, :left is used.
         #   @return [DecimalType, QuantityType, nil] The variance until `timestamp`,
         #     or nil if no future states could be found.
         #   @since openHAB 4.2
+        #   @since openHAB 5.0 riemann_type parameter added
 
-        # @!method variance_between(start, finish, service = nil)
+        # @!method variance_between(start, finish, service = nil, riemann_type: nil)
         #   Returns the variance of the item's state between two points in time
         #   @param [#to_zoned_date_time] start The point in time from which to search
         #   @param [#to_zoned_date_time] finish The point in time to which to search
         #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann sum.
+        #     If nil, :left is used.
         #   @return [DecimalType, QuantityType, nil] The variance between `start` and `finish`,
         #     or nil if no states could be found.
+        #   @since openHAB 5.0 riemann_type parameter added
 
         # @!method changed_since?(timestamp, service = nil)
         #   Whether the item's state has changed since the given time
@@ -461,6 +488,37 @@ module OpenHAB
         #   @return [Array<PersistedState>] An array of {PersistedState} persisted for this item.
         #   @since openHAB 4.0
 
+        # @!method riemann_sum_since(timestamp, service = nil, riemann_type: nil)
+        #   Returns the Riemann sum of the states since a certain point in time.
+        #   @param [#to_zoned_date_time] timestamp The point in time from which to search
+        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann sum.
+        #     If nil, :left is used.
+        #   @return [DecimalType, QuantityType, nil] The riemann sum since `timestamp`,
+        #     or nil if no previous states could be found.
+        #   @since openHAB 5.0
+
+        # @!method riemann_sum_until(timestamp, service = nil, riemann_type: nil)
+        #   Returns the Riemann sum of the states between now until a certain point in time.
+        #   @param [#to_zoned_date_time] timestamp The point in time until which to search
+        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann sum.
+        #     If nil, :left is used.
+        #   @return [DecimalType, QuantityType, nil] The riemann sum until `timestamp`,
+        #     or nil if no previous states could be found.
+        #   @since openHAB 5.0
+
+        # @!method riemann_sum_between(start, finish, service = nil, riemann_type: nil)
+        #   Returns the Riemann sum of the states between two points in time.
+        #   @param [#to_zoned_date_time] start The point in time from which to search
+        #   @param [#to_zoned_date_time] finish The point in time to which to search
+        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann sum.
+        #     If nil, :left is used.
+        #   @return [DecimalType, QuantityType, nil] The riemann sum between `start` and `finish`,
+        #     or nil if no previous states could be found.
+        #   @since openHAB 5.0
+
         # @!method remove_all_states_since(timestamp, service = nil)
         #   Removes persisted data points since a certain point in time.
         #   @param [#to_zoned_date_time] timestamp The point in time from which to remove
@@ -645,75 +703,102 @@ module OpenHAB
 
         class << self
           # @!visibility private
-          def def_persistence_method(method, quantify: false)
+          def def_persistence_method(method, quantify: false, riemann_param: nil)
             method = method.to_s.dup
             suffix = method.delete_suffix!("?") && "?"
+            riemann_arg = nil
+
+            if riemann_param
+              riemann_param = ", riemann_type: nil"
+              # @deprecated OH4.3 remove if guard when dropping OH 4.3
+              if Actions::PersistenceExtensions.const_defined?(:RiemannType)
+                riemann_arg = "to_riemann_type(riemann_type),"
+              end
+            end
 
             class_eval <<~RUBY, __FILE__, __LINE__ + 1
-              def #{method}#{suffix}(timestamp, service = nil)        # def changed_since?(timestamp, service = nil)
-                service ||= persistence_service                       #   service ||= persistence_service
-                result = Actions::PersistenceExtensions.#{method}(    #   result = Actions::PersistenceExtensions.changed_since(
-                  self,                                               #     self,
-                  timestamp.to_zoned_date_time,                       #     timestamp.to_zoned_date_time,
-                  service&.to_s                                       #     service&.to_s
-                )                                                     #   )
-                wrap_result(result, quantify: #{quantify})            #   wrap_result(result, quantify: false)
-              end                                                     # end
+              def #{method}#{suffix}(timestamp, service = nil#{riemann_param}) # def changed_since?(timestamp, service = nil, riemann_type: nil)
+                service ||= persistence_service                                #   service ||= persistence_service
+                result = Actions::PersistenceExtensions.#{method}(             #   result = Actions::PersistenceExtensions.average_since(
+                  self,                                                        #     self,
+                  timestamp.to_zoned_date_time,                                #     timestamp.to_zoned_date_time,
+                  #{riemann_arg}                                               #     to_riemann_type(riemann_type),
+                  service&.to_s                                                #     service&.to_s
+                )                                                              #   )
+                wrap_result(result, quantify: #{quantify})                     #   wrap_result(result, quantify: false)
+              end                                                              # end
             RUBY
           end
 
           # @!visibility private
-          def def_persistence_methods(method, quantify: false)
+          def def_persistence_methods(method, quantify: false, riemann_param: nil)
             method = method.to_s.dup
             suffix = method.delete_suffix!("?") && "?"
+            riemann_arg = nil
 
-            def_persistence_method("#{method}_since#{suffix}", quantify:)
+            def_persistence_method("#{method}_since#{suffix}", quantify:, riemann_param:)
             # @deprecated OH 4.1 remove if guard, keeping the content, when dropping OH 4.1
             if OpenHAB::Core.version >= OpenHAB::Core::V4_2
-              def_persistence_method("#{method}_until#{suffix}", quantify:)
+              def_persistence_method("#{method}_until#{suffix}", quantify:, riemann_param:)
+            end
+
+            if riemann_param
+              riemann_param = ", riemann_type: nil"
+              # @deprecated OH4.3 remove if guard when dropping OH 4.3
+              if Actions::PersistenceExtensions.const_defined?(:RiemannType)
+                riemann_arg = "to_riemann_type(riemann_type),"
+              end
             end
 
             method = "#{method}_between"
             class_eval <<~RUBY, __FILE__, __LINE__ + 1
-              def #{method}#{suffix}(start, finish, service = nil)    # def changed_between?(start, finish, service = nil)
-                service ||= persistence_service                       #   service ||= persistence_service
-                result = Actions::PersistenceExtensions.#{method}(    #   result = Actions::PersistenceExtensions.changed_between?(
-                  self,                                               #     self,
-                  start.to_zoned_date_time,                           #     start.to_zoned_date_time,
-                  finish.to_zoned_date_time,                          #     finish.to_zoned_date_time,
-                  service&.to_s                                       #     service&.to_s
-                )                                                     #   )
-                wrap_result(result, quantify: #{quantify})            #   wrap_result(result, quantify: false)
-              end                                                     # end
+              def #{method}#{suffix}(start, finish, service = nil#{riemann_param}) # def changed_between?(start, finish, service = nil, riemann_type: nil)
+                service ||= persistence_service                                    #   service ||= persistence_service
+                result = Actions::PersistenceExtensions.#{method}(                 #   result = Actions::PersistenceExtensions.average_between(
+                  self,                                                            #     self,
+                  start.to_zoned_date_time,                                        #     start.to_zoned_date_time,
+                  finish.to_zoned_date_time,                                       #     finish.to_zoned_date_time,
+                  #{riemann_arg}                                                   #     to_riemann_type(riemann_type),
+                  service&.to_s                                                    #     service&.to_s
+                )                                                                  #   )
+                wrap_result(result, quantify: #{quantify})                         #   wrap_result(result, quantify: false)
+              end                                                                  # end
             RUBY
           end
         end
 
-        def_persistence_methods(:average, quantify: true)
-        def_persistence_methods(:median, quantify: true) if OpenHAB::Core.version >= OpenHAB::Core::V4_3
-        def_persistence_methods(:delta, quantify: true)
-        def_persistence_methods(:deviation, quantify: true)
-        def_persistence_methods(:sum, quantify: true)
-        def_persistence_methods(:variance, quantify: true)
-
+        # arranged in alphabetical order
+        def_persistence_methods(:average, quantify: true, riemann_param: true)
         def_persistence_methods(:changed?)
         def_persistence_methods(:count)
+
         def_persistence_methods(:count_state_changes)
         alias_method :state_changes_since, :count_state_changes_since
         alias_method :state_changes_until, :count_state_changes_until if OpenHAB::Core.version >= OpenHAB::Core::V4_2
         alias_method :state_changes_between, :count_state_changes_between
 
+        def_persistence_methods(:delta, quantify: true)
+        def_persistence_methods(:deviation, quantify: true, riemann_param: true)
+
         # @deprecated OH 4.2 - this still exists in OH 4.2 but logs a deprecation warning
         def_persistence_method(:historic_state, quantify: true)
-
-        def_persistence_methods(:maximum, quantify: true)
-        def_persistence_methods(:minimum, quantify: true)
-        def_persistence_methods(:updated?)
 
         def_persistence_methods(:get_all_states, quantify: true)
         alias_method :all_states_since, :get_all_states_since
         alias_method :all_states_until, :get_all_states_until if OpenHAB::Core.version >= OpenHAB::Core::V4_2
         alias_method :all_states_between, :get_all_states_between
+
+        def_persistence_methods(:maximum, quantify: true)
+        def_persistence_methods(:minimum, quantify: true)
+        def_persistence_methods(:median, quantify: true) if OpenHAB::Core.version >= OpenHAB::Core::V4_3
+        # @deprecated OH4.3 remove if guard when dropping OH 4.3
+        if Actions::PersistenceExtensions.const_defined?(:RiemannType)
+          # riemann_sum methods were added in OH 5.0 which already quantifies the result in core
+          def_persistence_methods(:riemann_sum, riemann_param: true)
+        end
+        def_persistence_methods(:sum, quantify: true)
+        def_persistence_methods(:updated?)
+        def_persistence_methods(:variance, quantify: true, riemann_param: true)
 
         if OpenHAB::Core.version >= OpenHAB::Core::V4_2
           def_persistence_method(:persisted_state) # already quantified in core
@@ -804,6 +889,15 @@ module OpenHAB
         #
         def persistence_service
           Thread.current[:openhab_persistence_service]
+        end
+
+        #
+        # Convert a symbol to a RiemannType enum value
+        # @param [Symbol] sym the symbol to convert
+        # @return [RiemannType] the RiemannType enum value, or nil if sym is nil
+        #
+        def to_riemann_type(sym)
+          Actions::PersistenceExtensions::RiemannType.value_of(sym.to_s.upcase) if sym
         end
       end
     end
