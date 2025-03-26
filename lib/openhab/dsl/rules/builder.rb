@@ -1059,7 +1059,11 @@ module OpenHAB
         # {Core::Events::ThingStatusInfoChangedEvent} depending on if the
         # triggering element was an item or a thing.
         #
-        # @param [Item, GroupItem::Members, Thing, ThingUID, Things::Registry] items Objects to create trigger for.
+        # @param [Item, GroupItem::Members, Thing, ThingUID, Things::Registry, String] items
+        #   Objects to create trigger for.
+        #   When a String is provided, it is assumed to be an item or group name, unless when it
+        #   contains a colon, in which case it is assumed to be a thing UID.
+        #   The String may contain '*' and '?' wildcards since openHAB 5.0.
         # @param [State, Array<State>, #===, nil] from
         #   Only execute rule if previous state matches `from` state(s).
         # @param [State, Array<State>, #===, nil] to
@@ -1175,11 +1179,12 @@ module OpenHAB
                  Core::Things::ThingUID,
                  Core::Things::Registry,
                  Core::Items::Item,
-                 Core::Items::GroupItem::Members
+                 Core::Items::GroupItem::Members,
+                 String
               nil
             else
               raise ArgumentError,
-                    "items must be an Item, GroupItem::Members, Thing, ThingUID, or Things::Registry"
+                    "items must be an Item, GroupItem::Members, Thing, ThingUID, Things::Registry, or a String"
             end
 
             logger.trace { "Creating changed trigger for entity(#{item}), to(#{to.inspect}), from(#{from.inspect})" }
@@ -1531,7 +1536,10 @@ module OpenHAB
         # The `event` passed to run blocks will be an
         # {Core::Events::ItemCommandEvent}.
         #
-        # @param [Item, GroupItem::Members] items Items to create trigger for
+        # @param [Item, GroupItem::Members] items
+        #   Items to create trigger for.
+        #   When a String is provided, it is assumed to be an item or group name.
+        #   The String may contain '*' and '?' wildcards since openHAB 5.0.
         # @param [Core::Types::Command, Array<Core::Types::Command>, #===, nil] command commands to match for trigger
         # @param [Array<Core::Types::Command>, #===, nil] commands Fluent alias for `command`
         # @param [Object] attach object to be attached to the trigger
@@ -1610,10 +1618,11 @@ module OpenHAB
           items.each do |item|
             case item
             when Core::Items::Item,
-                 Core::Items::GroupItem::Members
+                 Core::Items::GroupItem::Members,
+                 String
               nil
             else
-              raise ArgumentError, "items must be an Item or GroupItem::Members"
+              raise ArgumentError, "items must be an Item, GroupItem::Members, or a String"
             end
             commands.each do |cmd|
               logger.trace { "Creating received command trigger for items #{item.inspect} and commands #{cmd.inspect}" }
@@ -1888,8 +1897,11 @@ module OpenHAB
         # {Core::Events::ThingStatusInfoEvent} depending on if the triggering
         # element was an item or a thing.
         #
-        # @param [Item, GroupItem::Members, Thing] items
+        # @param [Item, GroupItem::Members, Thing, String] items
         #   Objects to create trigger for.
+        #   When a String is provided, it is assumed to be an item or group name, unless when it
+        #   contains a colon, in which case it is assumed to be a thing UID.
+        #   The String may contain '*' and '?' wildcards since openHAB 5.0.
         # @param [State, Array<State>, Symbol, String, #===, nil] to
         #   Only execute rule if the state matches `to` state(s). If the
         #   updated element is a {Core::Things::Thing}, the `to` accepts
@@ -1972,10 +1984,11 @@ module OpenHAB
             when Core::Things::Thing,
                  Core::Things::ThingUID,
                  Core::Items::Item,
-                 Core::Items::GroupItem::Members
+                 Core::Items::GroupItem::Members,
+                 String
               nil
             else
-              raise ArgumentError, "items must be an Item, GroupItem::Members, Thing, or ThingUID"
+              raise ArgumentError, "items must be an Item, GroupItem::Members, Thing, ThingUID, or a String"
             end
 
             logger.trace { "Creating updated trigger for item(#{item}) to(#{to})" }

@@ -82,8 +82,16 @@ module OpenHAB
                              thing(thing: item, from:, to:)
                            when Core::Things::Registry
                              thing(thing: "*", from:, to:)
-                           else
+                           when Core::Items::Item
                              item(item:, from:, to:)
+                           when Core::Items::Registry
+                             item(item: "*", from:, to:)
+                           else
+                             if item.to_s.include?(":")
+                               thing(thing: item, from:, to:)
+                             else
+                               item(item:, from:, to:)
+                             end
                            end
             append_trigger(type:, config:, attach:, conditions:, label:)
           end
@@ -113,7 +121,7 @@ module OpenHAB
           #  second element is a Hash configuring trigger
           #
           def item(item:, from:, to:)
-            config = { "itemName" => item.name }
+            config = { "itemName" => item.is_a?(Item) ? item.name : item.to_s }
             config["state"] = to.to_s if to
             config["previousState"] = from.to_s if from
             [ITEM_STATE_CHANGE, config]
