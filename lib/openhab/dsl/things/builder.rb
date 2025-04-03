@@ -360,7 +360,7 @@ module OpenHAB
           @type = type
           @label = label
           @config = config&.transform_keys(&:to_s)
-          @default_tags = Items::ItemBuilder.normalize_tags(*Array.wrap(default_tags))
+          @default_tags = Items::Tags.normalize(*Array.wrap(default_tags))
           @properties = properties&.transform_keys(&:to_s)
           @description = description
           @accepted_item_type = accepted_item_type
