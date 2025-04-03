@@ -4,6 +4,7 @@ require "forwardable"
 
 require_relative "property"
 require_relative "guard"
+require_relative "triggers"
 require_relative "rule_triggers"
 require_relative "terse"
 

@@ -2,6 +2,8 @@
 
 require "forwardable"
 
+require_relative "hash"
+
 module OpenHAB
   module Core
     module Items
