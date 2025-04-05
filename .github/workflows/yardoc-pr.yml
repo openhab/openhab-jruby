@@ -1,0 +1,51 @@
+name: Create temporary YARD docs for PR review
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+env:
+  RUBY_VERSION: 3.1.4
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write
+
+concurrency:
+  group: yardoc-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'ci skip') && github.event.action != 'closed'"
+    steps:
+      - run: |
+          pwd
+          ls -la 
+      # - name: Checkout
+      #   uses: actions/checkout@v4
+      #   with:
+      #     ref: ${{ inputs.ref_name || github.ref_name }}
+      # - uses: ruby/setup-ruby@v1
+      #   with:
+      #     ruby-version: ${{ env.RUBY_VERSION }}
+      #     bundler-cache: true
+      # - name: Build YARD docs
+      #   run: bin/yardoc
+      # - name: Deploy
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./docs/yard/
+      #     destination_dir: ./pr/${{ github.event.pull_request.number }}
+      #     user_name: 'github-actions[bot]'
+      #     user_email: '41898282+github-actions[bot]@users.noreply.github.com'
+  cleanup:
+    runs-on: ubuntu-latest
+    if: github.event.action == 'closed'
+    steps:
+      - name: Clean up old YARD docs
+        run: |
+          ls -la ./pr/
+          echo rm -rf ./pr/${{ github.event.pull_request.number }}
