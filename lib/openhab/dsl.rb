@@ -296,6 +296,19 @@ module OpenHAB
     # own instance of the timers object, so you don't need to worry about collisions among
     # different files.
     #
+    # ### Sharing Timers with other scripts
+    #
+    # When a timer is stored in the {shared_cache}, it will automatically be converted into
+    # an openHAB Timer object. It can then be used in other scripts or UI rules,
+    # written in JRuby or other supported languages.
+    #
+    # Timers are normally managed by TimerManager, and are normally automatically cancelled
+    # when the script unloads/reloads.
+    # To disable this automatic timer cancellation at script unload, call {Core::Timer#unmanage}.
+    #
+    # openHAB will cancel the timer stored in the {OpenHAB::DSL.shared_cache shared_cache}
+    # and remove the cache entry when all the scripts that _had accessed_ it have been unloaded.
+    #
     # @see timers
     # @see Rules::BuilderDSL#changed
     # @see Items::TimedCommand
@@ -376,6 +389,19 @@ module OpenHAB
     #       end
     #     end
     #   end
+    #
+    # @example Timers can be shared with other scripts
+    #   # script1.rb:
+    #   timer = after(10.hours) { logger.warn "Timer created in script1.rb fired" }
+    #   shared_cache[:script1_timer] = timer
+    #
+    #   # inside a different JRuby UI rule or script:
+    #   # This is an openHAB timer object, not a JRuby timer object
+    #   # the reschedule method expects a ZonedDateTime
+    #   shared_cache[:script1_timer]&.reschedule(10.seconds.from_now)
+    #
+    #   # inside another JS script:
+    #   cache.shared.get("script1_timer")?.cancel()
     #
     def after(duration, id: nil, reschedule: true, &block)
       raise ArgumentError, "Block is required" unless block
