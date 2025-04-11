@@ -47,7 +47,7 @@ module OpenHAB
     module ValueCache
       # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-5B-5D Hash#[]
       def [](key)
-        get(key.to_s)
+        get(key)
       end
 
       #
@@ -58,18 +58,18 @@ module OpenHAB
       # @return [Object] new value or current value
       #
       def compute_if_absent(key, &)
-        get(key.to_s, &)
+        get(key, &)
       end
 
       # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-5B-5D-3D Hash#[]=
       def []=(key, value)
-        put(key.to_s, value)
+        put(key, value)
       end
       alias_method :store, :[]
 
       # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-delete Hash#delete
       def delete(key)
-        key = key.to_s
+        key = key.to_s # needed for remove below
         if block_given?
           fetch(key) do
             return yield(key)
@@ -89,8 +89,8 @@ module OpenHAB
                 "wrong number of arguments (given #{default_value.length + 1}, expected 0..1)"
         end
 
-        key = key.to_s
         if default_value.empty?
+          key = key.to_s
           if block_given?
             get(key) do
               return yield(key)
@@ -184,6 +184,44 @@ module OpenHAB
           self[k]
         end
       end
+
+      #
+      # Converts values before storing them in the cache.
+      #
+      # This is used to convert JRuby timers created with {OpenHAB::DSL.after} to openHAB timers.
+      #
+      # Because we generally can't store JRuby objects in the shared cache,
+      # we can convert other things to Java objects here too as necessary.
+      #
+      # @!visibility private
+      module ValueConverter
+        # @!visibility private
+        def get(key, &)
+          key = key.to_s
+          return super(key) unless block_given?
+
+          super do
+            convert(yield(key))
+          end
+        end
+
+        # @!visibility private
+        def put(key, value)
+          key = key.to_s
+          value = convert(value)
+          super
+        end
+
+        private
+
+        def convert(value)
+          value.respond_to?(:to_java) ? value.to_java : value
+        end
+      end
+
+      # We use prepend here instead of overriding the methods inside ValueCache module/interface
+      # because the methods are defined in the implementation class
+      $sharedCache.singleton_class.prepend(ValueConverter)
     end
   end
 end

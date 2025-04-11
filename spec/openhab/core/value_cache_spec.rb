@@ -148,4 +148,18 @@ RSpec.describe "OpenHAB::Core::ValueCache" do
       expect(shared_cache.values_at(:key1, :key2, :key3)).to eql [1, nil, 3]
     end
   end
+
+  context "when used to store a Timer" do
+    self.mock_timers = false
+    it "converts the timer to openHAB Timer" do
+      timer = after(1.seconds) { nil }
+      shared_cache[:timer] = timer
+      expect(shared_cache[:timer]).to be_a(org.openhab.core.automation.module.script.action.Timer)
+
+      shared_cache.compute_if_absent(:timer2) do
+        after(1.seconds) { nil }
+      end
+      expect(shared_cache[:timer2]).to be_a(org.openhab.core.automation.module.script.action.Timer)
+    end
+  end
 end
