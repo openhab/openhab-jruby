@@ -2,12 +2,18 @@
 
 RSpec.describe OpenHAB::Core::Events::ItemStateChangedEvent do
   it "is inspectable" do
-    event = OpenHAB::Core::Events::ItemEventFactory.create_state_changed_event("item", NULL, ON)
+    # @deprecated OH4.3 remove args and pass 5 arguments directly when dropping oh 4.3
+    args = ["item", NULL, ON]
+    args += [nil, nil] if OpenHAB::Core.full_version > Gem::Version.new("5.0.0.M1")
+    event = OpenHAB::Core::Events::ItemEventFactory.create_state_changed_event(*args)
     expect(event.inspect).to eql "#<OpenHAB::Core::Events::ItemStateChangedEvent item=item state=NULL was=ON>"
   end
 
   it "has proper predicates for an ON => NULL event" do
-    event = OpenHAB::Core::Events::ItemEventFactory.create_state_changed_event("item", NULL, ON)
+    # @deprecated OH4.3 remove args and pass 5 arguments directly when dropping oh 4.3
+    args = ["item", NULL, ON]
+    args += [nil, nil] if OpenHAB::Core.full_version > Gem::Version.new("5.0.0.M1")
+    event = OpenHAB::Core::Events::ItemEventFactory.create_state_changed_event(*args)
 
     expect(event).to be_null
     expect(event).not_to be_undef
@@ -20,7 +26,10 @@ RSpec.describe OpenHAB::Core::Events::ItemStateChangedEvent do
   end
 
   it "has proper predicates for an ON => UNDEF event" do
-    event = OpenHAB::Core::Events::ItemEventFactory.create_state_changed_event("item", UNDEF, ON)
+    # @deprecated OH4.3 remove args and pass 5 arguments directly when dropping oh 4.3
+    args = ["item", UNDEF, ON]
+    args += [nil, nil] if OpenHAB::Core.full_version > Gem::Version.new("5.0.0.M1")
+    event = OpenHAB::Core::Events::ItemEventFactory.create_state_changed_event(*args)
 
     expect(event).not_to be_null
     expect(event).to be_undef
@@ -33,7 +42,10 @@ RSpec.describe OpenHAB::Core::Events::ItemStateChangedEvent do
   end
 
   it "has proper predicates for a NULL => ON event" do
-    event = OpenHAB::Core::Events::ItemEventFactory.create_state_changed_event("item", ON, NULL)
+    # @deprecated OH4.3 remove args and pass 5 arguments directly when dropping oh 4.3
+    args = ["item", ON, NULL]
+    args += [nil, nil] if OpenHAB::Core.full_version > Gem::Version.new("5.0.0.M1")
+    event = OpenHAB::Core::Events::ItemEventFactory.create_state_changed_event(*args)
 
     expect(event).not_to be_null
     expect(event).not_to be_undef
@@ -46,7 +58,10 @@ RSpec.describe OpenHAB::Core::Events::ItemStateChangedEvent do
   end
 
   it "has proper predicates for an UNDEF => ON event" do
-    event = OpenHAB::Core::Events::ItemEventFactory.create_state_changed_event("item", ON, UNDEF)
+    # @deprecated OH4.3 remove args and pass 5 arguments directly when dropping oh 4.3
+    args = ["item", ON, UNDEF]
+    args += [nil, nil] if OpenHAB::Core.full_version > Gem::Version.new("5.0.0.M1")
+    event = OpenHAB::Core::Events::ItemEventFactory.create_state_changed_event(*args)
 
     expect(event).not_to be_null
     expect(event).not_to be_undef

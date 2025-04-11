@@ -21,6 +21,21 @@ module OpenHAB
       @version ||= Gem::Version.new(VERSION).release.freeze
     end
 
+    #
+    # Returns the full version of openHAB
+    #
+    # The {version} method returns the release version, stripping off any
+    # additional qualifiers such as M1, or snapshots.
+    # This method returns the full version string, including the qualifiers.
+    #
+    # @return [Gem::Version] Returns the full version of openHAB
+    #
+    # @!visibility private
+    #
+    def self.full_version
+      @full_version ||= Gem::Version.new(VERSION).freeze
+    end
+
     raise "`openhab-scripting` requires openHAB >= 4.1.0" unless version >= V4_1
 
     # @return [Integer] Number of seconds to wait between checks for automation manager
