@@ -3959,6 +3959,12 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
 
 
 
+  
+  
+  
+  
+  
+  
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -4007,7 +4013,7 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 49</span>
 
 <span class="keyword">def</span> <span class="function">[]</span>(key)
-  get(key.to_s)
+  get(key)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4053,7 +4059,7 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 65</span>
 
 <span class="keyword">def</span> <span class="function">[]=</span>(key, value)
-  put(key.to_s, value)
+  put(key, value)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4196,7 +4202,7 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 60</span>
 
 <span class="keyword">def</span> <span class="function">compute_if_absent</span>(key, &amp;)
-  get(key.to_s, &amp;)
+  get(key, &amp;)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4248,7 +4254,7 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 71</span>
 
 <span class="keyword">def</span> <span class="function">delete</span>(key)
-  key = key.to_s
+  key = key.to_s <span class="comment"># needed for remove below</span>
   <span class="keyword">if</span> block_given?
     fetch(key) <span class="keyword">do</span>
       <span class="keyword">return</span> <span class="keyword">yield</span>(key)
@@ -4379,8 +4385,8 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
           <span class="string"><span class="delimiter">&quot;</span><span class="content">wrong number of arguments (given </span><span class="inline"><span class="inline-delimiter">#{</span>default_value.length + <span class="integer">1</span><span class="inline-delimiter">}</span></span><span class="content">, expected 0..1)</span><span class="delimiter">&quot;</span></span>
   <span class="keyword">end</span>
 
-  key = key.to_s
   <span class="keyword">if</span> default_value.empty?
+    key = key.to_s
     <span class="keyword">if</span> block_given?
       get(key) <span class="keyword">do</span>
         <span class="keyword">return</span> <span class="keyword">yield</span>(key)
@@ -4763,7 +4769,7 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
 </div>
 
         <footer>
-  Generated on Fri Apr 11 21:38:10 2025 by
+  Generated on Fri Apr 11 21:40:58 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.4).
 </footer>

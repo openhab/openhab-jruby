@@ -3776,6 +3776,29 @@ has been scheduled to run later with <span class='object_link'><a href="../DSL.h
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#managed%3F-instance_method" title="#managed? (instance method)">#<strong>managed?</strong>  &#x21d2; true, false </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>True if the timer is managed by TimerManager, false otherwise.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#reschedule-instance_method" title="#reschedule (instance method)">#<strong>reschedule</strong>(time = nil)  &#x21d2; self </a>
     
 
@@ -3842,6 +3865,29 @@ has been scheduled to run later with <span class='object_link'><a href="../DSL.h
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#unmanage-instance_method" title="#unmanage (instance method)">#<strong>unmanage</strong>  &#x21d2; org.openhab.core.automation.module.script.action.Timer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Removes the timer from the <span class='object_link'><a href="../DSL/TimerManager.html" title="OpenHAB::DSL::TimerManager (class)">TimerManager</a></span>.</p>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -3903,7 +3949,7 @@ has been scheduled to run later with <span class='object_link'><a href="../DSL.h
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 71</span>
 
 </pre>
     </td>
@@ -4063,13 +4109,13 @@ has been scheduled to run later with <span class='object_link'><a href="../DSL.h
       <pre class="lines">
 
 
-108
 109
 110
-111</pre>
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 109</span>
 
 <span class="keyword">def</span> <span class="function">cancel</span>
   <span class="constant">DSL</span>.timers.delete(<span class="predefined-constant">self</span>)
@@ -4170,7 +4216,6 @@ has been scheduled to run later with <span class='object_link'><a href="../DSL.h
       <pre class="lines">
 
 
-58
 59
 60
 61
@@ -4179,10 +4224,11 @@ has been scheduled to run later with <span class='object_link'><a href="../DSL.h
 64
 65
 66
-67</pre>
+67
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 59</span>
 
 <span class="keyword">def</span> <span class="function">inspect</span>
   r = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span>.class.name<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span><span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>id.inspect<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> id<span class="inline-delimiter">}</span></span><span class="inline"><span class="inline-delimiter">#{</span>block.source_location.join(<span class="string"><span class="delimiter">&quot;</span><span class="content">:</span><span class="delimiter">&quot;</span></span>)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
@@ -4193,6 +4239,65 @@ has been scheduled to run later with <span class='object_link'><a href="../DSL.h
     r += <span class="string"><span class="delimiter">&quot;</span><span class="content"> (executed)</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> terminated?
   <span class="keyword">end</span>
   <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>r<span class="inline-delimiter">}</span></span><span class="content">&gt;</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="managed?-instance_method">
+  
+    #<strong>managed?</strong>  &#x21d2; <tt>true</tt>, <tt>false</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns True if the timer is managed by TimerManager, false otherwise.
+A timer is managed by default, and becomes un-managed when <span class='object_link'><a href="#unmanage-instance_method" title="OpenHAB::Core::Timer#unmanage (method)">#unmanage</a></span> is called.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>True if the timer is managed by TimerManager, false otherwise.
+A timer is managed by default, and becomes un-managed when <span class='object_link'><a href="#unmanage-instance_method" title="OpenHAB::Core::Timer#unmanage (method)">#unmanage</a></span> is called.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+195
+196
+197</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 195</span>
+
+<span class="keyword">def</span> <span class="function">managed?</span>
+  <span class="instance-variable">@managed</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4260,7 +4365,6 @@ If unspecified, the original time is used.</p>
       <pre class="lines">
 
 
-83
 84
 85
 86
@@ -4269,10 +4373,11 @@ If unspecified, the original time is used.</p>
 89
 90
 91
-92</pre>
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 84</span>
 
 <span class="keyword">def</span> <span class="function">reschedule</span>(time = <span class="predefined-constant">nil</span>)
   <span class="keyword">return</span> reschedule!(time) <span class="keyword">unless</span> id
@@ -4387,12 +4492,95 @@ def_delegator <span class="symbol">:@timer</span>, <span class="symbol">:has_ter
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="unmanage-instance_method">
+  
+    #<strong>unmanage</strong>  &#x21d2; <tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/automation/module/script/action/Timer.html" target="_parent" title="org.openhab.core.automation.module.script.action.Timer">org.openhab.core.automation.module.script.action.Timer</a></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Removes the timer from the <span class='object_link'><a href="../DSL/TimerManager.html" title="OpenHAB::DSL::TimerManager (class)">TimerManager</a></span></p>
+<p>The effects of calling this method are:</p>
+<ul>
+<li>The timer will no longer be automatically cancelled when the script unloads.
+It will still execute as scheduled even if the script is unloaded/removed.</li>
+<li>It can no longer be referenced by its <code>id</code>.</li>
+<li>Subsequent calls to <span class='object_link'><a href="../DSL.html#after-class_method" title="OpenHAB::DSL.after (method)">after</a></span> with the same <code>id</code> will create a separate new timer.</li>
+<li>Normal timer operations such as <span class='object_link'><a href="#reschedule-instance_method" title="OpenHAB::Core::Timer#reschedule (method)">#reschedule</a></span>, <span class='object_link'><a href="#cancel-instance_method" title="OpenHAB::Core::Timer#cancel (method)">#cancel</a></span>, etc. will still work.</li>
+</ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>timer = after(<span class="integer">10</span>.hours) { logger.warn <span class="string"><span class="delimiter">&quot;</span><span class="content">Timer created in script1.rb fired</span><span class="delimiter">&quot;</span></span> }
+shared_cache[<span class="symbol">:script1_timer</span>] = timer
+<span class="comment"># Don't cancel the timer when this script unloads,</span>
+<span class="comment"># but openHAB will do it if all scripts that had referenced the shared cache are unloaded.</span>
+timer.unmanage</code></pre>
+    
+  </div>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/automation/module/script/action/Timer.html" target="_parent" title="org.openhab.core.automation.module.script.action.Timer">org.openhab.core.automation.module.script.action.Timer</a></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The openHAB Timer object</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+186
+187
+188
+189
+190
+191</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/timer.rb', line 186</span>
+
+<span class="keyword">def</span> <span class="function">unmanage</span>
+  <span class="instance-variable">@managed</span> = <span class="predefined-constant">false</span>
+  <span class="constant">DSL</span>.timers.delete(<span class="predefined-constant">self</span>)
+  <span class="instance-variable">@id</span> = <span class="predefined-constant">nil</span>
+  <span class="instance-variable">@timer</span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
         <footer>
-  Generated on Fri Apr 11 21:38:13 2025 by
+  Generated on Fri Apr 11 21:41:01 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.4).
 </footer>
