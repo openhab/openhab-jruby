@@ -1,5 +1,18 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.38.0](https://github.com/openhab/openhab-jruby/tree/v5.38.0) (2025-04-11)
+
+### Features
+
+- Add a default file so Gemfile doesn't need a custom require by [@jimtng](https://github.com/jimtng) in [#428](https://github.com/openhab/openhab-jruby/pull/428)
+- Support `ItemStateUpdatedEvent#last_state_update` and `ItemStateChangedEvent#last_state_change` by [@jimtng](https://github.com/jimtng) in [#401](https://github.com/openhab/openhab-jruby/pull/401)
+- Add `GenericItem#was`, `#was?`, `#was_xxx?` predicates, document `Item#last_state`, `#last_state_change`, and `#last_state_update` methods by [@jimtng](https://github.com/jimtng) in [#397](https://github.com/openhab/openhab-jruby/pull/397)
+- Support passing timer objects to other scripts via shared_cache by [@jimtng](https://github.com/jimtng) in [#431](https://github.com/openhab/openhab-jruby/pull/431)
+- Semantic Tags: add `subclasses:` parameter to allow exact match and exclude all subclasses of the given tags by [@jimtng](https://github.com/jimtng) in [#433](https://github.com/openhab/openhab-jruby/pull/433)
+- Support wildcard item and improve wildcard thing triggers by [@jimtng](https://github.com/jimtng) in [#413](https://github.com/openhab/openhab-jruby/pull/413)
+
+**Full Changelog**: [v5.37.0...v5.38.0](https://github.com/openhab/openhab-jruby/compare/v5.37.0...v5.38.0)
+
 ## [v5.37.0](https://github.com/openhab/openhab-jruby/tree/v5.37.0) (2025-03-25)
 
 ### Features
