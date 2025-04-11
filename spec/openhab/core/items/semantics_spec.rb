@@ -70,8 +70,21 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
       specify { expect(Patio_Light_Bulb.points(Semantics::Level, Semantics::Control)).to eql [Patio_Light_Brightness] }
     end
 
-    it "returns points of a location" do
-      expect(gPatio.points).to eql [Patio_Point]
+    it "includes the subclasses of the given point" do
+      items.build do
+        switch_item "Patio_Switch", group: gPatio, tag: Semantics::Switch # This is a subclass of Control
+      end
+      expect(gPatio.points(Semantics::Control)).to match_array [Patio_Point, Patio_Switch]
+    end
+
+    context "with subclasses: false" do
+      it "excludes subclasses" do
+        items.build do
+          switch_item "Patio_Switch", group: gPatio, tag: Semantics::Switch # This is a subclass of Control
+        end
+        expect(Patio_Switch.semantic_type < Patio_Point.semantic_type).to be true
+        expect(gPatio.points(Semantics::Control, subclasses: false)).to match_array [Patio_Point]
+      end
     end
 
     it "does not return points in sublocations and equipments" do
@@ -224,6 +237,23 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
 
         expect(gIndoor.locations(Semantics::LivingRoom, Semantics::Kitchen)).to match_array([gLivingRoom, gKitchen])
       end
+
+      it "includes the subclasses of the given locations" do
+        items.build do
+          group_item "gRoom", group: gIndoor, tag: Semantics::Room
+        end
+        expect(gIndoor.locations(Semantics::Room)).to match_array [gRoom, gLivingRoom]
+      end
+
+      context "with subclasses: false" do
+        it "excludes subclasses" do
+          items.build do
+            group_item "gRoom", group: gIndoor, tag: Semantics::Room
+          end
+          expect(Semantics::LivingRoom < Semantics::Room).to be true # Perform check in case the hierarchy changes
+          expect(gIndoor.locations(Semantics::Room, subclasses: false)).to match_array [gRoom]
+        end
+      end
     end
 
     describe "#equipments" do
@@ -244,6 +274,25 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
         end
 
         expect(gIndoor.equipments(Semantics::Television, Semantics::Speaker)).to match_array([gTV, gSpeaker])
+      end
+
+      it "includes the subclasses of the given equipments" do
+        items.build do
+          switch_item "Patio_Fan", group: gPatio, tag: Semantics::Fan
+          switch_item "Patio_CeilingFan", group: gPatio, tag: Semantics::CeilingFan # This is a subclass of Fan
+        end
+        expect(gPatio.equipments(Semantics::Fan)).to match_array [Patio_Fan, Patio_CeilingFan]
+      end
+
+      context "with subclasses: false" do
+        it "excludes subclasses" do
+          items.build do
+            switch_item "Patio_Fan", group: gPatio, tag: Semantics::Fan
+            switch_item "Patio_CeilingFan", group: gPatio, tag: Semantics::CeilingFan # This is a subclass of Fan
+          end
+          expect(Semantics::CeilingFan < Semantics::Fan).to be true # Perform check in case the hierarchy changes
+          expect(gPatio.equipments(Semantics::Fan, subclasses: false)).to match_array [Patio_Fan]
+        end
       end
     end
 
