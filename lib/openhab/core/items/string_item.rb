@@ -14,6 +14,10 @@ module OpenHAB
       # @!attribute [r] state
       #   @return [StringType, nil]
       #
+      # @!attribute [r] was
+      #   @return [StringType, nil]
+      #   @since openHAB 5.0
+      #
       # @example
       #   # StringOne has a current state of "Hello"
       #   StringOne << StringOne + " World!"

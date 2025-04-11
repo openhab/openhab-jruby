@@ -79,8 +79,43 @@ module OpenHAB
         #   [Ruby safe navigation operator `&.`](https://docs.ruby-lang.org/en/master/syntax/calling_methods_rdoc.html#label-Safe+Navigation+Operator)
         #   Use {#undef?} or {#null?} to check for those states.
         #
+        # @see was
+        #
         def state
           raw_state if state?
+        end
+
+        # @!method was_undef?
+        #   Check if {#was} is {UNDEF}
+        #   @return [true, false]
+
+        # @!method was_null?
+        #   Check if {#was} is {NULL}
+        #   @return [true, false]
+
+        #
+        # Check if the item's previous state was not `nil`, {UNDEF} or {NULL}
+        #
+        # @return [true, false]
+        #
+        # @since openHAB 5.0
+        #
+        def was?
+          !last_state.nil? && !last_state.is_a?(Types::UnDefType)
+        end
+
+        #
+        # @!attribute [r] was
+        #
+        # @return [State] The previous state of the item. nil if the item was never updated, or
+        #   if the item was updated to {NULL} or {UNDEF}.
+        # @since openHAB 5.0
+        #
+        # @see state
+        # @see Item#last_state
+        #
+        def was
+          last_state if was?
         end
 
         # @!method null?

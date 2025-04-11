@@ -14,6 +14,9 @@ module OpenHAB
       # @!attribute [r] state
       #   @return [OnOffType, nil]
       #
+      # @!attribute [r] was
+      #   @return [OnOffType, nil]
+      #   @since openHAB 5.0
       #
       # @example Turn on all switches in a `Group:Switch` called Switches
       #   Switches.on
@@ -76,6 +79,14 @@ module OpenHAB
         # @!method off!
         #   Send the {OFF} command to the item, even when {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.
         #   @return [SwitchItem] `self`
+
+        # @!method was_on?
+        #   Check if {#was} is (implicitly convertible to) {ON}
+        #   @return [true, false]
+
+        # @!method was_off?
+        #   Check if {#was} is (implicitly convertible to) {OFF}
+        #   @return [true, false]
       end
     end
   end

@@ -35,6 +35,10 @@ module OpenHAB
       # @!attribute [r] state
       #   @return [HSBType, nil]
       #
+      # @!attribute [r] was
+      #   @return [HSBType, nil]
+      #   @since openHAB 5.0
+      #
       class ColorItem < DimmerItem
         # Make sure to do the String => HSBType conversion in Ruby,
         # where we add support for hex

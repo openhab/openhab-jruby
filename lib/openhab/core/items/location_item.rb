@@ -16,6 +16,10 @@ module OpenHAB
       # @!attribute [r] state
       #   @return [PointType, nil]
       #
+      # @!attribute [r] was
+      #   @return [PointType, nil]
+      #   @since openHAB 5.0
+      #
       # @example Send point commands
       #   Location << '30,20'   # latitude of 30, longitude of 20
       #   Location << '30,20,80' # latitude of 30, longitude of 20, altitude of 80

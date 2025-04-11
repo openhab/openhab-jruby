@@ -200,6 +200,169 @@ RSpec.describe OpenHAB::Core::Items::Item do
     end
   end
 
+  describe "#was", if: OpenHAB::Core.version >= OpenHAB::Core::V5_0 do
+    it "returns nil if the item had never changed" do
+      expect(LightSwitch.was).to be_nil
+    end
+
+    it "returns the previous state" do
+      LightSwitch.update(ON)
+      LightSwitch.update(OFF)
+      expect(LightSwitch.was).to eql ON
+      expect(LightSwitch.was).to be_on
+      LightSwitch.update(ON)
+      expect(LightSwitch.was).to eql OFF
+      expect(LightSwitch.was).to be_off
+    end
+
+    it "returns nil if the item was NULL or UNDEF" do
+      LightSwitch.update(UNDEF)
+      LightSwitch.update(ON)
+      expect(LightSwitch.was).to be_nil
+      LightSwitch.update(NULL)
+      LightSwitch.update(ON)
+      expect(LightSwitch.was).to be_nil
+    end
+  end
+
+  describe "#was?", if: OpenHAB::Core.version >= OpenHAB::Core::V5_0 do
+    it "works" do
+      expect(LightSwitch.was?).to be false
+      LightSwitch.update(NULL)
+      expect(LightSwitch.was?).to be false
+      LightSwitch.update(ON)
+      expect(LightSwitch.was?).to be false
+      LightSwitch.update(UNDEF)
+      expect(LightSwitch.was?).to be true
+      LightSwitch.update(OFF)
+      expect(LightSwitch.was?).to be false
+      LightSwitch.update(ON)
+      expect(LightSwitch.was?).to be true
+    end
+  end
+
+  context "with was_*? predicates", if: OpenHAB::Core.version >= OpenHAB::Core::V5_0 do
+    describe "#was_undef?" do
+      it "works" do
+        LightSwitch.update(UNDEF)
+        LightSwitch.update(ON)
+        expect(LightSwitch.was_undef?).to be true
+        LightSwitch.update(OFF)
+        expect(LightSwitch.was_undef?).to be false
+      end
+    end
+
+    describe "#was_null?" do
+      it "works" do
+        LightSwitch.update(NULL)
+        LightSwitch.update(ON)
+        expect(LightSwitch.was_null?).to be true
+        LightSwitch.update(OFF)
+        expect(LightSwitch.was_null?).to be false
+      end
+    end
+
+    describe "#was_on?" do
+      it "works" do
+        LightSwitch.update(ON)
+        LightSwitch.update(OFF)
+        expect(LightSwitch.was_on?).to be true
+        LightSwitch.update(ON)
+        expect(LightSwitch.was_on?).to be false
+      end
+    end
+
+    describe "#was_off?" do
+      it "works" do
+        LightSwitch.update(OFF)
+        LightSwitch.update(ON)
+        expect(LightSwitch.was_off?).to be true
+        LightSwitch.update(OFF)
+        expect(LightSwitch.was_off?).to be false
+      end
+    end
+
+    describe "#was_up?" do
+      it "works" do
+        items.build { rollershutter_item Shutter, state: UP }
+        Shutter.update(DOWN)
+        expect(Shutter.was_up?).to be true
+        Shutter.update(UP)
+        expect(Shutter.was_up?).to be false
+      end
+    end
+
+    describe "#was_down?" do
+      it "works" do
+        items.build { rollershutter_item Shutter, state: DOWN }
+        Shutter.update(UP)
+        expect(Shutter.was_down?).to be true
+        Shutter.update(DOWN)
+        expect(Shutter.was_down?).to be false
+      end
+    end
+
+    describe "#was_open?" do
+      it "works" do
+        items.build { contact_item Door, state: OPEN }
+        Door.update(CLOSED)
+        expect(Door.was_open?).to be true
+        Door.update(OPEN)
+        expect(Door.was_open?).to be false
+      end
+    end
+
+    describe "#was_closed?" do
+      it "works" do
+        items.build { contact_item Door, state: CLOSED }
+        Door.update(OPEN)
+        expect(Door.was_closed?).to be true
+        Door.update(CLOSED)
+        expect(Door.was_closed?).to be false
+      end
+    end
+
+    describe "#was_playing?" do
+      it "works" do
+        items.build { player_item Player, state: PLAY }
+        Player.update(PAUSE)
+        expect(Player.was_playing?).to be true
+        Player.update(PLAY)
+        expect(Player.was_playing?).to be false
+      end
+    end
+
+    describe "#was_paused?" do
+      it "works" do
+        items.build { player_item Player, state: PAUSE }
+        Player.update(PLAY)
+        expect(Player.was_paused?).to be true
+        Player.update(PAUSE)
+        expect(Player.was_paused?).to be false
+      end
+    end
+
+    describe "#was_rewinding?" do
+      it "works" do
+        items.build { player_item Player, state: REWIND }
+        Player.update(PLAY)
+        expect(Player.was_rewinding?).to be true
+        Player.update(REWIND)
+        expect(Player.was_rewinding?).to be false
+      end
+    end
+
+    describe "#was_fast_forwarding?" do
+      it "works" do
+        items.build { player_item Player, state: FASTFORWARD }
+        Player.update(PLAY)
+        expect(Player.was_fast_forwarding?).to be true
+        Player.update(FASTFORWARD)
+        expect(Player.was_fast_forwarding?).to be false
+      end
+    end
+  end
+
   describe "#formatted_state" do
     it "just returns the state if it has no format" do
       items.build { number_item MyTemp, state: 5.556 }
