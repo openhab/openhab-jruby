@@ -543,17 +543,14 @@ module OpenHAB
         # @example Given a A/V receiver's input item, search for its power item
         #   FamilyReceiver_Input.points(Semantics::Switch) # => [FamilyReceiver_Switch]
         #
-        # @param [SemanticTag] point_or_property_types
-        #   Pass 1 or 2 classes that are sub-classes of {Point} or {Property}.
-        #   Note that when comparing against semantic tags, it does a sub-class check.
-        #   So if you search for [Control], you'll get items tagged with [Switch].
+        # @param (see Enumerable#points)
         # @return [Array<Item>]
         #
-        def points(*point_or_property_types)
-          return members.points(*point_or_property_types) if equipment? || location?
+        def points(...)
+          return members.points(...) if equipment? || location?
 
           # automatically search the parent equipment (or location?!) for sibling points
-          result = (equipment || location)&.points(*point_or_property_types) || []
+          result = (equipment || location)&.points(...) || []
           result.delete(self)
           result
         end
@@ -572,6 +569,14 @@ module Enumerable
 
   #
   # Returns a new array of items that are a semantics Location (optionally of one of the given types)
+  #
+  # @param [SemanticTag] types
+  #   Pass 1 or more classes that are sub-classes of {Semantics::Location Semantics::Location}.
+  #   Note that when comparing against semantic tags, it does a sub-class check by default.
+  #   So if you search for [Room], you'll get items tagged with [LivingRoom], [Kitchen], etc.
+  # @param [true, false] subclasses
+  #   If true, match all subclasses of the given types.
+  #   If false, only match the exact type.
   # @return [Array<Item>]
   #
   # @example Get all rooms
@@ -580,7 +585,7 @@ module Enumerable
   # @example Get all bedrooms and bathrooms
   #   items.locations(Semantics::Bedroom, Semantics::Bathroom)
   #
-  def locations(*types)
+  def locations(*types, subclasses: true)
     begin
       raise ArgumentError unless types.all? { |type| type < Semantics::Location }
     rescue ArgumentError, TypeError
@@ -588,7 +593,13 @@ module Enumerable
     end
 
     result = select(&:location?)
-    result.select! { |i| types.any? { |type| i.location_type <= type } } unless types.empty?
+    unless types.empty?
+      if subclasses
+        result.select! { |i| types.any? { |type| i.location_type <= type } }
+      else
+        result.select! { |i| types.include?(i.location_type) }
+      end
+    end
 
     result
   end
@@ -602,6 +613,13 @@ module Enumerable
   #   that belong to the {Semantics::Equipment equipments}, use {#members}
   #   before calling {#points}. See the example with {#points}.
   #
+  # @param [SemanticTag] types
+  #   Pass 1 or more classes that are sub-classes of {Semantics::Equipment Semantics::Equipment}.
+  #   Note that when comparing against semantic tags, it does a sub-class check by default.
+  #   So if you search for [Fan], you'll get items tagged with [CeilingFan], [KitchenHood], etc.
+  # @param [true, false] subclasses
+  #   If true, match all subclasses of the given types.
+  #   If false, only match the exact type.
   # @return [Array<Item>]
   #
   # @example Get all TVs in a room
@@ -610,7 +628,7 @@ module Enumerable
   # @example Get all TVs and Speakers in a room
   #   lGreatRoom.equipments(Semantics::Television, Semantics::Speaker)
   #
-  def equipments(*types)
+  def equipments(*types, subclasses: true)
     begin
       raise ArgumentError unless types.all? { |type| type < Semantics::Equipment }
     rescue ArgumentError, TypeError
@@ -618,13 +636,27 @@ module Enumerable
     end
 
     result = select(&:equipment?)
-    result.select! { |i| types.any? { |type| i.equipment_type <= type } } unless types.empty?
+    unless types.empty?
+      if subclasses
+        result.select! { |i| types.any? { |type| i.equipment_type <= type } }
+      else
+        result.select! { |i| types.include?(i.equipment_type) }
+      end
+    end
 
     result
   end
 
   # Returns a new array of items that are semantics points (optionally of a given type)
   #
+  # @param [SemanticTag] point_or_property_types
+  #   Pass 1 or 2 classes that are sub-classes of {Semantics::Point Semantics::Point} or
+  #   {Semantics::Property Semantics::Property}.
+  #   Note that when comparing against semantic tags, it does a sub-class check by default.
+  #   So if you search for [Control], you'll get items tagged with [Switch].
+  # @param [true, false] subclasses
+  #   If true, match all subclasses of the given types.
+  #   If false, only match the exact type.
   # @return [Array<Item>]
   #
   # @example Get all the power switch items for every equipment in a room
@@ -632,7 +664,7 @@ module Enumerable
   #
   # @see #members
   #
-  def points(*point_or_property_types)
+  def points(*point_or_property_types, subclasses: true)
     unless (0..2).cover?(point_or_property_types.length)
       raise ArgumentError, "wrong number of arguments (given #{point_or_property_types.length}, expected 0..2)"
     end
@@ -652,8 +684,13 @@ module Enumerable
 
     select do |point|
       point.point? && point_or_property_types.all? do |tag|
-        (tag < Semantics::Point && point.point_type&.<=(tag)) ||
-          (tag < Semantics::Property && point.property_type&.<=(tag))
+        if subclasses
+          (tag < Semantics::Point && point.point_type&.<=(tag)) ||
+            (tag < Semantics::Property && point.property_type&.<=(tag))
+        else
+          (tag < Semantics::Point && point.point_type == tag) ||
+            (tag < Semantics::Property && point.property_type == tag)
+        end
       end
     end
   end
