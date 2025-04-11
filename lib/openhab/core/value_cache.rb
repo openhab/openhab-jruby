@@ -221,7 +221,7 @@ module OpenHAB
 
       # We use prepend here instead of overriding the methods inside ValueCache module/interface
       # because the methods are defined in the implementation class
-      $sharedCache.singleton_class.prepend(ValueConverter)
+      $sharedCache.class.prepend(ValueConverter)
     end
   end
 end
