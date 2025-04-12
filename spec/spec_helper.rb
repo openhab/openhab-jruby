@@ -43,6 +43,12 @@ RSpec.configure do |config|
     # per process
     $terminal = Object.new
     def $terminal.type; end
+    $console = Object.new
+    def $console.session
+      @session ||= Object.new
+      def @session.terminal = $terminal
+      @session
+    end
     require "openhab/console"
   end
 
