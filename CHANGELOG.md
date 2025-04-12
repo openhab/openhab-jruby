@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.38.1](https://github.com/openhab/openhab-jruby/tree/v5.38.1) (2025-04-12)
+
+### Bug Fixes
+
+- handle nil last_state for was_xx? predicate by [@jimtng](https://github.com/jimtng) in [#435](https://github.com/openhab/openhab-jruby/pull/435)
+
+**Full Changelog**: [v5.38.0...v5.38.1](https://github.com/openhab/openhab-jruby/compare/v5.38.0...v5.38.1)
+
 ## [v5.38.0](https://github.com/openhab/openhab-jruby/tree/v5.38.0) (2025-04-11)
 
 ### Features
