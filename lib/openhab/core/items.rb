@@ -46,13 +46,13 @@ module OpenHAB
 
             logger.trace { "Defining #{klass}##{state_predicate} for #{state}" }
             klass.class_eval <<~RUBY, __FILE__, __LINE__ + 1
-              def #{state_predicate}                                                  # def on?
-                raw_state.as(#{state.class.java_class.simple_name}).equal?(#{state})  #   raw_state.as(OnOffType) == ON
-              end                                                                     # end
+              def #{state_predicate}                                                   # def on?
+                raw_state.as(#{state.class.java_class.simple_name}).equal?(#{state})   #   raw_state.as(OnOffType) == ON
+              end                                                                      # end
 
-              def was_#{state_predicate}                                              # def was_on?
-                last_state.as(#{state.class.java_class.simple_name}).equal?(#{state}) #   last_state.as(OnOffType) == ON
-              end                                                                     # end
+              def was_#{state_predicate}                                               # def was_on?
+                last_state&.as(#{state.class.java_class.simple_name}).equal?(#{state}) #   last_state.as(OnOffType) == ON
+              end                                                                      # end
             RUBY
           end
         end
