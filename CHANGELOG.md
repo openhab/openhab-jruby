@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.38.2](https://github.com/openhab/openhab-jruby/tree/v5.38.2) (2025-04-13)
+
+### Bug Fixes
+
+- Resolve $terminal from $console by [@jimtng](https://github.com/jimtng) in [#436](https://github.com/openhab/openhab-jruby/pull/436)
+
+**Full Changelog**: [v5.38.1...v5.38.2](https://github.com/openhab/openhab-jruby/compare/v5.38.1...v5.38.2)
+
 ## [v5.38.1](https://github.com/openhab/openhab-jruby/tree/v5.38.1) (2025-04-12)
 
 ### Bug Fixes
