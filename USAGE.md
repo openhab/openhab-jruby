@@ -156,7 +156,7 @@ This functionality can be disabled for users who prefer to manage their own gems
 Simply change the `gems` and `require` configuration settings.
 
 | Parameter             | Description                                                                                                |
-| --------------------- | ---------------------------------------------------------------------------------------------------------- |
+|-----------------------|------------------------------------------------------------------------------------------------------------|
 | `gem_home`            | The path to store Ruby Gems. <br/><br/>Default: `$OPENHAB_CONF/automation/ruby/.gem/{RUBY_ENGINE_VERSION}` |
 | `gems`                | A list of gems to install. <br/><br/>Default: `openhab-scripting=~>5.0`                                    |
 | `bundle_gemfile`      | The path to your Gemfile relative to `$OPENHAB_CONF/automation/ruby`. <br/><br/>Default: `Gemfile`         |
@@ -166,7 +166,7 @@ Simply change the `gems` and `require` configuration settings.
 | `dependency_tracking` | Enable dependency tracking. <br/><br/>Default: `true`                                                      |
 | `local_context`       | See notes below. <br/><br/>Default: `singlethread`                                                         |
 | `local_variables`     | See notes below. <br/><br/>Default: `transient`                                                            |
-| `console`             | The default script used by `jrubyscripting console` Karaf console command. <br/><br/>Default: `irb`         |
+| `console`             | The default script used by `jrubyscripting console` Karaf console command. <br/><br/>Default: `irb`        |
 
 When using file-based configuration, these parameters must be prefixed with `org.openhab.automation.jrubyscripting:`, for example:
 
@@ -194,7 +194,7 @@ Multiple version specifiers can be added by separating them with a semicolon.
 Examples:
 
 | gem setting                                      | Description                                                                                              |
-| ------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
+|--------------------------------------------------|----------------------------------------------------------------------------------------------------------|
 | `openhab-scripting`                              | install the latest version of `openhab-scripting` gem                                                    |
 | `openhab-scripting=~>5.0.0`                      | install the latest version 5.0.x but not 5.1.x                                                           |
 | `openhab-scripting=~>5.0`                        | install the latest version 5.x but not 6.x. **This is the default/recommended setting.**                 |
@@ -310,7 +310,7 @@ This tables gives an overview of the `event` object for most common trigger type
 For full details, explore {OpenHAB::Core::Events}.
 
 | Property Name | Type                                         | Trigger Types                                                                                        | Description                                          | Rules DSL Equivalent   |
-| ------------- | -------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | ---------------------- |
+|---------------|----------------------------------------------|------------------------------------------------------------------------------------------------------|------------------------------------------------------|------------------------|
 | `state`       | {OpenHAB::Core::Types::State State} or `nil` | `[item] changed`, `[item] was updated`                                                               | State that triggered event                           | `triggeringItem.state` |
 | `was`         | {OpenHAB::Core::Types::State State} or `nil` | `[item] changed`                                                                                     | Previous state of Item or Group that triggered event | `previousState`        |
 | `command`     | {OpenHAB::Core::Types::Command Command}      | `[item] received a command`                                                                          | Command that triggered event                         | `receivedCommand`      |
@@ -1911,11 +1911,11 @@ Karaf Console commands are provided for performing maintenance and troubleshooti
 The commands are prefixed with `openhab:jrubyscripting` or just `jrubyscripting` followed by the sub-commands listed below:
 
 | Command   | Description                                                                                                      |
-| --------- | ---------------------------------------------------------------------------------------------------------------- |
+|-----------|------------------------------------------------------------------------------------------------------------------|
 | `info`    | Displays information about JRuby Scripting add-on                                                                |
 | `console` | Starts an interactive JRuby REPL console which allows you to interact directly with the current openHAB runtime. |
 | `bundle`  | Runs Ruby bundler with your Gemfile as configured with [bundle_gemfile](#bundle_gemfile) setting                 |
-| `gem`     | Runs Ruby gem command to installs, upgrade, uninstall gems that are located in your [gem_home](#gem_home)        |
+| `gem`     | Runs Ruby gem command to install, upgrade, or uninstall gems that are located in your [gem_home](#gem_home)      |
 | `prune`   | Removes gem files and directories from older openhab installations.                                              |
 
 ## Calling Java From JRuby
