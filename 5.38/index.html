@@ -3673,6 +3673,7 @@ This library offers a streamlined syntax for writing file-based and UI-based rul
 <li><a href="#hooks">Hooks</a></li>
 </ul>
 </li>
+<li><a href="#console-commands">Console Commands</a></li>
 <li><a href="#calling-java-from-jruby">Calling Java From JRuby</a></li>
 <li><a href="#full-documentation">Full Documentation</a></li>
 </ul>
@@ -3740,6 +3741,10 @@ Simply change the <code>gems</code> and <code>require</code> configuration setti
 <td>A list of gems to install. <!-- raw HTML omitted --><!-- raw HTML omitted -->Default: <code>openhab-scripting=~&gt;5.0</code></td>
 </tr>
 <tr>
+<td><code>bundle_gemfile</code></td>
+<td>The path to your Gemfile relative to <code>$OPENHAB_CONF/automation/ruby</code>. <!-- raw HTML omitted --><!-- raw HTML omitted -->Default: <code>Gemfile</code></td>
+</tr>
+<tr>
 <td><code>check_update</code></td>
 <td>Check for updated version of <code>gems</code> on start up or settings change. <!-- raw HTML omitted --><!-- raw HTML omitted -->Default: <code>true</code></td>
 </tr>
@@ -3762,6 +3767,10 @@ Simply change the <code>gems</code> and <code>require</code> configuration setti
 <tr>
 <td><code>local_variables</code></td>
 <td>See notes below. <!-- raw HTML omitted --><!-- raw HTML omitted -->Default: <code>transient</code></td>
+</tr>
+<tr>
+<td><code>console</code></td>
+<td>The default script used by <code>jrubyscripting console</code> Karaf console command. <!-- raw HTML omitted --><!-- raw HTML omitted -->Default: <code>irb</code></td>
 </tr>
 </tbody>
 </table>
@@ -3798,7 +3807,7 @@ Multiple version specifiers can be added by separating them with a semicolon.</p
 </tr>
 <tr>
 <td><code>openhab-scripting=~&gt;5.0</code></td>
-<td>install the latest version 5.x but not 6.x</td>
+<td>install the latest version 5.x but not 6.x. <strong>This is the default/recommended setting.</strong></td>
 </tr>
 <tr>
 <td><code>openhab-scripting=~&gt;5.0, faraday=~&gt;2.7;&gt;=2.7.4</code></td>
@@ -3810,9 +3819,19 @@ Multiple version specifiers can be added by separating them with a semicolon.</p
 </tr>
 </tbody>
 </table>
+<h3 id="bundle_gemfile"><a href="#bundle_gemfile" class="header-anchor">#</a>bundle_gemfile <!-- raw HTML omitted --></h3>
+<p>A path to your Gemfile, including the file name.
+It can be an absolute path, or just the file-name portion, in which case it will be resolved to <code>$OPENHAB_CONF/automation/ruby</code>.
+The default is <code>Gemfile</code>.</p>
+<p>If the Gemfile doesn't exist, the <a href="#gems">gems</a> setting will take effect, and bundler will not be used.</p>
+<p>The <a href="#console-commands">bundler init console command</a> can be used to create a new Gemfile, or you can create it manually.
+When this Gemfile exists, the <a href="#gems">gems</a> setting will be ignored, and only the gems specified in your Gemfile will be installed and used.</p>
+<p>Note that by default, the gems listed in the Gemfile will also be required, so it's not necessary to require them again in the <a href="#require">require</a> setting.
+To disable this behavior for a specific gem, add a <code>require: false</code> argument to the <code>gem</code> command within the Gemfile.</p>
 <h3 id="check_update"><a href="#check_update" class="header-anchor">#</a>check_update <!-- raw HTML omitted --></h3>
 <p>Check RubyGems for updates to the above gems when openHAB starts or JRuby settings are changed.
 Otherwise it will try to fulfil the requirements with locally installed gems, and you can manage them yourself with an external Ruby by setting the same GEM_HOME.</p>
+<p>This setting equally applies whether you're using bundler with <a href="#bundle_gemfile">Gemfile</a> or the <a href="#gems">gems</a> way of installing Ruby gems.</p>
 <h3 id="require"><a href="#require" class="header-anchor">#</a>require <!-- raw HTML omitted --></h3>
 <p>A comma separated list of script names to be required by the JRuby Scripting Engine at the beginning of user scripts.
 The default is to require the helper library.</p>
@@ -5031,6 +5050,39 @@ script_unloaded <span class="keyword">do</span>
   logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">script unloaded</span><span class="delimiter">&quot;</span></span>)
 <span class="keyword">end</span>
 </code></pre>
+<h2 id="console-commands"><a href="#console-commands" class="header-anchor">#</a>Console Commands</h2>
+<p>Karaf Console commands are provided for performing maintenance and troubleshooting tasks.
+The commands are prefixed with <code>openhab:jrubyscripting</code> or just <code>jrubyscripting</code> followed by the sub-commands listed below:</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>info</code></td>
+<td>Displays information about JRuby Scripting add-on</td>
+</tr>
+<tr>
+<td><code>console</code></td>
+<td>Starts an interactive JRuby REPL console which allows you to interact directly with the current openHAB runtime.</td>
+</tr>
+<tr>
+<td><code>bundle</code></td>
+<td>Runs Ruby bundler with your Gemfile as configured with <a href="#bundle_gemfile">bundle_gemfile</a> setting</td>
+</tr>
+<tr>
+<td><code>gem</code></td>
+<td>Runs Ruby gem command to installs, upgrade, uninstall gems that are located in your <a href="#gem_home">gem_home</a></td>
+</tr>
+<tr>
+<td><code>prune</code></td>
+<td>Removes gem files and directories from older openhab installations.</td>
+</tr>
+</tbody>
+</table>
 <h2 id="calling-java-from-jruby"><a href="#calling-java-from-jruby" class="header-anchor">#</a>Calling Java From JRuby</h2>
 <p>JRuby can <a href="https://github.com/jruby/jruby/wiki/CallingJavaFromJRuby">access almost any Java object</a> that's available in the current JVM.
 This is how the library is implemented internally.</p>
@@ -5047,7 +5099,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Sat Apr 12 13:23:21 2025 by
+  Generated on Sun Apr 13 16:33:36 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.4).
 </footer>
