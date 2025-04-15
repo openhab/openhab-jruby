@@ -960,7 +960,6 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       # @deprecated OH4.3 remove guard when dropping support for OH4.3
       context "with wildcard", if: OpenHAB::Core.full_version > Gem::Version.new("5.0.0.M1") do
         it "works" do
-          puts OpenHAB::Core.version
           triggered_item = nil
           received_command("*") { |event| triggered_item = event.item }
 
