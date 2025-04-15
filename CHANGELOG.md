@@ -1,5 +1,15 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.38.3](https://github.com/openhab/openhab-jruby/tree/v5.38.3) (2025-04-15)
+
+### Bug Fixes
+
+- console irb: Require irb ~> 1.14 to allow the version shipped with JRuby 10 by [@jimtng](https://github.com/jimtng) in [#439](https://github.com/openhab/openhab-jruby/pull/439)
+- Fix JRuby 10.0 compatibility: use `itr` instead of `it` for iterator by [@ccutrer](https://github.com/ccutrer) in [#444](https://github.com/openhab/openhab-jruby/pull/444)
+- Fix various "instance vars on non-persistent Java type" warnings on JRuby 10 by [@ccutrer](https://github.com/ccutrer) in [#450](https://github.com/openhab/openhab-jruby/pull/450)
+
+**Full Changelog**: [v5.38.2...v5.38.3](https://github.com/openhab/openhab-jruby/compare/v5.38.2...v5.38.3)
+
 ## [v5.38.2](https://github.com/openhab/openhab-jruby/tree/v5.38.2) (2025-04-13)
 
 ### Bug Fixes
