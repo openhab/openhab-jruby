@@ -2,9 +2,9 @@
 
 require "openhab/console/stdio"
 
-gem "irb", "~> 1.15"
-
 require "irb"
+
+raise "IRB Version 1.14 or later is required." unless Gem::Version.new(IRB::VERSION) >= Gem::Version.new("1.14")
 
 module OpenHAB
   # @!visibility private
