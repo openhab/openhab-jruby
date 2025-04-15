@@ -231,7 +231,7 @@ module OpenHAB
         #     @return [void]
         def tags=(values)
           modify do
-            values = DSL::Items::ItemBuilder.normalize_tags(*values)
+            values = DSL::Items::Tags.normalize(*values)
             next if values.to_set == tags.to_set
 
             @modified = true

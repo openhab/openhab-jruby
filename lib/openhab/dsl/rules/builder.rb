@@ -4,6 +4,7 @@ require "forwardable"
 
 require_relative "property"
 require_relative "guard"
+require_relative "triggers"
 require_relative "rule_triggers"
 require_relative "terse"
 
@@ -2212,7 +2213,7 @@ module OpenHAB
         # @return [void]
         def add_tag(tag)
           # have to normalize tags first
-          @tags = DSL::Items::ItemBuilder.normalize_tags(*tags)
+          @tags = DSL::Items::Tags.normalize(*tags)
           @tags << tag unless @tags.include?(tag)
         end
 
@@ -2240,7 +2241,7 @@ module OpenHAB
         # @return [true,false] true if it should be created, false otherwise
         #
         def create_rule?
-          @tags = DSL::Items::ItemBuilder.normalize_tags(*tags)
+          @tags = DSL::Items::Tags.normalize(*tags)
           return true if tags.intersect?(%w[Script Scene])
 
           if !triggers?

@@ -278,27 +278,6 @@ module OpenHAB
           def item_factory
             @item_factory ||= OpenHAB::OSGi.service("org.openhab.core.items.ItemFactory")
           end
-
-          #
-          # Convert the given array to an array of strings.
-          # Convert Semantics classes to their simple name.
-          #
-          # @param [String,Symbol,Semantics::Tag] tags A list of strings, symbols, or Semantics classes
-          # @return [Array] An array of strings
-          #
-          # @example
-          #   tags = normalize_tags("tag1", Semantics::LivingRoom)
-          #
-          # @!visibility private
-          def normalize_tags(*tags)
-            tags.compact.map do |tag|
-              case tag
-              when String then tag
-              when Symbol, Semantics::SemanticTag then tag.to_s
-              else raise ArgumentError, "`#{tag}` must be a subclass of Semantics::Tag, a `Symbol`, or a `String`."
-              end
-            end
-          end
         end
 
         # @param dimension [Symbol, String, nil] The unit dimension for a {NumberItem} (see {ItemBuilder#dimension})
@@ -450,7 +429,7 @@ module OpenHAB
         def tag(*tags)
           return @tags if tags.empty?
 
-          @tags.concat(self.class.normalize_tags(*tags))
+          @tags.concat(Tags.normalize(*tags))
         end
         alias_method :tags, :tag
 

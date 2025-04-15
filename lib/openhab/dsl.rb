@@ -10,7 +10,8 @@ require_relative "osgi"
 require_relative "core"
 
 Dir[File.expand_path("dsl/**/*.rb", __dir__)].each do |f|
-  require f
+  # some files are excluded because they're autoloaded
+  require f unless f.include?("/rules/") || f =~ %r{dsl/(items|sitemaps|things)/builder.rb$}
 end
 
 require_relative "core_ext"
@@ -27,6 +28,32 @@ module OpenHAB
   # inside of other classes, or include the module.
   #
   module DSL
+    module Items
+      autoload :Builder, "openhab/dsl/items/builder"
+      autoload :BaseBuilderDSL, "openhab/dsl/items/builder"
+      autoload :ItemBuilder, "openhab/dsl/items/builder"
+    end
+
+    module Things
+      autoload :Builder, "openhab/dsl/things/builder"
+    end
+
+    module Sitemaps
+      autoload :Builder, "openhab/dsl/sitemaps/builder"
+      autoload :LinkableWidgetBuilder, "openhab/dsl/sitemaps/builder"
+    end
+
+    module Rules
+      # sorted alphabetically
+      autoload :AutomationRule, "openhab/dsl/rules/automation_rule"
+      autoload :Builder, "openhab/dsl/rules/builder"
+      autoload :Guard, "openhab/dsl/rules/guard"
+      autoload :NameInference, "openhab/dsl/rules/name_inference"
+      autoload :Property, "openhab/dsl/rules/property"
+      autoload :RuleTriggers, "openhab/dsl/rules/rule_triggers"
+      autoload :Terse, "openhab/dsl/rules/terse"
+    end
+
     # include this before Core::Actions so that Core::Action's method_missing
     # takes priority
     include Core::EntityLookup

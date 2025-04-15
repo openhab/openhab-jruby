@@ -4,7 +4,6 @@ require "singleton"
 
 require "openhab/core/entity_lookup"
 require "openhab/core/lazy_array"
-require "openhab/dsl/items/builder"
 
 module OpenHAB
   module Core

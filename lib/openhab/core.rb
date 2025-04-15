@@ -149,5 +149,6 @@ end
 require_relative "core/provider"
 
 Dir[File.expand_path("core/**/*.rb", __dir__)].each do |f|
-  require f
+  # metadata is autoloaded
+  require f unless f.include?("/metadata/")
 end
