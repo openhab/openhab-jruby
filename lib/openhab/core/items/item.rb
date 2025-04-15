@@ -390,7 +390,7 @@ module OpenHAB
         #   # Item1's metadata after: {"namespace2"=>["value", {"config1"=>"foo", "config2"=>"bar"}], "namespace"=>["value", {"config1"=>"foo", "config2"=>"bar"}]}
         #
         def metadata
-          @metadata ||= Metadata::NamespaceHash.new(name)
+          Metadata::NamespaceHash.new(name)
         end
         # rubocop:enable Layout/LineLength
 
