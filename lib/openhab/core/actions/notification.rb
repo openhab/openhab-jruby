@@ -94,7 +94,7 @@ module OpenHAB
             # @deprecated OH 4.1
             if Core.version >= Core::V4_2
               buttons ||= []
-              buttons = buttons.map { |title, action| "#{title}=#{action}" } if buttons.is_a?(Hash)
+              buttons = buttons.map { |button_title, action| "#{button_title}=#{action}" } if buttons.is_a?(Hash)
               raise ArgumentError, "buttons must contain (0..3) elements." unless (0..3).cover?(buttons.size)
 
               attachment = "item:#{attachment.name}" if attachment.is_a?(Item) && attachment.image_item?

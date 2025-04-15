@@ -26,6 +26,9 @@ module OpenHAB
       end
 
       def html_markup_markdown(text)
+        # Remove the "omit from toc" comments
+        text.gsub!(" <!-- omit from toc -->", "")
+
         result = super
 
         html = Nokogiri::HTML5.fragment(result)
@@ -42,13 +45,10 @@ module OpenHAB
           end
         end
 
-        # wtf commonmarker, you don't generate anchors?!
-        html.css("h1, h2, h3, h4, h5, h6").each do |header|
-          next if header["id"]
-
-          id = header.text.strip.downcase.delete(%(.?"')).gsub(/[ ,]+/, "-")
-          header["id"] = id
-          header.prepend_child(%(<a href="##{id}" class="header-anchor">#</a>))
+        # add the "#" mouse-over to header links
+        html.css(Array.new(6) { |i| "h#{i + 1} > a.anchor" }.join(", ")).each do |anchor|
+          anchor["class"] = "header-anchor"
+          anchor.content = "#"
         end
 
         html.to_s
