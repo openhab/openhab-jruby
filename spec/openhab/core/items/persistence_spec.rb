@@ -109,7 +109,7 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
     updated?
     variance
   ].product(variants).each do |name, variant|
-    prefix = name.to_s
+    prefix = +name.to_s
     suffix = prefix.delete_suffix!("?") && "?"
     method = :"#{prefix}_#{variant}#{suffix}"
     next unless OpenHAB::Core::Items::Persistence.instance_methods.include?(method)
