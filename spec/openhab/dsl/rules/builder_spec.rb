@@ -1820,7 +1820,8 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
             run { raise "failure!" }
           end
           expect(spec_log_lines).to include(include("failure! (RuntimeError)"))
-          expect(spec_log_lines).to include(match(%r{rules/builder_spec\.rb:(?:\d+):in `block}))
+          # @deprecated OH 4.3 - remove the backtick when dropping OH 4.3
+          expect(spec_log_lines).to include(match(%r{rules/builder_spec\.rb:#{__LINE__ - 4}:in [`']block}))
         end
 
         it "logs java exceptions" do
