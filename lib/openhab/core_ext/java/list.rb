@@ -87,9 +87,9 @@ module Java::JavaUtil::List # rubocop:disable Style/ClassAndModuleChildren
   def delete_if
     raise NotImplementedError unless block_given?
 
-    it = list_iterator
-    while it.has_next? # rubocop:disable Style/WhileUntilModifier
-      it.remove if yield(it.next)
+    itr = list_iterator
+    while itr.has_next? # rubocop:disable Style/WhileUntilModifier
+      itr.remove if yield(itr.next)
     end
     self
   end
@@ -160,17 +160,17 @@ module Java::JavaUtil::List # rubocop:disable Style/ClassAndModuleChildren
     start = range.begin
     start = 0 if start.negative?
     start = length if start > length
-    it = list_iterator(start)
+    itr = list_iterator(start)
 
-    while range.cover?(it.next_index)
-      break if range.end.nil? && !it.has_next?
+    while range.cover?(itr.next_index)
+      break if range.end.nil? && !itr.has_next?
 
-      obj = yield(it.next_index) if block_given?
-      if it.has_next?
-        it.next
-        it.set(obj)
+      obj = yield(itr.next_index) if block_given?
+      if itr.has_next?
+        itr.next
+        itr.set(obj)
       else
-        it.add(obj)
+        itr.add(obj)
       end
     end
 
@@ -183,22 +183,22 @@ module Java::JavaUtil::List # rubocop:disable Style/ClassAndModuleChildren
             "wrong number of arguments calling `flatten` (given #{args.length}, expect 0..1)"
     end
 
-    it = list_iterator
+    itr = list_iterator
 
     args = [args.first - 1] unless args.empty?
     done = args.first == 0 # rubocop:disable Style/NumericPredicate
 
     changed = false
-    while it.has_next?
-      element = it.next
+    while itr.has_next?
+      element = itr.next
       next unless element.respond_to?(:to_ary)
 
       changed = true
-      it.remove
+      itr.remove
       arr = element.to_ary
       arr = arr.flatten(*args) unless done
       arr.each do |e|
-        it.add(e)
+        itr.add(e)
       end
     end
     changed ? self : nil
@@ -223,9 +223,9 @@ module Java::JavaUtil::List # rubocop:disable Style/ClassAndModuleChildren
   def keep_if?
     raise NotImplementedError unless block_given?
 
-    it = list_iterator
-    while it.has_next? # rubocop:disable Style/WhileUntilModifier
-      it.remove unless yield(it.next)
+    itr = list_iterator
+    while itr.has_next? # rubocop:disable Style/WhileUntilModifier
+      itr.remove unless yield(itr.next)
     end
     self
   end
@@ -257,10 +257,10 @@ module Java::JavaUtil::List # rubocop:disable Style/ClassAndModuleChildren
     count = args.first
     start = [length - count, 0].max
     result = self[start..-1].to_a # rubocop:disable Style/SlicingWithRange
-    it = list_iterator(start)
-    while it.has_next?
-      it.next
-      it.remove
+    itr = list_iterator(start)
+    while itr.has_next?
+      itr.next
+      itr.remove
     end
     result
   end
@@ -278,12 +278,12 @@ module Java::JavaUtil::List # rubocop:disable Style/ClassAndModuleChildren
   def reject!
     raise NotImplementedError unless block_given?
 
-    it = list_iterator
+    itr = list_iterator
     changed = false
-    while it.has_next
-      if yield(it.next)
+    while itr.has_next
+      if yield(itr.next)
         changed = true
-        it.remove
+        itr.remove
       end
     end
     self if changed
@@ -319,12 +319,12 @@ module Java::JavaUtil::List # rubocop:disable Style/ClassAndModuleChildren
   def select!
     raise NotImplementedError unless block_given?
 
-    it = list_iterator
+    itr = list_iterator
     changed = false
-    while it.has_next?
-      unless yield(it.next)
+    while itr.has_next?
+      unless yield(itr.next)
         changed = true
-        it.remove
+        itr.remove
       end
     end
     self if changed
@@ -344,12 +344,12 @@ module Java::JavaUtil::List # rubocop:disable Style/ClassAndModuleChildren
 
     count = args.first
     result = self[0...count].to_a
-    it = list_iterator
+    itr = list_iterator
     count.times do
-      break unless it.has_next?
+      break unless itr.has_next?
 
-      it.next
-      it.remove
+      itr.next
+      itr.remove
     end
     result
   end
@@ -377,10 +377,10 @@ module Java::JavaUtil::List # rubocop:disable Style/ClassAndModuleChildren
 
     result = slice(*args).to_a
 
-    it = list_iterator(start)
+    itr = list_iterator(start)
     result.length.times do
-      it.next
-      it.remove
+      itr.next
+      itr.remove
     end
     result
   end
@@ -395,14 +395,14 @@ module Java::JavaUtil::List # rubocop:disable Style/ClassAndModuleChildren
   def uniq!
     seen = Set.new
 
-    it = list_iterator
+    itr = list_iterator
     changed = false
-    while it.has_next?
-      n = it.next
+    while itr.has_next?
+      n = itr.next
       n = yield(n) if block_given?
       if seen.include?(n)
         changed = true
-        it.remove
+        itr.remove
       end
       seen << n
     end
