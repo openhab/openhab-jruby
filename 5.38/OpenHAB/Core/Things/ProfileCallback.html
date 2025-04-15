@@ -3748,22 +3748,16 @@ and channels.</p>
       <pre class="lines">
 
 
-16
-17
-18
-19
-20
-21
-22</pre>
+26
+27
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/profile_callback.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/profile_callback.rb', line 26</span>
 
 <span class="keyword">def</span> <span class="function">handle_command</span>(command)
-  <span class="keyword">unless</span> instance_variable_defined?(<span class="symbol">:@dummy_channel_item</span>)
-    <span class="instance-variable">@dummy_channel_item</span> = <span class="constant">DSL</span>::<span class="constant">Items</span>::<span class="constant">ItemBuilder</span>.item_factory.create_item(link.channel.accepted_item_type, <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>)
-  <span class="keyword">end</span>
-  command = <span class="instance-variable">@dummy_channel_item</span>.format_command(command) <span class="keyword">if</span> <span class="instance-variable">@dummy_channel_item</span>
+  command = <span class="constant">ProfileCallback</span>.dummy_channel_item(link.channel.accepted_item_type)&amp;.format_command(command)
   <span class="keyword">super</span>
 <span class="keyword">end</span></pre>
     </td>
@@ -3811,13 +3805,13 @@ and channels.</p>
       <pre class="lines">
 
 
-29
-30
-31
-32</pre>
+36
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/profile_callback.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/profile_callback.rb', line 36</span>
 
 <span class="keyword">def</span> <span class="function">send_command</span>(command)
   command = link.item.format_command(command)
@@ -3886,7 +3880,7 @@ and channels.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/profile_callback.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/profile_callback.rb', line 51</span>
 
 </pre>
     </td>
@@ -3934,13 +3928,13 @@ and channels.</p>
       <pre class="lines">
 
 
-39
-40
-41
-42</pre>
+46
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/profile_callback.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/things/profile_callback.rb', line 46</span>
 
 <span class="keyword">def</span> <span class="function">send_update</span>(state)
   state = link.item.format_update(state)
@@ -3956,7 +3950,7 @@ and channels.</p>
 </div>
 
         <footer>
-  Generated on Sun Apr 13 16:33:41 2025 by
+  Generated on Tue Apr 15 13:39:15 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.4).
 </footer>
