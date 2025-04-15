@@ -3581,8 +3581,8 @@ Channels, which can be bound to Items. - Documentation for openhab-scripting JRu
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>A <span class='object_link'><a href="" title="OpenHAB::Core::Things::Thing (module)">Thing</a></span> is a representation of a connected part (e.g. physical device
-or cloud service) from the real world. It contains a list of
+    <p>A <span class='object_link'><a href="" title="OpenHAB::Core::Things::Thing (module)">Thing</a></span> is a representation of a connected part (e.g. physical device<br>
+or cloud service) from the real world. It contains a list of<br>
 <span class='object_link'><a href="Channel.html" title="OpenHAB::Core::Things::Channel (class)">Channels</a></span>, which can be bound to <span class='object_link'><a href="../Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Items</a></span>.</p>
 
 
@@ -3591,7 +3591,7 @@ or cloud service) from the real world. It contains a list of
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>thing = things[<span class="string"><span class="delimiter">&quot;</span><span class="content">chromecast:audiogroup:dd9f8622-eee-4eaf-b33f-cdcdcdeee001121</span><span class="delimiter">&quot;</span></span>]
@@ -3602,15 +3602,15 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Item linked to volume channel: </span><span class="inline"><span class="inline-delimiter">#{</span>thing.channels[<span class="string"><span class="delimiter">'</span><span class="content">volume</span><span class="delimiter">'</span></span>]&amp;.item&amp;.name<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Thing actions can be called directly through a Thing object</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Thing actions can be called directly through a Thing object</p>
+</div></h5>
       
       <pre class="example code"><code>things[<span class="string"><span class="delimiter">&quot;</span><span class="content">mqtt:broker:mosquitto</span><span class="delimiter">&quot;</span></span>].publish_mqtt(<span class="string"><span class="delimiter">&quot;</span><span class="content">zigbee2mqttt/bridge/config/permit_join</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">true</span><span class="delimiter">&quot;</span></span>)
 things[<span class="string"><span class="delimiter">&quot;</span><span class="content">mail:smtp:local</span><span class="delimiter">&quot;</span></span>].send_mail(<span class="string"><span class="delimiter">&quot;</span><span class="content">me@example.com</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Subject</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Email body</span><span class="delimiter">&quot;</span></span>)</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Thing can be accessed directly through <span class='object_link'><a href="../EntityLookup.html" title="OpenHAB::Core::EntityLookup (module)">entity lookup</a></span></p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Thing can be accessed directly through <span class='object_link'><a href="../EntityLookup.html" title="OpenHAB::Core::EntityLookup (module)">entity lookup</a></span></p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># replace ':' with '_' in thing uid</span>
 mqtt_broker_mosquitto.online? <span class="comment"># is mqtt:broker:mosquitto thing online?</span></code></pre>
@@ -4355,7 +4355,7 @@ mqtt_broker_mosquitto.online? <span class="comment"># is mqtt:broker:mosquitto t
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>things[<span class="string"><span class="delimiter">'</span><span class="content">mail:smtp:local</span><span class="delimiter">'</span></span>].send_email(<span class="string"><span class="delimiter">'</span><span class="content">me@example.com</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">subject</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">message</span><span class="delimiter">'</span></span>)</code></pre>
@@ -5417,15 +5417,15 @@ mqtt_broker_mosquitto.online? <span class="comment"># is mqtt:broker:mosquitto t
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>logger.info things[<span class="string"><span class="delimiter">&quot;</span><span class="content">smtp:mail:local</span><span class="delimiter">&quot;</span></span>].configuration[<span class="string"><span class="delimiter">&quot;</span><span class="content">hostname</span><span class="delimiter">&quot;</span></span>]
 logger.info things[<span class="string"><span class="delimiter">&quot;</span><span class="content">ipcamera:dahua:frontporch</span><span class="delimiter">&quot;</span></span>].configuration[<span class="symbol">:ipAddress</span>]</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Changing Thing configuration</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Changing Thing configuration</p>
+</div></h5>
       
       <pre class="example code"><code>things[<span class="string"><span class="delimiter">&quot;</span><span class="content">smtp:mail:local</span><span class="delimiter">&quot;</span></span>].configuration[<span class="symbol">:hostname</span>] = <span class="string"><span class="delimiter">&quot;</span><span class="content">smtp.gmail.com</span><span class="delimiter">&quot;</span></span></code></pre>
     
@@ -6857,15 +6857,15 @@ logger.info things[<span class="string"><span class="delimiter">&quot;</span><sp
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>logger.info things[<span class="string"><span class="delimiter">&quot;</span><span class="content">fronius:meter:mybridge:mymeter</span><span class="delimiter">&quot;</span></span>].properties[<span class="string"><span class="delimiter">&quot;</span><span class="content">modelId</span><span class="delimiter">&quot;</span></span>]
 logger.info things[<span class="string"><span class="delimiter">&quot;</span><span class="content">fronius:meter:mybridge:mymeter</span><span class="delimiter">&quot;</span></span>].properties[<span class="symbol">:modelId</span>]</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Changing Thing properties</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Changing Thing properties</p>
+</div></h5>
       
       <pre class="example code"><code>things[<span class="string"><span class="delimiter">&quot;</span><span class="content">lgwebos:WebOSTV:livingroom</span><span class="delimiter">&quot;</span></span>].properties[<span class="symbol">:deviceId</span>] = <span class="string"><span class="delimiter">&quot;</span><span class="content">e57ae675-aea0-4397-97bc-c39bea30c2ee</span><span class="delimiter">&quot;</span></span></code></pre>
     
@@ -8823,7 +8823,7 @@ logger.info things[<span class="string"><span class="delimiter">&quot;</span><sp
 </h3><div class="docstring">
   <div class="discussion">
     <p>Fetches the actions available for this thing.</p>
-<p>Default scope actions are available directly on the thing object, via
+<p>Default scope actions are available directly on the thing object, via<br>
 <span class='object_link'><a href="#method_missing-instance_method" title="OpenHAB::Core::Things::Thing#method_missing (method)">#method_missing</a></span>.</p>
 
 
@@ -8832,7 +8832,7 @@ logger.info things[<span class="string"><span class="delimiter">&quot;</span><sp
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>things[<span class="string"><span class="delimiter">&quot;</span><span class="content">max:thermostat:mybridge:thermostat</span><span class="delimiter">&quot;</span></span>].actions(<span class="string"><span class="delimiter">&quot;</span><span class="content">max-devices</span><span class="delimiter">&quot;</span></span>).delete_from_cube</code></pre>
@@ -9655,9 +9655,9 @@ logger.info things[<span class="string"><span class="delimiter">&quot;</span><sp
 </div>
 
         <footer>
-  Generated on Tue Apr 15 13:39:12 2025 by
+  Generated on Tue Apr 15 23:01:57 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.4).
+  0.9.37 (ruby-3.1.4).
 </footer>
 
       </main>

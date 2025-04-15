@@ -3553,7 +3553,7 @@
       </aside>
 
       <main class="page">
-        <div class="content"><div id='filecontents'><h1 id="examples"><a href="#examples" class="header-anchor">#</a>Examples</h1>
+        <div class="content"><div id='filecontents'><h1><a href="#examples" aria-hidden="true" class="header-anchor" id="examples">#</a>Examples</h1>
 <p>The following examples are for file-based rules but most of them are applicable to <a href="file.USAGE.html#ui-based-scripts">UI rules</a> as well.</p>
 <ul>
 <li><a href="#trigger-when-an-item-changed-state">Trigger when an item changed state</a></li>
@@ -3575,7 +3575,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="trigger-when-an-item-changed-state"><a href="#trigger-when-an-item-changed-state" class="header-anchor">#</a>Trigger when an item changed state</h2>
+<h2><a href="#trigger-when-an-item-changed-state" aria-hidden="true" class="header-anchor" id="trigger-when-an-item-changed-state">#</a>Trigger when an item changed state</h2>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">Turn on light when sensor changed to open</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   changed <span class="constant">Door_Sensor</span>, <span class="key">to</span>: <span class="constant">OPEN</span>
   run { <span class="constant">Cupboard_Light</span>.on }
@@ -3600,7 +3600,7 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
   run { <span class="constant">Cupboard_Light</span> &lt;&lt; <span class="constant">Door_Sensor</span>.open? } <span class="comment"># Send a boolean command to a Switch Item</span>
 <span class="keyword">end</span>
 </code></pre>
-<h2 id="trigger-when-a-group-member-changed-state"><a href="#trigger-when-a-group-member-changed-state" class="header-anchor">#</a>Trigger when a group member changed state</h2>
+<h2><a href="#trigger-when-a-group-member-changed-state" aria-hidden="true" class="header-anchor" id="trigger-when-a-group-member-changed-state">#</a>Trigger when a group member changed state</h2>
 <pre class="code ruby"><code class="ruby"><span class="comment"># Assumption: Motion sensor items are named using the pattern RoomName_Motion</span>
 <span class="comment"># and Light switch items are named with the pattern RoomName_Light</span>
 rule <span class="string"><span class="delimiter">'</span><span class="content">Generic motion rule</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
@@ -3612,7 +3612,7 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
 <span class="keyword">end</span>
 </code></pre>
 <p>See also: <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#Triggers-group" title="group::OpenHAB::DSL::Rules::BuilderDSL::Triggers (group)">Triggers</a></span></p>
-<h2 id="various-ways-of-sending-a-command-to-an-item"><a href="#various-ways-of-sending-a-command-to-an-item" class="header-anchor">#</a>Various ways of sending a command to an item</h2>
+<h2><a href="#various-ways-of-sending-a-command-to-an-item" aria-hidden="true" class="header-anchor" id="various-ways-of-sending-a-command-to-an-item">#</a>Various ways of sending a command to an item</h2>
 <pre class="code ruby"><code class="ruby"><span class="comment"># Using the shovel operator</span>
 <span class="constant">Light1</span> &lt;&lt; <span class="constant">ON</span>
 <span class="constant">DimmerItem1</span> &lt;&lt; <span class="integer">100</span>
@@ -3633,10 +3633,10 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
 [<span class="constant">RollerItem1</span>, <span class="constant">RollerItem2</span>, <span class="constant">RollerItem3</span>].down
 [<span class="constant">NumberItem1</span>, <span class="constant">NumberItem2</span>, <span class="constant">NumberItem3</span>].command <span class="integer">100</span>
 </code></pre>
-<p>Each item type supports command helpers relevant to the type.
-For example, a <span class='object_link'><a href="OpenHAB/Core/Items/SwitchItem.html" title="OpenHAB::Core::Items::SwitchItem (class)">SwitchItem</a></span> supports <span class='object_link'><a href="OpenHAB/Core/Items/SwitchItem.html#on-instance_method" title="OpenHAB::Core::Items::SwitchItem#on (method)">on</a></span> and <span class='object_link'><a href="OpenHAB/Core/Items/SwitchItem.html#off-instance_method" title="OpenHAB::Core::Items::SwitchItem#off (method)">off</a></span>.
+<p>Each item type supports command helpers relevant to the type.<br>
+For example, a <span class='object_link'><a href="OpenHAB/Core/Items/SwitchItem.html" title="OpenHAB::Core::Items::SwitchItem (class)">SwitchItem</a></span> supports <span class='object_link'><a href="OpenHAB/Core/Items/SwitchItem.html#on-instance_method" title="OpenHAB::Core::Items::SwitchItem#on (method)">on</a></span> and <span class='object_link'><a href="OpenHAB/Core/Items/SwitchItem.html#off-instance_method" title="OpenHAB::Core::Items::SwitchItem#off (method)">off</a></span>.<br>
 See specific item types under <span class='object_link'><a href="OpenHAB/Core/Items.html" title="OpenHAB::Core::Items (module)">OpenHAB::Core::Items</a></span></p>
-<h2 id="dealing-with-item-states"><a href="#dealing-with-item-states" class="header-anchor">#</a>Dealing with Item States</h2>
+<h2><a href="#dealing-with-item-states" aria-hidden="true" class="header-anchor" id="dealing-with-item-states">#</a>Dealing with Item States</h2>
 <pre class="code ruby"><code class="ruby"><span class="comment"># Items:</span>
 <span class="comment"># Number:Temperature Outside_Temperature e.g. 28 °C</span>
 <span class="comment"># Number:Temperature Inside_Temperature e.g. 22 °C</span>
@@ -3647,14 +3647,14 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 <pre class="code ruby"><code class="ruby"><span class="constant">Switch1</span>.on?    <span class="comment"># =&gt; true if Switch1.state == ON</span>
 <span class="constant">Shutter1</span>.up?   <span class="comment"># =&gt; true if Shutter1.state == UP</span>
 </code></pre>
-<h3 id="detect-change-duration-without-creating-an-explicit-timer"><a href="#detect-change-duration-without-creating-an-explicit-timer" class="header-anchor">#</a>Detect change duration without creating an explicit timer</h3>
+<h3><a href="#detect-change-duration-without-creating-an-explicit-timer" aria-hidden="true" class="header-anchor" id="detect-change-duration-without-creating-an-explicit-timer">#</a>Detect change duration without creating an explicit timer</h3>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">Warn when garage door is open a long time</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   changed <span class="constant">Garage_Door</span>, <span class="key">to</span>: <span class="constant">OPEN</span>, <span class="key">for</span>: <span class="integer">15</span>.minutes
   run { <span class="constant">Voice</span>.say <span class="string"><span class="delimiter">&quot;</span><span class="content">Warning, the garage door is open</span><span class="delimiter">&quot;</span></span> } <span class="comment"># call TTS to the default audio sink</span>
 <span class="keyword">end</span>
 </code></pre>
-<h3 id="automatic-activation-of-exhaust-fan-based-on-humidity-sensor"><a href="#automatic-activation-of-exhaust-fan-based-on-humidity-sensor" class="header-anchor">#</a>Automatic activation of exhaust fan based on humidity sensor</h3>
-<p>This uses the <code>evolution_rate</code> <span class='object_link'><a href="OpenHAB/Core/Items/Persistence.html" title="OpenHAB::Core::Items::Persistence (module)">persistence</a></span> feature,  coupled with an easy way to specify <a href="file.USAGE.html#durations">duration</a>.
+<h3><a href="#automatic-activation-of-exhaust-fan-based-on-humidity-sensor" aria-hidden="true" class="header-anchor" id="automatic-activation-of-exhaust-fan-based-on-humidity-sensor">#</a>Automatic activation of exhaust fan based on humidity sensor</h3>
+<p>This uses the <code>evolution_rate</code> <span class='object_link'><a href="OpenHAB/Core/Items/Persistence.html" title="OpenHAB::Core::Items::Persistence (module)">persistence</a></span> feature,  coupled with an easy way to specify <a href="file.USAGE.html#durations">duration</a>.<br>
 It is accessed simply through <code>ItemName.persistence_function</code>.</p>
 <pre class="code ruby"><code class="ruby"><span class="comment"># Note: don't activate the exhaust fan if the bathroom light is off at night</span>
 <span class="comment"># Sun_Elevation is an Astro item. Its state is positive during daylight</span>
@@ -3672,21 +3672,21 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
   <span class="keyword">end</span>
 <span class="keyword">end</span>
 </code></pre>
-<h2 id="executing-an-external-command"><a href="#executing-an-external-command" class="header-anchor">#</a>Executing an External Command</h2>
-<p>OpenHAB offers <span class='object_link'><a href="OpenHAB/Core/Actions/Exec.html#execute_command_line-class_method" title="OpenHAB::Core::Actions::Exec.execute_command_line (method)">execute_command_line</a></span> to execute
+<h2><a href="#executing-an-external-command" aria-hidden="true" class="header-anchor" id="executing-an-external-command">#</a>Executing an External Command</h2>
+<p>OpenHAB offers <span class='object_link'><a href="OpenHAB/Core/Actions/Exec.html#execute_command_line-class_method" title="OpenHAB::Core::Actions::Exec.execute_command_line (method)">execute_command_line</a></span> to execute<br>
 an external command. However, in Ruby it is also possible to use, amongst others:</p>
 <ul>
-<li><a href="https://ruby-doc.org/core/Kernel.html#method-i-system">system</a>: waits for the execution to finish,
+<li><a href="https://ruby-doc.org/core/Kernel.html#method-i-system">system</a>: waits for the execution to finish,<br>
 then returns <code>true</code> (zero exit status), <code>false</code> (non-zero exit status), or <code>nil</code> if the execution fails.</li>
-<li><a href="https://ruby-doc.org/core/Kernel.html#method-i-60">backtick operator</a>: waits for the execution to finish,
+<li><a href="https://ruby-doc.org/core/Kernel.html#method-i-60">backtick operator</a>: waits for the execution to finish,<br>
 then returns the stdout output of the command as a String.</li>
-<li><a href="https://ruby-doc.org/core/Kernel.html#method-i-spawn">spawn</a>: executes the command and immediately
-returns control to the caller, leaving the command running in the background. This method returns
+<li><a href="https://ruby-doc.org/core/Kernel.html#method-i-spawn">spawn</a>: executes the command and immediately<br>
+returns control to the caller, leaving the command running in the background. This method returns<br>
 the pid of the spawned process which must be waited out or detached to avoid creating zombie processes.</li>
 <li><a href="https://ruby-doc.org/core/IO.html#method-c-popen">IO#popen</a>: a more advanced method of executing an external process.</li>
 </ul>
-<p>Unlike <span class='object_link'><a href="OpenHAB/Core/Actions/Exec.html#execute_command_line-class_method" title="OpenHAB::Core::Actions::Exec.execute_command_line (method)">execute_command_line</a></span> which expects each command
-argument to be split up, Ruby's execution methods can accept a single string containing the full command which
+<p>Unlike <span class='object_link'><a href="OpenHAB/Core/Actions/Exec.html#execute_command_line-class_method" title="OpenHAB::Core::Actions::Exec.execute_command_line (method)">execute_command_line</a></span> which expects each command<br>
+argument to be split up, Ruby's execution methods can accept a single string containing the full command which<br>
 also allows IO redirections / pipe because it spawns a subshell.</p>
 <pre class="code ruby"><code class="ruby">system(<span class="string"><span class="delimiter">&quot;</span><span class="content">ls -l </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">OpenHAB</span>::<span class="constant">Core</span>.config_folder<span class="inline-delimiter">}</span></span><span class="content"> &gt; </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">OpenHAB</span>::<span class="constant">Core</span>.config_folder / <span class="string"><span class="delimiter">&quot;</span><span class="content">misc</span><span class="delimiter">&quot;</span></span> / <span class="string"><span class="delimiter">&quot;</span><span class="content">directory_listing.txt</span><span class="delimiter">&quot;</span></span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
 
@@ -3698,9 +3698,9 @@ logger.info <span class="string"><span class="delimiter">&quot;</span><span clas
 pid = spawn(<span class="string"><span class="delimiter">&quot;</span><span class="content">ssh pi@192.168.1.20 sudo reboot</span><span class="delimiter">&quot;</span></span>)
 <span class="constant">Process</span>.detach(pid)
 </code></pre>
-<h2 id="gem-cleanup"><a href="#gem-cleanup" class="header-anchor">#</a>Gem Cleanup</h2>
-<p>The openHAB JRuby add-on will automatically download and install the latest version of the library according to the <a href="file.USAGE.html#configuration">settings in jruby.cfg</a>.
-Over time, the older versions of the library will accumulate in the gem_home directory.
+<h2><a href="#gem-cleanup" aria-hidden="true" class="header-anchor" id="gem-cleanup">#</a>Gem Cleanup</h2>
+<p>The openHAB JRuby add-on will automatically download and install the latest version of the library according to the <a href="file.USAGE.html#configuration">settings in jruby.cfg</a>.<br>
+Over time, the older versions of the library will accumulate in the gem_home directory.<br>
 The following code saved as <code>gem_cleanup.rb</code> or another name of your choice can be placed in the <code>automation/ruby</code> directory to perform uninstallation of the older gem versions every time openHAB starts up.</p>
 <pre class="code ruby"><code class="ruby">require <span class="string"><span class="delimiter">&quot;</span><span class="content">rubygems/commands/uninstall_command</span><span class="delimiter">&quot;</span></span>
 require <span class="string"><span class="delimiter">&quot;</span><span class="content">pathname</span><span class="delimiter">&quot;</span></span>
@@ -3727,8 +3727,8 @@ after(<span class="integer">3</span>.minutes) <span class="keyword">do</span>
   gem_home.parent.children.reject { |p| p == gem_home }.each(&amp;<span class="symbol">:rmtree</span>)
 <span class="keyword">end</span>
 </code></pre>
-<h2 id="ui-rules"><a href="#ui-rules" class="header-anchor">#</a>UI rules</h2>
-<h3 id="reset-the-switch-that-triggered-the-rule-after-5-seconds"><a href="#reset-the-switch-that-triggered-the-rule-after-5-seconds" class="header-anchor">#</a>Reset the switch that triggered the rule after 5 seconds</h3>
+<h2><a href="#ui-rules" aria-hidden="true" class="header-anchor" id="ui-rules">#</a>UI rules</h2>
+<h3><a href="#reset-the-switch-that-triggered-the-rule-after-5-seconds" aria-hidden="true" class="header-anchor" id="reset-the-switch-that-triggered-the-rule-after-5-seconds">#</a>Reset the switch that triggered the rule after 5 seconds</h3>
 <p>Trigger defined as:</p>
 <ul>
 <li>When: a member of an item group receives a command</li>
@@ -3740,7 +3740,7 @@ after <span class="integer">5</span>.seconds <span class="keyword">do</span>
   event.item.off
 <span class="keyword">end</span>
 </code></pre>
-<h3 id="update-a-datetime-item-with-the-current-time-when-a-motion-sensor-is-triggered"><a href="#update-a-datetime-item-with-the-current-time-when-a-motion-sensor-is-triggered" class="header-anchor">#</a>Update a DateTime Item with the current time when a motion sensor is triggered</h3>
+<h3><a href="#update-a-datetime-item-with-the-current-time-when-a-motion-sensor-is-triggered" aria-hidden="true" class="header-anchor" id="update-a-datetime-item-with-the-current-time-when-a-motion-sensor-is-triggered">#</a>Update a DateTime Item with the current time when a motion sensor is triggered</h3>
 <p>Given the following group and items:</p>
 <pre class="code java"><code class="java"><span class="predefined-type">Group</span> MotionSensors
 Switch Sensor1 (MotionSensors)
@@ -3758,8 +3758,8 @@ DateTime Sensor2_LastMotion
 <pre class="code ruby"><code class="ruby">logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>event.item.name<span class="inline-delimiter">}</span></span><span class="content"> Triggered</span><span class="delimiter">&quot;</span></span>)
 items[<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>event.item_name<span class="inline-delimiter">}</span></span><span class="content">_LastMotion</span><span class="delimiter">&quot;</span></span>].update <span class="constant">Time</span>.now
 </code></pre>
-<h3 id="trigger-a-scene-with-an-on-off-switch"><a href="#trigger-a-scene-with-an-on-off-switch" class="header-anchor">#</a>Trigger a Scene with an ON OFF Switch</h3>
-<p>Use <a href="https://www.openhab.org/docs/tutorial/rules_scenes.html">Scenes</a> in combination with
+<h3><a href="#trigger-a-scene-with-an-on-off-switch" aria-hidden="true" class="header-anchor" id="trigger-a-scene-with-an-on-off-switch">#</a>Trigger a Scene with an ON OFF Switch</h3>
+<p>Use <a href="https://www.openhab.org/docs/tutorial/rules_scenes.html">Scenes</a> in combination with<br>
 <span class='object_link'><a href="OpenHAB/Core/Items/Semantics.html" title="OpenHAB::Core::Items::Semantics (module)">Semantic Model</a></span></p>
 <p>Trigger defined as:</p>
 <ul>
@@ -3784,9 +3784,9 @@ scenes.tagged(active_scene).each(&amp;<span class="symbol">:trigger</span>) <spa
 </div></div>
 
         <footer>
-  Generated on Tue Apr 15 13:39:10 2025 by
+  Generated on Tue Apr 15 23:01:54 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.4).
+  0.9.37 (ruby-3.1.4).
 </footer>
 
       </main>

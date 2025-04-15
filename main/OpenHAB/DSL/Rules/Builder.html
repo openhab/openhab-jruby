@@ -3911,13 +3911,13 @@ Note that all methods on this module are also availabe directly on OpenHAB::DSL.
 </h3><div class="docstring">
   <div class="discussion">
     <p>Create a new rule</p>
-<p>The rule must have at least one trigger and one execution block.
+<p>The rule must have at least one trigger and one execution block.<br>
 To create a "script" without any triggers, use <span class='object_link'><a href="../../DSL.html#script-class_method" title="OpenHAB::DSL.script (method)">script</a></span>.</p>
-<p>When explicit <code>id</code> is not provided, the rule's ID will be inferred from the block's source location,
+<p>When explicit <code>id</code> is not provided, the rule's ID will be inferred from the block's source location,<br>
 and a suffix will be added to avoid clashing against existing rules.</p>
-<p>When an explicit <code>id</code> is provided and an existing rule with the same id already exists,
+<p>When an explicit <code>id</code> is provided and an existing rule with the same id already exists,<br>
 the rule will not be created, and the method will return nil.</p>
-<p>To ensure that a rule is created even when the same id already exists, use <span class='object_link'><a href="../../DSL.html#rule!-class_method" title="OpenHAB::DSL.rule! (method)">OpenHAB::DSL.rule!</a></span> or call
+<p>To ensure that a rule is created even when the same id already exists, use <span class='object_link'><a href="../../DSL.html#rule!-class_method" title="OpenHAB::DSL.rule! (method)">OpenHAB::DSL.rule!</a></span> or call<br>
 <span class='object_link'><a href="../../Core/Rules/Registry.html#remove-instance_method" title="OpenHAB::Core::Rules::Registry#remove (method)">rules.remove</a></span> to remove any existing rule prior to creating the new rule.</p>
 
 
@@ -3926,7 +3926,7 @@ the rule will not be created, and the method will return nil.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -3936,8 +3936,8 @@ the rule will not be created, and the method will return nil.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Create a rule with an explicit id, deleting any existing rule with the same id</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Create a rule with an explicit id, deleting any existing rule with the same id</p>
+</div></h5>
       
       <pre class="example code"><code>rule! <span class="string"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>, <span class="key">id</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">my_happy_day_reminder</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   every <span class="symbol">:day</span>
@@ -4161,7 +4161,7 @@ the rule will not be created, and the method will return nil.</p>
 </h3><div class="docstring">
   <div class="discussion">
     <p>Create a new scene</p>
-<p>A scene is a rule with no triggers. It can be called by various other actions,
+<p>A scene is a rule with no triggers. It can be called by various other actions,<br>
 such as the Run Rules action.</p>
 
 
@@ -4394,10 +4394,10 @@ such as the Run Rules action.</p>
 </h3><div class="docstring">
   <div class="discussion">
     <p>Create a new script</p>
-<p>A script is a rule with no triggers. It can be called by various other actions,
+<p>A script is a rule with no triggers. It can be called by various other actions,<br>
 such as the Run Rules action, or by calling <span class='object_link'><a href="../../Core/Rules/Rule.html#trigger-instance_method" title="OpenHAB::Core::Rules::Rule#trigger (method)">Core::Rules::Rule#trigger</a></span>.</p>
-<p>Scripts can be executed with some additional context, similar to method parameters
-(see <span class='object_link'><a href="../../Core/Rules/Rule.html#trigger-instance_method" title="OpenHAB::Core::Rules::Rule#trigger (method)">Core::Rules::Rule#trigger</a></span>).
+<p>Scripts can be executed with some additional context, similar to method parameters<br>
+(see <span class='object_link'><a href="../../Core/Rules/Rule.html#trigger-instance_method" title="OpenHAB::Core::Rules::Rule#trigger (method)">Core::Rules::Rule#trigger</a></span>).<br>
 The context can be accessed from within the script's execution block as a "local" variable.</p>
 
 
@@ -4406,11 +4406,11 @@ The context can be accessed from within the script's execution block as a "local
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>A simple script</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>A simple script</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># return the script object into a variable</span>
 door_check = script <span class="string"><span class="delimiter">&quot;</span><span class="content">Check all doors</span><span class="delimiter">&quot;</span></span>, <span class="key">id</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">door_check</span><span class="delimiter">&quot;</span></span>, <span class="key">tags</span>: <span class="symbol">:security</span> <span class="keyword">do</span>
@@ -4422,8 +4422,8 @@ door_check = script <span class="string"><span class="delimiter">&quot;</span><s
 door_check.run</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>A script with context</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>A script with context</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># This script expects to be called with `message` as context/parameter</span>
 <span class="constant">DESTINATION_EMAIL</span> = <span class="string"><span class="delimiter">&quot;</span><span class="content">myemail@example.com</span><span class="delimiter">&quot;</span></span>
@@ -4656,9 +4656,9 @@ rules.scripts[<span class="string"><span class="delimiter">&quot;</span><span cl
 </div>
 
         <footer>
-  Generated on Tue Apr 15 13:39:15 2025 by
+  Generated on Tue Apr 15 23:02:01 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.4).
+  0.9.37 (ruby-3.1.4).
 </footer>
 
       </main>

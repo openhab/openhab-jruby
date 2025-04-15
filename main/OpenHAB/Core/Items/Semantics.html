@@ -3647,33 +3647,33 @@ For more information, see add - Documentation for openhab-scripting JRuby helper
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Module for implementing semantics helper methods on <span class='object_link'><a href="Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span> in order to easily navigate
-the <a href="https://www.openhab.org/docs/tutorial/model.html" target="_parent" title="Semantic Model">Semantic Model</a> in your scripts.
+    <p>Module for implementing semantics helper methods on <span class='object_link'><a href="Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span> in order to easily navigate<br>
+the <a href="https://www.openhab.org/docs/tutorial/model.html" target="_parent" title="Semantic Model">Semantic Model</a> in your scripts.<br>
 This can be extremely useful to find related items in rules that are executed for any member of a group.</p>
-<p>Wraps <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/model/script/actions/Semantics.html" target="_parent" title="org.openhab.core.model.script.actions.Semantics">org.openhab.core.model.script.actions.Semantics</a> as well as adding a few additional convenience methods.
+<p>Wraps <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/model/script/actions/Semantics.html" target="_parent" title="org.openhab.core.model.script.actions.Semantics">org.openhab.core.model.script.actions.Semantics</a> as well as adding a few additional convenience methods.<br>
 Also includes classes for each semantic tag.</p>
-<p>Be warned that the Semantic model is stricter than can actually be
-described by tags and groups on an Item. It makes assumptions that any
+<p>Be warned that the Semantic model is stricter than can actually be<br>
+described by tags and groups on an Item. It makes assumptions that any<br>
 given item only belongs to one semantic type (<span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Location</a></span>, <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Equipment</a></span>, <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Point</a></span>).</p>
-<h2 id="enumerable-helper-methods"><a href="#enumerable-helper-methods" class="header-anchor">#</a>Enumerable helper methods</h2>
-<p><span class='object_link'><a href="../../../Enumerable.html" title="Enumerable (module)">Enumerable helper methods</a></span> are also provided to complement the semantic model. These methods can be
-chained together to find specific item(s) based on custom tags or group memberships that are outside
+<h2><a href="#enumerable-helper-methods" aria-hidden="true" class="header-anchor" id="enumerable-helper-methods">#</a>Enumerable helper methods</h2>
+<p><span class='object_link'><a href="../../../Enumerable.html" title="Enumerable (module)">Enumerable helper methods</a></span> are also provided to complement the semantic model. These methods can be<br>
+chained together to find specific item(s) based on custom tags or group memberships that are outside<br>
 the semantic model.</p>
 <p>The Enumerable helper methods apply to:</p>
 <ul>
-<li><span class='object_link'><a href="GroupItem.html#members-instance_method" title="OpenHAB::Core::Items::GroupItem#members (method)">GroupItem#members</a></span> and <span class='object_link'><a href="GroupItem.html#all_members-instance_method" title="OpenHAB::Core::Items::GroupItem#all_members (method)">GroupItem#all_members</a></span>. This includes semantic
-<span class='object_link'><a href="#location-instance_method" title="OpenHAB::Core::Items::Semantics#location (method)">#location</a></span> and <span class='object_link'><a href="#equipment-instance_method" title="OpenHAB::Core::Items::Semantics#equipment (method)">#equipment</a></span> because they are also group items.
+<li><span class='object_link'><a href="GroupItem.html#members-instance_method" title="OpenHAB::Core::Items::GroupItem#members (method)">GroupItem#members</a></span> and <span class='object_link'><a href="GroupItem.html#all_members-instance_method" title="OpenHAB::Core::Items::GroupItem#all_members (method)">GroupItem#all_members</a></span>. This includes semantic<br>
+<span class='object_link'><a href="#location-instance_method" title="OpenHAB::Core::Items::Semantics#location (method)">#location</a></span> and <span class='object_link'><a href="#equipment-instance_method" title="OpenHAB::Core::Items::Semantics#equipment (method)">#equipment</a></span> because they are also group items.<br>
 An exception is for Equipments that are an item (not a group)</li>
-<li>Array of items, such as the return value of <span class='object_link'><a href="../../../Enumerable.html#equipments-instance_method" title="Enumerable#equipments (method)">Enumerable#equipments</a></span>, <span class='object_link'><a href="../../../Enumerable.html#locations-instance_method" title="Enumerable#locations (method)">Enumerable#locations</a></span>,
-<span class='object_link'><a href="../../../Enumerable.html#points-instance_method" title="Enumerable#points (method)">Enumerable#points</a></span>, <span class='object_link'><a href="../../../Enumerable.html#tagged-instance_method" title="Enumerable#tagged (method)">Enumerable#tagged</a></span>, <span class='object_link'><a href="../../../Enumerable.html#not_tagged-instance_method" title="Enumerable#not_tagged (method)">Enumerable#not_tagged</a></span>, <span class='object_link'><a href="../../../Enumerable.html#member_of-instance_method" title="Enumerable#member_of (method)">Enumerable#member_of</a></span>,
+<li>Array of items, such as the return value of <span class='object_link'><a href="../../../Enumerable.html#equipments-instance_method" title="Enumerable#equipments (method)">Enumerable#equipments</a></span>, <span class='object_link'><a href="../../../Enumerable.html#locations-instance_method" title="Enumerable#locations (method)">Enumerable#locations</a></span>,<br>
+<span class='object_link'><a href="../../../Enumerable.html#points-instance_method" title="Enumerable#points (method)">Enumerable#points</a></span>, <span class='object_link'><a href="../../../Enumerable.html#tagged-instance_method" title="Enumerable#tagged (method)">Enumerable#tagged</a></span>, <span class='object_link'><a href="../../../Enumerable.html#not_tagged-instance_method" title="Enumerable#not_tagged (method)">Enumerable#not_tagged</a></span>, <span class='object_link'><a href="../../../Enumerable.html#member_of-instance_method" title="Enumerable#member_of (method)">Enumerable#member_of</a></span>,<br>
 <span class='object_link'><a href="../../../Enumerable.html#not_member_of-instance_method" title="Enumerable#not_member_of (method)">Enumerable#not_member_of</a></span>, <span class='object_link'><a href="../../../Enumerable.html#members-instance_method" title="Enumerable#members (method)">Enumerable#members</a></span> methods, etc.</li>
 <li><span class='object_link'><a href="../../DSL.html#items-class_method" title="OpenHAB::DSL.items (method)">items[]</a></span> hash which contains all items in the system.</li>
 </ul>
-<h2 id="semantic-classes"><a href="#semantic-classes" class="header-anchor">#</a>Semantic Classes</h2>
-<p>Each <a href="https://github.com/openhab/openhab-core/blob/main/bundles/org.openhab.core.semantics/model/SemanticTags.csv">Semantic
-Tag</a>
-has a corresponding class within the <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/package-summary.html" target="_parent" title="org.openhab.core.semantics">org.openhab.core.semantics</a> class hierarchy.
-These "semantic classes" are available as constants in the <span class='object_link'><a href="" title="OpenHAB::Core::Items::Semantics (module)">Semantics</a></span> module with the corresponding name.
+<h2><a href="#semantic-classes" aria-hidden="true" class="header-anchor" id="semantic-classes">#</a>Semantic Classes</h2>
+<p>Each <a href="https://github.com/openhab/openhab-core/blob/main/bundles/org.openhab.core.semantics/model/SemanticTags.csv">Semantic<br>
+Tag</a><br>
+has a corresponding class within the <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/semantics/package-summary.html" target="_parent" title="org.openhab.core.semantics">org.openhab.core.semantics</a> class hierarchy.<br>
+These "semantic classes" are available as constants in the <span class='object_link'><a href="" title="OpenHAB::Core::Items::Semantics (module)">Semantics</a></span> module with the corresponding name.<br>
 The following table illustrates the semantic constants:</p>
 <table>
 <thead>
@@ -3709,17 +3709,17 @@ The following table illustrates the semantic constants:</p>
 </tr>
 </tbody>
 </table>
-<p>These constants can be used as arguments to the <span class='object_link'><a href="#points-instance_method" title="OpenHAB::Core::Items::Semantics#points (method)">#points</a></span>,
-<span class='object_link'><a href="../../../Enumerable.html#locations-instance_method" title="Enumerable#locations (method)">Enumerable#locations</a></span> and <span class='object_link'><a href="../../../Enumerable.html#equipments-instance_method" title="Enumerable#equipments (method)">Enumerable#equipments</a></span> methods to filter
-their results. They can also be compared against the return value of
-<span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span>, <span class='object_link'><a href="#location_type-instance_method" title="OpenHAB::Core::Items::Semantics#location_type (method)">#location_type</a></span>, <span class='object_link'><a href="#equipment_type-instance_method" title="OpenHAB::Core::Items::Semantics#equipment_type (method)">#equipment_type</a></span>, <span class='object_link'><a href="#point_type-instance_method" title="OpenHAB::Core::Items::Semantics#point_type (method)">#point_type</a></span>,
-and <span class='object_link'><a href="#property_type-instance_method" title="OpenHAB::Core::Items::Semantics#property_type (method)">#property_type</a></span>. They can even be used with
+<p>These constants can be used as arguments to the <span class='object_link'><a href="#points-instance_method" title="OpenHAB::Core::Items::Semantics#points (method)">#points</a></span>,<br>
+<span class='object_link'><a href="../../../Enumerable.html#locations-instance_method" title="Enumerable#locations (method)">Enumerable#locations</a></span> and <span class='object_link'><a href="../../../Enumerable.html#equipments-instance_method" title="Enumerable#equipments (method)">Enumerable#equipments</a></span> methods to filter<br>
+their results. They can also be compared against the return value of<br>
+<span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span>, <span class='object_link'><a href="#location_type-instance_method" title="OpenHAB::Core::Items::Semantics#location_type (method)">#location_type</a></span>, <span class='object_link'><a href="#equipment_type-instance_method" title="OpenHAB::Core::Items::Semantics#equipment_type (method)">#equipment_type</a></span>, <span class='object_link'><a href="#point_type-instance_method" title="OpenHAB::Core::Items::Semantics#point_type (method)">#point_type</a></span>,<br>
+and <span class='object_link'><a href="#property_type-instance_method" title="OpenHAB::Core::Items::Semantics#property_type (method)">#property_type</a></span>. They can even be used with<br>
 <span class='object_link'><a href="../../DSL/Items/ItemBuilder.html#tag-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#tag (method)">DSL::Items::ItemBuilder#tag</a></span>.</p>
 <p>All of the tag objects implement <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>.</p>
-<p>For example, to get the synonyms for <code>Semantics::Lightbulb</code> in German:
+<p>For example, to get the synonyms for <code>Semantics::Lightbulb</code> in German:<br>
 <code>Semantics::Lightbulb.synonyms(java.util.Locale::GERMAN)</code></p>
-<h2 id="adding-custom-semantic-tags"><a href="#adding-custom-semantic-tags" class="header-anchor">#</a>Adding Custom Semantic Tags</h2>
-<p>openHAB 4.0 supports adding custom semantic tags to augment the standard set of tags to better suit
+<h2><a href="#adding-custom-semantic-tags" aria-hidden="true" class="header-anchor" id="adding-custom-semantic-tags">#</a>Adding Custom Semantic Tags</h2>
+<p>openHAB 4.0 supports adding custom semantic tags to augment the standard set of tags to better suit<br>
 your particular requirements.</p>
 <p>For more information, see <span class='object_link'><a href="#add-class_method" title="OpenHAB::Core::Items::Semantics.add (method)">Semantics.add</a></span></p>
 
@@ -3729,11 +3729,11 @@ your particular requirements.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Working with tags</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Working with tags</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Return an array of sibling points with a &quot;Switch&quot; tag</span>
 <span class="constant">Light_Color</span>.points(<span class="constant">Semantics</span>::<span class="constant">Switch</span>)
@@ -3743,8 +3743,8 @@ your particular requirements.</p>
 <span class="constant">Light_Color</span>.property_type == <span class="constant">Semantics</span>::<span class="constant">Light</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>switches.items</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>switches.items</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Group</span>   gFullOn
 <span class="constant">Group</span>   gRoomOff
@@ -3758,8 +3758,8 @@ your particular requirements.</p>
 <span class="constant">Number</span>  <span class="constant">MudLights_Scene</span>      <span class="string"><span class="delimiter">&quot;</span><span class="content">Scene</span><span class="delimiter">&quot;</span></span>                     (eMudLights, gFullOn, gRoomOff)</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Find the switch item for a scene channel on a zwave dimmer</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Find the switch item for a scene channel on a zwave dimmer</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">turn dimmer to full on when switch double-tapped up</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed gFullOn.members, <span class="key">to</span>: <span class="float">1.3</span>
@@ -3770,8 +3770,8 @@ your particular requirements.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Turn off all the lights in a room</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Turn off all the lights in a room</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">turn off all lights in the room when switch double-tapped down</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed gRoomOff.members, <span class="key">to</span>: <span class="float">2.3</span>
@@ -3787,8 +3787,8 @@ your particular requirements.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Finding a related item that doesn't fit in the semantic model</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Finding a related item that doesn't fit in the semantic model</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># We can use custom tags to identify certain items that don't quite fit in the semantic model.</span>
 <span class="comment"># The extensions to the Enumerable mentioned above can help in this scenario.</span>
@@ -3819,8 +3819,8 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Find all semantic entities regardless of hierarchy</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Find all semantic entities regardless of hierarchy</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># All locations</span>
 items.locations
@@ -3877,7 +3877,7 @@ items.tagged(<span class="string"><span class="delimiter">&quot;</span><span cla
         <dt id="Tag-constant" class="deprecated">Tag =
           <div class="docstring">
   <div class="discussion">
-    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>Since openHAB 4.0, <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span> is the interface that all tags implement.
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>Since openHAB 4.0, <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span> is the interface that all tags implement.<br>
 Tags are simple instances, instead of another interface in a hierarchical structure.</p>
 </div></div>
 <p>This is a marker interface for all semantic tag classes.</p>
@@ -4524,7 +4524,7 @@ Tags are simple instances, instead of another interface in a hierarchical struct
 </h3><div class="docstring">
   <div class="discussion">
     <p>Gets the related <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Location</a></span> Item of this Item.</p>
-<p>Checks ancestor groups one level at a time, returning the first
+<p>Checks ancestor groups one level at a time, returning the first<br>
 <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Location</a></span> Item found.</p>
 
 
@@ -4747,8 +4747,8 @@ Tags are simple instances, instead of another interface in a hierarchical struct
 </h3><div class="docstring">
   <div class="discussion">
     <p>Returns the <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span> this Item is tagged with.</p>
-<p>It will only return the first applicable Tag, preferring
-a sub-tag of <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Location</a></span>, <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Equipment</a></span>, or <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Point</a></span> first,
+<p>It will only return the first applicable Tag, preferring<br>
+a sub-tag of <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Location</a></span>, <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Equipment</a></span>, or <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Point</a></span> first,<br>
 and if none of those are found, looks for a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Property</a></span>.</p>
 
 
@@ -4836,17 +4836,17 @@ and if none of those are found, looks for a <span class='object_link'><a href="S
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Add one semantic tag <code>Balcony</code> whose parent is <code>Semantics::Outdoor</code> (Location)</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Add one semantic tag <code>Balcony</code> whose parent is <code>Semantics::Outdoor</code> (Location)</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Semantics</span>.add(<span class="key">Balcony</span>: <span class="constant">Semantics</span>::<span class="constant">Outdoor</span>)</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Add multiple semantic tags</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Add multiple semantic tags</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Semantics</span>.add(<span class="key">Balcony</span>: <span class="constant">Semantics</span>::<span class="constant">Outdoor</span>,
               <span class="key">SecretRoom</span>: <span class="constant">Semantics</span>::<span class="constant">Room</span>,
@@ -4866,8 +4866,8 @@ and if none of those are found, looks for a <span class='object_link'><a href="S
       
       
         &mdash;
-        <div class='inline'><p>Pairs of <code>tag</code> =&gt; <code>parent</code> where tag is either a <code>Symbol</code> or a <code>String</code>
-for the tag to be added, and parent is either a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>, a <code>Symbol</code> or a <code>String</code> of an
+        <div class='inline'><p>Pairs of <code>tag</code> =&gt; <code>parent</code> where tag is either a <code>Symbol</code> or a <code>String</code><br>
+for the tag to be added, and parent is either a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>, a <code>Symbol</code> or a <code>String</code> of an<br>
 existing tag.</p>
 </div>
       
@@ -4909,7 +4909,7 @@ existing tag.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code><span class="constant">Semantics</span>.add(<span class="key">SecretRoom</span>: <span class="constant">Semantics</span>::<span class="constant">Room</span>, <span class="key">label</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">My Secret Room</span><span class="delimiter">&quot;</span></span>,
@@ -4931,7 +4931,7 @@ existing tag.</p>
       
       
         &mdash;
-        <div class='inline'><p>Optional label. When <code>nil</code>, infer the label from the tag name,
+        <div class='inline'><p>Optional label. When <code>nil</code>, infer the label from the tag name,<br>
 converting <code>CamelCase</code> to <code>Camel Case</code></p>
 </div>
       
@@ -4981,8 +4981,8 @@ converting <code>CamelCase</code> to <code>Camel Case</code></p>
       
       
         &mdash;
-        <div class='inline'><p>Exactly one pair of <code>tag</code> =&gt; <code>parent</code> where tag is either a <code>Symbol</code> or a
-<code>String</code> for the tag to be added, and parent is either a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>, a <code>Symbol</code> or a
+        <div class='inline'><p>Exactly one pair of <code>tag</code> =&gt; <code>parent</code> where tag is either a <code>Symbol</code> or a<br>
+<code>String</code> for the tag to be added, and parent is either a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>, a <code>Symbol</code> or a<br>
 <code>String</code> of an existing tag.</p>
 </div>
       
@@ -5273,7 +5273,7 @@ converting <code>CamelCase</code> to <code>Camel Case</code></p>
       
       
         &mdash;
-        <div class='inline'><p>Custom Semantic Tags to remove.
+        <div class='inline'><p>Custom Semantic Tags to remove.<br>
 The built in Semantic Tags cannot be removed.</p>
 </div>
       
@@ -5499,7 +5499,7 @@ The built in Semantic Tags cannot be removed.</p>
 </h3><div class="docstring">
   <div class="discussion">
     <p>Checks if this Item is an <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Equipment</a></span></p>
-<p>This is implemented as checking if the item's <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span>
+<p>This is implemented as checking if the item's <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span><br>
 is an <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Equipment</a></span>. I.e. an Item has a single <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span>.</p>
 
 
@@ -5554,7 +5554,7 @@ is an <span class='object_link'><a href="Semantics/SemanticTag.html" title="Open
 </h3><div class="docstring">
   <div class="discussion">
     <p>Checks if this Item is a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Location</a></span></p>
-<p>This is implemented as checking if the item's <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span>
+<p>This is implemented as checking if the item's <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span><br>
 is a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Location</a></span>. I.e. an Item has a single <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span>.</p>
 
 
@@ -5609,7 +5609,7 @@ is a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenH
 </h3><div class="docstring">
   <div class="discussion">
     <p>Checks if this Item is a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Point</a></span></p>
-<p>This is implemented as checking if the item's <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span>
+<p>This is implemented as checking if the item's <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span><br>
 is a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Point</a></span>. I.e. an Item has a single <span class='object_link'><a href="#semantic_type-instance_method" title="OpenHAB::Core::Items::Semantics#semantic_type (method)">#semantic_type</a></span>.</p>
 
 
@@ -5665,7 +5665,7 @@ is a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenH
   <div class="discussion">
     <p>Return the related Point Items.</p>
 <p>Searches this Equipment Item for Points that are tagged appropriately.</p>
-<p>If called on a Point Item, it will automatically search for sibling Points
+<p>If called on a Point Item, it will automatically search for sibling Points<br>
 (and remove itself if found).</p>
 
 
@@ -5674,37 +5674,37 @@ is a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenH
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Get all points for a TV</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Get all points for a TV</p>
+</div></h5>
       
       <pre class="example code"><code>eGreatTV.points</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Search an Equipment item for its switch</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Search an Equipment item for its switch</p>
+</div></h5>
       
       <pre class="example code"><code>eGuestFan.points(<span class="constant">Semantics</span>::<span class="constant">Switch</span>) <span class="comment"># =&gt; [GuestFan_Dimmer]</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Search a Thermostat item for its current temperature item</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Search a Thermostat item for its current temperature item</p>
+</div></h5>
       
       <pre class="example code"><code>eFamilyThermostat.points(<span class="constant">Semantics</span>::<span class="constant">Status</span>, <span class="constant">Semantics</span>::<span class="constant">Temperature</span>)
 <span class="comment"># =&gt; [FamilyThermostat_AmbTemp]</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Search a Thermostat item for is setpoints</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Search a Thermostat item for is setpoints</p>
+</div></h5>
       
       <pre class="example code"><code>eFamilyThermostat.points(<span class="constant">Semantics</span>::<span class="constant">Control</span>, <span class="constant">Semantics</span>::<span class="constant">Temperature</span>)
 <span class="comment"># =&gt; [FamilyThermostat_HeatingSetpoint, FamilyThermostat_CoolingSetpoint]</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Given a A/V receiver's input item, search for its power item</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Given a A/V receiver's input item, search for its power item</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">FamilyReceiver_Input</span>.points(<span class="constant">Semantics</span>::<span class="constant">Switch</span>) <span class="comment"># =&gt; [FamilyReceiver_Switch]</span></code></pre>
     
@@ -5722,9 +5722,9 @@ is a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenH
       
       
         &mdash;
-        <div class='inline'><p>Pass 1 or 2 classes that are sub-classes of <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Semantics::Point</a></span> or
-<span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Semantics::Property</a></span>.
-Note that when comparing against semantic tags, it does a sub-class check by default.
+        <div class='inline'><p>Pass 1 or 2 classes that are sub-classes of <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Semantics::Point</a></span> or<br>
+<span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Semantics::Property</a></span>.<br>
+Note that when comparing against semantic tags, it does a sub-class check by default.<br>
 So if you search for [Control], you'll get items tagged with [Switch].</p>
 </div>
       
@@ -5740,7 +5740,7 @@ So if you search for [Control], you'll get items tagged with [Switch].</p>
       
       
         &mdash;
-        <div class='inline'><p>If true, match all subclasses of the given types.
+        <div class='inline'><p>If true, match all subclasses of the given types.<br>
 If false, only match the exact type.</p>
 </div>
       
@@ -5851,9 +5851,9 @@ If false, only match the exact type.</p>
 </div>
 
         <footer>
-  Generated on Tue Apr 15 13:39:13 2025 by
+  Generated on Tue Apr 15 23:01:58 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.4).
+  0.9.37 (ruby-3.1.4).
 </footer>
 
       </main>

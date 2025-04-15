@@ -3592,34 +3592,34 @@ removed. - Documentation for openhab-scripting JRuby helper library.">
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>Only the <span class='object_link'><a href="../DSL.html#shared_cache-class_method" title="OpenHAB::DSL.shared_cache (method)">sharedCache</a></span> is exposed in Ruby.
-For a private cache, simply use an instance variable. See
+    <div class='inline'><p>Only the <span class='object_link'><a href="../DSL.html#shared_cache-class_method" title="OpenHAB::DSL.shared_cache (method)">sharedCache</a></span> is exposed in Ruby.<br>
+For a private cache, simply use an instance variable. See<br>
 <a href="../../file.ruby-basics.html#variables" title="Instance Variables">Instance Variables</a>.</p>
 </div>
   </div>
 
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>Because every script or UI rule gets its own JRuby engine instance,
-you cannot rely on being able to access Ruby objects between them. Only
-objects that implement a Java interface that's part of Java or openHAB
-Core (such as Hash implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" target="_parent" title="java.util.Map">java.util.Map</a>, or other basic
-datatypes) can be reliably stored and accessed from the shared cache.
-Likewise, you can use the cache to access data from other scripting
-languages, but they'll be all but useless in Ruby. It's best to stick
-to simple data types. If you're having troubles, serializing to_json
+    <div class='inline'><p>Because every script or UI rule gets its own JRuby engine instance,<br>
+you cannot rely on being able to access Ruby objects between them. Only<br>
+objects that implement a Java interface that's part of Java or openHAB<br>
+Core (such as Hash implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" target="_parent" title="java.util.Map">java.util.Map</a>, or other basic<br>
+datatypes) can be reliably stored and accessed from the shared cache.<br>
+Likewise, you can use the cache to access data from other scripting<br>
+languages, but they'll be all but useless in Ruby. It's best to stick<br>
+to simple data types. If you're having troubles, serializing to_json<br>
 before storing may help.</p>
 </div>
   </div>
 
-<p>ValueCache is the interface used to access a
-<span class='object_link'><a href="../DSL.html#shared_cache-class_method" title="OpenHAB::DSL.shared_cache (method)">shared cache</a></span> available between scripts and/or
+<p>ValueCache is the interface used to access a<br>
+<span class='object_link'><a href="../DSL.html#shared_cache-class_method" title="OpenHAB::DSL.shared_cache (method)">shared cache</a></span> available between scripts and/or<br>
 rule executions.</p>
-<p>While ValueCache looks somewhat like a Hash, it does not support
-iteration of the contained elements. So it's limited to strictly storing,
+<p>While ValueCache looks somewhat like a Hash, it does not support<br>
+iteration of the contained elements. So it's limited to strictly storing,<br>
 fetching, or removing known elements.</p>
-<p>Shared caches are <em>not</em> persisted between openHAB restarts. And in fact,
-if all scripts are unloaded that reference a particular key, that key is
+<p>Shared caches are <em>not</em> persisted between openHAB restarts. And in fact,<br>
+if all scripts are unloaded that reference a particular key, that key is<br>
 removed.</p>
 
 
@@ -3628,7 +3628,7 @@ removed.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>shared_cache.compute_if_absent(<span class="symbol">:execution_count</span>) { <span class="integer">0</span> }
@@ -4333,7 +4333,7 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>shared_cache.fetch(<span class="symbol">:key_from_another_script</span>) <span class="comment"># raises NoKeyError</span></code></pre>
@@ -4769,9 +4769,9 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
 </div>
 
         <footer>
-  Generated on Tue Apr 15 13:39:12 2025 by
+  Generated on Tue Apr 15 23:01:56 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.4).
+  0.9.37 (ruby-3.1.4).
 </footer>
 
       </main>

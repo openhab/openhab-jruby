@@ -3610,27 +3610,27 @@ command will reschedule the timed command for that new duration. - Documentation
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     <p>Extensions for <span class='object_link'><a href="../../Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span> to implement timed commands</p>
-<p>All items have an implicit timer associated with them, enabling to
-easily set an item into a specific state for a specified duration and
-then at the expiration of that duration have the item automatically
-change to another state. These timed commands are reentrant, meaning
-if the same timed command is triggered while an outstanding timed
-command exist, that timed command will be rescheduled rather than
+<p>All items have an implicit timer associated with them, enabling to<br>
+easily set an item into a specific state for a specified duration and<br>
+then at the expiration of that duration have the item automatically<br>
+change to another state. These timed commands are reentrant, meaning<br>
+if the same timed command is triggered while an outstanding timed<br>
+command exist, that timed command will be rescheduled rather than<br>
 creating a distinct timed command.</p>
-<p>Timed commands are initiated by using the 'for:' argument with the
-command. This is available on both the 'command' method and any
+<p>Timed commands are initiated by using the 'for:' argument with the<br>
+command. This is available on both the 'command' method and any<br>
 command-specific methods, e.g. <span class='object_link'><a href="../../Core/Items/SwitchItem.html#on-instance_method" title="OpenHAB::Core::Items::SwitchItem#on (method)">Core::Items::SwitchItem#on</a></span>.</p>
-<p>The timer will be cancelled, and the item's state will not be changed
+<p>The timer will be cancelled, and the item's state will not be changed<br>
 to the on_expire state if:</p>
 <ul>
 <li>The item receives any command within the timed command duration.</li>
-<li>The item is updated to a different state, even if it is then updated
+<li>The item is updated to a different state, even if it is then updated<br>
 back to the same state.</li>
 </ul>
-<p>For example, if you have a Switch on a timer and another rule sends
-a command to that item, even when it's commanded to the same state,
+<p>For example, if you have a Switch on a timer and another rule sends<br>
+a command to that item, even when it's commanded to the same state,<br>
 the timer will be automatically canceled.</p>
-<p>Sending a different duration (for:) value for the timed
+<p>Sending a different duration (for:) value for the timed<br>
 command will reschedule the timed command for that new duration.</p>
 
 
@@ -3713,19 +3713,19 @@ command will reschedule the timed command for that new duration.</p>
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>If a block is provided, and the timer is canceled because the
-item changed state while it was waiting, the block will still be
-executed. The timed command can be reinstated by calling <span class='object_link'><a href="TimedCommand/TimedCommandDetails.html#resume-instance_method" title="OpenHAB::DSL::Items::TimedCommand::TimedCommandDetails#resume (method)">#resume</a></span> or
+    <div class='inline'><p>If a block is provided, and the timer is canceled because the<br>
+item changed state while it was waiting, the block will still be<br>
+executed. The timed command can be reinstated by calling <span class='object_link'><a href="TimedCommand/TimedCommandDetails.html#resume-instance_method" title="OpenHAB::DSL::Items::TimedCommand::TimedCommandDetails#resume (method)">#resume</a></span> or<br>
 <span class='object_link'><a href="TimedCommand/TimedCommandDetails.html#reschedule-instance_method" title="OpenHAB::DSL::Items::TimedCommand::TimedCommandDetails#reschedule (method)">#reschedule</a></span>.</p>
-<p>If the timer expired, the timed command can be rescheduled from inside the block by calling
+<p>If the timer expired, the timed command can be rescheduled from inside the block by calling<br>
 <span class='object_link'><a href="TimedCommand/TimedCommandDetails.html#reschedule-instance_method" title="OpenHAB::DSL::Items::TimedCommand::TimedCommandDetails#reschedule (method)">#reschedule</a></span>.</p>
-<p>Be sure to check <span class='object_link'><a href="TimedCommand/TimedCommandDetails.html#expired%3F-instance_method" title="OpenHAB::DSL::Items::TimedCommand::TimedCommandDetails#expired? (method)">#expired?</a></span>
-and/or <span class='object_link'><a href="TimedCommand/TimedCommandDetails.html#cancelled%3F-instance_method" title="OpenHAB::DSL::Items::TimedCommand::TimedCommandDetails#cancelled? (method)">#cancelled?</a></span> to determine why
+<p>Be sure to check <span class='object_link'><a href="TimedCommand/TimedCommandDetails.html#expired%3F-instance_method" title="OpenHAB::DSL::Items::TimedCommand::TimedCommandDetails#expired? (method)">#expired?</a></span><br>
+and/or <span class='object_link'><a href="TimedCommand/TimedCommandDetails.html#cancelled%3F-instance_method" title="OpenHAB::DSL::Items::TimedCommand::TimedCommandDetails#cancelled? (method)">#cancelled?</a></span> to determine why<br>
 the block was called.</p>
 </div>
   </div>
 
-<p>Sends command to an item for specified duration, then on timer expiration sends
+<p>Sends command to an item for specified duration, then on timer expiration sends<br>
 the expiration command to the item</p>
 
 
@@ -3734,7 +3734,7 @@ the expiration command to the item</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code><span class="constant">Switch</span>.command(<span class="constant">ON</span>, <span class="key">for</span>: <span class="integer">5</span>.minutes)</code></pre>
@@ -3749,8 +3749,8 @@ the expiration command to the item</p>
       <pre class="example code"><code><span class="constant">Dimmer</span>.on(<span class="key">for</span>: <span class="integer">5</span>.minutes) { |event| <span class="constant">Dimmer</span>.off <span class="keyword">if</span> <span class="constant">Light</span>.on? }</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Only start a timed command if the command was ensured</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Only start a timed command if the command was ensured</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Motion Detected</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   received_command <span class="constant">Motion_Sensor</span>, <span class="key">command</span>: <span class="constant">ON</span>
@@ -3845,8 +3845,8 @@ the expiration command to the item</p>
       
       
         
-        <div class='inline'><p>If a block is provided, <code>on_expire</code> is ignored and the block
-is expected to set the item to the desired state or carry out some
+        <div class='inline'><p>If a block is provided, <code>on_expire</code> is ignored and the block<br>
+is expected to set the item to the desired state or carry out some<br>
 other action.</p>
 </div>
       
@@ -3994,9 +3994,9 @@ other action.</p>
 </div>
 
         <footer>
-  Generated on Tue Apr 15 13:39:13 2025 by
+  Generated on Tue Apr 15 23:01:58 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.4).
+  0.9.37 (ruby-3.1.4).
 </footer>
 
       </main>

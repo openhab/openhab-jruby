@@ -3881,12 +3881,12 @@
 
     <div class="docstring">
   <div class="discussion">
-    <p>Guards exist to only permit rules to run if certain conditions are
-satisfied. Think of these as declarative <code>if</code> statements that keep
-the run block free of conditional logic, although you can of course
+    <p>Guards exist to only permit rules to run if certain conditions are<br>
+satisfied. Think of these as declarative <code>if</code> statements that keep<br>
+the run block free of conditional logic, although you can of course<br>
 still use conditional logic in run blocks if you prefer.</p>
-<h3 id="guard-combination"><a href="#guard-combination" class="header-anchor">#</a>Guard Combination</h3>
-<p>Multiple guards can be used on the same rule. All must be satisfied
+<h3><a href="#guard-combination" aria-hidden="true" class="header-anchor" id="guard-combination">#</a>Guard Combination</h3>
+<p>Multiple guards can be used on the same rule. All must be satisfied<br>
 for a rule to execute.</p>
 
 
@@ -3895,7 +3895,7 @@ for a rule to execute.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Set OutsideDimmer to 50% if LightSwitch turned on and OtherSwitch is OFF and Door is CLOSED</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -4066,13 +4066,13 @@ for a rule to execute.</p>
 </div>
   </div>
 
-<p>Triggers specify what will cause the execution blocks to run.
+<p>Triggers specify what will cause the execution blocks to run.<br>
 Multiple triggers can be defined within the same rule.</p>
-<h3 id="trigger-attachments"><a href="#trigger-attachments" class="header-anchor">#</a>Trigger Attachments</h3>
-<p>All triggers support event attachments that enable the association
-of an object to a trigger. This enables one to use the same rule
-and take different actions if the trigger is different. The
-attached object is passed to the execution block through the
+<h3><a href="#trigger-attachments" aria-hidden="true" class="header-anchor" id="trigger-attachments">#</a>Trigger Attachments</h3>
+<p>All triggers support event attachments that enable the association<br>
+of an object to a trigger. This enables one to use the same rule<br>
+and take different actions if the trigger is different. The<br>
+attached object is passed to the execution block through the<br>
 <span class='object_link'><a href="../../Core/Events/AbstractEvent.html#attachment-instance_method" title="OpenHAB::Core::Events::AbstractEvent#attachment (method)">OpenHAB::Core::Events::AbstractEvent#attachment</a></span> accessor.</p>
 
 
@@ -4081,7 +4081,7 @@ attached object is passed to the execution block through the
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Set Dark switch at sunrise and sunset</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
@@ -4713,9 +4713,9 @@ attached object is passed to the execution block through the
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Creates a trigger based on the date and time stored in a <span class='object_link'><a href="../../Core/Items/DateTimeItem.html" title="OpenHAB::Core::Items::DateTimeItem (class)">DateTimeItem</a></span></p>
-<p>The trigger will dynamically update whenever the state of the item changes.
+<p>The trigger will dynamically update whenever the state of the item changes.<br>
 If the item is <span class='object_link'><a href="../../Core/Types/UnDefType.html#NULL-constant" title="OpenHAB::Core::Types::UnDefType::NULL (constant)">NULL</a></span> or <span class='object_link'><a href="../../Core/Types/UnDefType.html#UNDEF-constant" title="OpenHAB::Core::Types::UnDefType::UNDEF (constant)">UNDEF</a></span>, the trigger will not run.</p>
-<p>To trigger just on the time portion of the item, use <span class='object_link'><a href="#every-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#every (method)">#every</a></span> instead, e.g.
+<p>To trigger just on the time portion of the item, use <span class='object_link'><a href="#every-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#every (method)">#every</a></span> instead, e.g.<br>
 <code>every :day, at: MyDateTimeItem</code>.</p>
 <p>The <code>event</code> passed to run blocks will be a <span class='object_link'><a href="../../Core/Events/TimerEvent.html" title="OpenHAB::Core::Events::TimerEvent (class)">Core::Events::TimerEvent</a></span>.</p>
 
@@ -4725,7 +4725,7 @@ If the item is <span class='object_link'><a href="../../Core/Types/UnDefType.htm
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">say hello when the kids get home from school</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -4744,8 +4744,8 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Using an offset</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Using an offset</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Turn on lights 15 minutes before sunset</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   at <span class="constant">Sunset_Time</span>, <span class="key">offset</span>: <span class="integer">-15</span>.minutes
@@ -4783,9 +4783,9 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
       
       
         &mdash;
-        <div class='inline'><p>Offset the execution time from the time specified in the item.
-This can be a negative value to execute the rule before the time specified in the item.
-A Duration will be converted to its total length in seconds, with any excess precision information dropped.
+        <div class='inline'><p>Offset the execution time from the time specified in the item.<br>
+This can be a negative value to execute the rule before the time specified in the item.<br>
+A Duration will be converted to its total length in seconds, with any excess precision information dropped.<br>
 @since openHAB 4.3</p>
 </div>
       
@@ -4850,7 +4850,7 @@ A Duration will be converted to its total length in seconds, with any excess pre
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Between guard</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -4874,8 +4874,8 @@ A Duration will be converted to its total length in seconds, with any excess pre
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>String of <span class='object_link'><a href="../../CoreExt/Java/LocalTime.html" title="OpenHAB::CoreExt::Java::LocalTime (class)">LocalTime</a></span></p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>String of <span class='object_link'><a href="../../CoreExt/Java/LocalTime.html" title="OpenHAB::CoreExt::Java::LocalTime (class)">LocalTime</a></span></p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Log an entry if started between 3:30:04 and midnight using strings</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   on_load
@@ -4884,8 +4884,8 @@ A Duration will be converted to its total length in seconds, with any excess pre
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p><span class='object_link'><a href="../../CoreExt/Java/LocalTime.html" title="OpenHAB::CoreExt::Java::LocalTime (class)">LocalTime</a></span></p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p><span class='object_link'><a href="../../CoreExt/Java/LocalTime.html" title="OpenHAB::CoreExt::Java::LocalTime (class)">LocalTime</a></span></p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Log an entry if started between 3:30:04 and midnight using LocalTime objects</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   on_load
@@ -4894,8 +4894,8 @@ A Duration will be converted to its total length in seconds, with any excess pre
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>String of <span class='object_link'><a href="../../CoreExt/Java/MonthDay.html" title="OpenHAB::CoreExt::Java::MonthDay (class)">MonthDay</a></span></p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>String of <span class='object_link'><a href="../../CoreExt/Java/MonthDay.html" title="OpenHAB::CoreExt::Java::MonthDay (class)">MonthDay</a></span></p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Log an entry if started between March 9th and April 10ths</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   on_load
@@ -4904,8 +4904,8 @@ A Duration will be converted to its total length in seconds, with any excess pre
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p><span class='object_link'><a href="../../CoreExt/Java/MonthDay.html" title="OpenHAB::CoreExt::Java::MonthDay (class)">MonthDay</a></span></p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p><span class='object_link'><a href="../../CoreExt/Java/MonthDay.html" title="OpenHAB::CoreExt::Java::MonthDay (class)">MonthDay</a></span></p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Log an entry if started between March 9th and April 10ths</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   on_load
@@ -4959,15 +4959,15 @@ prop <span class="symbol">:between</span></pre>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Creates a trigger when an item, member of a group, or a thing changed
+    <p class="note returns_void">This method returns an undefined value.</p><p>Creates a trigger when an item, member of a group, or a thing changed<br>
 states.</p>
-<p>When the changed element is a <span class='object_link'><a href="../../Core/Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Thing</a></span>, the <code>from</code>
-and <code>to</code> values will accept symbols and strings, where the symbol'
-matches the
+<p>When the changed element is a <span class='object_link'><a href="../../Core/Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Thing</a></span>, the <code>from</code><br>
+and <code>to</code> values will accept symbols and strings, where the symbol'<br>
+matches the<br>
 <a href="https://www.openhab.org/docs/concepts/things.html#thing-status">supported status</a>.</p>
-<p>The <code>event</code> passed to run blocks will be an
-<span class='object_link'><a href="../../Core/Events/ItemStateChangedEvent.html" title="OpenHAB::Core::Events::ItemStateChangedEvent (class)">Core::Events::ItemStateChangedEvent</a></span> or a
-<span class='object_link'><a href="../../Core/Events/ThingStatusInfoChangedEvent.html" title="OpenHAB::Core::Events::ThingStatusInfoChangedEvent (class)">Core::Events::ThingStatusInfoChangedEvent</a></span> depending on if the
+<p>The <code>event</code> passed to run blocks will be an<br>
+<span class='object_link'><a href="../../Core/Events/ItemStateChangedEvent.html" title="OpenHAB::Core::Events::ItemStateChangedEvent (class)">Core::Events::ItemStateChangedEvent</a></span> or a<br>
+<span class='object_link'><a href="../../Core/Events/ThingStatusInfoChangedEvent.html" title="OpenHAB::Core::Events::ThingStatusInfoChangedEvent (class)">Core::Events::ThingStatusInfoChangedEvent</a></span> depending on if the<br>
 triggering element was an item or a thing.</p>
 
 
@@ -4976,11 +4976,11 @@ triggering element was an item or a thing.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Single item trigger</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Single item trigger</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Execute rule when a sensor changed</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="constant">FrontMotion_Sensor</span>
@@ -4988,8 +4988,8 @@ triggering element was an item or a thing.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Multiple items can be separated with a comma:</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Multiple items can be separated with a comma:</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Execute rule when either sensor changed</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="constant">FrontMotion_Sensor</span>, <span class="constant">RearMotion_Sensor</span>
@@ -4997,8 +4997,8 @@ triggering element was an item or a thing.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Group member trigger</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Group member trigger</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Execute rule when member changed</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="constant">Sensors</span>.members
@@ -5006,8 +5006,8 @@ triggering element was an item or a thing.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>You can optionally provide <code>from</code> and/or <code>to</code> states to restrict the cases in which the rule executes:</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>You can optionally provide <code>from</code> and/or <code>to</code> states to restrict the cases in which the rule executes:</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Execute rule when item is changed to specific number, from specific number</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="constant">Alarm_Mode</span>, <span class="key">from</span>: <span class="integer">8</span>, <span class="key">to</span>: [<span class="integer">14</span>,<span class="integer">12</span>]
@@ -5015,8 +5015,8 @@ triggering element was an item or a thing.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Works with ranges:</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Works with ranges:</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Execute when item changed to a range of numbers, from a range of numbers</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="constant">Alarm_Mode</span>, <span class="key">from</span>: <span class="integer">8</span>..<span class="integer">10</span>, <span class="key">to</span>: <span class="integer">12</span>..<span class="integer">14</span>
@@ -5024,8 +5024,8 @@ triggering element was an item or a thing.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Works with endless ranges:</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Works with endless ranges:</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Execute rule when item is changed to any number greater than 12</span><span class="delimiter">&quot;</span></span>
   changed <span class="constant">Alarm_Mode</span>, <span class="key">to</span>: (<span class="integer">12</span>..)   <span class="comment"># Parenthesis required for endless ranges</span>
@@ -5033,8 +5033,8 @@ triggering element was an item or a thing.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Works with procs:</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Works with procs:</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Execute when item state is changed from an odd number, to an even number</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="constant">Alarm_Mode</span>, <span class="key">from</span>: proc { |from| from.odd? }, <span class="key">to</span>: proc {|to| to.even? }
@@ -5042,8 +5042,8 @@ triggering element was an item or a thing.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Works with lambdas:</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Works with lambdas:</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Execute when item state is changed from an odd number, to an even number</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="constant">Alarm_Mode</span>, <span class="key">from</span>: -&gt; from { from.odd? }, <span class="key">to</span>: -&gt; to { to.even? }
@@ -5051,8 +5051,8 @@ triggering element was an item or a thing.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Works with regexes:</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Works with regexes:</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Execute when item state is changed to something matching a regex</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="constant">Alarm_Mode</span>, <span class="key">to</span>: <span class="regexp"><span class="delimiter">/</span><span class="content">armed</span><span class="delimiter">/</span></span>
@@ -5060,8 +5060,8 @@ triggering element was an item or a thing.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Delay the trigger until the item has been in the same state for 10 seconds</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Delay the trigger until the item has been in the same state for 10 seconds</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Execute rule when item is changed for specified duration</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="constant">Closet_Door</span>, <span class="key">to</span>: <span class="constant">CLOSED</span>, <span class="key">for</span>: <span class="integer">10</span>.seconds
@@ -5071,8 +5071,8 @@ triggering element was an item or a thing.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p><code>for</code> parameter can be a proc that returns a duration:</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p><code>for</code> parameter can be a proc that returns a duration:</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Alarm_Delay</span> &lt;&lt; <span class="integer">20</span>
 
@@ -5082,8 +5082,8 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Works with Things:</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Works with Things:</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Execute rule when thing is changed</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed things[<span class="string"><span class="delimiter">&quot;</span><span class="content">astro:sun:home</span><span class="delimiter">&quot;</span></span>], <span class="symbol">:from</span> =&gt; <span class="symbol">:online</span>, <span class="symbol">:to</span> =&gt; <span class="symbol">:uninitialized</span>
@@ -5091,8 +5091,8 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Trigger when any Thing changes status</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Trigger when any Thing changes status</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Thing status monitoring</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed things, <span class="key">to</span>: <span class="symbol">:offline</span>
@@ -5104,8 +5104,8 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Use Item wildcards (since openHAB 5.0)</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Use Item wildcards (since openHAB 5.0)</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Execute rule when the state of a matching item changed</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="string"><span class="delimiter">&quot;</span><span class="content">*_Door</span><span class="delimiter">&quot;</span></span>, <span class="key">to</span>: <span class="constant">OPEN</span>
@@ -5113,8 +5113,8 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Use Thing wildcards (since openHAB 5.0)</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Use Thing wildcards (since openHAB 5.0)</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Execute rule when a matching thing changed status</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="string"><span class="delimiter">&quot;</span><span class="content">mqtt:topic:*light*</span><span class="delimiter">&quot;</span></span>, <span class="key">to</span>: <span class="symbol">:online</span>
@@ -5122,8 +5122,8 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Real World Example</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Real World Example</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Log (or notify) when an exterior door is left open for more than 5 minutes</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="constant">ExteriorDoors</span>.members, <span class="key">to</span>: <span class="constant">OPEN</span>, <span class="key">for</span>: <span class="integer">5</span>.minutes
@@ -5144,9 +5144,9 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
       
       
         &mdash;
-        <div class='inline'><p>Objects to create trigger for.
-When a String is provided, it is assumed to be an item or group name, unless when it
-contains a colon, in which case it is assumed to be a thing UID.
+        <div class='inline'><p>Objects to create trigger for.<br>
+When a String is provided, it is assumed to be an item or group name, unless when it<br>
+contains a colon, in which case it is assumed to be a thing UID.<br>
 The String may contain <code>*</code> and <code>?</code> wildcards since openHAB 5.0.</p>
 </div>
       
@@ -5198,7 +5198,7 @@ The String may contain <code>*</code> and <code>?</code> wildcards since openHAB
       
       
         &mdash;
-        <div class='inline'><p>Duration for which the item/thing must remain in the same state before executing the execution blocks.
+        <div class='inline'><p>Duration for which the item/thing must remain in the same state before executing the execution blocks.<br>
 When a proc is provided, it will be called when the rule is triggered to get the duration.</p>
 </div>
       
@@ -5315,8 +5315,8 @@ When a proc is provided, it will be called when the rule is triggered to get the
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Creates a channel trigger</p>
-<p>The channel trigger executes rule when a specific channel is triggered. The syntax
-supports one or more channels with one or more triggers. <code>thing</code> is an optional
+<p>The channel trigger executes rule when a specific channel is triggered. The syntax<br>
+supports one or more channels with one or more triggers. <code>thing</code> is an optional<br>
 parameter that makes it easier to set triggers on multiple channels on the same thing.</p>
 <p>The <code>event</code> passed to run blocks will be a <span class='object_link'><a href="../../Core/Events/ChannelTriggeredEvent.html" title="OpenHAB::Core::Events::ChannelTriggeredEvent (class)">Core::Events::ChannelTriggeredEvent</a></span>.</p>
 
@@ -5326,7 +5326,7 @@ parameter that makes it easier to set triggers on multiple channels on the same 
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Execute rule when channel is triggered</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -5411,7 +5411,7 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
       
       
         &mdash;
-        <div class='inline'><p>channels to create triggers for in form of 'binding_id:type_id:thing_id#channel_id'
+        <div class='inline'><p>channels to create triggers for in form of 'binding_id:type_id:thing_id#channel_id'<br>
 or 'channel_id' if thing is provided.</p>
 </div>
       
@@ -5528,7 +5528,7 @@ or 'channel_id' if thing is provided.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">channel linked</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -5649,7 +5649,7 @@ or 'channel_id' if thing is provided.</p>
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Creates a channel unlinked trigger</p>
 <p>The <code>event</code> passed to run blocks will be an <span class='object_link'><a href="../../Core/Events/ItemChannelLinkRemovedEvent.html" title="OpenHAB::Core::Events::ItemChannelLinkRemovedEvent (class)">Core::Events::ItemChannelLinkRemovedEvent</a></span>.</p>
-<p>Note that the item or the thing it's linked to may no longer exist,
+<p>Note that the item or the thing it's linked to may no longer exist,<br>
 so if you try to access those objects they'll be nil.</p>
 
 
@@ -5658,7 +5658,7 @@ so if you try to access those objects they'll be nil.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">channel unlinked</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -5804,11 +5804,11 @@ so if you try to access those objects they'll be nil.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Using a cron expression</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Using a cron expression</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">cron expression</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   cron <span class="string"><span class="delimiter">&quot;</span><span class="content">43 46 13 ? * ?</span><span class="delimiter">&quot;</span></span>
@@ -5865,15 +5865,15 @@ so if you try to access those objects they'll be nil.</p>
     <p>The trigger can be created by specifying each field as keyword arguments.</p>
 <p>When certain fields were omitted:</p>
 <ul>
-<li>The more specific fields will default to <code>0</code> for <code>hour</code>, <code>minute</code>, and <code>second</code>,
+<li>The more specific fields will default to <code>0</code> for <code>hour</code>, <code>minute</code>, and <code>second</code>,<br>
 to <code>MON</code> for <code>dow</code>, and to <code>1</code> for <code>dom</code> and <code>month</code>.</li>
 <li>The less specific fields will default to <code>*</code> or <code>?</code> as appropriate.</li>
 </ul>
 <p>Each field is optional, but at least one must be specified.</p>
-<p>The same rules for the standard
-<a href="https://www.quartz-scheduler.org/documentation/quartz-2.2.2/tutorials/tutorial-lesson-06.html">cron expression</a>
-apply for each field. For example, multiple values can be separated
-with a comma within a string, and ranges can be specified with a dash or with
+<p>The same rules for the standard<br>
+<a href="https://www.quartz-scheduler.org/documentation/quartz-2.2.2/tutorials/tutorial-lesson-06.html">cron expression</a><br>
+apply for each field. For example, multiple values can be separated<br>
+with a comma within a string, and ranges can be specified with a dash or with<br>
 a Ruby Range.</p>
 
 
@@ -5882,11 +5882,11 @@ a Ruby Range.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Using String values</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Using String values</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Run every 3 minutes on Monday to Friday</span>
 <span class="comment"># equivalent to the cron expression &quot;0 */3 * ? * MON-FRI *&quot;</span>
@@ -5896,8 +5896,8 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Defaults for unspecified fields</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Defaults for unspecified fields</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Run at midnight on the first day of January, February, and March</span>
 <span class="comment"># equivalent to the cron expression &quot;0 0 0 1 JAN-MAR ? *&quot;</span>
@@ -5907,8 +5907,8 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Using Ruby Range values</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Using Ruby Range values</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Run on the hour, every hour between 1pm and 5pm</span>
 <span class="comment"># equivalent to the cron expression &quot;0 0 13-17 ? * ? *&quot;</span>
@@ -6104,9 +6104,9 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Waits until triggers have stopped firing for a period of time before executing the rule.</p>
-<p>It ignores triggers that are "bouncing around" (rapidly firing) by ignoring
+<p>It ignores triggers that are "bouncing around" (rapidly firing) by ignoring<br>
 them until they have quiesced (stopped triggering for a while).</p>
-<h2 id="comparison-table"><a href="#comparison-table" class="header-anchor">#</a>Comparison Table</h2>
+<h2><a href="#comparison-table" aria-hidden="true" class="header-anchor" id="comparison-table">#</a>Comparison Table</h2>
 <table>
 <thead>
 <tr>
@@ -6133,8 +6133,8 @@ them until they have quiesced (stopped triggering for a while).</p>
 </tr>
 </tbody>
 </table>
-<h2 id="timing-diagram"><a href="#timing-diagram" class="header-anchor">#</a>Timing Diagram</h2>
-<p>The following timing diagram illustrates the difference between <span class='object_link'><a href="#debounce_for-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#debounce_for (method)">#debounce_for</a></span>,
+<h2><a href="#timing-diagram" aria-hidden="true" class="header-anchor" id="timing-diagram">#</a>Timing Diagram</h2>
+<p>The following timing diagram illustrates the difference between <span class='object_link'><a href="#debounce_for-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#debounce_for (method)">#debounce_for</a></span>,<br>
 <span class='object_link'><a href="#throttle_for-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#throttle_for (method)">#throttle_for</a></span>, and <span class='object_link'><a href="#only_every-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#only_every (method)">#only_every</a></span> guards:</p>
 <pre class="code ruby"><code class="ruby"><span class="constant">TIME</span> <span class="constant">INDEX</span> ===&gt;                <span class="integer">1</span>    <span class="integer">1</span>    <span class="integer">2</span>    <span class="integer">2</span>    <span class="integer">3</span>    <span class="integer">3</span>    <span class="integer">4</span>    <span class="integer">4</span>
                      <span class="integer">0</span>    <span class="integer">5</span>    <span class="integer">0</span>    <span class="integer">5</span>    <span class="integer">0</span>    <span class="integer">5</span>    <span class="integer">0</span>    <span class="integer">5</span>    <span class="integer">0</span>    <span class="integer">5</span>
@@ -6162,11 +6162,11 @@ debounce_for <span class="integer">5</span>..<span class="integer">44</span>: <s
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Wait until item stopped changing for at least 1 minute before running the rule</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Wait until item stopped changing for at least 1 minute before running the rule</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="keyword">do</span>
   changed <span class="constant">Item1</span>
@@ -6175,8 +6175,8 @@ debounce_for <span class="integer">5</span>..<span class="integer">44</span>: <s
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Alert when door is open for a while</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Alert when door is open for a while</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Note: When combined with a state check (only_if), this becomes functionally</span>
 <span class="comment"># equivalent to the changed duration feature.</span>
@@ -6201,15 +6201,15 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
       
       
         &mdash;
-        <div class='inline'><p>The minimum interval between two consecutive
+        <div class='inline'><p>The minimum interval between two consecutive<br>
 triggers before the rules are allowed to run.</p>
-<p>When specified just as a Duration or an endless range, it sets the minimum interval
-between two consecutive triggers before rules are executed. It will
+<p>When specified just as a Duration or an endless range, it sets the minimum interval<br>
+between two consecutive triggers before rules are executed. It will<br>
 wait endlessly unless this condition is met or an end of range was specified.</p>
-<p>When the end of the range is specified, it sets the maximum amount of time to wait
-from the first trigger before the rule will execute, even when triggers continue
+<p>When the end of the range is specified, it sets the maximum amount of time to wait<br>
+from the first trigger before the rule will execute, even when triggers continue<br>
 to occur more frequently than the minimum interval.</p>
-<p>When an equal beginning and ending values are given, it will behave just like
+<p>When an equal beginning and ending values are given, it will behave just like<br>
 <span class='object_link'><a href="#throttle_for-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#throttle_for (method)">#throttle_for</a></span>.</p>
 </div>
       
@@ -6262,7 +6262,7 @@ to occur more frequently than the minimum interval.</p>
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Add a wait between or after run blocks.</p>
-<p>The delay property is a non thread-blocking element that is executed
+<p>The delay property is a non thread-blocking element that is executed<br>
 after, before, or between run blocks.</p>
 
 
@@ -6271,7 +6271,7 @@ after, before, or between run blocks.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">delay execution</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -6289,8 +6289,8 @@ after, before, or between run blocks.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Like other execution blocks, multiple can exist in a single rule.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Like other execution blocks, multiple can exist in a single rule.</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Multiple delays can exist in a rule</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   on_load
@@ -6302,8 +6302,8 @@ after, before, or between run blocks.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>You can use Ruby code in your rule across multiple execution blocks like a run and a delay.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>You can use Ruby code in your rule across multiple execution blocks like a run and a delay.</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Dim a switch on system startup over 100 seconds</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   on_load
@@ -6363,7 +6363,7 @@ prop_array <span class="symbol">:delay</span>, <span class="key">array_name</spa
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns all <span class='object_link'><a href="../../Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Items</a></span> (or <span class='object_link'><a href="../../Core/Items/GroupItem/Members.html" title="OpenHAB::Core::Items::GroupItem::Members (class)">GroupItem::Members</a></span>) referenced
+    <p>Returns all <span class='object_link'><a href="../../Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Items</a></span> (or <span class='object_link'><a href="../../Core/Items/GroupItem/Members.html" title="OpenHAB::Core::Items::GroupItem::Members (class)">GroupItem::Members</a></span>) referenced<br>
 by the specified trigger types in this rule.</p>
 
 
@@ -6372,11 +6372,11 @@ by the specified trigger types in this rule.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Ensure all dependencies have a state when executing a rule</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Ensure all dependencies have a state when executing a rule</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="keyword">do</span> |rule|
   changed <span class="constant">Item1</span>, <span class="constant">Item2</span>, <span class="constant">Item3</span>
@@ -6524,7 +6524,7 @@ prop <span class="symbol">:description</span></pre>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">disabled rule</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -6585,7 +6585,7 @@ prop <span class="symbol">:enabled</span></pre>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">thing updated</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -6626,7 +6626,7 @@ prop <span class="symbol">:enabled</span></pre>
       
       
         &mdash;
-        <div class='inline'><p>The sender of the event to trigger on.
+        <div class='inline'><p>The sender of the event to trigger on.<br>
 Default does not filter on source.</p>
 </div>
       
@@ -6644,7 +6644,7 @@ Default does not filter on source.</p>
       
       
         &mdash;
-        <div class='inline'><p>Only subscribe to certain event types.
+        <div class='inline'><p>Only subscribe to certain event types.<br>
 Default does not filter on event types.</p>
 </div>
       
@@ -6705,7 +6705,7 @@ Default does not filter on event types.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Daily</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -6716,8 +6716,8 @@ Default does not filter on event types.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>The above rule could also be expressed using LocalTime class as below</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>The above rule could also be expressed using LocalTime class as below</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Daily</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   every <span class="symbol">:day</span>, <span class="key">at</span>: <span class="constant">LocalTime</span>.of(<span class="integer">5</span>, <span class="integer">15</span>)
@@ -6725,8 +6725,8 @@ Default does not filter on event types.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Specific day of the week</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Specific day of the week</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Weekly</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   every <span class="symbol">:monday</span>, <span class="key">at</span>: <span class="string"><span class="delimiter">'</span><span class="content">5:15</span><span class="delimiter">'</span></span>
@@ -6736,8 +6736,8 @@ Default does not filter on event types.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Symbolic interval</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Symbolic interval</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Often</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   every <span class="symbol">:minute</span>
@@ -6755,8 +6755,8 @@ Default does not filter on event types.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Duration interval</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Duration interval</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Often</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   every <span class="integer">5</span>.minutes
@@ -6766,8 +6766,8 @@ Default does not filter on event types.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>MonthDay</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>MonthDay</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Every 14th of Feb at 2pm</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   every <span class="string"><span class="delimiter">'</span><span class="content">02-14</span><span class="delimiter">'</span></span>, <span class="key">at</span>: <span class="string"><span class="delimiter">'</span><span class="content">2pm</span><span class="delimiter">'</span></span>
@@ -6775,8 +6775,8 @@ Default does not filter on event types.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Multiple day-of-week</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Multiple day-of-week</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Weekend</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   every <span class="symbol">:saturday</span>, <span class="symbol">:sunday</span>, <span class="key">at</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">10:00</span><span class="delimiter">&quot;</span></span>
@@ -6784,8 +6784,8 @@ Default does not filter on event types.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Trigger at the time portion of a DateTime Item</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Trigger at the time portion of a DateTime Item</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Every day at sunset</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   every <span class="symbol">:day</span>, <span class="key">at</span>: <span class="constant">Sunset_Time</span>
@@ -6793,8 +6793,8 @@ Default does not filter on event types.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Using DateTime trigger with offset</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Using DateTime trigger with offset</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Every day before sunset</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   every <span class="symbol">:day</span>, <span class="key">at</span>: <span class="constant">Sunset_Time</span>, <span class="key">offset</span>: <span class="integer">-20</span>.minutes
@@ -6832,9 +6832,9 @@ Default does not filter on event types.</p>
       
       
         &mdash;
-        <div class='inline'><p>What time of day to execute rule
-If <code>value</code> is <code>:day</code>, <code>at</code> can be a <span class='object_link'><a href="../../Core/Items/DateTimeItem.html" title="OpenHAB::Core::Items::DateTimeItem (class)">DateTimeItem</a></span>, and
-the trigger will run every day at the (time only portion of) current state of the
+        <div class='inline'><p>What time of day to execute rule<br>
+If <code>value</code> is <code>:day</code>, <code>at</code> can be a <span class='object_link'><a href="../../Core/Items/DateTimeItem.html" title="OpenHAB::Core::Items::DateTimeItem (class)">DateTimeItem</a></span>, and<br>
+the trigger will run every day at the (time only portion of) current state of the<br>
 item. If the item is <span class='object_link'><a href="../../Core/Types/UnDefType.html#NULL-constant" title="OpenHAB::Core::Types::UnDefType::NULL (constant)">NULL</a></span> or <span class='object_link'><a href="../../Core/Types/UnDefType.html#UNDEF-constant" title="OpenHAB::Core::Types::UnDefType::UNDEF (constant)">UNDEF</a></span>, the trigger will not run.</p>
 </div>
       
@@ -6852,9 +6852,9 @@ item. If the item is <span class='object_link'><a href="../../Core/Types/UnDefTy
       
       
         &mdash;
-        <div class='inline'><p>Offset the execution time from the time specified in the item.
-This can be a negative value to execute the rule before the time specified in the item.
-A Duration will be converted to its total length in seconds, with any excess precision information dropped.
+        <div class='inline'><p>Offset the execution time from the time specified in the item.<br>
+This can be a negative value to execute the rule before the time specified in the item.<br>
+A Duration will be converted to its total length in seconds, with any excess precision information dropped.<br>
 @since openHAB 4.3</p>
 </div>
       
@@ -7077,7 +7077,7 @@ A Duration will be converted to its total length in seconds, with any excess pre
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">item added</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -7186,7 +7186,7 @@ A Duration will be converted to its total length in seconds, with any excess pre
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">item removed</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -7295,7 +7295,7 @@ A Duration will be converted to its total length in seconds, with any excess pre
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">item updated</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -7439,7 +7439,7 @@ prop <span class="symbol">:name</span></pre>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Set OutsideDimmer to 50% if LightSwtich turned on and OtherSwitch is OFF</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -7449,8 +7449,8 @@ prop <span class="symbol">:name</span></pre>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Multiple <span class='object_link'><a href="#not_if-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#not_if (method)">#not_if</a></span> statements can be used and if <strong>any</strong> of them are not satisfied the rule will not run.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Multiple <span class='object_link'><a href="#not_if-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#not_if (method)">#not_if</a></span> statements can be used and if <strong>any</strong> of them are not satisfied the rule will not run.</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Set OutsideDimmer to 50% if LightSwitch turned on and OtherSwitch is OFF and Door is not CLOSED</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="constant">LightSwitch</span>, <span class="key">to</span>: <span class="constant">ON</span>
@@ -7531,8 +7531,8 @@ prop_array(<span class="symbol">:not_if</span>) <span class="keyword">do</span> 
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Creates a trigger that executes when the script is loaded</p>
-<p>Execute the rule whenever the script is first loaded, including on openHAB start up,
-and on subsequent reloads on file modifications.
+<p>Execute the rule whenever the script is first loaded, including on openHAB start up,<br>
+and on subsequent reloads on file modifications.<br>
 This is useful to perform initialization routines, especially when combined with other triggers.</p>
 
 
@@ -7541,7 +7541,7 @@ This is useful to perform initialization routines, especially when combined with
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">script startup rule</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -7573,7 +7573,7 @@ This is useful to perform initialization routines, especially when combined with
       
       
         &mdash;
-        <div class='inline'><p>The amount of time to wait before executing the rule.
+        <div class='inline'><p>The amount of time to wait before executing the rule.<br>
 When nil, execute immediately.</p>
 </div>
       
@@ -7662,7 +7662,7 @@ When nil, execute immediately.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Trigger at openHAB system start</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -7671,8 +7671,8 @@ When nil, execute immediately.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Trigger at a specific start level</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Trigger at a specific start level</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Trigger after things are loaded</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   on_start <span class="key">at_level</span>: <span class="symbol">:things</span>
@@ -7680,8 +7680,8 @@ When nil, execute immediately.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Trigger at multiple levels</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Trigger at multiple levels</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Multiple start up triggers</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   on_start <span class="key">at_levels</span>: <span class="symbol"><span class="delimiter">%i[</span><span class="content">ui things complete</span><span class="delimiter">]</span></span>
@@ -7706,7 +7706,7 @@ When nil, execute immediately.</p>
       
       
         &mdash;
-        <div class='inline'><p>Zero or more start levels. Note that Startlevels less than 40 are not available as triggers
+        <div class='inline'><p>Zero or more start levels. Note that Startlevels less than 40 are not available as triggers<br>
 because the rule engine needs to start up first before it can execute any rules</p>
 <table>
 <thead>
@@ -7873,12 +7873,12 @@ because the rule engine needs to start up first before it can execute any rules<
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Executes the rule then ignores subsequent triggers for a given duration.</p>
-<p>Additional triggers that occur within the given duration after the rule execution
-will be ignored. This results in executions happening only at the specified interval or
+<p>Additional triggers that occur within the given duration after the rule execution<br>
+will be ignored. This results in executions happening only at the specified interval or<br>
 more.</p>
-<p>Unlike <span class='object_link'><a href="#throttle_for-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#throttle_for (method)">#throttle_for</a></span>, this guard will execute the rule as soon as a new trigger
-occurs instead of waiting for the specified duration. This is ideal for triggers
-such as a door bell where the rule should run as soon as a new trigger is detected
+<p>Unlike <span class='object_link'><a href="#throttle_for-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#throttle_for (method)">#throttle_for</a></span>, this guard will execute the rule as soon as a new trigger<br>
+occurs instead of waiting for the specified duration. This is ideal for triggers<br>
+such as a door bell where the rule should run as soon as a new trigger is detected<br>
 but ignore subsequent triggers if they occur too soon after.</p>
 
 
@@ -7887,11 +7887,11 @@ but ignore subsequent triggers if they occur too soon after.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Only allow executions every 10 minutes or more</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Only allow executions every 10 minutes or more</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Aircon Vent Control</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="constant">BedRoom_Temperature</span>
@@ -7902,8 +7902,8 @@ but ignore subsequent triggers if they occur too soon after.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Run only on the first update and ignore subsequent triggers for the next minute</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Run only on the first update and ignore subsequent triggers for the next minute</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># They can keep pressing the door bell as often as they like,</span>
 <span class="comment"># but the bell will only ring at most once every minute</span>
@@ -7914,8 +7914,8 @@ rule <span class="keyword">do</span>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Using symbolic duration</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Using symbolic duration</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Display update</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   updated <span class="constant">Power_Usage</span>
@@ -7937,7 +7937,7 @@ rule <span class="keyword">do</span>
       
       
         &mdash;
-        <div class='inline'><p>The period during which
+        <div class='inline'><p>The period during which<br>
 subsequent triggers are ignored.</p>
 </div>
       
@@ -7997,7 +7997,7 @@ subsequent triggers are ignored.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Set OutsideDimmer to 50% if LightSwitch turned on and OtherSwitch is also ON</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -8007,8 +8007,8 @@ subsequent triggers are ignored.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Multiple <span class='object_link'><a href="#only_if-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#only_if (method)">#only_if</a></span> statements can be used and <em>all</em> must be true for the rule to run.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Multiple <span class='object_link'><a href="#only_if-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#only_if (method)">#only_if</a></span> statements can be used and <em>all</em> must be true for the rule to run.</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Set OutsideDimmer to 50% if LightSwitch turned on and OtherSwitch is also ON and Door is closed</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="constant">LightSwitch</span>, <span class="key">to</span>: <span class="constant">ON</span>
@@ -8018,8 +8018,8 @@ subsequent triggers are ignored.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Guards have access to event information.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Guards have access to event information.</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Set OutsideDimmer to 50% if any switch in group Switches starting with Outside is switched On</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="constant">Switches</span>.items, <span class="key">to</span>: <span class="constant">ON</span>
@@ -8098,12 +8098,12 @@ prop_array(<span class="symbol">:only_if</span>) <span class="keyword">do</span>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Add a block that will be passed event data, to be run if guards are
+    <p>Add a block that will be passed event data, to be run if guards are<br>
 not satisfied.</p>
-<p>The <span class='object_link'><a href="#otherwise-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#otherwise (method)">#otherwise</a></span> property is the automation code that is executed when
-a rule is triggered and guards are not satisfied.  This property
-accepts a block of code and executes it. The block is automatically
-passed an event object which can be used to access multiple
+<p>The <span class='object_link'><a href="#otherwise-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#otherwise (method)">#otherwise</a></span> property is the automation code that is executed when<br>
+a rule is triggered and guards are not satisfied.  This property<br>
+accepts a block of code and executes it. The block is automatically<br>
+passed an event object which can be used to access multiple<br>
 properties about the triggering event.</p>
 
 
@@ -8112,7 +8112,7 @@ properties about the triggering event.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Turn switch ON or OFF based on value of another switch</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
@@ -8170,7 +8170,7 @@ prop_array <span class="symbol">:otherwise</span>, <span class="key">array_name<
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Creates a trigger for when an item or group receives a command.</p>
 <p>The command/commands parameters are replicated for DSL fluency.</p>
-<p>The <code>event</code> passed to run blocks will be an
+<p>The <code>event</code> passed to run blocks will be an<br>
 <span class='object_link'><a href="../../Core/Events/ItemCommandEvent.html" title="OpenHAB::Core::Events::ItemCommandEvent (class)">Core::Events::ItemCommandEvent</a></span>.</p>
 
 
@@ -8179,7 +8179,7 @@ prop_array <span class="symbol">:otherwise</span>, <span class="key">array_name<
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Execute rule when item received command</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
@@ -8224,8 +8224,8 @@ prop_array <span class="symbol">:otherwise</span>, <span class="key">array_name<
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Works with procs</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Works with procs</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Execute rule when Alarm Mode command is odd</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   received_command <span class="constant">Alarm_Mode</span>, <span class="key">command</span>: proc { |c| c.odd? }
@@ -8233,8 +8233,8 @@ prop_array <span class="symbol">:otherwise</span>, <span class="key">array_name<
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Works with lambdas</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Works with lambdas</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Execute rule when Alarm Mode command is odd</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   received_command <span class="constant">Alarm_Mode</span>, <span class="key">command</span>: -&gt; c { c.odd? }
@@ -8242,8 +8242,8 @@ prop_array <span class="symbol">:otherwise</span>, <span class="key">array_name<
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Works with regexes</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Works with regexes</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Execute rule when Alarm Mode command matches a substring</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   received_command <span class="constant">Alarm_Mode</span>, <span class="key">command</span>: <span class="regexp"><span class="delimiter">/</span><span class="content">arm</span><span class="delimiter">/</span></span>
@@ -8251,8 +8251,8 @@ prop_array <span class="symbol">:otherwise</span>, <span class="key">array_name<
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Use Item wildcards (since openHAB 5.0)</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Use Item wildcards (since openHAB 5.0)</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Execute rule when the matching item received command</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   received_command <span class="string"><span class="delimiter">'</span><span class="content">*_Light</span><span class="delimiter">'</span></span>, <span class="key">command</span>: <span class="constant">ON</span>
@@ -8273,8 +8273,8 @@ prop_array <span class="symbol">:otherwise</span>, <span class="key">array_name<
       
       
         &mdash;
-        <div class='inline'><p>Items to create trigger for.
-When a String is provided, it is assumed to be an item or group name.
+        <div class='inline'><p>Items to create trigger for.<br>
+When a String is provided, it is assumed to be an item or group name.<br>
 The String may contain <code>*</code> and <code>?</code> wildcards since openHAB 5.0.</p>
 </div>
       
@@ -8413,11 +8413,11 @@ The String may contain <code>*</code> and <code>?</code> wildcards since openHAB
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Add a block that will be passed event data.</p>
-<p>The run property is the automation code that is executed when a rule
-is triggered. This property accepts a block of code and executes it.
-The block is automatically passed an event object which can be used
-to access multiple properties about the triggering event. The code
-for the automation can be entirely within the run block and can call
+<p>The run property is the automation code that is executed when a rule<br>
+is triggered. This property accepts a block of code and executes it.<br>
+The block is automatically passed an event object which can be used<br>
+to access multiple properties about the triggering event. The code<br>
+for the automation can be entirely within the run block and can call<br>
 methods defined in the Ruby script.</p>
 
 
@@ -8426,11 +8426,11 @@ methods defined in the Ruby script.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p><code>{}</code> style used for single line blocks.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p><code>{}</code> style used for single line blocks.</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Access Event Properties</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   changed <span class="constant">TestSwitch</span>
@@ -8438,8 +8438,8 @@ methods defined in the Ruby script.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p><code>do/end</code> style used for multi-line blocks.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p><code>do/end</code> style used for multi-line blocks.</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Multi Line Run Block</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   changed <span class="constant">TestSwitch</span>
@@ -8451,8 +8451,8 @@ methods defined in the Ruby script.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Rules can have multiple run blocks and they are executed in order. Useful when used in combination with <span class='object_link'><a href="#delay-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#delay (method)">#delay</a></span>.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Rules can have multiple run blocks and they are executed in order. Useful when used in combination with <span class='object_link'><a href="#delay-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#delay (method)">#delay</a></span>.</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Multiple Run Blocks</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   changed <span class="constant">TestSwitch</span>
@@ -8515,7 +8515,7 @@ prop_array <span class="symbol">:run</span>, <span class="key">array_name</span>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">tagged rule</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -8581,7 +8581,7 @@ prop <span class="symbol">:tags</span></pre>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">thing added</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -8690,7 +8690,7 @@ prop <span class="symbol">:tags</span></pre>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">thing removed</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -8799,7 +8799,7 @@ prop <span class="symbol">:tags</span></pre>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">thing updated</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -8899,19 +8899,19 @@ prop <span class="symbol">:tags</span></pre>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Rate-limits rule executions by delaying triggers and executing the last
+    <p class="note returns_void">This method returns an undefined value.</p><p>Rate-limits rule executions by delaying triggers and executing the last<br>
 trigger within the given duration.</p>
-<p>When a new trigger occurs, it will hold the execution and start a fixed timer for
-the given duration. Should more triggers occur during this time, keep holding
+<p>When a new trigger occurs, it will hold the execution and start a fixed timer for<br>
+the given duration. Should more triggers occur during this time, keep holding<br>
 and once the wait time is over, execute the latest trigger.</p>
-<p><span class='object_link'><a href="#throttle_for-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#throttle_for (method)">#throttle_for</a></span> will execute rules after it had waited
-for the given duration, regardless of how frequently the triggers were occuring.
-In contrast, <span class='object_link'><a href="#debounce_for-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#debounce_for (method)">#debounce_for</a></span> will wait until there is a minimum interval
+<p><span class='object_link'><a href="#throttle_for-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#throttle_for (method)">#throttle_for</a></span> will execute rules after it had waited<br>
+for the given duration, regardless of how frequently the triggers were occuring.<br>
+In contrast, <span class='object_link'><a href="#debounce_for-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#debounce_for (method)">#debounce_for</a></span> will wait until there is a minimum interval<br>
 between two triggers.</p>
-<p><span class='object_link'><a href="#throttle_for-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#throttle_for (method)">#throttle_for</a></span> is ideal in situations where regular status updates need to be made
-for frequently changing values. It is also useful when a rule responds to triggers
-from multiple related items that are updated at around the same time. Instead of
-executing the rule multiple times, <span class='object_link'><a href="#throttle_for-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#throttle_for (method)">#throttle_for</a></span> will wait for a pre-set amount
+<p><span class='object_link'><a href="#throttle_for-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#throttle_for (method)">#throttle_for</a></span> is ideal in situations where regular status updates need to be made<br>
+for frequently changing values. It is also useful when a rule responds to triggers<br>
+from multiple related items that are updated at around the same time. Instead of<br>
+executing the rule multiple times, <span class='object_link'><a href="#throttle_for-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#throttle_for (method)">#throttle_for</a></span> will wait for a pre-set amount<br>
 of time since the first group of triggers occurred before executing the rule.</p>
 
 
@@ -8920,11 +8920,11 @@ of time since the first group of triggers occurred before executing the rule.</p
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Perform calculations from multiple items</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Perform calculations from multiple items</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Update Power Summary </span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span> |rule|
   changed <span class="constant">Power_From_Solar</span>, <span class="constant">Power_Load</span>, <span class="constant">Power_From_Grid</span>
@@ -8957,7 +8957,7 @@ of time since the first group of triggers occurred before executing the rule.</p
       
       
         &mdash;
-        <div class='inline'><p>The minimum amount of time to wait inbetween rule
+        <div class='inline'><p>The minimum amount of time to wait inbetween rule<br>
 executions.</p>
 </div>
       
@@ -9016,7 +9016,7 @@ executions.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Execute rule when item time series is updated</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
@@ -9145,11 +9145,11 @@ executions.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Create a trigger for the <a href="https://www.openhab.org/addons/automation/pidcontroller/">PID Controller Automation</a> add-on.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Create a trigger for the <a href="https://www.openhab.org/addons/automation/pidcontroller/">PID Controller Automation</a> add-on.</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">PID Control</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   trigger <span class="string"><span class="delimiter">'</span><span class="content">pidcontroller.trigger</span><span class="delimiter">'</span></span>,
@@ -9168,8 +9168,8 @@ executions.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>DateTime Trigger</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>DateTime Trigger</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">DateTime Trigger</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   description <span class="string"><span class="delimiter">'</span><span class="content">Triggers at a time specified in MyDateTimeItem</span><span class="delimiter">'</span></span>
@@ -9270,9 +9270,9 @@ executions.</p>
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Add a block that will be passed the triggering item.</p>
-<p>This property is the same as the <span class='object_link'><a href="#run-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#run (method)">#run</a></span> property except rather than
-passing an event object to the automation block the triggered item is
-passed. This enables optimizations for simple cases and supports
+<p>This property is the same as the <span class='object_link'><a href="#run-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#run (method)">#run</a></span> property except rather than<br>
+passing an event object to the automation block the triggered item is<br>
+passed. This enables optimizations for simple cases and supports<br>
 Ruby's <a href="https://medium.com/@dcjones/the-pretzel-colon-75df46dde0c7">pretzel colon <code>&amp;:</code> operator.</a>.</p>
 
 
@@ -9281,7 +9281,7 @@ Ruby's <a href="https://medium.com/@dcjones/the-pretzel-colon-75df46dde0c7">pret
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">motion sensor triggered</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -9298,8 +9298,8 @@ Ruby's <a href="https://medium.com/@dcjones/the-pretzel-colon-75df46dde0c7">pret
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Triggered items are highly useful when working with groups</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Triggered items are highly useful when working with groups</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Switches is a group of Switch items</span>
 rule <span class="string"><span class="delimiter">'</span><span class="content">Triggered item is item changed when a group item is changed.</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
@@ -9313,8 +9313,8 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Like other execution blocks, multiple triggered blocks are supported in a single rule</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Like other execution blocks, multiple triggered blocks are supported in a single rule</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Turn a switch off and log it, 5 seconds after turning it on</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   changed <span class="constant">Switches</span>.members, <span class="key">to</span>: <span class="constant">ON</span>
@@ -9421,9 +9421,9 @@ prop(<span class="symbol">:uid</span>) { |id| <span class="constant">Thread</spa
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Create a trigger when item, group or thing is updated</p>
-<p>The <code>event</code> passed to run blocks will be an
-<span class='object_link'><a href="../../Core/Events/ItemStateEvent.html" title="OpenHAB::Core::Events::ItemStateEvent (class)">Core::Events::ItemStateEvent</a></span> or a
-<span class='object_link'><a href="../../Core/Events/ThingStatusInfoEvent.html" title="OpenHAB::Core::Events::ThingStatusInfoEvent (class)">Core::Events::ThingStatusInfoEvent</a></span> depending on if the triggering
+<p>The <code>event</code> passed to run blocks will be an<br>
+<span class='object_link'><a href="../../Core/Events/ItemStateEvent.html" title="OpenHAB::Core::Events::ItemStateEvent (class)">Core::Events::ItemStateEvent</a></span> or a<br>
+<span class='object_link'><a href="../../Core/Events/ThingStatusInfoEvent.html" title="OpenHAB::Core::Events::ThingStatusInfoEvent (class)">Core::Events::ThingStatusInfoEvent</a></span> depending on if the triggering<br>
 element was an item or a thing.</p>
 
 
@@ -9432,7 +9432,7 @@ element was an item or a thing.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Execute rule when item is updated to any value</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
@@ -9477,8 +9477,8 @@ element was an item or a thing.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Works with procs</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Works with procs</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Execute rule when member of group is changed to an odd state</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   updated <span class="constant">AlarmModes</span>.members, <span class="key">to</span>: proc { |t| t.odd? }
@@ -9486,8 +9486,8 @@ element was an item or a thing.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Works with lambdas:</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Works with lambdas:</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Execute rule when member of group is changed to an odd state</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   updated <span class="constant">AlarmModes</span>.members, <span class="key">to</span>: -&gt; t { t.odd? }
@@ -9495,8 +9495,8 @@ element was an item or a thing.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Works with regexes:</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Works with regexes:</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Execute rule when member of group is changed to a substring</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   updated <span class="constant">AlarmModes</span>.members, <span class="key">to</span>: <span class="regexp"><span class="delimiter">/</span><span class="content">armed</span><span class="delimiter">/</span></span>
@@ -9504,8 +9504,8 @@ element was an item or a thing.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Works with things as well</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Works with things as well</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Execute rule when thing is updated</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
    updated things[<span class="string"><span class="delimiter">'</span><span class="content">astro:sun:home</span><span class="delimiter">'</span></span>], <span class="symbol">:to</span> =&gt; <span class="symbol">:uninitialized</span>
@@ -9513,8 +9513,8 @@ element was an item or a thing.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Use Item wildcards (since openHAB 5.0)</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Use Item wildcards (since openHAB 5.0)</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Execute rule when the state of a matching item is updated</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   updated <span class="string"><span class="delimiter">'</span><span class="content">*_Door</span><span class="delimiter">'</span></span>, <span class="key">to</span>: <span class="constant">OPEN</span>
@@ -9522,8 +9522,8 @@ element was an item or a thing.</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Use Thing wildcards (since openHAB 5.0)</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Use Thing wildcards (since openHAB 5.0)</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">Execute rule when the status of a matching thing is updated</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   updated <span class="string"><span class="delimiter">'</span><span class="content">mqtt:topic:*light*</span><span class="delimiter">'</span></span>, <span class="key">to</span>: <span class="symbol">:online</span>
@@ -9545,9 +9545,9 @@ element was an item or a thing.</p>
       
       
         &mdash;
-        <div class='inline'><p>Objects to create trigger for.
-When a String is provided, it is assumed to be an item or group name, unless when it
-contains a colon, in which case it is assumed to be a thing UID.
+        <div class='inline'><p>Objects to create trigger for.<br>
+When a String is provided, it is assumed to be an item or group name, unless when it<br>
+contains a colon, in which case it is assumed to be a thing UID.<br>
 The String may contain <code>*</code> and <code>?</code> wildcards since openHAB 5.0.</p>
 </div>
       
@@ -9565,9 +9565,9 @@ The String may contain <code>*</code> and <code>?</code> wildcards since openHAB
       
       
         &mdash;
-        <div class='inline'><p>Only execute rule if the state matches <code>to</code> state(s). If the
-updated element is a <span class='object_link'><a href="../../Core/Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Core::Things::Thing</a></span>, the <code>to</code> accepts
-symbols and strings that match
+        <div class='inline'><p>Only execute rule if the state matches <code>to</code> state(s). If the<br>
+updated element is a <span class='object_link'><a href="../../Core/Things/Thing.html" title="OpenHAB::Core::Things::Thing (module)">Core::Things::Thing</a></span>, the <code>to</code> accepts<br>
+symbols and strings that match<br>
 <a href="https://www.openhab.org/docs/concepts/things.html#thing-status">supported thing statuses</a>.</p>
 </div>
       
@@ -9662,21 +9662,21 @@ symbols and strings that match
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Create a trigger to watch a path</p>
-<p>It provides the ability to create a trigger on file and directory
+<p>It provides the ability to create a trigger on file and directory<br>
 changes.</p>
-<p>If a file or a path that does not exist is supplied as the argument
-to watch, the parent directory will be watched and the file or
-non-existent part of the supplied path will become the glob. For
-example, if the path given is <code>/tmp/foo/bar</code> and <code>/tmp/foo</code>
-exists but <code>bar</code> does not exist inside of of <code>/tmp/foo</code> then the
-directory <code>/tmp/foo</code> will be watched for any files that match
+<p>If a file or a path that does not exist is supplied as the argument<br>
+to watch, the parent directory will be watched and the file or<br>
+non-existent part of the supplied path will become the glob. For<br>
+example, if the path given is <code>/tmp/foo/bar</code> and <code>/tmp/foo</code><br>
+exists but <code>bar</code> does not exist inside of of <code>/tmp/foo</code> then the<br>
+directory <code>/tmp/foo</code> will be watched for any files that match<br>
 <code>*/bar</code>.</p>
-<p>If the last part of the path contains any glob characters e.g.
-<code>/tmp/foo/*bar</code>, the parent directory will be watched and the last
-part of the path will be treated as if it was passed as the <code>glob</code>
-argument. In other words, <code>watch '/tmp/foo/*bar'</code> is equivalent to
+<p>If the last part of the path contains any glob characters e.g.<br>
+<code>/tmp/foo/*bar</code>, the parent directory will be watched and the last<br>
+part of the path will be treated as if it was passed as the <code>glob</code><br>
+argument. In other words, <code>watch '/tmp/foo/*bar'</code> is equivalent to<br>
 <code>watch '/tmp/foo', glob: '*bar'</code></p>
-<h3 id="watching-inside-subdirectories"><a href="#watching-inside-subdirectories" class="header-anchor">#</a>Watching inside subdirectories</h3>
+<h3><a href="#watching-inside-subdirectories" aria-hidden="true" class="header-anchor" id="watching-inside-subdirectories">#</a>Watching inside subdirectories</h3>
 <p>Subdirectories aren't watched unless:</p>
 <ul>
 <li>One of the glob patterns include the recursive match pattern <code>**</code>, or</li>
@@ -9690,11 +9690,11 @@ argument. In other words, <code>watch '/tmp/foo/*bar'</code> is equivalent to
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Watch <code>items</code> directory inside of the openHAB configuration path and log any changes.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Watch <code>items</code> directory inside of the openHAB configuration path and log any changes.</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">watch directory</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   watch <span class="constant">OpenHAB</span>::<span class="constant">Core</span>.config_folder / <span class="string"><span class="delimiter">'</span><span class="content">items</span><span class="delimiter">'</span></span>
@@ -9702,8 +9702,8 @@ argument. In other words, <code>watch '/tmp/foo/*bar'</code> is equivalent to
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Watch <code>items</code> directory for files that end in <code>*.erb</code> and log any changes</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Watch <code>items</code> directory for files that end in <code>*.erb</code> and log any changes</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">watch directory</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   watch <span class="constant">OpenHAB</span>::<span class="constant">Core</span>.config_folder / <span class="string"><span class="delimiter">'</span><span class="content">items</span><span class="delimiter">'</span></span>, <span class="key">glob</span>: <span class="string"><span class="delimiter">'</span><span class="content">*.erb</span><span class="delimiter">'</span></span>
@@ -9711,8 +9711,8 @@ argument. In other words, <code>watch '/tmp/foo/*bar'</code> is equivalent to
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Watch <code>items/foo.items</code> log any changes</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Watch <code>items/foo.items</code> log any changes</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">watch directory</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   watch <span class="constant">OpenHAB</span>::<span class="constant">Core</span>.config_folder / <span class="string"><span class="delimiter">'</span><span class="content">items/foo.items</span><span class="delimiter">'</span></span>
@@ -9720,8 +9720,8 @@ argument. In other words, <code>watch '/tmp/foo/*bar'</code> is equivalent to
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Watch <code>items/*.items</code> log any changes</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Watch <code>items/*.items</code> log any changes</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">watch directory</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   watch <span class="constant">OpenHAB</span>::<span class="constant">Core</span>.config_folder / <span class="string"><span class="delimiter">'</span><span class="content">items/*.items</span><span class="delimiter">'</span></span>
@@ -9729,8 +9729,8 @@ argument. In other words, <code>watch '/tmp/foo/*bar'</code> is equivalent to
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Watch <code>items/*.items</code> for when items files are deleted or created (ignore changes)</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Watch <code>items/*.items</code> for when items files are deleted or created (ignore changes)</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">'</span><span class="content">watch directory</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   watch <span class="constant">OpenHAB</span>::<span class="constant">Core</span>.config_folder / <span class="string"><span class="delimiter">'</span><span class="content">items/*.items</span><span class="delimiter">'</span></span>, <span class="key">for</span>: [<span class="symbol">:deleted</span>, <span class="symbol">:created</span>]
@@ -9738,8 +9738,8 @@ argument. In other words, <code>watch '/tmp/foo/*bar'</code> is equivalent to
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Watch for changes inside all subdirs of <code>config_folder/automation/ruby/lib</code></p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Watch for changes inside all subdirs of <code>config_folder/automation/ruby/lib</code></p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Watch recursively</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   watch <span class="constant">OpenHAB</span>::<span class="constant">Core</span>.config_folder / <span class="string"><span class="delimiter">&quot;</span><span class="content">automation/ruby/lib/**</span><span class="delimiter">&quot;</span></span>
@@ -9747,8 +9747,8 @@ argument. In other words, <code>watch '/tmp/foo/*bar'</code> is equivalent to
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Recursively watch using subdirectory in glob</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Recursively watch using subdirectory in glob</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Monitor changes in the list of installed gems</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   watch <span class="predefined-constant">ENV</span>[<span class="string"><span class="delimiter">'</span><span class="content">GEM_HOME</span><span class="delimiter">'</span></span>], <span class="key">glob</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">gems/*</span><span class="delimiter">&quot;</span></span>
@@ -9756,8 +9756,8 @@ argument. In other words, <code>watch '/tmp/foo/*bar'</code> is equivalent to
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Recursively watch using glob option</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Recursively watch using glob option</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Watch recursively</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   watch <span class="constant">OpenHAB</span>::<span class="constant">Core</span>.config_folder / <span class="string"><span class="delimiter">&quot;</span><span class="content">automation/ruby/lib</span><span class="delimiter">&quot;</span></span>, <span class="key">glob</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">**</span><span class="delimiter">&quot;</span></span>
@@ -9795,7 +9795,7 @@ argument. In other words, <code>watch '/tmp/foo/*bar'</code> is equivalent to
       
       
         &mdash;
-        <div class='inline'><p>Limit events to paths matching this glob. Globs are matched using <code>glob</code>
+        <div class='inline'><p>Limit events to paths matching this glob. Globs are matched using <code>glob</code><br>
 <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/FileSystem.html#getPathMatcher(java.lang.String)" target="_parent" title="PathMatcher">PathMatcher</a> rules.</p>
 </div>
       
@@ -9878,9 +9878,9 @@ argument. In other words, <code>watch '/tmp/foo/*bar'</code> is equivalent to
 </div>
 
         <footer>
-  Generated on Tue Apr 15 13:39:16 2025 by
+  Generated on Tue Apr 15 23:02:01 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.4).
+  0.9.37 (ruby-3.1.4).
 </footer>
 
       </main>

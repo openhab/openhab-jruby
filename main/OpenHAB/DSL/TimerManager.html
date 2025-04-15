@@ -3912,12 +3912,12 @@
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>This method is not recommended for normal use in rules.
-Timers are prone to race conditions if accessed from multiple rules,
-or from timers themselves. Rescheduling, canceling, or scheduling
-a new timer based on the results of this method may cause problems,
-since the state may have changed in the meantime. Instead, use
-<span class='object_link'><a href="../DSL.html#after-class_method" title="OpenHAB::DSL.after (method)">after</a></span> with an <code>id</code>, <span class='object_link'><a href="#cancel-instance_method" title="OpenHAB::DSL::TimerManager#cancel (method)">#cancel</a></span>, <span class='object_link'><a href="#reschedule-instance_method" title="OpenHAB::DSL::TimerManager#reschedule (method)">#reschedule</a></span>, or
+    <div class='inline'><p>This method is not recommended for normal use in rules.<br>
+Timers are prone to race conditions if accessed from multiple rules,<br>
+or from timers themselves. Rescheduling, canceling, or scheduling<br>
+a new timer based on the results of this method may cause problems,<br>
+since the state may have changed in the meantime. Instead, use<br>
+<span class='object_link'><a href="../DSL.html#after-class_method" title="OpenHAB::DSL.after (method)">after</a></span> with an <code>id</code>, <span class='object_link'><a href="#cancel-instance_method" title="OpenHAB::DSL::TimerManager#cancel (method)">#cancel</a></span>, <span class='object_link'><a href="#reschedule-instance_method" title="OpenHAB::DSL::TimerManager#reschedule (method)">#reschedule</a></span>, or<br>
 <span class='object_link'><a href="#schedule-instance_method" title="OpenHAB::DSL::TimerManager#schedule (method)">#schedule</a></span> to perform those actions atomically.</p>
 </div>
   </div>
@@ -3993,10 +3993,10 @@ since the state may have changed in the meantime. Instead, use
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>Only timers that are still active can be rescheduled by their id.
-Once a timer is finished executing or cancelled, it is no longer maintained by TimerManager,
-and calling this method will do nothing.
-To reschedule a possibly expired or cancelled timer, either call the <span class='object_link'><a href="../Core/Timer.html#reschedule-instance_method" title="OpenHAB::Core::Timer#reschedule (method)">Core::Timer#reschedule</a></span>
+    <div class='inline'><p>Only timers that are still active can be rescheduled by their id.<br>
+Once a timer is finished executing or cancelled, it is no longer maintained by TimerManager,<br>
+and calling this method will do nothing.<br>
+To reschedule a possibly expired or cancelled timer, either call the <span class='object_link'><a href="../Core/Timer.html#reschedule-instance_method" title="OpenHAB::Core::Timer#reschedule (method)">Core::Timer#reschedule</a></span><br>
 method of the timer object, or use <span class='object_link'><a href="#schedule-instance_method" title="OpenHAB::DSL::TimerManager#schedule (method)">#schedule</a></span>.</p>
 </div>
   </div>
@@ -4095,8 +4095,8 @@ method of the timer object, or use <span class='object_link'><a href="#schedule-
 </h3><div class="docstring">
   <div class="discussion">
     <p>Schedule a timer by id</p>
-<p>Schedules a timer by id, but passes the current timer -- if it exists --
-to the block so that you can decide how you want to proceed based on that
+<p>Schedules a timer by id, but passes the current timer -- if it exists --<br>
+to the block so that you can decide how you want to proceed based on that<br>
 state. The timer is created in a thread-safe manner.</p>
 
 
@@ -4105,11 +4105,11 @@ state. The timer is created in a thread-safe manner.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Extend an existing timer, or schedule a new one</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Extend an existing timer, or schedule a new one</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># This is technically the same functionality as just calling `after()` with an `id`,</span>
 <span class="comment"># but allows you to perform extra steps if the timer is actually scheduled.</span>
@@ -4122,8 +4122,8 @@ timers.schedule(item) <span class="keyword">do</span> |timer|
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Keep trying to turn something on, up to 5 times</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Keep trying to turn something on, up to 5 times</p>
+</div></h5>
       
       <pre class="example code"><code>timers.schedule(item) <span class="keyword">do</span> |timer|
   <span class="keyword">next</span> <span class="keyword">if</span> timer <span class="comment"># don't interrupt a retry cycle if it already exists</span>
@@ -4184,7 +4184,7 @@ timers.schedule(item) <span class="keyword">do</span> |timer|
       
       
         &mdash;
-        <div class='inline'><p>A new timer to associate with this id, the existing
+        <div class='inline'><p>A new timer to associate with this id, the existing<br>
 timer, or nil. If nil, any existing timer will be cancelled.</p>
 </div>
       
@@ -4279,9 +4279,9 @@ timer, or nil. If nil, any existing timer will be cancelled.</p>
 </div>
 
         <footer>
-  Generated on Tue Apr 15 13:39:16 2025 by
+  Generated on Tue Apr 15 23:02:01 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.4).
+  0.9.37 (ruby-3.1.4).
 </footer>
 
       </main>
