@@ -8,6 +8,8 @@ OpenHAB::RSpec::Configuration.use_root_instance = true
 # clean any external OPENHAB or KARAF references; we want to use our private install
 ENV.delete_if { |k| k.match?(/^(?:OPENHAB|KARAF)_/) }
 ENV["OPENHAB_HOME"] = "#{Dir.pwd}/tmp/openhab"
+ENV["TZ"] = "UTC"
+java.util.TimeZone.default = java.util.TimeZone.get_time_zone("Etc/UTC")
 
 require "openhab/rspec"
 
