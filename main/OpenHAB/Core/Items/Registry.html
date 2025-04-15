@@ -2650,6 +2650,17 @@
   </li>
 
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../DSL/Items/Tags.html" title="OpenHAB::DSL::Items::Tags (module)">Tags</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   <li class="collapsed">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../DSL/Items/TimedCommand.html" title="OpenHAB::DSL::Items::TimedCommand (module)">TimedCommand</a></span>
@@ -3847,12 +3858,12 @@
       <pre class="lines">
 
 
+21
 22
-23
-24</pre>
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 21</span>
 
 <span class="keyword">def</span> <span class="function">[]</span>(name)
   <span class="constant">EntityLookup</span>.lookup_item(name)
@@ -4017,13 +4028,13 @@ wasn't created by the current provider.</p>
       <pre class="lines">
 
 
+55
 56
 57
-58
-59</pre>
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 55</span>
 
 <span class="keyword">def</span> <span class="function">build</span>(preferred_provider = <span class="predefined-constant">nil</span>, <span class="key">update</span>: <span class="predefined-constant">true</span>, &amp;block)
   <span class="constant">DSL</span>::<span class="constant">Items</span>::<span class="constant">BaseBuilderDSL</span>.new(preferred_provider, <span class="key">update</span>:)
@@ -4099,12 +4110,12 @@ wasn't created by the current provider.</p>
       <pre class="lines">
 
 
+28
 29
-30
-31</pre>
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 28</span>
 
 <span class="keyword">def</span> <span class="function">key?</span>(name)
   !<span class="global-variable">$ir</span>.get(name).nil?
@@ -4190,6 +4201,7 @@ wasn't created by the current provider.</p>
       <pre class="lines">
 
 
+70
 71
 72
 73
@@ -4204,11 +4216,10 @@ wasn't created by the current provider.</p>
 82
 83
 84
-85
-86</pre>
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 70</span>
 
 <span class="keyword">def</span> <span class="function">remove</span>(item_name, <span class="key">recursive</span>: <span class="predefined-constant">false</span>)
   item_name = item_name.name <span class="keyword">if</span> item_name.is_a?(<span class="constant">Item</span>)
@@ -4269,12 +4280,12 @@ wasn't created by the current provider.</p>
       <pre class="lines">
 
 
+37
 38
-39
-40</pre>
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/registry.rb', line 37</span>
 
 <span class="keyword">def</span> <span class="function">to_a</span>
   <span class="global-variable">$ir</span>.items.map { |item| <span class="constant">Proxy</span>.new(item) }
@@ -4289,7 +4300,7 @@ wasn't created by the current provider.</p>
 </div>
 
         <footer>
-  Generated on Tue Apr 15 23:02:02 2025 by
+  Generated on Tue Apr 15 23:24:36 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>
