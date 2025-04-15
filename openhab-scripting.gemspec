@@ -25,18 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "marcel", "~> 1.0"
   spec.add_dependency "method_source", "~> 1.0"
 
-  spec.add_development_dependency "cucumber", "~> 9.2"
-  spec.add_development_dependency "cuke_linter", "~> 1.2"
-  spec.add_development_dependency "gem-release", "~> 2.2"
-  spec.add_development_dependency "httparty", "~> 0.20"
-  spec.add_development_dependency "persistent_httparty", "~> 0.1"
-  spec.add_development_dependency "process_exists", "~> 0.2"
-  spec.add_development_dependency "rake", "~> 13.0"
-  spec.add_development_dependency "rspec", "~> 3.11"
-  spec.add_development_dependency "timecop", "~> 0.9"
-  spec.add_development_dependency "tty-command", "~> 0.10"
-  spec.add_development_dependency "yaml-lint", "~> 0.0"
-
   spec.files = Dir["{lib}/**/*"]
   spec.require_paths = ["lib"]
 end

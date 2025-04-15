@@ -55,9 +55,6 @@ module OpenHAB
           end
         end
 
-        # Remove the "omit from toc" comments
-        result.gsub!(" <!-- omit from toc -->", "")
-
         # re-link files in docs/*.md. They're written so they work on github without any
         # processing
         result.gsub!(%r{\[([A-Za-z0-9,. ]+)\]\(([A-Za-z0-9./-]+)\)}) do |str|
