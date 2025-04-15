@@ -3626,6 +3626,8 @@
   
   
     
+      <span class="note title readonly">readonly</span>
+    
     
   
   
@@ -3650,6 +3652,8 @@
   
   
   
+    
+      <span class="note title readonly">readonly</span>
     
     
   
@@ -3915,7 +3919,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/abstract_event.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/abstract_event.rb', line 36</span>
 
 </pre>
     </td>
@@ -3967,14 +3971,14 @@
       <pre class="lines">
 
 
-31
-32
-33
-34
-35</pre>
+56
+57
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/abstract_event.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/abstract_event.rb', line 56</span>
 
 <span class="keyword">def</span> <span class="function">inspect</span>
   s = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Events::</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span>.class.simple_name<span class="inline-delimiter">}</span></span><span class="content"> topic=</span><span class="inline"><span class="inline-delimiter">#{</span>topic<span class="inline-delimiter">}</span></span><span class="content"> payload=</span><span class="inline"><span class="inline-delimiter">#{</span>payload.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
@@ -4029,17 +4033,27 @@
       <pre class="lines">
 
 
-25
-26
-27
-28</pre>
+45
+46
+47
+48
+49
+50
+51
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/abstract_event.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/abstract_event.rb', line 45</span>
 
 <span class="keyword">def</span> <span class="function">payload</span>
   require <span class="string"><span class="delimiter">&quot;</span><span class="content">json</span><span class="delimiter">&quot;</span></span>
+  <span class="comment"># Disable &quot;instance vars on non-persistent Java type&quot;</span>
+  original_verbose = <span class="global-variable">$VERBOSE</span>
+  <span class="global-variable">$VERBOSE</span> = <span class="predefined-constant">nil</span>
   <span class="instance-variable">@payload</span> ||= <span class="constant">JSON</span>.parse(get_payload, <span class="key">symbolize_names</span>: <span class="predefined-constant">true</span>) <span class="keyword">unless</span> get_payload.empty?
+<span class="keyword">ensure</span>
+  <span class="global-variable">$VERBOSE</span> = original_verbose
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4051,7 +4065,7 @@
 </div>
 
         <footer>
-  Generated on Tue Apr 15 03:59:49 2025 by
+  Generated on Tue Apr 15 04:23:41 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.4).
 </footer>
