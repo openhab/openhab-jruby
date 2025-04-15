@@ -25,10 +25,10 @@ module OpenHAB
               OpenHAB::OSGi.service("org.openhab.core.io.rest.sse.internal.SseItemStatesEventBuilder")&.tap do |builder|
                 m = builder.class.java_class.get_declared_method("getDisplayState", Item, java.util.Locale)
                 m.accessible = true
-                builder.instance_variable_set(:@getDisplayState, m)
                 # Disable "singleton on non-persistent Java type"
                 original_verbose = $VERBOSE
                 $VERBOSE = nil
+                builder.instance_variable_set(:@getDisplayState, m)
                 def builder.get_display_state(item)
                   @getDisplayState.invoke(self, item, nil)
                 end

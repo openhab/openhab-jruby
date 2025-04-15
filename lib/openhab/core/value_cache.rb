@@ -175,7 +175,7 @@ module OpenHAB
 
       # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-to_proc Hash#to_proc
       def to_proc
-        @to_proc ||= ->(k) { self[k] }
+        ->(k) { self[k] }
       end
 
       # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-values_at Hash#values_at

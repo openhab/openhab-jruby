@@ -8,10 +8,30 @@ module OpenHAB
       # Add attachments event data.
       class AbstractEvent
         # @return [Object]
-        attr_accessor :attachment
+        attr_reader :attachment
 
         # @return [Hash]
-        attr_accessor :inputs
+        attr_reader :inputs
+
+        # @!visibility private
+        def attachment=(value)
+          # Disable "instance vars on non-persistent Java type"
+          original_verbose = $VERBOSE
+          $VERBOSE = nil
+          @attachment = value
+        ensure
+          $VERBOSE = original_verbose
+        end
+
+        # @!visibility private
+        def inputs=(value)
+          # Disable "instance vars on non-persistent Java type"
+          original_verbose = $VERBOSE
+          $VERBOSE = nil
+          @inputs = value
+        ensure
+          $VERBOSE = original_verbose
+        end
 
         # @!attribute [r] source
         # @return [String] The component that sent the event.
@@ -24,7 +44,12 @@ module OpenHAB
         #
         def payload
           require "json"
+          # Disable "instance vars on non-persistent Java type"
+          original_verbose = $VERBOSE
+          $VERBOSE = nil
           @payload ||= JSON.parse(get_payload, symbolize_names: true) unless get_payload.empty?
+        ensure
+          $VERBOSE = original_verbose
         end
 
         # @return [String]

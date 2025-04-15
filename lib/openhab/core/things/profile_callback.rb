@@ -8,16 +8,23 @@ module OpenHAB
       # and channels.
       #
       module ProfileCallback
+        class << self
+          # @!visibility private
+          def dummy_channel_item(accepted_item_type)
+            @dummy_channel_items[accepted_item_type]
+          end
+        end
+        @dummy_channel_items = Hash.new do |hash, key|
+          hash[key] = DSL::Items::ItemBuilder.item_factory.create_item(key, "")
+        end
+
         #
         # Forward the given command to the respective thing handler.
         #
         # @param [Command] command
         #
         def handle_command(command)
-          unless instance_variable_defined?(:@dummy_channel_item)
-            @dummy_channel_item = DSL::Items::ItemBuilder.item_factory.create_item(link.channel.accepted_item_type, "")
-          end
-          command = @dummy_channel_item.format_command(command) if @dummy_channel_item
+          command = ProfileCallback.dummy_channel_item(link.channel.accepted_item_type)&.format_command(command)
           super
         end
 
