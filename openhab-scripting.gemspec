@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "marcel", "~> 1.0"
   spec.add_dependency "method_source", "~> 1.0"
 
-  spec.add_development_dependency "cucumber", "~> 8.0"
+  spec.add_development_dependency "cucumber", "~> 9.2"
   spec.add_development_dependency "cuke_linter", "~> 1.2"
   spec.add_development_dependency "gem-release", "~> 2.2"
   spec.add_development_dependency "httparty", "~> 0.20"
