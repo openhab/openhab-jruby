@@ -3,21 +3,19 @@
     <li><a href="/openhab-jruby/5.38" class="version-button stable">Stable <small>(5.38)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
-  <% archived_versions = %w[] %>
-  <% unless archived_versions.empty? %>
-    <div class="archived-versions">
-      <div class="dropdown-wrapper">
-        <a class="dropdown-title">
-          <span class="title">Archived</span>
-          <span class="arrow down"></span>
-        </a>
-        <ul class="nav-dropdown">
-          <% archived_versions.each do |version| %>
-            <li class="dropdown-item"><a href="/<%= version %>"><%= version %></a></li>
-          <% end %>
-        </ul>
-      </div>
+  <div class="archived-versions">
+    <div class="dropdown-wrapper">
+      <a class="dropdown-title">
+        <span class="title">Archived</span>
+        <span class="arrow down"></span>
+      </a>
+      <ul class="nav-dropdown" id="version-dropdown">
+        <% 
+          # This will be populated by versions.js, e.g.:
+          # <li class="dropdown-item"><a href="/xx.xx">xx.xx</a></li> 
+        %>
+      </ul>
     </div>
-  <% end %>
+  </div>
 </div>
 
