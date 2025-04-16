@@ -1,3 +1,8 @@
+/**
+ * This script populates the archived versions dropdown in the documentation.
+ * Place this in the root /js/ directory outside of the versioned directories.
+ */
+
 function populateArchivedVersions() {
   const archivedVersions = [
     "5.0",

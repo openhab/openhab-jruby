@@ -19,7 +19,7 @@ DOC_FILES = %w[
   templates/default/layout/html/versions.erb
 ].freeze
 
-VERSIONS_JS = "templates/default/fulldoc/html/js/versions.js"
+VERSIONS_JS = "docs/js/versions.js"
 
 def file_sub(file, old, new)
   contents = File.read(file)
