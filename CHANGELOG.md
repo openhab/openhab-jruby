@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.38.4](https://github.com/openhab/openhab-jruby/tree/v5.38.4) (2025-04-16)
+
+### Features
+
+- Autoload builders (items, things, sitemaps, rules) and item metadata by [@jimtng](https://github.com/jimtng) in [#429](https://github.com/openhab/openhab-jruby/pull/429)
+
+**Full Changelog**: [v5.38.3...v5.38.4](https://github.com/openhab/openhab-jruby/compare/v5.38.3...v5.38.4)
+
 ## [v5.38.3](https://github.com/openhab/openhab-jruby/tree/v5.38.3) (2025-04-15)
 
 ### Bug Fixes
