@@ -3644,8 +3644,8 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
 [<span class="constant">RollerItem1</span>, <span class="constant">RollerItem2</span>, <span class="constant">RollerItem3</span>].down
 [<span class="constant">NumberItem1</span>, <span class="constant">NumberItem2</span>, <span class="constant">NumberItem3</span>].command <span class="integer">100</span>
 </code></pre>
-<p>Each item type supports command helpers relevant to the type.<br>
-For example, a <span class='object_link'><a href="OpenHAB/Core/Items/SwitchItem.html" title="OpenHAB::Core::Items::SwitchItem (class)">SwitchItem</a></span> supports <span class='object_link'><a href="OpenHAB/Core/Items/SwitchItem.html#on-instance_method" title="OpenHAB::Core::Items::SwitchItem#on (method)">on</a></span> and <span class='object_link'><a href="OpenHAB/Core/Items/SwitchItem.html#off-instance_method" title="OpenHAB::Core::Items::SwitchItem#off (method)">off</a></span>.<br>
+<p>Each item type supports command helpers relevant to the type.
+For example, a <span class='object_link'><a href="OpenHAB/Core/Items/SwitchItem.html" title="OpenHAB::Core::Items::SwitchItem (class)">SwitchItem</a></span> supports <span class='object_link'><a href="OpenHAB/Core/Items/SwitchItem.html#on-instance_method" title="OpenHAB::Core::Items::SwitchItem#on (method)">on</a></span> and <span class='object_link'><a href="OpenHAB/Core/Items/SwitchItem.html#off-instance_method" title="OpenHAB::Core::Items::SwitchItem#off (method)">off</a></span>.
 See specific item types under <span class='object_link'><a href="OpenHAB/Core/Items.html" title="OpenHAB::Core::Items (module)">OpenHAB::Core::Items</a></span></p>
 <h2><a href="#dealing-with-item-states" aria-hidden="true" class="header-anchor" id="dealing-with-item-states">#</a>Dealing with Item States</h2>
 <pre class="code ruby"><code class="ruby"><span class="comment"># Items:</span>
@@ -3665,7 +3665,7 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 <span class="keyword">end</span>
 </code></pre>
 <h3><a href="#automatic-activation-of-exhaust-fan-based-on-humidity-sensor" aria-hidden="true" class="header-anchor" id="automatic-activation-of-exhaust-fan-based-on-humidity-sensor">#</a>Automatic activation of exhaust fan based on humidity sensor</h3>
-<p>This uses the <code>evolution_rate</code> <span class='object_link'><a href="OpenHAB/Core/Items/Persistence.html" title="OpenHAB::Core::Items::Persistence (module)">persistence</a></span> feature,  coupled with an easy way to specify <a href="file.USAGE.html#durations">duration</a>.<br>
+<p>This uses the <code>evolution_rate</code> <span class='object_link'><a href="OpenHAB/Core/Items/Persistence.html" title="OpenHAB::Core::Items::Persistence (module)">persistence</a></span> feature,  coupled with an easy way to specify <a href="file.USAGE.html#durations">duration</a>.
 It is accessed simply through <code>ItemName.persistence_function</code>.</p>
 <pre class="code ruby"><code class="ruby"><span class="comment"># Note: don't activate the exhaust fan if the bathroom light is off at night</span>
 <span class="comment"># Sun_Elevation is an Astro item. Its state is positive during daylight</span>
@@ -3684,20 +3684,20 @@ rule <span class="string"><span class="delimiter">&quot;</span><span class="cont
 <span class="keyword">end</span>
 </code></pre>
 <h2><a href="#executing-an-external-command" aria-hidden="true" class="header-anchor" id="executing-an-external-command">#</a>Executing an External Command</h2>
-<p>OpenHAB offers <span class='object_link'><a href="OpenHAB/Core/Actions/Exec.html#execute_command_line-class_method" title="OpenHAB::Core::Actions::Exec.execute_command_line (method)">execute_command_line</a></span> to execute<br>
+<p>OpenHAB offers <span class='object_link'><a href="OpenHAB/Core/Actions/Exec.html#execute_command_line-class_method" title="OpenHAB::Core::Actions::Exec.execute_command_line (method)">execute_command_line</a></span> to execute
 an external command. However, in Ruby it is also possible to use, amongst others:</p>
 <ul>
-<li><a href="https://ruby-doc.org/core/Kernel.html#method-i-system">system</a>: waits for the execution to finish,<br>
+<li><a href="https://ruby-doc.org/core/Kernel.html#method-i-system">system</a>: waits for the execution to finish,
 then returns <code>true</code> (zero exit status), <code>false</code> (non-zero exit status), or <code>nil</code> if the execution fails.</li>
-<li><a href="https://ruby-doc.org/core/Kernel.html#method-i-60">backtick operator</a>: waits for the execution to finish,<br>
+<li><a href="https://ruby-doc.org/core/Kernel.html#method-i-60">backtick operator</a>: waits for the execution to finish,
 then returns the stdout output of the command as a String.</li>
-<li><a href="https://ruby-doc.org/core/Kernel.html#method-i-spawn">spawn</a>: executes the command and immediately<br>
-returns control to the caller, leaving the command running in the background. This method returns<br>
+<li><a href="https://ruby-doc.org/core/Kernel.html#method-i-spawn">spawn</a>: executes the command and immediately
+returns control to the caller, leaving the command running in the background. This method returns
 the pid of the spawned process which must be waited out or detached to avoid creating zombie processes.</li>
 <li><a href="https://ruby-doc.org/core/IO.html#method-c-popen">IO#popen</a>: a more advanced method of executing an external process.</li>
 </ul>
-<p>Unlike <span class='object_link'><a href="OpenHAB/Core/Actions/Exec.html#execute_command_line-class_method" title="OpenHAB::Core::Actions::Exec.execute_command_line (method)">execute_command_line</a></span> which expects each command<br>
-argument to be split up, Ruby's execution methods can accept a single string containing the full command which<br>
+<p>Unlike <span class='object_link'><a href="OpenHAB/Core/Actions/Exec.html#execute_command_line-class_method" title="OpenHAB::Core::Actions::Exec.execute_command_line (method)">execute_command_line</a></span> which expects each command
+argument to be split up, Ruby's execution methods can accept a single string containing the full command which
 also allows IO redirections / pipe because it spawns a subshell.</p>
 <pre class="code ruby"><code class="ruby">system(<span class="string"><span class="delimiter">&quot;</span><span class="content">ls -l </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">OpenHAB</span>::<span class="constant">Core</span>.config_folder<span class="inline-delimiter">}</span></span><span class="content"> &gt; </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">OpenHAB</span>::<span class="constant">Core</span>.config_folder / <span class="string"><span class="delimiter">&quot;</span><span class="content">misc</span><span class="delimiter">&quot;</span></span> / <span class="string"><span class="delimiter">&quot;</span><span class="content">directory_listing.txt</span><span class="delimiter">&quot;</span></span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
 
@@ -3710,8 +3710,8 @@ pid = spawn(<span class="string"><span class="delimiter">&quot;</span><span clas
 <span class="constant">Process</span>.detach(pid)
 </code></pre>
 <h2><a href="#gem-cleanup" aria-hidden="true" class="header-anchor" id="gem-cleanup">#</a>Gem Cleanup</h2>
-<p>The openHAB JRuby add-on will automatically download and install the latest version of the library according to the <a href="file.USAGE.html#configuration">settings in jruby.cfg</a>.<br>
-Over time, the older versions of the library will accumulate in the gem_home directory.<br>
+<p>The openHAB JRuby add-on will automatically download and install the latest version of the library according to the <a href="file.USAGE.html#configuration">settings in jruby.cfg</a>.
+Over time, the older versions of the library will accumulate in the gem_home directory.
 The following code saved as <code>gem_cleanup.rb</code> or another name of your choice can be placed in the <code>automation/ruby</code> directory to perform uninstallation of the older gem versions every time openHAB starts up.</p>
 <pre class="code ruby"><code class="ruby">require <span class="string"><span class="delimiter">&quot;</span><span class="content">rubygems/commands/uninstall_command</span><span class="delimiter">&quot;</span></span>
 require <span class="string"><span class="delimiter">&quot;</span><span class="content">pathname</span><span class="delimiter">&quot;</span></span>
@@ -3770,7 +3770,7 @@ DateTime Sensor2_LastMotion
 items[<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>event.item_name<span class="inline-delimiter">}</span></span><span class="content">_LastMotion</span><span class="delimiter">&quot;</span></span>].update <span class="constant">Time</span>.now
 </code></pre>
 <h3><a href="#trigger-a-scene-with-an-on-off-switch" aria-hidden="true" class="header-anchor" id="trigger-a-scene-with-an-on-off-switch">#</a>Trigger a Scene with an ON OFF Switch</h3>
-<p>Use <a href="https://www.openhab.org/docs/tutorial/rules_scenes.html">Scenes</a> in combination with<br>
+<p>Use <a href="https://www.openhab.org/docs/tutorial/rules_scenes.html">Scenes</a> in combination with
 <span class='object_link'><a href="OpenHAB/Core/Items/Semantics.html" title="OpenHAB::Core::Items::Semantics (module)">Semantic Model</a></span></p>
 <p>Trigger defined as:</p>
 <ul>
@@ -3795,7 +3795,7 @@ scenes.tagged(active_scene).each(&amp;<span class="symbol">:trigger</span>) <spa
 </div></div>
 
         <footer>
-  Generated on Tue Apr 15 23:24:30 2025 by
+  Generated on Wed Apr 16 15:13:08 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>

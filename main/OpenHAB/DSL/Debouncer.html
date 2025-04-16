@@ -3642,10 +3642,10 @@ Notes:
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     <p>Provides the feature for debouncing calls to a given block.</p>
-<p>The debouncer can filter events and only allow the events on the leading or trailing edge<br>
-of the given interval. Its behavior can be customized through settings passed to its<br>
+<p>The debouncer can filter events and only allow the events on the leading or trailing edge
+of the given interval. Its behavior can be customized through settings passed to its
 <span class='object_link'><a href="#initialize-instance_method" title="OpenHAB::DSL::Debouncer#initialize (method)">constructor</a></span>.</p>
-<p>The following timing diagram illustrates the incoming triggers and the actual executions<br>
+<p>The following timing diagram illustrates the incoming triggers and the actual executions
 using various options.</p>
 <pre class="code ruby"><code class="ruby">                             <span class="integer">1</span>    <span class="integer">1</span>    <span class="integer">2</span>    <span class="integer">2</span>    <span class="integer">3</span>    <span class="integer">3</span>    <span class="integer">4</span>    <span class="integer">4</span>
                    <span class="integer">0</span>    <span class="integer">5</span>    <span class="integer">0</span>    <span class="integer">5</span>    <span class="integer">0</span>    <span class="integer">5</span>    <span class="integer">0</span>    <span class="integer">5</span>    <span class="integer">0</span>    <span class="integer">5</span>
@@ -3669,9 +3669,9 @@ more options, <span class="key">leading</span>: <span class="predefined-constant
 <p>Notes:</p>
 <ul>
 <li><code>|</code> indicates the start of the debounce period</li>
-<li>With <code>for: 5..5</code> (a range with begin=end), the <code>idle_time</code> argument is irrelevant<br>
+<li>With <code>for: 5..5</code> (a range with begin=end), the <code>idle_time</code> argument is irrelevant
 and be unset/set to any value as it will not alter the debouncer's behavior.</li>
-<li>Without an <code>idle_time</code>, the range end in <code>for: X..Y</code> is irrelevant. It is equivalent to<br>
+<li>Without an <code>idle_time</code>, the range end in <code>for: X..Y</code> is irrelevant. It is equivalent to
 <code>for: X</code> without the end of the range.</li>
 </ul>
 
@@ -3918,12 +3918,12 @@ and be unset/set to any value as it will not alter the debouncer's behavior.</li
 </h3><div class="docstring">
   <div class="discussion">
     <p>Constructor to create a debouncer object.</p>
-<p>The constructor sets the options and behaviour of the debouncer when the <span class='object_link'><a href="#call-instance_method" title="OpenHAB::DSL::Debouncer#call (method)">#call</a></span><br>
+<p>The constructor sets the options and behaviour of the debouncer when the <span class='object_link'><a href="#call-instance_method" title="OpenHAB::DSL::Debouncer#call (method)">#call</a></span>
 method is called.</p>
 <p>Terminology:</p>
 <ul>
 <li><code>calls</code> are invocations of the <span class='object_link'><a href="#call-instance_method" title="OpenHAB::DSL::Debouncer#call (method)">#call</a></span> method, i.e. the events that need to be throttled / debounced.</li>
-<li><code>executions</code> are the actual code executions of the given block. Executions usually occur<br>
+<li><code>executions</code> are the actual code executions of the given block. Executions usually occur
 less frequently than the call to the debounce method.</li>
 </ul>
 
@@ -3946,13 +3946,13 @@ less frequently than the call to the debounce method.</li>
         &mdash;
         <div class='inline'><p>The minimum and optional maximum execution interval.</p>
 <ul>
-<li><span class='object_link'><a href="../CoreExt/Java/Duration.html" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span>: The minimum interval between executions. The debouncer will not execute<br>
+<li><span class='object_link'><a href="../CoreExt/Java/Duration.html" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span>: The minimum interval between executions. The debouncer will not execute
 the given block more often than this.</li>
-<li><span class='object_link'><a href="../../Range.html" title="Range (class)">Range</a></span>: A range of <span class='object_link'><a href="../CoreExt/Java/Duration.html" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span>s for the minimum to maximum interval between executions.<br>
-The range end defines the maximum duration from the initial trigger, at which<br>
-the debouncer will execute the block, even when an <code>idle_time</code> argument was given and<br>
+<li><span class='object_link'><a href="../../Range.html" title="Range (class)">Range</a></span>: A range of <span class='object_link'><a href="../CoreExt/Java/Duration.html" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span>s for the minimum to maximum interval between executions.
+The range end defines the maximum duration from the initial trigger, at which
+the debouncer will execute the block, even when an <code>idle_time</code> argument was given and
 calls continue to occur at an interval less than <code>idle_time</code>.</li>
-<li><code>nil</code>: When <code>nil</code>, no debouncing is performed, all the other parameters are ignored,<br>
+<li><code>nil</code>: When <code>nil</code>, no debouncing is performed, all the other parameters are ignored,
 and every call will result in immediate execution of the given block.</li>
 </ul>
 </div>
@@ -3972,9 +3972,9 @@ and every call will result in immediate execution of the given block.</li>
       
         &mdash;
         <div class='inline'><ul>
-<li><code>true</code>: Perform leading edge "debouncing". Execute the first call then ignore<br>
+<li><code>true</code>: Perform leading edge "debouncing". Execute the first call then ignore
 subsequent calls that occur within the debounce period.</li>
-<li><code>false</code>: Perform trailing edge debouncing. Execute the last call at the end of<br>
+<li><code>false</code>: Perform trailing edge debouncing. Execute the last call at the end of
 the debounce period and ignore all the calls leading up to it.</li>
 </ul>
 </div>
@@ -3993,9 +3993,9 @@ the debounce period and ignore all the calls leading up to it.</li>
       
       
         &mdash;
-        <div class='inline'><p>The minimum idle time between calls to stop debouncing.<br>
-The debouncer will continue to hold until the interval between two calls is longer<br>
-than the idle time or until the maximum interval between executions, when<br>
+        <div class='inline'><p>The minimum idle time between calls to stop debouncing.
+The debouncer will continue to hold until the interval between two calls is longer
+than the idle time or until the maximum interval between executions, when
 specified, is reached.</p>
 </div>
       
@@ -4187,7 +4187,7 @@ specified, is reached.</p>
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Debounces calls to the given block.</p>
-<p>This method is meant to be called repeatedly with the same given block.<br>
+<p>This method is meant to be called repeatedly with the same given block.
 However, if no block is given, it will call and debounce the previously given block</p>
 
 
@@ -4364,7 +4364,7 @@ after(<span class="integer">20</span>.seconds) <span class="keyword">do</span> |
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Immediately executes any outstanding event of a trailing edge debounce.<br>
+    <p>Immediately executes any outstanding event of a trailing edge debounce.
 The next call will start a new period.</p>
 <p>It has no effect on a leading edge debouncer - use <span class='object_link'><a href="#reset-instance_method" title="OpenHAB::DSL::Debouncer#reset (method)">#reset</a></span> instead.</p>
 
@@ -4384,7 +4384,7 @@ The next call will start a new period.</p>
       
       
         &mdash;
-        <div class='inline'><p>True if an existing debounce timer was rescheduled to run immediately.<br>
+        <div class='inline'><p>True if an existing debounce timer was rescheduled to run immediately.
 False if there were no outstanding executions.</p>
 </div>
       
@@ -4494,7 +4494,7 @@ False if there were no outstanding executions.</p>
     <p>Resets the debounce period and cancels any outstanding block executions of a trailing edge debouncer.</p>
 <ul>
 <li>A leading edge debouncer will execute its block on the next call and start a new debounce period.</li>
-<li>A trailing edge debouncer will reset its debounce timer and the next call will become the start<br>
+<li>A trailing edge debouncer will reset its debounce timer and the next call will become the start
 of a new debounce period.</li>
 </ul>
 
@@ -4553,7 +4553,7 @@ of a new debounce period.</li>
 </div>
 
         <footer>
-  Generated on Tue Apr 15 23:24:34 2025 by
+  Generated on Wed Apr 16 15:13:13 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>

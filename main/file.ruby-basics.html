@@ -3565,19 +3565,19 @@
 
       <main class="page">
         <div class="content"><div id='filecontents'><h1><a href="#ruby-basics" aria-hidden="true" class="header-anchor" id="ruby-basics">#</a>Ruby Basics</h1>
-<p>The openHAB JRuby scripting automation is based on the <a href="https://www.jruby.org/">JRuby</a> implementation of the<br>
-<a href="https://www.ruby-lang.org/">Ruby</a> language. This page offers a quick overview of Ruby to help you get started<br>
-writing rules. However, it is by no means comprehensive. A wealth of information can be found on<br>
+<p>The openHAB JRuby scripting automation is based on the <a href="https://www.jruby.org/">JRuby</a> implementation of the
+<a href="https://www.ruby-lang.org/">Ruby</a> language. This page offers a quick overview of Ruby to help you get started
+writing rules. However, it is by no means comprehensive. A wealth of information can be found on
 <a href="https://www.ruby-lang.org/en/documentation/">Ruby's web site</a>.</p>
 <h2><a href="#data-types" aria-hidden="true" class="header-anchor" id="data-types">#</a>Data Types</h2>
-<p>In Ruby, everything is an object, even primitive types such as numbers and strings. For example, <code>1</code> as a number is an object<br>
+<p>In Ruby, everything is an object, even primitive types such as numbers and strings. For example, <code>1</code> as a number is an object
 and has all the methods for the <a href="https://docs.ruby-lang.org/en/master/Integer.html">Integer class</a>.</p>
 <p>It is useful to get to know the basic data types that we will often encounter:</p>
 <ul>
 <li><a href="https://docs.ruby-lang.org/en/master/Integer.html">Integer</a> - e.g. <code>1</code>, <code>-3</code>, etc.</li>
 <li><a href="https://docs.ruby-lang.org/en/master/Float.html">Floating Point</a> - e.g. <code>3.5</code></li>
-<li><a href="https://docs.ruby-lang.org/en/master/String.html">String</a> -<br>
-String literals in Ruby can be enclosed with double quotes, or single quotes. Strings enclosed by double quotes can<br>
+<li><a href="https://docs.ruby-lang.org/en/master/String.html">String</a> -
+String literals in Ruby can be enclosed with double quotes, or single quotes. Strings enclosed by double quotes can
 contain variables and expressions that are enclosed with <code>#{}</code>. For example: <code>"Hi my name is #{name_variable}"</code>. The String class offers a plethora of useful methods to operate on and manipulate strings.</li>
 <li><a href="https://docs.ruby-lang.org/en/master/Array.html">Array</a> - example: <code>[1, 2, 'foo', AnotherObject]</code></li>
 <li><a href="https://docs.ruby-lang.org/en/master/Hash.html">Hash</a> - example: <code>{ 'key1' =&gt; 'value', 'key2' =&gt; 'value' }</code></li>
@@ -3589,13 +3589,13 @@ contain variables and expressions that are enclosed with <code>#{}</code>. For e
 <li>In Ruby, variables start with a lower case and by convention use <code>snake_case</code>.</li>
 <li>Uppercase identifiers are constants, e.g. <code>NAMES</code></li>
 <li>Variable whose names start with <code>$</code> are global variables, e.g. <code>$i_am_global</code>.</li>
-<li>Variable whose names start with <code>@</code> are instance variables, e.g. <code>@instance_variable</code>.<br>
+<li>Variable whose names start with <code>@</code> are instance variables, e.g. <code>@instance_variable</code>.
 Instance variables are similar to member variables or fields in other languages.</li>
 <li>Local variables are just plain names that starts with a lower case, e.g. <code>local_var</code>.</li>
 </ul>
 <h3><a href="#examples" aria-hidden="true" class="header-anchor" id="examples">#</a>Examples</h3>
-<p>Instance variables are created as soon as they are referenced.<br>
-They are persisted on whatever <code>self</code> is.<br>
+<p>Instance variables are created as soon as they are referenced.
+They are persisted on whatever <code>self</code> is.
 In most simple file-based rules, and in UI based rules, <code>self</code> is simply a top level <code>Object</code> named <code>main</code>, and instance variables will be persisted between multiple executions of the same rule:</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">light turned on</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="constant">Light_Switch</span>, <span class="key">to</span>: <span class="constant">ON</span>
@@ -3607,7 +3607,7 @@ In most simple file-based rules, and in UI based rules, <code>self</code> is sim
 <span class="keyword">end</span>
 </code></pre>
 <h2><a href="#string-interpolation" aria-hidden="true" class="header-anchor" id="string-interpolation">#</a>String Interpolation</h2>
-<p>String interpolation is done by enclosing a variable or an expression with <code>#{</code> and <code>}</code> inside a double quoted string.<br>
+<p>String interpolation is done by enclosing a variable or an expression with <code>#{</code> and <code>}</code> inside a double quoted string.
 The variable doesn't have to be a string. Ruby will automatically call <code>#to_s</code> for you.</p>
 <p>Although string concatenation with <code>+</code> is possible, using string interpolation is preferred.</p>
 <p>An example of string interpolation is included above.</p>
@@ -3647,8 +3647,8 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
 <span class="keyword">end</span>
 </code></pre>
 <h2><a href="#loops" aria-hidden="true" class="header-anchor" id="loops">#</a>Loops</h2>
-<p>While Ruby supports the traditional <code>for</code> and <code>while</code> loop, they are rarely used.<br>
-Ruby objects such as Array, Hash, Set, etc. provide a plethora of methods to<br>
+<p>While Ruby supports the traditional <code>for</code> and <code>while</code> loop, they are rarely used.
+Ruby objects such as Array, Hash, Set, etc. provide a plethora of methods to
 achieve the same thing in a more "Ruby" way.</p>
 <h3><a href="#examples-1" aria-hidden="true" class="header-anchor" id="examples-1">#</a>Examples</h3>
 <pre class="code ruby"><code class="ruby">array = [<span class="integer">1</span>, <span class="integer">2</span>, <span class="integer">3</span>]
@@ -3708,7 +3708,7 @@ one_minus(<span class="key">another</span>: <span class="integer">1</span>)
 one_minus <span class="key">another</span>: <span class="integer">1</span>
 </code></pre>
 <h2><a href="#blocks" aria-hidden="true" class="header-anchor" id="blocks">#</a>Blocks</h2>
-<p>Multi-line blocks in Ruby are enclosed in a <code>do</code> .. <code>end</code> pair and single line blocks are enclosed with braces <code>{</code> .. <code>}</code>. You have encountered blocks in the examples above.<br>
+<p>Multi-line blocks in Ruby are enclosed in a <code>do</code> .. <code>end</code> pair and single line blocks are enclosed with braces <code>{</code> .. <code>}</code>. You have encountered blocks in the examples above.
 Rules are implemented in a block:</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">rulename</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   ...
@@ -3732,7 +3732,7 @@ Rules are implemented in a block:</p>
 <span class="keyword">end</span>
 </code></pre>
 <h2><a href="#rubys-safe-navigation-operator" aria-hidden="true" class="header-anchor" id="rubys-safe-navigation-operator">#</a>Ruby's Safe Navigation Operator</h2>
-<p>Ruby has a <a href="https://docs.ruby-lang.org/en/master/syntax/calling_methods_rdoc.html#label-Safe+Navigation+Operator">safe navigation operator</a><br>
+<p>Ruby has a <a href="https://docs.ruby-lang.org/en/master/syntax/calling_methods_rdoc.html#label-Safe+Navigation+Operator">safe navigation operator</a>
 <code>&amp;.</code> which is similar to <code>?.</code> in C#, Groovy, Kotlin, etc.</p>
 <pre class="code ruby"><code class="ruby"><span class="comment"># Instead of:</span>
 <span class="keyword">if</span> items[<span class="string"><span class="delimiter">'</span><span class="content">My_Item</span><span class="delimiter">'</span></span>]
@@ -3757,7 +3757,7 @@ items[<span class="string"><span class="delimiter">'</span><span class="content"
 </code></pre>
 <p>Note: To exit early from a UI rule, use <code>return</code>.</p>
 <h3><a href="#parentheses" aria-hidden="true" class="header-anchor" id="parentheses">#</a>Parentheses</h3>
-<p>In Ruby, parentheses are optional when calling a method. However, when calling a method with arguments and a single-line block,<br>
+<p>In Ruby, parentheses are optional when calling a method. However, when calling a method with arguments and a single-line block,
 the parentheses must be used. Example:</p>
 <pre class="code ruby"><code class="ruby">after(<span class="integer">5</span>.seconds) {  }
 
@@ -3781,14 +3781,14 @@ after <span class="integer">5</span>.seconds { }
 </code></pre>
 <h2><a href="#source-code-formatting" aria-hidden="true" class="header-anchor" id="source-code-formatting">#</a>Source Code Formatting</h2>
 <p>The <a href="https://rubystyle.guide">ruby style guide</a> offers the generally accepted standards for Ruby source code formatting.</p>
-<p>When working with file based rules in a source code editor (e.g. VSCode), it is highly recommended to integrate<br>
-<a href="https://rubocop.org/">Rubocop</a> (or <a href="https://github.com/fohte/rubocop-daemon">rubocop-daemon</a>)<br>
+<p>When working with file based rules in a source code editor (e.g. VSCode), it is highly recommended to integrate
+<a href="https://rubocop.org/">Rubocop</a> (or <a href="https://github.com/fohte/rubocop-daemon">rubocop-daemon</a>)
 as the source code formatter and linter for Ruby.</p>
 <p>Happy coding!</p>
 </div></div>
 
         <footer>
-  Generated on Tue Apr 15 23:24:30 2025 by
+  Generated on Wed Apr 16 15:13:08 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>

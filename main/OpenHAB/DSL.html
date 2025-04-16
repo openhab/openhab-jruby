@@ -3607,8 +3607,8 @@ inside of other classes, or include the module. - Documentation for openhab-scri
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     <p>The main DSL available to rules.</p>
-<p>Methods on this module are extended onto <code>main</code>, the top level <code>self</code> in<br>
-any file. You can also access them as class methods on the module for use<br>
+<p>Methods on this module are extended onto <code>main</code>, the top level <code>self</code> in
+any file. You can also access them as class methods on the module for use
 inside of other classes, or include the module.</p>
 
 
@@ -4209,7 +4209,7 @@ inside of other classes, or include the module.</p>
 
     <div class="docstring">
   <div class="discussion">
-    <p>These methods allow certain operations to be grouped inside the given block<br>
+    <p>These methods allow certain operations to be grouped inside the given block
 to reduce repetitions</p>
 
 
@@ -4512,7 +4512,7 @@ to reduce repetitions</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Provide access to the script context / variables<br>
+    <p>Provide access to the script context / variables
 see OpenHAB::DSL::Rules::AutomationRule#execute!</p>
 
 
@@ -4580,27 +4580,27 @@ see OpenHAB::DSL::Rules::AutomationRule#execute!</p>
   <div class="discussion">
     <p>Create a timer and execute the supplied block after the specified duration</p>
 <h3><a href="#reentrant-timers" aria-hidden="true" class="header-anchor" id="reentrant-timers">#</a>Reentrant Timers</h3>
-<p>Timers with an id are reentrant by id. Reentrant means that when the same id is encountered,<br>
-the timer is rescheduled rather than creating a second new timer. Note that the timer will<br>
+<p>Timers with an id are reentrant by id. Reentrant means that when the same id is encountered,
+the timer is rescheduled rather than creating a second new timer. Note that the timer will
 execute the block provided in the latest call.</p>
 <p>This removes the need for the usual boilerplate code to manually keep track of timer objects.</p>
 <p>Timers with <code>id</code> can be managed with the built-in <span class='object_link'><a href="#timers-class_method" title="OpenHAB::DSL.timers (method)">timers</a></span> object.</p>
 <p>When a timer is cancelled, it will be removed from the object.</p>
-<p>Be sure that your ids are unique. For example, if you're using <span class='object_link'><a href="Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">items</a></span> as your<br>
-ids, you either need to be sure you don't use the same item for multiple logical contexts,<br>
-or you need to make your id more specific, by doing something like embedding the item in<br>
-array with a symbol of the timer's purpose, like <code>[:vacancy, item]</code>. But also note that<br>
-assuming default settings, every Ruby file (for file-based rules) or UI rule gets its<br>
-own instance of the timers object, so you don't need to worry about collisions among<br>
+<p>Be sure that your ids are unique. For example, if you're using <span class='object_link'><a href="Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">items</a></span> as your
+ids, you either need to be sure you don't use the same item for multiple logical contexts,
+or you need to make your id more specific, by doing something like embedding the item in
+array with a symbol of the timer's purpose, like <code>[:vacancy, item]</code>. But also note that
+assuming default settings, every Ruby file (for file-based rules) or UI rule gets its
+own instance of the timers object, so you don't need to worry about collisions among
 different files.</p>
 <h3><a href="#sharing-timers-with-other-scripts" aria-hidden="true" class="header-anchor" id="sharing-timers-with-other-scripts">#</a>Sharing Timers with other scripts</h3>
-<p>When a timer is stored in the <span class='object_link'><a href="#shared_cache-class_method" title="OpenHAB::DSL.shared_cache (method)">shared_cache</a></span>, it will automatically be converted into<br>
-an openHAB Timer object. It can then be used in other scripts or UI rules,<br>
+<p>When a timer is stored in the <span class='object_link'><a href="#shared_cache-class_method" title="OpenHAB::DSL.shared_cache (method)">shared_cache</a></span>, it will automatically be converted into
+an openHAB Timer object. It can then be used in other scripts or UI rules,
 written in JRuby or other supported languages.</p>
-<p>Timers are normally managed by TimerManager, and are normally automatically cancelled<br>
-when the script unloads/reloads.<br>
+<p>Timers are normally managed by TimerManager, and are normally automatically cancelled
+when the script unloads/reloads.
 To disable this automatic timer cancellation at script unload, call <span class='object_link'><a href="Core/Timer.html#unmanage-instance_method" title="OpenHAB::Core::Timer#unmanage (method)">Core::Timer#unmanage</a></span>.</p>
-<p>openHAB will cancel the timer stored in the <span class='object_link'><a href="#shared_cache-class_method" title="OpenHAB::DSL.shared_cache (method)">shared_cache</a></span><br>
+<p>openHAB will cancel the timer stored in the <span class='object_link'><a href="#shared_cache-class_method" title="OpenHAB::DSL.shared_cache (method)">shared_cache</a></span>
 and remove the cache entry when all the scripts that <em>had accessed</em> it have been unloaded.</p>
 
 
@@ -4819,7 +4819,7 @@ cache.shared.get(<span class="string"><span class="delimiter">&quot;</span><span
       
       
         &mdash;
-        <div class='inline'><p>if <code>reschedule</code> is false, the existing timer.<br>
+        <div class='inline'><p>if <code>reschedule</code> is false, the existing timer.
 Otherwise the new timer.</p>
 </div>
       
@@ -4891,7 +4891,7 @@ Otherwise the new timer.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Convert a string based range into a range of LocalTime, LocalDate, MonthDay, or ZonedDateTime<br>
+    <p>Convert a string based range into a range of LocalTime, LocalDate, MonthDay, or ZonedDateTime
 depending on the format of the string.</p>
 
 
@@ -5041,7 +5041,7 @@ depending on the format of the string.</p>
       
       
         &mdash;
-        <div class='inline'><p>The URI for the ConfigDescription. When nil, a dummy URI is used which will<br>
+        <div class='inline'><p>The URI for the ConfigDescription. When nil, a dummy URI is used which will
 be replaced by the profile with the correct URI for that profile.</p>
 </div>
       
@@ -5133,11 +5133,11 @@ be replaced by the profile with the correct URI for that profile.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Waits until calls to this method have stopped firing for a period of time<br>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Waits until calls to this method have stopped firing for a period of time
 before executing the block.</p>
-<p>This method acts as a guard for the given block to ensure that it doesn't get executed<br>
-too frequently. The debounce_for method can be called as frequently as possible.<br>
-The given block, however, will only be executed once the <code>debounce_time</code> has passed<br>
+<p>This method acts as a guard for the given block to ensure that it doesn't get executed
+too frequently. The debounce_for method can be called as frequently as possible.
+The given block, however, will only be executed once the <code>debounce_time</code> has passed
 since the last call to debounce_for.</p>
 <p>This method can be used from within a UI rule as well as from a file-based rule.</p>
 
@@ -5209,15 +5209,15 @@ debounce_for(<span class="integer">10</span>.minutes) <span class="keyword">do</
       
       
         &mdash;
-        <div class='inline'><p>The minimum interval between two consecutive<br>
+        <div class='inline'><p>The minimum interval between two consecutive
 triggers before the rules are allowed to run.</p>
-<p>When specified just as a Duration or an endless range, it sets the minimum interval<br>
-between two consecutive triggers before rules are executed. It will<br>
+<p>When specified just as a Duration or an endless range, it sets the minimum interval
+between two consecutive triggers before rules are executed. It will
 wait endlessly unless this condition is met or an end of range was specified.</p>
-<p>When the end of the range is specified, it sets the maximum amount of time to wait<br>
-from the first trigger before the rule will execute, even when triggers continue<br>
+<p>When the end of the range is specified, it sets the maximum amount of time to wait
+from the first trigger before the rule will execute, even when triggers continue
 to occur more frequently than the minimum interval.</p>
-<p>When an equal beginning and ending values are given, it will behave just like<br>
+<p>When an equal beginning and ending values are given, it will behave just like
 <span class='object_link'><a href="#throttle_for-class_method" title="OpenHAB::DSL.throttle_for (method)">throttle_for</a></span>.</p>
 </div>
       
@@ -5267,8 +5267,8 @@ to occur more frequently than the minimum interval.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Global method that takes a block and for the duration of the block<br>
-all commands sent will check if the item is in the command's state<br>
+    <p>Global method that takes a block and for the duration of the block
+all commands sent will check if the item is in the command's state
 before sending the command. This also applies to updates.</p>
 
 
@@ -5393,20 +5393,20 @@ ensure_states <span class="keyword">do</span>
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>This method is only intended for use at the top level of rule<br>
-scripts. If it's used within library methods, or hap-hazardly within<br>
-rules, things can get very confusing because the prior state won't be<br>
+    <div class='inline'><p>This method is only intended for use at the top level of rule
+scripts. If it's used within library methods, or hap-hazardly within
+rules, things can get very confusing because the prior state won't be
 properly restored.</p>
 </div>
   </div>
 
 <p>Permanently enable conditional execution of commands and updates for the current thread.</p>
-<p>When conditional executions are enabled, commands and updates will only be sent if the<br>
-item's current state is not the same as the command or updated state.<br>
-This eliminates the need to chain the command and update calls through<br>
+<p>When conditional executions are enabled, commands and updates will only be sent if the
+item's current state is not the same as the command or updated state.
+This eliminates the need to chain the command and update calls through
 <span class='object_link'><a href="DSL/Items/Ensure/Ensurable.html#ensure-instance_method" title="OpenHAB::DSL::Items::Ensure::Ensurable#ensure (method)">ensure</a></span>.</p>
-<p>When conditional executions are enabled either by this method or within a block of <span class='object_link'><a href="#ensure_states-class_method" title="OpenHAB::DSL.ensure_states (method)">ensure_states</a></span>,<br>
-commands and updates can still be forcefully executed using the corresponding bang methods, e.g.<br>
+<p>When conditional executions are enabled either by this method or within a block of <span class='object_link'><a href="#ensure_states-class_method" title="OpenHAB::DSL.ensure_states (method)">ensure_states</a></span>,
+commands and updates can still be forcefully executed using the corresponding bang methods, e.g.
 <code>Item1.on!</code>, <code>Item1.command!(50)</code>, or <code>Item1.update!(ON)</code>.</p>
 
 
@@ -5533,7 +5533,7 @@ commands and updates can still be forcefully executed using the corresponding ba
         <span class="signature">.<strong>holiday_file</strong>(file) { ... } &#x21d2; <tt><span class='object_link'>Object</span></tt> </span>
         <div class="docstring">
   <div class="discussion">
-    <p>Sets a thread local variable to use a specific holiday file<br>
+    <p>Sets a thread local variable to use a specific holiday file
 for <span class='object_link'><a href="CoreExt/Ephemeris.html" title="OpenHAB::CoreExt::Ephemeris (module)">ephemeris calls</a></span> inside the block.</p>
 
 
@@ -5566,7 +5566,7 @@ for <span class='object_link'><a href="CoreExt/Ephemeris.html" title="OpenHAB::C
       
       
         &mdash;
-        <div class='inline'><p>Path to a file defining holidays;<br>
+        <div class='inline'><p>Path to a file defining holidays;
 <code>nil</code> to reset to default.</p>
 </div>
       
@@ -5740,7 +5740,7 @@ for <span class='object_link'><a href="CoreExt/Ephemeris.html" title="OpenHAB::C
       
       
         &mdash;
-        <div class='inline'><p>Path to a file defining holidays;<br>
+        <div class='inline'><p>Path to a file defining holidays;
 <code>nil</code> to reset to default.</p>
 </div>
       
@@ -5885,8 +5885,8 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Limit how often the given block executes to the specified interval.</p>
-<p><span class='object_link'><a href="#only_every-class_method" title="OpenHAB::DSL.only_every (method)">only_every</a></span> will execute the given block but prevents further executions<br>
-until the given interval has passed. In contrast, <span class='object_link'><a href="#throttle_for-class_method" title="OpenHAB::DSL.throttle_for (method)">throttle_for</a></span> will not<br>
+<p><span class='object_link'><a href="#only_every-class_method" title="OpenHAB::DSL.only_every (method)">only_every</a></span> will execute the given block but prevents further executions
+until the given interval has passed. In contrast, <span class='object_link'><a href="#throttle_for-class_method" title="OpenHAB::DSL.throttle_for (method)">throttle_for</a></span> will not
 execute the block immediately, and will wait until the end of the interval.</p>
 
 
@@ -5951,7 +5951,7 @@ only_every(<span class="integer">30</span>.seconds) { <span class="constant">Aud
       
       
         &mdash;
-        <div class='inline'><p>The period during which<br>
+        <div class='inline'><p>The period during which
 subsequent triggers are ignored.</p>
 </div>
       
@@ -6003,7 +6003,7 @@ subsequent triggers are ignored.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Sets a thread local variable to set the default persistence service<br>
+    <p>Sets a thread local variable to set the default persistence service
 for method calls inside the block</p>
 
 
@@ -6127,9 +6127,9 @@ for method calls inside the block</p>
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>This method is only intended for use at the top level of rule<br>
-scripts. If it's used within library methods, or hap-hazardly within<br>
-rules, things can get very confusing because the prior state won't be<br>
+    <div class='inline'><p>This method is only intended for use at the top level of rule
+scripts. If it's used within library methods, or hap-hazardly within
+rules, things can get very confusing because the prior state won't be
 properly restored.</p>
 </div>
   </div>
@@ -6155,7 +6155,7 @@ properly restored.</p>
       
       
         &mdash;
-        <div class='inline'><p>Persistence service either as a String or a Symbol. When nil, use<br>
+        <div class='inline'><p>Persistence service either as a String or a Symbol. When nil, use
 the system's default persistence service.</p>
 </div>
       
@@ -6227,7 +6227,7 @@ the system's default persistence service.</p>
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Defines a new profile that can be applied to item channel links.</p>
-<p>To create a profile that can be used in the UI, provide a label and optionally a <span class='object_link'><a href="#config_description-class_method" title="OpenHAB::DSL.config_description (method)">config_description</a></span>,<br>
+<p>To create a profile that can be used in the UI, provide a label and optionally a <span class='object_link'><a href="#config_description-class_method" title="OpenHAB::DSL.config_description (method)">config_description</a></span>,
 otherwise the profile will not be visible in the UI.</p>
 
 
@@ -6463,7 +6463,7 @@ profile(<span class="symbol">:range_filter</span>, <span class="key">label</span
       
       
         &mdash;
-        <div class='inline'><p>The time series for <code>:time_series_from_handler</code> events.<br>
+        <div class='inline'><p>The time series for <code>:time_series_from_handler</code> events.
 Only available since openHAB 4.1.</p>
 </div>
       
@@ -6682,7 +6682,7 @@ provider!(<span class="key">metadata</span>: { <span class="key">last_status_fro
       
       
         &mdash;
-        <div class='inline'><p>An explicit provider to use. If it's a <span class='object_link'><a href="Core/Provider.html" title="OpenHAB::Core::Provider (class)">Core::Provider</a></span>, the type will be inferred automatically.<br>
+        <div class='inline'><p>An explicit provider to use. If it's a <span class='object_link'><a href="Core/Provider.html" title="OpenHAB::Core::Provider (class)">Core::Provider</a></span>, the type will be inferred automatically.
 Otherwise it's applied to all types.</p>
 </div>
       
@@ -6698,12 +6698,12 @@ Otherwise it's applied to all types.</p>
       
       
         &mdash;
-        <div class='inline'><p>A list of providers by type. Type can be <code>:items</code>, <code>:metadata</code>, <code>:things</code>, <code>:links</code>,<br>
-an <span class='object_link'><a href="Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span> applying the provider to all metadata on that item, or a String or Symbol<br>
+        <div class='inline'><p>A list of providers by type. Type can be <code>:items</code>, <code>:metadata</code>, <code>:things</code>, <code>:links</code>,
+an <span class='object_link'><a href="Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span> applying the provider to all metadata on that item, or a String or Symbol
 applying the provider to all metadata of that namespace.</p>
-<p>The provider can be a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/common/registry/Provider.html" target="_parent" title="Provider">Provider</a>, <code>:persistent</code>,<br>
-<code>:transient</code>, or a Proc returning one of those types. When the Proc is called for metadata<br>
-elements, the <span class='object_link'><a href="Core/Items/Metadata/Hash.html" title="OpenHAB::Core::Items::Metadata::Hash (class)">Core::Items::Metadata::Hash</a></span> will be passed as an argument. Therefore it's<br>
+<p>The provider can be a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/common/registry/Provider.html" target="_parent" title="Provider">Provider</a>, <code>:persistent</code>,
+<code>:transient</code>, or a Proc returning one of those types. When the Proc is called for metadata
+elements, the <span class='object_link'><a href="Core/Items/Metadata/Hash.html" title="OpenHAB::Core::Items::Metadata::Hash (class)">Core::Items::Metadata::Hash</a></span> will be passed as an argument. Therefore it's
 recommended that you use a Proc, not a Lambda, for permissive argument matching.</p>
 </div>
       
@@ -6817,15 +6817,15 @@ recommended that you use a Proc, not a Lambda, for permissive argument matching.
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>This method is only intended for use at the top level of rule<br>
-scripts. If it's used within library methods, or hap-hazardly within<br>
-rules, things can get very confusing because the prior state won't be<br>
+    <div class='inline'><p>This method is only intended for use at the top level of rule
+scripts. If it's used within library methods, or hap-hazardly within
+rules, things can get very confusing because the prior state won't be
 properly restored.</p>
 </div>
   </div>
 
 <p>Permanently set the implicit provider(s) for this thread.</p>
-<p><span class='object_link'><a href="#provider!-class_method" title="OpenHAB::DSL.provider! (method)">provider!</a></span> calls are cumulative - additional calls will not erase the effects<br>
+<p><span class='object_link'><a href="#provider!-class_method" title="OpenHAB::DSL.provider! (method)">provider!</a></span> calls are cumulative - additional calls will not erase the effects
 of previous calls unless they are for the same provider type.</p>
 
 
@@ -6847,7 +6847,7 @@ of previous calls unless they are for the same provider type.</p>
       
       
         &mdash;
-        <div class='inline'><p>An explicit provider to use. If it's a <span class='object_link'><a href="Core/Provider.html" title="OpenHAB::Core::Provider (class)">Core::Provider</a></span>, the type will be inferred automatically.<br>
+        <div class='inline'><p>An explicit provider to use. If it's a <span class='object_link'><a href="Core/Provider.html" title="OpenHAB::Core::Provider (class)">Core::Provider</a></span>, the type will be inferred automatically.
 Otherwise it's applied to all types.</p>
 </div>
       
@@ -6863,12 +6863,12 @@ Otherwise it's applied to all types.</p>
       
       
         &mdash;
-        <div class='inline'><p>A list of providers by type. Type can be <code>:items</code>, <code>:metadata</code>, <code>:things</code>, <code>:links</code>,<br>
-an <span class='object_link'><a href="Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span> applying the provider to all metadata on that item, or a String or Symbol<br>
+        <div class='inline'><p>A list of providers by type. Type can be <code>:items</code>, <code>:metadata</code>, <code>:things</code>, <code>:links</code>,
+an <span class='object_link'><a href="Core/Items/Item.html" title="OpenHAB::Core::Items::Item (module)">Item</a></span> applying the provider to all metadata on that item, or a String or Symbol
 applying the provider to all metadata of that namespace.</p>
-<p>The provider can be a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/common/registry/Provider.html" target="_parent" title="Provider">Provider</a>, <code>:persistent</code>,<br>
-<code>:transient</code>, or a Proc returning one of those types. When the Proc is called for metadata<br>
-elements, the <span class='object_link'><a href="Core/Items/Metadata/Hash.html" title="OpenHAB::Core::Items::Metadata::Hash (class)">Core::Items::Metadata::Hash</a></span> will be passed as an argument. Therefore it's<br>
+<p>The provider can be a <a href="https://www.openhab.org/javadoc/latest/org/openhab/core/common/registry/Provider.html" target="_parent" title="Provider">Provider</a>, <code>:persistent</code>,
+<code>:transient</code>, or a Proc returning one of those types. When the Proc is called for metadata
+elements, the <span class='object_link'><a href="Core/Items/Metadata/Hash.html" title="OpenHAB::Core::Items::Metadata::Hash (class)">Core::Items::Metadata::Hash</a></span> will be passed as an argument. Therefore it's
 recommended that you use a Proc, not a Lambda, for permissive argument matching.</p>
 </div>
       
@@ -7050,13 +7050,13 @@ recommended that you use a Proc, not a Lambda, for permissive argument matching.
 </h3><div class="docstring">
   <div class="discussion">
     <p>Create a new rule</p>
-<p>The rule must have at least one trigger and one execution block.<br>
+<p>The rule must have at least one trigger and one execution block.
 To create a "script" without any triggers, use <span class='object_link'><a href="#script-class_method" title="OpenHAB::DSL.script (method)">script</a></span>.</p>
-<p>When explicit <code>id</code> is not provided, the rule's ID will be inferred from the block's source location,<br>
+<p>When explicit <code>id</code> is not provided, the rule's ID will be inferred from the block's source location,
 and a suffix will be added to avoid clashing against existing rules.</p>
-<p>When an explicit <code>id</code> is provided and an existing rule with the same id already exists,<br>
+<p>When an explicit <code>id</code> is provided and an existing rule with the same id already exists,
 the rule will not be created, and the method will return nil.</p>
-<p>To ensure that a rule is created even when the same id already exists, use <span class='object_link'><a href="#rule!-class_method" title="OpenHAB::DSL.rule! (method)">rule!</a></span> or call<br>
+<p>To ensure that a rule is created even when the same id already exists, use <span class='object_link'><a href="#rule!-class_method" title="OpenHAB::DSL.rule! (method)">rule!</a></span> or call
 <span class='object_link'><a href="Core/Rules/Registry.html#remove-instance_method" title="OpenHAB::Core::Rules::Registry#remove (method)">rules.remove</a></span> to remove any existing rule prior to creating the new rule.</p>
 
 
@@ -7321,7 +7321,7 @@ the rule will not be created, and the method will return nil.</p>
 </h3><div class="docstring">
   <div class="discussion">
     <p>Create a new scene</p>
-<p>A scene is a rule with no triggers. It can be called by various other actions,<br>
+<p>A scene is a rule with no triggers. It can be called by various other actions,
 such as the Run Rules action.</p>
 
 
@@ -7542,10 +7542,10 @@ such as the Run Rules action.</p>
 </h3><div class="docstring">
   <div class="discussion">
     <p>Create a new script</p>
-<p>A script is a rule with no triggers. It can be called by various other actions,<br>
+<p>A script is a rule with no triggers. It can be called by various other actions,
 such as the Run Rules action, or by calling <span class='object_link'><a href="Core/Rules/Rule.html#trigger-instance_method" title="OpenHAB::Core::Rules::Rule#trigger (method)">Core::Rules::Rule#trigger</a></span>.</p>
-<p>Scripts can be executed with some additional context, similar to method parameters<br>
-(see <span class='object_link'><a href="Core/Rules/Rule.html#trigger-instance_method" title="OpenHAB::Core::Rules::Rule#trigger (method)">Core::Rules::Rule#trigger</a></span>).<br>
+<p>Scripts can be executed with some additional context, similar to method parameters
+(see <span class='object_link'><a href="Core/Rules/Rule.html#trigger-instance_method" title="OpenHAB::Core::Rules::Rule#trigger (method)">Core::Rules::Rule#trigger</a></span>).
 The context can be accessed from within the script's execution block as a "local" variable.</p>
 
 
@@ -7801,34 +7801,34 @@ rules.scripts[<span class="string"><span class="delimiter">&quot;</span><span cl
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>Only the <span class='object_link'><a href="#shared_cache-class_method" title="OpenHAB::DSL.shared_cache (method)">sharedCache</a></span> is exposed in Ruby.<br>
-For a private cache, simply use an instance variable. See<br>
+    <div class='inline'><p>Only the <span class='object_link'><a href="#shared_cache-class_method" title="OpenHAB::DSL.shared_cache (method)">sharedCache</a></span> is exposed in Ruby.
+For a private cache, simply use an instance variable. See
 <a href="../file.ruby-basics.html#variables" title="Instance Variables">Instance Variables</a>.</p>
 </div>
   </div>
 
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>Because every script or UI rule gets its own JRuby engine instance,<br>
-you cannot rely on being able to access Ruby objects between them. Only<br>
-objects that implement a Java interface that's part of Java or openHAB<br>
-Core (such as Hash implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" target="_parent" title="java.util.Map">java.util.Map</a>, or other basic<br>
-datatypes) can be reliably stored and accessed from the shared cache.<br>
-Likewise, you can use the cache to access data from other scripting<br>
-languages, but they'll be all but useless in Ruby. It's best to stick<br>
-to simple data types. If you're having troubles, serializing to_json<br>
+    <div class='inline'><p>Because every script or UI rule gets its own JRuby engine instance,
+you cannot rely on being able to access Ruby objects between them. Only
+objects that implement a Java interface that's part of Java or openHAB
+Core (such as Hash implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" target="_parent" title="java.util.Map">java.util.Map</a>, or other basic
+datatypes) can be reliably stored and accessed from the shared cache.
+Likewise, you can use the cache to access data from other scripting
+languages, but they'll be all but useless in Ruby. It's best to stick
+to simple data types. If you're having troubles, serializing to_json
 before storing may help.</p>
 </div>
   </div>
 
-<p>ValueCache is the interface used to access a<br>
-<span class='object_link'><a href="#shared_cache-class_method" title="OpenHAB::DSL.shared_cache (method)">shared cache</a></span> available between scripts and/or<br>
+<p>ValueCache is the interface used to access a
+<span class='object_link'><a href="#shared_cache-class_method" title="OpenHAB::DSL.shared_cache (method)">shared cache</a></span> available between scripts and/or
 rule executions.</p>
-<p>While ValueCache looks somewhat like a Hash, it does not support<br>
-iteration of the contained elements. So it's limited to strictly storing,<br>
+<p>While ValueCache looks somewhat like a Hash, it does not support
+iteration of the contained elements. So it's limited to strictly storing,
 fetching, or removing known elements.</p>
-<p>Shared caches are <em>not</em> persisted between openHAB restarts. And in fact,<br>
-if all scripts are unloaded that reference a particular key, that key is<br>
+<p>Shared caches are <em>not</em> persisted between openHAB restarts. And in fact,
+if all scripts are unloaded that reference a particular key, that key is
 removed.</p>
 
 
@@ -7957,8 +7957,8 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
 </h3><div class="docstring">
   <div class="discussion">
     <p>Store states of supplied items</p>
-<p>Takes one or more items and returns a map <code>{Item =&gt; State}</code> with the<br>
-current state of each item. It is implemented by calling openHAB's<br>
+<p>Takes one or more items and returns a map <code>{Item =&gt; State}</code> with the
+current state of each item. It is implemented by calling openHAB's
 <a href="https://www.openhab.org/docs/configuration/actions.html#event-bus-actions">events.storeStates()</a>.</p>
 
 
@@ -8130,19 +8130,19 @@ things[<span class="string"><span class="delimiter">'</span><span class="content
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Rate-limits block executions by delaying calls and only executing the last<br>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Rate-limits block executions by delaying calls and only executing the last
 call within the given duration.</p>
-<p>When throttle_for is called, it will hold from executing the block and start<br>
-a fixed timer for the given duration. Should more calls occur during<br>
+<p>When throttle_for is called, it will hold from executing the block and start
+a fixed timer for the given duration. Should more calls occur during
 this time, keep holding and once the wait time is over, execute the block.</p>
-<p><span class='object_link'><a href="#throttle_for-class_method" title="OpenHAB::DSL.throttle_for (method)">throttle_for</a></span> will execute the block after it had waited for the given duration,<br>
-regardless of how frequently <code>throttle_for</code> was called.<br>
-In contrast, <span class='object_link'><a href="#debounce_for-class_method" title="OpenHAB::DSL.debounce_for (method)">debounce_for</a></span> will wait until there is a minimum interval<br>
+<p><span class='object_link'><a href="#throttle_for-class_method" title="OpenHAB::DSL.throttle_for (method)">throttle_for</a></span> will execute the block after it had waited for the given duration,
+regardless of how frequently <code>throttle_for</code> was called.
+In contrast, <span class='object_link'><a href="#debounce_for-class_method" title="OpenHAB::DSL.debounce_for (method)">debounce_for</a></span> will wait until there is a minimum interval
 between two triggers.</p>
-<p><span class='object_link'><a href="#throttle_for-class_method" title="OpenHAB::DSL.throttle_for (method)">throttle_for</a></span> is ideal in situations where regular status updates need to be made<br>
-for frequently changing values. It is also useful when a rule responds to triggers<br>
-from multiple related items that are updated at around the same time. Instead of<br>
-executing the rule multiple times, <span class='object_link'><a href="#throttle_for-class_method" title="OpenHAB::DSL.throttle_for (method)">throttle_for</a></span> will wait for a pre-set amount<br>
+<p><span class='object_link'><a href="#throttle_for-class_method" title="OpenHAB::DSL.throttle_for (method)">throttle_for</a></span> is ideal in situations where regular status updates need to be made
+for frequently changing values. It is also useful when a rule responds to triggers
+from multiple related items that are updated at around the same time. Instead of
+executing the rule multiple times, <span class='object_link'><a href="#throttle_for-class_method" title="OpenHAB::DSL.throttle_for (method)">throttle_for</a></span> will wait for a pre-set amount
 of time since the first group of triggers occurred before executing the rule.</p>
 
 
@@ -8194,7 +8194,7 @@ of time since the first group of triggers occurred before executing the rule.</p
       
       
         &mdash;
-        <div class='inline'><p>The minimum amount of time to wait inbetween rule<br>
+        <div class='inline'><p>The minimum amount of time to wait inbetween rule
 executions.</p>
 </div>
       
@@ -8327,7 +8327,7 @@ executions.</p>
       
       
         &mdash;
-        <div class='inline'><p>The transformation type, e.g. REGEX<br>
+        <div class='inline'><p>The transformation type, e.g. REGEX
 or MAP</p>
 </div>
       
@@ -8343,7 +8343,7 @@ or MAP</p>
       
       
         &mdash;
-        <div class='inline'><p>The function to call. This value depends<br>
+        <div class='inline'><p>The function to call. This value depends
 on the transformation type</p>
 </div>
       
@@ -8435,14 +8435,14 @@ on the transformation type</p>
         <span class="signature">.<strong>unit</strong>(*units) { ... } &#x21d2; <tt><span class='object_link'>Object</span></tt> </span>
         <div class="docstring">
   <div class="discussion">
-    <p>Sets the implicit unit(s) for this thread such that classes<br>
-operating inside the block can perform automatic conversions to the<br>
+    <p>Sets the implicit unit(s) for this thread such that classes
+operating inside the block can perform automatic conversions to the
 supplied unit for <span class='object_link'><a href="Core/Types/QuantityType.html" title="OpenHAB::Core::Types::QuantityType (class)">QuantityType</a></span>.</p>
-<p>To facilitate conversion of multiple dimensioned and dimensionless<br>
-numbers the unit block may be used. The unit block attempts to do the<br>
-<em>right thing</em> based on the mix of dimensioned and dimensionless items<br>
-within the block. Specifically all dimensionless items are converted to<br>
-the supplied unit, except when they are used for multiplication or<br>
+<p>To facilitate conversion of multiple dimensioned and dimensionless
+numbers the unit block may be used. The unit block attempts to do the
+<em>right thing</em> based on the mix of dimensioned and dimensionless items
+within the block. Specifically all dimensionless items are converted to
+the supplied unit, except when they are used for multiplication or
 division.</p>
 
 
@@ -8703,15 +8703,15 @@ unit(<span class="string"><span class="delimiter">'</span><span class="content">
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>This method is only intended for use at the top level of rule<br>
-scripts. If it's used within library methods, or hap-hazardly within<br>
-rules, things can get very confusing because the prior state won't be<br>
+    <div class='inline'><p>This method is only intended for use at the top level of rule
+scripts. If it's used within library methods, or hap-hazardly within
+rules, things can get very confusing because the prior state won't be
 properly restored.</p>
 </div>
   </div>
 
 <p>Permanently sets the implicit unit(s) for this thread</p>
-<p><span class='object_link'><a href="#unit!-class_method" title="OpenHAB::DSL.unit! (method)">unit!</a></span> calls are cumulative - additional calls will not erase the effects<br>
+<p><span class='object_link'><a href="#unit!-class_method" title="OpenHAB::DSL.unit! (method)">unit!</a></span> calls are cumulative - additional calls will not erase the effects
 of previous calls unless they are for the same dimension.</p>
 
 
@@ -8874,7 +8874,7 @@ unit!
 </div>
 
         <footer>
-  Generated on Tue Apr 15 23:24:30 2025 by
+  Generated on Wed Apr 16 15:13:08 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>

@@ -3565,18 +3565,18 @@
 
       <main class="page">
         <div class="content"><div id='filecontents'><h1><a href="#testing" aria-hidden="true" class="header-anchor" id="testing">#</a>Testing</h1>
-<p><code>openhab-scripting</code> includes framework classes to allow you to write unit tests<br>
-for your openHAB rules written in JRuby. It loads up a limited actual openHAB runtime<br>
-environment. Because it is a limited environment, with no actual bindings or things,<br>
-you may need to stub out those actions in your tests. The autoupdate manager is<br>
-running, so any commands sent to items that aren't marked as <code>autoupdate="false"</code> will<br>
+<p><code>openhab-scripting</code> includes framework classes to allow you to write unit tests
+for your openHAB rules written in JRuby. It loads up a limited actual openHAB runtime
+environment. Because it is a limited environment, with no actual bindings or things,
+you may need to stub out those actions in your tests. The autoupdate manager is
+running, so any commands sent to items that aren't marked as <code>autoupdate="false"</code> will
 update automatically.</p>
 <h2><a href="#usage" aria-hidden="true" class="header-anchor" id="usage">#</a>Usage</h2>
-<p>You must run tests on a system with an actual openHAB instance installed, with your<br>
+<p>You must run tests on a system with an actual openHAB instance installed, with your
 configuration. JRuby &gt;= 9.3.8.0 must also be installed.</p>
 <ul>
 <li>Install and activate JRuby (by your method of choice - chruby, rbenv, etc.).</li>
-<li>Either create an empty directory, or use <code>$OPENHAB_CONF</code> itself (the former<br>
+<li>Either create an empty directory, or use <code>$OPENHAB_CONF</code> itself (the former
 is untested)</li>
 <li>Create a <code>Gemfile</code> with the following contents (or add to an existing one):</li>
 </ul>
@@ -3598,7 +3598,7 @@ group(<span class="symbol">:rules</span>) <span class="keyword">do</span>
 <li>Run <code>gem install bundler</code></li>
 <li>Run <code>bundle install</code></li>
 <li>Run <code>bundle exec rspec --init</code></li>
-<li>Edit the generated <code>spec/spec_helper.rb</code> to satisfy your preferences, and<br>
+<li>Edit the generated <code>spec/spec_helper.rb</code> to satisfy your preferences, and
 add:</li>
 </ul>
 <pre class="code ruby"><code class="ruby">require <span class="string"><span class="delimiter">&quot;</span><span class="content">rubygems</span><span class="delimiter">&quot;</span></span>
@@ -3648,19 +3648,19 @@ require <span class="string"><span class="delimiter">&quot;</span><span class="c
 <ul>
 <li>See <span class='object_link'><a href="OpenHAB/RSpec/Helpers.html" title="OpenHAB::RSpec::Helpers (module)">OpenHAB::RSpec::Helpers</a></span> for all helper methods available in specs.</li>
 <li>All items are reset to <span class='object_link'><a href="OpenHAB/Core/Types/UnDefType.html#NULL-constant" title="OpenHAB::Core::Types::UnDefType::NULL (constant)">NULL</a></span> before each spec.</li>
-<li><code>on_load</code> triggers are <em>not</em> honored. Items will be reset to <span class='object_link'><a href="OpenHAB/Core/Types/UnDefType.html#NULL-constant" title="OpenHAB::Core::Types::UnDefType::NULL (constant)">NULL</a></span> before<br>
-the next spec anyway, so just don't waste the energy running them. You<br>
+<li><code>on_load</code> triggers are <em>not</em> honored. Items will be reset to <span class='object_link'><a href="OpenHAB/Core/Types/UnDefType.html#NULL-constant" title="OpenHAB::Core::Types::UnDefType::NULL (constant)">NULL</a></span> before
+the next spec anyway, so just don't waste the energy running them. You
 can still trigger rules manually.</li>
-<li>Rule triggers besides item related triggers (such as cron or watchers)<br>
+<li>Rule triggers besides item related triggers (such as cron or watchers)
 are not triggered. You can test them with <span class='object_link'><a href="OpenHAB/Core/Rules/Rule.html#trigger-instance_method" title="OpenHAB::Core::Rules::Rule#trigger (method)">trigger</a></span>.</li>
 <li>You can trigger channels directly with <span class='object_link'>OpenHAB::RSpec::Helpers#trigger_channel</span>.</li>
-<li>Timers aren't triggered automatically. Use the <span class='object_link'>OpenHAB::RSpec::Helpers#execute_timers</span><br>
-helper to execute any timers that are ready to run. The <code>timecop</code> gem is<br>
-automatically included, so use <code>Timecop.travel(5.seconds)</code> (for example)<br>
-to travel forward in time and have timers ready to execute. Note that this<br>
+<li>Timers aren't triggered automatically. Use the <span class='object_link'>OpenHAB::RSpec::Helpers#execute_timers</span>
+helper to execute any timers that are ready to run. The <code>timecop</code> gem is
+automatically included, so use <code>Timecop.travel(5.seconds)</code> (for example)
+to travel forward in time and have timers ready to execute. Note that this
 includes implicit timers created by rules that use the <code>for:</code> feature.</li>
-<li>Logging levels can be changed in your code. Setting a log level for a logger<br>
-further up the chain (separated by dots) applies to all loggers underneath<br>
+<li>Logging levels can be changed in your code. Setting a log level for a logger
+further up the chain (separated by dots) applies to all loggers underneath
 it.</li>
 </ul>
 <pre class="code ruby"><code class="ruby"><span class="constant">OpenHAB</span>::<span class="constant">Log</span>.logger(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.automation.internal.RuleEngineImpl</span><span class="delimiter">&quot;</span></span>).level = <span class="symbol">:debug</span>
@@ -3669,34 +3669,34 @@ it.</li>
 <span class="constant">OpenHAB</span>::<span class="constant">Log</span>.events.level = <span class="symbol">:info</span>
 </code></pre>
 <ul>
-<li>Differing from when openHAB loads rules, all rules are loaded into a single<br>
-JRuby execution context, so changes to globals in one file will affect other<br>
-files. In particular, this applies to ids for reentrant timers will now share<br>
+<li>Differing from when openHAB loads rules, all rules are loaded into a single
+JRuby execution context, so changes to globals in one file will affect other
+files. In particular, this applies to ids for reentrant timers will now share
 a single namespace among all files.</li>
-<li>Some actions may not be available; you should stub them out if you use them.<br>
-Core actions like <span class='object_link'>OpenHAB::Core::Actions#notify</span>, <span class='object_link'><a href="OpenHAB/Core/Actions/Voice.html#say-class_method" title="OpenHAB::Core::Actions::Voice.say (method)">OpenHAB::Core::Actions::Voice.say</a></span>,<br>
-and <span class='object_link'><a href="OpenHAB/Core/Actions/Audio.html#play_sound-class_method" title="OpenHAB::Core::Actions::Audio.play_sound (method)">OpenHAB::Core::Actions::Audio.play_sound</a></span> are stubbed to only log a message<br>
+<li>Some actions may not be available; you should stub them out if you use them.
+Core actions like <span class='object_link'>OpenHAB::Core::Actions#notify</span>, <span class='object_link'><a href="OpenHAB/Core/Actions/Voice.html#say-class_method" title="OpenHAB::Core::Actions::Voice.say (method)">OpenHAB::Core::Actions::Voice.say</a></span>,
+and <span class='object_link'><a href="OpenHAB/Core/Actions/Audio.html#play_sound-class_method" title="OpenHAB::Core::Actions::Audio.play_sound (method)">OpenHAB::Core::Actions::Audio.play_sound</a></span> are stubbed to only log a message
 (at debug level).</li>
-<li>You may want to avoid rules from firing while setting up the proper state for<br>
+<li>You may want to avoid rules from firing while setting up the proper state for
 a test. In that case, use the <span class='object_link'>OpenHAB::RSpec::Helpers#suspend_rules</span> helper.</li>
-<li>Item persistence is enabled by default using an in-memory store that only<br>
+<li>Item persistence is enabled by default using an in-memory store that only
 tracks changes to items.</li>
-<li>The <span class='object_link'>OpenHAB::RSpec::Helpers#install_addon</span> helper can be used to install an<br>
-addon like <code>binding-astro</code> if you need to be able to create things from your<br>
-rules. Note that the addon isn't actually allowed to start, just be installed to<br>
+<li>The <span class='object_link'>OpenHAB::RSpec::Helpers#install_addon</span> helper can be used to install an
+addon like <code>binding-astro</code> if you need to be able to create things from your
+rules. Note that the addon isn't actually allowed to start, just be installed to
 make type metadata from XML available.</li>
-<li>If you have any Things in your openHAB instance that take two minutes to come<br>
-online due to missing type metadata, you can force them to initialize<br>
+<li>If you have any Things in your openHAB instance that take two minutes to come
+online due to missing type metadata, you can force them to initialize
 immediately by calling <span class='object_link'>OpenHAB::RSpec::Helpers#initialize_missing_thing_types</span>.</li>
-<li>You can add a <code>binding.irb</code> call in to a spec (or your rule file) to break<br>
-execution at that point and allow you to explore the current state of things<br>
+<li>You can add a <code>binding.irb</code> call in to a spec (or your rule file) to break
+execution at that point and allow you to explore the current state of things
 with a REPL.</li>
 </ul>
 <h2><a href="#configuration" aria-hidden="true" class="header-anchor" id="configuration">#</a>Configuration</h2>
-<p>There are a few environment variables you can set to help the gem find the<br>
-necessary dependencies. The default should work for an OpenHABian install<br>
-or installation on Ubuntu or Debian with .debs. You may need to customize them<br>
-if your installation is laid out differently. Additional openHAB or Karaf<br>
+<p>There are a few environment variables you can set to help the gem find the
+necessary dependencies. The default should work for an OpenHABian install
+or installation on Ubuntu or Debian with .debs. You may need to customize them
+if your installation is laid out differently. Additional openHAB or Karaf
 specific system properties will be set the same as openHAB would.</p>
 <table>
 <thead>
@@ -3720,7 +3720,7 @@ specific system properties will be set the same as openHAB would.</p>
 </tbody>
 </table>
 <h2><a href="#transformations" aria-hidden="true" class="header-anchor" id="transformations">#</a>Transformations</h2>
-<p>Ruby transformations <em>must</em> have a magic comment <code># -*- mode: ruby -*-</code> in them to be loaded.<br>
+<p>Ruby transformations <em>must</em> have a magic comment <code># -*- mode: ruby -*-</code> in them to be loaded.
 Then they can be accessed as a method on <span class='object_link'><a href="OpenHAB/Transform.html" title="OpenHAB::Transform (module)">OpenHAB::Transform</a></span> based on the filename:</p>
 <pre class="code ruby"><code class="ruby"><span class="constant">OpenHAB</span>::<span class="constant">Transform</span>.compass(<span class="string"><span class="delimiter">&quot;</span><span class="content">59 °</span><span class="delimiter">&quot;</span></span>)
 <span class="constant">OpenHAB</span>::<span class="constant">Transform</span>.compass(<span class="string"><span class="delimiter">&quot;</span><span class="content">30</span><span class="delimiter">&quot;</span></span>, <span class="key">param</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">7</span><span class="delimiter">&quot;</span></span>)
@@ -3728,7 +3728,7 @@ Then they can be accessed as a method on <span class='object_link'><a href="Open
 </code></pre>
 <p>They're loaded into a sub-JRuby engine, just like they run in openHAB.</p>
 <h2><a href="#irb" aria-hidden="true" class="header-anchor" id="irb">#</a>IRB</h2>
-<p>If you would like to use a REPL sandbox to play with your items,<br>
+<p>If you would like to use a REPL sandbox to play with your items,
 create bin/console with the following contents, and then run it:</p>
 <pre class="code ruby"><code class="ruby"><span class="doctype">#!/usr/bin/env ruby</span>
 <span class="comment"># frozen_string_literal: true</span>
@@ -3755,7 +3755,7 @@ require <span class="string"><span class="delimiter">&quot;</span><span class="c
 </div></div>
 
         <footer>
-  Generated on Tue Apr 15 23:24:30 2025 by
+  Generated on Wed Apr 16 15:13:08 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>
