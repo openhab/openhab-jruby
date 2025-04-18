@@ -84,3 +84,25 @@ jobs:
     with:
       ref_name: v${{needs.release.outputs.NEW_VERSION}}
       ref_type: tag
+  publish_docs_versions:
+    needs: publish_main_docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+      - name: Get versions.js from the main branch
+        run: |
+          git fetch origin main:main
+          git checkout main -- docs/js/versions.js
+          git reset docs/js/versions.js
+      - name: Update versions.js
+        run: |
+          mkdir -p js
+          mv docs/js/versions.js js/versions.js
+          git add js/versions.js
+          git config --local user.name 'github-actions[bot]'
+          git config --local user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m "Update versions.js with new version v${{ env.NEW_VERSION }}"
+
