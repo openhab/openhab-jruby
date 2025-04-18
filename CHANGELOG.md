@@ -1,5 +1,9 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.38.5](https://github.com/openhab/openhab-jruby/tree/v5.38.5) (2025-04-18)
+
+**Full Changelog**: [v5.38.4...v5.38.5](https://github.com/openhab/openhab-jruby/compare/v5.38.4...v5.38.5)
+
 ## [v5.38.4](https://github.com/openhab/openhab-jruby/tree/v5.38.4) (2025-04-16)
 
 ### Features
