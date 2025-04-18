@@ -96,7 +96,7 @@ jobs:
         run: |
           git fetch origin main:main
           git checkout main -- docs/js/versions.js
-          git reset docs/js/versions.js
+          git restore --staged docs/js/versions.js
       - name: Update versions.js
         run: |
           mkdir -p js
@@ -105,4 +105,4 @@ jobs:
           git config --local user.name 'github-actions[bot]'
           git config --local user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git commit -m "Update versions.js with new version v${{ env.NEW_VERSION }}"
-
+          git push
