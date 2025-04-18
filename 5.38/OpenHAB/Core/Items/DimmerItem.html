@@ -33,6 +33,7 @@
   <script type="text/javascript" charset="utf-8" src="../../../js/app.js"></script>
 
 
+    <script type="text/javascript" charset="utf-8" src="https://openhab.github.io/openhab-jruby/js/versions.js"></script>
     <meta property="og:description" name="description" content="A DimmerItem can be used as a switch (ON/OFF), but it also accepts
 percent values to reflect the dimmed state. - Documentation for openhab-scripting JRuby helper library.">
     <meta property="og:image" content="https://raw.githubusercontent.com/jruby/collateral/master/logos/PNGs/circle-fill/full-color/jruby-logo-circle-logo-fill-outline-medium.png">
@@ -87,8 +88,17 @@ percent values to reflect the dimmed state. - Documentation for openhab-scriptin
     <li><a href="/openhab-jruby/5.38" class="version-button stable">Stable <small>(5.38)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
-  
-  
+  <div class="archived-versions">
+    <div class="dropdown-wrapper">
+      <a class="dropdown-title">
+        <span class="title">Archived</span>
+        <span class="arrow down"></span>
+      </a>
+      <ul class="nav-dropdown" id="version-dropdown">
+        
+      </ul>
+    </div>
+  </div>
 </div>
 
 
@@ -2651,6 +2661,17 @@ percent values to reflect the dimmed state. - Documentation for openhab-scriptin
   </li>
 
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../DSL/Items/Tags.html" title="OpenHAB::DSL::Items::Tags (module)">Tags</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   <li class="collapsed">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../DSL/Items/TimedCommand.html" title="OpenHAB::DSL::Items::TimedCommand (module)">TimedCommand</a></span>
@@ -3614,46 +3635,46 @@ percent values to reflect the dimmed state.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code><span class="constant">DimmerOne</span> &lt;&lt; <span class="constant">DimmerOne</span>.state - <span class="integer">5</span>
 <span class="constant">DimmerOne</span> &lt;&lt; <span class="integer">100</span> - <span class="constant">DimmerOne</span>.state</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Turn on all dimmers in group</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Turn on all dimmers in group</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Dimmers</span>.members.each(&amp;<span class="symbol">:on</span>)</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Turn off all dimmers in group</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Turn off all dimmers in group</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Dimmers</span>.members.each(&amp;<span class="symbol">:off</span>)</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Turn on switches that are off</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Turn on switches that are off</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Dimmers</span>.select(&amp;<span class="symbol">:off?</span>).each(&amp;<span class="symbol">:on</span>)</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Turn off switches that are on</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Turn off switches that are on</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Dimmers</span>.select(&amp;<span class="symbol">:on?</span>).each(&amp;<span class="symbol">:off</span>)</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Dimmers can be selected in an enumerable with grep.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Dimmers can be selected in an enumerable with grep.</p>
+</div></h5>
       
       <pre class="example code"><code>items.grep(<span class="constant">DimmerItem</span>)
      .each { |dimmer| logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>dimmer.name<span class="inline-delimiter">}</span></span><span class="content"> is a Dimmer</span><span class="delimiter">&quot;</span></span>) }</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Dimmers can also be used in case statements with ranges.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Dimmers can also be used in case statements with ranges.</p>
+</div></h5>
       
       <pre class="example code"><code>items.grep(<span class="constant">DimmerItem</span>)
      .each <span class="keyword">do</span> |dimmer|
@@ -4368,7 +4389,7 @@ percent values to reflect the dimmed state.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code><span class="constant">DimmerOne</span>.brighten
@@ -4513,7 +4534,7 @@ If 1 is the amount, the INCREASE command is sent, otherwise the</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code><span class="constant">DimmerOne</span>.dim
@@ -4645,9 +4666,9 @@ current state - amount is sent as a command.</p>
 </div>
 
         <footer>
-  Generated on Tue Apr 15 13:39:22 2025 by
+  Generated on Fri Apr 18 21:13:21 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.4).
+  0.9.37 (ruby-3.1.4).
 </footer>
 
       </main>

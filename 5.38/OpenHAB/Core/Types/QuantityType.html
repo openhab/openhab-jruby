@@ -33,6 +33,7 @@
   <script type="text/javascript" charset="utf-8" src="../../../js/app.js"></script>
 
 
+    <script type="text/javascript" charset="utf-8" src="https://openhab.github.io/openhab-jruby/js/versions.js"></script>
     <meta property="og:description" name="description" content="QuantityType extends DecimalType to handle physical unit measurement.
 
 QuantityType is part of the Units of Measurement
@@ -90,8 +91,17 @@ You can construct a QuantityType object by using the pipe operator with any Nume
     <li><a href="/openhab-jruby/5.38" class="version-button stable">Stable <small>(5.38)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
-  
-  
+  <div class="archived-versions">
+    <div class="dropdown-wrapper">
+      <a class="dropdown-title">
+        <span class="title">Archived</span>
+        <span class="arrow down"></span>
+      </a>
+      <ul class="nav-dropdown" id="version-dropdown">
+        
+      </ul>
+    </div>
+  </div>
 </div>
 
 
@@ -2654,6 +2664,17 @@ You can construct a QuantityType object by using the pipe operator with any Nume
   </li>
 
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../DSL/Items/Tags.html" title="OpenHAB::DSL::Items::Tags (module)">Tags</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   <li class="collapsed">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../DSL/Items/TimedCommand.html" title="OpenHAB::DSL::Items::TimedCommand (module)">TimedCommand</a></span>
@@ -3615,11 +3636,11 @@ You can construct a <span class='object_link'><a href="" title="OpenHAB::Core::T
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>QuantityTypes can perform math operations between them.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>QuantityTypes can perform math operations between them.</p>
+</div></h5>
       
       <pre class="example code"><code>(<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) + (<span class="integer">-25</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) <span class="comment"># =&gt; 25.0 °F</span>
 (<span class="integer">100</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) / (<span class="integer">2</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) <span class="comment"># =&gt; 50</span>
@@ -3627,15 +3648,15 @@ You can construct a <span class='object_link'><a href="" title="OpenHAB::Core::T
 (<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) + (<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) <span class="comment"># =&gt; 100 °F</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>If the operand is a number, it will be unit-less, but the result of the operation will have a unit. This only works for multiplication and division.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>If the operand is a number, it will be unit-less, but the result of the operation will have a unit. This only works for multiplication and division.</p>
+</div></h5>
       
       <pre class="example code"><code>(<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) * <span class="integer">2</span> <span class="comment"># =&gt; 100 °F</span>
 (<span class="integer">100</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) / <span class="integer">2</span> <span class="comment"># =&gt; 50 °F</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>If the operand is a dimensioned NumberItem it will automatically be converted to a quantity for the operation.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>If the operand is a dimensioned NumberItem it will automatically be converted to a quantity for the operation.</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># NumberF = &quot;2 °F&quot;</span>
 <span class="comment"># NumberC = &quot;2 °C&quot;</span>
@@ -3643,16 +3664,16 @@ You can construct a <span class='object_link'><a href="" title="OpenHAB::Core::T
 (<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) + <span class="constant">NumberC</span>.state <span class="comment"># =&gt; 85.60 °F</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>If the operand is a non-dimensioned NumberItem it can be used only in multiplication and division operations.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>If the operand is a non-dimensioned NumberItem it can be used only in multiplication and division operations.</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Number Dimensionless = 2</span>
 (<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) * <span class="constant">Dimensionless</span>.state <span class="comment"># =&gt; 100 °F</span>
 (<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) / <span class="constant">Dimensionless</span>.state <span class="comment"># =&gt; 25 °F</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Quantities can be compared, if they have comparable units.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Quantities can be compared, if they have comparable units.</p>
+</div></h5>
       
       <pre class="example code"><code>(<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) &gt;  (<span class="integer">25</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>)
 (<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) &gt;  (<span class="integer">525</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>)
@@ -3661,14 +3682,14 @@ You can construct a <span class='object_link'><a href="" title="OpenHAB::Core::T
 (<span class="integer">50</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) &lt;  (<span class="integer">25</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>A Range can be used with QuantityType:</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>A Range can be used with QuantityType:</p>
+</div></h5>
       
       <pre class="example code"><code>((<span class="integer">0</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)..(<span class="integer">100</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)).cover?(<span class="constant">NumberC</span>)</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>A Range can also be used in a case statement for a dimensioned item:</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>A Range can also be used in a case statement for a dimensioned item:</p>
+</div></h5>
       
       <pre class="example code"><code>description = <span class="keyword">case</span> <span class="constant">NumberC</span>.state
               <span class="keyword">when</span> (<span class="integer">-20</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>)...(<span class="integer">18</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span>) <span class="keyword">then</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">too cold</span><span class="delimiter">&quot;</span></span>
@@ -3678,8 +3699,8 @@ You can construct a <span class='object_link'><a href="" title="OpenHAB::Core::T
               <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Dimensioned Number Items can be converted to quantities with other units using the | operator</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Dimensioned Number Items can be converted to quantities with other units using the | operator</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># NumberC = &quot;23 °C&quot;</span>
 
@@ -3690,8 +3711,8 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">In Fahrenheit </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">NumberC</span>.state | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Dimensionless Number Items can be converted to quantities with units using the | operator</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Dimensionless Number Items can be converted to quantities with units using the | operator</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Dimensionless = 70</span>
 
@@ -3702,8 +3723,8 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">In Fahrenheit </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Dimensionless</span>.state | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Dimensioned Number Items automatically use their units and convert automatically for math operations</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Dimensioned Number Items automatically use their units and convert automatically for math operations</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Number:Temperature NumberC = 23 °C</span>
 <span class="comment"># Number:Temperature NumberF = 70 °F</span>
@@ -3711,8 +3732,8 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 <span class="constant">NumberF</span>.state + <span class="constant">NumberC</span>.state <span class="comment"># =&gt; 143.40 °F</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Dimensionless Number Items can be used for multiplication and division.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Dimensionless Number Items can be used for multiplication and division.</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Number Dimensionless = 2</span>
 <span class="comment"># Number:Temperature NumberF = 70 °F</span>
@@ -3722,16 +3743,16 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 <span class="integer">2</span> * <span class="constant">NumberF</span>.state                   <span class="comment"># =&gt; 140.0 °F</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Comparisons work on dimensioned number items with different, but comparable units.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Comparisons work on dimensioned number items with different, but comparable units.</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Number:Temperature NumberC = 23 °C</span>
 <span class="comment"># Number:Temperature NumberF = 70 °F</span>
 <span class="constant">NumberC</span>.state &gt; <span class="constant">NumberF</span>.state <span class="comment"># =&gt; true</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>For certain unit types, such as temperature, all unit needs to be normalized to the comparator for all operations when combining comparison operators with dimensioned numbers.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>For certain unit types, such as temperature, all unit needs to be normalized to the comparator for all operations when combining comparison operators with dimensioned numbers.</p>
+</div></h5>
       
       <pre class="example code"><code>(<span class="constant">NumberC</span>.state | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) - (<span class="constant">NumberF</span>.state | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span>) &lt; <span class="integer">4</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°F</span><span class="delimiter">&quot;</span></span></code></pre>
     
@@ -4249,7 +4270,7 @@ less than, equal to, or greater than self</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code><span class="constant">NumberC</span>.state | <span class="constant">ImperialUnits</span>::<span class="constant">FAHRENHEIT</span></code></pre>
@@ -4392,9 +4413,9 @@ less than, equal to, or greater than self</p>
 </div>
 
         <footer>
-  Generated on Tue Apr 15 13:39:25 2025 by
+  Generated on Fri Apr 18 21:13:23 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.4).
+  0.9.37 (ruby-3.1.4).
 </footer>
 
       </main>

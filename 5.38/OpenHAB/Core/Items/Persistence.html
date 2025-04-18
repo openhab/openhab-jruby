@@ -33,6 +33,7 @@
   <script type="text/javascript" charset="utf-8" src="../../../js/app.js"></script>
 
 
+    <script type="text/javascript" charset="utf-8" src="https://openhab.github.io/openhab-jruby/js/versions.js"></script>
     <meta property="og:description" name="description" content="Items extensions to support
 openHAB's Persistence feature. - Documentation for openhab-scripting JRuby helper library.">
     <meta property="og:image" content="https://raw.githubusercontent.com/jruby/collateral/master/logos/PNGs/circle-fill/full-color/jruby-logo-circle-logo-fill-outline-medium.png">
@@ -87,8 +88,17 @@ openHAB's Persistence feature. - Documentation for openhab-scripting JRuby helpe
     <li><a href="/openhab-jruby/5.38" class="version-button stable">Stable <small>(5.38)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
-  
-  
+  <div class="archived-versions">
+    <div class="dropdown-wrapper">
+      <a class="dropdown-title">
+        <span class="title">Archived</span>
+        <span class="arrow down"></span>
+      </a>
+      <ul class="nav-dropdown" id="version-dropdown">
+        
+      </ul>
+    </div>
+  </div>
 </div>
 
 
@@ -2651,6 +2661,17 @@ openHAB's Persistence feature. - Documentation for openhab-scripting JRuby helpe
   </li>
 
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../DSL/Items/Tags.html" title="OpenHAB::DSL::Items::Tags (module)">Tags</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   <li class="collapsed">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../DSL/Items/TimedCommand.html" title="OpenHAB::DSL::Items::TimedCommand (module)">TimedCommand</a></span>
@@ -3594,32 +3615,32 @@ openHAB's Persistence feature. - Documentation for openhab-scripting JRuby helpe
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>The following examples are based on these items</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>The following examples are based on these items</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Number</span>        <span class="constant">UV_Index</span>
 <span class="key">Number</span>:<span class="constant">Power</span>  <span class="constant">Power_Usage</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Power Usage [%.2f W]</span><span class="delimiter">&quot;</span></span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Getting persistence data from the system default persistence service</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Getting persistence data from the system default persistence service</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">UV_Index</span>.average_since(<span class="integer">1</span>.hour.ago)      <span class="comment"># returns a DecimalType</span>
 <span class="constant">Power_Usage</span>.average_since(<span class="integer">12</span>.hours.ago) <span class="comment"># returns a QuantityType that corresponds to the item's type</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Querying a non-default persistence service</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Querying a non-default persistence service</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">UV_Index</span>.average_since(<span class="integer">1</span>.hour.ago, <span class="symbol">:influxdb</span>)
 <span class="constant">Power_Usage</span>.average_since(<span class="integer">12</span>.hours.ago, <span class="symbol">:rrd4j</span>)</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Time of day shortcuts</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Time of day shortcuts</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Persistence methods accept any object that responds to #to_zoned_date_time, which includes</span>
 <span class="comment"># LocalTime, LocalDate, and Ruby's Time, Date, and DateTime.</span>
@@ -3646,8 +3667,8 @@ logger.info <span class="constant">Power_Usage</span>.average_between(<span clas
 <span class="constant">Power_Usage</span>.average_between(<span class="constant">Time</span>.parse(<span class="string"><span class="delimiter">&quot;</span><span class="content">4pm</span><span class="delimiter">&quot;</span></span>) - <span class="integer">1</span>.day, <span class="constant">Time</span>.parse(<span class="string"><span class="delimiter">&quot;</span><span class="content">9pm</span><span class="delimiter">&quot;</span></span>) - <span class="integer">1</span>.day)</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Comparison using Quantity</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Comparison using Quantity</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Because Power_Usage has a unit, the return value</span>
 <span class="comment"># from average_since is a QuantityType</span>
@@ -3656,8 +3677,8 @@ logger.info <span class="constant">Power_Usage</span>.average_between(<span clas
 end</span></span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>PersistedState</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>PersistedState</p>
+</div></h5>
       
       <pre class="example code"><code>max = <span class="constant">Power_Usage</span>.maximum_since(<span class="constant">LocalTime</span>::<span class="constant">MIDNIGHT</span>)
 logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Max power usage today: </span><span class="inline"><span class="inline-delimiter">#{</span>max<span class="inline-delimiter">}</span></span><span class="content">, at: </span><span class="inline"><span class="inline-delimiter">#{</span>max.timestamp<span class="inline-delimiter">}</span></span><span class="content">)</span></span></code></pre>
@@ -11523,9 +11544,9 @@ or nil if no future states could be found.</p>
 </div>
 
         <footer>
-  Generated on Tue Apr 15 13:39:15 2025 by
+  Generated on Fri Apr 18 21:13:13 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.4).
+  0.9.37 (ruby-3.1.4).
 </footer>
 
       </main>

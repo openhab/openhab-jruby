@@ -33,6 +33,7 @@
   <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
 
 
+    <script type="text/javascript" charset="utf-8" src="https://openhab.github.io/openhab-jruby/js/versions.js"></script>
     <meta property="og:description" name="description" content="Some examples in converting your openHAB rules from other scripting languages to JRuby Scripting">
     <meta property="og:image" content="https://raw.githubusercontent.com/jruby/collateral/master/logos/PNGs/circle-fill/full-color/jruby-logo-circle-logo-fill-outline-medium.png">
     <meta property="og:image:alt" content="The JRuby logo">
@@ -86,8 +87,17 @@
     <li><a href="/openhab-jruby/5.38" class="version-button stable">Stable <small>(5.38)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
-  
-  
+  <div class="archived-versions">
+    <div class="dropdown-wrapper">
+      <a class="dropdown-title">
+        <span class="title">Archived</span>
+        <span class="arrow down"></span>
+      </a>
+      <ul class="nav-dropdown" id="version-dropdown">
+        
+      </ul>
+    </div>
+  </div>
 </div>
 
 
@@ -2650,6 +2660,17 @@
   </li>
 
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="OpenHAB/DSL/Items/Tags.html" title="OpenHAB::DSL::Items::Tags (module)">Tags</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   <li class="collapsed">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="OpenHAB/DSL/Items/TimedCommand.html" title="OpenHAB::DSL::Items::TimedCommand (module)">TimedCommand</a></span>
@@ -3553,8 +3574,8 @@
       </aside>
 
       <main class="page">
-        <div class="content"><div id='filecontents'><h1 id="conversion-examples"><a href="#conversion-examples" class="header-anchor">#</a>Conversion Examples</h1>
-<h2 id="jsscripting"><a href="#jsscripting" class="header-anchor">#</a>JSScripting</h2>
+        <div class="content"><div id='filecontents'><h1><a href="#conversion-examples" aria-hidden="true" class="header-anchor" id="conversion-examples">#</a>Conversion Examples</h1>
+<h2><a href="#jsscripting" aria-hidden="true" class="header-anchor" id="jsscripting">#</a>JSScripting</h2>
 <pre class="code java"><code class="java"><span class="type">var</span> email = <span class="string"><span class="delimiter">&quot;</span><span class="content">juliet@capulet.org</span><span class="delimiter">&quot;</span></span>
 
 rules.JSRule({
@@ -3660,7 +3681,7 @@ rules.when().item(<span class="string"><span class="delimiter">'</span><span cla
 <pre class="code ruby"><code class="ruby"><span class="comment"># When the HallLight is updated to ON, make sure that BedroomLight1 is set to the same state as the BedroomLight2</span>
 updated(<span class="constant">HallLight</span>) { <span class="constant">BedroomLight2</span> &lt;&lt; <span class="constant">BedroomLight1</span>.state }
 </code></pre>
-<h2 id="dsl"><a href="#dsl" class="header-anchor">#</a>DSL</h2>
+<h2><a href="#dsl" aria-hidden="true" class="header-anchor" id="dsl">#</a>DSL</h2>
 <pre class="code java"><code class="java">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Snap Fan to preset percentages</span><span class="delimiter">&quot;</span></span>
 when <span class="predefined-type">Member</span> of CeilingFans changed
 then
@@ -3703,7 +3724,7 @@ end
   <span class="keyword">end</span>
 <span class="keyword">end</span>
 </code></pre>
-<h2 id="python"><a href="#python" class="header-anchor">#</a>Python</h2>
+<h2><a href="#python" aria-hidden="true" class="header-anchor" id="python">#</a>Python</h2>
 <pre class="code python"><code class="python"><span class="decorator">@rule</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Use Supplemental Heat In Office</span><span class="delimiter">&quot;</span></span>)
 <span class="decorator">@when</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Item Office_Temperature changed</span><span class="delimiter">&quot;</span></span>)
 <span class="decorator">@when</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Item Thermostats_Upstairs_Temp changed</span><span class="delimiter">&quot;</span></span>)
@@ -3740,9 +3761,9 @@ end
 </div></div>
 
         <footer>
-  Generated on Tue Apr 15 13:39:11 2025 by
+  Generated on Fri Apr 18 21:13:09 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.4).
+  0.9.37 (ruby-3.1.4).
 </footer>
 
       </main>

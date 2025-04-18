@@ -33,6 +33,7 @@
   <script type="text/javascript" charset="utf-8" src="../../../js/app.js"></script>
 
 
+    <script type="text/javascript" charset="utf-8" src="https://openhab.github.io/openhab-jruby/js/versions.js"></script>
     <meta property="og:description" name="description" content="A group behaves like a regular item, but also has #members which are
 nested items that can be enumerated.
 
@@ -106,8 +107,17 @@ Number Den_Temp "Den temperature" (GroundFloor, Temperatures)
     <li><a href="/openhab-jruby/5.38" class="version-button stable">Stable <small>(5.38)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
-  
-  
+  <div class="archived-versions">
+    <div class="dropdown-wrapper">
+      <a class="dropdown-title">
+        <span class="title">Archived</span>
+        <span class="arrow down"></span>
+      </a>
+      <ul class="nav-dropdown" id="version-dropdown">
+        
+      </ul>
+    </div>
+  </div>
 </div>
 
 
@@ -2670,6 +2680,17 @@ Number Den_Temp "Den temperature" (GroundFloor, Temperatures)
   </li>
 
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../DSL/Items/Tags.html" title="OpenHAB::DSL::Items::Tags (module)">Tags</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   <li class="collapsed">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../DSL/Items/TimedCommand.html" title="OpenHAB::DSL::Items::TimedCommand (module)">TimedCommand</a></span>
@@ -3648,11 +3669,11 @@ Number Den_Temp &quot;Den temperature&quot; (GroundFloor, Temperatures)
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Operate on items in a group using enumerable methods</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Operate on items in a group using enumerable methods</p>
+</div></h5>
       
       <pre class="example code"><code>logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Total Temperatures: </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Temperatures</span>.members.count<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
 <span class="comment"># Total Temperatures: 3</span>
@@ -3660,14 +3681,14 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 <span class="comment"># Temperatures: GroundFloor, Sensors</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Access to the methods and attributes like any item</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Access to the methods and attributes like any item</p>
+</div></h5>
       
       <pre class="example code"><code>logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Group: </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Temperatures</span>.name<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="comment"># Group: Temperatures'</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Operates on items in nested groups using enumerable methods</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Operates on items in nested groups using enumerable methods</p>
+</div></h5>
       
       <pre class="example code"><code>logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">House Count: </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">House</span>.all_members.count<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
 <span class="comment"># House Count: 7</span>
@@ -3675,8 +3696,8 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 <span class="comment"># Items: Bedroom temperature, Den temperature, Living Room temperature</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Iterate through the direct members of the group</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Iterate through the direct members of the group</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Temperatures</span>.members.each <span class="keyword">do</span> |item|
   logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>item.label<span class="inline-delimiter">}</span></span><span class="content"> is: </span><span class="inline"><span class="inline-delimiter">#{</span>item.state<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
@@ -3692,8 +3713,8 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Built in <span class='object_link'><a href="../../../Enumerable.html" title="Enumerable (module)">Enumerable</a></span> functions can be applied to groups.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Built in <span class='object_link'><a href="../../../Enumerable.html" title="Enumerable (module)">Enumerable</a></span> functions can be applied to groups.</p>
+</div></h5>
       
       <pre class="example code"><code>logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Max is </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Temperatures</span>.members.map(&amp;<span class="symbol">:state</span>).max<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
 logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Min is </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Temperatures</span>.members.map(&amp;<span class="symbol">:state</span>).min<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)</code></pre>
@@ -4710,9 +4731,9 @@ because base_item is needed to determine the command/data types but is not avail
 </div>
 
         <footer>
-  Generated on Tue Apr 15 13:39:22 2025 by
+  Generated on Fri Apr 18 21:13:20 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.4).
+  0.9.37 (ruby-3.1.4).
 </footer>
 
       </main>

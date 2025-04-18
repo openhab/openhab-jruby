@@ -33,6 +33,7 @@
   <script type="text/javascript" charset="utf-8" src="../../../js/app.js"></script>
 
 
+    <script type="text/javascript" charset="utf-8" src="https://openhab.github.io/openhab-jruby/js/versions.js"></script>
     <meta property="og:description" name="description" content="A DateTimeItem stores a timestamp including a valid time zone. - Documentation for openhab-scripting JRuby helper library.">
     <meta property="og:image" content="https://raw.githubusercontent.com/jruby/collateral/master/logos/PNGs/circle-fill/full-color/jruby-logo-circle-logo-fill-outline-medium.png">
     <meta property="og:image:alt" content="The JRuby logo">
@@ -86,8 +87,17 @@
     <li><a href="/openhab-jruby/5.38" class="version-button stable">Stable <small>(5.38)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
-  
-  
+  <div class="archived-versions">
+    <div class="dropdown-wrapper">
+      <a class="dropdown-title">
+        <span class="title">Archived</span>
+        <span class="arrow down"></span>
+      </a>
+      <ul class="nav-dropdown" id="version-dropdown">
+        
+      </ul>
+    </div>
+  </div>
 </div>
 
 
@@ -2650,6 +2660,17 @@
   </li>
 
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../DSL/Items/Tags.html" title="OpenHAB::DSL::Items::Tags (module)">Tags</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   <li class="collapsed">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../DSL/Items/TimedCommand.html" title="OpenHAB::DSL::Items::TimedCommand (module)">TimedCommand</a></span>
@@ -3605,18 +3626,18 @@
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>DateTime items can be updated and commanded with Ruby Time objects or Java ZonedDateTime objects</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>DateTime items can be updated and commanded with Ruby Time objects or Java ZonedDateTime objects</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Example_DateTimeItem</span> &lt;&lt; <span class="constant">Time</span>.now
 <span class="constant">Example_DateTimeItem</span> &lt;&lt; <span class="constant">ZonedDateTime</span>.now</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Math operations (+ and -) are available to make calculations with time in a few different ways</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Math operations (+ and -) are available to make calculations with time in a few different ways</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Example_DateTimeItem</span>.state + <span class="integer">600</span> <span class="comment"># Number of seconds</span>
 <span class="constant">Example_DateTimeItem</span>.state - <span class="string"><span class="delimiter">'</span><span class="content">01:15</span><span class="delimiter">'</span></span> <span class="comment"># Subtracts 1h 15 min</span>
@@ -3626,8 +3647,8 @@
 <span class="constant">Example_DateTimeItem</span>.state - <span class="string"><span class="delimiter">'</span><span class="content">2021-01-01 15:40</span><span class="delimiter">'</span></span> <span class="comment"># Calculates time difference</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Comparisons between different time objects can be performed</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Comparisons between different time objects can be performed</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Example_DateTimeItem</span>.state == <span class="constant">Example_DateTimeItem2</span>.state <span class="comment"># Equality, works across time zones</span>
 <span class="constant">Example_DateTimeItem</span>.state &gt; <span class="constant">Date</span>.parse(<span class="string"><span class="delimiter">'</span><span class="content">2021-01-31</span><span class="delimiter">'</span></span>) <span class="comment"># After midnight jan 31st 2021</span>
@@ -3635,8 +3656,8 @@
 <span class="constant">Example_DateTimeItem</span>.state &lt; <span class="constant">LocalTime</span>::<span class="constant">NOON</span> <span class="comment"># Before noon</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>LocalTime ranges created also work</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>LocalTime ranges created also work</p>
+</div></h5>
       
       <pre class="example code"><code><span class="keyword">case</span> <span class="constant">Example_DateTimeItem</span>.state
 <span class="keyword">when</span> <span class="constant">LocalTime</span>.parse(<span class="string"><span class="delimiter">'</span><span class="content">00:00</span><span class="delimiter">'</span></span>)...<span class="constant">LocalTime</span>.parse(<span class="string"><span class="delimiter">'</span><span class="content">08:00</span><span class="delimiter">'</span></span>)
@@ -4013,9 +4034,9 @@
 </div>
 
         <footer>
-  Generated on Tue Apr 15 13:39:25 2025 by
+  Generated on Fri Apr 18 21:13:24 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.4).
+  0.9.37 (ruby-3.1.4).
 </footer>
 
       </main>

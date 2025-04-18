@@ -33,6 +33,7 @@
   <script type="text/javascript" charset="utf-8" src="../../../js/app.js"></script>
 
 
+    <script type="text/javascript" charset="utf-8" src="https://openhab.github.io/openhab-jruby/js/versions.js"></script>
     <meta property="og:description" name="description" content="The core features of an openHAB item. - Documentation for openhab-scripting JRuby helper library.">
     <meta property="og:image" content="https://raw.githubusercontent.com/jruby/collateral/master/logos/PNGs/circle-fill/full-color/jruby-logo-circle-logo-fill-outline-medium.png">
     <meta property="og:image:alt" content="The JRuby logo">
@@ -86,8 +87,17 @@
     <li><a href="/openhab-jruby/5.38" class="version-button stable">Stable <small>(5.38)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
-  
-  
+  <div class="archived-versions">
+    <div class="dropdown-wrapper">
+      <a class="dropdown-title">
+        <span class="title">Archived</span>
+        <span class="arrow down"></span>
+      </a>
+      <ul class="nav-dropdown" id="version-dropdown">
+        
+      </ul>
+    </div>
+  </div>
 </div>
 
 
@@ -2642,6 +2652,17 @@
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../DSL/Items/ItemBuilder.html" title="OpenHAB::DSL::Items::ItemBuilder (class)">ItemBuilder</a></span>
       
         &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../DSL/Items/Tags.html" title="OpenHAB::DSL::Items::Tags (module)">Tags</a></span>
       
       
     </span>
@@ -5238,7 +5259,7 @@ this method only returns the first channel.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>logger.info(<span class="constant">Exterior_WindDirection</span>.formatted_state) <span class="comment"># =&gt; &quot;NE (36°)&quot;</span></code></pre>
@@ -5574,17 +5595,17 @@ this method only returns the first channel.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Get the configuration of the first link</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Get the configuration of the first link</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">LivingRoom_Light_Power</span>.links.first.configuration</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Remove all managed links</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Remove all managed links</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">LivingRoom_Light_Power</span>.links.clear</code></pre>
     
@@ -5665,160 +5686,160 @@ String StringItem1
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Check namespace's existence</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Check namespace's existence</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Item1</span>.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace</span><span class="delimiter">&quot;</span></span>].nil?
 <span class="constant">Item1</span>.metadata.key?(<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace</span><span class="delimiter">&quot;</span></span>)</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Access item's metadata value</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Access item's metadata value</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Item1</span>.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace1</span><span class="delimiter">&quot;</span></span>].value</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Access namespace1's configuration</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Access namespace1's configuration</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Item1</span>.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace1</span><span class="delimiter">&quot;</span></span>][<span class="string"><span class="delimiter">&quot;</span><span class="content">config1</span><span class="delimiter">&quot;</span></span>]</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Safely search for the specified value - no errors are raised, only nil returned if a key in the chain doesn't exist</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Safely search for the specified value - no errors are raised, only nil returned if a key in the chain doesn't exist</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Item1</span>.metadata.dig(<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace1</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">config1</span><span class="delimiter">&quot;</span></span>) <span class="comment"># =&gt; &quot;foo&quot;</span>
 <span class="constant">Item1</span>.metadata.dig(<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace2</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">config1</span><span class="delimiter">&quot;</span></span>) <span class="comment"># =&gt; nil</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Set item's metadata value, preserving its config</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Set item's metadata value, preserving its config</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Item1's metadata before: {&quot;namespace1&quot;=&gt;[&quot;value&quot;, {&quot;config1&quot;=&gt;&quot;foo&quot;, &quot;config2&quot;=&gt;&quot;bar&quot;}]}</span>
 <span class="constant">Item1</span>.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace1</span><span class="delimiter">&quot;</span></span>].value = <span class="string"><span class="delimiter">&quot;</span><span class="content">new value</span><span class="delimiter">&quot;</span></span>
 <span class="comment"># Item1's metadata after: {&quot;namespace1&quot;=&gt;[&quot;new value&quot;, {&quot;config1&quot;=&gt;&quot;foo&quot;, &quot;config2&quot;=&gt;&quot;bar&quot;]}}</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Set item's metadata config, preserving its value</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Set item's metadata config, preserving its value</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Item1's metadata before: {&quot;namespace1&quot;=&gt;[&quot;value&quot;, {&quot;config1&quot;=&gt;&quot;foo&quot;, &quot;config2&quot;=&gt;&quot;bar&quot;}]}</span>
 <span class="constant">Item1</span>.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace1</span><span class="delimiter">&quot;</span></span>].replace({ <span class="string"><span class="delimiter">&quot;</span><span class="content">scooby</span><span class="delimiter">&quot;</span></span>=&gt;<span class="string"><span class="delimiter">&quot;</span><span class="content">doo</span><span class="delimiter">&quot;</span></span> })
 <span class="comment"># Item1's metadata after: {&quot;namespace1&quot;=&gt;[&quot;value&quot;, {scooby=&quot;doo&quot;}]}</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Set a namespace to a new value and config in one line</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Set a namespace to a new value and config in one line</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Item1's metadata before: {&quot;namespace1&quot;=&gt;&quot;value&quot;, {&quot;config1&quot;=&gt;&quot;foo&quot;, &quot;config2&quot;=&gt;&quot;bar&quot;}}</span>
 <span class="constant">Item1</span>.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace1</span><span class="delimiter">&quot;</span></span>] = <span class="string"><span class="delimiter">&quot;</span><span class="content">new value</span><span class="delimiter">&quot;</span></span>, { <span class="string"><span class="delimiter">&quot;</span><span class="content">scooby</span><span class="delimiter">&quot;</span></span>=&gt;<span class="string"><span class="delimiter">&quot;</span><span class="content">doo</span><span class="delimiter">&quot;</span></span> }
 <span class="comment"># Item1's metadata after: {&quot;namespace1&quot;=&gt;[&quot;new value&quot;, {scooby=&quot;doo&quot;}]}</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Set item's metadata value and clear its previous config</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Set item's metadata value and clear its previous config</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Item1's metadata before: {&quot;namespace1&quot;=&gt;[&quot;value&quot;, {&quot;config1&quot;=&gt;&quot;foo&quot;, &quot;config2&quot;=&gt;&quot;bar&quot;}]}</span>
 <span class="constant">Item1</span>.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace1</span><span class="delimiter">&quot;</span></span>] = <span class="string"><span class="delimiter">&quot;</span><span class="content">new value</span><span class="delimiter">&quot;</span></span>
 <span class="comment"># Item1's metadata after: {&quot;namespace1&quot;=&gt;&quot;value&quot; }</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Set item's metadata config, set its value to nil, and wiping out previous config</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Set item's metadata config, set its value to nil, and wiping out previous config</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Item1's metadata before: {&quot;namespace1&quot;=&gt;[&quot;value&quot;, {&quot;config1&quot;=&gt;&quot;foo&quot;, &quot;config2&quot;=&gt;&quot;bar&quot;}]}</span>
 <span class="constant">Item1</span>.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace1</span><span class="delimiter">&quot;</span></span>] = { <span class="string"><span class="delimiter">&quot;</span><span class="content">newconfig</span><span class="delimiter">&quot;</span></span>=&gt;<span class="string"><span class="delimiter">&quot;</span><span class="content">value</span><span class="delimiter">&quot;</span></span> }
 <span class="comment"># Item1's metadata after: {&quot;namespace1&quot;=&gt;{&quot;config1&quot;=&gt;&quot;foo&quot;, &quot;config2&quot;=&gt;&quot;bar&quot;}}</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Update namespace1's specific configuration, preserving its value and other config</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Update namespace1's specific configuration, preserving its value and other config</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Item1's metadata before: {&quot;namespace1&quot;=&gt;[&quot;value&quot;, {&quot;config1&quot;=&gt;&quot;foo&quot;, &quot;config2&quot;=&gt;&quot;bar&quot;}]}</span>
 <span class="constant">Item1</span>.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace1</span><span class="delimiter">&quot;</span></span>][<span class="string"><span class="delimiter">&quot;</span><span class="content">config1</span><span class="delimiter">&quot;</span></span>] = <span class="string"><span class="delimiter">&quot;</span><span class="content">doo</span><span class="delimiter">&quot;</span></span>
 <span class="comment"># Item1's metadata will be: {&quot;namespace1&quot;=&gt;[&quot;value&quot;, {&quot;config1&quot;=&gt;&quot;doo&quot;, &quot;config2&quot;=&gt;&quot;bar&quot;}]}</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Add a new configuration to namespace1</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Add a new configuration to namespace1</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Item1's metadata before: {&quot;namespace1&quot;=&gt;[&quot;value&quot;, {&quot;config1&quot;=&gt;&quot;foo&quot;, &quot;config2&quot;=&gt;&quot;bar&quot;}]}</span>
 <span class="constant">Item1</span>.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace1</span><span class="delimiter">&quot;</span></span>][<span class="string"><span class="delimiter">&quot;</span><span class="content">config3</span><span class="delimiter">&quot;</span></span>] = <span class="string"><span class="delimiter">&quot;</span><span class="content">boo</span><span class="delimiter">&quot;</span></span>
 <span class="comment"># Item1's metadata after: {&quot;namespace1&quot;=&gt;[&quot;value&quot;, {&quot;config1&quot;=&gt;&quot;foo&quot;, &quot;config2&quot;=&gt;&quot;bar&quot;, config3=&quot;boo&quot;}]}</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Delete a config</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Delete a config</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Item1's metadata before: {&quot;namespace1&quot;=&gt;[&quot;value&quot;, {&quot;config1&quot;=&gt;&quot;foo&quot;, &quot;config2&quot;=&gt;&quot;bar&quot;}]}</span>
 <span class="constant">Item1</span>.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace1</span><span class="delimiter">&quot;</span></span>].delete(<span class="string"><span class="delimiter">&quot;</span><span class="content">config2</span><span class="delimiter">&quot;</span></span>)
 <span class="comment"># Item1's metadata after: {&quot;namespace1&quot;=&gt;[&quot;value&quot;, {&quot;config1&quot;=&gt;&quot;foo&quot;}]}</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Add a namespace and set it to a value</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Add a namespace and set it to a value</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Item1's metadata before: {&quot;namespace1&quot;=&gt;[&quot;value&quot;, {&quot;config1&quot;=&gt;&quot;foo&quot;, &quot;config2&quot;=&gt;&quot;bar&quot;}]}</span>
 <span class="constant">Item1</span>.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace2</span><span class="delimiter">&quot;</span></span>] = <span class="string"><span class="delimiter">&quot;</span><span class="content">qx</span><span class="delimiter">&quot;</span></span>
 <span class="comment"># Item1's metadata after: {&quot;namespace1&quot;=&gt;[&quot;value&quot;, {&quot;config1&quot;=&gt;&quot;foo&quot;, &quot;config2&quot;=&gt;&quot;bar&quot;}], &quot;namespace2&quot;=&gt;&quot;qx&quot;}</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Add a namespace and set it to a value and config</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Add a namespace and set it to a value and config</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Item1's metadata before: {&quot;namespace1&quot;=&gt;[&quot;value&quot;, {&quot;config1&quot;=&gt;&quot;foo&quot;, &quot;config2&quot;=&gt;&quot;bar&quot;}]}</span>
 <span class="constant">Item1</span>.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace2</span><span class="delimiter">&quot;</span></span>] = <span class="string"><span class="delimiter">&quot;</span><span class="content">qx</span><span class="delimiter">&quot;</span></span>, { <span class="string"><span class="delimiter">&quot;</span><span class="content">config1</span><span class="delimiter">&quot;</span></span>=&gt;<span class="string"><span class="delimiter">&quot;</span><span class="content">doo</span><span class="delimiter">&quot;</span></span> }
 <span class="comment"># Item1's metadata after: {&quot;namespace1&quot;=&gt;[&quot;value&quot;, {&quot;config1&quot;=&gt;&quot;foo&quot;, &quot;config2&quot;=&gt;&quot;bar&quot;}], &quot;namespace2&quot;=&gt;[&quot;qx&quot;, {&quot;config1&quot;=&gt;&quot;doo&quot;}]}</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Enumerate Item1's namespaces</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Enumerate Item1's namespaces</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Item1</span>.metadata.each { |namespace, metadata| logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Item1's namespace: </span><span class="inline"><span class="inline-delimiter">#{</span>namespace<span class="inline-delimiter">}</span></span><span class="content">=</span><span class="inline"><span class="inline-delimiter">#{</span>metadata<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>) }</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Add metadata from a hash</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Add metadata from a hash</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Item1</span>.metadata.merge!({<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace1</span><span class="delimiter">&quot;</span></span>=&gt;{<span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span>, {<span class="string"><span class="delimiter">&quot;</span><span class="content">config1</span><span class="delimiter">&quot;</span></span>=&gt;<span class="string"><span class="delimiter">&quot;</span><span class="content">baz</span><span class="delimiter">&quot;</span></span>} ], <span class="string"><span class="delimiter">&quot;</span><span class="content">namespace2</span><span class="delimiter">&quot;</span></span>=&gt;{<span class="string"><span class="delimiter">&quot;</span><span class="content">qux</span><span class="delimiter">&quot;</span></span>, {<span class="string"><span class="delimiter">&quot;</span><span class="content">config</span><span class="delimiter">&quot;</span></span>=&gt;<span class="string"><span class="delimiter">&quot;</span><span class="content">quu</span><span class="delimiter">&quot;</span></span>} ]})</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Merge Item2's metadata into Item1's metadata</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Merge Item2's metadata into Item1's metadata</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Item1</span>.metadata.merge!(<span class="constant">Item2</span>.metadata)</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Delete a namespace</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Delete a namespace</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Item1</span>.metadata.delete(<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace1</span><span class="delimiter">&quot;</span></span>)</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Delete all metadata of the item</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Delete all metadata of the item</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Item1</span>.metadata.clear</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Does this item have any metadata?</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Does this item have any metadata?</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Item1</span>.metadata.any?</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Store another item's state</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Store another item's state</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">StringItem1</span>.update <span class="string"><span class="delimiter">&quot;</span><span class="content">TEST</span><span class="delimiter">&quot;</span></span>
 <span class="constant">Item1</span>.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">other_state</span><span class="delimiter">&quot;</span></span>] = <span class="constant">StringItem1</span>.state</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Store event's state</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Store event's state</p>
+</div></h5>
       
       <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">save event state</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   changed <span class="constant">StringItem1</span>
@@ -5826,14 +5847,14 @@ String StringItem1
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>If the namespace already exists: Update the value of a namespace but preserve its config; otherwise create a new namespace with the given value and nil config.</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>If the namespace already exists: Update the value of a namespace but preserve its config; otherwise create a new namespace with the given value and nil config.</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">Item1</span>.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace</span><span class="delimiter">&quot;</span></span>] = <span class="string"><span class="delimiter">&quot;</span><span class="content">value</span><span class="delimiter">&quot;</span></span>, <span class="constant">Item1</span>.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace</span><span class="delimiter">&quot;</span></span>]</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Copy another namespace</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Copy another namespace</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># Item1's metadata before: {&quot;namespace2&quot;=&gt;[&quot;value&quot;, {&quot;config1&quot;=&gt;&quot;foo&quot;, &quot;config2&quot;=&gt;&quot;bar&quot;}]}</span>
 <span class="constant">Item1</span>.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace</span><span class="delimiter">&quot;</span></span>] = <span class="constant">Item1</span>.metadata[<span class="string"><span class="delimiter">&quot;</span><span class="content">namespace2</span><span class="delimiter">&quot;</span></span>]
@@ -6306,25 +6327,25 @@ the command will only be sent if the item is not already in the same state.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Sending a <span class='object_link'><a href="../Types/Command.html" title="OpenHAB::Core::Types::Command (module)">Command</a></span> to an item</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Sending a <span class='object_link'><a href="../Types/Command.html" title="OpenHAB::Core::Types::Command (module)">Command</a></span> to an item</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">MySwitch</span>.command(<span class="constant">ON</span>) <span class="comment"># The preferred method is `MySwitch.on`</span>
 <span class="constant">Garage_Door</span>.command(<span class="constant">DOWN</span>) <span class="comment"># The preferred method is `Garage_Door.down`</span>
 <span class="constant">SetTemperature</span>.command <span class="integer">20</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Sending a plain number to a <span class='object_link'><a href="NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span></p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Sending a plain number to a <span class='object_link'><a href="NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span></p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">SetTemperature</span>.command(<span class="float">22.5</span>) <span class="comment"># if it accepts a DecimalType</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Sending a string to a dimensioned <span class='object_link'><a href="NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span></p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Sending a string to a dimensioned <span class='object_link'><a href="NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span></p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">SetTemperature</span>.command(<span class="string"><span class="delimiter">&quot;</span><span class="content">22.5 °C</span><span class="delimiter">&quot;</span></span>) <span class="comment"># The string will be parsed and converted to a QuantityType</span></code></pre>
     
@@ -6864,23 +6885,23 @@ this method only returns the first link.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Link an item to a channel</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Link an item to a channel</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">LivingRoom_Light_Power</span>.link(<span class="string"><span class="delimiter">&quot;</span><span class="content">mqtt:topic:livingroom-light:power</span><span class="delimiter">&quot;</span></span>)</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Link to a Thing's channel</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Link to a Thing's channel</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">LivingRoom_Light_Power</span>.link(things[<span class="string"><span class="delimiter">&quot;</span><span class="content">mqtt:topic:livingroom-light</span><span class="delimiter">&quot;</span></span>].channels[<span class="string"><span class="delimiter">&quot;</span><span class="content">power</span><span class="delimiter">&quot;</span></span>])</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Specify a link configuration</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Specify a link configuration</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">High_Temperature_Alert</span>.link(
   <span class="string"><span class="delimiter">&quot;</span><span class="content">mqtt:topic:outdoor-thermometer:temperature</span><span class="delimiter">&quot;</span></span>,
@@ -7088,7 +7109,7 @@ def_type_predicate(<span class="symbol">:location</span>)</pre>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>event.item.member_of?(gFullOn)</code></pre>
@@ -7513,7 +7534,7 @@ def_type_predicate(<span class="symbol">:switch</span>)</pre>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>event.item.tagged?(<span class="string"><span class="delimiter">&quot;</span><span class="content">Setpoint</span><span class="delimiter">&quot;</span></span>)</code></pre>
@@ -7783,31 +7804,31 @@ def_type_predicate(<span class="symbol">:switch</span>)</pre>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Updating to a <span class='object_link'><a href="../Types/State.html" title="OpenHAB::Core::Types::State (module)">State</a></span></p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Updating to a <span class='object_link'><a href="../Types/State.html" title="OpenHAB::Core::Types::State (module)">State</a></span></p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">DoorStatus</span>.update(<span class="constant">OPEN</span>)
 <span class="constant">InsideTemperature</span>.update <span class="integer">20</span> | <span class="string"><span class="delimiter">&quot;</span><span class="content">°C</span><span class="delimiter">&quot;</span></span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Updating to <span class='object_link'><a href="../Types/UnDefType.html#NULL-constant" title="OpenHAB::Core::Types::UnDefType::NULL (constant)">NULL</a></span>, the two following are equivalent:</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Updating to <span class='object_link'><a href="../Types/UnDefType.html#NULL-constant" title="OpenHAB::Core::Types::UnDefType::NULL (constant)">NULL</a></span>, the two following are equivalent:</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">DoorStatus</span>.update(<span class="predefined-constant">nil</span>)
 <span class="constant">DoorStatus</span>.update(<span class="constant">NULL</span>)</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Updating with a plain number</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Updating with a plain number</p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">PeopleCount</span>.update(<span class="integer">5</span>) <span class="comment"># A plain NumberItem</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Updating with a string to a dimensioned <span class='object_link'><a href="NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span></p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Updating with a string to a dimensioned <span class='object_link'><a href="NumberItem.html" title="OpenHAB::Core::Items::NumberItem (class)">NumberItem</a></span></p>
+</div></h5>
       
       <pre class="example code"><code><span class="constant">InsideTemperature</span>.update(<span class="string"><span class="delimiter">&quot;</span><span class="content">22.5 °C</span><span class="delimiter">&quot;</span></span>) <span class="comment"># The string will be parsed and converted to a QuantityType</span></code></pre>
     
@@ -7886,9 +7907,9 @@ otherwise the item.</p>
 </div>
 
         <footer>
-  Generated on Tue Apr 15 13:39:13 2025 by
+  Generated on Fri Apr 18 21:13:11 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.4).
+  0.9.37 (ruby-3.1.4).
 </footer>
 
       </main>

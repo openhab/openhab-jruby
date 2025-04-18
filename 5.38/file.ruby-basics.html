@@ -33,6 +33,7 @@
   <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
 
 
+    <script type="text/javascript" charset="utf-8" src="https://openhab.github.io/openhab-jruby/js/versions.js"></script>
     <meta property="og:description" name="description" content="A brief introduction to the basics of the Ruby programming language for writing openHAB automation rules">
     <meta property="og:image" content="https://raw.githubusercontent.com/jruby/collateral/master/logos/PNGs/circle-fill/full-color/jruby-logo-circle-logo-fill-outline-medium.png">
     <meta property="og:image:alt" content="The JRuby logo">
@@ -86,8 +87,17 @@
     <li><a href="/openhab-jruby/5.38" class="version-button stable">Stable <small>(5.38)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
-  
-  
+  <div class="archived-versions">
+    <div class="dropdown-wrapper">
+      <a class="dropdown-title">
+        <span class="title">Archived</span>
+        <span class="arrow down"></span>
+      </a>
+      <ul class="nav-dropdown" id="version-dropdown">
+        
+      </ul>
+    </div>
+  </div>
 </div>
 
 
@@ -2650,6 +2660,17 @@
   </li>
 
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="OpenHAB/DSL/Items/Tags.html" title="OpenHAB::DSL::Items::Tags (module)">Tags</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   <li class="collapsed">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="OpenHAB/DSL/Items/TimedCommand.html" title="OpenHAB::DSL::Items::TimedCommand (module)">TimedCommand</a></span>
@@ -3553,12 +3574,12 @@
       </aside>
 
       <main class="page">
-        <div class="content"><div id='filecontents'><h1 id="ruby-basics"><a href="#ruby-basics" class="header-anchor">#</a>Ruby Basics</h1>
+        <div class="content"><div id='filecontents'><h1><a href="#ruby-basics" aria-hidden="true" class="header-anchor" id="ruby-basics">#</a>Ruby Basics</h1>
 <p>The openHAB JRuby scripting automation is based on the <a href="https://www.jruby.org/">JRuby</a> implementation of the
 <a href="https://www.ruby-lang.org/">Ruby</a> language. This page offers a quick overview of Ruby to help you get started
 writing rules. However, it is by no means comprehensive. A wealth of information can be found on
 <a href="https://www.ruby-lang.org/en/documentation/">Ruby's web site</a>.</p>
-<h2 id="data-types"><a href="#data-types" class="header-anchor">#</a>Data Types</h2>
+<h2><a href="#data-types" aria-hidden="true" class="header-anchor" id="data-types">#</a>Data Types</h2>
 <p>In Ruby, everything is an object, even primitive types such as numbers and strings. For example, <code>1</code> as a number is an object
 and has all the methods for the <a href="https://docs.ruby-lang.org/en/master/Integer.html">Integer class</a>.</p>
 <p>It is useful to get to know the basic data types that we will often encounter:</p>
@@ -3573,7 +3594,7 @@ contain variables and expressions that are enclosed with <code>#{}</code>. For e
 <li><a href="https://docs.ruby-lang.org/en/master/Symbol.html">Symbol</a> - example: <code>:iamasymbol</code></li>
 <li><a href="https://docs.ruby-lang.org/en/master/Range.html">Range</a> - example: <code>1..5</code></li>
 </ul>
-<h2 id="variables"><a href="#variables" class="header-anchor">#</a>Variables</h2>
+<h2><a href="#variables" aria-hidden="true" class="header-anchor" id="variables">#</a>Variables</h2>
 <ul>
 <li>In Ruby, variables start with a lower case and by convention use <code>snake_case</code>.</li>
 <li>Uppercase identifiers are constants, e.g. <code>NAMES</code></li>
@@ -3582,7 +3603,7 @@ contain variables and expressions that are enclosed with <code>#{}</code>. For e
 Instance variables are similar to member variables or fields in other languages.</li>
 <li>Local variables are just plain names that starts with a lower case, e.g. <code>local_var</code>.</li>
 </ul>
-<h3 id="examples"><a href="#examples" class="header-anchor">#</a>Examples</h3>
+<h3><a href="#examples" aria-hidden="true" class="header-anchor" id="examples">#</a>Examples</h3>
 <p>Instance variables are created as soon as they are referenced.
 They are persisted on whatever <code>self</code> is.
 In most simple file-based rules, and in UI based rules, <code>self</code> is simply a top level <code>Object</code> named <code>main</code>, and instance variables will be persisted between multiple executions of the same rule:</p>
@@ -3595,12 +3616,12 @@ In most simple file-based rules, and in UI based rules, <code>self</code> is sim
   <span class="keyword">end</span>
 <span class="keyword">end</span>
 </code></pre>
-<h2 id="string-interpolation"><a href="#string-interpolation" class="header-anchor">#</a>String Interpolation</h2>
+<h2><a href="#string-interpolation" aria-hidden="true" class="header-anchor" id="string-interpolation">#</a>String Interpolation</h2>
 <p>String interpolation is done by enclosing a variable or an expression with <code>#{</code> and <code>}</code> inside a double quoted string.
 The variable doesn't have to be a string. Ruby will automatically call <code>#to_s</code> for you.</p>
 <p>Although string concatenation with <code>+</code> is possible, using string interpolation is preferred.</p>
 <p>An example of string interpolation is included above.</p>
-<h2 id="control-expressions"><a href="#control-expressions" class="header-anchor">#</a>Control Expressions</h2>
+<h2><a href="#control-expressions" aria-hidden="true" class="header-anchor" id="control-expressions">#</a>Control Expressions</h2>
 <p>Ruby supports various <a href="https://docs.ruby-lang.org/en/master/doc/syntax/control_expressions_rdoc.html">control expressions</a> such as <code>if/else</code>, ternary operator, <code>case</code>, etc.</p>
 <p>Example:</p>
 <pre class="code ruby"><code class="ruby"><span class="keyword">if</span> a
@@ -3635,11 +3656,11 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
   <span class="keyword">end</span>
 <span class="keyword">end</span>
 </code></pre>
-<h2 id="loops"><a href="#loops" class="header-anchor">#</a>Loops</h2>
+<h2><a href="#loops" aria-hidden="true" class="header-anchor" id="loops">#</a>Loops</h2>
 <p>While Ruby supports the traditional <code>for</code> and <code>while</code> loop, they are rarely used.
 Ruby objects such as Array, Hash, Set, etc. provide a plethora of methods to
 achieve the same thing in a more "Ruby" way.</p>
-<h3 id="examples"><a href="#examples" class="header-anchor">#</a>Examples</h3>
+<h3><a href="#examples-1" aria-hidden="true" class="header-anchor" id="examples-1">#</a>Examples</h3>
 <pre class="code ruby"><code class="ruby">array = [<span class="integer">1</span>, <span class="integer">2</span>, <span class="integer">3</span>]
 array.each <span class="keyword">do</span> |elem|
   logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Element: </span><span class="inline"><span class="inline-delimiter">#{</span>elem<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
@@ -3663,7 +3684,7 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
 <span class="keyword">end</span>
 </code></pre>
 <p>Note: <code>next</code> is similar to <code>continue</code> in C/Java. <code>break</code> in Ruby is the same as in C/Java.</p>
-<h2 id="methods"><a href="#methods" class="header-anchor">#</a>Methods</h2>
+<h2><a href="#methods" aria-hidden="true" class="header-anchor" id="methods">#</a>Methods</h2>
 <p><a href="https://docs.ruby-lang.org/en/master/syntax/methods_rdoc.html">Methods</a> are defined like this:</p>
 <pre class="code ruby"><code class="ruby"><span class="keyword">def</span> <span class="function">one_plus_one</span> <span class="comment"># It can also be defined as def one_plus_one()</span>
   <span class="integer">1</span> + <span class="integer">1</span>
@@ -3696,7 +3717,7 @@ one_minus(<span class="key">another</span>: <span class="integer">1</span>)
 <span class="comment"># Guess what, the parentheses can also be omitted here:</span>
 one_minus <span class="key">another</span>: <span class="integer">1</span>
 </code></pre>
-<h2 id="blocks"><a href="#blocks" class="header-anchor">#</a>Blocks</h2>
+<h2><a href="#blocks" aria-hidden="true" class="header-anchor" id="blocks">#</a>Blocks</h2>
 <p>Multi-line blocks in Ruby are enclosed in a <code>do</code> .. <code>end</code> pair and single line blocks are enclosed with braces <code>{</code> .. <code>}</code>. You have encountered blocks in the examples above.
 Rules are implemented in a block:</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">rulename</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
@@ -3711,7 +3732,7 @@ Rules are implemented in a block:</p>
   <span class="keyword">end</span>
 <span class="keyword">end</span>
 </code></pre>
-<h3 id="block-arguments"><a href="#block-arguments" class="header-anchor">#</a>Block arguments</h3>
+<h3><a href="#block-arguments" aria-hidden="true" class="header-anchor" id="block-arguments">#</a>Block arguments</h3>
 <p>Blocks can receive arguments which are passed by its caller. We will often encounter this in <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#run-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#run (method)">run</a></span> and <span class='object_link'><a href="OpenHAB/DSL/Rules/BuilderDSL.html#triggered-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#triggered (method)">triggered</a></span> blocks.</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">name</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   changed <span class="constant">Switches</span>.members
@@ -3720,7 +3741,7 @@ Rules are implemented in a block:</p>
   <span class="keyword">end</span>
 <span class="keyword">end</span>
 </code></pre>
-<h2 id="rubys-safe-navigation-operator"><a href="#rubys-safe-navigation-operator" class="header-anchor">#</a>Ruby's Safe Navigation Operator</h2>
+<h2><a href="#rubys-safe-navigation-operator" aria-hidden="true" class="header-anchor" id="rubys-safe-navigation-operator">#</a>Ruby's Safe Navigation Operator</h2>
 <p>Ruby has a <a href="https://docs.ruby-lang.org/en/master/syntax/calling_methods_rdoc.html#label-Safe+Navigation+Operator">safe navigation operator</a>
 <code>&amp;.</code> which is similar to <code>?.</code> in C#, Groovy, Kotlin, etc.</p>
 <pre class="code ruby"><code class="ruby"><span class="comment"># Instead of:</span>
@@ -3731,8 +3752,8 @@ Rules are implemented in a block:</p>
 <span class="comment"># We can write it as:</span>
 items[<span class="string"><span class="delimiter">'</span><span class="content">My_Item</span><span class="delimiter">'</span></span>]&amp;.on
 </code></pre>
-<h2 id="some-gotchas"><a href="#some-gotchas" class="header-anchor">#</a>Some Gotchas</h2>
-<h3 id="exiting-early"><a href="#exiting-early" class="header-anchor">#</a>Exiting early</h3>
+<h2><a href="#some-gotchas" aria-hidden="true" class="header-anchor" id="some-gotchas">#</a>Some Gotchas</h2>
+<h3><a href="#exiting-early" aria-hidden="true" class="header-anchor" id="exiting-early">#</a>Exiting early</h3>
 <p>To <a href="https://stackoverflow.com/questions/1402757/how-to-break-out-from-a-ruby-block">exit early from a block</a>, use <code>next</code> instead of <code>return</code>.</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">rule name</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
   changed <span class="constant">Item1</span>
@@ -3745,7 +3766,7 @@ items[<span class="string"><span class="delimiter">'</span><span class="content"
 <span class="keyword">end</span>
 </code></pre>
 <p>Note: To exit early from a UI rule, use <code>return</code>.</p>
-<h3 id="parentheses"><a href="#parentheses" class="header-anchor">#</a>Parentheses</h3>
+<h3><a href="#parentheses" aria-hidden="true" class="header-anchor" id="parentheses">#</a>Parentheses</h3>
 <p>In Ruby, parentheses are optional when calling a method. However, when calling a method with arguments and a single-line block,
 the parentheses must be used. Example:</p>
 <pre class="code ruby"><code class="ruby">after(<span class="integer">5</span>.seconds) {  }
@@ -3761,14 +3782,14 @@ after <span class="integer">5</span>.seconds <span class="keyword">do</span>
 <span class="comment"># the following example will cause an error</span>
 after <span class="integer">5</span>.seconds { }
 </code></pre>
-<h3 id="zero-is-truthy-in-ruby"><a href="#zero-is-truthy-in-ruby" class="header-anchor">#</a>Zero is "truthy" in Ruby</h3>
+<h3><a href="#zero-is-truthy-in-ruby" aria-hidden="true" class="header-anchor" id="zero-is-truthy-in-ruby">#</a>Zero is "truthy" in Ruby</h3>
 <pre class="code ruby"><code class="ruby"><span class="keyword">if</span> <span class="integer">0</span>
   logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">This will always be executed</span><span class="delimiter">&quot;</span></span>
 <span class="keyword">else</span>
   logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">This will never be executed</span><span class="delimiter">&quot;</span></span>
 <span class="keyword">end</span>
 </code></pre>
-<h2 id="source-code-formatting"><a href="#source-code-formatting" class="header-anchor">#</a>Source Code Formatting</h2>
+<h2><a href="#source-code-formatting" aria-hidden="true" class="header-anchor" id="source-code-formatting">#</a>Source Code Formatting</h2>
 <p>The <a href="https://rubystyle.guide">ruby style guide</a> offers the generally accepted standards for Ruby source code formatting.</p>
 <p>When working with file based rules in a source code editor (e.g. VSCode), it is highly recommended to integrate
 <a href="https://rubocop.org/">Rubocop</a> (or <a href="https://github.com/fohte/rubocop-daemon">rubocop-daemon</a>)
@@ -3777,9 +3798,9 @@ as the source code formatter and linter for Ruby.</p>
 </div></div>
 
         <footer>
-  Generated on Tue Apr 15 13:39:11 2025 by
+  Generated on Fri Apr 18 21:13:09 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.4).
+  0.9.37 (ruby-3.1.4).
 </footer>
 
       </main>

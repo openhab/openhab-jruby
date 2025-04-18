@@ -33,6 +33,7 @@
   <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
 
 
+    <script type="text/javascript" charset="utf-8" src="https://openhab.github.io/openhab-jruby/js/versions.js"></script>
     <meta property="og:description" name="description" content="Manages timers created by after, or #schedule. - Documentation for openhab-scripting JRuby helper library.">
     <meta property="og:image" content="https://raw.githubusercontent.com/jruby/collateral/master/logos/PNGs/circle-fill/full-color/jruby-logo-circle-logo-fill-outline-medium.png">
     <meta property="og:image:alt" content="The JRuby logo">
@@ -86,8 +87,17 @@
     <li><a href="/openhab-jruby/5.38" class="version-button stable">Stable <small>(5.38)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
-  
-  
+  <div class="archived-versions">
+    <div class="dropdown-wrapper">
+      <a class="dropdown-title">
+        <span class="title">Archived</span>
+        <span class="arrow down"></span>
+      </a>
+      <ul class="nav-dropdown" id="version-dropdown">
+        
+      </ul>
+    </div>
+  </div>
 </div>
 
 
@@ -2650,6 +2660,17 @@
   </li>
 
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Items/Tags.html" title="OpenHAB::DSL::Items::Tags (module)">Tags</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   <li class="collapsed">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Items/TimedCommand.html" title="OpenHAB::DSL::Items::TimedCommand (module)">TimedCommand</a></span>
@@ -4105,11 +4126,11 @@ state. The timer is created in a thread-safe manner.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Extend an existing timer, or schedule a new one</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Extend an existing timer, or schedule a new one</p>
+</div></h5>
       
       <pre class="example code"><code><span class="comment"># This is technically the same functionality as just calling `after()` with an `id`,</span>
 <span class="comment"># but allows you to perform extra steps if the timer is actually scheduled.</span>
@@ -4122,8 +4143,8 @@ timers.schedule(item) <span class="keyword">do</span> |timer|
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Keep trying to turn something on, up to 5 times</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Keep trying to turn something on, up to 5 times</p>
+</div></h5>
       
       <pre class="example code"><code>timers.schedule(item) <span class="keyword">do</span> |timer|
   <span class="keyword">next</span> <span class="keyword">if</span> timer <span class="comment"># don't interrupt a retry cycle if it already exists</span>
@@ -4279,9 +4300,9 @@ timer, or nil. If nil, any existing timer will be cancelled.</p>
 </div>
 
         <footer>
-  Generated on Tue Apr 15 13:39:18 2025 by
+  Generated on Fri Apr 18 21:13:16 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.4).
+  0.9.37 (ruby-3.1.4).
 </footer>
 
       </main>

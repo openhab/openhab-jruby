@@ -33,6 +33,7 @@
   <script type="text/javascript" charset="utf-8" src="../../../js/app.js"></script>
 
 
+    <script type="text/javascript" charset="utf-8" src="https://openhab.github.io/openhab-jruby/js/versions.js"></script>
     <meta property="og:description" name="description" content="The ItemBuilder DSL allows you to customize an Item - Documentation for openhab-scripting JRuby helper library.">
     <meta property="og:image" content="https://raw.githubusercontent.com/jruby/collateral/master/logos/PNGs/circle-fill/full-color/jruby-logo-circle-logo-fill-outline-medium.png">
     <meta property="og:image:alt" content="The JRuby logo">
@@ -86,8 +87,17 @@
     <li><a href="/openhab-jruby/5.38" class="version-button stable">Stable <small>(5.38)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
-  
-  
+  <div class="archived-versions">
+    <div class="dropdown-wrapper">
+      <a class="dropdown-title">
+        <span class="title">Archived</span>
+        <span class="arrow down"></span>
+      </a>
+      <ul class="nav-dropdown" id="version-dropdown">
+        
+      </ul>
+    </div>
+  </div>
 </div>
 
 
@@ -2650,6 +2660,17 @@
   </li>
 
   
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Tags.html" title="OpenHAB::DSL::Items::Tags (module)">Tags</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
   <li class="collapsed">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="TimedCommand.html" title="OpenHAB::DSL::Items::TimedCommand (module)">TimedCommand</a></span>
@@ -4720,6 +4741,27 @@ Note the dimension must be properly capitalized.</p>
       <pre class="lines">
 
 
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
 339
 340
 341
@@ -4783,31 +4825,10 @@ Note the dimension must be properly capitalized.</p>
 399
 400
 401
-402
-403
-404
-405
-406
-407
-408
-409
-410
-411
-412
-413
-414
-415
-416
-417
-418
-419
-420
-421
-422
-423</pre>
+402</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 339</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 318</span>
 
 <span class="keyword">def</span> <span class="function">initialize</span>(type,
                name = <span class="predefined-constant">nil</span>,
@@ -5882,7 +5903,7 @@ If a hash, keys are commands, and values are labels</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>type <span class="comment">#=&gt; :switch</span></code></pre>
@@ -6057,7 +6078,7 @@ If a hash, keys are commands, and values are labels</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 486</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 465</span>
 
 </pre>
     </td>
@@ -6094,7 +6115,7 @@ If a hash, keys are commands, and values are labels</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
       <pre class="example code"><code>items.build <span class="keyword">do</span>
@@ -6104,24 +6125,24 @@ If a hash, keys are commands, and values are labels</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Relative channel name</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Relative channel name</p>
+</div></h5>
       
       <pre class="example code"><code>items.build <span class="keyword">do</span>
   switch_item <span class="constant">Bedroom_Light</span>, <span class="key">thing</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">mqtt:topic:bedroom-light</span><span class="delimiter">&quot;</span></span>, <span class="key">channel</span>: <span class="symbol">:power</span>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Multiple channels</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Multiple channels</p>
+</div></h5>
       
       <pre class="example code"><code>items.build <span class="keyword">do</span>
   dimmer_item <span class="constant">DemoDimmer</span>, <span class="key">channels</span>: [<span class="string"><span class="delimiter">&quot;</span><span class="content">hue:0210:bridge:1:color</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">knx:device:bridge:generic:controlDimmer</span><span class="delimiter">&quot;</span></span>]
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Multiple channels in a block</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Multiple channels in a block</p>
+</div></h5>
       
       <pre class="example code"><code>items.build <span class="keyword">do</span>
   dimmer_item <span class="constant">DemoDimmer</span> <span class="keyword">do</span>
@@ -6131,8 +6152,8 @@ If a hash, keys are commands, and values are labels</p>
 <span class="keyword">end</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Multiple channels with config</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Multiple channels with config</p>
+</div></h5>
       
       <pre class="example code"><code>items.build <span class="keyword">do</span>
   dimmer_item <span class="constant">DemoDimmer</span>, <span class="key">channels</span>: [[<span class="string"><span class="delimiter">&quot;</span><span class="content">hue:0210:bridge:1:color</span><span class="delimiter">&quot;</span></span>, <span class="key">profile</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">system:follow</span><span class="delimiter">&quot;</span></span>],
@@ -6307,29 +6328,29 @@ channel, and the second element being a config hash.</p>
       <pre class="lines">
 
 
-578
-579
-580
-581
-582
-583
-584
-585
-586
-587
-588
-589
-590
-591
-592
-593
-594
-595
-596
-597</pre>
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 578</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 557</span>
 
 <span class="keyword">def</span> <span class="function">channel</span>(*channels)
   <span class="keyword">return</span> <span class="instance-variable">@channels</span> <span class="keyword">if</span> channels.empty?
@@ -6375,54 +6396,54 @@ channel, and the second element being a config hash.</p>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Get the current expire setting</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Get the current expire setting</p>
+</div></h5>
       
       <pre class="example code"><code>expire</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Clear any expire setting</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Clear any expire setting</p>
+</div></h5>
       
       <pre class="example code"><code>expire <span class="predefined-constant">nil</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Use a duration</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Use a duration</p>
+</div></h5>
       
       <pre class="example code"><code>expire <span class="integer">5</span>.hours</code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Use a string duration</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Use a string duration</p>
+</div></h5>
       
       <pre class="example code"><code>expire <span class="string"><span class="delimiter">&quot;</span><span class="content">5h</span><span class="delimiter">&quot;</span></span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Set a specific state on expiration</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Set a specific state on expiration</p>
+</div></h5>
       
       <pre class="example code"><code>expire <span class="integer">5</span>.minutes, <span class="constant">NULL</span>
 expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <span class="constant">NULL</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Send a command on expiration</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Send a command on expiration</p>
+</div></h5>
       
       <pre class="example code"><code>expire <span class="integer">5</span>.minutes, <span class="key">command</span>: <span class="constant">OFF</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Specify the duration and command in the same string</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Specify the duration and command in the same string</p>
+</div></h5>
       
       <pre class="example code"><code>expire <span class="string"><span class="delimiter">&quot;</span><span class="content">5h,command=OFF</span><span class="delimiter">&quot;</span></span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Set the expire configuration</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Set the expire configuration</p>
+</div></h5>
       
       <pre class="example code"><code>expire <span class="integer">5</span>.minutes, <span class="key">ignore_state_updates</span>: <span class="predefined-constant">true</span></code></pre>
     
@@ -6535,33 +6556,33 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
 630
 631
-632
-633
-634
-635
-636
-637
-638
-639
-640
-641
-642
-643
-644
-645
-646
-647
-648
-649
-650
-651
-652
-653</pre>
+632</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 630</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 609</span>
 
 <span class="keyword">def</span> <span class="function">expire</span>(*args, <span class="key">command</span>: <span class="predefined-constant">nil</span>, <span class="key">state</span>: <span class="predefined-constant">nil</span>, <span class="key">ignore_state_updates</span>: <span class="predefined-constant">nil</span>, <span class="key">ignore_commands</span>: <span class="predefined-constant">nil</span>)
   <span class="keyword">unless</span> (<span class="integer">0</span>..<span class="integer">2</span>).cover?(args.length)
@@ -6663,7 +6684,7 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 497</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 476</span>
 
 </pre>
     </td>
@@ -6838,20 +6859,20 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
-473
-474
-475
-476
-477
-478
-479
-480
-481
-482
-483</pre>
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 473</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 452</span>
 
 <span class="keyword">def</span> <span class="function">group</span>(*groups)
   <span class="keyword">return</span> <span class="instance-variable">@groups</span> <span class="keyword">if</span> groups.empty?
@@ -6937,15 +6958,15 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
-519
-520
-521
-522
-523
-524</pre>
+498
+499
+500
+501
+502
+503</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 519</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 498</span>
 
 <span class="symbol"><span class="delimiter">%i[</span><span class="content">alexa ga homekit</span><span class="delimiter">]</span></span>.each <span class="keyword">do</span> |shortcut|
   define_method(shortcut) <span class="keyword">do</span> |value = <span class="predefined-constant">nil</span>, config = <span class="predefined-constant">nil</span>|
@@ -6995,17 +7016,17 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
-737
-738
-739
-740
-741
-742
-743
-744</pre>
+716
+717
+718
+719
+720
+721
+722
+723</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 737</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 716</span>
 
 <span class="keyword">def</span> <span class="function">inspect</span>
   s = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Items::</span><span class="inline"><span class="inline-delimiter">#{</span>inspect_type<span class="inline-delimiter">}</span></span><span class="content">ItemBuilder</span><span class="inline"><span class="inline-delimiter">#{</span>type_details<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>label.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
@@ -7187,19 +7208,19 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
-450
-451
-452
-453
-454</pre>
+429
+430
+431
+432
+433</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 450</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 429</span>
 
 <span class="keyword">def</span> <span class="function">tag</span>(*tags)
   <span class="keyword">return</span> <span class="instance-variable">@tags</span> <span class="keyword">if</span> tags.empty?
 
-  <span class="instance-variable">@tags</span>.concat(<span class="predefined-constant">self</span>.class.normalize_tags(*tags))
+  <span class="instance-variable">@tags</span>.concat(<span class="constant">Tags</span>.normalize(*tags))
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -7244,12 +7265,12 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
       <pre class="lines">
 
 
-430
-431
-432</pre>
+409
+410
+411</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 430</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 409</span>
 
 <span class="keyword">def</span> <span class="function">to_s</span>
   label || name
@@ -7264,9 +7285,9 @@ expire <span class="integer">5</span>.minutes, <span class="key">state</span>: <
 </div>
 
         <footer>
-  Generated on Tue Apr 15 13:39:17 2025 by
+  Generated on Fri Apr 18 21:13:15 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.4).
+  0.9.37 (ruby-3.1.4).
 </footer>
 
       </main>
