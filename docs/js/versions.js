@@ -45,12 +45,20 @@ function populateArchivedVersions() {
   archivedVersions.forEach((version) => {
     const versionLink = $("<a>")
       .attr("href", `/openhab-jruby/${version}/`)
-      .text(version);
+      .text(version)
+      .click(gotoVersion);
     const listItem = $("<li>")
       .addClass("dropdown-item")
       .append(versionLink);
     versionDropdown.append(listItem);
   });
+}
+
+function gotoVersion(e) {
+  e.preventDefault();
+  const version = $(e.target).text();
+  const newUrl = window.location.href.replace(/(\/openhab-scripting\/)(?:\d+\.\d+|main)\//, `$1${version}/`);
+  window.location.href = newUrl;
 }
 
 $(document).ready(function() {
