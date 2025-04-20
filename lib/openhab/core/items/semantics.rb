@@ -571,9 +571,9 @@ module Enumerable
   # Returns a new array of items that are a semantics Location (optionally of one of the given types)
   #
   # @param [SemanticTag] types
-  #   Pass 1 or more classes that are sub-classes of {Semantics::Location Semantics::Location}.
+  #   Pass 1 or more tags that are sub-tags of {Semantics::Location Semantics::Location}.
   #   Note that when comparing against semantic tags, it does a sub-class check by default.
-  #   So if you search for [Room], you'll get items tagged with [LivingRoom], [Kitchen], etc.
+  #   So if you search for `Room`, you'll get items tagged with `LivingRoom`, `Kitchen`, etc.
   # @param [true, false] subclasses
   #   If true, match all subclasses of the given types.
   #   If false, only match the exact type.
@@ -614,9 +614,9 @@ module Enumerable
   #   before calling {#points}. See the example with {#points}.
   #
   # @param [SemanticTag] types
-  #   Pass 1 or more classes that are sub-classes of {Semantics::Equipment Semantics::Equipment}.
-  #   Note that when comparing against semantic tags, it does a sub-class check by default.
-  #   So if you search for [Fan], you'll get items tagged with [CeilingFan], [KitchenHood], etc.
+  #   Pass 1 or more tags that are sub-classes of {Semantics::Equipment Semantics::Equipment}.
+  #   Note that when comparing against semantic tags, it does a sub-class check by default,
+  #   so if you search for `Fan`, you'll get items tagged with `CeilingFan`, `KitchenHood`, etc.
   # @param [true, false] subclasses
   #   If true, match all subclasses of the given types.
   #   If false, only match the exact type.
@@ -649,11 +649,15 @@ module Enumerable
 
   # Returns a new array of items that are semantics points (optionally of a given type)
   #
-  # @param [SemanticTag] point_or_property_types
-  #   Pass 1 or 2 classes that are sub-classes of {Semantics::Point Semantics::Point} or
-  #   {Semantics::Property Semantics::Property}.
-  #   Note that when comparing against semantic tags, it does a sub-class check by default.
-  #   So if you search for [Control], you'll get items tagged with [Switch].
+  # @param [SemanticTag, Array<SemanticTag>] point_or_property_types
+  #   Pass 1 or more tags that are sub-tags of {Semantics::Point Semantics::Point} or
+  #   {Semantics::Property Semantics::Property}. If multiple point _or_ property
+  #   tags are given, the point only has to match one of them. But if point _and_
+  #   property tag(s) are given, the point must match both a point and property tag.
+  #   You may also pass an array of tags, to match multiple combination of tags at once.
+  #   See the air temperature/speed control example below.
+  #   Note that when comparing against semantic tags, it does a sub-class check by default,
+  #   so if you search for `Control`, you'll get items tagged with `Switch`.
   # @param [true, false] subclasses
   #   If true, match all subclasses of the given types.
   #   If false, only match the exact type.
@@ -662,35 +666,58 @@ module Enumerable
   # @example Get all the power switch items for every equipment in a room
   #   lGreatRoom.equipments.members.points(Semantics::Switch)
   #
+  # @example Get (all) the temperature setpoints for a thermostat
+  #   eMainFloorThermostat.points(Semantics::Setpoint, Semantics::Temperature)
+  #
+  # @example Get all the brightness and color (light) points in a room
+  #   lKitchen.equipments.members.points(Semantics::Brightness, Semantics::Color)
+  #
+  # @example Get all the brightness and color (light) control points in a room
+  #   lKitchen.equipments.members.points(Semantics::Control, Semantics::Brightness, Semantics::Color)
+  #
+  # @example Get the air temperature and speed control points in a room
+  #   lGreatRoom.equipments.members.points([Semantics::Measurement, Semantics::Temperature],
+  #                                        [Semantics::Control, Semantics::Speed])
+  #   # => [GreatRoom_AirTemp, GreatRoom_FanSpeed]
+  #
   # @see #members
   #
   def points(*point_or_property_types, subclasses: true)
-    unless (0..2).cover?(point_or_property_types.length)
-      raise ArgumentError, "wrong number of arguments (given #{point_or_property_types.length}, expected 0..2)"
-    end
+    return select(&:point?) if point_or_property_types.empty?
 
     begin
-      raise ArgumentError unless point_or_property_types.all? do |tag|
-                                   tag < Semantics::Point ||
-                                   tag < Semantics::Property
-                                 end
+      arrays, non_arrays = point_or_property_types.partition { |tag| tag.is_a?(Array) }
+      arrays << non_arrays unless non_arrays.empty?
+
+      arrays.map! do |array|
+        points = array.select { |tag| tag < Semantics::Point }
+        properties = array.select { |tag| tag < Semantics::Property }
+        raise ArgumentError unless points.length + properties.length == array.length
+
+        [points, properties]
+      end
     rescue ArgumentError, TypeError
-      raise ArgumentError, "point_or_property_types must all be a subclass of Point or Property"
-    end
-    if point_or_property_types.count { |tag| tag < Semantics::Point } > 1 ||
-       point_or_property_types.count { |tag| tag < Semantics::Property } > 1
-      raise ArgumentError, "point_or_property_types cannot both be a subclass of Point or Property"
+      raise ArgumentError, "point_or_property_types must all be arrays, or a subclass of Point or Property"
     end
 
     select do |point|
-      point.point? && point_or_property_types.all? do |tag|
+      point.point? && arrays.any? do |(points, properties)|
         if subclasses
-          (tag < Semantics::Point && point.point_type&.<=(tag)) ||
-            (tag < Semantics::Property && point.property_type&.<=(tag))
+          next false if !points.empty? &&
+                        ((point_type = point.point_type).nil? ||
+                         points.none? { |tag| point_type <= tag })
+          next false if !properties.empty? &&
+                        ((property_type = point.property_type).nil? ||
+                         properties.none? { |tag| property_type <= tag })
         else
-          (tag < Semantics::Point && point.point_type == tag) ||
-            (tag < Semantics::Property && point.property_type == tag)
+          next false if !points.empty? &&
+                        ((point_type = point.point_type).nil? ||
+                         points.none?(point_type))
+          next false if !properties.empty? &&
+                        ((property_type = point.property_type).nil? ||
+                         properties.none?(property_type))
         end
+        true
       end
     end
   end
