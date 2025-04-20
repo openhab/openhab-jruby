@@ -9,6 +9,8 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
           group_item "Patio_Light_Bulb", tag: Semantics::Lightbulb do
             dimmer_item "Patio_Light_Brightness", tags: [Semantics::Control, Semantics::Level]
             color_item "Patio_Light_Color", tags: [Semantics::Control, Semantics::Light]
+            number_item "Patio_Light_Power", tags: [Semantics::Measurement, Semantics::Power]
+            switch_item "Patio_Light_ControlPower", tags: [Semantics::Control, Semantics::Power]
           end
 
           switch_item "Patio_Motion", tags: [Semantics::MotionDetector, "CustomTag"]
@@ -60,14 +62,60 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
 
   describe "#points" do
     it "returns siblings of a point" do
-      expect(Patio_Light_Brightness.points).to eql [Patio_Light_Color]
+      expect(Patio_Light_Brightness.points).to eql [Patio_Light_Color, Patio_Light_Power, Patio_Light_ControlPower]
     end
 
     describe "returns points of an equipment" do
-      specify { expect(Patio_Light_Bulb.points).to match_array([Patio_Light_Brightness, Patio_Light_Color]) }
+      specify do
+        expect(Patio_Light_Bulb.points).to match_array([Patio_Light_Brightness,
+                                                        Patio_Light_Color,
+                                                        Patio_Light_Power,
+                                                        Patio_Light_ControlPower])
+      end
+
       specify { expect(Patio_Light_Bulb.points(Semantics::Light)).to eql [Patio_Light_Color] }
       specify { expect(Patio_Light_Bulb.points(Semantics::Level)).to eql [Patio_Light_Brightness] }
       specify { expect(Patio_Light_Bulb.points(Semantics::Level, Semantics::Control)).to eql [Patio_Light_Brightness] }
+      specify { expect(Patio_Light_Bulb.points([Semantics::Measurement, Semantics::Power])).to eql [Patio_Light_Power] }
+
+      specify do
+        expect(Patio_Light_Bulb.points(Semantics::Control, Semantics::Measurement))
+          .to match_array([Patio_Light_Brightness,
+                           Patio_Light_Color,
+                           Patio_Light_Power,
+                           Patio_Light_ControlPower])
+      end
+
+      specify do
+        expect(Patio_Light_Bulb.points(Semantics::Control, Semantics::Light, Semantics::Power))
+          .to match_array([Patio_Light_Color,
+                           Patio_Light_ControlPower])
+      end
+
+      specify do
+        expect(Patio_Light_Bulb.points(Semantics::Control, Semantics::Measurement, Semantics::Power))
+          .to match_array([Patio_Light_Power,
+                           Patio_Light_ControlPower])
+      end
+
+      specify do
+        # A bit odd, but valid. It's anything that's (control or measurement) and (light or power)
+        expect(Patio_Light_Bulb.points(Semantics::Control,
+                                       Semantics::Measurement,
+                                       Semantics::Power,
+                                       Semantics::Light))
+          .to match_array([
+                            Patio_Light_Color,
+                            Patio_Light_Power,
+                            Patio_Light_ControlPower
+                          ])
+      end
+
+      specify do
+        expect(Patio_Light_Bulb.points([Semantics::Measurement, Semantics::Power],
+                                       [Semantics::Control, Semantics::Light]))
+          .to match_array([Patio_Light_Power, Patio_Light_Color])
+      end
     end
 
     it "includes the subclasses of the given point" do
@@ -103,19 +151,6 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
       specify { expect { Patio_Light_Bulb.points(Semantics::Level, Semantics::Indoor) }.to raise_error(ArgumentError) }
       specify { expect { Patio_Light_Bulb.points(Semantics::Lightbulb) }.to raise_error(ArgumentError) }
       specify { expect { Patio_Light_Bulb.points(Semantics::Indoor) }.to raise_error(ArgumentError) }
-      specify { expect { Patio_Light_Bulb.points(Semantics::Level, Semantics::Light) }.to raise_error(ArgumentError) }
-
-      specify do
-        expect do
-          Patio_Light_Bulb.points(Semantics::Switch, Semantics::Control)
-        end.to raise_error(ArgumentError)
-      end
-
-      specify do
-        expect do
-          Patio_Light_Bulb.points(Semantics::Switch, Semantics::Light, Semantics::Level)
-        end.to raise_error(ArgumentError)
-      end
     end
   end
 
@@ -191,14 +226,23 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
         gPatio.members.equipments.members.points(*args)
       end
 
-      specify { expect(points).to match_array([Patio_Light_Brightness, Patio_Light_Color]) }
-      specify { expect(points(Semantics::Control)).to match_array([Patio_Light_Brightness, Patio_Light_Color]) }
+      specify do
+        expect(points).to match_array([Patio_Light_Brightness,
+                                       Patio_Light_Color,
+                                       Patio_Light_Power,
+                                       Patio_Light_ControlPower])
+      end
+
+      specify do
+        expect(points(Semantics::Control)).to match_array([Patio_Light_Brightness,
+                                                           Patio_Light_Color,
+                                                           Patio_Light_ControlPower])
+      end
+
       specify { expect(points(Semantics::Light)).to eql([Patio_Light_Color]) }
       specify { expect(points(Semantics::Light, Semantics::Control)).to eql([Patio_Light_Color]) }
 
-      specify { expect { points(Semantics::Light, Semantics::Level) }.to raise_error(ArgumentError) }
       specify { expect { points(Semantics::Room) }.to raise_error(ArgumentError) }
-      specify { expect { points(Semantics::Control, Semantics::Switch) }.to raise_error(ArgumentError) }
 
       context "with GroupItem as a point" do
         before do
