@@ -5738,15 +5738,19 @@ is a <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenH
         <span class='name'>point_or_property_types</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">SemanticTag</a></span>&gt;</tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><p>Pass 1 or 2 classes that are sub-classes of <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Semantics::Point</a></span> or
-<span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Semantics::Property</a></span>.
-Note that when comparing against semantic tags, it does a sub-class check by default.
-So if you search for [Control], you'll get items tagged with [Switch].</p>
+        <div class='inline'><p>Pass 1 or more tags that are sub-tags of <span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Semantics::Point</a></span> or
+<span class='object_link'><a href="Semantics/SemanticTag.html" title="OpenHAB::Core::Items::Semantics::SemanticTag (module)">Semantics::Property</a></span>. If multiple point <em>or</em> property
+tags are given, the point only has to match one of them. But if point <em>and</em>
+property tag(s) are given, the point must match both a point and property tag.
+You may also pass an array of tags, to match multiple combination of tags at once.
+See the air temperature/speed control example below.
+Note that when comparing against semantic tags, it does a sub-class check by default,
+so if you search for <code>Control</code>, you'll get items tagged with <code>Switch</code>.</p>
 </div>
       
     </li>
@@ -5872,7 +5876,7 @@ If false, only match the exact type.</p>
 </div>
 
         <footer>
-  Generated on Sun Apr 20 02:00:12 2025 by
+  Generated on Sun Apr 20 03:17:04 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>
