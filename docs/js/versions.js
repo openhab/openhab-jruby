@@ -55,10 +55,19 @@ function populateArchivedVersions() {
 }
 
 function gotoVersion(e) {
-  e.preventDefault();
-  const version = $(e.target).text();
-  const newUrl = window.location.href.replace(/(\/openhab-scripting\/)(?:\d+\.\d+|main)\//, `$1${version}/`);
-  window.location.href = newUrl;
+  // The target could be a sub element of the <a> tag, e.g. <small>
+  const target = e.target.tagName === 'A' ? e.target : e.target.closest('a');
+  if (target.classList.contains('current')) {
+    e.preventDefault();
+    return;
+  }
+  const version = target.pathname.split('/').filter(s => s).slice(-1)[0];
+  const versionRegex = new RegExp(`(?<=/openhab-jruby/)(\\d+\\.\\d+|main)(?=/)`);
+  const newUrl = window.location.href.replace(versionRegex, version);
+  if (newUrl !== window.location.href) {
+    e.preventDefault();
+    window.location.href = newUrl;
+  }
 }
 
 $(document).ready(function() {

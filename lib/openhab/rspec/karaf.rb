@@ -7,6 +7,7 @@ require "time"
 
 require_relative "jruby"
 require_relative "shell"
+require_relative "mocks/synchronous_executor"
 
 module OpenHAB
   module RSpec
@@ -291,7 +292,6 @@ module OpenHAB
             cfg.update(props)
           end
           wait_for_service("org.openhab.core.automation.RuleManager") do |re|
-            require_relative "mocks/synchronous_executor"
             # overwrite thCallbacks to one that will spy to remove threading
             field = re.class.java_class.declared_field :thCallbacks
             field.accessible = true
@@ -430,8 +430,6 @@ module OpenHAB
           end
 
           if bundle_name == "org.openhab.core"
-            require_relative "mocks/synchronous_executor"
-
             org.openhab.core.common.ThreadPoolManager.field_accessor :pools
             org.openhab.core.common.ThreadPoolManager.pools = Mocks::SynchronousExecutorMap.instance
           end
