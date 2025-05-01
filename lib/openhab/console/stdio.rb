@@ -23,7 +23,7 @@ module OpenHAB
       end
 
       def winsize
-        [@terminal.width, @terminal.height]
+        [@terminal.height, @terminal.width]
       end
 
       def inspect
