@@ -9,17 +9,23 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
 
   # Call the given method with one timestamp argument
   def call_with_one_arg(method, item, with_riemann_type: false)
-    timestamp = method.to_s.include?("until") ? 2.seconds.from_now : 2.seconds.ago
+    timestamp = if method.to_s.include?("until")
+                  2.seconds.from_now
+                elsif method.to_s.include?("between")
+                  [2.seconds.ago..Time.now]
+                else
+                  2.seconds.ago
+                end
 
     if with_riemann_type
       %i[left midpoint right trapezoidal].each do |riemann_type|
-        item.public_send(method, timestamp, riemann_type:)
-        item.public_send(method, timestamp, :influxdb, riemann_type:)
+        item.public_send(method, *timestamp, riemann_type:)
+        item.public_send(method, *timestamp, :influxdb, riemann_type:)
       end
     end
 
-    item.public_send(method, timestamp, :influxdb)
-    item.public_send(method, timestamp)
+    item.public_send(method, *timestamp, :influxdb)
+    item.public_send(method, *timestamp)
   end
 
   # Call the given method with two timestamp arguments
@@ -36,11 +42,8 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
   end
 
   def call_method(method, item, with_riemann_type: false)
-    if method.to_s.include?("between")
-      call_with_two_args(method, item, with_riemann_type:)
-    else
-      call_with_one_arg(method, item, with_riemann_type:)
-    end
+    call_with_two_args(method, item, with_riemann_type:) if method.to_s.include?("between")
+    call_with_one_arg(method, item, with_riemann_type:)
   end
 
   # Freeze time to avoid intermittent timing issues esp. with #delta_since

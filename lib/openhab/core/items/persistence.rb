@@ -132,15 +132,25 @@ module OpenHAB
         #   @since openHAB 4.2
         #   @since openHAB 5.0 riemann_type parameter added
 
-        # @!method average_between(start, finish, service = nil, riemann_type: nil)
+        # @!method average_between
         #   Returns the average value of the item's state between two points in time
-        #   @param [#to_zoned_date_time] start The point in time from which to search
-        #   @param [#to_zoned_date_time] finish The point in time to which to search
-        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
-        #   @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann sum.
-        #     If nil, :left is used.
+        #
+        #   @overload average_between(start, finish, service = nil, reimann_type: nil)
+        #     @param [#to_zoned_date_time] start The point in time from which to search
+        #     @param [#to_zoned_date_time] finish The point in time to which to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #     @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann
+        #       sum. If nil, :left is used.
+        #
+        #   @overload average_between(range, service = nil, reimann_type: nil)
+        #     @param [Range<#to_zoned_date_time>] range The time range to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #     @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann
+        #       sum. If nil, :left is used.
+        #
         #   @return [DecimalType, QuantityType, nil] The average value between `start` and `finish`,
         #     or nil if no states could be found.
+        #
         #   @since openHAB 5.0 riemann_type parameter added
 
         # @!method delta_since(timestamp, service = nil)
@@ -158,11 +168,18 @@ module OpenHAB
         #     or nil if no future states could be found.
         #   @since openHAB 4.2
 
-        # @!method delta_between(start, finish, service = nil)
+        # @!method delta_between
         #   Returns the difference value of the item's state between two points in time
-        #   @param [#to_zoned_date_time] start The point in time from which to search
-        #   @param [#to_zoned_date_time] finish The point in time to which to search
-        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
+        #   @overload delta_between(start, finish, service = nil)
+        #     @param [#to_zoned_date_time] start The point in time from which to search
+        #     @param [#to_zoned_date_time] finish The point in time to which to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
+        #   @overload delta_between(range, service = nil)
+        #     @param [Range<#to_zoned_date_time>] range The time range to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
         #   @return [DecimalType, QuantityType, nil] The difference value between `start` and `finish`,
         #     or nil if no states could be found.
 
@@ -187,13 +204,19 @@ module OpenHAB
         #   @since openHAB 4.2
         #   @since openHAB 5.0 riemann_type parameter added
 
-        # @!method deviation_between(start, finish, service = nil, riemann_type: nil)
+        # @!method deviation_between
         #   Returns the standard deviation of the item's state between two points in time
-        #   @param [#to_zoned_date_time] start The point in time from which to search
-        #   @param [#to_zoned_date_time] finish The point in time to which to search
-        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
-        #   @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann sum.
-        #     If nil, :left is used.
+        #
+        #   @overload deviation_between(start, finish, service = nil)
+        #     @param [#to_zoned_date_time] start The point in time from which to search
+        #     @param [#to_zoned_date_time] finish The point in time to which to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #     @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann
+        #       sum. If nil, :left is used.
+        #   @overload deviation_between(range, service = nil)
+        #     @param [Range<#to_zoned_date_time>] range The time range to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
         #   @return [DecimalType, QuantityType, nil] The standard deviation between `start` and `finish`,
         #     or nil if no states could be found.
         #   @since openHAB 5.0 riemann_type parameter added
@@ -214,11 +237,17 @@ module OpenHAB
         #     or nil if no future states could be found.
         #   @since openHAB 4.3
 
-        # @!method median_between(start, finish, service = nil)
+        # @!method median_between
         #   Returns the median of the item's state between two points in time
-        #   @param [#to_zoned_date_time] start The point in time from which to search
-        #   @param [#to_zoned_date_time] finish The point in time to which to search
-        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
+        #   @overload median_between(start, finish, service = nil)
+        #     @param [#to_zoned_date_time] start The point in time from which to search
+        #     @param [#to_zoned_date_time] finish The point in time to which to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @overload median_between(range, service = nil)
+        #     @param [Range<#to_zoned_date_time>] range The time range to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
         #   @return [DecimalType, QuantityType, nil] The median between `start` and `finish`,
         #     or nil if no states could be found.
         #   @since openHAB 4.3
@@ -238,11 +267,17 @@ module OpenHAB
         #     or nil if no future states could be found.
         #   @since openHAB 4.2
 
-        # @!method sum_between(start, finish, service = nil)
+        # @!method sum_between
         #   Returns the sum of the item's state between two points in time
-        #   @param [#to_zoned_date_time] start The point in time from which to search
-        #   @param [#to_zoned_date_time] finish The point in time to which to search
-        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
+        #   @overload sum_between(start, finish, service = nil)
+        #     @param [#to_zoned_date_time] start The point in time from which to search
+        #     @param [#to_zoned_date_time] finish The point in time to which to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @overload sum_between(range, service = nil)
+        #     @param [Range<#to_zoned_date_time>] range The time range to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
         #   @return [DecimalType, QuantityType, nil] The sum between `start` and `finish`,
         #     or nil if no states could be found.
 
@@ -267,13 +302,21 @@ module OpenHAB
         #   @since openHAB 4.2
         #   @since openHAB 5.0 riemann_type parameter added
 
-        # @!method variance_between(start, finish, service = nil, riemann_type: nil)
+        # @!method variance_between
         #   Returns the variance of the item's state between two points in time
-        #   @param [#to_zoned_date_time] start The point in time from which to search
-        #   @param [#to_zoned_date_time] finish The point in time to which to search
-        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
-        #   @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann sum.
-        #     If nil, :left is used.
+        #
+        #   @overload variance_between(start, finish, service = nil, reimann_type: nil)
+        #     @param [#to_zoned_date_time] start The point in time from which to search
+        #     @param [#to_zoned_date_time] finish The point in time to which to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #     @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann
+        #       sum. If nil, :left is used.
+        #   @overload variance_between(range, service = nil, reimann_type: nil)
+        #     @param [Range<#to_zoned_date_time>] range The time range to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #     @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann
+        #       sum. If nil, :left is used.
+        #
         #   @return [DecimalType, QuantityType, nil] The variance between `start` and `finish`,
         #     or nil if no states could be found.
         #   @since openHAB 5.0 riemann_type parameter added
@@ -291,11 +334,17 @@ module OpenHAB
         #   @return [true,false] True if the item's state has changed until the given `timestamp`, False otherwise.
         #   @since openHAB 4.2
 
-        # @!method changed_between?(start, finish, service = nil)
+        # @!method changed_between?
         #   Whether the item's state changed between two points in time
-        #   @param [#to_zoned_date_time] start The point in time from which to search
-        #   @param [#to_zoned_date_time] finish The point in time to which to search
-        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
+        #   @overload changed_between?(start, finish, service = nil)
+        #     @param [#to_zoned_date_time] start The point in time from which to search
+        #     @param [#to_zoned_date_time] finish The point in time to which to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @overload changed_between?(range, service = nil)
+        #     @param [Range<#to_zoned_date_time>] range The time range to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
         #   @return [true,false] True if the item's state changed between `start` and `finish`, False otherwise.
 
         # @!method evolution_rate(timestamp, service = nil)
@@ -335,11 +384,17 @@ module OpenHAB
         #     or nil if no future states could be found.
         #   @since openHAB 4.2
 
-        # @!method evolution_rate_between(start, finish, service = nil)
+        # @!method evolution_rate_between
         #   Returns the evolution rate of the item's state between two points in time
-        #   @param [#to_zoned_date_time] start The point in time from which to search
-        #   @param [#to_zoned_date_time] finish The point in time to which to search
-        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
+        #   @overload evolution_rate_between(start, finish, service = nil)
+        #     @param [#to_zoned_date_time] start The point in time from which to search
+        #     @param [#to_zoned_date_time] finish The point in time to which to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @overload evolution_rate_between(range, service = nil)
+        #     @param [Range<#to_zoned_date_time>] range The time range to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
         #   @return [DecimalType, nil] The evolution rate between `start` and `finish`,
         #     or nil if no states could be found.
         #   @since openHAB 4.2
@@ -375,11 +430,17 @@ module OpenHAB
         #     or nil if no future states could be found.
         #   @since openHAB 4.2
 
-        # @!method maximum_between(start, finish, service = nil)
+        # @!method maximum_between
         #   Returns the maximum value of the item's state between two points in time
-        #   @param [#to_zoned_date_time] start The point in time from which to search
-        #   @param [#to_zoned_date_time] finish The point in time to which to search
-        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
+        #   @overload maximum_between(start, finish, service = nil)
+        #     @param [#to_zoned_date_time] start The point in time from which to search
+        #     @param [#to_zoned_date_time] finish The point in time to which to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @overload maximum_between(range, service = nil)
+        #     @param [Range<#to_zoned_date_time>] range The time range to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
         #   @return [PersistedState, nil] The maximum value between `start` and `finish`,
         #     or nil if no states could be found.
 
@@ -398,11 +459,17 @@ module OpenHAB
         #     or nil if no future states could be found.
         #   @since openHAB 4.2
 
-        # @!method minimum_between(start, finish, service = nil)
+        # @!method minimum_between
         #   Returns the minimum value of the item's state between two points in time
-        #   @param [#to_zoned_date_time] start The point in time from which to search
-        #   @param [#to_zoned_date_time] finish The point in time to which to search
-        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
+        #   @overload minimum_between(start, finish, service = nil)
+        #     @param [#to_zoned_date_time] start The point in time from which to search
+        #     @param [#to_zoned_date_time] finish The point in time to which to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @overload minimum_between(range, service = nil)
+        #     @param [Range<#to_zoned_date_time>] range The time range to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
         #   @return [PersistedState, nil] The minimum value between `start` and `finish`,
         #     or nil if no states could be found.
 
@@ -419,11 +486,17 @@ module OpenHAB
         #   @return [true,false] True if the item's state will be updated until the given `timestamp`, False otherwise.
         #   @since openHAB 4.2
 
-        # @!method updated_between?(start, finish, service = nil)
+        # @!method updated_between?
         #   Whether the item's state was updated between two points in time
-        #   @param [#to_zoned_date_time] start The point in time from which to search
-        #   @param [#to_zoned_date_time] finish The point in time to which to search
-        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
+        #   @overload updated_between?(start, finish, service = nil)
+        #     @param [#to_zoned_date_time] start The point in time from which to search
+        #     @param [#to_zoned_date_time] finish The point in time to which to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @overload updated_between?(range, service = nil)
+        #     @param [Range<#to_zoned_date_time>] range The time range to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
         #   @return [true,false] True if the item's state was updated between `start` and `finish`, False otherwise.
 
         # @!method count_since(timestamp, service = nil)
@@ -439,11 +512,17 @@ module OpenHAB
         #   @return [Integer] The number of values persisted for this item.
         #   @since openHAB 4.2
 
-        # @!method count_between(start, finish, service = nil)
+        # @!method count_between
         #   Returns the number of available data points between two points in time.
-        #   @param [#to_zoned_date_time] start The point in time from which to search
-        #   @param [#to_zoned_date_time] finish The point in time to which to search
-        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
+        #   @overload count_between(start, finish, service = nil)
+        #     @param [#to_zoned_date_time] start The point in time from which to search
+        #     @param [#to_zoned_date_time] finish The point in time to which to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @overload count_between(range, service = nil)
+        #     @param [Range<#to_zoned_date_time>] range The time range to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
         #   @return [Integer] The number of values persisted for this item.
 
         # @!method count_state_changes_since(timestamp, service = nil)
@@ -459,11 +538,17 @@ module OpenHAB
         #   @return [Integer] The number of values persisted for this item.
         #   @since openHAB 4.2
 
-        # @!method count_state_changes_between(start, finish, service = nil)
+        # @!method count_state_changes_between
         #   Returns the number of changes in data points between two points in time.
-        #   @param [#to_zoned_date_time] start The point in time from which to search
-        #   @param [#to_zoned_date_time] finish The point in time to which to search
-        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
+        #   @overload count_state_changes_between(start, finish, service = nil)
+        #     @param [#to_zoned_date_time] start The point in time from which to search
+        #     @param [#to_zoned_date_time] finish The point in time to which to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @overload count_state_changes_between(range, service = nil)
+        #     @param [Range<#to_zoned_date_time>] range The time range to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
         #   @return [Integer] The number of values persisted for this item.
 
         # @!method all_states_since(timestamp, service = nil)
@@ -480,11 +565,17 @@ module OpenHAB
         #   @return [Array<PersistedState>] An array of {PersistedState} persisted for this item.
         #   @since openHAB 4.2
 
-        # @!method all_states_between(start, finish, service = nil)
+        # @!method all_states_between
         #   Returns all the states between two points in time.
-        #   @param [#to_zoned_date_time] start The point in time from which to search
-        #   @param [#to_zoned_date_time] finish The point in time to which to search
-        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
+        #   @overload all_states_between(start, finish, service = nil)
+        #     @param [#to_zoned_date_time] start The point in time from which to search
+        #     @param [#to_zoned_date_time] finish The point in time to which to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @overload all_states_between(range, service = nil)
+        #     @param [Range<#to_zoned_date_time>] range The time range to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
         #   @return [Array<PersistedState>] An array of {PersistedState} persisted for this item.
         #   @since openHAB 4.0
 
@@ -508,13 +599,21 @@ module OpenHAB
         #     or nil if no previous states could be found.
         #   @since openHAB 5.0
 
-        # @!method riemann_sum_between(start, finish, service = nil, riemann_type: nil)
+        # @!method riemann_sum_between
         #   Returns the Riemann sum of the states between two points in time.
-        #   @param [#to_zoned_date_time] start The point in time from which to search
-        #   @param [#to_zoned_date_time] finish The point in time to which to search
-        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
-        #   @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann sum.
-        #     If nil, :left is used.
+        #
+        #   @overload riemann_sum_between(start, finish, service = nil, riemann_type: nil)
+        #     @param [#to_zoned_date_time] start The point in time from which to search
+        #     @param [#to_zoned_date_time] finish The point in time to which to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #     @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann
+        #       sum. If nil, :left is used.
+        #   @overload riemann_sum_between(range, service = nil, riemann_type: nil)
+        #     @param [Range<#to_zoned_date_time>] range The time range to search
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #     @param [:left, :midpoint, :right, :trapezoidal] riemann_type An optional approximation type for Riemann
+        #       sum. If nil, :left is used.
+        #
         #   @return [DecimalType, QuantityType, nil] The riemann sum between `start` and `finish`,
         #     or nil if no previous states could be found.
         #   @since openHAB 5.0
@@ -533,11 +632,17 @@ module OpenHAB
         #   @return [void]
         #   @since openHAB 4.2
 
-        # @!method remove_all_states_between(start, finish, service = nil)
+        # @!method remove_all_states_between
         #   Removes persisted data points between two points in time.
-        #   @param [#to_zoned_date_time] start The point in time from which to remove
-        #   @param [#to_zoned_date_time] finish The point in time to which to remove
-        #   @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
+        #   @overload remove_all_states_between(start, finish, service = nil)
+        #     @param [#to_zoned_date_time] start The point in time from which to remove
+        #     @param [#to_zoned_date_time] finish The point in time to which to remove
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #   @overload remove_all_states_between(range, service = nil)
+        #     @param [Range<#to_zoned_date_time>] range The time range to remove
+        #     @param [Symbol, String] service An optional persistence id instead of the default persistence service.
+        #
         #   @return [void]
         #   @since openHAB 4.2
 
@@ -756,17 +861,23 @@ module OpenHAB
 
             method = "#{method}_between"
             class_eval <<~RUBY, __FILE__, __LINE__ + 1
-              def #{method}#{suffix}(start, finish, service = nil#{riemann_param}) # def changed_between?(start, finish, service = nil, riemann_type: nil)
-                service ||= persistence_service                                    #   service ||= persistence_service
-                result = Actions::PersistenceExtensions.#{method}(                 #   result = Actions::PersistenceExtensions.average_between(
-                  self,                                                            #     self,
-                  start.to_zoned_date_time,                                        #     start.to_zoned_date_time,
-                  finish.to_zoned_date_time,                                       #     finish.to_zoned_date_time,
-                  #{riemann_arg}                                                   #     to_riemann_type(riemann_type),
-                  service&.to_s                                                    #     service&.to_s
-                )                                                                  #   )
-                wrap_result(result, quantify: #{quantify})                         #   wrap_result(result, quantify: false)
-              end                                                                  # end
+              def #{method}#{suffix}(start, finish = nil, service = nil#{riemann_param})             # def changed_between?(start, finish, service = nil, riemann_type: nil)
+                if start.is_a?(Range)                                                                #   if start.is_a?(Range)
+                  raise ArgumentError, "wrong number of arguments (given 3, expected 2)" if service  #     raise ArgumentError, "wrong number of arguments (given 3, expected 2)" if service
+                  service = finish                                                                   #     service = finish
+                  finish = start.end                                                                 #     finish = start.end
+                  start = start.begin                                                                #     start = start.begin
+                end                                                                                  #   end
+                service ||= persistence_service                                                      #   service ||= persistence_service
+                result = Actions::PersistenceExtensions.#{method}(                                   #   result = Actions::PersistenceExtensions.average_between(
+                  self,                                                                              #     self,
+                  start.to_zoned_date_time,                                                          #     start.to_zoned_date_time,
+                  finish.to_zoned_date_time,                                                         #     finish.to_zoned_date_time,
+                  #{riemann_arg}                                                                     #     to_riemann_type(riemann_type),
+                  service&.to_s                                                                      #     service&.to_s
+                )                                                                                    #   )
+                wrap_result(result, quantify: #{quantify})                                           #   wrap_result(result, quantify: false)
+              end                                                                                    # end
             RUBY
           end
         end
