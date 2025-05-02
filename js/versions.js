@@ -40,17 +40,35 @@ function populateArchivedVersions() {
     "5.35",
     "5.36",
     "5.37",
+    "5.38",
   ]; // ARCHIVED_VERSIONS_MARKER
   const versionDropdown = $("#version-dropdown");
   archivedVersions.forEach((version) => {
     const versionLink = $("<a>")
       .attr("href", `/openhab-jruby/${version}/`)
-      .text(version);
+      .text(version)
+      .click(gotoVersion);
     const listItem = $("<li>")
       .addClass("dropdown-item")
       .append(versionLink);
     versionDropdown.append(listItem);
   });
+}
+
+function gotoVersion(e) {
+  // The target could be a sub element of the <a> tag, e.g. <small>
+  const target = e.target.tagName === 'A' ? e.target : e.target.closest('a');
+  if (target.classList.contains('current')) {
+    e.preventDefault();
+    return;
+  }
+  const version = target.pathname.split('/').filter(s => s).slice(-1)[0];
+  const versionRegex = new RegExp(`(?<=/openhab-jruby/)(\\d+\\.\\d+|main)(?=/)`);
+  const newUrl = window.location.href.replace(versionRegex, version);
+  if (newUrl !== window.location.href) {
+    e.preventDefault();
+    window.location.href = newUrl;
+  }
 }
 
 $(document).ready(function() {
