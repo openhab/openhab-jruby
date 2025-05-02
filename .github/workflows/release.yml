@@ -62,7 +62,7 @@ jobs:
 
           bin/rake changelog[${{ env.OLD_VERSION }},${{ env.NEW_VERSION }},new_changes.md]
 
-          git add Gemfile.lock CHANGELOG.md USAGE.md templates .known_good_references
+          git add Gemfile.lock CHANGELOG.md USAGE.md docs templates .known_good_references
           git commit --amend --no-edit
       - uses: rubygems/release-gem@v1
         with:
