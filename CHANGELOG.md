@@ -1,5 +1,18 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.39.0](https://github.com/openhab/openhab-jruby/tree/v5.39.0) (2025-05-02)
+
+### Features
+
+- Enhance flexibility of #points by [@ccutrer](https://github.com/ccutrer) in [#459](https://github.com/openhab/openhab-jruby/pull/459)
+- Support passing Ranges to between persistence methods by [@ccutrer](https://github.com/ccutrer) in [#463](https://github.com/openhab/openhab-jruby/pull/463)
+
+### Bug Fixes
+
+- Fix console winsize by [@ccutrer](https://github.com/ccutrer) in [#462](https://github.com/openhab/openhab-jruby/pull/462)
+
+**Full Changelog**: [v5.38.5...v5.39.0](https://github.com/openhab/openhab-jruby/compare/v5.38.5...v5.39.0)
+
 ## [v5.38.5](https://github.com/openhab/openhab-jruby/tree/v5.38.5) (2025-04-18)
 
 **Full Changelog**: [v5.38.4...v5.38.5](https://github.com/openhab/openhab-jruby/compare/v5.38.4...v5.38.5)
