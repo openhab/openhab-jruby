@@ -2,13 +2,7 @@
 
 require "forwardable"
 
-require_relative "property"
-require_relative "guard"
-require_relative "triggers"
-require_relative "rule_triggers"
-require_relative "terse"
-
-Dir[File.expand_path("triggers/*.rb", __dir__)].each do |f|
+Dir[File.expand_path("**/*.rb", __dir__)].each do |f|
   require f
 end
 
