@@ -45,13 +45,14 @@ module OpenHAB
 
     module Rules
       # sorted alphabetically
-      autoload :AutomationRule, "openhab/dsl/rules/automation_rule"
+      autoload :AutomationRule, "openhab/dsl/rules/builder"
       autoload :Builder, "openhab/dsl/rules/builder"
-      autoload :Guard, "openhab/dsl/rules/guard"
-      autoload :NameInference, "openhab/dsl/rules/name_inference"
-      autoload :Property, "openhab/dsl/rules/property"
-      autoload :RuleTriggers, "openhab/dsl/rules/rule_triggers"
-      autoload :Terse, "openhab/dsl/rules/terse"
+      autoload :Guard, "openhab/dsl/rules/builder"
+      autoload :NameInference, "openhab/dsl/rules/builder"
+      autoload :Property, "openhab/dsl/rules/builder"
+      autoload :RuleTriggers, "openhab/dsl/rules/builder"
+      autoload :Terse, "openhab/dsl/rules/builder"
+      autoload :Triggers, "openhab/dsl/rules/builder"
     end
 
     # include this before Core::Actions so that Core::Action's method_missing
