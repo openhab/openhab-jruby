@@ -68,6 +68,14 @@ module OpenHAB
       end
 
       #
+      # @!attribute [r] user_data_folder
+      # @return [Pathname] The userdata folder path.
+      #
+      def user_data_folder
+        Pathname.new(org.openhab.core.OpenHAB.user_data_folder)
+      end
+
+      #
       # @!attribute [r] automation_manager
       # @return [org.openhab.core.automation.module.script.rulesupport.shared.ScriptedAutomationManager]
       #   The openHAB Automation manager.
