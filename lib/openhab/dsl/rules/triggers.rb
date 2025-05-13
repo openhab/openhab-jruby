@@ -10,7 +10,3 @@ module OpenHAB
     end
   end
 end
-
-Dir[File.expand_path("triggers/**/*.rb", __dir__)].each do |f|
-  require f
-end
