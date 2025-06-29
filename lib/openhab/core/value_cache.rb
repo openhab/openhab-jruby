@@ -50,6 +50,19 @@ module OpenHAB
         get(key)
       end
 
+      # @!method compute(key, &)
+      #   Attempts to compute a mapping for the specified key and its current mapped value
+      #   (or null if there is no current mapping).
+      #   See {java.util.Map#compute(K,java.util.function.BiFunction) java.util.Map#compute} for details.
+      #
+      #   @param [String] key the key whose mapping is to be computed
+      #   @yield [key, current_value] a block to compute the new value
+      #   @yieldparam [String] key
+      #   @yieldparam [Object] current_value the current value, or nil if there is no current mapping
+      #   @yieldreturn [Object] new value, or nil to remove the key
+      #
+      #   @since openHAB 5.0
+
       #
       # Compute and store new value for key if the key is absent. This method is atomic.
       #
