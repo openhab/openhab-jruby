@@ -212,8 +212,9 @@ module OpenHAB
             # Java21 added #first method, which overrides Ruby's #first.
             # It throws an error if the list is Empty instead of returning nil.
             # So we use #ruby_first to ensure we get Ruby's behaviour
-            tag_class = service.get_by_label_or_synonym(id, locale).ruby_first ||
-                        Provider.registry.get_tag_class_by_id(id)
+            tag_class = Provider.registry.get_tag_class_by_id(id) ||
+                        service.get_by_label_or_synonym(id, locale).ruby_first
+
             return unless tag_class
 
             Provider.registry.get(Provider.registry.class.build_id(tag_class))
