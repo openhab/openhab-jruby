@@ -1,5 +1,17 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.39.1](https://github.com/openhab/openhab-jruby/tree/v5.39.1) (2025-07-11)
+
+### Features
+
+- Add `OpenHAB::Core.user_data_folder` by [@jimtng](https://github.com/jimtng) in [#470](https://github.com/openhab/openhab-jruby/pull/470)
+
+### Bug Fixes
+
+- Semantics tag lookup: prioritize ID over label or synonym by [@jimtng](https://github.com/jimtng) in [#472](https://github.com/openhab/openhab-jruby/pull/472)
+
+**Full Changelog**: [v5.39.0...v5.39.1](https://github.com/openhab/openhab-jruby/compare/v5.39.0...v5.39.1)
+
 ## [v5.39.0](https://github.com/openhab/openhab-jruby/tree/v5.39.0) (2025-05-02)
 
 ### Features
