@@ -2214,6 +2214,7 @@ removed. - Documentation for openhab-scripting JRuby helper library.">
   
   
   
+  
 
         
       </ul>
@@ -3753,6 +3754,29 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#compute-instance_method" title="#compute (instance method)">#<strong>compute</strong>(key) {|key, current_value| ... } &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Attempts to compute a mapping for the specified key and its current mapped value (or null if there is no current mapping).</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#compute_if_absent-instance_method" title="#compute_if_absent (instance method)">#<strong>compute_if_absent</strong>(key)  &#x21d2; Object </a>
     
 
@@ -4072,12 +4096,12 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-65
-66
-67</pre>
+78
+79
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 78</span>
 
 <span class="keyword">def</span> <span class="function">[]=</span>(key, value)
   put(key, value)
@@ -4118,16 +4142,16 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-109
-110
-111
-112
-113
-114
-115</pre>
+122
+123
+124
+125
+126
+127
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 109</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 122</span>
 
 <span class="keyword">def</span> <span class="function">assoc</span>(key)
   [key,
@@ -4136,6 +4160,142 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
      <span class="keyword">return</span> <span class="predefined-constant">nil</span>
    <span class="keyword">end</span>]
 <span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="compute-instance_method">
+  
+    #<strong>compute</strong>(key) {|key, current_value| ... } &#x21d2; <tt><span class='object_link'>Object</span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Attempts to compute a mapping for the specified key and its current mapped value
+(or null if there is no current mapping).
+See <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html#compute(K,java.util.function.BiFunction)" target="_parent" title="java.util.Map#compute">java.util.Map#compute</a> for details.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>key</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the key whose mapping is to be computed</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>key</tt>, <tt>current_value</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>a block to compute the new value</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>key</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>current_value</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'>Object</span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the current value, or nil if there is no current mapping</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Yield Returns:</p>
+<ul class="yieldreturn">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'>Object</span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>new value, or nil to remove the key</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 5.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 53</span>
+
+</pre>
     </td>
   </tr>
 </table>
@@ -4215,12 +4375,12 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-60
-61
-62</pre>
+73
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 73</span>
 
 <span class="keyword">def</span> <span class="function">compute_if_absent</span>(key, &amp;)
   get(key, &amp;)
@@ -4261,18 +4421,18 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-71
-72
-73
-74
-75
-76
-77
-78
-79</pre>
+84
+85
+86
+87
+88
+89
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 84</span>
 
 <span class="keyword">def</span> <span class="function">delete</span>(key)
   key = key.to_s <span class="comment"># needed for remove below</span>
@@ -4319,13 +4479,13 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-118
-119
-120
-121</pre>
+131
+132
+133
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 131</span>
 
 <span class="keyword">def</span> <span class="function">dig</span>(key, *identifiers)
   r = fetch(key) { <span class="keyword">return</span> <span class="predefined-constant">nil</span> }
@@ -4375,19 +4535,6 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
 99
 100
 101
@@ -4395,10 +4542,23 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
 103
 104
 105
-106</pre>
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 86</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 99</span>
 
 <span class="keyword">def</span> <span class="function">fetch</span>(key, *default_value)
   <span class="keyword">if</span> default_value.length &gt; <span class="integer">1</span>
@@ -4457,22 +4617,22 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136</pre>
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 137</span>
 
 <span class="keyword">def</span> <span class="function">fetch_values</span>(*keys, &amp;block)
   result = []
@@ -4540,12 +4700,12 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-139
-140
-141</pre>
+152
+153
+154</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 152</span>
 
 <span class="keyword">def</span> <span class="function">key?</span>(key)
   !!fetch(key) { <span class="keyword">return</span> <span class="predefined-constant">false</span> }
@@ -4590,26 +4750,26 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
 160
 161
 162
-163</pre>
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 147</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 160</span>
 
 <span class="keyword">def</span> <span class="function">merge!</span>(*other_hashes)
   other_hashes.each <span class="keyword">do</span> |hash|
@@ -4664,17 +4824,17 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-167
-168
-169
-170
-171
-172
-173
-174</pre>
+180
+181
+182
+183
+184
+185
+186
+187</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 167</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 180</span>
 
 <span class="keyword">def</span> <span class="function">slice</span>(*keys)
   result = {}
@@ -4720,12 +4880,12 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-177
-178
-179</pre>
+190
+191
+192</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 177</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 190</span>
 
 <span class="keyword">def</span> <span class="function">to_proc</span>
   -&gt;(k) { <span class="predefined-constant">self</span>[k] }
@@ -4766,14 +4926,14 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
       <pre class="lines">
 
 
-182
-183
-184
-185
-186</pre>
+195
+196
+197
+198
+199</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 182</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/value_cache.rb', line 195</span>
 
 <span class="keyword">def</span> <span class="function">values_at</span>(*keys)
   keys.map <span class="keyword">do</span> |k|
@@ -4790,7 +4950,7 @@ shared_cache[<span class="symbol">:execution_count</span>] += <span class="integ
 </div>
 
         <footer>
-  Generated on Fri May  2 00:38:33 2025 by
+  Generated on Fri Jul 11 14:41:31 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>
