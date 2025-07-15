@@ -4244,7 +4244,7 @@ wasn't created by the current provider.</p>
   <span class="keyword">end</span>
 
   <span class="constant">Things</span>::<span class="constant">Links</span>::<span class="constant">Provider</span>.registry.providers.grep(<span class="constant">ManagedProvider</span>).each <span class="keyword">do</span> |managed_provider|
-    managed_provider.remove_links_for_item(item_name)
+    managed_provider.remove_links_for_item(item_name) <span class="keyword">if</span> managed_provider.respond_to?(<span class="symbol">:remove_links_for_item</span>)
   <span class="keyword">end</span>
   provider.remove(item_name, recursive)
 <span class="keyword">end</span></pre>
@@ -4311,7 +4311,7 @@ wasn't created by the current provider.</p>
 </div>
 
         <footer>
-  Generated on Fri Jul 11 14:41:36 2025 by
+  Generated on Tue Jul 15 04:36:57 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>
