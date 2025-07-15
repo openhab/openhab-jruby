@@ -79,7 +79,7 @@ module OpenHAB
           end
 
           Things::Links::Provider.registry.providers.grep(ManagedProvider).each do |managed_provider|
-            managed_provider.remove_links_for_item(item_name)
+            managed_provider.remove_links_for_item(item_name) if managed_provider.respond_to?(:remove_links_for_item)
           end
           provider.remove(item_name, recursive)
         end
