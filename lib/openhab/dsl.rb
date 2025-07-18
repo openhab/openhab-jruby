@@ -1138,6 +1138,5 @@ OpenHAB::Core::Items.import_into_global_namespace
 singleton_class.include(OpenHAB::DSL)
 # Patch Object to work around https://github.com/openhab/openhab-jruby/issues/4
 Object.extend(OpenHAB::CoreExt::Ruby::Object::ClassMethods)
-OpenHAB::CoreExt::Ruby::Object.instance_variable_set(:@top_self, self)
 
 logger.debug { "openHAB JRuby Scripting Library Version #{OpenHAB::DSL::VERSION} Loaded" }
