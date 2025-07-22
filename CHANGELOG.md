@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.39.3](https://github.com/openhab/openhab-jruby/tree/v5.39.3) (2025-07-22)
+
+### Bug Fixes
+
+- Fix rules autoloading for timed commands by [@jimtng](https://github.com/jimtng) in [#469](https://github.com/openhab/openhab-jruby/pull/469)
+
+**Full Changelog**: [v5.39.2...v5.39.3](https://github.com/openhab/openhab-jruby/compare/v5.39.2...v5.39.3)
+
 ## [v5.39.2](https://github.com/openhab/openhab-jruby/tree/v5.39.2) (2025-07-15)
 
 **Full Changelog**: [v5.39.1...v5.39.2](https://github.com/openhab/openhab-jruby/compare/v5.39.1...v5.39.2)
