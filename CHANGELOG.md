@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.40.0](https://github.com/openhab/openhab-jruby/tree/v5.40.0) (2025-07-27)
+
+### Features
+
+- Items Builder: add `matter` shortcut to set Matter metadata by [@jimtng](https://github.com/jimtng) in [#477](https://github.com/openhab/openhab-jruby/pull/477)
+
+**Full Changelog**: [v5.39.3...v5.40.0](https://github.com/openhab/openhab-jruby/compare/v5.39.3...v5.40.0)
+
 ## [v5.39.3](https://github.com/openhab/openhab-jruby/tree/v5.39.3) (2025-07-22)
 
 ### Bug Fixes
