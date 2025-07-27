@@ -3882,7 +3882,7 @@ items will automatically be a member of this group.</p>
   
   
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="ItemBuilder.html" title="OpenHAB::DSL::Items::ItemBuilder (class)">ItemBuilder</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ItemBuilder.html#alexa-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#alexa (method)">#alexa</a></span>, <span class='object_link'><a href="ItemBuilder.html#channel-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#channel (method)">#channel</a></span>, <span class='object_link'><a href="ItemBuilder.html#expire-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#expire (method)">#expire</a></span>, <span class='object_link'><a href="ItemBuilder.html#ga-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#ga (method)">#ga</a></span>, <span class='object_link'><a href="ItemBuilder.html#group-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#group (method)">#group</a></span>, <span class='object_link'><a href="ItemBuilder.html#homekit-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#homekit (method)">#homekit</a></span>, <span class='object_link'><a href="ItemBuilder.html#inspect-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="ItemBuilder.html#tag-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#tag (method)">#tag</a></span>, <span class='object_link'><a href="ItemBuilder.html#to_s-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#to_s (method)">#to_s</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="ItemBuilder.html#alexa-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#alexa (method)">#alexa</a></span>, <span class='object_link'><a href="ItemBuilder.html#channel-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#channel (method)">#channel</a></span>, <span class='object_link'><a href="ItemBuilder.html#expire-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#expire (method)">#expire</a></span>, <span class='object_link'><a href="ItemBuilder.html#ga-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#ga (method)">#ga</a></span>, <span class='object_link'><a href="ItemBuilder.html#group-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#group (method)">#group</a></span>, <span class='object_link'><a href="ItemBuilder.html#homekit-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#homekit (method)">#homekit</a></span>, <span class='object_link'><a href="ItemBuilder.html#inspect-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="ItemBuilder.html#matter-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#matter (method)">#matter</a></span>, <span class='object_link'><a href="ItemBuilder.html#tag-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#tag (method)">#tag</a></span>, <span class='object_link'><a href="ItemBuilder.html#to_s-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#to_s (method)">#to_s</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -4187,6 +4187,21 @@ Note the dimension must be properly capitalized.</p>
   
     <li>
       
+        <span class='name'>matter</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt><span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;(String, Hash&lt;String, <span class='object_link'>Object</span>&gt;)&gt;</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Matter metadata (see <span class='object_link'><a href="ItemBuilder.html#matter-instance_method" title="OpenHAB::DSL::Items::ItemBuilder#matter (method)">ItemBuilder#matter</a></span>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>metadata</span>
       
       
@@ -4237,17 +4252,17 @@ Note the dimension must be properly capitalized.</p>
       <pre class="lines">
 
 
-791
-792
-793
-794
-795
-796
-797
-798</pre>
+806
+807
+808
+809
+810
+811
+812
+813</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 791</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 806</span>
 
 <span class="keyword">def</span> <span class="function">initialize</span>(*args, <span class="key">type</span>: <span class="predefined-constant">nil</span>, <span class="key">function</span>: <span class="predefined-constant">nil</span>, <span class="key">thing</span>: <span class="predefined-constant">nil</span>, **kwargs)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">invalid function </span><span class="inline"><span class="inline-delimiter">#{</span>function<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> function &amp;&amp; !function.match?(<span class="constant">FUNCTION_REGEX</span>)
@@ -4317,12 +4332,12 @@ Note the dimension must be properly capitalized.</p>
       <pre class="lines">
 
 
-772
-773
-774</pre>
+787
+788
+789</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 772</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 787</span>
 
 <span class="keyword">def</span> <span class="function">function</span>
   <span class="instance-variable">@function</span>
@@ -4372,12 +4387,12 @@ Note the dimension must be properly capitalized.</p>
       <pre class="lines">
 
 
-781
-782
-783</pre>
+796
+797
+798</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 781</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 796</span>
 
 <span class="keyword">def</span> <span class="function">label_base</span>
   <span class="instance-variable">@label_base</span>
@@ -4427,12 +4442,12 @@ Note the dimension must be properly capitalized.</p>
       <pre class="lines">
 
 
-784
-785
-786</pre>
+799
+800
+801</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 784</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 799</span>
 
 <span class="keyword">def</span> <span class="function">members</span>
   <span class="instance-variable">@members</span>
@@ -4482,12 +4497,12 @@ Note the dimension must be properly capitalized.</p>
       <pre class="lines">
 
 
-778
-779
-780</pre>
+793
+794
+795</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 778</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 793</span>
 
 <span class="keyword">def</span> <span class="function">name_base</span>
   <span class="instance-variable">@name_base</span>
@@ -4537,12 +4552,12 @@ Note the dimension must be properly capitalized.</p>
       <pre class="lines">
 
 
-775
-776
-777</pre>
+790
+791
+792</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 775</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 790</span>
 
 <span class="keyword">def</span> <span class="function">thing</span>
   <span class="instance-variable">@thing</span>
@@ -4592,12 +4607,12 @@ Note the dimension must be properly capitalized.</p>
       <pre class="lines">
 
 
-753
-754
-755</pre>
+768
+769
+770</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 753</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/builder.rb', line 768</span>
 
 <span class="keyword">def</span> <span class="function">unit</span>
   <span class="instance-variable">@unit</span>
@@ -4613,7 +4628,7 @@ Note the dimension must be properly capitalized.</p>
 </div>
 
         <footer>
-  Generated on Wed Jul 23 03:40:27 2025 by
+  Generated on Sun Jul 27 01:23:43 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>
