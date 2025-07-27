@@ -313,6 +313,8 @@ module OpenHAB
         #   Google Assistant metadata (see {ItemBuilder#ga})
         # @param homekit [String, Symbol, Array<(String, Hash<String, Object>)>, nil]
         #   Homekit metadata (see {ItemBuilder#homekit})
+        # @param matter [String, Symbol, Array<(String, Hash<String, Object>)>, nil]
+        #   Matter metadata (see {ItemBuilder#matter})
         # @param metadata [Hash<String, Hash>] Generic metadata (see {ItemBuilder#metadata})
         # @param state [State] Initial state
         def initialize(type,
@@ -340,6 +342,7 @@ module OpenHAB
                        alexa: nil,
                        ga: nil, # rubocop:disable Naming/MethodParameterName
                        homekit: nil,
+                       matter: nil,
                        metadata: nil,
                        state: nil)
           raise ArgumentError, "`name` cannot be nil" if name.nil?
@@ -389,6 +392,7 @@ module OpenHAB
           self.alexa(alexa) if alexa
           self.ga(ga) if ga
           self.homekit(homekit) if homekit
+          self.matter(matter) if matter
           self.state = state
 
           self.group(*group)
@@ -495,7 +499,18 @@ module OpenHAB
         #   @return [void]
         #
 
-        %i[alexa ga homekit].each do |shortcut|
+        #
+        # @!method matter(value, config = nil)
+        #   Shortcut for adding Matter metadata
+        #
+        #   @see https://www.openhab.org/addons/bindings/matter/#matter-bridge
+        #
+        #   @param value [String, Symbol] Matter device type or attribute(s)
+        #   @param config [Hash, nil] Additional Matter configuration
+        #   @return [void]
+        #
+
+        %i[alexa ga homekit matter].each do |shortcut|
           define_method(shortcut) do |value = nil, config = nil|
             value, config = value if value.is_a?(Array)
             metadata[shortcut] = [value, config]
