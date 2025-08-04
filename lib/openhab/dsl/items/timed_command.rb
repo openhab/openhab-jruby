@@ -36,7 +36,7 @@ module OpenHAB
         # {TimedCommand#command timed command} is being called.
         #
         # @attr [Item] item
-        #   @!visibility private
+        #   The item that the timed command was sent to.
         # @attr [Types::Type, Proc] on_expire
         #   @!visibility private
         # @attr [Core::Timer] timer
