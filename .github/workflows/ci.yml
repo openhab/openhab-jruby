@@ -105,7 +105,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: tmp/
-          key: openHAB-setup-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.snapshot_date || '' }}-java-${{ matrix.java_version }}
+          key: openHAB-setup-2-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.snapshot_date || '' }}-java-${{ matrix.java_version }}
       - uses: ruby/setup-ruby@v1
         if: steps.cache.outputs.cache-hit != 'true'
         with:
@@ -171,7 +171,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: tmp/
-          key: openHAB-setup-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.snapshot_date || '' }}-java-${{ matrix.java_version }}
+          key: openHAB-setup-2-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.snapshot_date || '' }}-java-${{ matrix.java_version }}
           fail-on-cache-miss: true
       - name: RSpec
         run: bin/rspec --format progress --format html --out rspec.html
@@ -224,7 +224,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: tmp/
-          key: openHAB-setup-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.snapshot_date || '' }}-java-${{ matrix.java_version }}
+          key: openHAB-setup-2-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.snapshot_date || '' }}-java-${{ matrix.java_version }}
           fail-on-cache-miss: true
       - name: Cucumber
         run: bin/rake features
