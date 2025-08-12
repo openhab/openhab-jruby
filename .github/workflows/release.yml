@@ -102,7 +102,11 @@ jobs:
           mkdir -p js
           mv docs/js/versions.js js/versions.js
           git add js/versions.js
-          git config --local user.name 'github-actions[bot]'
-          git config --local user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m "Update versions.js with new version v${{ env.NEW_VERSION }}"
-          git push
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "Nothing to commit"
+          else
+            git config --local user.name 'github-actions[bot]'
+            git config --local user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m "Update versions.js with new version v${{ env.NEW_VERSION }}"
+            git push
+          fi
