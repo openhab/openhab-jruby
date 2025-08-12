@@ -105,13 +105,14 @@ jobs:
         uses: actions/cache@v4
         with:
           path: tmp/
-          key: openHAB-setup-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.snapshot_date || '' }}-java-${{ matrix.java_version }}
+          key: openHAB-setup-2-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.snapshot_date || '' }}-java-${{ matrix.java_version }}
       - uses: ruby/setup-ruby@v1
         if: steps.cache.outputs.cache-hit != 'true'
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
           bundler-cache: true
       - uses: actions/setup-java@v4
+        if: steps.cache.outputs.cache-hit != 'true'
         with:
           distribution: zulu
           java-version: ${{ matrix.java_version }}
@@ -151,10 +152,10 @@ jobs:
             jruby_version: jruby-9.4.9.0
             openhab_version: 4.3.6
           - java_version: 21
-            jruby_version: jruby-9.4.12.0
+            jruby_version: jruby-10.0.0.1
             openhab_version: 5.0.0
           - java_version: 21
-            jruby_version: jruby-10.0.0.0
+            jruby_version: jruby-10.0.2.0
             openhab_version: 5.1.0-SNAPSHOT
     steps:
       - uses: actions/checkout@v4
@@ -171,7 +172,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: tmp/
-          key: openHAB-setup-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.snapshot_date || '' }}-java-${{ matrix.java_version }}
+          key: openHAB-setup-2-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.snapshot_date || '' }}-java-${{ matrix.java_version }}
+          fail-on-cache-miss: true
       - name: RSpec
         run: bin/rspec --format progress --format html --out rspec.html
         timeout-minutes: 6
@@ -223,7 +225,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: tmp/
-          key: openHAB-setup-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.snapshot_date || '' }}-java-${{ matrix.java_version }}
+          key: openHAB-setup-2-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.snapshot_date || '' }}-java-${{ matrix.java_version }}
+          fail-on-cache-miss: true
       - name: Cucumber
         run: bin/rake features
         timeout-minutes: 4
