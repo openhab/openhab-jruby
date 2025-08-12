@@ -35,7 +35,8 @@ module OpenHAB
         def handle_event_internal(type, payload, topic, source)
           event_factory = @typed_event_factories[type]
           unless event_factory
-            logger.debug { "Could not find an Event Factory for the event type '#{type}'." }
+            # We can't call the block version because this is a native java logger
+            logger.debug("Could not find an Event Factory for the event type '#{type}'.")
             return
           end
 
