@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.40.1](https://github.com/openhab/openhab-jruby/tree/v5.40.1) (2025-08-12)
+
+### Bug Fixes
+
+- Fix debug call in event_admin rspec mock by [@jimtng](https://github.com/jimtng) in [#480](https://github.com/openhab/openhab-jruby/pull/480)
+
+**Full Changelog**: [v5.40.0...v5.40.1](https://github.com/openhab/openhab-jruby/compare/v5.40.0...v5.40.1)
+
 ## [v5.40.0](https://github.com/openhab/openhab-jruby/tree/v5.40.0) (2025-07-27)
 
 ### Features
