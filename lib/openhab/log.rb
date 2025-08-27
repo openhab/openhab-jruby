@@ -384,6 +384,7 @@ module OpenHAB
       end
 
       extend Forwardable
+
       def_delegators :current_logger, *(Logger.public_instance_methods.select do |m|
         Logger.instance_method(m).owner == Logger
       end - BasicObject.public_instance_methods)

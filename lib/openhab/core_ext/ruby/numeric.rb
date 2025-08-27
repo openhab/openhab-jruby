@@ -169,6 +169,7 @@ module OpenHAB
         include QuantityTypeConversion
         # non-Integer/Float (i.e. BigDecimal) can still be converted to Duration, via converting to float first
         extend Forwardable
+
         def_delegators :to_f,
                        :milliseconds,
                        :millisecond,

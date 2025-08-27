@@ -162,7 +162,7 @@ module OpenHAB
           def format_offset(offset)
             return "" unless offset&.nonzero?
 
-            " #{offset.positive? ? "+" : ""}#{offset.seconds.to_s.downcase[2..]}" # Remove "PT" from the ISO8601 string
+            " #{"+" if offset.positive?}#{offset.seconds.to_s.downcase[2..]}" # Remove "PT" from the ISO8601 string
           end
         end
       end

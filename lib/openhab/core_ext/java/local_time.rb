@@ -36,6 +36,7 @@ module OpenHAB
       #
       class LocalTime
         include Between
+
         # @!parse include Time
 
         class << self

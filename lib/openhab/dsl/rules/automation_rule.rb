@@ -120,10 +120,9 @@ module OpenHAB
         # @return [Queue] <description>
         #
         def create_queue(event)
-          case check_guards(event:)
-          when true
+          if check_guards?(event:)
             @run_queue.dup.grep_v(BuilderDSL::Otherwise)
-          when false
+          else
             @run_queue.dup.grep(BuilderDSL::Otherwise)
           end
         end
@@ -211,7 +210,7 @@ module OpenHAB
         # @return [true,false] True if guards says rule should execute, false otherwise
         #
         # Loggging inflates method length
-        def check_guards(event:)
+        def check_guards?(event:)
           return true if @guard.nil?
 
           unless @between.nil?

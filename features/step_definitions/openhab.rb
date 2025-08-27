@@ -25,13 +25,13 @@ end
 Then(/^It should log '([^']*)' within (\d+) seconds$/) do |string, seconds|
   wait_until(seconds: seconds.to_i,
              msg: "'#{string}' not found in log file (#{openhab_log}) within #{seconds} seconds") do
-    check_log(string)
+    check_log?(string)
   end
 end
 
 Then("It should not log {string} within {int} seconds") do |string, seconds|
   not_for(seconds:, msg: "'#{string}'' found in log file (#{openhab_log}) within #{seconds} seconds") do
-    check_log(string)
+    check_log?(string)
   end
 end
 
@@ -42,7 +42,7 @@ end
 
 def check_items(added:)
   wait_until(seconds: 10, msg: "Not all #{added} items were added") do
-    (added.map(&:name) - (Rest.items.map { |item| item["name"] })).empty?
+    (added.map(&:name) - Rest.items.map { |item| item["name"] }).empty?
   rescue
     false
   end

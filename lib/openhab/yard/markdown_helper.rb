@@ -5,6 +5,7 @@ module OpenHAB
     # @!visibility private
     module MarkdownHelper
       include ::YARD::Templates::Helpers::HtmlHelper
+
       # @group Linking Objects and URLs
 
       def diskfile
@@ -44,7 +45,7 @@ module OpenHAB
                       end) + (match ? $`.count("\n") : 0)
               if match
                 log.warn "In file `#{file}':#{line}: Cannot resolve link to #{name} from text#{match ? ":" : "."}\n" \
-                         "\t#{match[1] ? "..." : ""}#{match[2].delete("\n")}#{match[3] ? "..." : ""}"
+                         "\t#{"..." if match[1]}#{match[2].delete("\n")}#{"..." if match[3]}"
                 # Don't strip the link. This is so literals like {RUBY_ENGINE_VERSION} remain as they are,
                 # not stripped to "RUBY_ENGINE_VERSION"
                 next str

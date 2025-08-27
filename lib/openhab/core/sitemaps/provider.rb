@@ -25,7 +25,7 @@ module OpenHAB
         include org.openhab.core.model.sitemap.SitemapProvider
 
         # @!visibility private
-        alias_method :getSitemap, :get
+        alias_method :getSitemap, :get # rubocop:disable Naming/MethodName
 
         # rubocop:disable Naming/MethodName
 

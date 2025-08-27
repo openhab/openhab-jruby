@@ -50,7 +50,7 @@ module OpenHAB
             end
             count
           end
-          alias_method :removeLinksForItem, :remove_links_for_item
+          alias_method :removeLinksForItem, :remove_links_for_item # rubocop:disable Naming/MethodName
 
           #
           # Removes all links to a given thing.
@@ -69,7 +69,7 @@ module OpenHAB
             end
             count
           end
-          alias_method :removeLinksForThing, :remove_links_for_thing
+          alias_method :removeLinksForThing, :remove_links_for_thing # rubocop:disable Naming/MethodName
         end
       end
     end

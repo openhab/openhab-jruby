@@ -58,6 +58,7 @@ module OpenHAB
     # include this before Core::Actions so that Core::Action's method_missing
     # takes priority
     include Core::EntityLookup
+
     #
     # @!parse
     #   include Core::Actions

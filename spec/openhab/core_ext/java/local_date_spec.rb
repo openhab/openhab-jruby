@@ -188,14 +188,14 @@ RSpec.describe java.time.LocalDate do
 
     it "works with range" do
       expect(date.between?("2022-10-01".."2022-12-01")).to be true
-      expect(date.between?(date..date + 1.day)).to be true
-      expect(date.between?(date - 5.days..date)).to be true
-      expect(date.between?(date - 5.days...date)).to be false
+      expect(date.between?(date..(date + 1.day))).to be true
+      expect(date.between?((date - 5.days)..date)).to be true
+      expect(date.between?((date - 5.days)...date)).to be false
       expect(date.between?(date..)).to be true
     end
 
     it "checks for invalid arguments" do
-      expect { date.between?((date..date + 1.day), date) }.to raise_exception(ArgumentError)
+      expect { date.between?(date..(date + 1.day), date) }.to raise_exception(ArgumentError)
       expect { date.between?(date) }.to raise_exception(ArgumentError)
     end
   end

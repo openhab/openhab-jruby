@@ -13,6 +13,7 @@ module OpenHAB
       # @!visibility private
       class Proxy < Delegator
         extend Forwardable
+
         def_delegators :__getobj__, :class, :is_a?, :kind_of?
 
         # @!visibility private

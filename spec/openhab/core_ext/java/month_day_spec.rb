@@ -214,9 +214,9 @@ RSpec.describe java.time.MonthDay do
 
     it "works with range" do
       expect(date.between?("11-08".."12-01")).to be true
-      expect(date.between?(date..date + 1.day)).to be true
-      expect(date.between?(date - 5.days..date)).to be true
-      expect(date.between?(date - 5.days...date)).to be false
+      expect(date.between?(date..(date + 1.day))).to be true
+      expect(date.between?((date - 5.days)..date)).to be true
+      expect(date.between?((date - 5.days)...date)).to be false
       expect(date.between?(date..)).to be true
     end
   end

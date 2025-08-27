@@ -97,7 +97,7 @@ module OpenHAB
           open
         end
 
-        def addingService(reference) # rubocop:disable Naming/MethodName
+        def addingService(reference)
           topics = Array(reference.get_property(org.osgi.service.event.EventConstants::EVENT_TOPIC))
           topics = nil if topics.empty? || topics.include?("*")
 
@@ -119,11 +119,11 @@ module OpenHAB
           service
         end
 
-        def postEvent(event) # rubocop:disable Naming/MethodName
+        def postEvent(event)
           sendEvent(event)
         end
 
-        def sendEvent(event) # rubocop:disable Naming/MethodName
+        def sendEvent(event)
           # prevent re-entrancy
           if (pending_events = Thread.current[:event_admin_pending_events])
             pending_events << event

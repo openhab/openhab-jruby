@@ -76,9 +76,9 @@ RSpec.describe Time do
     it "works with range" do
       expect(time.between?("2022-10-01".."2022-12-01")).to be true
       expect(time.between?("2022-11-09T02:09:05+00:00".."2022-12-01")).to be true
-      expect(time.between?(time..time + 1)).to be true
-      expect(time.between?(time - 5..time)).to be true
-      expect(time.between?(time - 5...time)).to be false
+      expect(time.between?(time..(time + 1))).to be true
+      expect(time.between?((time - 5)..time)).to be true
+      expect(time.between?((time - 5)...time)).to be false
       expect(time.between?(time..)).to be true
     end
   end

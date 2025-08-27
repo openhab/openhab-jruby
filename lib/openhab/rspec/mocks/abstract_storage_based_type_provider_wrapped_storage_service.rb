@@ -15,7 +15,7 @@ module OpenHAB
           @java_klass = java_klass
         end
 
-        def getStorage(name, _class_loader) # rubocop:disable Naming/MethodName
+        def getStorage(name, _class_loader)
           super(name.sub(@ruby_klass.name, @java_klass.name), @java_klass.class_loader)
         end
       end

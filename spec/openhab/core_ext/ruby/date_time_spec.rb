@@ -51,9 +51,9 @@ RSpec.describe DateTime do
     it "works with range" do
       expect(dt.between?("2022-10-01".."2022-12-01")).to be true
       expect(dt.between?("2022-11-09T02:09:05+00:00".."2022-12-01")).to be true
-      expect(dt.between?(dt..dt + 1)).to be true
-      expect(dt.between?(dt - 5..dt)).to be true
-      expect(dt.between?(dt - 5...dt)).to be false
+      expect(dt.between?(dt..(dt + 1))).to be true
+      expect(dt.between?((dt - 5)..dt)).to be true
+      expect(dt.between?((dt - 5)...dt)).to be false
       expect(dt.between?(dt..)).to be true
     end
   end
