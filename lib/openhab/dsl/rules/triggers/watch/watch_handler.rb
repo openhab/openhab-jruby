@@ -26,6 +26,7 @@ module OpenHAB
           class Watcher
             # Use full java class name here to satisfy YARD linter
             include org.openhab.core.service.WatchService::WatchEventListener
+
             java_import org.openhab.core.service.WatchService
 
             # Hash of event symbols as strings to map to WatchService events

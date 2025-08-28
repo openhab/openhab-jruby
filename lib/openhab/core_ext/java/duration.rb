@@ -16,6 +16,7 @@ module OpenHAB
       #
       class Duration
         include Between
+
         # @!parse include TemporalAmount
 
         #

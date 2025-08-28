@@ -47,7 +47,7 @@ RSpec.describe java.time.ZonedDateTime do
 
     it "works with Time QuantityType" do
       now = described_class.now
-      expect((now - QuantityType.new("5 s"))).to be_a described_class
+      expect(now - QuantityType.new("5 s")).to be_a described_class
       expect((now - QuantityType.new("5 s")).to_i).to be(now.to_i - 5)
     end
 
@@ -249,9 +249,9 @@ RSpec.describe java.time.ZonedDateTime do
     it "works with range" do
       expect(zdt.between?("2022-10-01".."2022-12-01")).to be true
       expect(zdt.between?("2022-11-09T02:09:05+00:00".."2022-12-01")).to be true
-      expect(zdt.between?(zdt..zdt + 1.day)).to be true
-      expect(zdt.between?(zdt - 5.days..zdt)).to be true
-      expect(zdt.between?(zdt - 5.days...zdt)).to be false
+      expect(zdt.between?(zdt..(zdt + 1.day))).to be true
+      expect(zdt.between?((zdt - 5.days)..zdt)).to be true
+      expect(zdt.between?((zdt - 5.days)...zdt)).to be false
       expect(zdt.between?(zdt..)).to be true
     end
   end

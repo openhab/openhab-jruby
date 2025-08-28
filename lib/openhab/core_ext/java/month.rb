@@ -10,6 +10,7 @@ module OpenHAB
       # Extensions to {java.time.Month}
       class Month
         include Between
+
         # @!parse include Time
 
         # @return [Month]

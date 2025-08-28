@@ -8,6 +8,7 @@ require "persistent_httparty"
 #
 class Rest
   include HTTParty
+
   persistent_connection_adapter
 
   def self.openhab_port

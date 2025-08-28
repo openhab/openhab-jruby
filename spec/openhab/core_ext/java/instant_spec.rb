@@ -32,13 +32,13 @@ RSpec.describe java.time.Instant do
       now = described_class.now
       expect((now - 5.seconds).to_i).to be(now.to_i - 5)
       expect((now - 2.minutes).to_i).to be(now.to_i - 120)
-      expect((now - 1.second)).to be_a(described_class)
+      expect(now - 1.second).to be_a(described_class)
     end
 
     it "works with integers" do
       now = described_class.now
       expect((now - 5).to_i).to be(now.to_i - 5)
-      expect((now - 5)).to be_a(described_class)
+      expect(now - 5).to be_a(described_class)
     end
 
     it "returns a duration for another Instant instance" do
@@ -265,9 +265,9 @@ RSpec.describe java.time.Instant do
     it "works with range" do
       expect(instant.between?("2022-10-01".."2022-12-01")).to be true
       expect(instant.between?("2022-11-09T02:09:05Z".."2022-12-01")).to be true
-      expect(instant.between?(instant..instant + 1.day)).to be true
-      expect(instant.between?(instant - 5.days..instant)).to be true
-      expect(instant.between?(instant - 5.days...instant)).to be false
+      expect(instant.between?(instant..(instant + 1.day))).to be true
+      expect(instant.between?((instant - 5.days)..instant)).to be true
+      expect(instant.between?((instant - 5.days)...instant)).to be false
       expect(instant.between?(instant..)).to be true
     end
   end

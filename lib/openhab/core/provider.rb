@@ -40,6 +40,7 @@ module OpenHAB
       include org.openhab.core.common.registry.ManagedProvider
       include Enumerable
       include Singleton
+
       public_class_method :new
 
       # Known supported provider types
@@ -183,7 +184,7 @@ module OpenHAB
       def all
         @elements.values
       end
-      alias_method :getAll, :all
+      alias_method :getAll, :all # rubocop:disable Naming/MethodName
 
       #
       # Remove an element from this provider

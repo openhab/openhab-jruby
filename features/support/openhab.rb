@@ -24,7 +24,7 @@ class OpenHABClient
     reopen
     @io.write("#{command}\r\n")
     output = check_output
-    output.slice!(0..command.length + 1)
+    output.slice!(0..(command.length + 1))
     output.strip!
     output
   end
@@ -107,11 +107,11 @@ def ensure_openhab_running
   cmd.run(File.join(openhab_dir, "runtime/bin/status"), only_output_on_error: true)
 end
 
-def check_log(entry)
-  check_log_regexp(/#{Regexp.escape(entry)}/)
+def check_log?(entry)
+  check_log_regexp?(/#{Regexp.escape(entry)}/)
 end
 
-def check_log_regexp(regexp)
+def check_log_regexp?(regexp)
   lines = File.foreach(openhab_log).select { |line| line.include?("Error during evaluation of script") }
   if lines.any?
     log(lines)

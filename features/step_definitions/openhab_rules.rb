@@ -46,7 +46,7 @@ def wait_for_rule(log_line)
     # MacOS)
     openhab_client("bundle:restart org.openhab.core.automation.module.script.rulesupport")
   end
-  wait_until(seconds: 60, msg: "Rule not added") { check_log(log_line) }
+  wait_until(seconds: 60, msg: "Rule not added") { check_log?(log_line) }
 end
 
 def deploy_ruby_file(code:, directory:, filename: "", check: true)

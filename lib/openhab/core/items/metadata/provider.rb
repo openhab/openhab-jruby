@@ -40,7 +40,7 @@ module OpenHAB
             end
             nil
           end
-          alias_method :removeItemMetadata, :remove_item_metadata
+          alias_method :removeItemMetadata, :remove_item_metadata # rubocop:disable Naming/MethodName
         end
       end
     end

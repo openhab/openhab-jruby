@@ -29,11 +29,11 @@ module OpenHAB
             # @param [Hash] inputs inputs from trigger
             # @return [true, false] if the conditions passed (and therefore the block was run)
             #
-            def process(mod:, inputs:)
+            def process(mod:, inputs:) # rubocop:disable Naming/PredicateMethod
               logger.trace { "Checking #{inputs} against condition trigger #{self}" }
-              unless check_value(Conditions.old_state_from(inputs), @from) &&
-                     check_value(Conditions.new_state_from(inputs), @to) &&
-                     check_value(inputs["command"], @command)
+              unless check_value?(Conditions.old_state_from(inputs), @from) &&
+                     check_value?(Conditions.new_state_from(inputs), @to) &&
+                     check_value?(inputs["command"], @command)
                 return false
               end
 
@@ -50,7 +50,7 @@ module OpenHAB
 
             private
 
-            def check_value(value, expected_value)
+            def check_value?(value, expected_value)
               return true if value.nil?
 
               return true if expected_value.nil?
