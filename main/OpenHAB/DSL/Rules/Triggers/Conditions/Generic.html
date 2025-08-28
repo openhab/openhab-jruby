@@ -3981,11 +3981,11 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/conditions/generic.rb', line 32</span>
 
-<span class="keyword">def</span> <span class="function">process</span>(<span class="key">mod</span>:, <span class="key">inputs</span>:)
+<span class="keyword">def</span> <span class="function">process</span>(<span class="key">mod</span>:, <span class="key">inputs</span>:) <span class="comment"># rubocop:disable Naming/PredicateMethod</span>
   logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">Checking </span><span class="inline"><span class="inline-delimiter">#{</span>inputs<span class="inline-delimiter">}</span></span><span class="content"> against condition trigger </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
-  <span class="keyword">unless</span> check_value(<span class="constant">Conditions</span>.old_state_from(inputs), <span class="instance-variable">@from</span>) &amp;&amp;
-         check_value(<span class="constant">Conditions</span>.new_state_from(inputs), <span class="instance-variable">@to</span>) &amp;&amp;
-         check_value(inputs[<span class="string"><span class="delimiter">&quot;</span><span class="content">command</span><span class="delimiter">&quot;</span></span>], <span class="instance-variable">@command</span>)
+  <span class="keyword">unless</span> check_value?(<span class="constant">Conditions</span>.old_state_from(inputs), <span class="instance-variable">@from</span>) &amp;&amp;
+         check_value?(<span class="constant">Conditions</span>.new_state_from(inputs), <span class="instance-variable">@to</span>) &amp;&amp;
+         check_value?(inputs[<span class="string"><span class="delimiter">&quot;</span><span class="content">command</span><span class="delimiter">&quot;</span></span>], <span class="instance-variable">@command</span>)
     <span class="keyword">return</span> <span class="predefined-constant">false</span>
   <span class="keyword">end</span>
 
@@ -4002,7 +4002,7 @@
 </div>
 
         <footer>
-  Generated on Tue Aug 12 14:54:53 2025 by
+  Generated on Thu Aug 28 00:55:27 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>

@@ -3892,7 +3892,6 @@
       <pre class="lines">
 
 
-187
 188
 189
 190
@@ -3904,10 +3903,11 @@
 196
 197
 198
-199</pre>
+199
+200</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 187</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 188</span>
 
 <span class="keyword">def</span> <span class="function">initialize</span>(trigger)
   <span class="instance-variable">@trigger</span> = trigger
@@ -4012,7 +4012,6 @@ Returns nil if the given path doesn't exist all the way to root, e.g. /nonexiste
       <pre class="lines">
 
 
-118
 119
 120
 121
@@ -4038,10 +4037,11 @@ Returns nil if the given path doesn't exist all the way to root, e.g. /nonexiste
 141
 142
 143
-144</pre>
+144
+145</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 119</span>
 
 <span class="keyword">def</span> <span class="function">dir_subdir_glob</span>(path, glob)
   pathname = <span class="constant">Pathname</span>.new(path)
@@ -4141,14 +4141,14 @@ an existing directory. nil if none was found up until the root directory</p>
       <pre class="lines">
 
 
-177
 178
 179
 180
-181</pre>
+181
+182</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 177</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 178</span>
 
 <span class="keyword">def</span> <span class="function">find_parent</span>(pathname)
   <span class="keyword">return</span> pathname <span class="keyword">if</span> pathname.root?
@@ -4198,7 +4198,6 @@ an existing directory. nil if none was found up until the root directory</p>
       <pre class="lines">
 
 
-147
 148
 149
 150
@@ -4209,10 +4208,11 @@ an existing directory. nil if none was found up until the root directory</p>
 155
 156
 157
-158</pre>
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 147</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 148</span>
 
 <span class="keyword">def</span> <span class="function">glob?</span>(string)
   <span class="keyword">unless</span> <span class="instance-variable">@regexp</span>
@@ -4269,12 +4269,12 @@ an existing directory. nil if none was found up until the root directory</p>
       <pre class="lines">
 
 
-161
 162
-163</pre>
+163
+164</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 161</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 162</span>
 
 <span class="keyword">def</span> <span class="function">recursive_glob?</span>(string)
   <span class="regexp"><span class="delimiter">/</span><span class="content">(?&lt;!</span><span class="char">\\</span><span class="char">\\</span><span class="content">)</span><span class="char">\*</span><span class="char">\*</span><span class="delimiter">/</span></span>.match?(string) || <span class="constant">Pathname</span>.new(string).each_filename.to_a.size &gt; <span class="integer">1</span>
@@ -4315,13 +4315,13 @@ an existing directory. nil if none was found up until the root directory</p>
       <pre class="lines">
 
 
-229
 230
 231
-232</pre>
+232
+233</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 229</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 230</span>
 
 <span class="keyword">def</span> <span class="function">dispose</span>
   logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">Deactivating watcher for </span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@path</span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
@@ -4357,12 +4357,12 @@ an existing directory. nil if none was found up until the root directory</p>
       <pre class="lines">
 
 
-222
 223
-224</pre>
+224
+225</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 222</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 223</span>
 
 <span class="keyword">def</span> <span class="function">setCallback</span>(callback) <span class="comment"># rubocop:disable Naming/MethodName</span>
   <span class="instance-variable">@rule_engine_callback</span> = callback
@@ -4433,7 +4433,6 @@ an existing directory. nil if none was found up until the root directory</p>
       <pre class="lines">
 
 
-206
 207
 208
 209
@@ -4446,10 +4445,11 @@ an existing directory. nil if none was found up until the root directory</p>
 216
 217
 218
-219</pre>
+219
+220</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 206</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 207</span>
 
 <span class="keyword">def</span> <span class="function">watch_event_handler</span>(glob)
   default_fs = java.nio.file.FileSystems.default
@@ -4475,7 +4475,7 @@ an existing directory. nil if none was found up until the root directory</p>
 </div>
 
         <footer>
-  Generated on Tue Aug 12 14:54:54 2025 by
+  Generated on Thu Aug 28 00:55:27 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>

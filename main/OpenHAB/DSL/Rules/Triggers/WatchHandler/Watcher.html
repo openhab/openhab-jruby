@@ -3826,7 +3826,6 @@ and also creates and removes a unique WatchService for each instance</p>
       <pre class="lines">
 
 
-42
 43
 44
 45
@@ -3835,10 +3834,11 @@ and also creates and removes a unique WatchService for each instance</p>
 48
 49
 50
-51</pre>
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 43</span>
 
 <span class="keyword">def</span> <span class="function">initialize</span>(path, subdirs, types, &amp;block)
   <span class="instance-variable">@types</span> = types.map { |type| <span class="constant">STRING_TO_EVENT</span>[type] }
@@ -3888,7 +3888,6 @@ This isn't an OSGi service, but it's called by <span class='object_link'><a href
       <pre class="lines">
 
 
-55
 56
 57
 58
@@ -3911,10 +3910,11 @@ This isn't an OSGi service, but it's called by <span class='object_link'><a href
 75
 76
 77
-78</pre>
+78
+79</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 56</span>
 
 <span class="keyword">def</span> <span class="function">activate</span>
   java_path = java.nio.file.Path.of(<span class="instance-variable">@path</span>.to_s)
@@ -3970,16 +3970,16 @@ This isn't an OSGi service, but it's called by <span class='object_link'><a href
       <pre class="lines">
 
 
-81
 82
 83
 84
 85
 86
-87</pre>
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 82</span>
 
 <span class="keyword">def</span> <span class="function">deactivate</span>
   <span class="instance-variable">@watch_service</span>&amp;.unregister_listener(<span class="predefined-constant">self</span>)
@@ -4052,7 +4052,6 @@ This isn't an OSGi service, but it's called by <span class='object_link'><a href
       <pre class="lines">
 
 
-92
 93
 94
 95
@@ -4060,10 +4059,11 @@ This isn't an OSGi service, but it's called by <span class='object_link'><a href
 97
 98
 99
-100</pre>
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/watch/watch_handler.rb', line 93</span>
 
 <span class="keyword">def</span> <span class="function">processWatchEvent</span>(kind, path) <span class="comment"># rubocop:disable Naming/MethodName</span>
   logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">processWatchEvent triggered </span><span class="inline"><span class="inline-delimiter">#{</span>path<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>kind<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span><span class="instance-variable">@types</span><span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
@@ -4084,7 +4084,7 @@ This isn't an OSGi service, but it's called by <span class='object_link'><a href
 </div>
 
         <footer>
-  Generated on Tue Aug 12 14:54:53 2025 by
+  Generated on Thu Aug 28 00:55:27 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>
