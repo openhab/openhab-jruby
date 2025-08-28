@@ -37,8 +37,8 @@ module OpenHAB
         end
 
         # @!visibility private
-        def onCommandFromItem(command)
-          return unless process_event(:command_from_item, command:) == true
+        def onCommandFromItem(command, source = nil)
+          return unless process_event(:command_from_item, command:, source:) == true
 
           logger.trace("Forwarding original command")
           @callback.handle_command(command)
@@ -92,6 +92,7 @@ module OpenHAB
           params[:command] ||= nil
           params[:trigger] ||= nil
           params[:time_series] ||= nil
+          params[:source] ||= nil
 
           kwargs = {}
           @block.parameters.each do |(param_type, name)|

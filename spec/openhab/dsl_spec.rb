@@ -104,6 +104,23 @@ RSpec.describe OpenHAB::DSL do
       SeasonColor << "0,100,100"
     end
 
+    it "receives the command source", if: OpenHAB::Core.version >= OpenHAB::Core::V5_1 do
+      profile :command_source do |item:, source:|
+        expect(source).to eql "test_source"
+        item.update("triggered")
+        false
+      end
+
+      items.build do
+        string_item MyString,
+                    channel: ["astro:sun:home:season#name", { profile: "ruby:command_source" }],
+                    autoupdate: false
+      end
+
+      MyString.command("foo", source: "test_source")
+      expect(MyString.state).to eq "triggered"
+    end
+
     context "with time series" do
       it "supports sending a time series" do
         profile :send_as_time_series do |event, callback:, command:|
