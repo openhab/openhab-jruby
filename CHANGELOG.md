@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.41.0](https://github.com/openhab/openhab-jruby/tree/v5.41.0) (2025-09-22)
+
+### Features
+
+- Support `source` in profiles by [@ccutrer](https://github.com/ccutrer) in [#485](https://github.com/openhab/openhab-jruby/pull/485)
+
+**Full Changelog**: [v5.40.1...v5.41.0](https://github.com/openhab/openhab-jruby/compare/v5.40.1...v5.41.0)
+
 ## [v5.40.1](https://github.com/openhab/openhab-jruby/tree/v5.40.1) (2025-08-12)
 
 ### Bug Fixes
