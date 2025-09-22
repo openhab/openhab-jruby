@@ -91,20 +91,30 @@ module OpenHAB
           label || name
         end
 
-        # @!attribute [r] formatted_state
+        # @!attribute [r] display_state
         #
         # Format the item's state according to its state description
         #
-        # This may include running a transformation.
+        # This may include running a transformation, if one is defined in the
+        # state description's pattern, otherwise it will format according to the
+        # pattern. If no state description is defined, the state will simply
+        # be returned as a string.
+        #
+        # @note While this method is also aliased to `#transformed_state` to
+        #   match the field available in the openHAB REST API, unlike the API it
+        #   will always return a value even if the state description has no
+        #   transformation.
         #
         # @return [String] The formatted state
         #
         # @example
-        #   logger.info(Exterior_WindDirection.formatted_state) # => "NE (36°)"
+        #   logger.info(Exterior_WindDirection.display_state) # => "NE (36°)"
         #
-        def formatted_state
+        def display_state
           Item.item_states_event_builder.get_display_state(self)
         end
+        alias_method :transformed_state, :display_state
+        alias_method :formatted_state, :display_state
 
         #
         # Send a command to this item
