@@ -79,13 +79,13 @@ jobs:
       ref_name: main
       ref_type: branch
   publish_tag_docs:
-    needs: release
+    needs: publish_main_docs
     uses: ./.github/workflows/yardoc.yml
     with:
       ref_name: v${{needs.release.outputs.NEW_VERSION}}
       ref_type: tag
   publish_docs_versions:
-    needs: publish_main_docs
+    needs: publish_tag_docs
     runs-on: ubuntu-latest
     steps:
       - name: Checkout gh-pages
@@ -107,6 +107,6 @@ jobs:
           else
             git config --local user.name 'github-actions[bot]'
             git config --local user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git commit -m "Update versions.js with new version v${{ env.NEW_VERSION }}"
+            git commit -m "Update versions.js with new version v${{needs.release.outputs.NEW_VERSION}}"
             git push
           fi
