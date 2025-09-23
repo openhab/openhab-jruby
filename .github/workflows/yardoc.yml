@@ -43,9 +43,6 @@ jobs:
       - name: Determine Destination Dir
         id: destination_dir
         run: ruby -e 'ref_name = "${{ inputs.ref_name || github.ref_name }}"; ref_name = ref_name[1..-1].split(".")[0..1].join(".") if "${{ inputs.ref_type || github.ref_type }}" == "tag"; puts "DESTINATION_DIR=#{ref_name}"' >> $GITHUB_OUTPUT
-      - name: Avoid race condition with push to main branch
-        if: ${{ (inputs.ref_type || github.ref_type) == 'tag' }}
-        run: sleep 15
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
