@@ -1,0 +1,43 @@
+name: Manually Publish Documentation
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version tag to publish: <major>.<minor>"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}-${{ inputs.version }}
+  cancel-in-progress: true
+
+jobs:
+  find_latest_patch:
+    runs-on: ubuntu-latest
+    outputs:
+      latest_patch: ${{ steps.get_patch.outputs.latest_patch }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Get Latest Patch Version
+        id: get_patch
+        run: |
+          git fetch --tags
+          latest_patch=$(git tag --list "v${{ inputs.version }}.*" --sort=-v:refname | head -n 1)
+          if [ -z "$latest_patch" ]; then
+            echo "No tags found for version prefix v${{ inputs.version }}.*"
+            exit 1
+          fi
+          echo "Latest patch version found: $latest_patch"
+          echo "latest_patch=$latest_patch" >> $GITHUB_OUTPUT
+
+  publish_tag_docs:
+    needs: find_latest_patch
+    uses: ./.github/workflows/yardoc.yml
+    with:
+      ref_name: ${{ needs.find_latest_patch.outputs.latest_patch }}
+      ref_type: tag
