@@ -39,7 +39,7 @@ module OpenHAB
         #
         # Returns the event payload as a Hash.
         #
-        # @return [Hash, nil] The payload object parsed by JSON. The keys are symbolized.
+        # @return [Hash, String, nil] The payload object parsed by JSON. The keys are symbolized.
         #   `nil` when the payload is empty.
         #
         def payload
@@ -48,6 +48,8 @@ module OpenHAB
           original_verbose = $VERBOSE
           $VERBOSE = nil
           @payload ||= JSON.parse(get_payload, symbolize_names: true) unless get_payload.empty?
+        rescue JSON::ParserError
+          get_payload
         ensure
           $VERBOSE = original_verbose
         end
