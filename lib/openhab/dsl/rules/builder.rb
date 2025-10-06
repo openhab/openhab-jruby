@@ -1804,6 +1804,7 @@ module OpenHAB
         #   end
         #
         def event(topic, source: nil, types: nil, attach: nil)
+          types ||= org.openhab.core.events.EventSubscriber::ALL_EVENT_TYPES
           types = types.join(",") if types.is_a?(Enumerable)
           trigger("core.GenericEventTrigger",
                   topic:,
