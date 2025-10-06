@@ -82,7 +82,7 @@ jobs:
     needs: publish_main_docs
     uses: ./.github/workflows/yardoc.yml
     with:
-      ref_name: v${{needs.release.outputs.NEW_VERSION}}
+      ref_name: v${{needs.release.outputs.new_version}}
       ref_type: tag
   publish_docs_versions:
     needs: publish_tag_docs
@@ -107,6 +107,6 @@ jobs:
           else
             git config --local user.name 'github-actions[bot]'
             git config --local user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git commit -m "Update versions.js with new version v${{needs.release.outputs.NEW_VERSION}}"
+            git commit -m "Update versions.js with new version v${{needs.release.outputs.new_version}}"
             git push
           fi
