@@ -76,4 +76,5 @@ function gotoVersion(e) {
 
 $(document).ready(function() {
   populateArchivedVersions();
+  $('.version-button').click(gotoVersion);
 });
