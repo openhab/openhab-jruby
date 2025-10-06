@@ -2,9 +2,18 @@
 
 ## [v5.42.1](https://github.com/openhab/openhab-jruby/tree/v5.42.1) (2025-10-06)
 
+### Bug Fixes
+
+- Fix `AbstractEvent#payload` for non-JSON payloads by [@ccutrer](https://github.com/ccutrer) in [#491](https://github.com/openhab/openhab-jruby/pull/491)
+- Fix event trigger when types are not specified by [@ccutrer](https://github.com/ccutrer) in [#492](https://github.com/openhab/openhab-jruby/pull/492)
+
 **Full Changelog**: [v5.42.0...v5.42.1](https://github.com/openhab/openhab-jruby/compare/v5.42.0...v5.42.1)
 
 ## [v5.42.0](https://github.com/openhab/openhab-jruby/tree/v5.42.0) (2025-09-23)
+
+### Features
+
+- alias `Item#formatted_state` to `display_state` and `transformed_state` by [@ccutrer](https://github.com/ccutrer) in [#488](https://github.com/openhab/openhab-jruby/pull/488)
 
 **Full Changelog**: [v5.41.0...v5.42.0](https://github.com/openhab/openhab-jruby/compare/v5.41.0...v5.42.0)
 
