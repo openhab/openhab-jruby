@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.43.0](https://github.com/openhab/openhab-jruby/tree/v5.43.0) (2025-11-15)
+
+### Features
+
+- Infer an appropriate source for commands and updates by [@ccutrer](https://github.com/ccutrer) in [#495](https://github.com/openhab/openhab-jruby/pull/495)
+
+**Full Changelog**: [v5.42.1...v5.43.0](https://github.com/openhab/openhab-jruby/compare/v5.42.1...v5.43.0)
+
 ## [v5.42.1](https://github.com/openhab/openhab-jruby/tree/v5.42.1) (2025-10-06)
 
 ### Bug Fixes
