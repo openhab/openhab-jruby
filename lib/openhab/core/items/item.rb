@@ -10,6 +10,9 @@ module OpenHAB
       # The core features of an openHAB item.
       #
       module Item
+        EVENT_SOURCE = "org.openhab.automation.jrubyscripting"
+        private_constant :EVENT_SOURCE
+
         class << self
           # @!visibility private
           #
@@ -152,6 +155,7 @@ module OpenHAB
         def command(command, source: nil)
           command = format_command(command)
           logger.trace { "Sending Command #{command} to #{name}" }
+          source ||= infer_source if VERSION >= V5_1
           if source
             Events.publisher.post(Events::ItemEventFactory.create_command_event(name, command, source.to_s))
           else
@@ -179,6 +183,7 @@ module OpenHAB
         #   When given a {State} argument, it will be passed directly.
         #   Otherwise, the result of `#to_s` will be parsed into a {State} first.
         #   If `nil` is passed, the item will be updated to {NULL}.
+        # @param [String, nil] source Optional string to identify what sent the event.
         # @return [self, nil] nil when `ensure` is in effect and the item was already in the same state,
         #   otherwise the item.
         #
@@ -196,10 +201,15 @@ module OpenHAB
         # @example Updating with a string to a dimensioned {NumberItem}
         #   InsideTemperature.update("22.5 °C") # The string will be parsed and converted to a QuantityType
         #
-        def update(state)
+        def update(state, source: nil)
           state = format_update(state)
           logger.trace { "Sending Update #{state} to #{name}" }
-          $events.post_update(self, state)
+          source ||= infer_source if VERSION >= V5_1
+          if source
+            Events.publisher.post(Events::ItemEventFactory.create_state_event(name, state, source.to_s))
+          else
+            $events.post_update(self, state)
+          end
           Proxy.new(self)
         end
         alias_method :update!, :update
@@ -630,6 +640,17 @@ module OpenHAB
         # Allows sub-classes to append additional details to the type in an inspect string
         # @return [String]
         def type_details; end
+
+        def infer_source
+          actor = if $ctx&.key?("ruleUID")
+                    "rule:#{$ctx["ruleUID"]}"
+                  elsif (rule_uid = Thread.current[:openhab_rule_uid])
+                    "#{Thread.current[:openhab_rule_type]}:#{rule_uid}"
+                  else
+                    Log.top_level_file
+                  end
+          org.openhab.core.events.AbstractEvent.build_source(EVENT_SOURCE, actor)
+        end
       end
     end
   end
