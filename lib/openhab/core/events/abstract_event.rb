@@ -34,7 +34,20 @@ module OpenHAB
         end
 
         # @!attribute [r] source
-        # @return [String] The component that sent the event.
+        # @return [Source] The component(s) that sent the event.
+        def source
+          unless instance_variable_defined?(:@source)
+            begin
+              # Disable "instance vars on non-persistent Java type"
+              original_verbose = $VERBOSE
+              $VERBOSE = nil
+              @source = get_source && Source.new(get_source)
+            ensure
+              $VERBOSE = original_verbose
+            end
+          end
+          @source
+        end
 
         #
         # Returns the event payload as a Hash.

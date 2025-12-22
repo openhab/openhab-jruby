@@ -6,7 +6,7 @@ RSpec.describe OpenHAB::Core::Events::ItemCommandEvent do
     expect(event.inspect).to eql "#<OpenHAB::Core::Events::ItemCommandEvent item=item command=REFRESH>"
 
     event = OpenHAB::Core::Events::ItemEventFactory.create_command_event("item", REFRESH, "source")
-    expect(event.inspect).to eql '#<OpenHAB::Core::Events::ItemCommandEvent item=item command=REFRESH source="source">'
+    expect(event.inspect).to eql "#<OpenHAB::Core::Events::ItemCommandEvent item=item command=REFRESH source=source>"
   end
 
   describe "predicates" do # rubocop:disable RSpec/EmptyExampleGroup -- examples are dynamically generated

@@ -142,12 +142,12 @@ RSpec.describe OpenHAB::Core::Items::Item do
         end
       end
       LightSwitch2.command(ON, source: "one")
-      expect(source).to eql "one"
+      expect(source).to eq "one"
       # command aliases work
       LightSwitch2.on(source: "two")
-      expect(source).to eql "two"
+      expect(source).to eq "two"
       LightSwitch2.refresh(source: "three")
-      expect(source).to eql "three"
+      expect(source).to eq "three"
     end
   end
 
