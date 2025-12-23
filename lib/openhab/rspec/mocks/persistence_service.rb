@@ -109,10 +109,6 @@ module OpenHAB
           end
         end
 
-        def get_default_strategies # rubocop:disable Naming/AccessorMethodName -- must match Java interface
-          [org.openhab.core.persistence.strategy.PersistenceStrategy::Globals::CHANGE]
-        end
-
         private
 
         def query_internal(filter, &)
