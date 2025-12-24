@@ -106,7 +106,7 @@ RSpec.describe OpenHAB::DSL do
 
     it "receives the command source", if: OpenHAB::Core.version >= OpenHAB::Core::V5_1 do
       profile :command_source do |item:, source:|
-        expect(source).to eql "test_source"
+        expect(source).to eq "test_source"
         item.update("triggered")
         false
       end

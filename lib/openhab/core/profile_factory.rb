@@ -92,7 +92,7 @@ module OpenHAB
           params[:command] ||= nil
           params[:trigger] ||= nil
           params[:time_series] ||= nil
-          params[:source] ||= nil
+          params[:source] = (params[:source] && Core::Events::Source.new(params[:source])) || nil
 
           kwargs = {}
           @block.parameters.each do |(param_type, name)|

@@ -6,7 +6,7 @@ RSpec.describe OpenHAB::Core::Events::ItemStateEvent do
     expect(event.inspect).to eql "#<OpenHAB::Core::Events::ItemStateEvent item=item state=NULL>"
 
     event = OpenHAB::Core::Events::ItemEventFactory.create_state_event("item", NULL, "source")
-    expect(event.inspect).to eql '#<OpenHAB::Core::Events::ItemStateEvent item=item state=NULL source="source">'
+    expect(event.inspect).to eql "#<OpenHAB::Core::Events::ItemStateEvent item=item state=NULL source=source>"
   end
 
   it "has proper predicates for a NULL event" do

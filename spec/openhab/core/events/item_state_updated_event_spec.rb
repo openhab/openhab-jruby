@@ -11,7 +11,7 @@ RSpec.describe OpenHAB::Core::Events::ItemStateUpdatedEvent do
     args << "source"
     event = OpenHAB::Core::Events::ItemEventFactory.create_state_updated_event(*args)
     expect(event.inspect).to eql(
-      '#<OpenHAB::Core::Events::ItemStateUpdatedEvent item=item state=NULL source="source">'
+      "#<OpenHAB::Core::Events::ItemStateUpdatedEvent item=item state=NULL source=source>"
     )
   end
 
