@@ -158,7 +158,7 @@ module OpenHAB
     # @yieldparam [Core::Things::ChannelUID] channel_uid The linked channel.
     # @yieldparam [Hash] configuration The profile configuration.
     # @yieldparam [org.openhab.core.thing.profiles.ProfileContext] context The profile context.
-    # @yieldparam [String, nil] source The source of the event.
+    # @yieldparam [Core::Events::Source, nil] source The source of the event.
     #   @since openHAB 5.1
     # @yieldreturn [Boolean] Return true from the block in order to have default processing.
     # @return [void]

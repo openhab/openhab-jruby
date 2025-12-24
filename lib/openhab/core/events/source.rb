@@ -11,6 +11,41 @@ module OpenHAB
       # This class behaves like a String representing the event source, but also provides
       # methods to access the individual components in the delegation chain.
       #
+      # Starting from openHAB 5.1, the source can contain multiple components
+      # that contain information about the delegation chain of the event.
+      #
+      # Each {Source::Component component} contains:
+      # - {Source::Component#bundle bundle}: The module or app.
+      #   For example: `org.openhab.automation.jrubyscripting` when a rule sends a command,
+      #   or `org.openhab.core.io.rest` when a command comes from the REST API (UI).
+      # - {Source::Component#actor actor}: Optional. The rule, user or thinguid
+      #   (e.g., "lighting_rule", "mqtt:topic:livingroom-switch:switch4")
+      #
+      # @example Log commands with source information
+      #   rule "Log item commands" do
+      #     received_command MyItem
+      #     run do |event|
+      #       logger.info "#{MyItem.name} received command #{event.command} from: #{event.source}"
+      #       logger.info "  Source components:"
+      #       event.source.components.each_with_index do |component, index|
+      #         logger.info "    #{index}: bundle=#{component.bundle}, actor=#{component.actor}"
+      #       end
+      #     end
+      #   end
+      #
+      # @example Ignore commands from specific integrations
+      #   rule "Ignore UI commands" do
+      #     received_command MyItem
+      #     run do |event|
+      #       next if event.source.sender?("org.openhab.core.io.rest")
+      #       # process the command
+      #     end
+      #   end
+      #
+      # @see https://www.openhab.org/docs/developer/utils/events.html#the-core-events
+      # @see AbstractEvent#source
+      # @see OpenHAB::DSL.profile
+      #
       class Source < Delegator
         # The components in the event source delegation chain.
         # @return [Array<Component>]
