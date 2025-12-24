@@ -34,7 +34,7 @@ module OpenHAB
         end
 
         # @!attribute [r] source
-        # @return [Source] The component(s) that sent the event.
+        # @return [Source, nil] The component(s) that sent the event.
         def source
           unless instance_variable_defined?(:@source)
             begin

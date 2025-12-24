@@ -204,6 +204,11 @@ module OpenHAB
           other.is_a?(Source) && components == other.components
         end
 
+        # @return [Integer]
+        def hash
+          components.hash
+        end
+
         # Represents a single component in the event source delegation chain.
         class Component
           include Comparable
@@ -283,6 +288,11 @@ module OpenHAB
 
           def eql?(other)
             other.is_a?(Component) && bundle == other.bundle && actor == other.actor
+          end
+
+          # @return [Integer]
+          def hash
+            [bundle, actor].hash
           end
 
           private
