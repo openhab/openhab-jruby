@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Class: OpenHAB::Core::Events::ItemStateEvent
+  Class: OpenHAB::Core::Events::Source
   
     &mdash; openHAB JRuby
   
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="../../../css/coderay.css" type="text/css" />
 
 <script type="text/javascript">
-  pathId = "OpenHAB::Core::Events::ItemStateEvent";
+  pathId = "OpenHAB::Core::Events::Source";
   relpath = '../../../';
 </script>
 
@@ -34,7 +34,20 @@
 
 
     <script type="text/javascript" charset="utf-8" src="https://openhab.github.io/openhab-jruby/js/versions.js"></script>
-    <meta property="og:description" name="description" content="AbstractEvent sent when an item's state is updated (regardless of if it changed or not). - Documentation for openhab-scripting JRuby helper library.">
+    <meta property="og:description" name="description" content="Represents the source of an event as a chain of delegated Components.
+
+This class behaves like a String representing the event source, but also provides
+methods to access the individual components in the delegation chain.
+
+Starting from openHAB 5.1, the source can contain multiple components
+that contain information about the delegation chain of the event.
+
+Each component contains:
+- bundle: The module or app.
+  For example: `org.openhab.automation.jrubyscripting` when a rule sends a command,
+  or `org.openhab.core.io.rest` when a command comes from the REST API (UI).
+- actor: Optional. The rule, user or thinguid
+  (e.g., "lighting_rule", "mqtt:topic:livingroom-switch:switch4") - Documentation for openhab-scripting JRuby helper library.">
     <meta property="og:image" content="https://raw.githubusercontent.com/jruby/collateral/master/logos/PNGs/circle-fill/full-color/jruby-logo-circle-logo-fill-outline-medium.png">
     <meta property="og:image:alt" content="The JRuby logo">
     <script type="text/javascript">
@@ -618,8 +631,8 @@
 
   
   <li class="">
-    <span class="sidebar-link active">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="" title="OpenHAB::Core::Events::ItemStateEvent (class)">ItemStateEvent</a></span>
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="ItemStateEvent.html" title="OpenHAB::Core::Events::ItemStateEvent (class)">ItemStateEvent</a></span>
       
         &lt; ItemEvent
       
@@ -669,14 +682,14 @@
   </li>
 
   
-  <li class="collapsed">
-    <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Source.html" title="OpenHAB::Core::Events::Source (class)">Source</a></span>
+  <li class="">
+    <span class="sidebar-link active">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="" title="OpenHAB::Core::Events::Source (class)">Source</a></span>
       
         &lt; Delegator
       
       
-        <a class="arrow toggle right"></a>
+        <a class="arrow toggle down"></a>
       
     </span>
     
@@ -3629,7 +3642,7 @@
       </aside>
 
       <main class="page">
-        <div class="content"><h1>Class: OpenHAB::Core::Events::ItemStateEvent
+        <div class="content"><h1>Class: OpenHAB::Core::Events::Source
   
   
   
@@ -3639,16 +3652,14 @@
   <dl>
     <dt>Inherits:</dt>
     <dd>
-      <span class="inheritName"><span class='object_link'><a href="ItemEvent.html" title="OpenHAB::Core::Events::ItemEvent (class)">ItemEvent</a></span></span>
+      <span class="inheritName">Delegator</span>
       
         <ul class="fullTree">
           <li><span class='object_link'>Object</span></li>
           
-            <li class="next"><span class='object_link'><a href="AbstractEvent.html" title="OpenHAB::Core::Events::AbstractEvent (class)">AbstractEvent</a></span></li>
+            <li class="next">Delegator</li>
           
-            <li class="next"><span class='object_link'><a href="ItemEvent.html" title="OpenHAB::Core::Events::ItemEvent (class)">ItemEvent</a></span></li>
-          
-            <li class="next">OpenHAB::Core::Events::ItemStateEvent</li>
+            <li class="next">OpenHAB::Core::Events::Source</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -3661,11 +3672,6 @@
   
   
   
-  <dl>
-      <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="ItemState.html" title="OpenHAB::Core::Events::ItemState (module)">ItemState</a></span></dd>
-  </dl>
-  
   
 
   
@@ -3673,78 +3679,1623 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/openhab/core/events/item_state_event.rb</dd>
+    <dd>lib/openhab/core/events/source.rb</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p><span class='object_link'><a href="AbstractEvent.html" title="OpenHAB::Core::Events::AbstractEvent (class)">AbstractEvent</a></span> sent when an item's state is updated (regardless of if it changed or not).</p>
+    <p>Represents the source of an event as a chain of delegated <span class='object_link'><a href="Source/Component.html" title="OpenHAB::Core::Events::Source::Component (class)">Components</a></span>.</p>
+<p>This class behaves like a String representing the event source, but also provides
+methods to access the individual components in the delegation chain.</p>
+<p>Starting from openHAB 5.1, the source can contain multiple components
+that contain information about the delegation chain of the event.</p>
+<p>Each <span class='object_link'><a href="Source/Component.html" title="OpenHAB::Core::Events::Source::Component (class)">component</a></span> contains:</p>
+<ul>
+<li><span class='object_link'><a href="Source/Component.html#bundle-instance_method" title="OpenHAB::Core::Events::Source::Component#bundle (method)">bundle</a></span>: The module or app.
+For example: <code>org.openhab.automation.jrubyscripting</code> when a rule sends a command,
+or <code>org.openhab.core.io.rest</code> when a command comes from the REST API (UI).</li>
+<li><span class='object_link'><a href="Source/Component.html#actor-instance_method" title="OpenHAB::Core::Events::Source::Component#actor (method)">actor</a></span>: Optional. The rule, user or thinguid
+(e.g., "lighting_rule", "mqtt:topic:livingroom-switch:switch4")</li>
+</ul>
 
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+        <h5 class="example_title"><div class='inline'><p>Log commands with source information</p>
+</div></h5>
+      
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Log item commands</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+  received_command <span class="constant">MyItem</span>
+  run <span class="keyword">do</span> |event|
+    logger.info <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">MyItem</span>.name<span class="inline-delimiter">}</span></span><span class="content"> received command </span><span class="inline"><span class="inline-delimiter">#{</span>event.command<span class="inline-delimiter">}</span></span><span class="content"> from: </span><span class="inline"><span class="inline-delimiter">#{</span>event.source<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">  Source components:</span><span class="delimiter">&quot;</span></span>
+    event.source.components.each_with_index <span class="keyword">do</span> |component, index|
+      logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">    </span><span class="inline"><span class="inline-delimiter">#{</span>index<span class="inline-delimiter">}</span></span><span class="content">: bundle=</span><span class="inline"><span class="inline-delimiter">#{</span>component.bundle<span class="inline-delimiter">}</span></span><span class="content">, actor=</span><span class="inline"><span class="inline-delimiter">#{</span>component.actor<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
+    
+      
+        <h5 class="example_title"><div class='inline'><p>Ignore commands from specific integrations</p>
+</div></h5>
+      
+      <pre class="example code"><code>rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Ignore UI commands</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+  received_command <span class="constant">MyItem</span>
+  run <span class="keyword">do</span> |event|
+    <span class="keyword">next</span> <span class="keyword">if</span> event.source.sender?(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.io.rest</span><span class="delimiter">&quot;</span></span>)
+    <span class="comment"># process the command</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></code></pre>
+    
+  </div>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://www.openhab.org/docs/developer/utils/events.html#the-core-events" target="_parent" title="https://www.openhab.org/docs/developer/utils/events.html#the-core-events">https://www.openhab.org/docs/developer/utils/events.html#the-core-events</a></li>
+    
+      <li><span class='object_link'><a href="AbstractEvent.html#source-instance_method" title="OpenHAB::Core::Events::AbstractEvent#source (method)">AbstractEvent#source</a></span></li>
+    
+      <li><span class='object_link'><a href="../../DSL.html#profile-class_method" title="OpenHAB::DSL.profile (method)">DSL.profile</a></span></li>
+    
+  </ul>
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Source/Component.html" title="OpenHAB::Core::Events::Source::Component (class)">Component</a></span>
+    
+  
+</p>
+
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#actor-instance_method" title="#actor (instance method)">#<strong>actor</strong>  &#x21d2; String<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The actor (user, device, etc.) of the initial component that sent the event.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#bundle-instance_method" title="#bundle (instance method)">#<strong>bundle</strong>  &#x21d2; String<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The bundle (module, app, etc.) of the initial component that sent the event.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#components-instance_method" title="#components (instance method)">#<strong>components</strong>  &#x21d2; Array&lt;Component&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The components in the event source delegation chain.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#source-instance_method" title="#source (instance method)">#<strong>source</strong>  &#x21d2; String </a>
+    
+
+    
+      (also: #to_s, #to_str, #inspect, #__getobj__)
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The event source as a string.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2 id="Instance Method Summary">
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#!=-instance_method" title="#!= (instance method)">#<strong>!=</strong>(other)  &#x21d2; true, false </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#<=>-instance_method" title="#&lt;=&gt; (instance method)">#<strong>&lt;=&gt;</strong>(other)  &#x21d2; Integer<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#==-instance_method" title="#== (instance method)">#<strong>==</strong>(other)  &#x21d2; true, false </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#actor_for-instance_method" title="#actor_for (instance method)">#<strong>actor_for</strong>(bundle)  &#x21d2; String<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The actor (user, device, etc.) for the specified bundle, if any.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delegate-instance_method" title="#delegate (instance method)">#<strong>delegate</strong>(bundle, actor = nil)  &#x21d2; Source </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Construct a new <span class='object_link'><a href="" title="OpenHAB::Core::Events::Source (class)">Source</a></span> by adding an additional component to the delegation chain.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#eql%3F-instance_method" title="#eql? (instance method)">#<strong>eql?</strong>(other)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#hash-instance_method" title="#hash (instance method)">#<strong>hash</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(source_or_components)  &#x21d2; Source </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Construct a new <span class='object_link'><a href="" title="OpenHAB::Core::Events::Source (class)">Source</a></span> object.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#reject-instance_method" title="#reject (instance method)">#<strong>reject</strong>(bundle = nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Construct a new <span class='object_link'><a href="" title="OpenHAB::Core::Events::Source (class)">Source</a></span> without any components from the specified bundle.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#sender%3F-instance_method" title="#sender? (instance method)">#<strong>sender?</strong>(bundle_or_actor = nil, bundle: nil, actor: nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Check if the event was sent by the specified bundle or actor.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    
+      <span class="overload">#<strong>initialize</strong>(source)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::Core::Events::Source (class)">Source</a></span></tt> </span>
+    
+      <span class="overload">#<strong>initialize</strong>(components)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::Core::Events::Source (class)">Source</a></span></tt> </span>
+    
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Construct a new <span class='object_link'><a href="" title="OpenHAB::Core::Events::Source (class)">OpenHAB::Core::Events::Source</a></span> object.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <p class="tag_title">Overloads:</p>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">#<strong>initialize</strong>(source)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::Core::Events::Source (class)">Source</a></span></tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>source</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The event source as a string.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">#<strong>initialize</strong>(components)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::Core::Events::Source (class)">Source</a></span></tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>components</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Source/Component.html" title="OpenHAB::Core::Events::Source::Component (class)">Component</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The components in the event source delegation chain.</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 
+</div>
+      </li>
+    
+  </ul>
 
 
-
-  <h2>Instance Attribute Summary</h2>
-  
-  <h3 class="inherited">Attributes included from <span class='object_link'><a href="ItemState.html" title="OpenHAB::Core::Events::ItemState (module)">ItemState</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ItemState.html#state-instance_method" title="OpenHAB::Core::Events::ItemState#state (method)">#state</a></span></p>
-
-  
-  
-  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="ItemEvent.html" title="OpenHAB::Core::Events::ItemEvent (class)">ItemEvent</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ItemEvent.html#group-instance_method" title="OpenHAB::Core::Events::ItemEvent#group (method)">#group</a></span>, <span class='object_link'><a href="ItemEvent.html#item-instance_method" title="OpenHAB::Core::Events::ItemEvent#item (method)">#item</a></span></p>
-
-  
-  
-  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="AbstractEvent.html" title="OpenHAB::Core::Events::AbstractEvent (class)">AbstractEvent</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="AbstractEvent.html#attachment-instance_method" title="OpenHAB::Core::Events::AbstractEvent#attachment (method)">#attachment</a></span>, <span class='object_link'><a href="AbstractEvent.html#inputs-instance_method" title="OpenHAB::Core::Events::AbstractEvent#inputs (method)">#inputs</a></span>, <span class='object_link'><a href="AbstractEvent.html#source-instance_method" title="OpenHAB::Core::Events::AbstractEvent#source (method)">#source</a></span></p>
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
 
 
+63
+64
+65
+66
+67
+68
+69
+70
+71</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/source.rb', line 63</span>
+
+<span class="keyword">def</span> <span class="function">initialize</span>(source_or_components) <span class="comment"># rubocop:disable Lint/MissingSuper</span>
+  <span class="instance-variable">@components</span> = <span class="keyword">if</span> source_or_components.is_a?(<span class="constant">Array</span>)
+                  <span class="instance-variable">@source</span> = <span class="predefined-constant">nil</span>
+                  source_or_components.dup
+                <span class="keyword">else</span>
+                  <span class="instance-variable">@source</span> = -source_or_components
+                  <span class="instance-variable">@source</span>.split(<span class="string"><span class="delimiter">&quot;</span><span class="content">=&gt;</span><span class="delimiter">&quot;</span></span>).map { |s| <span class="constant">Component</span>.parse(s) }
+                <span class="keyword">end</span>.freeze
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="actor-instance_method">
+  
+    #<strong>actor</strong>  &#x21d2; <tt>String</tt><sup>?</sup>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The actor (user, device, etc.) of the initial component that sent the event.</p>
 
 
+  </div>
+</div>
+<div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
   
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
   
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+173
+174
+175</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/source.rb', line 173</span>
+
+<span class="keyword">def</span> <span class="function">actor</span>
+  components.first&amp;.actor
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="bundle-instance_method">
   
+    #<strong>bundle</strong>  &#x21d2; <tt>String</tt><sup>?</sup>  <span class="extras">(readonly)</span>
   
-  
-  <h2>Method Summary</h2>
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="ItemState.html" title="OpenHAB::Core::Events::ItemState (module)">ItemState</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ItemState.html#closed%3F-instance_method" title="OpenHAB::Core::Events::ItemState#closed? (method)">#closed?</a></span>, <span class='object_link'><a href="ItemState.html#down%3F-instance_method" title="OpenHAB::Core::Events::ItemState#down? (method)">#down?</a></span>, <span class='object_link'><a href="ItemState.html#inspect-instance_method" title="OpenHAB::Core::Events::ItemState#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="ItemState.html#null%3F-instance_method" title="OpenHAB::Core::Events::ItemState#null? (method)">#null?</a></span>, <span class='object_link'><a href="ItemState.html#off%3F-instance_method" title="OpenHAB::Core::Events::ItemState#off? (method)">#off?</a></span>, <span class='object_link'><a href="ItemState.html#on%3F-instance_method" title="OpenHAB::Core::Events::ItemState#on? (method)">#on?</a></span>, <span class='object_link'><a href="ItemState.html#open%3F-instance_method" title="OpenHAB::Core::Events::ItemState#open? (method)">#open?</a></span>, <span class='object_link'><a href="ItemState.html#paused%3F-instance_method" title="OpenHAB::Core::Events::ItemState#paused? (method)">#paused?</a></span>, <span class='object_link'><a href="ItemState.html#playing%3F-instance_method" title="OpenHAB::Core::Events::ItemState#playing? (method)">#playing?</a></span>, <span class='object_link'><a href="ItemState.html#state%3F-instance_method" title="OpenHAB::Core::Events::ItemState#state? (method)">#state?</a></span>, <span class='object_link'><a href="ItemState.html#undef%3F-instance_method" title="OpenHAB::Core::Events::ItemState#undef? (method)">#undef?</a></span>, <span class='object_link'><a href="ItemState.html#up%3F-instance_method" title="OpenHAB::Core::Events::ItemState#up? (method)">#up?</a></span></p>
 
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="AbstractEvent.html" title="OpenHAB::Core::Events::AbstractEvent (class)">AbstractEvent</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="AbstractEvent.html#inspect-instance_method" title="OpenHAB::Core::Events::AbstractEvent#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="AbstractEvent.html#payload-instance_method" title="OpenHAB::Core::Events::AbstractEvent#payload (method)">#payload</a></span></p>
 
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The bundle (module, app, etc.) of the initial component that sent the event.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+163
+164
+165</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/source.rb', line 163</span>
+
+<span class="keyword">def</span> <span class="function">bundle</span>
+  components.first&amp;.bundle
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="components-instance_method">
+  
+    #<strong>components</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Source/Component.html" title="OpenHAB::Core::Events::Source::Component (class)">Component</a></span>&gt;</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The components in the event source delegation chain.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Source/Component.html" title="OpenHAB::Core::Events::Source::Component (class)">Component</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+52
+53
+54</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/source.rb', line 52</span>
+
+<span class="keyword">def</span> <span class="function">components</span>
+  <span class="instance-variable">@components</span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="source-instance_method">
+  
+    #<strong>source</strong>  &#x21d2; <tt>String</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='to_s-instance_method'>to_s</span>, <span id='to_str-instance_method'>to_str</span>, <span id='inspect-instance_method'>inspect</span>, <span id='__getobj__-instance_method'>__getobj__</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The event source as a string.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+153
+154
+155</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/source.rb', line 153</span>
+
+<span class="keyword">def</span> <span class="function">source</span>
+  <span class="instance-variable">@source</span> ||= components.join(<span class="string"><span class="delimiter">&quot;</span><span class="content">=&gt;</span><span class="delimiter">&quot;</span></span>).freeze
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="!=-instance_method">
+  
+    #<strong>!=</strong>(other)  &#x21d2; <tt>true</tt>, <tt>false</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+191
+192
+193</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/source.rb', line 191</span>
+
+<span class="keyword">def</span> <span class="function">!=</span>(other)
+  !(<span class="predefined-constant">self</span> == other) <span class="comment"># rubocop:disable Style/InverseMethods</span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="<=>-instance_method">
+  
+    #<strong>&lt;=&gt;</strong>(other)  &#x21d2; <tt><span class='object_link'><a href="../../../Integer.html" title="Integer (class)">Integer</a></span></tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Integer.html" title="Integer (class)">Integer</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+196
+197
+198
+199
+200
+201</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/source.rb', line 196</span>
+
+<span class="keyword">def</span> <span class="function">&lt;=&gt;</span>(other)
+  <span class="keyword">return</span> <span class="integer">0</span> <span class="keyword">if</span> <span class="predefined-constant">self</span> == other
+  <span class="keyword">return</span> <span class="predefined-constant">nil</span> <span class="keyword">unless</span> other.respond_to?(<span class="symbol">:to_str</span>)
+
+  to_s &lt;=&gt; other.to_str
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="==-instance_method">
+  
+    #<strong>==</strong>(other)  &#x21d2; <tt>true</tt>, <tt>false</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+183
+184
+185
+186
+187
+188</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/source.rb', line 183</span>
+
+<span class="keyword">def</span> <span class="function">==</span>(other)
+  <span class="keyword">return</span> components == other.components <span class="keyword">if</span> other.is_a?(<span class="constant">Source</span>)
+  <span class="keyword">return</span> to_s == other.to_str <span class="keyword">if</span> other.respond_to?(<span class="symbol">:to_str</span>)
+
+  <span class="predefined-constant">false</span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="actor_for-instance_method">
+  
+    #<strong>actor_for</strong>(bundle)  &#x21d2; <tt>String</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the actor (user, device, etc.) for the specified bundle, if any.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>bundle</span>
+      
+      
+        <span class='type'>(<tt>#===</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The bundle (module, app, etc.) to find the actor for.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the actor (user, device, etc.) for the specified bundle, if any.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+119
+120
+121</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/source.rb', line 119</span>
+
+<span class="keyword">def</span> <span class="function">actor_for</span>(bundle)
+  components.find { |c| bundle === c.bundle }&amp;.actor <span class="comment"># rubocop:disable Style/CaseEquality</span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="delegate-instance_method">
+  
+    #<strong>delegate</strong>(bundle, actor = nil)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::Core::Events::Source (class)">Source</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Construct a new <span class='object_link'><a href="" title="OpenHAB::Core::Events::Source (class)">OpenHAB::Core::Events::Source</a></span> by adding an additional component to the delegation chain.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>bundle</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The bundle (module, app, etc.) of the new component to add to the chain.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>actor</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The actor (user, device, etc.) of the new component to add to the chain.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="OpenHAB::Core::Events::Source (class)">Source</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+80
+81
+82</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/source.rb', line 80</span>
+
+<span class="keyword">def</span> <span class="function">delegate</span>(bundle, actor = <span class="predefined-constant">nil</span>)
+  <span class="constant">Source</span>.new(components + [<span class="constant">Component</span>.build(bundle, actor)])
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="eql?-instance_method">
+  
+    #<strong>eql?</strong>(other)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+203
+204
+205</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/source.rb', line 203</span>
+
+<span class="keyword">def</span> <span class="function">eql?</span>(other)
+  other.is_a?(<span class="constant">Source</span>) &amp;&amp; components == other.components
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="hash-instance_method">
+  
+    #<strong>hash</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Integer.html" title="Integer (class)">Integer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+208
+209
+210</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/source.rb', line 208</span>
+
+<span class="keyword">def</span> <span class="function">hash</span>
+  components.hash
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="reject-instance_method">
+  
+    
+      <span class="overload">#<strong>reject</strong>(bundle)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::Core::Events::Source (class)">Source</a></span></tt> </span>
+    
+      <span class="overload">#<strong>reject</strong>({ |component| ... }) {|component| ... } &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::Core::Events::Source (class)">Source</a></span></tt> </span>
+    
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Construct a new <span class='object_link'><a href="" title="OpenHAB::Core::Events::Source (class)">OpenHAB::Core::Events::Source</a></span> without any components from the specified bundle.</p>
+<p>This is useful if you consider events from a specific bundle as sensitive,
+and want to filter that component out from an untrusted sender.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <p class="tag_title">Overloads:</p>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">#<strong>reject</strong>(bundle)  &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::Core::Events::Source (class)">Source</a></span></tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    <p>Returns a new Source without any components from the specified bundle.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>bundle</span>
+      
+      
+        <span class='type'>(<tt>#===</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The bundle (module, app, etc.) to reject.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="OpenHAB::Core::Events::Source (class)">Source</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>a new Source without any components from the specified bundle.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">#<strong>reject</strong>({ |component| ... }) {|component| ... } &#x21d2; <tt><span class='object_link'><a href="" title="OpenHAB::Core::Events::Source (class)">Source</a></span></tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    <p>Returns a new Source without any components for which the block returns true.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>component</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Source/Component.html" title="OpenHAB::Core::Events::Source::Component (class)">Component</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Each component in the delegation chain.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="OpenHAB::Core::Events::Source (class)">Source</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>a new Source without any components for which the block returns true.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+  </ul>
+
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+137
+138
+139
+140
+141
+142
+143
+144
+145</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/source.rb', line 137</span>
+
+<span class="keyword">def</span> <span class="function">reject</span>(bundle = <span class="predefined-constant">nil</span>, &amp;)
+  raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Either a bundle or a block must be given</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> bundle || block_given?
+
+  <span class="constant">Source</span>.new(<span class="keyword">if</span> block_given?
+               components.reject(&amp;)
+             <span class="keyword">else</span>
+               components.reject { |c| bundle === c.bundle } <span class="comment"># rubocop:disable Style/CaseEquality</span>
+             <span class="keyword">end</span>)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="sender?-instance_method">
+  
+    
+      <span class="overload">#<strong>sender?</strong>(bundle_or_actor)  &#x21d2; <tt>true</tt>, <tt>false</tt> </span>
+    
+      <span class="overload">#<strong>sender?</strong>(bundle: nil, actor: nil)  &#x21d2; <tt>true</tt>, <tt>false</tt> </span>
+    
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Check if the event was sent by the specified bundle or actor.</p>
+<p>Checks if any component matches the specified bundle or actor.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <p class="tag_title">Overloads:</p>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">#<strong>sender?</strong>(bundle_or_actor)  &#x21d2; <tt>true</tt>, <tt>false</tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>bundle_or_actor</span>
+      
+      
+        <span class='type'>(<tt>#===</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The bundle (module, app, etc.) or actor (user, device, etc.) to check.
+If either a bundle or actor in any component in the source matches, this method returns true.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">#<strong>sender?</strong>(bundle: nil, actor: nil)  &#x21d2; <tt>true</tt>, <tt>false</tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>bundle</span>
+      
+      
+        <span class='type'>(<tt>#===</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>actor</span>
+      
+      
+        <span class='type'>(<tt>#===</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+  </ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/source.rb', line 100</span>
+
+<span class="keyword">def</span> <span class="function">sender?</span>(bundle_or_actor = <span class="predefined-constant">nil</span>, <span class="key">bundle</span>: <span class="predefined-constant">nil</span>, <span class="key">actor</span>: <span class="predefined-constant">nil</span>)
+  <span class="keyword">unless</span> bundle_or_actor || bundle || actor
+    raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Specify one of bundle_or_actor, bundle or actor</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
+
+  <span class="comment"># rubocop:disable Style/CaseEquality</span>
+  components.any? <span class="keyword">do</span> |sender|
+    (bundle &amp;&amp; bundle === sender.bundle) ||
+      (actor &amp;&amp; actor === sender.actor) ||
+      (bundle_or_actor &amp;&amp; bundle_or_actor === sender.bundle) ||
+      (bundle_or_actor &amp;&amp; bundle_or_actor === sender.actor)
+  <span class="keyword">end</span>
+  <span class="comment"># rubocop:enable Style/CaseEquality</span>
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
 </div>
 
         <footer>
-  Generated on Wed Dec 24 16:26:47 2025 by
+  Generated on Wed Dec 24 16:26:40 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>

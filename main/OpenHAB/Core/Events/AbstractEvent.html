@@ -669,6 +669,60 @@
   </li>
 
   
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Source.html" title="OpenHAB::Core::Events::Source (class)">Source</a></span>
+      
+        &lt; Delegator
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  
+  
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="Source/Component.html" title="OpenHAB::Core::Events::Source::Component (class)">Component</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+        
+      </ul>
+    
+  </li>
+
+  
   <li class="">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="StartlevelEvent.html" title="OpenHAB::Core::Events::StartlevelEvent (class)">StartlevelEvent</a></span>
@@ -3693,7 +3747,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#source-instance_method" title="#source (instance method)">#<strong>source</strong>  &#x21d2; String </a>
+      <a href="#source-instance_method" title="#source (instance method)">#<strong>source</strong>  &#x21d2; Source<sup>?</sup> </a>
     
 
     
@@ -3712,7 +3766,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>The component that sent the event.</p>
+    <span class="summary_desc"><div class='inline'><p>The component(s) that sent the event.</p>
 </div></span>
   
 </li>
@@ -3899,7 +3953,7 @@
       <div class="method_details ">
   <h3 class="signature " id="source-instance_method">
   
-    #<strong>source</strong>  &#x21d2; <tt>String</tt>  <span class="extras">(readonly)</span>
+    #<strong>source</strong>  &#x21d2; <tt><span class='object_link'><a href="Source.html" title="OpenHAB::Core::Events::Source (class)">Source</a></span></tt><sup>?</sup>  <span class="extras">(readonly)</span>
   
 
   
@@ -3907,7 +3961,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns The component that sent the event.</p>
+    <p>Returns The component(s) that sent the event.</p>
 
 
   </div>
@@ -3920,12 +3974,12 @@
     <li>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Source.html" title="OpenHAB::Core::Events::Source (class)">Source</a></span></tt>, <tt>nil</tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><p>The component that sent the event.</p>
+        <div class='inline'><p>The component(s) that sent the event.</p>
 </div>
       
     </li>
@@ -3938,12 +3992,36 @@
       <pre class="lines">
 
 
-</pre>
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/abstract_event.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/abstract_event.rb', line 38</span>
 
-</pre>
+<span class="keyword">def</span> <span class="function">source</span>
+  <span class="keyword">unless</span> instance_variable_defined?(<span class="symbol">:@source</span>)
+    <span class="keyword">begin</span>
+      <span class="comment"># Disable &quot;instance vars on non-persistent Java type&quot;</span>
+      original_verbose = <span class="global-variable">$VERBOSE</span>
+      <span class="global-variable">$VERBOSE</span> = <span class="predefined-constant">nil</span>
+      <span class="instance-variable">@source</span> = get_source &amp;&amp; <span class="constant">Source</span>.new(get_source)
+    <span class="keyword">ensure</span>
+      <span class="global-variable">$VERBOSE</span> = original_verbose
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+  <span class="instance-variable">@source</span>
+<span class="keyword">end</span></pre>
     </td>
   </tr>
 </table>
@@ -3993,14 +4071,14 @@
       <pre class="lines">
 
 
-58
-59
-60
-61
-62</pre>
+71
+72
+73
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/abstract_event.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/abstract_event.rb', line 71</span>
 
 <span class="keyword">def</span> <span class="function">inspect</span>
   s = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Events::</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span>.class.simple_name<span class="inline-delimiter">}</span></span><span class="content"> topic=</span><span class="inline"><span class="inline-delimiter">#{</span>topic<span class="inline-delimiter">}</span></span><span class="content"> payload=</span><span class="inline"><span class="inline-delimiter">#{</span>payload.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
@@ -4055,20 +4133,20 @@
       <pre class="lines">
 
 
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55</pre>
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/abstract_event.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/events/abstract_event.rb', line 58</span>
 
 <span class="keyword">def</span> <span class="function">payload</span>
   require <span class="string"><span class="delimiter">&quot;</span><span class="content">json</span><span class="delimiter">&quot;</span></span>
@@ -4091,7 +4169,7 @@
 </div>
 
         <footer>
-  Generated on Tue Dec 23 04:29:46 2025 by
+  Generated on Wed Dec 24 16:26:47 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>
