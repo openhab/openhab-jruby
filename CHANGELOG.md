@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.44.0](https://github.com/openhab/openhab-jruby/tree/v5.44.0) (2025-12-25)
+
+### Features
+
+- Add convenience methods to parse the event source by [@jimtng](https://github.com/jimtng) in [#496](https://github.com/openhab/openhab-jruby/pull/496)
+
+**Full Changelog**: [v5.43.0...v5.44.0](https://github.com/openhab/openhab-jruby/compare/v5.43.0...v5.44.0)
+
 ## [v5.43.0](https://github.com/openhab/openhab-jruby/tree/v5.43.0) (2025-11-15)
 
 ### Features
