@@ -344,7 +344,7 @@ RSpec.describe OpenHAB::Core::Timer do
   context "with real timers" do
     # We need to actually test them here
     self.mock_timers = false
-    include_examples "Timer interface"
+    it_behaves_like "Timer interface"
 
     it "doesn't mock timers" do
       expect(self.class.mock_timers?).to be false
@@ -352,7 +352,7 @@ RSpec.describe OpenHAB::Core::Timer do
   end
 
   context "with mock timers" do
-    include_examples "Timer interface"
+    it_behaves_like "Timer interface"
 
     it "mocks timers" do
       expect(self.class.mock_timers?).to be true

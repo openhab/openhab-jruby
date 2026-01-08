@@ -66,12 +66,12 @@ def generate_index
             .reject { |m| m.name.to_s.end_with?("=") && m.is_attribute? }
             .sort_by { |m| m.path.split("::") }
             .map do |method|
-    {
-      u: url_for(method)[base_url.length..],
-      n: method.name(true),
-      p: method.namespace.title,
-      d: (1 if method.has_tag?(:deprecated))
-    }
+              {
+                u: url_for(method)[base_url.length..],
+                n: method.name(true),
+                p: method.namespace.title,
+                d: (1 if method.has_tag?(:deprecated))
+              }
   end
 
   asset("index.json", {

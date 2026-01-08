@@ -42,7 +42,7 @@ RSpec.describe OpenHAB::DSL::Rules::NameInference do
   context "with #changed" do
     let(:trigger) { :changed }
 
-    include_examples "item trigger"
+    it_behaves_like "item trigger"
 
     it "generates a useful name for a from:" do
       trigger = self.trigger
@@ -85,7 +85,7 @@ RSpec.describe OpenHAB::DSL::Rules::NameInference do
   context "with #updated" do
     let(:trigger) { :updated }
 
-    include_examples "item trigger"
+    it_behaves_like "item trigger"
   end
 
   context "with #received_command" do

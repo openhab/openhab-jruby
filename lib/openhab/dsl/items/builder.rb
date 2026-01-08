@@ -152,7 +152,7 @@ module OpenHAB
               item.metadata
                   .reject { |namespace, _| builder.metadata.key?(namespace) }
                   .each do |namespace, metadata|
-                item.metadata.delete(namespace) if metadata.provider == Core::Items::Metadata::Provider.current
+                    item.metadata.delete(namespace) if metadata.provider == Core::Items::Metadata::Provider.current
               end
             else
               item = builder.build

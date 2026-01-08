@@ -36,14 +36,14 @@ module OpenHAB
 
       # Delegate any other methods to the actual array, exclude mutating methods
       def method_missing(method, ...)
-        return to_a.send(method, ...) if method[-1] != "!" && Array.instance_methods.include?(method)
+        return to_a.send(method, ...) if method[-1] != "!" && Array.method_defined?(method)
 
         super
       end
 
       # @!visibility private
       def respond_to_missing?(method, include_private = false)
-        return true if method[-1] != "!" && Array.instance_methods.include?(method.to_sym)
+        return true if method[-1] != "!" && Array.method_defined?(method.to_sym)
 
         super
       end

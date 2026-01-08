@@ -36,7 +36,7 @@ module OpenHAB
         #   @return [true,false] Returns true if the duration is less than zero.
         #
 
-        unless instance_methods.include?(:positive?)
+        unless method_defined?(:positive?)
           #
           # @return [true, false] Returns true if the duration is greater than zero.
           #

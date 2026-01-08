@@ -7,7 +7,7 @@ module OpenHAB
       class Transformation
         class << self
           # @!visibility private
-          alias_method :raw_transform, :transform if instance_methods.include?(:transform)
+          alias_method :raw_transform, :transform if method_defined?(:transform)
 
           #
           # Applies a transformation of a given type with some function to a value.

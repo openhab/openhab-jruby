@@ -55,7 +55,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       description += " to: #{to.inspect}" if to
       description += " for: #{duration.inspect}" if duration
       callers = caller
-      id = callers.first.split("/").last.rpartition(":").first
+      id = callers.first.split("/").last.rpartition(":").first # rubocop:disable RSpec/LeakyLocalVariable
 
       it description, caller: callers do
         # this is the only way to make this accessible to both
@@ -773,7 +773,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         description += "for event #{event} " unless event.empty?
         description += "with args #{block.source.sub(/.*(?:{|do)\s+\[(.*)\]\s+(?:}|end)/, '\\1')}"
 
-        channel ||= "astro:sun:home:rise#event"
+        channel ||= "astro:sun:home:rise#event" # rubocop:disable RSpec/LeakyLocalVariable
         it(description, caller:) do
           channels = instance_exec(&block)
           triggered = false

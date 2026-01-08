@@ -91,9 +91,9 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
   end
 
   # riemann_sum methods were added in OH 5.0, so we don't need to test their quantification
-  numeric_methods = %i[average median delta deviation maximum minimum sum variance]
-  supports_riemann_arg = %i[average deviation variance riemann_sum]
-  variants = %i[since until between]
+  numeric_methods = %i[average median delta deviation maximum minimum sum variance].freeze
+  supports_riemann_arg = %i[average deviation variance riemann_sum].freeze # rubocop:disable RSpec/LeakyLocalVariable
+  variants = %i[since until between].freeze
   %i[
     all_states
     average
@@ -114,8 +114,8 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
   ].product(variants).each do |name, variant|
     prefix = +name.to_s
     suffix = prefix.delete_suffix!("?") && "?"
-    method = :"#{prefix}_#{variant}#{suffix}"
-    next unless OpenHAB::Core::Items::Persistence.instance_methods.include?(method)
+    method = :"#{prefix}_#{variant}#{suffix}" # rubocop:disable RSpec/LeakyLocalVariable
+    next unless OpenHAB::Core::Items::Persistence.method_defined?(method)
 
     describe "##{method}" do
       # @deprecated OH 4.1 - OH 4.2+ core returns QuantityType when applicable, so we don't have to quantify
