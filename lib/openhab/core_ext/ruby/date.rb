@@ -83,9 +83,17 @@ class Date
     to_zoned_date_time(context).to_instant
   end
 
+  # @!parse
+  #   # Extends {#<=>} to allow comparison with {java.time.MonthDay MonthDay}
+  #   # @return [Integer, nil]
+  #   def compare_with_coercion(other)
+  #   end
+  #   alias_method :<=>, :compare_with_coercion
+
+  # @!visibility private
   # @return [Integer, nil]
-  def compare_with_coercion(other)
-    return compare_without_coercion(other) if other.is_a?(self.class)
+  def oh_compare_with_coercion(other)
+    return oh_compare_without_coercion(other) if other.is_a?(self.class)
 
     return self <=> other.to_date(self) if other.is_a?(java.time.MonthDay)
 
@@ -93,10 +101,10 @@ class Date
       return lhs <=> rhs
     end
 
-    compare_without_coercion(other)
+    oh_compare_without_coercion(other)
   end
-  alias_method :compare_without_coercion, :<=>
-  alias_method :<=>, :compare_with_coercion
+  alias_method :oh_compare_without_coercion, :<=>
+  alias_method :<=>, :oh_compare_with_coercion
 
   #
   # Convert `other` to Date, if possible.
