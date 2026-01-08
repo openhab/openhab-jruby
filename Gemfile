@@ -27,7 +27,7 @@ group :development, :test do
   gem "rubocop-rspec", "~> 3.5", require: false
   gem "tty-command", "~> 0.10", require: false
   gem "yaml-lint", "~> 0.0", require: false
-  gem "yard", platform: :mri, github: "ccutrer/yard", branch: "integration", require: false
+  gem "yard", github: "ccutrer/yard", branch: "integration", require: false
 end
 
 group :test do
