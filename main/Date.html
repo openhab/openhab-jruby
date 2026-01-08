@@ -3735,8 +3735,6 @@
     
 
     
-      (also: #&lt;=&gt;)
-    
   </span>
   
   
@@ -3747,7 +3745,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>Extends <span class='object_link'><a href="#<=>-instance_method" title="Date#&lt;=&gt; (method)">#&lt;=&gt;</a></span> to allow comparison with <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/MonthDay.html" target="_parent" title="MonthDay">MonthDay</a>.</p>
+</div></span>
   
 </li>
 
@@ -4094,16 +4093,16 @@
       <pre class="lines">
 
 
-107
-108
-109
-110
-111
-112
-113</pre>
+115
+116
+117
+118
+119
+120
+121</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/date.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/date.rb', line 115</span>
 
 <span class="keyword">def</span> <span class="function">coerce</span>(other)
   logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">Coercing </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> as a request from </span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
@@ -4124,15 +4123,12 @@
   
 
   
-    <span class="aliases">Also known as:
-    <span class="names"><span id='<=>-instance_method'>&lt;=&gt;</span></span>
-    </span>
-  
 
   
 </h3><div class="docstring">
   <div class="discussion">
-    
+    <p>Extends <span class='object_link'><a href="#<=>-instance_method" title="Date#&lt;=&gt; (method)">#&lt;=&gt;</a></span> to allow comparison with <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/MonthDay.html" target="_parent" title="MonthDay">MonthDay</a></p>
+
 
   </div>
 </div>
@@ -4158,31 +4154,13 @@
       <pre class="lines">
 
 
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97</pre>
+3
+4</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/date.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/date.rb', line 3</span>
 
 <span class="keyword">def</span> <span class="function">compare_with_coercion</span>(other)
-  <span class="keyword">return</span> compare_without_coercion(other) <span class="keyword">if</span> other.is_a?(<span class="predefined-constant">self</span>.class)
-
-  <span class="keyword">return</span> <span class="predefined-constant">self</span> &lt;=&gt; other.to_date(<span class="predefined-constant">self</span>) <span class="keyword">if</span> other.is_a?(java.time.MonthDay)
-
-  <span class="keyword">if</span> other.respond_to?(<span class="symbol">:coerce</span>) &amp;&amp; (lhs, rhs = other.coerce(<span class="predefined-constant">self</span>))
-    <span class="keyword">return</span> lhs &lt;=&gt; rhs
-  <span class="keyword">end</span>
-
-  compare_without_coercion(other)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4226,10 +4204,10 @@
       <pre class="lines">
 
 
-117</pre>
+125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/date.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/ruby/date.rb', line 125</span>
 
 alias_method <span class="symbol">:inspect</span>, <span class="symbol">:to_s</span></pre>
     </td>
@@ -4867,7 +4845,7 @@ def_delegators <span class="symbol">:to_zoned_date_time</span>, <span class="sym
 </div>
 
         <footer>
-  Generated on Thu Dec 25 01:33:22 2025 by
+  Generated on Thu Jan  8 17:57:00 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>
