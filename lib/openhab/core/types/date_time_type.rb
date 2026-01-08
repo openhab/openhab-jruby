@@ -225,7 +225,7 @@ module OpenHAB
           # @deprecated OH 4.2 Remove version check when dropping OH 4.2
           return true if OpenHAB::Core.version >= OpenHAB::Core::V4_3 && to_instant.respond_to?(method)
           return true if zoned_date_time.respond_to?(method)
-          return true if ::Time.instance_methods.include?(method.to_sym)
+          return true if ::Time.method_defined?(method.to_sym)
 
           super
         end
@@ -241,7 +241,7 @@ module OpenHAB
           end
 
           return zoned_date_time.send(method, ...) if zoned_date_time.respond_to?(method)
-          return to_time.send(method, ...) if ::Time.instance_methods.include?(method.to_sym)
+          return to_time.send(method, ...) if ::Time.method_defined?(method.to_sym)
 
           super
         end

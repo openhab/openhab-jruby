@@ -106,29 +106,33 @@ module OpenHAB
                       unit_label: nil,
                       verify: false)
           # Extract the named arguments into a hash
-          @parameters << method(__method__).parameters
-                                           .select { |param_type, _| param_type == :key } # rubocop:disable Style/HashSlice
-                                           .to_h { |_, key| [key, binding.local_variable_get(key)] }
-                                           .then do |p|
-            p[:options] = p[:options].map do |opt_value, opt_label|
-              org.openhab.core.config.core.ParameterOption.new(opt_value, opt_label)
-            end
-            p[:filter_criteria] = p[:filter_criteria].map do |filter_name, filter_value|
-              org.openhab.core.config.core.FilterCriteria.new(filter_name, filter_value)
-            end
-            p[:minimum] = p.delete(:min)&.to_d&.to_java
-            p[:maximum] = p.delete(:max)&.to_d&.to_java
-            p[:step] = p.delete(:step)&.to_d&.to_java
-            p[:group_name] ||= @current_group
-            type = org.openhab.core.config.core.ConfigDescriptionParameter::Type.value_of(type.to_s.upcase)
+          @parameters <<
+            method(__method__)
+            .parameters
+            .select { |param_type, _| param_type == :key } # rubocop:disable Style/HashSlice
+            .to_h { |_, key| [key, binding.local_variable_get(key)] }
+            .then do |p|
+              p[:options] = p[:options].map do |opt_value, opt_label|
+                org.openhab.core.config.core.ParameterOption.new(opt_value, opt_label)
+              end
+              p[:filter_criteria] = p[:filter_criteria].map do |filter_name, filter_value|
+                org.openhab.core.config.core.FilterCriteria.new(filter_name, filter_value)
+              end
+              p[:minimum] = p.delete(:min)&.to_d&.to_java
+              p[:maximum] = p.delete(:max)&.to_d&.to_java
+              p[:step] = p.delete(:step)&.to_d&.to_java
+              p[:group_name] ||= @current_group
+              type = org.openhab.core.config.core.ConfigDescriptionParameter::Type.value_of(type.to_s.upcase)
 
-            parameter = org.openhab.core.config.core.ConfigDescriptionParameterBuilder.create(name.to_s, type)
+              parameter = org.openhab.core.config.core.ConfigDescriptionParameterBuilder.create(
+                name.to_s, type
+              )
 
-            p.each do |key, value|
-              parameter.send(:"with_#{key}", value) unless value.nil?
+              p.each do |key, value|
+                parameter.send(:"with_#{key}", value) unless value.nil?
+              end
+              parameter.build
             end
-            parameter.build
-          end
         end
 
         #

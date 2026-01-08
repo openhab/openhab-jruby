@@ -106,7 +106,7 @@ RSpec.describe OpenHAB::Core::Types::QuantityType do
     expect((0 | "°C") | "°F").to eql QuantityType.new("32 °F")
     expect((1 | "h") | "s").to eql QuantityType.new("3600 s")
     expect((23 | "°C") | ImperialUnits::FAHRENHEIT).to eql QuantityType.new("73.4 °F")
-    expect((((370 | "mired") | "K")).to_f.round).to be 2703
+    expect(((370 | "mired") | "K").to_f.round).to be 2703
   end
 
   it "supports ranges" do

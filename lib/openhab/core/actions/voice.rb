@@ -7,7 +7,7 @@ module OpenHAB
       class Voice
         class << self
           # @!visibility private
-          alias_method :raw_say, :say if instance_methods.include?(:say)
+          alias_method :raw_say, :say if method_defined?(:say)
 
           #
           # Say text via openHAB Text-To-Speech service, Voice.say()

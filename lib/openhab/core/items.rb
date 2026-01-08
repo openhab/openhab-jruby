@@ -42,7 +42,7 @@ module OpenHAB
         def def_predicate_methods(klass)
           values_for_enums(klass.ACCEPTED_DATA_TYPES).each do |state|
             _command_predicate, state_predicate = Types::PREDICATE_ALIASES[state.to_s]
-            next if klass.instance_methods.include?(state_predicate)
+            next if klass.method_defined?(state_predicate)
 
             logger.trace { "Defining #{klass}##{state_predicate} for #{state}" }
             klass.class_eval <<~RUBY, __FILE__, __LINE__ + 1
@@ -62,7 +62,7 @@ module OpenHAB
         def def_command_methods(klass)
           values_for_enums(klass.ACCEPTED_COMMAND_TYPES).each do |value|
             command = Types::COMMAND_ALIASES[value.to_s]
-            next if klass.instance_methods.include?(command)
+            next if klass.method_defined?(command)
 
             if value.is_a?(Types::State)
               logger.trace { "Defining #{klass}/Enumerable##{command}/#{command}! for #{value}" }
@@ -128,10 +128,10 @@ module OpenHAB
                .select { |k| k <= GenericItem && k != GroupItem && k != StringItem }
                .sort { |a, b| (a < b) ? 1 : -1 }
                .each do |klass|
-        klass.field_reader :ACCEPTED_COMMAND_TYPES, :ACCEPTED_DATA_TYPES unless klass == GenericItem
+                 klass.field_reader :ACCEPTED_COMMAND_TYPES, :ACCEPTED_DATA_TYPES unless klass == GenericItem
 
-        def_predicate_methods(klass)
-        def_command_methods(klass)
+                 def_predicate_methods(klass)
+                 def_command_methods(klass)
       end
 
       prepend_accepted_data_types

@@ -43,39 +43,39 @@ module OpenHAB
                .grep(Module)
                .select { |k| k < java.lang.Enum }
                .each do |klass|
-        # make sure == from Type is inherited
-        klass.remove_method(:==)
+                 # make sure == from Type is inherited
+                 klass.remove_method(:==)
 
-        # dynamically define predicate methods
-        klass.values.each do |value| # rubocop:disable Style/HashEachMethods -- this isn't a Ruby hash
-          # include all the aliases that we define for items both command and
-          # state aliases (since types can be interrogated as an incoming
-          # command, or as the state of an item)
-          command = :"#{Types::COMMAND_ALIASES[value.to_s]}?"
-          states = Types::PREDICATE_ALIASES[value.to_s]
+                 # dynamically define predicate methods
+                 klass.values.each do |value| # rubocop:disable Style/HashEachMethods -- this isn't a Ruby hash
+                   # include all the aliases that we define for items both command and
+                   # state aliases (since types can be interrogated as an incoming
+                   # command, or as the state of an item)
+                   command = :"#{Types::COMMAND_ALIASES[value.to_s]}?"
+                   states = Types::PREDICATE_ALIASES[value.to_s]
 
-          ([command] | states).each do |method|
-            logger.trace { "Defining #{klass}##{method} for #{value}" }
-            klass.class_eval <<~RUBY, __FILE__, __LINE__ + 1
-              def #{method}                                                 # def on?
-                as(#{value.class.java_class.simple_name}).equal?(#{value})  #   as(OnOffType).equal?(ON)
-              end                                                           # end
-            RUBY
-          end
+                   ([command] | states).each do |method|
+                     logger.trace { "Defining #{klass}##{method} for #{value}" }
+                     klass.class_eval <<~RUBY, __FILE__, __LINE__ + 1
+                       def #{method}                                                 # def on?
+                         as(#{value.class.java_class.simple_name}).equal?(#{value})  #   as(OnOffType).equal?(ON)
+                       end                                                           # end
+                     RUBY
+                   end
 
-          method = states.last
-          Events::ItemState.class_eval <<~RUBY, __FILE__, __LINE__ + 1
-            def #{method}                                                            # def on?
-              item_state.as(#{value.class.java_class.simple_name}).equal?(#{value})  #   item_state.as(OnOffType).equal?(ON)
-            end                                                                      # end
-          RUBY
+                   method = states.last
+                   Events::ItemState.class_eval <<~RUBY, __FILE__, __LINE__ + 1
+                     def #{method}                                                            # def on?
+                       item_state.as(#{value.class.java_class.simple_name}).equal?(#{value})  #   item_state.as(OnOffType).equal?(ON)
+                     end                                                                      # end
+                   RUBY
 
-          Events::ItemStateChangedEvent.class_eval <<~RUBY, __FILE__, __LINE__ + 1
-            def was_#{method}                                                            # def was_on?
-              old_item_state.as(#{value.class.java_class.simple_name}).equal?(#{value})  #   old_item_state.as(OnOffType).equal?(ON)
-            end                                                                          # end
-          RUBY
-        end
+                   Events::ItemStateChangedEvent.class_eval <<~RUBY, __FILE__, __LINE__ + 1
+                     def was_#{method}                                                            # def was_on?
+                       old_item_state.as(#{value.class.java_class.simple_name}).equal?(#{value})  #   old_item_state.as(OnOffType).equal?(ON)
+                     end                                                                          # end
+                   RUBY
+                 end
       end
     end
   end
