@@ -87,7 +87,11 @@ RSpec.describe OpenHAB::Core::Things::Thing do
 
   describe "#properties" do
     it "works" do
-      expect(thing.properties).to be_empty
+      if OpenHAB::Core.version < OpenHAB::Core::V5_2
+        expect(thing.properties).to be_empty
+      else
+        expect(thing.properties.to_h).to eql({ "thingTypeVersion" => "1" })
+      end
     end
 
     it "supports setting properties" do
