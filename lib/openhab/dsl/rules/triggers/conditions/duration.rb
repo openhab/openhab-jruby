@@ -31,16 +31,16 @@ module OpenHAB
             # Process rule
             # @param [Hash] inputs inputs from trigger
             #
-            def process(mod:, inputs:, &block)
+            def process(mod:, inputs:, &)
               timer = @timers[inputs["triggeringItem"]&.name]
               if timer&.active?
-                process_active_timer(timer, inputs, mod, &block)
+                process_active_timer(timer, inputs, mod, &)
               elsif @conditions.process(mod:, inputs:)
                 logger.trace { "Trigger Guards Matched for #{self}, delaying rule execution" }
                 # Add timer and attach timer to delay object, and also state being tracked to so
                 # timer can be cancelled if state changes
                 # Also another timer should not be created if changed to same value again but instead rescheduled
-                create_trigger_delay_timer(inputs, mod, &block)
+                create_trigger_delay_timer(inputs, mod, &)
               else
                 logger.trace { "Trigger Guards did not match for #{self}, ignoring trigger." }
               end

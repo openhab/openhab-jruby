@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "fileutils"
-require "set"
 require "shellwords"
 require "time"
 
@@ -160,11 +159,11 @@ module OpenHAB
                                                             :karafEtc,
                                                             :defaultStartLevel
         klass.class_eval do
-          def send_private(method_name, *args)
+          def send_private(method_name, *)
             method_name = method_name.to_s
             method = self.class.java_class.declared_methods.find { |m| m.name == method_name }
             method.accessible = true
-            method.invoke(self, *args)
+            method.invoke(self, *)
           end
 
           def launch_simple

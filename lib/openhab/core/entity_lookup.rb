@@ -137,9 +137,9 @@ module OpenHAB
       end
 
       # @!visibility private
-      def instance_eval_with_dummy_items(&block)
+      def instance_eval_with_dummy_items(&)
         DSL::ThreadLocal.thread_local(openhab_create_dummy_items: self.class.create_dummy_items?) do
-          instance_eval(&block)
+          instance_eval(&)
         end
       end
 

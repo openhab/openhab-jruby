@@ -280,8 +280,6 @@ module OpenHAB
                   OSGi.register_service(new_ast, *services, bundle: ast_bundle)
             end
           end
-        rescue NameError
-          # @deprecated OH 4.0
         end
 
         # RSpec additions

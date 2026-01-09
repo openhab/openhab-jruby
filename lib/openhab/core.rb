@@ -42,7 +42,7 @@ module OpenHAB
       @full_version ||= Gem::Version.new(VERSION).freeze
     end
 
-    raise "`openhab-scripting` requires openHAB >= 4.1.0" unless version >= V4_1
+    raise "`openhab-scripting` requires openHAB >= 5.0.0" unless version >= V5_0
 
     # @return [Integer] Number of seconds to wait between checks for automation manager
     CHECK_DELAY = 10

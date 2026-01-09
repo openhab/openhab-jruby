@@ -200,7 +200,7 @@ RSpec.describe OpenHAB::Core::Items::Item do
     end
   end
 
-  describe "#was", if: OpenHAB::Core.version >= OpenHAB::Core::V5_0 do
+  describe "#was" do
     it "returns nil if the item had never changed" do
       expect(LightSwitch.was).to be_nil
     end
@@ -225,7 +225,7 @@ RSpec.describe OpenHAB::Core::Items::Item do
     end
   end
 
-  describe "#was?", if: OpenHAB::Core.version >= OpenHAB::Core::V5_0 do
+  describe "#was?" do
     it "works" do
       expect(LightSwitch.was?).to be false
       LightSwitch.update(NULL)
@@ -241,7 +241,7 @@ RSpec.describe OpenHAB::Core::Items::Item do
     end
   end
 
-  context "with was_*? predicates", if: OpenHAB::Core.version >= OpenHAB::Core::V5_0 do
+  context "with was_*? predicates" do
     describe "#was_undef?" do
       it "works" do
         LightSwitch.update(UNDEF)
@@ -366,13 +366,7 @@ RSpec.describe OpenHAB::Core::Items::Item do
   describe "#formatted_state" do
     it "just returns the state if it has no format" do
       items.build { number_item MyTemp, state: 5.556 }
-      if OpenHAB::Core.version < OpenHAB::Core::V4_2
-        expect(MyTemp.formatted_state[0...5]).to eql "5.556"
-      else
-        # This is due to the change in OH4.2
-        # https://github.com/openhab/openhab-core/pull/4175
-        expect(MyTemp.formatted_state).to eql "6"
-      end
+      expect(MyTemp.formatted_state).to eql "6"
     end
 
     it "handles format strings" do

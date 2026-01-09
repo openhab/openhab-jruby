@@ -174,12 +174,6 @@ module OpenHAB
         GroupItem.extend(Forwardable)
         GroupItem.def_delegators :members, :equipments, :locations
 
-        # This is a marker interface for all semantic tag classes.
-        # @interface
-        # @deprecated Since openHAB 4.0, {SemanticTag} is the interface that all tags implement.
-        #   Tags are simple instances, instead of another interface in a hierarchical structure.
-        Tag = org.openhab.core.semantics.Tag
-
         class << self
           # @!visibility private
           def service

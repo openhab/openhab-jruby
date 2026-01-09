@@ -189,7 +189,7 @@ def retry_if_unauthorized(response)
   yield
 end
 
-def check_auth(&block)
-  yield.then { |response| retry_if_unauthorized(response, &block) }
+def check_auth(&)
+  yield.then { |response| retry_if_unauthorized(response, &) }
        .tap { |response| raise "Error in response: #{response.inspect}" unless response.success? }
 end

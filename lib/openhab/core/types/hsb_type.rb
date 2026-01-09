@@ -244,8 +244,8 @@ module OpenHAB
         # @see planckian?
         # @see https://en.wikipedia.org/wiki/Planckian_locus Planckian Locus
         # @since openHAB 4.3
-        def planckian_cct(range: nil, **kwargs)
-          return unless planckian?(**kwargs)
+        def planckian_cct(range: nil, **)
+          return unless planckian?(**)
 
           range = range.range if range.is_a?(NumberItem)
           cct = self.cct

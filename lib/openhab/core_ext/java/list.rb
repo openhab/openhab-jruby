@@ -354,12 +354,12 @@ module Java::JavaUtil::List # rubocop:disable Style/ClassAndModuleChildren
     result
   end
 
-  def shuffle!(*args)
-    replace(shuffle(*args))
+  def shuffle!(*)
+    replace(shuffle(*))
   end
 
-  def slice(*args)
-    self[*args]
+  def slice(*)
+    self[*]
   end
 
   def slice!(*args)

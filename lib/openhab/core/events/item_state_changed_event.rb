@@ -82,9 +82,8 @@ module OpenHAB
         def inspect
           s = "#<OpenHAB::Core::Events::ItemStateChangedEvent item=#{item_name} " \
               "state=#{item_state.inspect} was=#{old_item_state.inspect}"
-          # @deprecated OH4.3 remove respond_to? checks in the next two lines when dropping OH 4.3
-          s += " last_state_update=#{last_state_update}" if respond_to?(:last_state_update) && last_state_update
-          s += " last_state_change=#{last_state_change}" if respond_to?(:last_state_change) && last_state_change
+          s += " last_state_update=#{last_state_update}" if last_state_update
+          s += " last_state_change=#{last_state_change}" if last_state_change
           s += " source=#{source.inspect}" if source
           "#{s}>"
         end

@@ -363,7 +363,7 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
     items.build do
       number_item "Number1", range: 5..10
       number_item "Number2", range: 2..10, step: 2
-      number_item "Number3", range: Range.new(nil, 50) if RUBY_VERSION >= "2.7"
+      number_item "Number3", range: Range.new(nil, 50)
       number_item "Number4", range: 50..
     end
 
@@ -373,10 +373,8 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
     expect(Number2.state_description.minimum.to_i).to be 2
     expect(Number2.state_description.maximum.to_i).to be 10
     expect(Number2.state_description.step.to_i).to be 2
-    if RUBY_VERSION >= "2.7"
-      expect(Number3.state_description.minimum).to be_nil
-      expect(Number3.state_description.maximum.to_i).to be 50
-    end
+    expect(Number3.state_description.minimum).to be_nil
+    expect(Number3.state_description.maximum.to_i).to be 50
     expect(Number4.state_description.minimum.to_i).to be 50
     expect(Number4.state_description.maximum).to be_nil
   end

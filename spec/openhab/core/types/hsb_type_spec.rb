@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe OpenHAB::Core::Types::HSBType do
-  describe ".from_cct", if: OpenHAB::Core.version >= OpenHAB::Core::V4_3 do
+  describe ".from_cct" do
     it "works with an integer" do
       warm_white = HSBType.from_cct(2700)
       expect(warm_white.hue.to_f).to be_within(0.01).of(38.51)
@@ -28,7 +28,7 @@ RSpec.describe OpenHAB::Core::Types::HSBType do
     end
   end
 
-  describe "#planckian_cct", if: OpenHAB::Core.version >= OpenHAB::Core::V4_3 do
+  describe "#planckian_cct" do
     it "returns a value for a pure 'white'" do
       warm_white = HSBType.from_cct(2700)
       expect(warm_white.planckian_cct.to_i).to be 2699

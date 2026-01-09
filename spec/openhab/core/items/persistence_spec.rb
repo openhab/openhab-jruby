@@ -91,7 +91,6 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
   end
 
   # riemann_sum methods were added in OH 5.0, so we don't need to test their quantification
-  numeric_methods = %i[average median delta deviation maximum minimum sum variance].freeze
   supports_riemann_arg = %i[average deviation variance riemann_sum].freeze # rubocop:disable RSpec/LeakyLocalVariable
   variants = %i[since until between].freeze
   %i[
@@ -118,23 +117,8 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
     next unless OpenHAB::Core::Items::Persistence.method_defined?(method)
 
     describe "##{method}" do
-      # @deprecated OH 4.1 - OH 4.2+ core returns QuantityType when applicable, so we don't have to quantify
-      if OpenHAB::Core.version < OpenHAB::Core::V4_2 && numeric_methods.include?(name)
-        it "returns a QuantityType on a dimensioned NumberItem" do
-          result = call_method(method, dimensioned_item)
-          result = result.state if result.is_a?(OpenHAB::Core::Items::Persistence::PersistedState)
-          expect(result).to be_a(QuantityType)
-        end
-
-        it "returns a DecimalType on a dimensionless NumberItem" do
-          result = call_method(method, dimensionless_item)
-          result = result.state if result.is_a?(OpenHAB::Core::Items::Persistence::PersistedState)
-          expect(result).to be_a(DecimalType)
-        end
-      else
-        it "works" do
-          call_method(method, dimensionless_item, with_riemann_type: supports_riemann_arg.include?(name))
-        end
+      it "works" do
+        call_method(method, dimensionless_item, with_riemann_type: supports_riemann_arg.include?(name))
       end
 
       if name == :all_states
@@ -162,22 +146,19 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
       item.persist(:influxdb)
     end
 
-    # @deprecated OH 4.1 Remove if guard when dropping oh 4.1 support
-    if OpenHAB::Core.version >= OpenHAB::Core::V4_2
-      it "accepts a timestamp and a state" do
-        item.persist(Time.now - 1.minute, 5)
-        item.persist(Time.now - 1.minute, 5, :influxdb)
-      end
+    it "accepts a timestamp and a state" do
+      item.persist(Time.now - 1.minute, 5)
+      item.persist(Time.now - 1.minute, 5, :influxdb)
+    end
 
-      it "raises an error when given a timestamp with a missing state" do
-        expect { item.persist(Time.now) }.to raise_error(ArgumentError)
-      end
+    it "raises an error when given a timestamp with a missing state" do
+      expect { item.persist(Time.now) }.to raise_error(ArgumentError)
+    end
 
-      it "accepts a TimeSeries" do
-        time_series = TimeSeries.new.add(Time.now, 0)
-        item.persist(time_series)
-        item.persist(time_series, :influxdb)
-      end
+    it "accepts a TimeSeries" do
+      time_series = TimeSeries.new.add(Time.now, 0)
+      item.persist(time_series)
+      item.persist(time_series, :influxdb)
     end
   end
 
@@ -210,8 +191,7 @@ RSpec.describe OpenHAB::Core::Items::Persistence do
       expect(max).to be_a described_class::PersistedState
       expect(max).to eql max.state
       expect(max.timestamp).to be_a ZonedDateTime
-      # @deprecated OH 4.2 - Remove if guard when dropping oh 4.2 support
-      expect(max.instant).to be_a Instant if OpenHAB::Core.version >= OpenHAB::Core::V4_3
+      expect(max.instant).to be_a Instant
     end
 
     it "is inspectable" do

@@ -2,13 +2,7 @@
 
 RSpec.describe OpenHAB::CoreExt::Ephemeris do
   let(:holidays_gb) do
-    # @deprecated OH 4.1 Ephemeris holiday file format changed in openHAB 4.2
-    file = if OpenHAB::Core.version >= OpenHAB::Core::V4_2
-             "Holidays_gb.xml"
-           else
-             "Holidays_gb_4.1.xml"
-           end
-    fixture(file)
+    fixture("Holidays_gb.xml")
   end
 
   describe "#holiday" do

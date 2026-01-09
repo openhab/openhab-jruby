@@ -26,12 +26,7 @@ RSpec.describe OpenHAB::Core::Types::DateTimeType do
     specify { expect(date2.wday).to be 0 }
     specify { expect(date2).to be_utc }
     specify { expect(date2.month).to be 1 }
-
-    if OpenHAB::Core.version < OpenHAB::Core::V4_3
-      specify { expect(date2.zone).to eql "Z" }
-    else
-      specify { expect(date2.zone).to eql "Etc/UTC" }
-    end
+    specify { expect(date2.zone).to eql "Etc/UTC" }
   end
 
   it "considers same time but different zone to be equal" do

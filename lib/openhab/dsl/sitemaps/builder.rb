@@ -48,8 +48,8 @@ module OpenHAB
         # @yield Block executed in the context of a {SitemapBuilder}
         # @return [SitemapBuilder]
         # @!visibility public
-        def sitemap(name, label: nil, icon: nil, &block)
-          sitemap = SitemapBuilder.new(name, @builder_proxy, label:, icon:, &block)
+        def sitemap(name, label: nil, icon: nil, &)
+          sitemap = SitemapBuilder.new(name, @builder_proxy, label:, icon:, &)
           sitemap = sitemap.build
           if @update && @provider.get(sitemap.uid)
             @provider.update(sitemap)
@@ -355,8 +355,8 @@ module OpenHAB
         # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, mappings: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param mappings [Hash, Array, nil] Mappings from command to label (see {SwitchBuilder#mappings})
         # @!visibility private
-        def initialize(type, builder_proxy, mappings: nil, **kwargs, &block)
-          super(type, builder_proxy, **kwargs, &block)
+        def initialize(type, builder_proxy, mappings: nil, **, &)
+          super(type, builder_proxy, **, &)
 
           @mappings = mappings
         end
@@ -370,8 +370,7 @@ module OpenHAB
             mapping.cmd = cmd.to_s
             mapping.release_cmd = release_cmd.to_s unless release_cmd.nil?
             mapping.label = label&.to_s || cmd.to_s
-            # @deprecated OH 4.1 the if check is not needed in OH4.1+
-            mapping.icon = icon if icon
+            mapping.icon = icon
             widget.mappings.add(mapping)
           end
           widget
@@ -400,8 +399,8 @@ module OpenHAB
         # @param range [Range, nil] Allowed range of the value (see {SetpointBuilder#range})
         # @param step [Numeric,nil] How far the value will change with each button press (see {SetpointBuilder#step})
         # @!visibility private
-        def initialize(type, builder_proxy, range: nil, step: nil, **kwargs, &block)
-          super(type, builder_proxy, **kwargs, &block)
+        def initialize(type, builder_proxy, range: nil, step: nil, **, &)
+          super(type, builder_proxy, **, &)
 
           @range = range
           @step = step
@@ -441,8 +440,8 @@ module OpenHAB
         # @param release_only [true, false, nil]
         #   Only send the command when the slider is released (see {SliderBuilder#release_only=})
         # @!visibility private
-        def initialize(type, builder_proxy, switch: nil, frequency: nil, release_only: nil, **kwargs, &block)
-          super(type, builder_proxy, **kwargs, &block)
+        def initialize(type, builder_proxy, switch: nil, frequency: nil, release_only: nil, **, &)
+          super(type, builder_proxy, **, &)
 
           @switch = switch
           @frequency = frequency
@@ -464,8 +463,7 @@ module OpenHAB
           widget = super
           widget.switch_enabled = switch? unless @switch.nil?
           widget.send_frequency = (frequency * 1000).to_i if frequency
-          # @deprecated OH 4.1 remove the version check when dropping OH 4.1 support
-          widget.release_only = release_only? if OpenHAB::Core.version >= OpenHAB::Core::V4_2 && !@release_only.nil?
+          widget.release_only = release_only? unless @release_only.nil?
           widget
         end
       end
@@ -487,8 +485,8 @@ module OpenHAB
         # @param [String, nil] url (see {VideoBuilder#url})
         # @param [:mjpeg, :hls, nil] encoding (see {VideoBuilder#encoding})
         # @!visibility private
-        def initialize(type, builder_proxy, url: nil, encoding: nil, **kwargs, &block)
-          super(type, builder_proxy, **kwargs, &block)
+        def initialize(type, builder_proxy, url: nil, encoding: nil, **, &)
+          super(type, builder_proxy, **, &)
 
           @url = url
           self.encoding = encoding
@@ -563,9 +561,9 @@ module OpenHAB
                        legend: nil,
                        group: nil,
                        y_axis_pattern: nil,
-                       **kwargs,
-                       &block)
-          super(type, builder_proxy, **kwargs, &block)
+                       **,
+                       &)
+          super(type, builder_proxy, **, &)
 
           @service = service
           self.refresh = refresh
@@ -615,8 +613,8 @@ module OpenHAB
         # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, height: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param height [Integer] The number of element rows to fill (see {DefaultBuilder#height})
         # @!visibility private
-        def initialize(type, builder_proxy, height: nil, **kwargs, &block)
-          super(type, builder_proxy, **kwargs, &block)
+        def initialize(type, builder_proxy, height: nil, **, &)
+          super(type, builder_proxy, **, &)
 
           @height = height
         end
@@ -640,8 +638,8 @@ module OpenHAB
         # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, url: nil, height: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param url [String, nil] (see {WebviewBuilder#url})
         # @!visibility private
-        def initialize(type, builder_proxy, url: nil, **kwargs, &block)
-          super(type, builder_proxy, **kwargs, &block)
+        def initialize(type, builder_proxy, url: nil, **, &)
+          super(type, builder_proxy, **, &)
 
           @url = url
         end
@@ -666,8 +664,8 @@ module OpenHAB
         # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, frequency: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param frequency [Numeric, nil] How often to send requests (see {ColorpickerBuilder#frequency})
         # @!visibility private
-        def initialize(type, builder_proxy, frequency: nil, **kwargs, &block)
-          super(type, builder_proxy, **kwargs, &block)
+        def initialize(type, builder_proxy, frequency: nil, **, &)
+          super(type, builder_proxy, **, &)
 
           @frequency = frequency
         end
@@ -692,8 +690,8 @@ module OpenHAB
         # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, range: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
         # @param range [Range, nil] Allowed range of the value (see {ColortemperaturepickerBuilder#range})
         # @!visibility private
-        def initialize(type, builder_proxy, range: nil, **kwargs, &block)
-          super(type, builder_proxy, **kwargs, &block)
+        def initialize(type, builder_proxy, range: nil, **, &)
+          super(type, builder_proxy, **, &)
 
           @range = range
         end
@@ -729,8 +727,8 @@ module OpenHAB
         # @param [:text, :number, :date, :time, :datetime, nil] hint
         #   Gives a hint to the user interface to use a widget adapted to a specific use (see {InputBuilder#hint})
         # @!visibility private
-        def initialize(type, builder_proxy, hint: nil, **kwargs, &block)
-          super(type, builder_proxy, **kwargs, &block)
+        def initialize(type, builder_proxy, hint: nil, **, &)
+          super(type, builder_proxy, **, &)
 
           self.hint = hint
         end
@@ -798,9 +796,9 @@ module OpenHAB
                        click:,
                        release: nil,
                        stateless: nil,
-                       **kwargs,
-                       &block)
-          super(:button, builder_proxy, **kwargs, &block)
+                       **,
+                       &)
+          super(:button, builder_proxy, **, &)
 
           @row = row
           @column = column
@@ -816,24 +814,12 @@ module OpenHAB
 
         # @!visibility private
         def build
-          if Core.version >= Core::V4_2
-            super.tap do |widget|
-              widget.row = row
-              widget.column = column
-              widget.cmd = click.to_s
-              widget.release_cmd = release.to_s unless release.nil?
-              widget.stateless = stateless? unless @stateless.nil?
-            end
-          else
-            # @deprecated OH 4.1
-            # in OH 4.1, the button is a property of the Buttongrid, not a widget
-            SitemapBuilder.factory.create_button.tap do |button|
-              button.row = row
-              button.column = column
-              button.cmd = click.to_s
-              button.label = label
-              button.icon = icon if icon
-            end
+          super.tap do |widget|
+            widget.row = row
+            widget.column = column
+            widget.cmd = click.to_s
+            widget.release_cmd = release.to_s unless release.nil?
+            widget.stateless = stateless? unless @stateless.nil?
           end
         end
       end
@@ -1220,8 +1206,8 @@ module OpenHAB
         # @param url [String, nil] The URL for the image (see {ImageBuilder#url})
         # @param refresh [Numeric, nil] How often to refresh the image (see {ImageBuilder#refresh})
         # @!visibility private
-        def initialize(type, builder_proxy, url: nil, refresh: nil, **kwargs, &block)
-          super(type, builder_proxy, **kwargs, &block)
+        def initialize(type, builder_proxy, url: nil, refresh: nil, **, &)
+          super(type, builder_proxy, **, &)
 
           @url = url
           @refresh = refresh
@@ -1249,17 +1235,6 @@ module OpenHAB
       class ButtongridBuilder < LinkableWidgetBuilder
         REQUIRED_BUTTON_ARGS = %i[row column click].freeze
         private_constant :REQUIRED_BUTTON_ARGS
-
-        # @deprecated OH 4.1 in OH 4.1, Buttongrid is not a LinkableWidget.
-        # Pretend that the buttons property is its children so we can add to it in LinkableWidgetBuilder#build
-        if (Core::V4_1...Core::V4_2).cover?(Core.version)
-          java_import org.openhab.core.model.sitemap.sitemap.Buttongrid
-          module Buttongrid
-            def children
-              buttons
-            end
-          end
-        end
 
         # (see WidgetBuilder#initialize)
         # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, buttons: nil, label_color: nil, value_color: nil, icon_color: nil, visibility: nil)
@@ -1315,8 +1290,8 @@ module OpenHAB
         #
         # @see https://www.openhab.org/docs/ui/sitemaps.html#element-type-buttongrid
         # @!visibility private
-        def initialize(type, builder_proxy, buttons: [], **kwargs, &block)
-          super(type, builder_proxy, **kwargs, &block)
+        def initialize(type, builder_proxy, buttons: [], **, &)
+          super(type, builder_proxy, **, &)
 
           # Put the buttons given in the constructor before those added in the block
           # We can't do this before calling the super constructor because `children` is initialized there
@@ -1423,7 +1398,7 @@ module OpenHAB
         #     end
         #   end
         #
-        def button(row = nil, column = nil, click = nil, label = nil, icon = nil, **kwargs, &block)
+        def button(row = nil, column = nil, click = nil, label = nil, icon = nil, **kwargs, &)
           args = [row, column, click, label, icon].compact
 
           args = args.first if args.first.is_a?(Array)
@@ -1439,7 +1414,7 @@ module OpenHAB
           kwargs[:item] ||= item if item # default to the buttongrid's item
           kwargs[:label] ||= kwargs[:click].to_s
 
-          ButtonBuilder.new(@builder_proxy, **kwargs, &block).tap do |b|
+          ButtonBuilder.new(@builder_proxy, **kwargs, &).tap do |b|
             children << b
           end
         end

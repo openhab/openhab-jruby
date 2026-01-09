@@ -91,22 +91,19 @@ module OpenHAB
             tag ||= severity
             args.push(msg.to_s, icon&.to_s, tag&.to_s)
 
-            # @deprecated OH 4.1
-            if Core.version >= Core::V4_2
-              buttons ||= []
-              buttons = buttons.map { |button_title, action| "#{button_title}=#{action}" } if buttons.is_a?(Hash)
-              raise ArgumentError, "buttons must contain (0..3) elements." unless (0..3).cover?(buttons.size)
+            buttons ||= []
+            buttons = buttons.map { |button_title, action| "#{button_title}=#{action}" } if buttons.is_a?(Hash)
+            raise ArgumentError, "buttons must contain (0..3) elements." unless (0..3).cover?(buttons.size)
 
-              attachment = "item:#{attachment.name}" if attachment.is_a?(Item) && attachment.image_item?
+            attachment = "item:#{attachment.name}" if attachment.is_a?(Item) && attachment.image_item?
 
-              args.push(title&.to_s,
-                        id&.to_s,
-                        on_click&.to_s,
-                        attachment&.to_s,
-                        buttons[0]&.to_s,
-                        buttons[1]&.to_s,
-                        buttons[2]&.to_s)
-            end
+            args.push(title&.to_s,
+                      id&.to_s,
+                      on_click&.to_s,
+                      attachment&.to_s,
+                      buttons[0]&.to_s,
+                      buttons[1]&.to_s,
+                      buttons[2]&.to_s)
 
             NotificationAction.__send__(*args)
           end

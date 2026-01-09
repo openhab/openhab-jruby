@@ -97,16 +97,16 @@ module Enumerable
   # Send a command to every item in the collection
   # @return [self, nil] nil when `ensure` is in effect and all the items were already in the same state,
   #   otherwise self
-  def command(command, **kwargs)
-    self if count { |i| i.command(command, **kwargs) }.positive?
+  def command(command, **)
+    self if count { |i| i.command(command, **) }.positive?
   end
 
   # Send a command to every item in the collection, even when {OpenHAB::DSL.ensure_states! ensure_states!} is in effect.
   # @return [self]
-  def command!(command, **kwargs)
+  def command!(command, **)
     # We cannot alias this to #command above, otherwise it will call
     # DSL::Items::Ensure::Item#command which checks for ensure_states
-    each { |i| i.command!(command, **kwargs) }
+    each { |i| i.command!(command, **) }
     self
   end
 

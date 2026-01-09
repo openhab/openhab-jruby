@@ -28,9 +28,9 @@ def atomic_rule_write(rule_content, deploy_path)
   FileUtils.move temp_file, deploy_path
 end
 
-def deploy_shared_file(**kwargs)
+def deploy_shared_file(**)
   # check is always false, because shared code is never run immmediately
-  deploy_ruby_file(directory: ruby_lib_dir, check: false, **kwargs)
+  deploy_ruby_file(directory: ruby_lib_dir, check: false, **)
 end
 
 def deploy_rule

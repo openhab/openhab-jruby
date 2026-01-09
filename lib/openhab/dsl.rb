@@ -86,39 +86,39 @@ module OpenHAB
     # @!group Rule Creation
 
     # (see Rules::Builder#rule)
-    def rule(name = nil, id: nil, **kwargs, &block)
-      rules.build { rule(name, id:, **kwargs, &block) }
+    def rule(name = nil, id: nil, **, &)
+      rules.build { rule(name, id:, **, &) }
     end
 
     # Creates a rule that will remove existing rules with the same id, even when the id has been inferred.
     # @see rule
-    def rule!(name = nil, id: nil, **kwargs, &block)
-      rules.build { rule(name, id:, replace: true, **kwargs, &block) }
+    def rule!(name = nil, id: nil, **, &)
+      rules.build { rule(name, id:, replace: true, **, &) }
     end
 
     # (see Rules::Builder#scene)
-    def scene(name = nil, description: nil, id: nil, tag: nil, tags: nil, **kwargs, &block)
-      rules.build { scene(name, description:, id:, tag:, tags:, **kwargs, &block) }
+    def scene(name = nil, description: nil, id: nil, tag: nil, tags: nil, **, &)
+      rules.build { scene(name, description:, id:, tag:, tags:, **, &) }
     end
 
     # Creates a scene that will remove existing rules/scenes with the same id, even when the id has been inferred.
     # @see scene
-    def scene!(name = nil, description: nil, id: nil, tag: nil, tags: nil, **kwargs, &block)
+    def scene!(name = nil, description: nil, id: nil, tag: nil, tags: nil, **, &)
       rules.build do
-        scene(name, description:, id:, tag:, tags:, replace: true, **kwargs, &block)
+        scene(name, description:, id:, tag:, tags:, replace: true, **, &)
       end
     end
 
     # (see Rules::Builder#script)
-    def script(name = nil, description: nil, id: nil, tag: nil, tags: nil, **kwargs, &block)
-      rules.build { script(name, description:, id:, tag:, tags:, **kwargs, &block) }
+    def script(name = nil, description: nil, id: nil, tag: nil, tags: nil, **, &)
+      rules.build { script(name, description:, id:, tag:, tags:, **, &) }
     end
 
     # Creates a script that will remove existing rules/scripts with the same id, even when the id has been inferred.
     # @see script
-    def script!(name = nil, description: nil, id: nil, tag: nil, tags: nil, **kwargs, &block)
+    def script!(name = nil, description: nil, id: nil, tag: nil, tags: nil, **, &)
       rules.build do
-        script(name, description:, id:, tag:, tags:, replace: true, **kwargs, &block)
+        script(name, description:, id:, tag:, tags:, replace: true, **, &)
       end
     end
 
@@ -519,7 +519,7 @@ module OpenHAB
     #
     # @param (see Rules::BuilderDSL#debounce_for)
     # @param [Object] id ID to associate with this call.
-    # @param [Block] block The block to be debounced.
+    # @yield The block to be debounced.
     #
     # @return [void]
     #
@@ -536,9 +536,9 @@ module OpenHAB
     #
     # @see Rules::BuilderDSL#debounce_for Rule builder's debounce_for for a detailed description
     #
-    def debounce_for(debounce_time, id: nil, &block)
+    def debounce_for(debounce_time, id: nil, &)
       idle_time = debounce_time.is_a?(Range) ? debounce_time.begin : debounce_time
-      debounce(for: debounce_time, idle_time:, id:, &block)
+      debounce(for: debounce_time, idle_time:, id:, &)
     end
 
     #
@@ -562,15 +562,15 @@ module OpenHAB
     #
     # @param (see Rules::BuilderDSL#throttle_for)
     # @param [Object] id ID to associate with this call.
-    # @param [Block] block The block to be throttled.
+    # @yield The block to be throttled.
     #
     # @return [void]
     #
     # @see Rules::BuilderDSL#debounce_for Rule builder's debounce_for for a detailed description
     # @see Rules::BuilderDSL#throttle_for
     #
-    def throttle_for(duration, id: nil, &block)
-      debounce(for: duration, id:, &block)
+    def throttle_for(duration, id: nil, &)
+      debounce(for: duration, id:, &)
     end
 
     # (see Core::Actions::Transformation.transform)
@@ -587,7 +587,7 @@ module OpenHAB
     #
     # @param (see Rules::BuilderDSL#only_every)
     # @param [Object] id ID to associate with this call.
-    # @param [Block] block The block to be throttled.
+    # @yield The block to be throttled.
     #
     # @return [void]
     #
@@ -599,9 +599,9 @@ module OpenHAB
     # @see Rules::BuilderDSL#debounce_for Rule builder's debounce_for for a detailed description
     # @see Rules::BuilderDSL#only_every
     #
-    def only_every(interval, id: nil, &block)
+    def only_every(interval, id: nil, &)
       interval = 1.send(interval) if %i[second minute hour day].include?(interval)
-      debounce(for: interval, leading: true, id:, &block)
+      debounce(for: interval, leading: true, id:, &)
     end
 
     #

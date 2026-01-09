@@ -95,8 +95,8 @@ module OpenHAB
         # @param (see GroupItemBuilder#initialize)
         # @yieldparam [GroupItemBuilder] builder Item for further customization
         # @return [GroupItem]
-        def group_item(*args, **kwargs, &block)
-          item = GroupItemBuilder.new(*args, provider:, **kwargs)
+        def group_item(*, **, &block)
+          item = GroupItemBuilder.new(*, provider:, **)
           item.instance_eval(&block) if block
           result = provider.add(item)
           item.members.each do |i|
@@ -107,8 +107,8 @@ module OpenHAB
 
         private
 
-        def item(*args, **kwargs, &block)
-          item = ItemBuilder.new(*args, provider:, **kwargs)
+        def item(*, **, &block)
+          item = ItemBuilder.new(*, provider:, **)
           item.instance_eval(&block) if block
           r = provider.add(item)
           return Core::Items::Proxy.new(r) if r.is_a?(Item)
@@ -803,10 +803,10 @@ module OpenHAB
         # @param thing [Core::Things::ThingUID, Core::Things::Thing, String, nil]
         #        A Thing to be used as the base for the channel for any contained items.
         # @param (see ItemBuilder#initialize)
-        def initialize(*args, type: nil, function: nil, thing: nil, **kwargs)
+        def initialize(*, type: nil, function: nil, thing: nil, **)
           raise ArgumentError, "invalid function #{function}" if function && !function.match?(FUNCTION_REGEX)
 
-          super(type, *args, **kwargs)
+          super(type, *, **)
           @function = function
           @members = []
           @thing = thing

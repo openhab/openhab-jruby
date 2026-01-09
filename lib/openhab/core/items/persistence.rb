@@ -670,15 +670,6 @@ module OpenHAB
         #   @since openHAB 4.2
         #
         def persist(*args)
-          # @deprecated OH 4.1 this if block content can be removed when dropping OH 4.1 support
-          if Core.version < Core::V4_2
-            raise ArgumentError, "wrong number of arguments (given #{args.size}, expected 0..1)" if args.size > 1
-
-            service = args.last || persistence_service
-            Actions::PersistenceExtensions.persist(self, service&.to_s)
-            return
-          end
-
           first_arg = args.first
           if first_arg.is_a?(TimeSeries)
             if args.size > 2
@@ -752,9 +743,6 @@ module OpenHAB
         #   @since openHAB 4.2
 
         %i[last_update next_update last_change next_change].each do |method|
-          # @deprecated OH 4.1 remove this guard when dropping OH 4.1
-          next unless Actions::PersistenceExtensions.respond_to?(method)
-
           class_eval <<~RUBY, __FILE__, __LINE__ + 1
             def #{method}(service = nil)                            # def last_update(service = nil)
               service ||= persistence_service                       #   service ||= persistence_service
@@ -794,9 +782,6 @@ module OpenHAB
         #   @since openHAB 4.2
 
         %i[previous_state next_state].each do |method|
-          # @deprecated OH 4.1 remove this guard when dropping OH 4.1
-          next unless Actions::PersistenceExtensions.respond_to?(method)
-
           class_eval <<~RUBY, __FILE__, __LINE__ + 1
             def #{method}(service = nil, skip_equal: false)       # def previous_state(service = nil, skip_equal: false)
               service ||= persistence_service                     #   service ||= persistence_service
@@ -819,10 +804,7 @@ module OpenHAB
 
             if riemann_param
               riemann_param = ", riemann_type: nil"
-              # @deprecated OH4.3 remove if guard when dropping OH 4.3
-              if Actions::PersistenceExtensions.const_defined?(:RiemannType)
-                riemann_arg = "to_riemann_type(riemann_type),"
-              end
+              riemann_arg = "to_riemann_type(riemann_type),"
             end
 
             class_eval <<~RUBY, __FILE__, __LINE__ + 1
@@ -846,17 +828,11 @@ module OpenHAB
             riemann_arg = nil
 
             def_persistence_method("#{method}_since#{suffix}", quantify:, riemann_param:)
-            # @deprecated OH 4.1 remove if guard, keeping the content, when dropping OH 4.1
-            if OpenHAB::Core.version >= OpenHAB::Core::V4_2
-              def_persistence_method("#{method}_until#{suffix}", quantify:, riemann_param:)
-            end
+            def_persistence_method("#{method}_until#{suffix}", quantify:, riemann_param:)
 
             if riemann_param
               riemann_param = ", riemann_type: nil"
-              # @deprecated OH4.3 remove if guard when dropping OH 4.3
-              if Actions::PersistenceExtensions.const_defined?(:RiemannType)
-                riemann_arg = "to_riemann_type(riemann_type),"
-              end
+              riemann_arg = "to_riemann_type(riemann_type),"
             end
 
             method = "#{method}_between"
@@ -889,7 +865,7 @@ module OpenHAB
 
         def_persistence_methods(:count_state_changes)
         alias_method :state_changes_since, :count_state_changes_since
-        alias_method :state_changes_until, :count_state_changes_until if OpenHAB::Core.version >= OpenHAB::Core::V4_2
+        alias_method :state_changes_until, :count_state_changes_until
         alias_method :state_changes_between, :count_state_changes_between
 
         def_persistence_methods(:delta, quantify: true)
@@ -900,27 +876,21 @@ module OpenHAB
 
         def_persistence_methods(:get_all_states, quantify: true)
         alias_method :all_states_since, :get_all_states_since
-        alias_method :all_states_until, :get_all_states_until if OpenHAB::Core.version >= OpenHAB::Core::V4_2
+        alias_method :all_states_until, :get_all_states_until
         alias_method :all_states_between, :get_all_states_between
 
         def_persistence_methods(:maximum, quantify: true)
         def_persistence_methods(:minimum, quantify: true)
-        def_persistence_methods(:median, quantify: true) if OpenHAB::Core.version >= OpenHAB::Core::V4_3
-        # @deprecated OH4.3 remove if guard when dropping OH 4.3
-        if Actions::PersistenceExtensions.const_defined?(:RiemannType)
-          # riemann_sum methods were added in OH 5.0 which already quantifies the result in core
-          def_persistence_methods(:riemann_sum, riemann_param: true)
-        end
+        def_persistence_methods(:median, quantify: true)
+        def_persistence_methods(:riemann_sum, riemann_param: true) # already quantified in core
         def_persistence_methods(:sum, quantify: true)
         def_persistence_methods(:updated?)
         def_persistence_methods(:variance, quantify: true, riemann_param: true)
 
-        if OpenHAB::Core.version >= OpenHAB::Core::V4_2
-          def_persistence_method(:persisted_state) # already quantified in core
+        def_persistence_method(:persisted_state) # already quantified in core
 
-          def_persistence_methods(:evolution_rate)
-          def_persistence_methods(:remove_all_states)
-        end
+        def_persistence_methods(:evolution_rate)
+        def_persistence_methods(:remove_all_states)
 
         # @deprecated OH 4.2 this method is deprecated in OH 4.2 and may be removed in a future version
         def evolution_rate(start, finish_or_service = nil, service = nil)
