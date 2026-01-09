@@ -786,7 +786,7 @@ module OpenHAB
 
               <blacklistedFeatures>
                 <feature>openhab-runtime-ui</feature>
-                <feature>openhab-core-ui*</feature>
+                <feature>openhab-core-ui</feature>
                 <feature>openhab-misc-*</feature>
                 <feature>openhab-persistence-*</feature>
                 <feature>openhab-package-standard</feature>
@@ -807,6 +807,7 @@ module OpenHAB
                     <f:feature>openhab-core-model-sitemap</f:feature>
                     <f:feature>openhab-core-model-thing</f:feature>
                     <f:feature>openhab-core-storage-json</f:feature>
+                    <f:feature>openhab-core-ui-icon</f:feature>
                     <f:feature>openhab-transport-http</f:feature>
                     <f:feature prerequisite="true">wrapper</f:feature>
                     <f:bundle>mvn:org.openhab.core.bundles/org.openhab.core.karaf/#{version}</f:bundle>

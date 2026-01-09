@@ -17,6 +17,8 @@ module OpenHAB
     V5_0 = Gem::Version.new("5.0.0").freeze
     # @!visibility private
     V5_1 = Gem::Version.new("5.1.0").freeze
+    # @!visibility private
+    V5_2 = Gem::Version.new("5.2.0").freeze
 
     # @return [Gem::Version] Returns the current openHAB version as a Gem::Version object
     #   Note, this strips off snapshots, milestones and RC versions and returns the release version.
