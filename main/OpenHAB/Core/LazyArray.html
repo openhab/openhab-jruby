@@ -3823,7 +3823,7 @@ the lookup method</p>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/lazy_array.rb', line 38</span>
 
 <span class="keyword">def</span> <span class="function">method_missing</span>(method, ...)
-  <span class="keyword">return</span> to_a.send(method, ...) <span class="keyword">if</span> method[<span class="integer">-1</span>] != <span class="string"><span class="delimiter">&quot;</span><span class="content">!</span><span class="delimiter">&quot;</span></span> &amp;&amp; <span class="constant">Array</span>.instance_methods.include?(method)
+  <span class="keyword">return</span> to_a.send(method, ...) <span class="keyword">if</span> method[<span class="integer">-1</span>] != <span class="string"><span class="delimiter">&quot;</span><span class="content">!</span><span class="delimiter">&quot;</span></span> &amp;&amp; <span class="constant">Array</span>.method_defined?(method)
 
   <span class="keyword">super</span>
 <span class="keyword">end</span></pre>
@@ -3941,7 +3941,7 @@ parameter. Returns self.</p>
 </div>
 
         <footer>
-  Generated on Thu Jan  8 17:57:50 2026 by
+  Generated on Fri Jan  9 01:08:30 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>

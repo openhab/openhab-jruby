@@ -4283,7 +4283,7 @@ object representing the same instant</p>
   <span class="keyword">end</span>
 
   <span class="keyword">return</span> zoned_date_time.send(method, ...) <span class="keyword">if</span> zoned_date_time.respond_to?(method)
-  <span class="keyword">return</span> to_time.send(method, ...) <span class="keyword">if</span> ::<span class="constant">Time</span>.instance_methods.include?(method.to_sym)
+  <span class="keyword">return</span> to_time.send(method, ...) <span class="keyword">if</span> ::<span class="constant">Time</span>.method_defined?(method.to_sym)
 
   <span class="keyword">super</span>
 <span class="keyword">end</span></pre>
@@ -5296,7 +5296,7 @@ alias_method <span class="symbol">:to_instant</span>, <span class="symbol">:get_
 </div>
 
         <footer>
-  Generated on Thu Jan  8 17:58:03 2026 by
+  Generated on Fri Jan  9 01:08:43 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>

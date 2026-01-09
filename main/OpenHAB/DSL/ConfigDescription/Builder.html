@@ -3950,10 +3950,6 @@ instance.</p>
       <pre class="lines">
 
 
-142
-143
-144
-145
 146
 147
 148
@@ -3961,10 +3957,14 @@ instance.</p>
 150
 151
 152
-153</pre>
+153
+154
+155
+156
+157</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/config_description/builder.rb', line 142</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/config_description/builder.rb', line 146</span>
 
 <span class="keyword">def</span> <span class="function">build</span>(uri = <span class="predefined-constant">nil</span>, &amp;block)
   instance_eval(&amp;block) <span class="keyword">if</span> block
@@ -4609,7 +4609,11 @@ When nil, it will be inferred when this method is called inside a <span class='o
 129
 130
 131
-132</pre>
+132
+133
+134
+135
+136</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/config_description/builder.rb', line 86</span>
@@ -4637,29 +4641,33 @@ When nil, it will be inferred when this method is called inside a <span class='o
               <span class="key">unit_label</span>: <span class="predefined-constant">nil</span>,
               <span class="key">verify</span>: <span class="predefined-constant">false</span>)
   <span class="comment"># Extract the named arguments into a hash</span>
-  <span class="instance-variable">@parameters</span> &lt;&lt; method(__method__).parameters
-                                   .select { |param_type, _| param_type == <span class="symbol">:key</span> } <span class="comment"># rubocop:disable Style/HashSlice</span>
-                                   .to_h { |_, key| [key, binding.local_variable_get(key)] }
-                                   .then <span class="keyword">do</span> |p|
-    p[<span class="symbol">:options</span>] = p[<span class="symbol">:options</span>].map <span class="keyword">do</span> |opt_value, opt_label|
-      org.openhab.core.config.core.ParameterOption.new(opt_value, opt_label)
-    <span class="keyword">end</span>
-    p[<span class="symbol">:filter_criteria</span>] = p[<span class="symbol">:filter_criteria</span>].map <span class="keyword">do</span> |filter_name, filter_value|
-      org.openhab.core.config.core.FilterCriteria.new(filter_name, filter_value)
-    <span class="keyword">end</span>
-    p[<span class="symbol">:minimum</span>] = p.delete(<span class="symbol">:min</span>)&amp;.to_d&amp;.to_java
-    p[<span class="symbol">:maximum</span>] = p.delete(<span class="symbol">:max</span>)&amp;.to_d&amp;.to_java
-    p[<span class="symbol">:step</span>] = p.delete(<span class="symbol">:step</span>)&amp;.to_d&amp;.to_java
-    p[<span class="symbol">:group_name</span>] ||= <span class="instance-variable">@current_group</span>
-    type = org.openhab.core.config.core.ConfigDescriptionParameter::<span class="constant">Type</span>.value_of(type.to_s.upcase)
+  <span class="instance-variable">@parameters</span> &lt;&lt;
+    method(__method__)
+    .parameters
+    .select { |param_type, _| param_type == <span class="symbol">:key</span> } <span class="comment"># rubocop:disable Style/HashSlice</span>
+    .to_h { |_, key| [key, binding.local_variable_get(key)] }
+    .then <span class="keyword">do</span> |p|
+      p[<span class="symbol">:options</span>] = p[<span class="symbol">:options</span>].map <span class="keyword">do</span> |opt_value, opt_label|
+        org.openhab.core.config.core.ParameterOption.new(opt_value, opt_label)
+      <span class="keyword">end</span>
+      p[<span class="symbol">:filter_criteria</span>] = p[<span class="symbol">:filter_criteria</span>].map <span class="keyword">do</span> |filter_name, filter_value|
+        org.openhab.core.config.core.FilterCriteria.new(filter_name, filter_value)
+      <span class="keyword">end</span>
+      p[<span class="symbol">:minimum</span>] = p.delete(<span class="symbol">:min</span>)&amp;.to_d&amp;.to_java
+      p[<span class="symbol">:maximum</span>] = p.delete(<span class="symbol">:max</span>)&amp;.to_d&amp;.to_java
+      p[<span class="symbol">:step</span>] = p.delete(<span class="symbol">:step</span>)&amp;.to_d&amp;.to_java
+      p[<span class="symbol">:group_name</span>] ||= <span class="instance-variable">@current_group</span>
+      type = org.openhab.core.config.core.ConfigDescriptionParameter::<span class="constant">Type</span>.value_of(type.to_s.upcase)
 
-    parameter = org.openhab.core.config.core.ConfigDescriptionParameterBuilder.create(name.to_s, type)
+      parameter = org.openhab.core.config.core.ConfigDescriptionParameterBuilder.create(
+        name.to_s, type
+      )
 
-    p.each <span class="keyword">do</span> |key, value|
-      parameter.send(<span class="symbol"><span class="symbol">:</span><span class="delimiter">&quot;</span><span class="content">with_</span><span class="inline"><span class="inline-delimiter">#{</span>key<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>, value) <span class="keyword">unless</span> value.nil?
+      p.each <span class="keyword">do</span> |key, value|
+        parameter.send(<span class="symbol"><span class="symbol">:</span><span class="delimiter">&quot;</span><span class="content">with_</span><span class="inline"><span class="inline-delimiter">#{</span>key<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>, value) <span class="keyword">unless</span> value.nil?
+      <span class="keyword">end</span>
+      parameter.build
     <span class="keyword">end</span>
-    parameter.build
-  <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4671,7 +4679,7 @@ When nil, it will be inferred when this method is called inside a <span class='o
 </div>
 
         <footer>
-  Generated on Thu Jan  8 17:58:05 2026 by
+  Generated on Fri Jan  9 01:08:44 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>

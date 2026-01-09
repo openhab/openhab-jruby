@@ -4076,7 +4076,7 @@ explicitly.</p>
     .split(<span class="constant">File</span>::<span class="constant">PATH_SEPARATOR</span>)
       .reject(&amp;<span class="symbol">:empty?</span>)
       .reject <span class="keyword">do</span> |path|
-                       <span class="global-variable">$LOAD_PATH</span>.include?(path)
+        <span class="global-variable">$LOAD_PATH</span>.include?(path)
                      <span class="keyword">end</span>)
 
   requires = jrubyscripting_config&amp;.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">require</span><span class="delimiter">&quot;</span></span>) || <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>
@@ -4577,16 +4577,16 @@ The addon's bundle id is used as the identifier.</p>
       <span class="constant">OSGi</span>.service_component_classes(bundle)
           .select { |klass, _services| klass.ancestors.include?(ast.java_class) }
           .each <span class="keyword">do</span> |klass, services|
-        new_ast_klass = <span class="constant">Class</span>.new(ast)
-        new_ast_klass.become_java!
-        wrapped_storage_service = <span class="constant">Mocks</span>::<span class="constant">AbstractStorageBasedTypeProviderWrappedStorageService</span>
-                                  .new(storage_service,
-                                       new_ast_klass.java_class,
-                                       klass)
-        new_ast = new_ast_klass.new(wrapped_storage_service)
+            new_ast_klass = <span class="constant">Class</span>.new(ast)
+            new_ast_klass.become_java!
+            wrapped_storage_service = <span class="constant">Mocks</span>::<span class="constant">AbstractStorageBasedTypeProviderWrappedStorageService</span>
+                                      .new(storage_service,
+                                           new_ast_klass.java_class,
+                                           klass)
+            new_ast = new_ast_klass.new(wrapped_storage_service)
 
-        services -= [klass.name]
-        <span class="constant">OSGi</span>.register_service(new_ast, *services, <span class="key">bundle</span>: ast_bundle)
+            services -= [klass.name]
+            <span class="constant">OSGi</span>.register_service(new_ast, *services, <span class="key">bundle</span>: ast_bundle)
       <span class="keyword">end</span>
     <span class="keyword">end</span>
   <span class="keyword">rescue</span> <span class="constant">NameError</span>
@@ -5174,7 +5174,7 @@ will just sleep for <code>duration</code></p>
 </div>
 
         <footer>
-  Generated on Thu Jan  8 17:57:49 2026 by
+  Generated on Fri Jan  9 01:08:30 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.4).
 </footer>
