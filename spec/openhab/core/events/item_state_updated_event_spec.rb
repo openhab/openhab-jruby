@@ -5,11 +5,7 @@ RSpec.describe OpenHAB::Core::Events::ItemStateUpdatedEvent do
     event = OpenHAB::Core::Events::ItemEventFactory.create_state_updated_event("item", NULL, nil)
     expect(event.inspect).to eql "#<OpenHAB::Core::Events::ItemStateUpdatedEvent item=item state=NULL>"
 
-    # @deprecated OH4.3 remove args and pass 4 arguments directly when dropping oh 4.3
-    args = ["item", NULL]
-    args << nil if OpenHAB::Core.full_version > Gem::Version.new("5.0.0.M1")
-    args << "source"
-    event = OpenHAB::Core::Events::ItemEventFactory.create_state_updated_event(*args)
+    event = OpenHAB::Core::Events::ItemEventFactory.create_state_updated_event("item", NULL, nil, "source")
     expect(event.inspect).to eql(
       "#<OpenHAB::Core::Events::ItemStateUpdatedEvent item=item state=NULL source=source>"
     )

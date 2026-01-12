@@ -424,7 +424,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
                                                  "f7:flame"]
     end
 
-    it "supports release command in a hash element", if: OpenHAB::Core.version >= OpenHAB::Core::V4_2 do
+    it "supports release command in a hash element" do
       sitemaps.build do
         sitemap "default" do
           switch label: "My Switch", mappings: [
@@ -456,7 +456,6 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     it "can contain a mix of scalar, arrays, and hashes" do
       sitemaps.build do
         sitemap "default" do
-          # @deprecated OH 4.1
           switch label: "My Switch", mappings: [
             "OFF",
             %w[COOL cool],
@@ -541,7 +540,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
   end
 
-  it "can add a colortemperaturepicker", if: OpenHAB::Core.version >= OpenHAB::Core::V4_3 do
+  it "can add a colortemperaturepicker" do
     sitemaps.build do
       sitemap "default" do
         colortemperaturepicker label: "My Colorpicker"
@@ -698,8 +697,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         expect(buttons[1].cmd).to eq "YELLOW"
       end
 
-      # @deprecated OH 4.1 - remove the if check when dropping OH 4.1 support
-      it "uses buttongrid's item by default", if: OpenHAB::Core.version >= OpenHAB::Core::V4_2 do
+      it "uses buttongrid's item by default" do
         items.build do
           string_item Test1
           string_item Test2

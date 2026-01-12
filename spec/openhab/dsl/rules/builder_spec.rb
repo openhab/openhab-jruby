@@ -523,8 +523,8 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
               end
             end
 
-            def self.test_changed_trigger(item, new_state: 14, expect_triggered: "Alarm_Mode4", **kwargs)
-              super(item, caller:, **kwargs) do
+            def self.test_changed_trigger(item, new_state: 14, expect_triggered: "Alarm_Mode4", **)
+              super(item, caller:, **) do
                 Alarm_Mode4.update(new_state)
                 execute_timers
                 expect(triggered_item).to be_nil
@@ -574,8 +574,8 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
                                           initial_state: OFF,
                                           new_state: ON,
                                           expect_triggered: "Switches",
-                                          **kwargs)
-              super(item, initial_state:, caller:, **kwargs) do
+                                          **)
+              super(item, initial_state:, caller:, **) do
                 Switch2.update(new_state)
                 execute_timers
                 expect(triggered_item).to be_nil
@@ -638,8 +638,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           end
         end
 
-        # @deprecated OH4.3 remove guard when dropping support for OH4.3
-        context "with wildcard", if: OpenHAB::Core.full_version > Gem::Version.new("5.0.0.M1") do
+        context "with wildcard" do
           it "works" do
             triggered_item = nil
             changed("*") { |event| triggered_item = event.item }
@@ -710,8 +709,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           expect(triggered).to be true
         end
 
-        # @deprecated OH4.3 remove guard when dropping support for OH4.3
-        context "with wildcard", if: OpenHAB::Core.full_version > Gem::Version.new("5.0.0.M1") do
+        context "with wildcard" do
           let!(:moon) do
             things.build { thing "astro:moon:home", config: { "geolocation" => "0,0" } }
           end
@@ -902,7 +900,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         end.to raise_error(ArgumentError)
       end
 
-      def self.test_command_trigger(item, members: false, command: nil, expect_triggered: true, &block)
+      def self.test_command_trigger(item, members: false, command: nil, expect_triggered: true, &)
         description = "receives command sent to #{item}"
         description += ".members" if members
         description += " with command #{command.inspect}" if command
@@ -915,7 +913,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
             received_command(item, command:)
             run { triggered = true }
           end
-          instance_eval(&block)
+          instance_eval(&)
           expect(triggered).to be expect_triggered
         end
       end
@@ -957,8 +955,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         expect(triggering_group).to eql AlarmModes
       end
 
-      # @deprecated OH4.3 remove guard when dropping support for OH4.3
-      context "with wildcard", if: OpenHAB::Core.full_version > Gem::Version.new("5.0.0.M1") do
+      context "with wildcard" do
         it "works" do
           triggered_item = nil
           received_command("*") { |event| triggered_item = event.item }
@@ -1296,8 +1293,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           expect(executed).to be 2
         end
 
-        # @deprecated OH4.3 remove guard when dropping support for OH4.3
-        context "with wildcard", if: OpenHAB::Core.full_version > Gem::Version.new("5.0.0.M1") do
+        context "with wildcard" do
           it "works" do
             triggered_item = nil
             updated("*") { |event| triggered_item = event.item }
@@ -1419,35 +1415,32 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         end
       end
 
-      # @deprecated OH 4.1 remove if guard when dropping OH 4.1 support
-      if OpenHAB::Core.version >= OpenHAB::Core::V4_3
-        { "Duration" => 2.hours + 1.seconds, "Integer" => 2.hours.to_i + 1 }.each do |type, offset|
-          it "supports #{type} offset" do
-            items.build { date_time_item MyDateTimeItem }
+      { "Duration" => 2.hours + 1.seconds, "Integer" => 2.hours.to_i + 1 }.each do |type, offset|
+        it "supports #{type} offset" do
+          items.build { date_time_item MyDateTimeItem }
 
-            triggered = false
-            rule do
-              at(MyDateTimeItem, offset:)
-              run { triggered = true }
-            end
+          triggered = false
+          rule do
+            at(MyDateTimeItem, offset:)
+            run { triggered = true }
+          end
 
-            MyDateTimeItem.update(2.hours.ago) # without an offset, this would not have triggered the rule
-            wait(4.seconds) do
-              expect(triggered).to be true
-            end
+          MyDateTimeItem.update(2.hours.ago) # without an offset, this would not have triggered the rule
+          wait(4.seconds) do
+            expect(triggered).to be true
           end
         end
       end
     end
 
     describe "#every" do
-      def self.generate(name, cron_expression, *every_args, attach: nil, **kwargs)
+      def self.generate(name, cron_expression, *every_args, attach: nil, **)
         it(name, caller:) do
           rspec = self
           executed = false
           rule do
             rspec.expect(self).to rspec.receive(:cron).with(cron_expression, attach:)
-            every(*every_args, attach:, **kwargs)
+            every(*every_args, attach:, **)
             executed = true
           end
           expect(executed).to be true
@@ -1519,19 +1512,16 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           expect { every :month, at: MyDateTimeItem }.to raise_error(ArgumentError)
         end
 
-        # @deprecated OH 4.1 remove if guard when dropping OH 4.1 support
-        if OpenHAB::Core.version > OpenHAB::Core::V4_3
-          { "Duration" => 2.hours + 1.second, "Integer" => 2.hours.to_i + 1 }.each do |type, offset|
-            it "supports #{type} offset" do
-              items.build { date_time_item MyDateTimeItem }
+        { "Duration" => 2.hours + 1.second, "Integer" => 2.hours.to_i + 1 }.each do |type, offset|
+          it "supports #{type} offset" do
+            items.build { date_time_item MyDateTimeItem }
 
-              triggered = false
-              every(:day, at: MyDateTimeItem, offset:) { triggered = true }
+            triggered = false
+            every(:day, at: MyDateTimeItem, offset:) { triggered = true }
 
-              MyDateTimeItem.update(2.hours.ago) # without an offset, this would not have triggered the rule
-              wait(4.seconds) do
-                expect(triggered).to be true
-              end
+            MyDateTimeItem.update(2.hours.ago) # without an offset, this would not have triggered the rule
+            wait(4.seconds) do
+              expect(triggered).to be true
             end
           end
         end
@@ -1819,8 +1809,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
             run { raise "failure!" }
           end
           expect(spec_log_lines).to include(include("failure! (RuntimeError)"))
-          # @deprecated OH 4.3 - remove the backtick when dropping OH 4.3
-          expect(spec_log_lines).to include(match(%r{rules/builder_spec\.rb:#{__LINE__ - 4}:in [`']block}))
+          expect(spec_log_lines).to include(match(%r{rules/builder_spec\.rb:#{__LINE__ - 3}:in 'block}))
         end
 
         it "logs java exceptions" do

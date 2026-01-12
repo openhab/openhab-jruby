@@ -99,9 +99,9 @@ module OpenHAB
         # @!visibility private
         module ClassMethods
           # @!visibility private
-          def new(*args, **kwargs)
+          def new(*, **)
             return super if self == Timer
-            return Timer.new(*args, **kwargs) if Timer.mock_timers?
+            return Timer.new(*, **) if Timer.mock_timers?
 
             super
           end

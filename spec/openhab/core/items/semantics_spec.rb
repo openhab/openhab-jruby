@@ -222,8 +222,8 @@ RSpec.describe OpenHAB::Core::Items::Semantics do
     end
 
     describe "#points" do
-      def points(*args)
-        gPatio.members.equipments.members.points(*args)
+      def points(*)
+        gPatio.members.equipments.members.points(*)
       end
 
       specify do

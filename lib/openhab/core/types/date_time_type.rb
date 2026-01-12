@@ -18,13 +18,7 @@ module OpenHAB
         remove_method :==
 
         extend Forwardable
-
-        # @deprecated OH 4.2 DateTimeType implements Java's Comparable interface in openHAB 4.3
-        if OpenHAB::Core.version >= OpenHAB::Core::V4_3
-          include ComparableType
-        else
-          include Comparable
-        end
+        include ComparableType
 
         class << self
           #
@@ -43,15 +37,8 @@ module OpenHAB
           end
         end
 
-        # @deprecated OH 4.2 Just call zoned_date_time(ZoneId.system_default) in OH 4.3
-        if OpenHAB::Core.version >= OpenHAB::Core::V4_3
-          def to_zoned_date_time(context = nil) # rubocop:disable Lint/UnusedMethodArgument
-            zoned_date_time(ZoneId.system_default)
-          end
-        else
-          def to_zoned_date_time(context = nil) # rubocop:disable Lint/UnusedMethodArgument
-            zoned_date_time
-          end
+        def to_zoned_date_time(context = nil) # rubocop:disable Lint/UnusedMethodArgument
+          zoned_date_time(ZoneId.system_default)
         end
 
         # @!method to_zoned_date_time(context = nil)
@@ -93,7 +80,7 @@ module OpenHAB
           if value.nil?
             super()
             return
-          elsif OpenHAB::Core.version >= OpenHAB::Core::V4_3 && value.respond_to?(:to_instant)
+          elsif value.respond_to?(:to_instant)
             super(value.to_instant)
             return
           elsif value.respond_to?(:to_zoned_date_time)
@@ -122,10 +109,7 @@ module OpenHAB
         def eql?(other)
           return false unless other.instance_of?(self.class)
 
-          # @deprecated OH 4.2 Call compare_to(other).zero? in OH 4.3 to avoid the deprecated getZonedDateTime()
-          return compare_to(other).zero? if OpenHAB::Core.version >= OpenHAB::Core::V4_3
-
-          zoned_date_time.compare_to(other.zoned_date_time).zero?
+          compare_to(other).zero?
         end
 
         #
@@ -141,10 +125,7 @@ module OpenHAB
         def <=>(other)
           logger.trace { "(#{self.class}) #{self} <=> #{other} (#{other.class})" }
           if other.is_a?(self.class)
-            # @deprecated OH 4.2 Call compare_to(other) in OH 4.3 to avoid the deprecated getZonedDateTime()
-            return compare_to(other) if OpenHAB::Core.version >= OpenHAB::Core::V4_3
-
-            zoned_date_time <=> other.zoned_date_time
+            compare_to(other)
           elsif other.respond_to?(:to_time)
             to_time <=> other.to_time
           elsif other.respond_to?(:coerce)
@@ -222,8 +203,7 @@ module OpenHAB
 
         # @!visibility private
         def respond_to_missing?(method, _include_private = false)
-          # @deprecated OH 4.2 Remove version check when dropping OH 4.2
-          return true if OpenHAB::Core.version >= OpenHAB::Core::V4_3 && to_instant.respond_to?(method)
+          return true if to_instant.respond_to?(method)
           return true if zoned_date_time.respond_to?(method)
           return true if ::Time.method_defined?(method.to_sym)
 
@@ -235,11 +215,7 @@ module OpenHAB
         # object representing the same instant
         #
         def method_missing(method, ...)
-          # @deprecated OH 4.2 Remove version check when dropping OH 4.2
-          if OpenHAB::Core.version >= OpenHAB::Core::V4_3 && to_instant.respond_to?(method)
-            return to_instant.send(method, ...)
-          end
-
+          return to_instant.send(method, ...) if to_instant.respond_to?(method)
           return zoned_date_time.send(method, ...) if zoned_date_time.respond_to?(method)
           return to_time.send(method, ...) if ::Time.method_defined?(method.to_sym)
 

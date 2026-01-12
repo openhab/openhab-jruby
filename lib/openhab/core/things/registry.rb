@@ -48,8 +48,8 @@ module OpenHAB
         # @raise [FrozenError] if `update` is true but the existing thing with the same uid
         #   wasn't created by the current provider.
         #
-        def build(preferred_provider = nil, update: true, &block)
-          DSL::Things::Builder.new(preferred_provider, update:).instance_eval(&block)
+        def build(preferred_provider = nil, update: true, &)
+          DSL::Things::Builder.new(preferred_provider, update:).instance_eval(&)
         end
 
         #

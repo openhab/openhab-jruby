@@ -89,8 +89,8 @@ module OpenHAB
 
         private
 
-        def build(klass, *args, **kwargs, &block)
-          builder = klass.new(*args, **kwargs)
+        def build(klass, *, **, &block)
+          builder = klass.new(*, **)
           builder.parent_builder = self if builder.respond_to?(:parent_builder=)
           builder.instance_eval(&block) if block
           thing = builder.build
@@ -227,8 +227,8 @@ module OpenHAB
         # Add an explicitly configured channel to this item
         # @see ChannelBuilder#initialize
         # @return [Core::Things::Channel]
-        def channel(*args, **kwargs, &block)
-          channel = ChannelBuilder.new(*args, thing: self, **kwargs)
+        def channel(*, **, &block)
+          channel = ChannelBuilder.new(*, thing: self, **)
           channel.instance_eval(&block) if block
           channel.build.tap { |c| @channels << c }
         end
@@ -287,14 +287,14 @@ module OpenHAB
 
         # Create a new Bridge with this Bridge as its Bridge
         # @see BridgeBuilder#initialize
-        def bridge(*args, **kwargs, &)
-          parent_builder.bridge(*args, bridge: self, **kwargs, &)
+        def bridge(*, **, &)
+          parent_builder.bridge(*, bridge: self, **, &)
         end
 
         # Create a new Thing with this Bridge as its Bridge
         # @see ThingBuilder#initialize
-        def thing(*args, **kwargs, &)
-          parent_builder.thing(*args, bridge: self, **kwargs, &)
+        def thing(*, **, &)
+          parent_builder.thing(*, bridge: self, **, &)
         end
       end
 

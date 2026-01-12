@@ -52,9 +52,9 @@ module OpenHAB
         #
         # @see DSL::Items::Builder DSL::Items::Builder for more details and examples
         #
-        def build(preferred_provider = nil, update: true, &block)
+        def build(preferred_provider = nil, update: true, &)
           DSL::Items::BaseBuilderDSL.new(preferred_provider, update:)
-                                    .instance_eval_with_dummy_items(&block)
+                                    .instance_eval_with_dummy_items(&)
         end
 
         #

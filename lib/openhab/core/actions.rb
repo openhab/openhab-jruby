@@ -53,9 +53,9 @@ module OpenHAB
       # @!method notify(msg, email: nil, icon: nil, tag: nil, severity: nil, id: nil, title: nil, on_click: nil, attachment: nil, buttons: nil)
       # @deprecated Use {Notification.send Notification.send} instead.
       #
-      def notify(*args, **kwargs)
+      def notify(*, **)
         logger.warn("`notify` method is deprecated. Use `Notification.send` instead.")
-        Notification.send(*args, **kwargs)
+        Notification.send(*, **)
       end
     end
   end
