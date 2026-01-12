@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require_relative "lib/openhab/dsl/version"
+# allows CI stuff to work, but is stripped out when the gem is built
+require_relative "lib/openhab/core/gem"
 
 Gem::Specification.new do |spec|
   spec.name          = "openhab-scripting"
@@ -25,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "marcel", "~> 1.0"
   spec.add_dependency "method_source", "~> 1.0"
   # ENV var *only* for use from CI for Cucumber
-  spec.add_dependency "openhab", ">= 4.1.0", "< 5.3" unless ENV["OPENHAB_NO_RUNTIME_DEP"]
+  spec.add_dependency "openhab", ">= 4.1.0", "< 5.3" unless ENV["OPENHAB_NO_RUNTIME_DEP"] == "1"
 
   spec.files = Dir["{lib}/**/*"]
   spec.require_paths = ["lib"]
