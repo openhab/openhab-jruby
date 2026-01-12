@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.45.0](https://github.com/openhab/openhab-jruby/tree/v5.45.0) (2026-01-12)
+
+### Features
+
+- Add "openhab" dependency to gemspec by [@ccutrer](https://github.com/ccutrer) in [#408](https://github.com/openhab/openhab-jruby/pull/408)
+
+**Full Changelog**: [v5.44.1...v5.45.0](https://github.com/openhab/openhab-jruby/compare/v5.44.1...v5.45.0)
+
 ## [v5.44.1](https://github.com/openhab/openhab-jruby/tree/v5.44.1) (2026-01-08)
 
 **Full Changelog**: [v5.44.0...v5.44.1](https://github.com/openhab/openhab-jruby/compare/v5.44.0...v5.44.1)
