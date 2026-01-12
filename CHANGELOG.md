@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.46.0](https://github.com/openhab/openhab-jruby/tree/v5.46.0) (2026-01-12)
+
+### Features
+
+- Drop support for openHAB < 5.0 by [@ccutrer](https://github.com/ccutrer) in [#501](https://github.com/openhab/openhab-jruby/pull/501)
+
+**Full Changelog**: [v5.45.0...v5.46.0](https://github.com/openhab/openhab-jruby/compare/v5.45.0...v5.46.0)
+
 ## [v5.45.0](https://github.com/openhab/openhab-jruby/tree/v5.45.0) (2026-01-12)
 
 ### Features
