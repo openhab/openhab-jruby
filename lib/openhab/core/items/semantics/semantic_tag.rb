@@ -54,13 +54,13 @@ module OpenHAB
           # @!visibility private
           def <(other)
             check_type(other)
-            uid != other.uid && uid.start_with?(other.uid)
+            uid.start_with?("#{other.uid}_")
           end
 
           # @!visibility private
           def <=(other)
             check_type(other)
-            uid.start_with?(other.uid)
+            uid == other.uid || uid.start_with?("#{other.uid}_")
           end
 
           # @!visibility private
@@ -72,13 +72,13 @@ module OpenHAB
           # @!visibility private
           def >=(other)
             check_type(other)
-            other.uid.start_with?(uid)
+            other <= self
           end
 
           # @!visibility private
           def >(other)
             check_type(other)
-            uid != other.uid && other.uid.start_with?(uid)
+            other < self
           end
 
           # @return [String]
