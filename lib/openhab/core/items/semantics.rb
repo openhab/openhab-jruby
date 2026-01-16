@@ -381,7 +381,7 @@ module OpenHAB
         #   Property = SemanticTag
 
         # put ourself into the global namespace, replacing the action
-        Object.send(:remove_const, :Semantics)
+        Object.send(:remove_const, :Semantics) if Object.const_defined?(:Semantics)
         ::Semantics = self # rubocop:disable Naming/ConstantName
 
         #
