@@ -169,6 +169,7 @@ module OpenHAB
               if !channel.include?(":") &&
                  (thing = builder.thing ||
                   thing = builder.groups.find { |g| g.is_a?(GroupItemBuilder) && g.thing }&.thing)
+                thing = thing.uid if thing.respond_to?(:uid)
                 channel = "#{thing}:#{channel}"
               end
 
