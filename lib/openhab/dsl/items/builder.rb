@@ -249,7 +249,7 @@ module OpenHAB
         # Autoupdate setting
         # @return [true, false, nil]
         attr_accessor :autoupdate
-        # @return [String, Core::Things::Thing, Core::Things::ThingUID, nil]
+        # @return [String, Core::Things::Thing, Core::Things::ThingUID, DSL::Things::Builder::ThingBuilder, nil]
         #   {Core::Things::ThingUID Thing} from which to resolve relative channel ids
         attr_accessor :thing
         # @return [Core::Items::Metadata::NamespaceHash]
@@ -303,7 +303,7 @@ module OpenHAB
         # @param tags [String, Symbol, Semantics::Tag, Array<String, Symbol, Semantics::Tag>, nil]
         #        Fluent alias for `tag`.
         # @param autoupdate [true, false, nil] Autoupdate setting (see {ItemBuilder#autoupdate})
-        # @param thing [String, Core::Things::Thing, Core::Things::ThingUID, nil]
+        # @param thing [String, Core::Things::Thing, Core::Things::ThingUID, DSL::Things::Builder::ThingBuilder, nil]
         #   A Thing to be used as the base for the channel.
         # @param channel [String, Symbol, Core::Things::ChannelUID, Core::Things::Channel, nil]
         #   Channel to link the item to (see {ItemBuilder#channel}).
@@ -787,7 +787,7 @@ module OpenHAB
         # @return [String, nil]
         attr_accessor :function
         # A thing to be used as the base for the channel of any member items
-        # @return [Core::Things::ThingUID, Core::Things::Thing, String, nil]
+        # @return [Core::Things::ThingUID, Core::Things::Thing, DSL::Things::Builder::ThingBuilder, String, nil]
         attr_accessor :thing
         # A prefix to be added to the name of any member items
         # @return [String, nil]
@@ -801,7 +801,7 @@ module OpenHAB
 
         # @param type [Symbol, nil] The base type for the group
         # @param function [String, nil] The combiner function for this group
-        # @param thing [Core::Things::ThingUID, Core::Things::Thing, String, nil]
+        # @param thing [Core::Things::ThingUID, Core::Things::Thing, DSL::Things::Builder::ThingBuilder, String, nil]
         #        A Thing to be used as the base for the channel for any contained items.
         # @param (see ItemBuilder#initialize)
         def initialize(*, type: nil, function: nil, thing: nil, **)
