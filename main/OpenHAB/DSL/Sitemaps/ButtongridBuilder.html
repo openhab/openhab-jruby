@@ -84,7 +84,7 @@
         </nav>
         <div class="page-versions">
   <ul class="version-switcher">
-    <li><a href="/openhab-jruby/5.45" class="version-button stable">Stable <small>(5.45)</small></a></li>
+    <li><a href="/openhab-jruby/5.46" class="version-button stable">Stable <small>(5.46)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
   <div class="archived-versions">
@@ -1290,7 +1290,6 @@
     
   </li>
 
-  
   
   
   
@@ -2876,30 +2875,8 @@
         &lt; LinkableWidgetBuilder
       
       
-        <a class="arrow toggle down"></a>
-      
     </span>
     
-    
-      
-      <ul>
-        
-        
-  
-  <li class="">
-    <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="ButtongridBuilder/Buttongrid.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder::Buttongrid (module)">Buttongrid</a></span>
-      
-      
-    </span>
-    
-    
-  </li>
-
-  
-
-        
-      </ul>
     
   </li>
 
@@ -3707,17 +3684,7 @@
   
 </ul>
 
-</div><h2>Defined Under Namespace</h2>
-<p class="children">
-  
-    
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="ButtongridBuilder/Buttongrid.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder::Buttongrid (module)">Buttongrid</a></span>
-    
-  
-    
-  
-</p>
-
+</div>
 
 
 
@@ -4193,31 +4160,31 @@ when both are specified.</p>
       <pre class="lines">
 
 
-1426
-1427
-1428
-1429
-1430
-1431
-1432
-1433
-1434
-1435
-1436
-1437
-1438
-1439
-1440
-1441
-1442
-1443
-1444
-1445</pre>
+1401
+1402
+1403
+1404
+1405
+1406
+1407
+1408
+1409
+1410
+1411
+1412
+1413
+1414
+1415
+1416
+1417
+1418
+1419
+1420</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 1426</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 1401</span>
 
-<span class="keyword">def</span> <span class="function">button</span>(row = <span class="predefined-constant">nil</span>, column = <span class="predefined-constant">nil</span>, click = <span class="predefined-constant">nil</span>, label = <span class="predefined-constant">nil</span>, icon = <span class="predefined-constant">nil</span>, **kwargs, &amp;block)
+<span class="keyword">def</span> <span class="function">button</span>(row = <span class="predefined-constant">nil</span>, column = <span class="predefined-constant">nil</span>, click = <span class="predefined-constant">nil</span>, label = <span class="predefined-constant">nil</span>, icon = <span class="predefined-constant">nil</span>, **kwargs, &amp;)
   args = [row, column, click, label, icon].compact
 
   args = args.first <span class="keyword">if</span> args.first.is_a?(<span class="constant">Array</span>)
@@ -4233,7 +4200,7 @@ when both are specified.</p>
   kwargs[<span class="symbol">:item</span>] ||= item <span class="keyword">if</span> item <span class="comment"># default to the buttongrid's item</span>
   kwargs[<span class="symbol">:label</span>] ||= kwargs[<span class="symbol">:click</span>].to_s
 
-  <span class="constant">ButtonBuilder</span>.new(<span class="instance-variable">@builder_proxy</span>, **kwargs, &amp;block).tap <span class="keyword">do</span> |b|
+  <span class="constant">ButtonBuilder</span>.new(<span class="instance-variable">@builder_proxy</span>, **kwargs, &amp;).tap <span class="keyword">do</span> |b|
     children &lt;&lt; b
   <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
@@ -4247,9 +4214,9 @@ when both are specified.</p>
 </div>
 
         <footer>
-  Generated on Mon Jan 12 22:53:43 2026 by
+  Generated on Tue Jan 20 16:41:04 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.37 (ruby-3.1.4).
+  0.9.37 (ruby-3.4.2).
 </footer>
 
       </main>

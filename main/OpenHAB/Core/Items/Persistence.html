@@ -85,7 +85,7 @@ openHAB's Persistence feature. - Documentation for openhab-scripting JRuby helpe
         </nav>
         <div class="page-versions">
   <ul class="version-switcher">
-    <li><a href="/openhab-jruby/5.45" class="version-button stable">Stable <small>(5.45)</small></a></li>
+    <li><a href="/openhab-jruby/5.46" class="version-button stable">Stable <small>(5.46)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
   <div class="archived-versions">
@@ -1291,7 +1291,6 @@ openHAB's Persistence feature. - Documentation for openhab-scripting JRuby helpe
     
   </li>
 
-  
   
   
   
@@ -2870,37 +2869,15 @@ openHAB's Persistence feature. - Documentation for openhab-scripting JRuby helpe
   </li>
 
   
-  <li class="collapsed">
+  <li class="">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../DSL/Sitemaps/ButtongridBuilder.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder (class)">ButtongridBuilder</a></span>
       
         &lt; LinkableWidgetBuilder
       
       
-        <a class="arrow toggle right"></a>
-      
     </span>
     
-    
-      
-      <ul>
-        
-        
-  
-  <li class="">
-    <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../DSL/Sitemaps/ButtongridBuilder/Buttongrid.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder::Buttongrid (module)">Buttongrid</a></span>
-      
-      
-    </span>
-    
-    
-  </li>
-
-  
-
-        
-      </ul>
     
   </li>
 
@@ -8631,7 +8608,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 740</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 731</span>
 
 </pre>
     </td>
@@ -8712,7 +8689,7 @@ or nil if no previous state could be found.</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 727</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 718</span>
 
 </pre>
     </td>
@@ -9960,29 +9937,23 @@ or nil if no future states could be found.</p>
       <pre class="lines">
 
 
+745
+746
+747
+748
+749
+750
+751
+752
+753
 754
 755
-756
-757
-758
-759
-760
-761
-762
-763
-764
-765
-766
-767
-768</pre>
+756</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 754</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 745</span>
 
 <span class="symbol"><span class="delimiter">%i[</span><span class="content">last_update next_update last_change next_change</span><span class="delimiter">]</span></span>.each <span class="keyword">do</span> |method|
-  <span class="comment"># @deprecated OH 4.1 remove this guard when dropping OH 4.1</span>
-  <span class="keyword">next</span> <span class="keyword">unless</span> <span class="constant">Actions</span>::<span class="constant">PersistenceExtensions</span>.respond_to?(method)
-
   class_eval <span class="string"><span class="delimiter">&lt;&lt;~RUBY</span></span>, <span class="predefined-constant">__FILE__</span>, <span class="predefined-constant">__LINE__</span> + <span class="integer">1</span><span class="string"><span class="content">
     def </span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="content">(service = nil)                            # def last_update(service = nil)
       service ||= persistence_service                       #   service ||= persistence_service
@@ -10097,30 +10068,24 @@ does not refer to a valid service</p>
       <pre class="lines">
 
 
-796
-797
-798
-799
-800
-801
-802
-803
-804
-805
-806
-807
-808
-809
-810
-811</pre>
+784
+785
+786
+787
+788
+789
+790
+791
+792
+793
+794
+795
+796</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 796</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 784</span>
 
 <span class="symbol"><span class="delimiter">%i[</span><span class="content">previous_state next_state</span><span class="delimiter">]</span></span>.each <span class="keyword">do</span> |method|
-  <span class="comment"># @deprecated OH 4.1 remove this guard when dropping OH 4.1</span>
-  <span class="keyword">next</span> <span class="keyword">unless</span> <span class="constant">Actions</span>::<span class="constant">PersistenceExtensions</span>.respond_to?(method)
-
   class_eval <span class="string"><span class="delimiter">&lt;&lt;~RUBY</span></span>, <span class="predefined-constant">__FILE__</span>, <span class="predefined-constant">__LINE__</span> + <span class="integer">1</span><span class="string"><span class="content">
     def </span><span class="inline"><span class="inline-delimiter">#{</span>method<span class="inline-delimiter">}</span></span><span class="content">(service = nil, skip_equal: false)       # def previous_state(service = nil, skip_equal: false)
       service ||= persistence_service                     #   service ||= persistence_service
@@ -10226,7 +10191,7 @@ does not refer to a valid service</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 724</span>
 
 </pre>
     </td>
@@ -10500,30 +10465,12 @@ does not refer to a valid service</p>
 713
 714
 715
-716
-717
-718
-719
-720
-721
-722
-723
-724
-725</pre>
+716</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 672</span>
 
 <span class="keyword">def</span> <span class="function">persist</span>(*args)
-  <span class="comment"># @deprecated OH 4.1 this if block content can be removed when dropping OH 4.1 support</span>
-  <span class="keyword">if</span> <span class="constant">Core</span>.version &lt; <span class="constant">Core</span>::<span class="constant">V4_2</span>
-    raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">wrong number of arguments (given </span><span class="inline"><span class="inline-delimiter">#{</span>args.size<span class="inline-delimiter">}</span></span><span class="content">, expected 0..1)</span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> args.size &gt; <span class="integer">1</span>
-
-    service = args.last || persistence_service
-    <span class="constant">Actions</span>::<span class="constant">PersistenceExtensions</span>.persist(<span class="predefined-constant">self</span>, service&amp;.to_s)
-    <span class="keyword">return</span>
-  <span class="keyword">end</span>
-
   first_arg = args.first
   <span class="keyword">if</span> first_arg.is_a?(<span class="constant">TimeSeries</span>)
     <span class="keyword">if</span> args.size &gt; <span class="integer">2</span>
@@ -10771,7 +10718,7 @@ does not refer to a valid service</p>
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 770</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/persistence.rb', line 758</span>
 
 </pre>
     </td>
@@ -12843,9 +12790,9 @@ or nil if no future states could be found.</p>
 </div>
 
         <footer>
-  Generated on Mon Jan 12 22:53:36 2026 by
+  Generated on Tue Jan 20 16:40:57 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.37 (ruby-3.1.4).
+  0.9.37 (ruby-3.4.2).
 </footer>
 
       </main>

@@ -85,7 +85,7 @@ openHAB Cloud Notification Actions}. - Documentation for openhab-scripting JRuby
         </nav>
         <div class="page-versions">
   <ul class="version-switcher">
-    <li><a href="/openhab-jruby/5.45" class="version-button stable">Stable <small>(5.45)</small></a></li>
+    <li><a href="/openhab-jruby/5.46" class="version-button stable">Stable <small>(5.46)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
   <div class="archived-versions">
@@ -1291,7 +1291,6 @@ openHAB Cloud Notification Actions}. - Documentation for openhab-scripting JRuby
     
   </li>
 
-  
   
   
   
@@ -2870,37 +2869,15 @@ openHAB Cloud Notification Actions}. - Documentation for openhab-scripting JRuby
   </li>
 
   
-  <li class="collapsed">
+  <li class="">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../DSL/Sitemaps/ButtongridBuilder.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder (class)">ButtongridBuilder</a></span>
       
         &lt; LinkableWidgetBuilder
       
       
-        <a class="arrow toggle right"></a>
-      
     </span>
     
-    
-      
-      <ul>
-        
-        
-  
-  <li class="">
-    <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../DSL/Sitemaps/ButtongridBuilder/Buttongrid.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder::Buttongrid (module)">Buttongrid</a></span>
-      
-      
-    </span>
-    
-    
-  </li>
-
-  
-
-        
-      </ul>
     
   </li>
 
@@ -3876,6 +3853,9 @@ If nil, hide broadcast notifications.</p>
       <pre class="lines">
 
 
+125
+126
+127
 128
 129
 130
@@ -3890,13 +3870,10 @@ If nil, hide broadcast notifications.</p>
 139
 140
 141
-142
-143
-144
-145</pre>
+142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/notification.rb', line 128</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/notification.rb', line 125</span>
 
 <span class="keyword">def</span> <span class="function">hide</span>(<span class="key">email</span>: <span class="predefined-constant">nil</span>, <span class="key">id</span>: <span class="predefined-constant">nil</span>, <span class="key">tag</span>: <span class="predefined-constant">nil</span>)
   <span class="keyword">unless</span> <span class="constant">Actions</span>.const_defined?(<span class="symbol">:NotificationAction</span>)
@@ -4000,12 +3977,12 @@ If nil, hide broadcast notifications.</p>
       <pre class="lines">
 
 
-157
-158
-159</pre>
+154
+155
+156</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/notification.rb', line 157</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/notification.rb', line 154</span>
 
 <span class="keyword">def</span> <span class="function">log</span>(msg, <span class="key">icon</span>: <span class="predefined-constant">nil</span>, <span class="key">tag</span>: <span class="predefined-constant">nil</span>)
   <span class="constant">NotificationAction</span>.send_log_notification(msg.to_s, icon&amp;.to_s, tag&amp;.to_s)
@@ -4260,6 +4237,19 @@ or an image item.</p>
   
 </ul>
 
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
   <p class="tag_title">See Also:</p>
   <ul class="see">
@@ -4314,10 +4304,7 @@ or an image item.</p>
 106
 107
 108
-109
-110
-111
-112</pre>
+109</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/notification.rb', line 69</span>
@@ -4347,22 +4334,19 @@ or an image item.</p>
   tag ||= severity
   args.push(msg.to_s, icon&amp;.to_s, tag&amp;.to_s)
 
-  <span class="comment"># @deprecated OH 4.1</span>
-  <span class="keyword">if</span> <span class="constant">Core</span>.version &gt;= <span class="constant">Core</span>::<span class="constant">V4_2</span>
-    buttons ||= []
-    buttons = buttons.map { |button_title, action| <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>button_title<span class="inline-delimiter">}</span></span><span class="content">=</span><span class="inline"><span class="inline-delimiter">#{</span>action<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> } <span class="keyword">if</span> buttons.is_a?(<span class="constant">Hash</span>)
-    raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">buttons must contain (0..3) elements.</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> (<span class="integer">0</span>..<span class="integer">3</span>).cover?(buttons.size)
+  buttons ||= []
+  buttons = buttons.map { |button_title, action| <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>button_title<span class="inline-delimiter">}</span></span><span class="content">=</span><span class="inline"><span class="inline-delimiter">#{</span>action<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> } <span class="keyword">if</span> buttons.is_a?(<span class="constant">Hash</span>)
+  raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">buttons must contain (0..3) elements.</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> (<span class="integer">0</span>..<span class="integer">3</span>).cover?(buttons.size)
 
-    attachment = <span class="string"><span class="delimiter">&quot;</span><span class="content">item:</span><span class="inline"><span class="inline-delimiter">#{</span>attachment.name<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> attachment.is_a?(<span class="constant">Item</span>) &amp;&amp; attachment.image_item?
+  attachment = <span class="string"><span class="delimiter">&quot;</span><span class="content">item:</span><span class="inline"><span class="inline-delimiter">#{</span>attachment.name<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> attachment.is_a?(<span class="constant">Item</span>) &amp;&amp; attachment.image_item?
 
-    args.push(title&amp;.to_s,
-              id&amp;.to_s,
-              on_click&amp;.to_s,
-              attachment&amp;.to_s,
-              buttons[<span class="integer">0</span>]&amp;.to_s,
-              buttons[<span class="integer">1</span>]&amp;.to_s,
-              buttons[<span class="integer">2</span>]&amp;.to_s)
-  <span class="keyword">end</span>
+  args.push(title&amp;.to_s,
+            id&amp;.to_s,
+            on_click&amp;.to_s,
+            attachment&amp;.to_s,
+            buttons[<span class="integer">0</span>]&amp;.to_s,
+            buttons[<span class="integer">1</span>]&amp;.to_s,
+            buttons[<span class="integer">2</span>]&amp;.to_s)
 
   <span class="constant">NotificationAction</span>.__send__(*args)
 <span class="keyword">end</span></pre>
@@ -4376,9 +4360,9 @@ or an image item.</p>
 </div>
 
         <footer>
-  Generated on Mon Jan 12 22:53:47 2026 by
+  Generated on Tue Jan 20 16:41:08 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.37 (ruby-3.1.4).
+  0.9.37 (ruby-3.4.2).
 </footer>
 
       </main>

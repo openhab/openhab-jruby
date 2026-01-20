@@ -109,7 +109,7 @@ command will reschedule the timed command for that new duration. - Documentation
         </nav>
         <div class="page-versions">
   <ul class="version-switcher">
-    <li><a href="/openhab-jruby/5.45" class="version-button stable">Stable <small>(5.45)</small></a></li>
+    <li><a href="/openhab-jruby/5.46" class="version-button stable">Stable <small>(5.46)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
   <div class="archived-versions">
@@ -1315,7 +1315,6 @@ command will reschedule the timed command for that new duration. - Documentation
     
   </li>
 
-  
   
   
   
@@ -2894,37 +2893,15 @@ command will reschedule the timed command for that new duration. - Documentation
   </li>
 
   
-  <li class="collapsed">
+  <li class="">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../Sitemaps/ButtongridBuilder.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder (class)">ButtongridBuilder</a></span>
       
         &lt; LinkableWidgetBuilder
       
       
-        <a class="arrow toggle right"></a>
-      
     </span>
     
-    
-      
-      <ul>
-        
-        
-  
-  <li class="">
-    <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../Sitemaps/ButtongridBuilder/Buttongrid.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder::Buttongrid (module)">Buttongrid</a></span>
-      
-      
-    </span>
-    
-    
-  </li>
-
-  
-
-        
-      </ul>
     
   </li>
 
@@ -3745,7 +3722,7 @@ command will reschedule the timed command for that new duration.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#command-instance_method" title="#command (instance method)">#<strong>command</strong>(command, for: nil, on_expire: nil, only_when_ensured: false, **kwargs) {|timed_command| ... } &#x21d2; self </a>
+      <a href="#command-instance_method" title="#command (instance method)">#<strong>command</strong>(command, for: nil, on_expire: nil, only_when_ensured: false) {|timed_command| ... } &#x21d2; self </a>
     
 
     
@@ -3778,7 +3755,7 @@ command will reschedule the timed command for that new duration.</p>
       <div class="method_details first">
   <h3 class="signature first" id="command-instance_method">
   
-    #<strong>command</strong>(command, for: nil, on_expire: nil, only_when_ensured: false, **kwargs) {|timed_command| ... } &#x21d2; <tt>self</tt> 
+    #<strong>command</strong>(command, for: nil, on_expire: nil, only_when_ensured: false) {|timed_command| ... } &#x21d2; <tt>self</tt> 
   
 
   
@@ -4014,9 +3991,9 @@ other action.</p>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/items/timed_command.rb', line 152</span>
 
-<span class="keyword">def</span> <span class="function">command</span>(command, <span class="key">for</span>: <span class="predefined-constant">nil</span>, <span class="key">on_expire</span>: <span class="predefined-constant">nil</span>, <span class="key">only_when_ensured</span>: <span class="predefined-constant">false</span>, **kwargs, &amp;block)
+<span class="keyword">def</span> <span class="function">command</span>(command, <span class="key">for</span>: <span class="predefined-constant">nil</span>, <span class="key">on_expire</span>: <span class="predefined-constant">nil</span>, <span class="key">only_when_ensured</span>: <span class="predefined-constant">false</span>, **, &amp;block)
   duration = binding.local_variable_get(<span class="symbol">:for</span>)
-  <span class="keyword">return</span> <span class="keyword">super</span>(command, **kwargs) <span class="keyword">unless</span> duration
+  <span class="keyword">return</span> <span class="keyword">super</span>(command, **) <span class="keyword">unless</span> duration
 
   on_expire = block <span class="keyword">if</span> block
 
@@ -4024,10 +4001,10 @@ other action.</p>
     on_expire ||= default_on_expire(command)
     <span class="keyword">if</span> only_when_ensured
       <span class="constant">DSL</span>.ensure_states <span class="keyword">do</span>
-        create_timed_command(command, <span class="key">duration</span>:, <span class="key">on_expire</span>:) <span class="keyword">if</span> <span class="keyword">super</span>(command, **kwargs)
+        create_timed_command(command, <span class="key">duration</span>:, <span class="key">on_expire</span>:) <span class="keyword">if</span> <span class="keyword">super</span>(command, **)
       <span class="keyword">end</span>
     <span class="keyword">else</span>
-      <span class="keyword">super</span>(command, **kwargs)
+      <span class="keyword">super</span>(command, **)
       create_timed_command(command, <span class="key">duration</span>:, <span class="key">on_expire</span>:)
     <span class="keyword">end</span>
   <span class="keyword">end</span>
@@ -4050,7 +4027,7 @@ other action.</p>
           timed_command_details.timer.reschedule(duration)
           <span class="comment"># disable the cancel rule while we send the new command</span>
           <span class="constant">DSL</span>.rules[timed_command_details.rule_uid].disable
-          <span class="keyword">super</span>(command, **kwargs) <span class="comment"># This returns nil when &quot;ensured&quot;</span>
+          <span class="keyword">super</span>(command, **) <span class="comment"># This returns nil when &quot;ensured&quot;</span>
           <span class="constant">DSL</span>.rules[timed_command_details.rule_uid].enable
           timed_command_details
         <span class="keyword">end</span>
@@ -4070,9 +4047,9 @@ other action.</p>
 </div>
 
         <footer>
-  Generated on Mon Jan 12 22:53:37 2026 by
+  Generated on Tue Jan 20 16:40:57 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.37 (ruby-3.1.4).
+  0.9.37 (ruby-3.4.2).
 </footer>
 
       </main>

@@ -84,7 +84,7 @@
         </nav>
         <div class="page-versions">
   <ul class="version-switcher">
-    <li><a href="/openhab-jruby/5.45" class="version-button stable">Stable <small>(5.45)</small></a></li>
+    <li><a href="/openhab-jruby/5.46" class="version-button stable">Stable <small>(5.46)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
   <div class="archived-versions">
@@ -1290,7 +1290,6 @@
     
   </li>
 
-  
   
   
   
@@ -2869,37 +2868,15 @@
   </li>
 
   
-  <li class="collapsed">
+  <li class="">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../DSL/Sitemaps/ButtongridBuilder.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder (class)">ButtongridBuilder</a></span>
       
         &lt; LinkableWidgetBuilder
       
       
-        <a class="arrow toggle right"></a>
-      
     </span>
     
-    
-      
-      <ul>
-        
-        
-  
-  <li class="">
-    <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../DSL/Sitemaps/ButtongridBuilder/Buttongrid.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder::Buttongrid (module)">Buttongrid</a></span>
-      
-      
-    </span>
-    
-    
-  </li>
-
-  
-
-        
-      </ul>
     
   </li>
 
@@ -4370,8 +4347,7 @@
 86
 87
 88
-89
-90</pre>
+89</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/events/item_state_changed_event.rb', line 82</span>
@@ -4379,9 +4355,8 @@
 <span class="keyword">def</span> <span class="function">inspect</span>
   s = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Events::ItemStateChangedEvent item=</span><span class="inline"><span class="inline-delimiter">#{</span>item_name<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="delimiter">&quot;</span></span> \
       <span class="string"><span class="delimiter">&quot;</span><span class="content">state=</span><span class="inline"><span class="inline-delimiter">#{</span>item_state.inspect<span class="inline-delimiter">}</span></span><span class="content"> was=</span><span class="inline"><span class="inline-delimiter">#{</span>old_item_state.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
-  <span class="comment"># @deprecated OH4.3 remove respond_to? checks in the next two lines when dropping OH 4.3</span>
-  s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> last_state_update=</span><span class="inline"><span class="inline-delimiter">#{</span>last_state_update<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> respond_to?(<span class="symbol">:last_state_update</span>) &amp;&amp; last_state_update
-  s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> last_state_change=</span><span class="inline"><span class="inline-delimiter">#{</span>last_state_change<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> respond_to?(<span class="symbol">:last_state_change</span>) &amp;&amp; last_state_change
+  s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> last_state_update=</span><span class="inline"><span class="inline-delimiter">#{</span>last_state_update<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> last_state_update
+  s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> last_state_change=</span><span class="inline"><span class="inline-delimiter">#{</span>last_state_change<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> last_state_change
   s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> source=</span><span class="inline"><span class="inline-delimiter">#{</span>source.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> source
   <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>s<span class="inline-delimiter">}</span></span><span class="content">&gt;</span><span class="delimiter">&quot;</span></span>
 <span class="keyword">end</span></pre>
@@ -4938,9 +4913,9 @@
 </div>
 
         <footer>
-  Generated on Mon Jan 12 22:53:49 2026 by
+  Generated on Tue Jan 20 16:41:11 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.37 (ruby-3.1.4).
+  0.9.37 (ruby-3.4.2).
 </footer>
 
       </main>

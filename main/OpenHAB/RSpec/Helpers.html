@@ -89,7 +89,7 @@ explicitly. - Documentation for openhab-scripting JRuby helper library.">
         </nav>
         <div class="page-versions">
   <ul class="version-switcher">
-    <li><a href="/openhab-jruby/5.45" class="version-button stable">Stable <small>(5.45)</small></a></li>
+    <li><a href="/openhab-jruby/5.46" class="version-button stable">Stable <small>(5.46)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
   <div class="archived-versions">
@@ -1295,7 +1295,6 @@ explicitly. - Documentation for openhab-scripting JRuby helper library.">
     
   </li>
 
-  
   
   
   
@@ -2874,37 +2873,15 @@ explicitly. - Documentation for openhab-scripting JRuby helper library.">
   </li>
 
   
-  <li class="collapsed">
+  <li class="">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../DSL/Sitemaps/ButtongridBuilder.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder (class)">ButtongridBuilder</a></span>
       
         &lt; LinkableWidgetBuilder
       
       
-        <a class="arrow toggle right"></a>
-      
     </span>
     
-    
-      
-      <ul>
-        
-        
-  
-  <li class="">
-    <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../DSL/Sitemaps/ButtongridBuilder/Buttongrid.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder::Buttongrid (module)">Buttongrid</a></span>
-      
-      
-    </span>
-    
-    
-  </li>
-
-  
-
-        
-      </ul>
     
   </li>
 
@@ -4333,6 +4310,8 @@ The addon's bundle id is used as the identifier.</p>
       <pre class="lines">
 
 
+363
+364
 365
 366
 367
@@ -4364,12 +4343,10 @@ The addon's bundle id is used as the identifier.</p>
 393
 394
 395
-396
-397
-398</pre>
+396</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 365</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 363</span>
 
 <span class="keyword">def</span> <span class="function">install_addon</span>(addon_id, <span class="key">wait</span>: <span class="predefined-constant">true</span>, <span class="key">ready_markers</span>: <span class="predefined-constant">nil</span>)
   service_filter = <span class="string"><span class="delimiter">&quot;</span><span class="content">(component.name=org.openhab.core.karafaddons)</span><span class="delimiter">&quot;</span></span>
@@ -4520,9 +4497,7 @@ The addon's bundle id is used as the identifier.</p>
 295
 296
 297
-298
-299
-300</pre>
+298</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 221</span>
@@ -4589,8 +4564,6 @@ The addon's bundle id is used as the identifier.</p>
             <span class="constant">OSGi</span>.register_service(new_ast, *services, <span class="key">bundle</span>: ast_bundle)
       <span class="keyword">end</span>
     <span class="keyword">end</span>
-  <span class="keyword">rescue</span> <span class="constant">NameError</span>
-    <span class="comment"># @deprecated OH 4.0</span>
   <span class="keyword">end</span>
 
   <span class="comment"># RSpec additions</span>
@@ -4638,6 +4611,8 @@ The addon's bundle id is used as the identifier.</p>
       <pre class="lines">
 
 
+307
+308
 309
 310
 311
@@ -4654,12 +4629,10 @@ The addon's bundle id is used as the identifier.</p>
 322
 323
 324
-325
-326
-327</pre>
+325</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 309</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 307</span>
 
 <span class="keyword">def</span> <span class="function">load_rules</span>
   automation_paths = Array(::<span class="constant">RSpec</span>.configuration.openhab_automation_search_paths)
@@ -4714,6 +4687,8 @@ recognized.</p>
       <pre class="lines">
 
 
+338
+339
 340
 341
 342
@@ -4726,12 +4701,10 @@ recognized.</p>
 349
 350
 351
-352
-353
-354</pre>
+352</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 340</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 338</span>
 
 <span class="keyword">def</span> <span class="function">load_transforms</span>
   transform_path = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>org.openhab.core.OpenHAB.config_folder<span class="inline-delimiter">}</span></span><span class="content">/transform</span><span class="delimiter">&quot;</span></span>
@@ -4795,12 +4768,12 @@ recognized.</p>
       <pre class="lines">
 
 
-401
-402
-403</pre>
+399
+400
+401</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 401</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 399</span>
 
 <span class="keyword">def</span> <span class="function">log_file</span>
   <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>java.lang.System.get_property(<span class="string"><span class="delimiter">&quot;</span><span class="content">openhab.logdir</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">nil</span>)<span class="inline-delimiter">}</span></span><span class="content">/openhab.log</span><span class="delimiter">&quot;</span></span>
@@ -4863,15 +4836,15 @@ recognized.</p>
       <pre class="lines">
 
 
+412
+413
 414
 415
 416
-417
-418
-419</pre>
+417</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 414</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 412</span>
 
 <span class="keyword">def</span> <span class="function">spec_log_lines</span>
   <span class="constant">File</span>.open(log_file, <span class="string"><span class="delimiter">&quot;</span><span class="content">rb</span><span class="delimiter">&quot;</span></span>) <span class="keyword">do</span> |f|
@@ -5174,9 +5147,9 @@ will just sleep for <code>duration</code></p>
 </div>
 
         <footer>
-  Generated on Mon Jan 12 22:53:34 2026 by
+  Generated on Tue Jan 20 16:40:54 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.37 (ruby-3.1.4).
+  0.9.37 (ruby-3.4.2).
 </footer>
 
       </main>

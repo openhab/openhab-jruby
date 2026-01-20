@@ -211,7 +211,7 @@ function enableHovers() {
 }
 
 function selectVersion() {
-  if (document.location.pathname.startsWith("/openhab-jruby/5.45/")) {
+  if (document.location.pathname.startsWith("/openhab-jruby/5.46/")) {
     $(".version-button.stable").toggleClass("current");
   } else if (document.location.pathname.startsWith("/docs/") ||
     document.location.pathname.startsWith("/openhab-jruby/main/") ||

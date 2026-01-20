@@ -84,7 +84,7 @@
         </nav>
         <div class="page-versions">
   <ul class="version-switcher">
-    <li><a href="/openhab-jruby/5.45" class="version-button stable">Stable <small>(5.45)</small></a></li>
+    <li><a href="/openhab-jruby/5.46" class="version-button stable">Stable <small>(5.46)</small></a></li>
     <li><a href="/openhab-jruby/main" class="version-button main">Latest <small>(main)</small></a></li>
   </ul>
   <div class="archived-versions">
@@ -1290,7 +1290,6 @@
     
   </li>
 
-  
   
   
   
@@ -2869,37 +2868,15 @@
   </li>
 
   
-  <li class="collapsed">
+  <li class="">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../../Sitemaps/ButtongridBuilder.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder (class)">ButtongridBuilder</a></span>
       
         &lt; LinkableWidgetBuilder
       
       
-        <a class="arrow toggle right"></a>
-      
     </span>
     
-    
-      
-      <ul>
-        
-        
-  
-  <li class="">
-    <span class="sidebar-link">
-      <span class='object_link'><a class="sidebar-link sidebar-link-depth-4" href="../../../Sitemaps/ButtongridBuilder/Buttongrid.html" title="OpenHAB::DSL::Sitemaps::ButtongridBuilder::Buttongrid (module)">Buttongrid</a></span>
-      
-      
-    </span>
-    
-    
-  </li>
-
-  
-
-        
-      </ul>
     
   </li>
 
@@ -3778,7 +3755,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#process-instance_method" title="#process (instance method)">#<strong>process</strong>(mod:, inputs:, &amp;block)  &#x21d2; Object </a>
+      <a href="#process-instance_method" title="#process (instance method)">#<strong>process</strong>(mod:, inputs:)  &#x21d2; Object </a>
     
 
     
@@ -4004,7 +3981,7 @@
       <div class="method_details ">
   <h3 class="signature " id="process-instance_method">
   
-    #<strong>process</strong>(mod:, inputs:, &amp;block)  &#x21d2; <tt><span class='object_link'>Object</span></tt> 
+    #<strong>process</strong>(mod:, inputs:)  &#x21d2; <tt><span class='object_link'>Object</span></tt> 
   
 
   
@@ -4063,16 +4040,16 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/triggers/conditions/duration.rb', line 34</span>
 
-<span class="keyword">def</span> <span class="function">process</span>(<span class="key">mod</span>:, <span class="key">inputs</span>:, &amp;block)
+<span class="keyword">def</span> <span class="function">process</span>(<span class="key">mod</span>:, <span class="key">inputs</span>:, &amp;)
   timer = <span class="instance-variable">@timers</span>[inputs[<span class="string"><span class="delimiter">&quot;</span><span class="content">triggeringItem</span><span class="delimiter">&quot;</span></span>]&amp;.name]
   <span class="keyword">if</span> timer&amp;.active?
-    process_active_timer(timer, inputs, mod, &amp;block)
+    process_active_timer(timer, inputs, mod, &amp;)
   <span class="keyword">elsif</span> <span class="instance-variable">@conditions</span>.process(<span class="key">mod</span>:, <span class="key">inputs</span>:)
     logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">Trigger Guards Matched for </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content">, delaying rule execution</span><span class="delimiter">&quot;</span></span> }
     <span class="comment"># Add timer and attach timer to delay object, and also state being tracked to so</span>
     <span class="comment"># timer can be cancelled if state changes</span>
     <span class="comment"># Also another timer should not be created if changed to same value again but instead rescheduled</span>
-    create_trigger_delay_timer(inputs, mod, &amp;block)
+    create_trigger_delay_timer(inputs, mod, &amp;)
   <span class="keyword">else</span>
     logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">Trigger Guards did not match for </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content">, ignoring trigger.</span><span class="delimiter">&quot;</span></span> }
   <span class="keyword">end</span>
@@ -4087,9 +4064,9 @@
 </div>
 
         <footer>
-  Generated on Mon Jan 12 22:53:50 2026 by
+  Generated on Tue Jan 20 16:41:12 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.37 (ruby-3.1.4).
+  0.9.37 (ruby-3.4.2).
 </footer>
 
       </main>
