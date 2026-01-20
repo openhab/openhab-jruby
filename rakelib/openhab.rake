@@ -336,7 +336,7 @@ namespace :openhab do
   task deploy: %i[download build] do |_task|
     mkdir_p gem_home
     gem_file = File.join(PACKAGE_DIR, "openhab-scripting-#{OpenHAB::DSL::VERSION}.gem")
-    fail_on_error("gem install #{gem_file} -i #{gem_home} --no-document")
+    fail_on_error("gem install #{gem_file} -i #{gem_home} --no-document --force")
   end
 
   desc "Clean up local gems"
