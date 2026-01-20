@@ -132,18 +132,20 @@ module OpenHAB
 
           # @!visibility private
           def add(builder)
-            if DSL.items.key?(builder.name)
+            if (old_item = DSL.items[builder.name])
               raise ArgumentError, "Item #{builder.name} already exists" unless @update
 
               # Use provider.get because openHAB's ManagedProvider does not support the #[] method.
-              unless (old_item = provider.get(builder.name))
-                raise FrozenError, "Item #{builder.name} is managed by #{DSL.items[builder.name].provider}"
+              # Note that ManagedProvider stores PersistableItem objects, not the actual item,
+              # so we cannot use provider.get as old_item. We'll get it from the Item Registry instead.
+              unless provider.get(builder.name)
+                raise FrozenError, "Item #{builder.name} is managed by #{old_item.provider}"
               end
 
               item = builder.build
-              if item.config_eql?(old_item)
+              if item.config_eql?(old_item.__getobj__)
                 logger.debug { "Not replacing existing item #{item.uid} because it is identical" }
-                item = old_item
+                item = old_item.__getobj__
               else
                 logger.debug { "Replacing existing item #{item.uid} because it is not identical" }
                 provider.update(item)

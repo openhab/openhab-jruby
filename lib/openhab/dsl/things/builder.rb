@@ -95,16 +95,13 @@ module OpenHAB
           builder.instance_eval(&block) if block
           thing = builder.build
 
-          if DSL.things.key?(thing.uid)
+          if (old_thing = DSL.things[thing.uid])
             raise ArgumentError, "Thing #{thing.uid} already exists" unless @update
+            raise FrozenError, "Thing #{thing.uid} is managed by #{thing.provider}" unless provider.get(thing.uid)
 
-            unless (old_thing = provider.get(thing.uid))
-              raise FrozenError, "Thing #{thing.uid} is managed by #{thing.provider}"
-            end
-
-            if thing.config_eql?(old_thing)
+            if thing.config_eql?(old_thing.__getobj__)
               logger.debug { "Not replacing existing thing #{thing.uid}" }
-              thing = old_thing
+              thing = old_thing.__getobj__
             else
               provider.update(thing)
             end
