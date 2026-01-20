@@ -1,5 +1,16 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.46.1](https://github.com/openhab/openhab-jruby/tree/v5.46.1) (2026-01-20)
+
+### Bug Fixes
+
+- fix semantics already being removed by [@ccutrer](https://github.com/ccutrer) in [#505](https://github.com/openhab/openhab-jruby/pull/505)
+- Fix semantic comparisons of substring tags by [@ccutrer](https://github.com/ccutrer) in [#503](https://github.com/openhab/openhab-jruby/pull/503)
+- Allow passing a ThingBuilder as the thing to Item Builder by [@ccutrer](https://github.com/ccutrer) in [#504](https://github.com/openhab/openhab-jruby/pull/504)
+- Fix item and thing builder update of existing object by [@jimtng](https://github.com/jimtng) in [#507](https://github.com/openhab/openhab-jruby/pull/507)
+
+**Full Changelog**: [v5.46.0...v5.46.1](https://github.com/openhab/openhab-jruby/compare/v5.46.0...v5.46.1)
+
 ## [v5.46.0](https://github.com/openhab/openhab-jruby/tree/v5.46.0) (2026-01-12)
 
 ### Features
