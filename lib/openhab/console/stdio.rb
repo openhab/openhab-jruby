@@ -134,7 +134,9 @@ module OpenHAB
       def wait_readable(timeout = nil)
         return true if (@buffer.size - @buffer.tell).positive?
 
-        timeout = timeout ? 0 : timeout * 1000
+        return @byte_stream.available.positive? ? self : nil if timeout == 0 # rubocop:disable Style/NumericPredicate
+
+        timeout = timeout ? timeout * 1000 : 0
         char = @byte_stream.read(timeout)
         return nil if char.negative? # timeout
 
@@ -142,11 +144,24 @@ module OpenHAB
         self
       end
 
-      def raw(*)
-        previous_attributes = @terminal.enter_raw_mode
+      def raw(min: nil, time: nil, intr: nil)
+        previous_attributes = @terminal.attributes
+        new_attributes = @terminal.attributes
+        new_attributes.set_local_flags(java.util.EnumSet.of(org.jline.terminal.Attributes::LocalFlag::ICANON,
+                                                            org.jline.terminal.Attributes::LocalFlag::ECHO,
+                                                            org.jline.terminal.Attributes::LocalFlag::IEXTEN),
+                                       false)
+        new_attributes.set_local_flag(org.jline.terminal.Attributes::LocalFlag::ISIG, !!intr) # rubocop:disable Style/DoubleNegation
+        new_attributes.set_input_flags(java.util.EnumSet.of(org.jline.terminal.Attributes::InputFlag::IXON,
+                                                            org.jline.terminal.Attributes::InputFlag::ICRNL,
+                                                            org.jline.terminal.Attributes::InputFlag::INLCR),
+                                       false)
+        new_attributes.set_control_char(org.jline.terminal.Attributes::ControlChar::VMIN, min || 1)
+        new_attributes.set_control_char(org.jline.terminal.Attributes::ControlChar::VTIME, ((time || 0) * 10).to_i)
+        @terminal.attributes = new_attributes
         yield self
       ensure
-        @terminal.set_attributes(previous_attributes)
+        @terminal.set_attributes(previous_attributes) if previous_attributes
       end
     end
 
