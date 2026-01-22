@@ -67,6 +67,7 @@ module OpenHAB
 
         def completion_candidates(_preposing, target, _postposing, bind:)
           return super unless defined?(OpenHAB::Core::EntityLookup)
+          return super if target.empty?
           return super unless VALID_ENTITY_PREFIXES.include?(target[0])
 
           this = bind.eval("self")
@@ -88,8 +89,8 @@ module OpenHAB
   end
 end
 
-# disable Reline for now; it's not working
-IRB.conf[:USE_MULTILINE] = false
+# Uncomment to disable Reline and use Readline or StdioInputMethod
+# IRB.conf[:USE_MULTILINE] = false
 # Uncomment to disable Readline and force StdioInputMethod
 # IRB.conf[:USE_SINGLELINE] = false
 
