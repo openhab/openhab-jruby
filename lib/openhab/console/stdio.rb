@@ -39,6 +39,11 @@ module OpenHAB
 
         @byte_stream = terminal.input
         @buffer = StringIO.new.set_encoding(external_encoding)
+        @eof = false
+      end
+
+      def eof?
+        @buffer.eof? && @eof
       end
 
       def getbyte
@@ -47,6 +52,7 @@ module OpenHAB
           @buffer.truncate(0) if @buffer.eof?
           return b
         end
+        return nil if eof?
 
         b = @byte_stream.read
         return nil if b.negative?
@@ -60,6 +66,8 @@ module OpenHAB
           @buffer.truncate(0) if @buffer.eof?
           return c
         end
+        return nil if eof?
+
         bytes = (+"").force_encoding(Encoding::BINARY)
         loop do
           b = getbyte
@@ -110,7 +118,9 @@ module OpenHAB
       end
 
       def read(bytes)
-        r = readpartial(bytes)
+        r = readpartial(bytes) if !eof? || (@buffer.size - @buffer.tell).positive?
+        return nil if r.nil?
+
         r.concat(readpartial(bytes - r.bytesize)) while r.bytesize < bytes
         r
       end
@@ -123,6 +133,8 @@ module OpenHAB
           @buffer.truncate(0) if @buffer.eof?
           return r
         end
+
+        raise EOFError, "end of file reached" if eof?
 
         buffer = Java::byte[bytes].new
         read = @byte_stream.read_buffered(buffer)
@@ -138,6 +150,15 @@ module OpenHAB
 
         timeout = timeout ? timeout * 1000 : 0
         char = @byte_stream.read(timeout)
+        if char == -1
+          @eof = true
+          # this is not normal behavior for wait_readable, but it seems like when the SSH client
+          # disconnects, JLine just "closes" the NonBlockingPumpInputStream, and doesn't trigger
+          # any signals. On the other end, Reline just keeps calling this repetitively forever
+          # if we're at EOF, with the only way to break out to be check signals. So raise an exception
+          # here.
+          raise EOFError, "end of file reached"
+        end
         return nil if char.negative? # timeout
 
         ungetc(char.chr(external_encoding))
