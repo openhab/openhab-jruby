@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.47.0](https://github.com/openhab/openhab-jruby/tree/v5.47.0) (2026-01-23)
+
+### Features
+
+- Console improvements by [@ccutrer](https://github.com/ccutrer) in [#509](https://github.com/openhab/openhab-jruby/pull/509)
+
+**Full Changelog**: [v5.46.1...v5.47.0](https://github.com/openhab/openhab-jruby/compare/v5.46.1...v5.47.0)
+
 ## [v5.46.1](https://github.com/openhab/openhab-jruby/tree/v5.46.1) (2026-01-20)
 
 ### Bug Fixes
