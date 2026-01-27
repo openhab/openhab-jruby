@@ -128,6 +128,7 @@ RSpec.describe OpenHAB::Core::Items::Proxy do
     expect { Switch1.members }.to raise_error(NoMethodError)
   end
 
+  # rubocop:disable Style/CaseEquality
   describe "Comparisons" do
     before do
       items.build { switch_item "Switch2" }
@@ -142,6 +143,12 @@ RSpec.describe OpenHAB::Core::Items::Proxy do
       expect(Switch1 != Switch2).to be true
       expect(Switch1 != Switch1).to be false # rubocop:disable Lint/BinaryOperatorWithIdenticalOperands
     end
+
+    it "can be done with ===" do
+      expect(Switch1).to be === Switch1
+      expect(Switch1).not_to be === Switch2
+    end
   end
+  # rubocop:enable Style/CaseEquality
 end
 # rubocop:enable RSpec/IdenticalEqualityAssertion

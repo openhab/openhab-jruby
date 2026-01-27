@@ -251,6 +251,20 @@ module OpenHAB
         !(self == other) # rubocop:disable Style/InverseMethods
       end
 
+      #
+      # Check if delegates are case-like
+      #
+      # Otherwise items can't be used in Ruby case statements
+      #
+      # @return [true, false]
+      #
+      # @!visibility private
+      def ===(other)
+        return __getobj__ === other.__getobj__ if other.instance_of?(@klass) # rubocop:disable Style/CaseEquality
+
+        super
+      end
+
       # @return [String]
       def to_s
         target = __getobj__
