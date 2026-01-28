@@ -90,7 +90,7 @@ RSpec.describe OpenHAB::Core::Things::Thing do
       if OpenHAB::Core.version < OpenHAB::Core::V5_2
         expect(thing.properties).to be_empty
       else
-        expect(thing.properties.to_h).to eql({ "thingTypeVersion" => "1" })
+        expect(thing.properties.to_h).to eql({ "thingTypeVersion" => "2" })
       end
     end
 
