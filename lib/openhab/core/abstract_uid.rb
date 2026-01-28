@@ -6,6 +6,8 @@ module OpenHAB
 
     # A non specific base class for unique identifiers.
     class AbstractUID
+      extend Forwardable
+
       # implicit conversion to string
       alias_method :to_str, :to_s
       # inspect result is just the string representation
@@ -18,6 +20,15 @@ module OpenHAB
 
         to_s == other
       end
+
+      def_delegators :to_s,
+                     :start_with?,
+                     :end_with?,
+                     :include?,
+                     :match,
+                     :match?,
+                     :=~,
+                     :length
     end
 
     # have to remove == from all descendant classes so that they'll inherit
