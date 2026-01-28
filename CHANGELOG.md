@@ -1,5 +1,17 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.47.1](https://github.com/openhab/openhab-jruby/tree/v5.47.1) (2026-01-28)
+
+### Features
+
+- Make several string interrogation methods work with UIDs by [@ccutrer](https://github.com/ccutrer) in [#511](https://github.com/openhab/openhab-jruby/pull/511)
+
+### Bug Fixes
+
+- Fix using items in case statements by [@ccutrer](https://github.com/ccutrer) in [#510](https://github.com/openhab/openhab-jruby/pull/510)
+
+**Full Changelog**: [v5.47.0...v5.47.1](https://github.com/openhab/openhab-jruby/compare/v5.47.0...v5.47.1)
+
 ## [v5.47.0](https://github.com/openhab/openhab-jruby/tree/v5.47.0) (2026-01-23)
 
 ### Features
