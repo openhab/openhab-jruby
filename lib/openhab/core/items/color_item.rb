@@ -44,7 +44,12 @@ module OpenHAB
         # where we add support for hex
         # @!visibility private
         def format_type(type)
-          return Types::HSBType.new(type) if type.respond_to?(:to_str)
+          begin
+            return Types::HSBType.new(type) if type.respond_to?(:to_str)
+          rescue java.lang.IllegalArgumentException
+            # Perhaps it's "ON" or "50";
+            # Fall through to super
+          end
 
           super
         end

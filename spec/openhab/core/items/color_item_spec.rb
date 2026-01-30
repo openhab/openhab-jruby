@@ -42,4 +42,14 @@ RSpec.describe OpenHAB::Core::Items::ColorItem do
       expect(item.state).to eq HSBType.new("0,100,100")
     end
   end
+
+  it "can be commanded to ON with a string" do
+    item << "ON"
+    expect(item.state).to eql HSBType::WHITE
+  end
+
+  it "can be commanded to a percentage with a string" do
+    item << "50"
+    expect(item.state).to eql HSBType.new(0, 0, 50)
+  end
 end
