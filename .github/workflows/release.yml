@@ -80,13 +80,13 @@ jobs:
       ref_name: main
       ref_type: branch
   publish_tag_docs:
-    needs: publish_main_docs
+    needs: [release, publish_main_docs]
     uses: ./.github/workflows/yardoc.yml
     with:
       ref_name: v${{needs.release.outputs.new_version}}
       ref_type: tag
   publish_docs_versions:
-    needs: publish_tag_docs
+    needs: [release, publish_tag_docs]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout gh-pages
