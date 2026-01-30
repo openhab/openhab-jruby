@@ -3945,7 +3945,12 @@ helpers for working with RGB values of various forms.</p>
 48
 49
 50
-51</pre>
+51
+52
+53
+54
+55
+56</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/color_item.rb', line 42</span>
@@ -3955,7 +3960,12 @@ helpers for working with RGB values of various forms.</p>
   <span class="comment"># where we add support for hex</span>
   <span class="comment"># @!visibility private</span>
   <span class="keyword">def</span> <span class="function">format_type</span>(type)
-    <span class="keyword">return</span> <span class="constant">Types</span>::<span class="constant">HSBType</span>.new(type) <span class="keyword">if</span> type.respond_to?(<span class="symbol">:to_str</span>)
+    <span class="keyword">begin</span>
+      <span class="keyword">return</span> <span class="constant">Types</span>::<span class="constant">HSBType</span>.new(type) <span class="keyword">if</span> type.respond_to?(<span class="symbol">:to_str</span>)
+    <span class="keyword">rescue</span> java.lang.IllegalArgumentException
+      <span class="comment"># Perhaps it's &quot;ON&quot; or &quot;50&quot;;</span>
+      <span class="comment"># Fall through to super</span>
+    <span class="keyword">end</span>
 
     <span class="keyword">super</span>
   <span class="keyword">end</span>
@@ -4028,7 +4038,12 @@ helpers for working with RGB values of various forms.</p>
 48
 49
 50
-51</pre>
+51
+52
+53
+54
+55
+56</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/color_item.rb', line 42</span>
@@ -4038,7 +4053,12 @@ helpers for working with RGB values of various forms.</p>
   <span class="comment"># where we add support for hex</span>
   <span class="comment"># @!visibility private</span>
   <span class="keyword">def</span> <span class="function">format_type</span>(type)
-    <span class="keyword">return</span> <span class="constant">Types</span>::<span class="constant">HSBType</span>.new(type) <span class="keyword">if</span> type.respond_to?(<span class="symbol">:to_str</span>)
+    <span class="keyword">begin</span>
+      <span class="keyword">return</span> <span class="constant">Types</span>::<span class="constant">HSBType</span>.new(type) <span class="keyword">if</span> type.respond_to?(<span class="symbol">:to_str</span>)
+    <span class="keyword">rescue</span> java.lang.IllegalArgumentException
+      <span class="comment"># Perhaps it's &quot;ON&quot; or &quot;50&quot;;</span>
+      <span class="comment"># Fall through to super</span>
+    <span class="keyword">end</span>
 
     <span class="keyword">super</span>
   <span class="keyword">end</span>
@@ -4054,7 +4074,7 @@ helpers for working with RGB values of various forms.</p>
 </div>
 
         <footer>
-  Generated on Fri Jan 30 15:46:33 2026 by
+  Generated on Fri Jan 30 16:13:19 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.2).
 </footer>
