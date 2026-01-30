@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.47.2](https://github.com/openhab/openhab-jruby/tree/v5.47.2) (2026-01-30)
+
+### Bug Fixes
+
+- Fix commanding color items to ON or percentage with strings by [@ccutrer](https://github.com/ccutrer) in [#514](https://github.com/openhab/openhab-jruby/pull/514)
+
+**Full Changelog**: [v5.47.1...v5.47.2](https://github.com/openhab/openhab-jruby/compare/v5.47.1...v5.47.2)
+
 ## [v5.47.1](https://github.com/openhab/openhab-jruby/tree/v5.47.1) (2026-01-28)
 
 ### Features
