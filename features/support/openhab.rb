@@ -12,61 +12,9 @@ def openhab_dir
   File.realpath "tmp/openhab"
 end
 
-class OpenHABClient
-  include Singleton
-
-  def initialize
-    karaf_client_path = File.join(openhab_dir, "runtime/bin/client")
-    @command = "#{karaf_client_path} -p habopen"
-  end
-
-  def command(command)
-    reopen
-    @io.write("#{command}\r\n")
-    output = check_output
-    output.slice!(0..(command.length + 1))
-    output.strip!
-    output
-  end
-
-  def close
-    @io&.close
-    @io = nil
-  end
-
-  private
-
-  def reopen
-    close if @io&.wait_readable(0) && @io.eof?
-    return if @io
-
-    @io = IO.popen(@command, "r+")
-    check_output
-  end
-
-  def check_output
-    output = +""
-    loop do
-      @io.wait_readable
-      raise "Running `#{@command}` failed with stdout: #{output}" if @io.eof?
-
-      output << @io.readpartial(4096)
-      if output.end_with?("openhab> ")
-        output.slice!(-9..-1)
-        return output
-      end
-    end
-  end
-end
-
-def openhab_client(command, optimized_client: true)
-  if optimized_client
-    OpenHABClient.instance.command(command)
-  else
-    # Optimized client is currently failing on feature installs
-    cmd = TTY::Command.new(printer: :null)
-    cmd.run!(File.join(openhab_dir, "runtime/bin/client -p habopen  '#{command}'"), only_output_on_error: true)
-  end
+def openhab_client(command)
+  cmd = TTY::Command.new(printer: :null)
+  cmd.run!(File.join(openhab_dir, "runtime/bin/client -p habopen  '#{command}'"), only_output_on_error: true)
 end
 
 def items_dir
@@ -94,7 +42,6 @@ def openhab_log
 end
 
 def stop_openhab
-  OpenHABClient.instance.close
   system("rake openhab:stop 1>/dev/null 2>/dev/null") || raise("Error Stopping openHAB")
 end
 
@@ -128,14 +75,14 @@ end
 def install_feature(feature)
   return if feature_installed?(feature)
 
-  openhab_client("feature:install #{feature}", optimized_client: false)
+  openhab_client("feature:install #{feature}")
   wait_until(seconds: 120, msg: "Feature #{feature} not started") { feature_installed?(feature) }
 end
 
 def feature_installed?(feature)
   # System seems unsettled after adding a feature and sometimes openhab would restart
   # do not use optimized_client
-  openhab_client("feature:list -i --no-format", optimized_client: false)
+  openhab_client("feature:list -i --no-format")
     .stdout.lines.grep(/#{feature}/).grep(/Started/).any?
 end
 
