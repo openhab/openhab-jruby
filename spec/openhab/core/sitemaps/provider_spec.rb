@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe OpenHAB::Core::Sitemaps::Provider do
+RSpec.describe OpenHAB::Core::Sitemaps::Provider, unless: OpenHAB::Core::Sitemaps::Provider.registry do
   let(:model_listener) { org.openhab.core.model.core.ModelRepositoryChangeListener.impl { nil } }
-  let(:provider) { described_class.instance }
+  let(:provider) { described_class.current }
 
   before { provider.addModelChangeListener(model_listener) }
   after { provider.removeModelChangeListener(model_listener) }

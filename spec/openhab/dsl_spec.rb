@@ -532,7 +532,11 @@ RSpec.describe OpenHAB::DSL do
 
     let(:provider_class) { OpenHAB::Core::Items::Metadata::Provider }
     let(:registry) { provider_class.registry }
-    let(:managed_provider) { registry.managed_provider.get }
+    let(:managed_provider) do
+      provider = registry.managed_provider
+      provider = provider.get if provider.is_a?(java.util.Optional)
+      provider
+    end
 
     around do |example|
       provider_class.new(thread_provider: false) do |provider|

@@ -1464,7 +1464,7 @@ For more details, see {OpenHAB::DSL.profile #profile}.
 
 ### Sitemaps
 
-Sitemaps can be created via {OpenHAB::Core::Sitemaps::Provider#build sitemaps.build}.
+Sitemaps can be created via {OpenHAB::Core::Sitemaps::Registry#build sitemaps.build}.
 
 ```ruby
 sitemaps.build do

@@ -40,7 +40,6 @@ module OpenHAB
 
     module Sitemaps
       autoload :Builder, "openhab/dsl/sitemaps/builder"
-      autoload :LinkableWidgetBuilder, "openhab/dsl/sitemaps/builder"
     end
 
     module Rules
@@ -289,9 +288,9 @@ module OpenHAB
       Core::Rules::Registry.instance
     end
 
-    # @return [Core::Sitemaps::Provider]
+    # @return [Core::Sitemaps::Registry]
     def sitemaps
-      Core::Sitemaps::Provider.instance
+      Core::Sitemaps::Registry.instance
     end
 
     #

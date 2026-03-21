@@ -20,6 +20,8 @@ module OpenHAB
           end
         end
 
+        private
+
         def initialize
           super(unload_priority: 60)
         end
