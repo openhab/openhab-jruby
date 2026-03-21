@@ -2,7 +2,7 @@
 
 require "forwardable"
 
-Dir[File.expand_path("**/*.rb", __dir__)].each do |f|
+Dir[File.expand_path("**/*.rb", __dir__)].reject { |f| f == __FILE__ }.each do |f|
   require f
 end
 
