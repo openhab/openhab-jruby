@@ -70,10 +70,11 @@ module OpenHAB
          Core::Items::Metadata::Provider,
          Core::Items::Semantics::Provider,
          Core::Rules::Provider,
+         Core::Sitemaps::Provider,
          Core::Things::Provider,
          Core::Things::Links::Provider].each do |klass|
           config.around do |example|
-            klass.new(&example)
+            klass.send(:new, &example)
           end
         end
 

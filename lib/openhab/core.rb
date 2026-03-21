@@ -3,6 +3,11 @@
 module OpenHAB
   # Contains classes and modules that wrap actual openHAB objects
   module Core
+    module Sitemaps
+      autoload :Provider, "openhab/core/sitemaps/registry"
+      autoload :Registry, "openhab/core/sitemaps/registry"
+    end
+
     # The openHAB Version. >= 4.1 is required.
     # @return [String]
     VERSION = org.openhab.core.OpenHAB.version.freeze
@@ -163,8 +168,8 @@ require_relative "core/provider"
 Dir[File.expand_path("core/**/*.rb", __dir__)].each do |f|
   # already been run by either a binstub, or the addon
   next if f.end_with?("gem.rb")
-  # metadata is autoloaded
-  next if f.include?("/metadata/")
+  # autoloaded things
+  next if f.include?("/metadata/") || f.include?("/sitemaps/")
 
   require f
 end

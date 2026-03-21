@@ -6,9 +6,6 @@ module OpenHAB
     # Contains the various builders for sitemap elements.
     #
     module Sitemaps
-      # @!visibility private
-      org.openhab.core.model.sitemap.sitemap.impl.SitemapImpl.alias_method :uid, :name
-
       #
       # A sitemap builder allows you to dynamically create openHAB sitemaps at runtime.
       #
@@ -33,12 +30,12 @@ module OpenHAB
       #
       # @see https://www.openhab.org/docs/ui/sitemaps.html
       # @see OpenHAB::DSL.sitemaps
-      # @see OpenHAB::Core::Sitemaps::Provider#build sitemaps.build
+      # @see OpenHAB::Core::Sitemaps::Registry#build sitemaps.build
       #
       class Builder
         # @!visibility private
-        def initialize(provider, builder_proxy, update:)
-          @provider = provider
+        def initialize(builder_proxy, update:)
+          @provider = Core::Sitemaps::Provider.current
           @builder_proxy = builder_proxy
           @update = update
         end
@@ -144,7 +141,7 @@ module OpenHAB
                        icon_color: nil,
                        visibility: nil,
                        &block)
-          unless SitemapBuilder.factory.respond_to?(:"create_#{type}")
+          unless Core::Sitemaps::Compatibility.supported_widget_type?(type)
             raise ArgumentError,
                   "#{type} is not a valid widget type"
           end
@@ -211,7 +208,7 @@ module OpenHAB
 
         # @!visibility private
         def build
-          widget = SitemapBuilder.factory.send(:"create_#{@type}")
+          widget = create_widget
           item = @item
           item = item.name if item.respond_to?(:name)
           widget.item = item if item
@@ -220,7 +217,8 @@ module OpenHAB
           raise ArgumentError, "icon and static_icon are mutually exclusive" if icon && static_icon
 
           if static_icon
-            widget.static_icon = static_icon
+            widget.static_icon = true
+            widget.icon = static_icon
           elsif icon.is_a?(String)
             widget.icon = @icon
           elsif icon.is_a?(Hash)
@@ -233,7 +231,7 @@ module OpenHAB
           add_colors(widget, :value_color, value_colors)
           add_colors(widget, :icon_color, icon_colors)
 
-          add_conditions(widget, :visibility, visibilities, :create_visibility_rule)
+          add_conditions(widget, :visibility, visibilities, :visibility)
 
           widget
         end
@@ -250,29 +248,33 @@ module OpenHAB
 
         private
 
+        def create_widget
+          Core::Sitemaps::Compatibility.create_widget(@type)
+        end
+
         def add_colors(widget, method, colors)
           # ensure that the default color is at the end, and make the conditions nil (no conditions)
           colors.delete(:default)&.tap { |default_color| colors.merge!(nil => default_color) }
 
-          add_conditions(widget, method, colors.keys, :create_color_array) do |color_array, key|
-            color_array.arg = colors[key]
+          add_conditions(widget, method, colors.keys, :color) do |rule, key|
+            rule.argument = colors[key]
           end
         end
 
         def add_icons(widget)
           icon.delete(:default)&.tap { |default_icon| icon.merge!(nil => default_icon) }
-          add_conditions(widget, :icon_rules, icon.keys, :create_icon_rule) do |icon_array, key|
-            icon_array.arg = icon[key]
+          add_conditions(widget, :icon_rules, icon.keys, :icon) do |rule, key|
+            rule.argument = icon[key]
           end
         end
 
-        def add_conditions(widget, method, conditions, container_method)
+        def add_conditions(widget, method, conditions, rule_type)
           return if conditions.empty?
 
           object = widget.send(method)
 
           conditions.each do |sub_conditions|
-            container = SitemapBuilder.factory.send(container_method)
+            container = Core::Sitemaps::Compatibility.create_rule(rule_type)
 
             add_conditions_to_container(container, sub_conditions)
             yield container, sub_conditions if block_given?
@@ -293,8 +295,11 @@ module OpenHAB
             condition = SitemapBuilder.factory.create_condition
             condition.item = match["item"]
             condition.condition = match["condition"]
-            condition.sign = match["sign"]
-            condition.state = match["state"]
+            Core::Sitemaps::Compatibility.set_condition(
+              condition,
+              sign: match["sign"],
+              state: match["state"]
+            )
             container.conditions.add(condition)
           end
         end
@@ -1165,7 +1170,7 @@ module OpenHAB
           widget = super
 
           children.each do |child|
-            widget.children.add(child.build)
+            widget.widgets.add(child.build)
           end
 
           widget
@@ -1427,7 +1432,7 @@ module OpenHAB
         class << self
           # @!visibility private
           def factory
-            org.openhab.core.model.sitemap.sitemap.SitemapFactory.eINSTANCE
+            Core::Sitemaps::Provider.factory
           end
         end
 
@@ -1453,9 +1458,10 @@ module OpenHAB
           @name = name
         end
 
-        # @!visibility private
-        def build
-          super.tap { |sitemap| sitemap.name = name }
+        private
+
+        def create_widget
+          Core::Sitemaps::Compatibility.create_sitemap(name)
         end
       end
     end

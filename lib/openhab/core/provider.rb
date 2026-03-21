@@ -125,6 +125,7 @@ module OpenHAB
           end
 
           r = provider = super()
+
           if block_given?
             if thread_provider
               DSL.provider(provider) do
@@ -229,7 +230,7 @@ module OpenHAB
       # @!visibility private
       def unregister
         clear
-        self.class.registry.remove_provider(self)
+        self.class.registry&.remove_provider(self)
       end
 
       private
@@ -239,7 +240,13 @@ module OpenHAB
         @elements = java.util.concurrent.ConcurrentHashMap.new
         self.class.registry&.add_provider(self)
         ScriptHandling.script_unloaded(priority: unload_priority) { unregister }
+        # @deprecated OH 5.2: Remove the rest of this method when dropping OH 5.1
+        extra_initialize
       end
+
+      # @deprecated OH 5.2: Remove this method when dropping OH 5.1
+      # See https://github.com/jruby/jruby/issues/9321 for why this is needed instead of just putting the code in Model::Provider#initialize
+      def extra_initialize; end
     end
   end
 end

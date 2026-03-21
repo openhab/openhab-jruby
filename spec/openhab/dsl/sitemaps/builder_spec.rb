@@ -1,8 +1,18 @@
 # frozen_string_literal: true
 
 RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
+  # @deprecated when dropping OH 5.1, remove these helpers
+  # also remove the .to_s from the condition.to_s calls
+  def condition_value(condition)
+    condition.respond_to?(:value) ? condition.value : condition.state
+  end
+
+  def rule_argument(rule)
+    rule.respond_to?(:argument) ? rule.argument : rule.arg
+  end
+
   after do
-    sitemaps.clear
+    OpenHAB::Core::Sitemaps::Provider.current.clear
   end
 
   it "can reference an item directly" do
@@ -100,7 +110,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         end
       end
 
-      switch = s.children.first
+      switch = s.widgets.first
       expect(switch.icon).to eq "light"
     end
 
@@ -111,17 +121,17 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         end
       end
 
-      switch = s.children.first
+      switch = s.widgets.first
       expect(switch.icon).to be_nil
 
       expect(switch.icon_rules.size).to eq 2
       cond = switch.icon_rules.first
-      expect(cond.conditions.first.state).to eq "ON"
-      expect(cond.arg).to eq "f7:lightbulb_fill"
+      expect(condition_value(cond.conditions.first)).to eq "ON"
+      expect(rule_argument(cond)).to eq "f7:lightbulb_fill"
 
       cond = switch.icon_rules.last
-      expect(cond.conditions.first.state).to eq "OFF"
-      expect(cond.arg).to eq "f7:lightbulb_slash_fill"
+      expect(condition_value(cond.conditions.first)).to eq "OFF"
+      expect(rule_argument(cond)).to eq "f7:lightbulb_slash_fill"
     end
   end
 
@@ -133,8 +143,9 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         end
       end
 
-      switch = s.children.first
-      expect(switch.static_icon).to eq "light"
+      switch = s.widgets.first
+      expect(switch.icon).to eq "light"
+      expect(switch.static_icon).to be_truthy
     end
 
     it "is mutually exclusive with icon" do
@@ -156,12 +167,12 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         end
       end
 
-      switch = s.children.first
+      switch = s.widgets.first
       cond = switch.visibility.first
       cond = cond.conditions.first
       expect(cond.item).to eq "Switch1"
       expect(cond.condition.to_s).to eq "=="
-      expect(cond.state).to eq "ON"
+      expect(condition_value(cond)).to eq "ON"
     end
 
     it "supports a condition with just the state" do
@@ -171,12 +182,12 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         end
       end
 
-      switch = s.children.first
+      switch = s.widgets.first
       cond = switch.visibility.first
       cond = cond.conditions.first
       expect(cond.item).to be_nil
       expect(cond.condition).to be_nil
-      expect(cond.state).to eq "ON"
+      expect(condition_value(cond)).to eq "ON"
     end
 
     it "supports a condition with a literal state" do
@@ -186,12 +197,12 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         end
       end
 
-      switch = s.children.first
+      switch = s.widgets.first
       cond = switch.visibility.first
       cond = cond.conditions.first
       expect(cond.item).to be_nil
       expect(cond.condition).to be_nil
-      expect(cond.state).to eq "ON"
+      expect(condition_value(cond)).to eq "ON"
     end
 
     it "supports a condition with operator and state" do
@@ -201,12 +212,12 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         end
       end
 
-      switch = s.children.first
+      switch = s.widgets.first
       cond = switch.visibility.first
       cond = cond.conditions.first
       expect(cond.item).to be_nil
       expect(cond.condition.to_s).to eq "=="
-      expect(cond.state).to eq "ON"
+      expect(condition_value(cond)).to eq "ON"
     end
 
     it "supports multiple conditions" do
@@ -216,7 +227,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         end
       end
 
-      switch = s.children.first
+      switch = s.widgets.first
 
       expect(switch.visibility.size).to eq 2
 
@@ -224,13 +235,13 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
       cond = cond.conditions.first
       expect(cond.item).to eq "Switch1"
       expect(cond.condition.to_s).to eq "=="
-      expect(cond.state).to eq "ON"
+      expect(condition_value(cond)).to eq "ON"
 
       cond = switch.visibility.last
       cond = cond.conditions.first
       expect(cond.item).to eq "Switch2"
       expect(cond.condition.to_s).to eq "=="
-      expect(cond.state).to eq "ON"
+      expect(condition_value(cond)).to eq "ON"
     end
   end
 
@@ -242,13 +253,13 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         end
       end
 
-      switch = s.children.first
+      switch = s.widgets.first
       cond = rule = switch.label_color.first
       cond = cond.conditions.first
       expect(cond.item).to eq "Switch1"
       expect(cond.condition.to_s).to eq "=="
-      expect(cond.state).to eq "ON"
-      expect(rule.arg).to eq "green"
+      expect(condition_value(cond)).to eq "ON"
+      expect(rule_argument(rule)).to eq "green"
     end
 
     it "supports conditions with default value" do
@@ -258,13 +269,13 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         end
       end
 
-      switch = s.children.first
+      switch = s.widgets.first
       rules = switch.label_color
       expect(rules.size).to eq 2
 
       default = rules.last
       expect(default.conditions).to be_empty
-      expect(default.arg).to eq "red"
+      expect(rule_argument(default)).to eq "red"
     end
 
     it "supports non-conditional string value" do
@@ -274,10 +285,10 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         end
       end
 
-      switch = s.children.first
+      switch = s.widgets.first
       expect(switch.label_color.size).to eq 1
       rule = switch.label_color.first
-      expect(rule.arg).to eq "red"
+      expect(rule_argument(rule)).to eq "red"
     end
 
     it "supports simple color as the default in multiple calls" do
@@ -290,9 +301,9 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         end
       end
 
-      switch = s.children.first
-      expect(switch.label_color.first.arg).to eq "green"
-      expect(switch.label_color.last.arg).to eq "red"
+      switch = s.widgets.first
+      expect(rule_argument(switch.label_color.first)).to eq "green"
+      expect(rule_argument(switch.label_color.last)).to eq "red"
     end
   end
 
@@ -311,18 +322,18 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
       end
     end
 
-    switch = s.children.first
+    switch = s.widgets.first
     rule = switch.label_color.first
     cond = rule.conditions.first
     expect(cond.item).to eq "Switch1"
     expect(cond.condition.to_s).to eq "=="
-    expect(cond.state).to eq "ON"
+    expect(condition_value(cond)).to eq "ON"
 
     cond = rule.conditions.last
     expect(cond.item).to eq "Switch2"
     expect(cond.condition.to_s).to eq "=="
-    expect(cond.state).to eq "OFF"
-    expect(rule.arg).to eq "green"
+    expect(condition_value(cond)).to eq "OFF"
+    expect(rule_argument(rule)).to eq "green"
   end
 
   it "can add a frame" do
@@ -394,7 +405,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
           switch label: "My Switch", mappings: %w[off cool heat]
         end
       end
-      switch = sitemaps["default"].children.first
+      switch = sitemaps["default"].widgets.first
       expect(switch.mappings.map(&:cmd)).to eq %w[off cool heat]
       expect(switch.mappings.map(&:label)).to eq %w[off cool heat]
     end
@@ -405,7 +416,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
           switch label: "My Switch", mappings: [%w[OFF off], %w[COOL cool], %w[HEAT heat]]
         end
       end
-      switch = sitemaps["default"].children.first
+      switch = sitemaps["default"].widgets.first
       expect(switch.mappings.map(&:cmd)).to eq %w[OFF COOL HEAT]
       expect(switch.mappings.map(&:label)).to eq %w[off cool heat]
     end
@@ -416,7 +427,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
           switch label: "My Switch", mappings: [%w[OFF off], %w[COOL cool f7:snow], %w[HEAT heat f7:flame]]
         end
       end
-      switch = sitemaps["default"].children.first
+      switch = sitemaps["default"].widgets.first
       expect(switch.mappings.map(&:cmd)).to eq %w[OFF COOL HEAT]
       expect(switch.mappings.map(&:label)).to eq %w[off cool heat]
       expect(switch.mappings.map(&:icon)).to eq [nil,
@@ -432,7 +443,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
           ]
         end
       end
-      switch = sitemaps["default"].children.first
+      switch = sitemaps["default"].widgets.first
       expect(switch.mappings.first.cmd).to eq "OFF"
       expect(switch.mappings.first.release_cmd).to eq "ON"
     end
@@ -447,7 +458,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
           ]
         end
       end
-      switch = sitemaps["default"].children.first
+      switch = sitemaps["default"].widgets.first
       expect(switch.mappings.map(&:cmd)).to eq %w[OFF COOL HEAT]
       expect(switch.mappings.map(&:label)).to eq %w[off cool heat]
       expect(switch.mappings.map(&:icon)).to eq [nil, "f7:snow", "f7:flame"]
@@ -463,7 +474,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
           ]
         end
       end
-      switch = sitemaps["default"].children.first
+      switch = sitemaps["default"].widgets.first
       expect(switch.mappings.map(&:cmd)).to eq %w[OFF COOL HEAT]
       expect(switch.mappings.map(&:label)).to eq %w[OFF cool heat]
     end
@@ -475,7 +486,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         switch label: "My Switch", mappings: { OFF: "off", COOL: "cool", HEAT: "heat" }
       end
     end
-    switch = sitemaps["default"].children.first
+    switch = sitemaps["default"].widgets.first
     expect(switch.mappings.map(&:cmd)).to eq %w[OFF COOL HEAT]
     expect(switch.mappings.map(&:label)).to eq %w[off cool heat]
   end
@@ -504,7 +515,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         end
       end
 
-      expect(s.children.first.switch_enabled).to be true
+      expect(s.widgets.first.switch_enabled).to be true
     end
   end
 
@@ -563,10 +574,10 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         end
       end
 
-      bg = s.children.first
-      expect(bg.children.size).to eq 6
-      expect(bg.children[0].row).to eq 1
-      expect(bg.children[5].cmd).to eq "LEFT"
+      bg = s.widgets.first
+      expect(bg.widgets.size).to eq 6
+      expect(bg.widgets[0].row).to eq 1
+      expect(bg.widgets[5].cmd).to eq "LEFT"
     end
 
     it "accepts an array of hashes for buttons parameter" do
@@ -578,13 +589,13 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         end
       end
 
-      bg = s.children.first
-      expect(bg.children.size).to eq 1
-      expect(bg.children[0].row).to eq 1
-      expect(bg.children[0].column).to eq 2
-      expect(bg.children[0].cmd).to eq "BACK"
-      expect(bg.children[0].label).to eq "Back"
-      expect(bg.children[0].icon).to eq "f7:return"
+      bg = s.widgets.first
+      expect(bg.widgets.size).to eq 1
+      expect(bg.widgets[0].row).to eq 1
+      expect(bg.widgets[0].column).to eq 2
+      expect(bg.widgets[0].cmd).to eq "BACK"
+      expect(bg.widgets[0].label).to eq "Back"
+      expect(bg.widgets[0].icon).to eq "f7:return"
     end
 
     it "uses the command as label by default" do
@@ -594,7 +605,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
         end
       end
 
-      buttons = s.children.first.children
+      buttons = s.widgets.first.widgets
       expect(buttons[0].label).to eq "BACK"
       expect(buttons[1].label).to eq "Forward"
     end
@@ -608,7 +619,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
             end
           end
         end
-        button = s.children.first.children.first
+        button = s.widgets.first.widgets.first
         expect(button.row).to eq 1
         expect(button.column).to eq 1
         expect(button.cmd).to eq "BACK"
@@ -624,7 +635,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
             end
           end
         end
-        button = s.children.first.children.first
+        button = s.widgets.first.widgets.first
         expect(button.row).to eq 1
         expect(button.column).to eq 1
         expect(button.cmd).to eq "BACK"
@@ -642,8 +653,8 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
           end
         end
 
-        bg = s.children.first
-        buttons = bg.children
+        bg = s.widgets.first
+        buttons = bg.widgets
         expect(buttons.size).to eq 2
         expect(buttons[0].column).to eq 1
         expect(buttons[1].cmd).to eq "HOME"
@@ -668,8 +679,8 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
               end
             end
           end
-          bg = s.children.first
-          button = bg.children.first
+          bg = s.widgets.first
+          button = bg.widgets.first
           expect(button.row).to eq 2
           expect(button.column).to eq 2
           expect(button.cmd).to eq "HOME"
@@ -689,8 +700,8 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
           end
         end
 
-        bg = s.children.first
-        buttons = bg.children
+        bg = s.widgets.first
+        buttons = bg.widgets
         expect(buttons.size).to eq 2
         expect(buttons[1].row).to eq 1
         expect(buttons[1].column).to eq 2
@@ -712,7 +723,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
           end
         end
 
-        buttons = s.children.first.children
+        buttons = s.widgets.first.widgets
         expect(buttons[0].item).to eql "Test1"
         expect(buttons[1].item).to eql "Test2"
       end
