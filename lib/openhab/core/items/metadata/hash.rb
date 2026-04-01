@@ -264,7 +264,10 @@ module OpenHAB
           # in the meantime, force the serialization round-trip right now
           #
           def javaify
-            mapper = Provider.registry.managed_provider.get.storage.entityMapper
+            managed_provider = Provider.registry.managed_provider
+            # @deprecated remove the next line when dropping openHAB 5.1
+            managed_provider = managed_provider.get if managed_provider.is_a?(java.util.Optional)
+            mapper = managed_provider.storage.entityMapper
 
             @metadata = mapper.from_json(mapper.to_json_tree(@metadata), Metadata.java_class)
           end
