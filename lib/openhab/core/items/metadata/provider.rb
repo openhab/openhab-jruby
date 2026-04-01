@@ -22,8 +22,11 @@ module OpenHAB
           end
 
           # see Hash#javaify
-          registry.managed_provider.get.class.field_reader :storage
-          registry.managed_provider.get.storage.class.field_reader :entityMapper
+          managed_provider = registry.managed_provider
+          # @deprecated remove the next line when dropping openHAB 5.1
+          managed_provider = managed_provider.get if managed_provider.is_a?(java.util.Optional)
+          managed_provider.class.field_reader :storage
+          managed_provider.storage.class.field_reader :entityMapper
 
           #
           # Removes all metadata of a given item.

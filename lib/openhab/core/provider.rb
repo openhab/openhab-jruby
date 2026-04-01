@@ -87,7 +87,10 @@ module OpenHAB
           when nil, :transient
             instance
           when :persistent
-            registry.managed_provider.get
+            provider = registry.managed_provider
+            # @deprecated remove the next line when dropping openHAB 5.1
+            provider = provider.get if provider.is_a?(java.util.Optional)
+            provider
           when org.openhab.core.common.registry.ManagedProvider
             preferred_provider
           else
