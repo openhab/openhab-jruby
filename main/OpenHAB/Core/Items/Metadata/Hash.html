@@ -1516,6 +1516,20 @@ As a special case, a #== comparison can be done against a [value, config] array.
     
   </li>
 
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../Sitemaps/Registry.html" title="OpenHAB::Core::Sitemaps::Registry (class)">Registry</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
 
         
       </ul>
@@ -4222,7 +4236,10 @@ As a special case, a #== comparison can be done against a [value, config] array.
 268
 269
 270
-271</pre>
+271
+272
+273
+274</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/metadata/hash.rb', line 26</span>
@@ -4468,7 +4485,10 @@ As a special case, a #== comparison can be done against a [value, config] array.
   <span class="comment"># in the meantime, force the serialization round-trip right now</span>
   <span class="comment">#</span>
   <span class="keyword">def</span> <span class="function">javaify</span>
-    mapper = <span class="constant">Provider</span>.registry.managed_provider.get.storage.entityMapper
+    managed_provider = <span class="constant">Provider</span>.registry.managed_provider
+    <span class="comment"># @deprecated remove the next line when dropping openHAB 5.1</span>
+    managed_provider = managed_provider.get <span class="keyword">if</span> managed_provider.is_a?(java.util.Optional)
+    mapper = managed_provider.storage.entityMapper
 
     <span class="instance-variable">@metadata</span> = mapper.from_json(mapper.to_json_tree(<span class="instance-variable">@metadata</span>), <span class="constant">Metadata</span>.java_class)
   <span class="keyword">end</span>
@@ -4767,7 +4787,10 @@ As a special case, a #== comparison can be done against a [value, config] array.
 268
 269
 270
-271</pre>
+271
+272
+273
+274</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/metadata/hash.rb', line 26</span>
@@ -5013,7 +5036,10 @@ As a special case, a #== comparison can be done against a [value, config] array.
   <span class="comment"># in the meantime, force the serialization round-trip right now</span>
   <span class="comment">#</span>
   <span class="keyword">def</span> <span class="function">javaify</span>
-    mapper = <span class="constant">Provider</span>.registry.managed_provider.get.storage.entityMapper
+    managed_provider = <span class="constant">Provider</span>.registry.managed_provider
+    <span class="comment"># @deprecated remove the next line when dropping openHAB 5.1</span>
+    managed_provider = managed_provider.get <span class="keyword">if</span> managed_provider.is_a?(java.util.Optional)
+    mapper = managed_provider.storage.entityMapper
 
     <span class="instance-variable">@metadata</span> = mapper.from_json(mapper.to_json_tree(<span class="instance-variable">@metadata</span>), <span class="constant">Metadata</span>.java_class)
   <span class="keyword">end</span>
@@ -5326,7 +5352,7 @@ As a special case, a #== comparison can be done against a [value, config] array.
 </div>
 
         <footer>
-  Generated on Sun Mar 22 04:11:03 2026 by
+  Generated on Fri Apr  3 17:10:06 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.2).
 </footer>

@@ -1510,6 +1510,20 @@
     
   </li>
 
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="Sitemaps/Registry.html" title="OpenHAB::Core::Sitemaps::Registry (class)">Registry</a></span>
+      
+        &lt; Object
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
 
         
       </ul>
@@ -3947,12 +3961,12 @@
       <pre class="lines">
 
 
-105
-106
-107</pre>
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/provider.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/provider.rb', line 108</span>
 
 <span class="keyword">def</span> <span class="function">registry</span>
   raise <span class="constant">NotImplementedError</span>
@@ -4001,12 +4015,12 @@
       <pre class="lines">
 
 
-142
-143
-144</pre>
+146
+147
+148</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/provider.rb', line 142</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/provider.rb', line 146</span>
 
 <span class="keyword">def</span> <span class="function">type</span>
   name.split(<span class="string"><span class="delimiter">&quot;</span><span class="content">::</span><span class="delimiter">&quot;</span></span>)[<span class="integer">-2</span>].downcase.to_sym
@@ -4121,7 +4135,10 @@ it defaults to <code>:transient</code>.</li>
 93
 94
 95
-96</pre>
+96
+97
+98
+99</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/provider.rb', line 76</span>
@@ -4140,7 +4157,10 @@ it defaults to <code>:transient</code>.</li>
   <span class="keyword">when</span> <span class="predefined-constant">nil</span>, <span class="symbol">:transient</span>
     instance
   <span class="keyword">when</span> <span class="symbol">:persistent</span>
-    registry.managed_provider.get
+    provider = registry.managed_provider
+    <span class="comment"># @deprecated remove the next line when dropping openHAB 5.1</span>
+    provider = provider.get <span class="keyword">if</span> provider.is_a?(java.util.Optional)
+    provider
   <span class="keyword">when</span> org.openhab.core.common.registry.ManagedProvider
     preferred_provider
   <span class="keyword">else</span>
@@ -4219,12 +4239,12 @@ it defaults to <code>:transient</code>.</li>
       <pre class="lines">
 
 
-174
-175
-176</pre>
+178
+179
+180</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/provider.rb', line 174</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/provider.rb', line 178</span>
 
 <span class="keyword">def</span> <span class="function">[]</span>(key)
   <span class="instance-variable">@elements</span>[key]
@@ -4276,12 +4296,12 @@ it defaults to <code>:transient</code>.</li>
       <pre class="lines">
 
 
-184
-185
-186</pre>
+188
+189
+190</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/provider.rb', line 184</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/provider.rb', line 188</span>
 
 <span class="keyword">def</span> <span class="function">all</span>
   <span class="instance-variable">@elements</span>.values
@@ -4328,12 +4348,12 @@ it defaults to <code>:transient</code>.</li>
       <pre class="lines">
 
 
-153
-154
-155</pre>
+157
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/provider.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/provider.rb', line 157</span>
 
 <span class="keyword">def</span> <span class="function">inspect</span>
   <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span>.class.name<span class="inline-delimiter">}</span></span><span class="content">:</span><span class="inline"><span class="inline-delimiter">#{</span>object_id<span class="inline-delimiter">}</span></span><span class="content">&gt;</span><span class="delimiter">&quot;</span></span>
@@ -4348,7 +4368,7 @@ it defaults to <code>:transient</code>.</li>
 </div>
 
         <footer>
-  Generated on Sun Mar 22 04:10:55 2026 by
+  Generated on Fri Apr  3 17:09:57 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.2).
 </footer>
