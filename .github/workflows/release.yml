@@ -34,7 +34,7 @@ jobs:
       new_version: ${{ steps.bump_version.outputs.new_version }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - uses: git-actions/set-user@v1
       - uses: ruby/setup-ruby@v1
         with:
@@ -90,7 +90,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout gh-pages
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: gh-pages
       - name: Get versions.js from the main branch
