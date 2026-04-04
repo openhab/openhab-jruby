@@ -1,5 +1,14 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.47.3](https://github.com/openhab/openhab-jruby/tree/v5.47.3) (2026-04-04)
+
+### Bug Fixes
+
+- avoid circular require by [@ccutrer](https://github.com/ccutrer) in [#522](https://github.com/openhab/openhab-jruby/pull/522)
+- Refactor sitemap builder for new registry infrastructure in OH 5.2 by [@ccutrer](https://github.com/ccutrer) in [#521](https://github.com/openhab/openhab-jruby/pull/521)
+
+**Full Changelog**: [v5.47.2...v5.47.3](https://github.com/openhab/openhab-jruby/compare/v5.47.2...v5.47.3)
+
 ## [v5.47.2](https://github.com/openhab/openhab-jruby/tree/v5.47.2) (2026-01-30)
 
 ### Bug Fixes
