@@ -70,7 +70,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'ci skip')"
     outputs:
       openhab_matrix: |
-        ["5.0.0", "5.1.0", "5.2.0-SNAPSHOT"]
+        ["5.0.3", "5.1.3", "5.2.0-SNAPSHOT"]
       snapshot_date: |
         ${{ steps.snapshot-date.outputs.SNAPSHOT_DATE }}
     steps:
@@ -87,9 +87,9 @@ jobs:
       matrix:
         include:
           - java_version: 21
-            openhab_version: 5.0.0
+            openhab_version: 5.0.3
           - java_version: 21
-            openhab_version: 5.1.0
+            openhab_version: 5.1.3
           - java_version: 21
             openhab_version: 5.2.0-SNAPSHOT
     steps:
@@ -135,10 +135,10 @@ jobs:
         include:
           - java_version: 21
             jruby_version: jruby-10.0.0.1
-            openhab_version: 5.0.0
+            openhab_version: 5.0.3
           - java_version: 21
             jruby_version: jruby-10.0.2.0
-            openhab_version: 5.1.0
+            openhab_version: 5.1.3
           - java_version: 21
             jruby_version: jruby-10.0.4.0
             openhab_version: 5.2.0-SNAPSHOT
@@ -184,9 +184,9 @@ jobs:
       matrix:
         include:
           - java_version: 21
-            openhab_version: 5.0.0
+            openhab_version: 5.0.3
           - java_version: 21
-            openhab_version: 5.1.0
+            openhab_version: 5.1.3
           - java_version: 21
             openhab_version: 5.2.0-SNAPSHOT
     steps:
