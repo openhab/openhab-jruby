@@ -43,12 +43,72 @@ module OpenHAB
         else
           require_relative "model"
 
-          prepend Model::Provider
+          include org.openhab.core.model.sitemap.SitemapProvider
+
+          SUFFIX = ".sitemap"
+          private_constant :SUFFIX
+
+          # rubocop:disable Naming/MethodName
+
+          # @!visibility private
+          def addModelChangeListener(listener)
+            @listeners.add(listener)
+          end
+
+          # @!visibility private
+          def removeModelChangeListener(listener)
+            @listeners.remove(listener)
+          end
+          # rubocop:enable Naming/MethodName
+
+          def unregister
+            clear
+            @registration.unregister
+          end
+
+          # @!visibility private
+          def update(sitemap)
+            if sitemap.respond_to?(:to_str)
+              sitemap = get(sitemap).tap do |obj|
+                raise ArgumentError, "Sitemap #{sitemap} not found" unless obj
+              end
+            end
+            super
+          end
+
+          # @!visibility private
+          def remove(sitemap)
+            sitemap = sitemap.uid if sitemap.respond_to?(:uid)
+            super
+          end
+
+          private
+
+          def notify_listeners_about_added_element(element)
+            model_name = "#{element.name}#{SUFFIX}"
+            @listeners.each do |listener|
+              listener.modelChanged(model_name, org.openhab.core.model.core.EventType::ADDED)
+              listener.modelChanged(model_name, org.openhab.core.model.core.EventType::MODIFIED)
+            end
+          end
+
+          def notify_listeners_about_removed_element(element)
+            model_name = "#{element.name}#{SUFFIX}"
+            @listeners.each { |listener| listener.modelChanged(model_name, org.openhab.core.model.core.EventType::REMOVED) }
+          end
+
+          def notify_listeners_about_updated_element(_old_element, element)
+            model_name = "#{element.name}#{SUFFIX}"
+            @listeners.each { |listener| listener.modelChanged(model_name, org.openhab.core.model.core.EventType::MODIFIED) }
+          end
+
+          public
+
         end
 
-        alias_method :getSitemap, :get # rubocop:disable Naming/MethodName
-
         # rubocop:disable Naming/MethodName
+        alias_method :getSitemap, :get
+
         # @!visibility private
         def getSitemapNames
           @elements.key_set
