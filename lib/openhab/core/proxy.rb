@@ -66,6 +66,7 @@ module OpenHAB
         def subscribed_event_types
           @event_types.to_set
         end
+        alias_method :getSubscribedEventTypes, :subscribed_event_types # rubocop:disable Naming/MethodName
 
         # @return [org.openhab.core.events.EventFilter, nil]
         def event_filter
