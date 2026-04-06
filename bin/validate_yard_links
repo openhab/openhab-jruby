@@ -32,6 +32,12 @@ end
 references.each do |file, file_references|
   file_references.each do |(ref, line)|
     next if known_good_references.include?(ref)
+    if ref.match?(%r{^https://github.com/openhab/openhab-jruby/(?:issues|pull)/\d+$}) ||
+       ref.match?(%r{^https://github.com/openhab/openhab-jruby/commit/[0-9a-f]{40}$}) ||
+       ref.match?(%r{^https://github.com/openhab/openhab-jruby/tree/v\d+\.\d+\.\d+$}) ||
+       ref.match?(%r{^https://github.com/openhab/openhab-jruby/compare/v?\d+\.\d+\.\d+\.\.\.v?\d+\.\d+\.\d+$})
+       next
+    end
 
     # YARD doesn't escape these in its links
     ref = ref.gsub(BADLY_ESCAPED_FRAGMENTS_REGEX) { |m| CGI.escape(m) }
