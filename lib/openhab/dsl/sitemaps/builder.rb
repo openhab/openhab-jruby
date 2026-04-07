@@ -1170,7 +1170,10 @@ module OpenHAB
           widget = super
 
           children.each do |child|
-            widget.widgets.add(child.build)
+            child = child.build
+            # @deprecated OH 5.2: Remove conditional when dropping OH 5.1
+            child.parent = widget if child.respond_to?(:parent=)
+            widget.widgets.add(child)
           end
 
           widget

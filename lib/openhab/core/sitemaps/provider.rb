@@ -37,7 +37,9 @@ module OpenHAB
 
         # @deprecated OH 5.2: remove the non-registry branch when dropping OH 5.1
         if registry
+          require_relative "linkable_widget"
           require_relative "sitemap"
+          require_relative "widget"
 
           include org.openhab.core.sitemap.registry.SitemapProvider
         else
