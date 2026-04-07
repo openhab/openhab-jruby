@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.47.4](https://github.com/openhab/openhab-jruby/tree/v5.47.4) (2026-04-07)
+
+### Bug Fixes
+
+- inline back-compat SitemapProvider by [@ccutrer](https://github.com/ccutrer) in [#528](https://github.com/openhab/openhab-jruby/pull/528)
+
+**Full Changelog**: [v5.47.3...v5.47.4](https://github.com/openhab/openhab-jruby/compare/v5.47.3...v5.47.4)
+
 ## [v5.47.3](https://github.com/openhab/openhab-jruby/tree/v5.47.3) (2026-04-04)
 
 ### Bug Fixes
