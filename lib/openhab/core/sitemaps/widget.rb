@@ -9,7 +9,7 @@ module OpenHAB
       # @since openHAB 5.2.0
       module Widget
         # @!attribute [r] item
-        # @return [String]
+        # @return [String, nil]
 
         # @!attribute [r] label
         # @return [String, nil]
