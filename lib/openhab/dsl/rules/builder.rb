@@ -1461,7 +1461,9 @@ module OpenHAB
           # prevent overwriting @on_load
           raise ArgumentError, "on_load can only be used once within a rule" if @on_load
 
-          @on_load = { module: SecureRandom.uuid, delay: }
+          rule_uid = Thread.current[:openhab_rule_uid]
+          module_id = rule_uid ? "#{rule_uid}:on_load" : SecureRandom.uuid
+          @on_load = { module: module_id, delay: }
           attachments[@on_load[:module]] = attach
         end
 
