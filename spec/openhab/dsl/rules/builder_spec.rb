@@ -112,6 +112,30 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       end
     end
 
+    describe "module id inference" do
+      it "infers trigger ids from the rule uid" do
+        items.build { switch_item "MySwitch" }
+        my_rule = rule id: "my_test_rule" do
+          changed MySwitch
+          run { nil }
+        end
+        expect(my_rule.triggers.first.id).to eq "my_test_rule:1"
+      end
+
+      it "infers sequential trigger ids for multiple triggers" do
+        items.build do
+          switch_item "MySwitch1"
+          switch_item "MySwitch2"
+        end
+        my_rule = rule id: "my_test_rule" do
+          changed MySwitch1
+          changed MySwitch2
+          run { nil }
+        end
+        expect(my_rule.triggers.map(&:id)).to eq %w[my_test_rule:1 my_test_rule:2]
+      end
+    end
+
     describe "#on_start" do
       it "works with default level" do
         rule = rule do
