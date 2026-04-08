@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.47.5](https://github.com/openhab/openhab-jruby/tree/v5.47.5) (2026-04-08)
+
+### Bug Fixes
+
+- Fix sitemaps on OH 5.2 by [@ccutrer](https://github.com/ccutrer) in [#531](https://github.com/openhab/openhab-jruby/pull/531)
+
+**Full Changelog**: [v5.47.4...v5.47.5](https://github.com/openhab/openhab-jruby/compare/v5.47.4...v5.47.5)
+
 ## [v5.47.4](https://github.com/openhab/openhab-jruby/tree/v5.47.4) (2026-04-07)
 
 ### Bug Fixes
