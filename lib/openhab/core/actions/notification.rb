@@ -15,7 +15,8 @@ module OpenHAB
           # openHAB Cloud Notification Action}.
           #
           # @param msg [String] The message to send.
-          # @param email [String, nil] The email address to send to. If `nil`, the message will be broadcasted.
+          # @param email [String, <String>, nil] The email address(es) to send to. If `nil`, the message will be
+          #   broadcast.
           # @param icon [String, Symbol, nil] The icon name
           #   (as described in {https://www.openhab.org/docs/configuration/items.html#icons Items}).
           # @param tag [String, Symbol, nil] a name to group the type or severity of the notification.
@@ -83,7 +84,21 @@ module OpenHAB
             end
 
             args = []
-            if email
+            if email.is_a?(Enumerable)
+              email.each do |e|
+                send(msg,
+                     email: e,
+                     icon:,
+                     tag:,
+                     severity:,
+                     id:,
+                     title:,
+                     on_click:,
+                     attachment:,
+                     buttons:)
+              end
+              return
+            elsif email
               args.push(:send_notification, email)
             else
               args.push(:send_broadcast_notification)
@@ -116,7 +131,7 @@ module OpenHAB
           # - Notifications matching the `id` will be hidden, and
           # - Notifications matching the `tag` will be hidden, independently from the given tag.
           #
-          # @param email [String, nil] The email address to hide notifications for.
+          # @param email [String, <String>, nil] The email address(es) to hide notifications for.
           #   If nil, hide broadcast notifications.
           # @param id [String, nil] hide notifications associated with the given reference ID.
           # @param tag [String, nil] hide notifications associated with the given tag.
@@ -130,7 +145,12 @@ module OpenHAB
             raise ArgumentError, "Either id or tag must be provided." unless id || tag
 
             args = []
-            if email
+            if email.is_a?(Enumerable)
+              email.each do |e|
+                hide(email: e, id:, tag:)
+              end
+              return
+            elsif email
               args.push(email)
               notification = :notification
             else
