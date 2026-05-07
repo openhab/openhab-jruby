@@ -897,6 +897,7 @@ module OpenHAB
         # @param [String, Core::Things::Channel, Core::Things::ChannelUID] channels
         #   channels to create triggers for in form of 'binding_id:type_id:thing_id#channel_id'
         #   or 'channel_id' if thing is provided.
+        #   A string that contains `*` and `?` wildcards are supported since openHAB 5.2.
         # @param [String, Core::Things::Thing, Core::Things::ThingUID] thing
         #   Thing(s) to create trigger for if not specified with the channel.
         # @param [String, Array<String>] triggered
