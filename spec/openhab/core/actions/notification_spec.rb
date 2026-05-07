@@ -14,6 +14,14 @@ RSpec.describe OpenHAB::Core::Actions::Notification do
           .with("email@example.org", "Hello, world!", "icon", "tag", nil, nil, nil, nil, nil, nil, nil)
         Notification.send("Hello, world!", email: "email@example.org", icon: "icon", tag: "tag")
       end
+
+      it "iterates over multiple email addresses" do
+        expect(OpenHAB::Core::Actions::NotificationAction).to receive(:send_notification)
+          .with("email1@example.org", "Hello, world!", nil, nil, nil, nil, nil, nil, nil, nil, nil)
+        expect(OpenHAB::Core::Actions::NotificationAction).to receive(:send_notification)
+          .with("email2@example.org", "Hello, world!", nil, nil, nil, nil, nil, nil, nil, nil, nil)
+        Notification.send("Hello, world!", email: %w[email1@example.org email2@example.org])
+      end
     end
 
     describe "when broadcasting" do
