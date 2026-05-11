@@ -72,7 +72,11 @@ module OpenHAB
           raise ArgumentError, "Block is required" unless block
 
           id ||= inferred_id = NameInference.infer_rule_id_from_block(block)
-          script ||= block.source rescue nil # rubocop:disable Style/RescueModifier
+          script ||= begin
+            "# Source: #{block.source_location.join(":")}\n#{block.source}"
+          rescue
+            nil
+          end
 
           builder = nil
 
