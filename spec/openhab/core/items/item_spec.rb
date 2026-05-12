@@ -657,4 +657,98 @@ RSpec.describe OpenHAB::Core::Items::Item do
       end.to raise_error(NoMethodError)
     end
   end
+
+  context "with time predicates" do
+    describe "#state_changed_within?" do
+      it "raises if duration isn't a TemporalAmount" do
+        expect do
+          LightSwitch.state_changed_within?(1)
+        end.to raise_error(ArgumentError, /duration must be a TemporalAmount/)
+      end
+
+      it "returns true when last_state_change is within the duration" do
+        allow(LightSwitch).to receive(:last_state_change).and_return(4.minutes.ago)
+        expect(LightSwitch.state_changed_within?(5.minutes)).to be true
+      end
+
+      it "returns false when last_state_change is older than the duration" do
+        allow(LightSwitch).to receive(:last_state_change).and_return(6.minutes.ago)
+        expect(LightSwitch.state_changed_within?(5.minutes)).to be false
+      end
+
+      it "returns false if last_state_change is nil" do
+        allow(LightSwitch).to receive(:last_state_change).and_return(nil)
+        expect(LightSwitch.state_changed_within?(5.minutes)).to be false
+      end
+    end
+
+    describe "#state_updated_within?" do
+      it "raises if duration isn't a TemporalAmount" do
+        expect do
+          LightSwitch.state_updated_within?(1)
+        end.to raise_error(ArgumentError, /duration must be a TemporalAmount/)
+      end
+
+      it "returns true when last_state_update is within the duration" do
+        allow(LightSwitch).to receive(:last_state_update).and_return(4.minutes.ago)
+        expect(LightSwitch.state_updated_within?(5.minutes)).to be true
+      end
+
+      it "returns false when last_state_update is older than the duration" do
+        allow(LightSwitch).to receive(:last_state_update).and_return(6.minutes.ago)
+        expect(LightSwitch.state_updated_within?(5.minutes)).to be false
+      end
+
+      it "returns false if last_state_update is nil" do
+        allow(LightSwitch).to receive(:last_state_update).and_return(nil)
+        expect(LightSwitch.state_updated_within?(5.minutes)).to be false
+      end
+    end
+
+    describe "#state_changed_since?" do
+      it "returns true when last_state_change is on or after the given time" do
+        allow(LightSwitch).to receive(:last_state_change).and_return(4.minutes.ago)
+        expect(LightSwitch.state_changed_since?(5.minutes.ago)).to be true
+      end
+
+      it "returns false when last_state_change is before the given time" do
+        allow(LightSwitch).to receive(:last_state_change).and_return(6.minutes.ago)
+        expect(LightSwitch.state_changed_since?(5.minutes.ago)).to be false
+      end
+
+      it "accepts objects that respond to #to_zoned_date_time" do
+        allow(LightSwitch).to receive(:last_state_change).and_return(4.minutes.ago)
+        time = 5.minutes.ago.to_time
+        expect(LightSwitch.state_changed_since?(time)).to be true
+      end
+
+      it "returns false if last_state_change is nil" do
+        allow(LightSwitch).to receive(:last_state_change).and_return(nil)
+        expect(LightSwitch.state_changed_since?(5.minutes.ago)).to be false
+      end
+    end
+
+    describe "#state_updated_since?" do
+      it "returns true when last_state_update is on or after the given time" do
+        allow(LightSwitch).to receive(:last_state_update).and_return(4.minutes.ago)
+        expect(LightSwitch.state_updated_since?(5.minutes.ago)).to be true
+      end
+
+      it "returns false when last_state_update is before the given time" do
+        allow(LightSwitch).to receive(:last_state_update).and_return(6.minutes.ago)
+        expect(LightSwitch.state_updated_since?(5.minutes.ago)).to be false
+      end
+
+      it "accepts objects that respond to #to_zoned_date_time" do
+        allow(LightSwitch).to receive(:last_state_update).and_return(4.minutes.ago)
+        time = 5.minutes.ago.to_time
+        expect(LightSwitch.state_updated_since?(time)).to be true
+      end
+
+      it "returns false if last_state_update is nil" do
+        allow(LightSwitch).to receive(:last_state_update).and_return(nil)
+        expect(LightSwitch.state_updated_since?(5.minutes.ago)).to be false
+      end
+    end
+  end
 end

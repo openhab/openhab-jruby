@@ -120,6 +120,90 @@ module OpenHAB
         alias_method :formatted_state, :display_state
 
         #
+        # Check if the item's state has changed within a certain duration (inclusive).
+        #
+        # Note: This method uses the Item's {#last_state_change} timestamp, which is an internal
+        # timestamp maintained within the Item object, independent of any persistence data.
+        #
+        # @param duration [CoreExt::Java::TemporalAmount] the duration to check against
+        # @return [true, false] true if last_state_change >= duration.ago, false otherwise
+        # @raise [ArgumentError] if the duration is not a TemporalAmount
+        #
+        # @example
+        #   # Check if the item's state has changed within the last 5 minutes
+        #   MyLight.state_changed_within?(5.minutes)
+        #
+        def state_changed_within?(duration)
+          raise ArgumentError, "duration must be a TemporalAmount" unless duration.is_a?(CoreExt::Java::TemporalAmount)
+
+          changed_at = last_state_change
+          return false if changed_at.nil?
+
+          changed_at >= duration.ago
+        end
+
+        #
+        # Check if the item's state has changed since a certain time (inclusive).
+        #
+        # Note: This method uses the Item's {#last_state_change} timestamp, which is an internal
+        # timestamp maintained within the Item object, independent of any persistence data.
+        # This is different from {Persistence#changed_since?}, which is based on Persistence data.
+        #
+        # @param time [ZonedDateTime, Time, #to_zoned_date_time] the time to check against
+        # @return [true, false] true if last_state_change >= time, false otherwise
+        #
+        # @example
+        #   # Check if the item's state has changed since 1 hour ago
+        #   MyLight.state_changed_since?(1.hour.ago)
+        #
+        # @example
+        #   # Check if the item's state has changed since sunset
+        #   MyLight.state_changed_since?(Sunset_Time.state) # Sunset_Time is a DateTimeItem
+        #
+        def state_changed_since?(time)
+          changed_at = last_state_change
+          return false if changed_at.nil?
+
+          changed_at >= time
+        end
+
+        #
+        # Check if the item's state has been updated within a certain duration (inclusive).
+        #
+        # Note: This method uses the Item's {#last_state_update} timestamp, which is an internal
+        # timestamp maintained within the Item object, independent of any persistence data.
+        #
+        # @param duration [CoreExt::Java::TemporalAmount] the duration to check against
+        # @return [true, false] true if last_state_update >= duration.ago, false otherwise
+        # @raise [ArgumentError] if the duration is not a TemporalAmount
+        #
+        def state_updated_within?(duration)
+          raise ArgumentError, "duration must be a TemporalAmount" unless duration.is_a?(CoreExt::Java::TemporalAmount)
+
+          updated_at = last_state_update
+          return false if updated_at.nil?
+
+          updated_at >= duration.ago
+        end
+
+        #
+        # Check if the item's state has been updated since a certain time (inclusive).
+        #
+        # Note: This method uses the Item's {#last_state_update} timestamp, which is an internal
+        # timestamp maintained within the Item object, independent of any persistence data.
+        # This is different from {Persistence#updated_since?}, which is based on Persistence data.
+        #
+        # @param time [ZonedDateTime, Time, #to_zoned_date_time] the time to check against
+        # @return [true, false] true if last_state_update >= time, false otherwise
+        #
+        def state_updated_since?(time)
+          updated_at = last_state_update
+          return false if updated_at.nil?
+
+          updated_at >= time
+        end
+
+        #
         # Send a command to this item
         #
         # When this method is chained after the {OpenHAB::DSL::Items::Ensure::Ensurable#ensure ensure}
@@ -582,12 +666,9 @@ module OpenHAB
         # @return [String]
         def inspect
           s = "#<OpenHAB::Core::Items::#{type}Item#{type_details} #{name} #{label.inspect} state=#{raw_state.inspect}"
-          # @deprecated OH 4.3 Remove if guard when dropping support for OH 4.3
-          if respond_to?(:last_state)
-            s += " last_state=#{last_state.inspect}" if last_state
-            s += " last_state_update=#{last_state_update}" if last_state_update
-            s += " last_state_change=#{last_state_change}" if last_state_change
-          end
+          s += " last_state=#{last_state.inspect}" if last_state
+          s += " last_state_update=#{last_state_update}" if last_state_update
+          s += " last_state_change=#{last_state_change}" if last_state_change
           s += " category=#{category.inspect}" if category
           s += " tags=#{tags.to_a.inspect}" unless tags.empty?
           s += " groups=#{group_names}" unless group_names.empty?
