@@ -9,6 +9,7 @@ module OpenHAB
 
       # Extensions to {java.time.MonthDay}
       class MonthDay
+        include TimePredicates
         include Between
         include Ephemeris
 

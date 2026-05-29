@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../time_predicates"
+
 module OpenHAB
   module CoreExt
     module Java
@@ -24,6 +26,7 @@ module OpenHAB
 
         # @!visibility private
         def self.included(klass)
+          klass.prepend(OpenHAB::CoreExt::TimePredicates)
           klass.singleton_class.prepend(ClassMethods)
           klass.remove_method(:==)
           klass.alias_method(:inspect, :to_s)

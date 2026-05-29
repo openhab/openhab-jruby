@@ -10,6 +10,7 @@ module OpenHAB
       # Extensions to {java.time.LocalDate}
       class LocalDate
         include Time
+        include TimePredicates
         include Between
         include Ephemeris
 

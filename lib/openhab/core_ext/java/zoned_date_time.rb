@@ -13,6 +13,7 @@ module OpenHAB
       class ZonedDateTime
         extend Forwardable
         include Time
+        include TimePredicates
         include Between
 
         class << self # rubocop:disable Lint/EmptyClass

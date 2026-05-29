@@ -35,6 +35,7 @@ module OpenHAB
       #   end
       #
       class LocalTime
+        include TimePredicates
         include Between
 
         # @!parse include Time

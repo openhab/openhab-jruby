@@ -3,11 +3,14 @@
 require "forwardable"
 require "date"
 
+require_relative "../time_predicates"
+
 # Extensions to Date
 class Date
   extend Forwardable
   include OpenHAB::CoreExt::Between
   include OpenHAB::CoreExt::Ephemeris
+  include OpenHAB::CoreExt::TimePredicates
 
   #
   # Extends {#+} to allow adding a {java.time.temporal.TemporalAmount TemporalAmount}

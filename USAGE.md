@@ -1234,6 +1234,30 @@ Time.now.between?("05-01".."12-01")
 Time.now.between?("5am".."11pm")
 ```
 
+#### Proximity Checks
+
+The {OpenHAB::CoreExt::TimePredicates#within? within?} method allows you to check if a date/time object is within a specific distance (epsilon) of an anchor time. By default, this anchor time is `now`.
+This is highly useful for checking if a sensor update is fresh or if an event occurred near a specific deadline.
+
+```ruby
+time_object.within?(epsilon, of: ZonedDateTime.now)
+```
+
+##### Example
+
+Check a sensor's last update timestamp when a different event occurs:
+
+```ruby
+rule 'Welcome home light' do
+  changed Front_Door, to: OPEN
+  run do
+    # Evaluates if the hallway motion sensor was updated in the last 5 minutes.
+    # If not, assume someone is arriving from the outside and turn on the light.
+    Hallway_Light.on unless Hallway_Motion.last_state_change.within?(5.minutes)
+  end
+end
+```
+
 ### Ephemeris
 
 {OpenHAB::CoreExt::Ephemeris Helper methods} to easily access [openHAB's Ephemeris action](https://www.openhab.org/docs/configuration/actions.html#ephemeris) are provided on all date-like objects:

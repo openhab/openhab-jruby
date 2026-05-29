@@ -737,8 +737,8 @@ module OpenHAB
     # @example
     #   persistence(:influxdb) do
     #     Item1.persist
-    #     Item1.changed_since(1.hour)
-    #     Item1.average_since(12.hours)
+    #     Item1.changed_since?(1.hour.ago)
+    #     Item1.average_since(12.hours.ago)
     #   end
     #
     # @param [Object] service Persistence service either as a String or a Symbol
