@@ -582,12 +582,9 @@ module OpenHAB
         # @return [String]
         def inspect
           s = "#<OpenHAB::Core::Items::#{type}Item#{type_details} #{name} #{label.inspect} state=#{raw_state.inspect}"
-          # @deprecated OH 4.3 Remove if guard when dropping support for OH 4.3
-          if respond_to?(:last_state)
-            s += " last_state=#{last_state.inspect}" if last_state
-            s += " last_state_update=#{last_state_update}" if last_state_update
-            s += " last_state_change=#{last_state_change}" if last_state_change
-          end
+          s += " last_state=#{last_state.inspect}" if last_state
+          s += " last_state_update=#{last_state_update}" if last_state_update
+          s += " last_state_change=#{last_state_change}" if last_state_change
           s += " category=#{category.inspect}" if category
           s += " tags=#{tags.to_a.inspect}" unless tags.empty?
           s += " groups=#{group_names}" unless group_names.empty?
