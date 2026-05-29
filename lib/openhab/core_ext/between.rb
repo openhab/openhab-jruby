@@ -16,6 +16,8 @@ module OpenHAB
       #   @param [Range] range A range to check
       #   @return [true,false]
       #
+      # @see TimePredicates#within? to check if a time is within a certain distance of another time
+      #
       def between?(min, max = nil)
         range = if max
                   Range.new(min, max, false)

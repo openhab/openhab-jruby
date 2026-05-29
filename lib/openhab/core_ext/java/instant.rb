@@ -13,6 +13,7 @@ module OpenHAB
       class Instant < java.lang.Object
         extend Forwardable
         include Time
+        include TimePredicates
         include Between
 
         class << self # rubocop:disable Lint/EmptyClass

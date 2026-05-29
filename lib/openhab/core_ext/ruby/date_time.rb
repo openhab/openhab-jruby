@@ -3,6 +3,8 @@
 require "date"
 require "forwardable"
 
+require_relative "../time_predicates"
+
 # DateTime inherits from Date, but is more similar to Time semantically.
 # So it avoid alias_method chain bombs, and to ensure the correct end methods
 # exist here, we define the important methods from Time here as well.
@@ -12,6 +14,7 @@ class DateTime < Date
   extend Forwardable
   include OpenHAB::CoreExt::Between
   include OpenHAB::CoreExt::Ephemeris
+  include OpenHAB::CoreExt::TimePredicates
 
   # (see Time#plus_with_temporal)
   def plus_with_temporal(other)

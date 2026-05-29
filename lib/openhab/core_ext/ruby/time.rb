@@ -2,11 +2,14 @@
 
 require "forwardable"
 
+require_relative "../time_predicates"
+
 # Extensions to Time
 class Time
   extend Forwardable
   include OpenHAB::CoreExt::Between
   include OpenHAB::CoreExt::Ephemeris
+  include OpenHAB::CoreExt::TimePredicates
 
   #
   # @!method +(other)
