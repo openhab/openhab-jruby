@@ -257,6 +257,13 @@ module OpenHAB
           rs.register_tracker(org.openhab.core.service.ReadyService::ReadyTracker.impl { continue.call }, filter)
         end
 
+        # openHAB 5.2.0.M5+ can leave RuleEngineImpl.started false in the rspec
+        # harness even after the rule-engine startlevel marker is reached.
+        # Force it on so RuleEngineImpl.runRule won't drop triggered events.
+        rule_manager = OSGi.service("org.openhab.core.automation.RuleManager")
+        rule_manager.class.field_accessor :started
+        rule_manager.started = true unless rule_manager.started
+
         begin
           # load storage based type providers
           ast = org.openhab.core.thing.binding.AbstractStorageBasedTypeProvider

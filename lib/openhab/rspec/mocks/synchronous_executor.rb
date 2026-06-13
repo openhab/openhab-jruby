@@ -26,15 +26,18 @@ module OpenHAB
         end
 
         def submit(runnable)
-          return super unless Thread.current == main_thread
+          if OpenHAB::Core.version < "5.1.0" # @deprecated OH5.1 remove the version guard
+            return super unless Thread.current == main_thread # rubocop:disable Style/SoleNestedConditional
+          end
 
-          runnable.respond_to?(:run) ? runnable.run : runnable.call
-
-          java.util.concurrent.CompletableFuture.completed_future(nil)
+          value = runnable.respond_to?(:run) ? runnable.run : runnable.call
+          java.util.concurrent.CompletableFuture.completed_future(value)
         end
 
         def execute(runnable)
-          return super unless Thread.current == main_thread
+          if OpenHAB::Core.version < "5.1.0" # @deprecated OH5.1 remove the version guard
+            return super unless Thread.current == main_thread # rubocop:disable Style/SoleNestedConditional
+          end
 
           runnable.run
         end
