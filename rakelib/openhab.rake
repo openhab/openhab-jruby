@@ -252,6 +252,7 @@ namespace :openhab do
 
   def openhab_env
     {
+      "CHECK_ROOT_INSTANCE_RUNNING" => "false",
       "LANG" => ENV.fetch("LANG", nil),
       "JAVA_HOME" => ENV.fetch("JAVA_HOME", nil),
       "KARAF_REDIRECT" => karaf_log,
