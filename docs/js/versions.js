@@ -50,6 +50,7 @@ function populateArchivedVersions() {
     "5.45",
     "5.46",
     "5.47",
+    "5.48",
   ]; // ARCHIVED_VERSIONS_MARKER
   const versionDropdown = $("#version-dropdown");
   archivedVersions.forEach((version) => {

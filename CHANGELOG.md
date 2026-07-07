@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.49.0](https://github.com/openhab/openhab-jruby/tree/v5.49.0) (2026-07-07)
+
+### Features
+
+- Support openHAB 5.3-SNAPSHOT by [@jimtng](https://github.com/jimtng) in [#539](https://github.com/openhab/openhab-jruby/pull/539)
+
+**Full Changelog**: [v5.48.0...v5.49.0](https://github.com/openhab/openhab-jruby/compare/v5.48.0...v5.49.0)
+
 ## [v5.48.0](https://github.com/openhab/openhab-jruby/tree/v5.48.0) (2026-05-07)
 
 ### Features
