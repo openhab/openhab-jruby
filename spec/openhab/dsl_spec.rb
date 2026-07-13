@@ -337,6 +337,46 @@ RSpec.describe OpenHAB::DSL do
     end
   end
 
+  describe "#rules" do
+    shared_examples "a tagged rule collection" do |collection_name, factory_method, tag|
+      it "returns rules tagged with '#{tag}'" do
+        id = "my_tagged_#{tag.downcase}"
+        send(factory_method, id:) { nil }
+        expect(rules.send(collection_name)).to include rules[id]
+      end
+
+      it "does not return rules not tagged with '#{tag}'" do
+        rule(id: "my_normal_rule") { nil }
+        expect(rules.send(collection_name)).not_to include rules["my_normal_rule"]
+      end
+
+      describe "#[]" do
+        it "returns a matching #{tag} by uid" do
+          id = "my_#{tag.downcase}"
+          send(factory_method, id:) { nil }
+          expect(rules.send(collection_name)[id]).to eql rules[id]
+        end
+
+        it "returns nil for rule not tagged with '#{tag}'" do
+          rule(id: "my_other_rule") { nil }
+          expect(rules.send(collection_name)["my_other_rule"]).to be_nil
+        end
+
+        it "returns nil for a non-existent uid" do
+          expect(rules.send(collection_name)["nonexistent"]).to be_nil
+        end
+      end
+    end
+
+    describe "#scenes" do
+      it_behaves_like "a tagged rule collection", :scenes, :scene, "Scene"
+    end
+
+    describe "#scripts" do
+      it_behaves_like "a tagged rule collection", :scripts, :script, "Script"
+    end
+  end
+
   describe "#store_states" do
     before do
       items.build do
