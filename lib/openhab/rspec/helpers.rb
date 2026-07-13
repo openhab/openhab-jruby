@@ -417,10 +417,23 @@ module OpenHAB
       #   end
       #
       def spec_log_lines
-        File.open(log_file, "rb") do |f|
-          f.seek(@log_index) if @log_index
-          f.read.split("\n")
+        lines = []
+
+        # Give the underlying Log4j file channel up to ~50ms to flush its buffer to disk
+        5.times do
+          lines = File.open(log_file, "rb") do |f|
+            f.seek(@log_index) if @log_index
+            f.read.split("\n")
+          end
+
+          # If we read lines, break early. If it's still empty, yield execution to the
+          # JVM thread scheduler so the file appender thread can finish flushing.
+          break unless lines.empty?
+
+          sleep 0.01
         end
+
+        lines
       end
 
       private
