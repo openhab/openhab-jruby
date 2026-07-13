@@ -23,7 +23,7 @@ module OpenHAB
         #
         def [](uid)
           rule = $rules.get(uid)
-          rule.tagged?(@tag) ? rule : nil
+          rule if rule&.tagged?(@tag)
         end
         alias_method :include?, :[]
         alias_method :key?, :[]
