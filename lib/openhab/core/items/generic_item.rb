@@ -168,7 +168,7 @@ module OpenHAB
 
           proxied_self = Proxy.new(self)
 
-          return yield(proxied_self) if instance_variable_defined?(:@modifying) && @modifying
+          return yield(proxied_self) if proxied_self.instance_variable_get(:@modifying)
 
           begin
             provider = self.provider
@@ -178,15 +178,15 @@ module OpenHAB
               provider = nil
               logger.debug { "Forcing modifications to non-managed item #{name}" }
             end
-            @modified = false
-            @modifying = true
+            proxied_self.instance_variable_set(:@modified, false)
+            proxied_self.instance_variable_set(:@modifying, true)
 
             r = yield(proxied_self)
 
-            provider&.update(self) if @modified
+            provider&.update(self) if proxied_self.instance_variable_get(:@modified)
             r
           ensure
-            @modifying = false
+            proxied_self.instance_variable_set(:@modifying, false)
           end
         end
 
@@ -197,7 +197,9 @@ module OpenHAB
           modify do
             next if label == value
 
-            @modified = true
+            proxied_self = Proxy.new(self)
+
+            proxied_self.instance_variable_set(:@modified, true)
             set_label(value)
           end
         end
@@ -210,7 +212,9 @@ module OpenHAB
             value = value&.to_s
             next if category == value
 
-            @modified = true
+            proxied_self = Proxy.new(self)
+
+            proxied_self.instance_variable_set(:@modified, true)
             set_category(value)
           end
         end
@@ -234,7 +238,9 @@ module OpenHAB
             values = DSL::Items::Tags.normalize(*values)
             next if values.to_set == tags.to_set
 
-            @modified = true
+            proxied_self = Proxy.new(self)
+
+            proxied_self.instance_variable_set(:@modified, true)
             remove_all_tags
             add_tags(values)
           end
