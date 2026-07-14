@@ -2561,6 +2561,17 @@
     
   </li>
 
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../CoreExt/TimePredicates.html" title="OpenHAB::CoreExt::TimePredicates (module)">TimePredicates</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
 
         
       </ul>
@@ -6089,12 +6100,12 @@ String StringItem1
       <pre class="lines">
 
 
-601
-602
-603</pre>
+598
+599
+600</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 601</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 598</span>
 
 <span class="keyword">def</span> <span class="function">provider</span>
   <span class="constant">Provider</span>.registry.provider_for(<span class="predefined-constant">self</span>)
@@ -6329,10 +6340,10 @@ this method only returns the first thing.</p>
       <pre class="lines">
 
 
-622</pre>
+619</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 622</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 619</span>
 
 def_type_predicate(<span class="symbol">:call</span>)</pre>
     </td>
@@ -6385,10 +6396,10 @@ def_type_predicate(<span class="symbol">:call</span>)</pre>
       <pre class="lines">
 
 
-623</pre>
+620</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 623</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 620</span>
 
 def_type_predicate(<span class="symbol">:color</span>)</pre>
     </td>
@@ -6600,10 +6611,10 @@ otherwise the item.</p>
       <pre class="lines">
 
 
-624</pre>
+621</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 624</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 621</span>
 
 def_type_predicate(<span class="symbol">:contact</span>)</pre>
     </td>
@@ -6656,10 +6667,10 @@ def_type_predicate(<span class="symbol">:contact</span>)</pre>
       <pre class="lines">
 
 
-625</pre>
+622</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 625</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 622</span>
 
 def_type_predicate(<span class="symbol">:date_time</span>)</pre>
     </td>
@@ -6718,10 +6729,10 @@ def_type_predicate(<span class="symbol">:date_time</span>)</pre>
       <pre class="lines">
 
 
-627</pre>
+624</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 627</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 624</span>
 
 def_type_predicate(<span class="symbol">:dimmer</span>)</pre>
     </td>
@@ -6774,10 +6785,10 @@ def_type_predicate(<span class="symbol">:dimmer</span>)</pre>
       <pre class="lines">
 
 
-628</pre>
+625</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 628</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 625</span>
 
 def_type_predicate(<span class="symbol">:group</span>)</pre>
     </td>
@@ -6830,10 +6841,10 @@ def_type_predicate(<span class="symbol">:group</span>)</pre>
       <pre class="lines">
 
 
-629</pre>
+626</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 629</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 626</span>
 
 def_type_predicate(<span class="symbol">:image</span>)</pre>
     </td>
@@ -6889,22 +6900,16 @@ def_type_predicate(<span class="symbol">:image</span>)</pre>
 591
 592
 593
-594
-595
-596
-597</pre>
+594</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 583</span>
 
 <span class="keyword">def</span> <span class="function">inspect</span>
   s = <span class="string"><span class="delimiter">&quot;</span><span class="content">#&lt;OpenHAB::Core::Items::</span><span class="inline"><span class="inline-delimiter">#{</span>type<span class="inline-delimiter">}</span></span><span class="content">Item</span><span class="inline"><span class="inline-delimiter">#{</span>type_details<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="content"> </span><span class="inline"><span class="inline-delimiter">#{</span>label.inspect<span class="inline-delimiter">}</span></span><span class="content"> state=</span><span class="inline"><span class="inline-delimiter">#{</span>raw_state.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
-  <span class="comment"># @deprecated OH 4.3 Remove if guard when dropping support for OH 4.3</span>
-  <span class="keyword">if</span> respond_to?(<span class="symbol">:last_state</span>)
-    s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> last_state=</span><span class="inline"><span class="inline-delimiter">#{</span>last_state.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> last_state
-    s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> last_state_update=</span><span class="inline"><span class="inline-delimiter">#{</span>last_state_update<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> last_state_update
-    s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> last_state_change=</span><span class="inline"><span class="inline-delimiter">#{</span>last_state_change<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> last_state_change
-  <span class="keyword">end</span>
+  s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> last_state=</span><span class="inline"><span class="inline-delimiter">#{</span>last_state.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> last_state
+  s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> last_state_update=</span><span class="inline"><span class="inline-delimiter">#{</span>last_state_update<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> last_state_update
+  s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> last_state_change=</span><span class="inline"><span class="inline-delimiter">#{</span>last_state_change<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> last_state_change
   s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> category=</span><span class="inline"><span class="inline-delimiter">#{</span>category.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> category
   s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> tags=</span><span class="inline"><span class="inline-delimiter">#{</span>tags.to_a.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> tags.empty?
   s += <span class="string"><span class="delimiter">&quot;</span><span class="content"> groups=</span><span class="inline"><span class="inline-delimiter">#{</span>group_names<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> group_names.empty?
@@ -7178,10 +7183,10 @@ this method only returns the first link.</p>
       <pre class="lines">
 
 
-630</pre>
+627</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 630</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 627</span>
 
 def_type_predicate(<span class="symbol">:location</span>)</pre>
     </td>
@@ -7320,10 +7325,10 @@ def_type_predicate(<span class="symbol">:location</span>)</pre>
       <pre class="lines">
 
 
-631</pre>
+628</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 631</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 628</span>
 
 def_type_predicate(<span class="symbol">:number</span>)</pre>
     </td>
@@ -7376,10 +7381,10 @@ def_type_predicate(<span class="symbol">:number</span>)</pre>
       <pre class="lines">
 
 
-632</pre>
+629</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 632</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 629</span>
 
 def_type_predicate(<span class="symbol">:player</span>)</pre>
     </td>
@@ -7485,10 +7490,10 @@ def_type_predicate(<span class="symbol">:player</span>)</pre>
       <pre class="lines">
 
 
-633</pre>
+630</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 633</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 630</span>
 
 def_type_predicate(<span class="symbol">:rollershutter</span>)</pre>
     </td>
@@ -7541,10 +7546,10 @@ def_type_predicate(<span class="symbol">:rollershutter</span>)</pre>
       <pre class="lines">
 
 
-634</pre>
+631</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 634</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 631</span>
 
 def_type_predicate(<span class="symbol">:string</span>)</pre>
     </td>
@@ -7603,10 +7608,10 @@ def_type_predicate(<span class="symbol">:string</span>)</pre>
       <pre class="lines">
 
 
-636</pre>
+633</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 636</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/item.rb', line 633</span>
 
 def_type_predicate(<span class="symbol">:switch</span>)</pre>
     </td>
@@ -8033,7 +8038,7 @@ otherwise the item.</p>
 </div>
 
         <footer>
-  Generated on Tue Jul 14 16:55:29 2026 by
+  Generated on Tue Jul 14 16:57:58 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.2).
 </footer>

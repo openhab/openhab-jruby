@@ -2561,6 +2561,17 @@
     
   </li>
 
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="OpenHAB/CoreExt/TimePredicates.html" title="OpenHAB::CoreExt::TimePredicates (module)">TimePredicates</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
 
         
       </ul>
@@ -4690,6 +4701,22 @@ between(<span class="string"><span class="delimiter">&quot;</span><span class="c
 <span class="comment"># Compare against time of day</span>
 <span class="constant">Time</span>.now.between?(<span class="string"><span class="delimiter">&quot;</span><span class="content">5am</span><span class="delimiter">&quot;</span></span>..<span class="string"><span class="delimiter">&quot;</span><span class="content">11pm</span><span class="delimiter">&quot;</span></span>)
 </code></pre>
+<h4><a href="#proximity-checks" aria-hidden="true" class="header-anchor" id="proximity-checks">#</a>Proximity Checks</h4>
+<p>The <span class='object_link'><a href="OpenHAB/CoreExt/TimePredicates.html#within%3F-instance_method" title="OpenHAB::CoreExt::TimePredicates#within? (method)">within?</a></span> method allows you to check if a date/time object is within a specific distance (epsilon) of an anchor time. By default, this anchor time is <code>now</code>.
+This is highly useful for checking if a sensor update is fresh or if an event occurred near a specific deadline.</p>
+<pre class="code ruby"><code class="ruby">time_object.within?(epsilon, <span class="key">of</span>: <span class="constant">ZonedDateTime</span>.now)
+</code></pre>
+<h5><a href="#example" aria-hidden="true" class="header-anchor" id="example">#</a>Example</h5>
+<p>Check a sensor's last update timestamp when a different event occurs:</p>
+<pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">'</span><span class="content">Welcome home light</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+  changed <span class="constant">Front_Door</span>, <span class="key">to</span>: <span class="constant">OPEN</span>
+  run <span class="keyword">do</span>
+    <span class="comment"># Evaluates if the hallway motion sensor was updated in the last 5 minutes.</span>
+    <span class="comment"># If not, assume someone is arriving from the outside and turn on the light.</span>
+    <span class="constant">Hallway_Light</span>.on <span class="keyword">unless</span> <span class="constant">Hallway_Motion</span>.last_state_change.within?(<span class="integer">5</span>.minutes)
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</code></pre>
 <h3><a href="#ephemeris" aria-hidden="true" class="header-anchor" id="ephemeris">#</a>Ephemeris</h3>
 <p><span class='object_link'><a href="OpenHAB/CoreExt/Ephemeris.html" title="OpenHAB::CoreExt::Ephemeris (module)">Helper methods</a></span> to easily access <a href="https://www.openhab.org/docs/configuration/actions.html#ephemeris">openHAB's Ephemeris action</a> are provided on all date-like objects:</p>
 <pre class="code ruby"><code class="ruby"><span class="constant">Time</span>.now.holiday? <span class="comment"># =&gt; false</span>
@@ -5198,7 +5225,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Tue Jul 14 16:55:27 2026 by
+  Generated on Tue Jul 14 16:57:56 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.2).
 </footer>

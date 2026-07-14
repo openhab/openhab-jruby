@@ -2561,6 +2561,17 @@
     
   </li>
 
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../TimePredicates.html" title="OpenHAB::CoreExt::TimePredicates (module)">TimePredicates</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
 
         
       </ul>
@@ -3684,7 +3695,7 @@
   
   <dl>
       <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="../Between.html" title="OpenHAB::CoreExt::Between (module)">Between</a></span>, <span class='object_link'><a href="Time.html" title="OpenHAB::CoreExt::Java::Time (module)">Time</a></span></dd>
+      <dd><span class='object_link'><a href="../Between.html" title="OpenHAB::CoreExt::Between (module)">Between</a></span>, <span class='object_link'><a href="Time.html" title="OpenHAB::CoreExt::Java::Time (module)">Time</a></span>, <span class='object_link'><a href="../TimePredicates.html" title="OpenHAB::CoreExt::TimePredicates (module)">TimePredicates</a></span></dd>
   </dl>
   
   
@@ -4180,6 +4191,17 @@
   
   
   
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../TimePredicates.html" title="OpenHAB::CoreExt::TimePredicates (module)">TimePredicates</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../TimePredicates.html#within%3F-instance_method" title="OpenHAB::CoreExt::TimePredicates#within? (method)">#within?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
@@ -4235,7 +4257,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 22</span>
 
 </pre>
     </td>
@@ -4327,7 +4349,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 25</span>
 
 </pre>
     </td>
@@ -4397,14 +4419,14 @@
       <pre class="lines">
 
 
-81
 82
 83
 84
-85</pre>
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 82</span>
 
 <span class="keyword">def</span> <span class="function">+</span>(other)
   <span class="keyword">return</span> plus(other.seconds) <span class="keyword">if</span> other.is_a?(<span class="constant">Numeric</span>)
@@ -4489,7 +4511,6 @@
       <pre class="lines">
 
 
-64
 65
 66
 67
@@ -4501,10 +4522,11 @@
 73
 74
 75
-76</pre>
+76
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 65</span>
 
 <span class="keyword">def</span> <span class="function">-</span>(other)
   <span class="keyword">if</span> other.is_a?(<span class="constant">Instant</span>)
@@ -4561,7 +4583,6 @@
       <pre class="lines">
 
 
-109
 110
 111
 112
@@ -4571,10 +4592,11 @@
 116
 117
 118
-119</pre>
+119
+120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 109</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 110</span>
 
 <span class="keyword">def</span> <span class="function">&lt;=&gt;</span>(other)
   logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">(</span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span>.class<span class="inline-delimiter">}</span></span><span class="content">) </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> &lt;=&gt; </span><span class="inline"><span class="inline-delimiter">#{</span>other<span class="inline-delimiter">}</span></span><span class="content"> (</span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="content">)</span><span class="delimiter">&quot;</span></span> }
@@ -4645,15 +4667,15 @@
       <pre class="lines">
 
 
-139
 140
 141
 142
 143
-144</pre>
+144
+145</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 140</span>
 
 <span class="keyword">def</span> <span class="function">coerce</span>(other)
   logger.trace { <span class="string"><span class="delimiter">&quot;</span><span class="content">Coercing </span><span class="inline"><span class="inline-delimiter">#{</span><span class="predefined-constant">self</span><span class="inline-delimiter">}</span></span><span class="content"> as a request from </span><span class="inline"><span class="inline-delimiter">#{</span>other.class<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
@@ -4703,7 +4725,6 @@
       <pre class="lines">
 
 
-50
 51
 52
 53
@@ -4711,10 +4732,11 @@
 55
 56
 57
-58</pre>
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 51</span>
 
 def_delegators <span class="symbol">:to_zoned_date_time</span>,
 <span class="symbol">:to_local_time</span>,
@@ -4768,12 +4790,12 @@ def_delegators <span class="symbol">:to_zoned_date_time</span>,
       <pre class="lines">
 
 
-99
 100
-101</pre>
+101
+102</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 100</span>
 
 <span class="keyword">def</span> <span class="function">to_f</span>
   ((epoch_second * <span class="integer">1_000_000_000</span>) + nano).fdiv(<span class="float">1_000_000_000.0</span>)
@@ -4821,12 +4843,12 @@ def_delegators <span class="symbol">:to_zoned_date_time</span>,
       <pre class="lines">
 
 
-91
 92
-93</pre>
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 92</span>
 
 <span class="keyword">def</span> <span class="function">to_i</span>
   epoch_second
@@ -4873,7 +4895,6 @@ def_delegators <span class="symbol">:to_zoned_date_time</span>,
       <pre class="lines">
 
 
-50
 51
 52
 53
@@ -4881,10 +4902,11 @@ def_delegators <span class="symbol">:to_zoned_date_time</span>,
 55
 56
 57
-58</pre>
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 51</span>
 
 def_delegators <span class="symbol">:to_zoned_date_time</span>,
 <span class="symbol">:to_local_time</span>,
@@ -4937,7 +4959,6 @@ def_delegators <span class="symbol">:to_zoned_date_time</span>,
       <pre class="lines">
 
 
-50
 51
 52
 53
@@ -4945,10 +4966,11 @@ def_delegators <span class="symbol">:to_zoned_date_time</span>,
 55
 56
 57
-58</pre>
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 51</span>
 
 def_delegators <span class="symbol">:to_zoned_date_time</span>,
 <span class="symbol">:to_local_time</span>,
@@ -5001,7 +5023,6 @@ def_delegators <span class="symbol">:to_zoned_date_time</span>,
       <pre class="lines">
 
 
-50
 51
 52
 53
@@ -5009,10 +5030,11 @@ def_delegators <span class="symbol">:to_zoned_date_time</span>,
 55
 56
 57
-58</pre>
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 51</span>
 
 def_delegators <span class="symbol">:to_zoned_date_time</span>,
 <span class="symbol">:to_local_time</span>,
@@ -5065,7 +5087,6 @@ def_delegators <span class="symbol">:to_zoned_date_time</span>,
       <pre class="lines">
 
 
-50
 51
 52
 53
@@ -5073,10 +5094,11 @@ def_delegators <span class="symbol">:to_zoned_date_time</span>,
 55
 56
 57
-58</pre>
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 51</span>
 
 def_delegators <span class="symbol">:to_zoned_date_time</span>,
 <span class="symbol">:to_local_time</span>,
@@ -5132,7 +5154,7 @@ def_delegators <span class="symbol">:to_zoned_date_time</span>,
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 106</span>
 
 </pre>
     </td>
@@ -5198,13 +5220,13 @@ def_delegators <span class="symbol">:to_zoned_date_time</span>,
       <pre class="lines">
 
 
-123
 124
 125
-126</pre>
+126
+127</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 124</span>
 
 <span class="keyword">def</span> <span class="function">to_zoned_date_time</span>(context = <span class="predefined-constant">nil</span>)
   zone = context&amp;.zone || java.time.ZoneOffset::<span class="constant">UTC</span>
@@ -5255,7 +5277,6 @@ of the system time zone.</p>
       <pre class="lines">
 
 
-50
 51
 52
 53
@@ -5263,10 +5284,11 @@ of the system time zone.</p>
 55
 56
 57
-58</pre>
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 51</span>
 
 def_delegators <span class="symbol">:to_zoned_date_time</span>,
 <span class="symbol">:to_local_time</span>,
@@ -5320,7 +5342,6 @@ def_delegators <span class="symbol">:to_zoned_date_time</span>,
       <pre class="lines">
 
 
-50
 51
 52
 53
@@ -5328,10 +5349,11 @@ def_delegators <span class="symbol">:to_zoned_date_time</span>,
 55
 56
 57
-58</pre>
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 51</span>
 
 def_delegators <span class="symbol">:to_zoned_date_time</span>,
 <span class="symbol">:to_local_time</span>,
@@ -5385,7 +5407,6 @@ def_delegators <span class="symbol">:to_zoned_date_time</span>,
       <pre class="lines">
 
 
-50
 51
 52
 53
@@ -5393,10 +5414,11 @@ def_delegators <span class="symbol">:to_zoned_date_time</span>,
 55
 56
 57
-58</pre>
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/instant.rb', line 51</span>
 
 def_delegators <span class="symbol">:to_zoned_date_time</span>,
 <span class="symbol">:to_local_time</span>,
@@ -5417,7 +5439,7 @@ def_delegators <span class="symbol">:to_zoned_date_time</span>,
 </div>
 
         <footer>
-  Generated on Tue Jul 14 16:55:40 2026 by
+  Generated on Tue Jul 14 16:58:08 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.2).
 </footer>

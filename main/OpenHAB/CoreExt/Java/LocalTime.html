@@ -2561,6 +2561,17 @@
     
   </li>
 
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../TimePredicates.html" title="OpenHAB::CoreExt::TimePredicates (module)">TimePredicates</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
 
         
       </ul>
@@ -3682,7 +3693,7 @@
   
   <dl>
       <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="../Between.html" title="OpenHAB::CoreExt::Between (module)">Between</a></span></dd>
+      <dd><span class='object_link'><a href="../Between.html" title="OpenHAB::CoreExt::Between (module)">Between</a></span>, <span class='object_link'><a href="../TimePredicates.html" title="OpenHAB::CoreExt::TimePredicates (module)">TimePredicates</a></span></dd>
   </dl>
   
   
@@ -3969,6 +3980,17 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../Between.html" title="OpenHAB::CoreExt::Between (module)">Between</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Between.html#between%3F-instance_method" title="OpenHAB::CoreExt::Between#between? (method)">#between?</a></span></p>
 
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../TimePredicates.html" title="OpenHAB::CoreExt::TimePredicates (module)">TimePredicates</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../TimePredicates.html#within%3F-instance_method" title="OpenHAB::CoreExt::TimePredicates#within? (method)">#within?</a></span></p>
+
   <div id="class_attr_details" class="attr_details">
     <h2>Class Attribute Details</h2>
     
@@ -4014,7 +4036,7 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 44</span>
 
 </pre>
     </td>
@@ -4099,7 +4121,6 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
       <pre class="lines">
 
 
-56
 57
 58
 59
@@ -4111,10 +4132,11 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
 65
 66
 67
-68</pre>
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 57</span>
 
 <span class="keyword">def</span> <span class="function">parse</span>(string, formatter = <span class="predefined-constant">nil</span>)
   <span class="keyword">return</span> raw_parse(string, formatter) <span class="keyword">if</span> formatter
@@ -4196,16 +4218,16 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
       <pre class="lines">
 
 
-85
 86
 87
 88
 89
 90
-91</pre>
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 86</span>
 
 <span class="keyword">def</span> <span class="function">+</span>(other)
   <span class="keyword">return</span> plus(other.seconds) <span class="keyword">if</span> other.is_a?(<span class="constant">Numeric</span>)
@@ -4275,16 +4297,16 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
       <pre class="lines">
 
 
-74
 75
 76
 77
 78
 79
-80</pre>
+80
+81</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 75</span>
 
 <span class="keyword">def</span> <span class="function">-</span>(other)
   <span class="keyword">return</span> minus(other.seconds) <span class="keyword">if</span> other.is_a?(<span class="constant">Numeric</span>)
@@ -4337,12 +4359,12 @@ rule <span class="string"><span class="delimiter">'</span><span class="content">
       <pre class="lines">
 
 
-100
 101
-102</pre>
+102
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 100</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 101</span>
 
 <span class="keyword">def</span> <span class="function">succ</span>
   plus_seconds(<span class="integer">1</span>)
@@ -4412,12 +4434,12 @@ during conversion. <span class='object_link'><a href="ZonedDateTime.html#now-cla
       <pre class="lines">
 
 
-126
 127
-128</pre>
+128
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 127</span>
 
 <span class="keyword">def</span> <span class="function">to_instant</span>(context = <span class="predefined-constant">nil</span>)
   to_zoned_date_time(context).to_instant
@@ -4464,12 +4486,12 @@ during conversion. <span class='object_link'><a href="ZonedDateTime.html#now-cla
       <pre class="lines">
 
 
-105
 106
-107</pre>
+107
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 106</span>
 
 <span class="keyword">def</span> <span class="function">to_local_time</span>
   <span class="predefined-constant">self</span>
@@ -4538,13 +4560,13 @@ during conversion. <span class='object_link'><a href="ZonedDateTime.html#now-cla
       <pre class="lines">
 
 
-113
 114
 115
-116</pre>
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 113</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core_ext/java/local_time.rb', line 114</span>
 
 <span class="keyword">def</span> <span class="function">to_zoned_date_time</span>(context = <span class="predefined-constant">nil</span>)
   context ||= <span class="constant">ZonedDateTime</span>.now
@@ -4560,7 +4582,7 @@ during conversion. <span class='object_link'><a href="ZonedDateTime.html#now-cla
 </div>
 
         <footer>
-  Generated on Tue Jul 14 16:55:43 2026 by
+  Generated on Tue Jul 14 16:58:11 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.2).
 </footer>
