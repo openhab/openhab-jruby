@@ -4251,25 +4251,29 @@
       <pre class="lines">
 
 
-208
-209
 210
 211
 212
 213
 214
 215
-216</pre>
+216
+217
+218
+219
+220</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 208</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 210</span>
 
 <span class="keyword">def</span> <span class="function">category=</span>(value)
   modify <span class="keyword">do</span>
     value = value&amp;.to_s
     <span class="keyword">next</span> <span class="keyword">if</span> category == value
 
-    <span class="instance-variable">@modified</span> = <span class="predefined-constant">true</span>
+    proxied_self = <span class="constant">Proxy</span>.new(<span class="predefined-constant">self</span>)
+
+    proxied_self.instance_variable_set(<span class="symbol">:@modified</span>, <span class="predefined-constant">true</span>)
     set_category(value)
   <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
@@ -4618,26 +4622,30 @@ Use <span class='object_link'><a href="#undef%3F-instance_method" title="OpenHAB
       <pre class="lines">
 
 
-232
-233
-234
-235
 236
 237
 238
 239
 240
-241</pre>
+241
+242
+243
+244
+245
+246
+247</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 232</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/items/generic_item.rb', line 236</span>
 
 <span class="keyword">def</span> <span class="function">tags=</span>(values)
   modify <span class="keyword">do</span>
     values = <span class="constant">DSL</span>::<span class="constant">Items</span>::<span class="constant">Tags</span>.normalize(*values)
     <span class="keyword">next</span> <span class="keyword">if</span> values.to_set == tags.to_set
 
-    <span class="instance-variable">@modified</span> = <span class="predefined-constant">true</span>
+    proxied_self = <span class="constant">Proxy</span>.new(<span class="predefined-constant">self</span>)
+
+    proxied_self.instance_variable_set(<span class="symbol">:@modified</span>, <span class="predefined-constant">true</span>)
     remove_all_tags
     add_tags(values)
   <span class="keyword">end</span>
@@ -4910,7 +4918,7 @@ modifications.</p>
 
   proxied_self = <span class="constant">Proxy</span>.new(<span class="predefined-constant">self</span>)
 
-  <span class="keyword">return</span> <span class="keyword">yield</span>(proxied_self) <span class="keyword">if</span> instance_variable_defined?(<span class="symbol">:@modifying</span>) &amp;&amp; <span class="instance-variable">@modifying</span>
+  <span class="keyword">return</span> <span class="keyword">yield</span>(proxied_self) <span class="keyword">if</span> proxied_self.instance_variable_get(<span class="symbol">:@modifying</span>)
 
   <span class="keyword">begin</span>
     provider = <span class="predefined-constant">self</span>.provider
@@ -4920,15 +4928,15 @@ modifications.</p>
       provider = <span class="predefined-constant">nil</span>
       logger.debug { <span class="string"><span class="delimiter">&quot;</span><span class="content">Forcing modifications to non-managed item </span><span class="inline"><span class="inline-delimiter">#{</span>name<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> }
     <span class="keyword">end</span>
-    <span class="instance-variable">@modified</span> = <span class="predefined-constant">false</span>
-    <span class="instance-variable">@modifying</span> = <span class="predefined-constant">true</span>
+    proxied_self.instance_variable_set(<span class="symbol">:@modified</span>, <span class="predefined-constant">false</span>)
+    proxied_self.instance_variable_set(<span class="symbol">:@modifying</span>, <span class="predefined-constant">true</span>)
 
     r = <span class="keyword">yield</span>(proxied_self)
 
-    provider&amp;.update(<span class="predefined-constant">self</span>) <span class="keyword">if</span> <span class="instance-variable">@modified</span>
+    provider&amp;.update(<span class="predefined-constant">self</span>) <span class="keyword">if</span> proxied_self.instance_variable_get(<span class="symbol">:@modified</span>)
     r
   <span class="keyword">ensure</span>
-    <span class="instance-variable">@modifying</span> = <span class="predefined-constant">false</span>
+    proxied_self.instance_variable_set(<span class="symbol">:@modifying</span>, <span class="predefined-constant">false</span>)
   <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
@@ -5329,7 +5337,7 @@ modifications.</p>
 </div>
 
         <footer>
-  Generated on Tue Jul 14 16:53:57 2026 by
+  Generated on Tue Jul 14 16:55:42 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.2).
 </footer>
