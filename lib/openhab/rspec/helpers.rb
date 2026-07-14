@@ -364,10 +364,11 @@ module OpenHAB
       # @param [String] addon_id The addon id, such as "binding-mqtt"
       # @param [true,false] wait Wait until OSGi has confirmed the bundle is installed and running before returning.
       # @param [String,Array<String>] ready_markers Array of ready marker types to wait for.
+      # @param [Numeric] ready_timeout Max seconds to wait for ready markers.
       #   The addon's bundle id is used as the identifier.
       # @return [void]
       #
-      def install_addon(addon_id, wait: true, ready_markers: nil)
+      def install_addon(addon_id, wait: true, ready_markers: nil, ready_timeout: 30)
         service_filter = "(component.name=org.openhab.core.karafaddons)"
         addon_service = OSGi.service("org.openhab.core.addon.AddonService", filter: service_filter)
         addon_service.install(addon_id)
@@ -395,8 +396,19 @@ module OpenHAB
         end
 
         rs = OSGi.service("org.openhab.core.service.ReadyService")
+        deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + ready_timeout
+
         loop do
-          break if ready_markers.all? { |rm| rs.ready?(rm) }
+          pending_markers = ready_markers.reject { |rm| rs.ready?(rm) }
+          break if pending_markers.empty?
+
+          if Process.clock_gettime(Process::CLOCK_MONOTONIC) >= deadline
+            pending_marker_text = pending_markers
+                                  .map { |rm| "#{rm.type}(#{rm.identifier})" }
+                                  .join(", ")
+            logger.warn("Timed out waiting for ready markers for #{addon_id}: #{pending_marker_text}")
+            raise "Timed out after #{ready_timeout}s waiting for ready markers for #{addon_id}: #{pending_marker_text}"
+          end
 
           sleep 0.25
         end
