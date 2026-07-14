@@ -163,14 +163,40 @@ jobs:
           key: openHAB-setup-2-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.date || '' }}-java-${{ matrix.java_version }}
           fail-on-cache-miss: true
       - name: RSpec
-        run: bin/rspec --format progress --format html --out rspec.html
+        run: |
+          set -euo pipefail
+          bin/rspec --format progress --format html --out rspec.html &
+          rspec_pid=$!
+          start_time=$(date +%s)
+
+          while kill -0 "$rspec_pid" 2>/dev/null; do
+            sleep 30
+            now=$(date +%s)
+            elapsed=$((now - start_time))
+            echo "[heartbeat] $(date -u +%FT%TZ) rspec still running (${elapsed}s elapsed)"
+
+            if [[ "$elapsed" -ge 330 ]]; then
+              echo "RSpec exceeded 330s; collecting thread dump before termination"
+              kill -QUIT "$rspec_pid" || true
+              sleep 5
+              kill -TERM "$rspec_pid" || true
+              sleep 20
+              kill -KILL "$rspec_pid" || true
+              wait "$rspec_pid" || true
+              exit 124
+            fi
+          done
+
+          wait "$rspec_pid"
         timeout-minutes: 6
       - name: Upload openHAB Logs
         uses: actions/upload-artifact@v6
         if: failure()
         with:
           name: RSpec-logs-${{ matrix.openhab_version }}-${{ matrix.jruby_version }}-java-${{ matrix.java_version }}
-          path: tmp/openhab/userdata/logs
+          path: |
+            tmp/openhab/userdata/logs
+            tmp/karaf.log
           retention-days: 2
       - name: Upload RSpec results
         uses: actions/upload-artifact@v6
