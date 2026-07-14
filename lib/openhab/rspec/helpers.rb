@@ -364,20 +364,35 @@ module OpenHAB
       # @param [String] addon_id The addon id, such as "binding-mqtt"
       # @param [true,false] wait Wait until OSGi has confirmed the bundle is installed and running before returning.
       # @param [String,Array<String>] ready_markers Array of ready marker types to wait for.
+      # @param [Numeric] install_timeout Max seconds to wait for addon installation.
       # @param [Numeric] ready_timeout Max seconds to wait for ready markers.
       #   The addon's bundle id is used as the identifier.
       # @return [void]
       #
-      def install_addon(addon_id, wait: true, ready_markers: nil, ready_timeout: 30)
+      def install_addon(addon_id, wait: true, ready_markers: nil, install_timeout: 30, ready_timeout: 30)
         service_filter = "(component.name=org.openhab.core.karafaddons)"
         addon_service = OSGi.service("org.openhab.core.addon.AddonService", filter: service_filter)
         addon_service.install(addon_id)
         return unless wait
 
         addon = nil
+        install_start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+        install_deadline = install_start + install_timeout
+        next_install_log_at = install_start + 5
         loop do
           addon = addon_service.get_addon(addon_id, nil)
-          break if addon.installed?
+          break if addon&.installed?
+
+          now = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          if now >= next_install_log_at
+            elapsed = (now - install_start).round(1)
+            logger.warn("Still waiting for addon to install: #{addon_id} (elapsed=#{elapsed}s, timeout=#{install_timeout}s)") # rubocop:disable Layout/LineLength
+            next_install_log_at = now + 5
+          end
+
+          if now >= install_deadline
+            raise "Timed out after #{install_timeout}s waiting for addon installation: #{addon_id}"
+          end
 
           sleep 0.25
         end
@@ -396,16 +411,26 @@ module OpenHAB
         end
 
         rs = OSGi.service("org.openhab.core.service.ReadyService")
-        deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + ready_timeout
+        start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+        deadline = start + ready_timeout
+        next_log_at = start + 5
 
         loop do
+          now = Process.clock_gettime(Process::CLOCK_MONOTONIC)
           pending_markers = ready_markers.reject { |rm| rs.ready?(rm) }
           break if pending_markers.empty?
 
-          if Process.clock_gettime(Process::CLOCK_MONOTONIC) >= deadline
-            pending_marker_text = pending_markers
-                                  .map { |rm| "#{rm.type}(#{rm.identifier})" }
-                                  .join(", ")
+          pending_marker_text = pending_markers
+                                .map { |rm| "#{rm.type}(#{rm.identifier})" }
+                                .join(", ")
+
+          if now >= next_log_at
+            elapsed = (now - start).round(1)
+            logger.warn("Still waiting for ready markers for #{addon_id} (elapsed=#{elapsed}s, timeout=#{ready_timeout}s): #{pending_marker_text}") # rubocop:disable Layout/LineLength
+            next_log_at = now + 5
+          end
+
+          if now >= deadline
             logger.warn("Timed out waiting for ready markers for #{addon_id}: #{pending_marker_text}")
             raise "Timed out after #{ready_timeout}s waiting for ready markers for #{addon_id}: #{pending_marker_text}"
           end
