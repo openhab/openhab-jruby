@@ -382,7 +382,7 @@ module OpenHAB
           @thing_type_tracker.class.field_reader :openState
           org.openhab.core.config.core.xml.osgi.XmlDocumentBundleTracker::OpenState.field_reader :OPENED
           opened = org.openhab.core.config.core.xml.osgi.XmlDocumentBundleTracker::OpenState.OPENED
-          sleep until @thing_type_tracker.openState == opened
+          wait_until("thing type tracker open") { @thing_type_tracker.openState == opened }
           @bundle_context.bundles.each do |bundle|
             @thing_type_tracker.adding_bundle(bundle, nil)
           end
@@ -394,7 +394,7 @@ module OpenHAB
           @config_description_tracker.class.field_reader :openState
           org.openhab.core.config.core.xml.osgi.XmlDocumentBundleTracker::OpenState.field_reader :OPENED
           opened = org.openhab.core.config.core.xml.osgi.XmlDocumentBundleTracker::OpenState.OPENED
-          sleep until @config_description_tracker.openState == opened
+          wait_until("config description tracker open") { @config_description_tracker.openState == opened }
           @bundle_context.bundles.each do |bundle|
             @config_description_tracker.adding_bundle(bundle, nil)
           end
@@ -532,7 +532,7 @@ module OpenHAB
       end
 
       def wait_for_start
-        wait do |continue|
+        wait(timeout: 120, label: "all bundles to start") do |continue|
           @all_bundles_continue = continue
           next continue.call if all_bundles_started?
         end
@@ -557,10 +557,11 @@ module OpenHAB
           bundle.fragment?
       end
 
-      def wait(timeout: 30)
+      def wait(timeout: 30, label: nil)
         mutex = Mutex.new
         cond = ConditionVariable.new
         skip_wait = false
+        timed_out = false
 
         continue = lambda do
           # if continue was called synchronously, we can just return
@@ -570,8 +571,40 @@ module OpenHAB
         end
         mutex.synchronize do
           yield continue
-          cond.wait(mutex, timeout) unless skip_wait
+          timed_out = !cond.wait(mutex, timeout) unless skip_wait
         end
+
+        return unless timed_out
+
+        detail = label ? " while waiting for #{label}" : ""
+        raise "Timed out after #{timeout}s#{detail}. #{bundle_state_summary}"
+      end
+
+      def wait_until(label, timeout: 30, interval: 0.1)
+        deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + timeout
+        until yield
+          if Process.clock_gettime(Process::CLOCK_MONOTONIC) >= deadline
+            raise "Timed out after #{timeout}s while waiting for #{label}. #{bundle_state_summary}"
+          end
+
+          sleep interval
+        end
+      end
+
+      def bundle_state_summary
+        return "Bundle state unavailable" unless @bundle_context
+
+        bundle_counts = @bundle_context.bundles.each_with_object(Hash.new(0)) do |bundle, counts|
+          counts[bundle.state] += 1
+        end
+
+        active = org.osgi.framework.Bundle::ACTIVE
+        resolved = org.osgi.framework.Bundle::RESOLVED
+        starting = org.osgi.framework.Bundle::STARTING
+        installed = org.osgi.framework.Bundle::INSTALLED
+
+        "Bundles: active=#{bundle_counts[active]}, resolved=#{bundle_counts[resolved]}, " \
+          "starting=#{bundle_counts[starting]}, installed=#{bundle_counts[installed]}, total=#{@bundle_context.bundles.length}" # rubocop:disable Layout/LineLength
       end
 
       def link_osgi
