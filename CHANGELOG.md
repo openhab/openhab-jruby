@@ -1,5 +1,18 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.50.0](https://github.com/openhab/openhab-jruby/tree/v5.50.0) (2026-07-20)
+
+### Features
+
+- Add time predicate #within? by [@jimtng](https://github.com/jimtng) in [#538](https://github.com/openhab/openhab-jruby/pull/538)
+
+### Bug Fixes
+
+- Fix NoMethodError when rules.scenes[] or rules.scripts[] target is missing by [@jimtng](https://github.com/jimtng) in [#541](https://github.com/openhab/openhab-jruby/pull/541)
+- Move ivars from the non persistent java object to the item Proxy object by [@jimtng](https://github.com/jimtng) in [#546](https://github.com/openhab/openhab-jruby/pull/546)
+
+**Full Changelog**: [v5.49.0...v5.50.0](https://github.com/openhab/openhab-jruby/compare/v5.49.0...v5.50.0)
+
 ## [v5.49.0](https://github.com/openhab/openhab-jruby/tree/v5.49.0) (2026-07-07)
 
 ### Features
