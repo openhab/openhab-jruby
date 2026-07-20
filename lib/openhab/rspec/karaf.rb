@@ -143,6 +143,7 @@ module OpenHAB
 
         set_up_bundle_listener
         wait_for_start
+        set_context_class_loader_for_jollyday
         Mocks::SynchronousExecutor.instance.main_thread = Thread.current
         set_jruby_script_presets
         @main
@@ -475,10 +476,20 @@ module OpenHAB
           puts e.backtrace
         end
         @bundle_context.bundles.each do |bundle|
-          next unless bundle.symbolic_name.start_with?("org.openhab.core")
+          next unless bundle.symbolic_name.start_with?("org.openhab.core", "de.focus_shift.jollyday")
 
           add_class_loader(bundle)
         end
+      end
+
+      def set_context_class_loader_for_jollyday
+        bundle = @bundle_context.bundles.find { |b| b.symbolic_name == "de.focus_shift.jollyday-jackson" }
+        return unless bundle
+
+        loader = bundle.adapt(org.osgi.framework.wiring.BundleWiring.java_class)&.class_loader
+        return unless loader
+
+        java.lang.Thread.currentThread.setContextClassLoader(loader)
       end
 
       def set_up_service_listener

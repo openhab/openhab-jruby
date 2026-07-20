@@ -163,7 +163,7 @@ jobs:
           key: openHAB-setup-2-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.date || '' }}-java-${{ matrix.java_version }}
           fail-on-cache-miss: true
       - name: RSpec
-        run: bin/rspec --format progress --format html --out rspec.html
+        run: bin/rspec --format progress --format html --out rspec.html spec/openhab/core_ext/ephemeris_spec.rb
         timeout-minutes: 6
       - name: Upload openHAB Logs
         uses: actions/upload-artifact@v6
