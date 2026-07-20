@@ -173,18 +173,34 @@ module OpenHAB
         # Manually trigger the rule
         #
         # @param [Object, nil] event The event to pass to the rule's execution blocks.
+        # @param [Boolean] async Run the rule asynchronously.
+        #   When `true`, the method returns right away and the rule continues running in a separate thread.
         # @param [Boolean] consider_conditions Whether to check the conditions of the called rules.
         # @param [kwargs] context The context to pass to the conditions and the actions of the rule.
-        # @return [Hash] A copy of the rule context, including possible return values.
+        # @return [Hash, java.util.concurrent.Future<Hash>] A copy of the rule context,
+        #   including possible return values.
+        #   When `async` is true, a {java.util.concurrent.Future Future} object is returned
+        #   that will resolve to the context once the rule has finished executing.
+        #   To wait for the rule to complete and retrieve the context, call `#get` on the returned Future.
+        # @raise [NotImplementedError] if asynchronous execution isn't supported by the `RuleManager` implementation.
         #
-        def trigger(event = nil, consider_conditions: false, **context)
+        # @since openHAB 5.2 The `async` parameter was added to enable asynchronous rule execution.
+        #
+        def trigger(event = nil, async: false, consider_conditions: false, **context)
           event ||= org.openhab.core.automation.events.AutomationEventFactory
                        .createExecutionEvent(uid, nil, "manual")
           context.transform_keys!(&:to_s)
           # Unwrap any proxies and pass raw objects (items, things)
           context.transform_values! { |value| value.is_a?(Delegator) ? value.__getobj__ : value }
           context["event"] = event
-          Rules.manager.run_now(uid, consider_conditions, context)
+
+          return Rules.manager.run_now(uid, consider_conditions, context) unless async
+
+          begin
+            Rules.manager.run_async(uid, consider_conditions, context)
+          rescue java.lang.UnsupportedOperationException, NoMethodError
+            raise NotImplementedError
+          end
         end
         alias_method :run, :trigger
       end
