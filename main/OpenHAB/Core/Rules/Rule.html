@@ -4136,7 +4136,7 @@ met, enabling the core dynamic functionality of openHAB.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#trigger-instance_method" title="#trigger (instance method)">#<strong>trigger</strong>(event = nil, consider_conditions: false, **context)  &#x21d2; Hash </a>
+      <a href="#trigger-instance_method" title="#trigger (instance method)">#<strong>trigger</strong>(event = nil, async: false, consider_conditions: false, **context)  &#x21d2; Hash, java.util.concurrent.Future&lt;Hash&gt; </a>
     
 
     
@@ -5172,7 +5172,7 @@ met, enabling the core dynamic functionality of openHAB.</p>
       <div class="method_details ">
   <h3 class="signature " id="trigger-instance_method">
   
-    #<strong>trigger</strong>(event = nil, consider_conditions: false, **context)  &#x21d2; <tt>Hash</tt> 
+    #<strong>trigger</strong>(event = nil, async: false, consider_conditions: false, **context)  &#x21d2; <tt>Hash</tt>, <tt><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/Future.html" target="_parent" title="java.util.concurrent.Future">java.util.concurrent.Future</a>&lt;Hash&gt;</tt> 
   
 
   
@@ -5206,6 +5206,24 @@ met, enabling the core dynamic functionality of openHAB.</p>
       
         &mdash;
         <div class='inline'><p>The event to pass to the rule's execution blocks.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>async</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Run the rule asynchronously.
+When <code>true</code>, the method returns right away and the rule continues running in a separate thread.</p>
 </div>
       
     </li>
@@ -5250,12 +5268,48 @@ met, enabling the core dynamic functionality of openHAB.</p>
     <li>
       
       
-        <span class='type'>(<tt>Hash</tt>)</span>
+        <span class='type'>(<tt>Hash</tt>, <tt><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/Future.html" target="_parent" title="java.util.concurrent.Future">java.util.concurrent.Future</a>&lt;Hash&gt;</tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><p>A copy of the rule context, including possible return values.</p>
+        <div class='inline'><p>A copy of the rule context,
+including possible return values.
+When <code>async</code> is true, a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/Future.html" target="_parent" title="Future">Future</a> object is returned
+that will resolve to the context once the rule has finished executing.
+To wait for the rule to complete and retrieve the context, call <code>#get</code> on the returned Future.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>NotImplementedError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>if asynchronous execution isn't supported by the <code>RuleManager</code> implementation.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 5.2 The <code>async</code> parameter was added to enable asynchronous rule execution.</p>
 </div>
       
     </li>
@@ -5268,27 +5322,41 @@ met, enabling the core dynamic functionality of openHAB.</p>
       <pre class="lines">
 
 
-180
-181
-182
-183
-184
-185
-186
-187
-188</pre>
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 180</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/rules/rule.rb', line 189</span>
 
-<span class="keyword">def</span> <span class="function">trigger</span>(event = <span class="predefined-constant">nil</span>, <span class="key">consider_conditions</span>: <span class="predefined-constant">false</span>, **context)
+<span class="keyword">def</span> <span class="function">trigger</span>(event = <span class="predefined-constant">nil</span>, <span class="key">async</span>: <span class="predefined-constant">false</span>, <span class="key">consider_conditions</span>: <span class="predefined-constant">false</span>, **context)
   event ||= org.openhab.core.automation.events.AutomationEventFactory
                .createExecutionEvent(uid, <span class="predefined-constant">nil</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">manual</span><span class="delimiter">&quot;</span></span>)
   context.transform_keys!(&amp;<span class="symbol">:to_s</span>)
   <span class="comment"># Unwrap any proxies and pass raw objects (items, things)</span>
   context.transform_values! { |value| value.is_a?(<span class="constant">Delegator</span>) ? value.__getobj__ : value }
   context[<span class="string"><span class="delimiter">&quot;</span><span class="content">event</span><span class="delimiter">&quot;</span></span>] = event
-  <span class="constant">Rules</span>.manager.run_now(uid, consider_conditions, context)
+
+  <span class="keyword">return</span> <span class="constant">Rules</span>.manager.run_now(uid, consider_conditions, context) <span class="keyword">unless</span> async
+
+  <span class="keyword">begin</span>
+    <span class="constant">Rules</span>.manager.run_async(uid, consider_conditions, context)
+  <span class="keyword">rescue</span> java.lang.UnsupportedOperationException, <span class="constant">NoMethodError</span>
+    raise <span class="constant">NotImplementedError</span>
+  <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -5404,7 +5472,7 @@ met, enabling the core dynamic functionality of openHAB.</p>
 </div>
 
         <footer>
-  Generated on Mon Jul 20 00:07:15 2026 by
+  Generated on Mon Jul 20 17:53:24 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.2).
 </footer>
