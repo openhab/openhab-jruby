@@ -366,6 +366,7 @@ module OpenHAB
         "org.openhab.core.model.rule.runtime" => nil,
         "org.openhab.core.model.rule" => nil,
         "org.openhab.core.model.sitemap.runtime" => nil,
+        "org.openhab.core.ui" => nil,
         "org.openhab.core.voice" => nil
       }.freeze
       private_constant :BLOCKED_COMPONENTS
@@ -805,11 +806,14 @@ module OpenHAB
                     <f:feature>openhab-core-model-script</f:feature>
                     <f:feature>openhab-core-model-sitemap</f:feature>
                     <f:feature>openhab-core-model-thing</f:feature>
+                    <f:feature>openhab-core-model-yaml</f:feature>
                     <f:feature>openhab-core-storage-json</f:feature>
                     <f:feature>openhab-core-ui-icon</f:feature>
                     <f:feature>openhab-transport-http</f:feature>
                     <f:feature prerequisite="true">wrapper</f:feature>
                     <f:bundle>mvn:org.openhab.core.bundles/org.openhab.core.karaf/#{version}</f:bundle>
+                    <!-- openhab-core-model-yaml imports org.openhab.core.ui.components since OH 5.2 -->
+                    <f:bundle>mvn:org.openhab.core.bundles/org.openhab.core.ui/#{version}</f:bundle>
                   </feature>
                 </replacement>
               </featureReplacements>
