@@ -156,6 +156,42 @@ module OpenHAB
           ]
         end.freeze
       end
+
+      #
+      # Returns the current start level of the openHAB runtime.
+      #
+      # Start levels represent runtime startup progress as integer values:
+      #
+      # - `10` - OSGi application start level reached (bundles activated).
+      # - `20` - Model entities (items, things, links, persistence config) loaded.
+      # - `30` - Item states restored from persistence service, where applicable.
+      # - `40` - Rules loaded and parsed; script engine factories available.
+      # - `50` - Rule engine executed all "system started" rules and is active.
+      # - `70` - User interface is up and running.
+      # - `80` - All things have been initialized.
+      # - `100` - Startup is fully complete.
+      #
+      # @example Checking if startup is complete
+      #   if OpenHAB::Core.startlevel == 100
+      #     logger.info "openHAB startup complete!"
+      #   end
+      #
+      # @example Checking if things are initialized
+      #   if OpenHAB::Core.startlevel >= 80
+      #     logger.info "Things are ready."
+      #   end
+      #
+      # @return [Integer, nil] The current start level integer, or `nil` if the
+      #   StartLevelService is unavailable.
+      #
+      # @see OpenHAB::DSL::Rules::BuilderDSL#on_start on_start rule trigger
+      # @see OpenHAB::Core::Events::StartlevelEvent StartlevelEvent
+      #
+      def startlevel
+        @start_level_service ||= OSGi.service("org.openhab.core.service.StartLevelService")
+        @start_level_service&.start_level
+      end
+      alias_method :start_level, :startlevel
     end
 
     import_default_presets unless defined?($ir)
