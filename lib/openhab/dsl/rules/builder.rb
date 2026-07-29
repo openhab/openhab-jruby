@@ -1512,6 +1512,8 @@ module OpenHAB
         #   end
         #
         # @see https://www.openhab.org/docs/configuration/rules-dsl.html#system-based-triggers System based triggers
+        # @see OpenHAB::Core::Events::StartlevelEvent
+        # @see OpenHAB::Core.startlevel
         #
         def on_start(at_level: nil, at_levels: nil, attach: nil)
           levels = Array.wrap(at_level) | Array.wrap(at_levels)
