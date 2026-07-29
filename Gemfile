@@ -32,7 +32,7 @@ end
 
 group :test do
   gem "cucumber", "~> 11.1", require: false
-  gem "cuke_linter", "~> 1.2", require: false
+  gem "cuke_linter", "~> 1.4", require: false
   gem "httparty", "~> 0.20", require: false
   gem "irb", "~> 1.15", require: false
   gem "persistent_httparty", "~> 0.1", require: false
