@@ -2304,6 +2304,8 @@
   
   
   
+  
+  
 
         
       </ul>
@@ -3879,6 +3881,31 @@
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#startlevel-class_method" title="startlevel (class method)">.<strong>startlevel</strong>  &#x21d2; Integer<sup>?</sup> </a>
+    
+
+    
+      (also: start_level)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the current start level of the openHAB runtime.</p>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -4126,12 +4153,117 @@
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="startlevel-class_method">
+  
+    .<strong>startlevel</strong>  &#x21d2; <tt><span class='object_link'><a href="../Integer.html" title="Integer (class)">Integer</a></span></tt><sup>?</sup> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='start_level-class_method'>start_level</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the current start level of the openHAB runtime.</p>
+<p>Start levels represent runtime startup progress as integer values:</p>
+<ul>
+<li><code>10</code> - OSGi application start level reached (bundles activated).</li>
+<li><code>20</code> - Model entities (items, things, links, persistence config) loaded.</li>
+<li><code>30</code> - Item states restored from persistence service, where applicable.</li>
+<li><code>40</code> - Rules loaded and parsed; script engine factories available.</li>
+<li><code>50</code> - Rule engine executed all "system started" rules and is active.</li>
+<li><code>70</code> - User interface is up and running.</li>
+<li><code>80</code> - All things have been initialized.</li>
+<li><code>100</code> - Startup is fully complete.</li>
+</ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+        <h5 class="example_title"><div class='inline'><p>Checking if startup is complete</p>
+</div></h5>
+      
+      <pre class="example code"><code><span class="keyword">if</span> <span class="constant">OpenHAB</span>::<span class="constant">Core</span>.startlevel == <span class="integer">100</span>
+  logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">openHAB startup complete!</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></code></pre>
+    
+      
+        <h5 class="example_title"><div class='inline'><p>Checking if things are initialized</p>
+</div></h5>
+      
+      <pre class="example code"><code><span class="keyword">if</span> <span class="constant">OpenHAB</span>::<span class="constant">Core</span>.startlevel &gt;= <span class="integer">80</span>
+  logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">Things are ready.</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Integer.html" title="Integer (class)">Integer</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The current start level integer, or <code>nil</code> if the
+StartLevelService is unavailable.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="DSL/Rules/BuilderDSL.html#on_start-instance_method" title="OpenHAB::DSL::Rules::BuilderDSL#on_start (method)">on_start rule trigger</a></span></li>
+    
+      <li><span class='object_link'><a href="Core/Events/StartlevelEvent.html" title="OpenHAB::Core::Events::StartlevelEvent (class)">StartlevelEvent</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+190
+191
+192
+193</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core.rb', line 190</span>
+
+<span class="keyword">def</span> <span class="function">startlevel</span>
+  <span class="instance-variable">@start_level_service</span> ||= <span class="constant">OSGi</span>.service(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.service.StartLevelService</span><span class="delimiter">&quot;</span></span>)
+  <span class="instance-variable">@start_level_service</span>&amp;.start_level
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
         <footer>
-  Generated on Wed Jul 29 13:20:47 2026 by
+  Generated on Wed Jul 29 15:32:04 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.2).
 </footer>
