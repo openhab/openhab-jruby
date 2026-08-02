@@ -229,10 +229,12 @@ module OpenHAB
         def <=>(other)
           # compare instants, otherwise it will differ by timezone, which we don't want
           # (use eql? if you care about that)
-          if other.respond_to?(:to_zoned_date_time)
-            to_instant.compare_to(other.to_zoned_date_time(self).to_instant)
+          if other.is_a?(self.class)
+            to_instant.compare_to(other.to_instant)
           elsif other.respond_to?(:coerce) && (lhs, rhs = other.coerce(self))
             lhs <=> rhs
+          elsif other.respond_to?(:to_zoned_date_time)
+            to_instant.compare_to(other.to_zoned_date_time(self).to_instant)
           end
         end
 

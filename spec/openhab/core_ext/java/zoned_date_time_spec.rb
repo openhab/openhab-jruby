@@ -254,5 +254,17 @@ RSpec.describe java.time.ZonedDateTime do
       expect(zdt.between?((zdt - 5.days)...zdt)).to be false
       expect(zdt.between?(zdt..)).to be true
     end
+
+    context "when compared against Month ranges" do
+      let(:august_zdt) { described_class.parse("2022-08-15T13:37:00+00:00") }
+
+      it "includes dates that fall in the range end month" do
+        expect(august_zdt.between?(Month::JUNE..Month::AUGUST)).to be true
+      end
+
+      it "compares against a Month endpoint by month precision" do
+        expect(august_zdt <= Month::AUGUST).to be true
+      end
+    end
   end
 end

@@ -81,6 +81,18 @@ RSpec.describe Time do
       expect(time.between?((time - 5)...time)).to be false
       expect(time.between?(time..)).to be true
     end
+
+    context "when compared against Month ranges" do
+      let(:august_time) { described_class.new(2022, 8, 15, 13, 37, 0, "+00:00") }
+
+      it "includes dates that fall in the range end month" do
+        expect(august_time.between?(Month::JUNE..Month::AUGUST)).to be true
+      end
+
+      it "compares against a Month endpoint by month precision" do
+        expect(august_time <= Month::AUGUST).to be true
+      end
+    end
   end
 
   describe "#to_instant" do

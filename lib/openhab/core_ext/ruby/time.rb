@@ -68,6 +68,28 @@ class Time
   alias_method :minus_without_temporal, :-
   alias_method :-, :minus_with_temporal
 
+  # @!parse
+  #   # Extends {#<=>} to allow comparisons via #coerce with time-like objects
+  #   # such as Month and MonthDay.
+  #   # @return [Integer, nil]
+  #   def compare_with_coercion(other)
+  #   end
+  #   alias_method :<=>, :compare_with_coercion
+
+  # @!visibility private
+  # @return [Integer, nil]
+  def oh_compare_with_coercion(other)
+    return oh_compare_without_coercion(other) if other.is_a?(self.class)
+
+    if other.respond_to?(:coerce) && (lhs, rhs = other.coerce(self))
+      return lhs <=> rhs
+    end
+
+    oh_compare_without_coercion(other)
+  end
+  alias_method :oh_compare_without_coercion, :<=>
+  alias_method :<=>, :oh_compare_with_coercion
+
   # @return [LocalDate]
   def to_local_date(_context = nil)
     java.time.LocalDate.of(year, month, day)
