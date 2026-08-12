@@ -23,7 +23,10 @@ Gem::Specification.new do |spec|
     "rubygems_mfa_required" => "true"
   }
 
+  spec.add_dependency "bigdecimal", "~> 4.0"
   spec.add_dependency "bundler", ">= 2.2", "< 5.0"
+  spec.add_dependency "csv", "~> 3.0"
+  spec.add_dependency "irb", "~> 1.4"
   spec.add_dependency "marcel", "~> 1.0"
   spec.add_dependency "method_source", "~> 1.0"
   # ENV var *only* for use from CI for Cucumber

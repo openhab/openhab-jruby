@@ -103,7 +103,8 @@ jobs:
       - uses: ruby/setup-ruby@v1
         if: steps.cache.outputs.cache-hit != 'true'
         with:
-          ruby-version: ${{ env.RUBY_VERSION }}
+          # Use JRuby for openHAB setup so it installs the correct version of the bigdecimal gem for JRuby
+          ruby-version: jruby-10.1.1.0
           bundler-cache: true
       - uses: actions/setup-java@v5
         if: steps.cache.outputs.cache-hit != 'true'
