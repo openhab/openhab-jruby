@@ -3968,7 +3968,7 @@ See the <a href="https://github.com/jruby/jruby/wiki/RedBridge#local-variable-be
 <p><img src="docs/images/rule-config.png" alt="openHAB Rule Configuration"></p>
 <h4><a href="#adding-actions" aria-hidden="true" class="header-anchor" id="adding-actions">#</a>Adding Actions</h4>
 <p>Select "Add Action" and then select "Run Script" with "Ruby".
-This will bring up an empty script editor where you can enter your JavaScript.</p>
+This will bring up an empty script editor where you can enter your script.</p>
 <p><img src="docs/images/rule-engines.png" alt="openHAB Rule Engines"></p>
 <p>You can now write rules using standard Ruby along with the included openHAB <a href="#library-details">library</a>.</p>
 <p><img src="docs/images/rule-script.png" alt="openHAB Rule Script"></p>
@@ -3980,8 +3980,8 @@ logger.info(<span class="string"><span class="delimiter">&quot;</span><span clas
 <pre class="code ruby"><code class="ruby"><span class="constant">Notification</span>.send(<span class="string"><span class="delimiter">&quot;</span><span class="content">romeo@montague.org</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Balcony door is open</span><span class="delimiter">&quot;</span></span>)
 </code></pre>
 <p>Querying the status of a thing:</p>
-<pre class="code ruby"><code class="ruby">logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Thing status: </span><span class="inline"><span class="inline-delimiter">#{</span>things[<span class="string"><span class="delimiter">&quot;</span><span class="content">zwave:serial_zstick:512</span><span class="delimiter">&quot;</span></span>].status<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)<span class="string"><span class="delimiter">&quot;</span><span class="content">
-</span></span></code></pre>
+<pre class="code ruby"><code class="ruby">logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Thing status: </span><span class="inline"><span class="inline-delimiter">#{</span>things[<span class="string"><span class="delimiter">&quot;</span><span class="content">zwave:serial_zstick:512</span><span class="delimiter">&quot;</span></span>].status<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)
+</code></pre>
 <p>Theoretically you could even use a system start trigger with a UI rule, and then use the <a href="#file-based-rules">syntax</a> mostly developed for file based rules to create multiple rules.</p>
 <h3><a href="#file-based-scripts" aria-hidden="true" class="header-anchor" id="file-based-scripts">#</a>File Based Scripts</h3>
 <p>The JRuby Scripting addon will load Ruby script files with <code>.rb</code> extension from <code>automation/ruby</code> in the user configuration directory.
@@ -3990,7 +3990,7 @@ Local variable state is not persisted among reloads, see using the <a href="#cac
 See <a href="#file-based-rules">File Based Rules</a> for examples of creating rules within your scripts.</p>
 <h3><a href="#event-object" aria-hidden="true" class="header-anchor" id="event-object">#</a>Event Object</h3>
 <p>When you use "Item event" as trigger (i.e. "[item] received a command", "[item] was updated", "[item] changed"), there is additional context available for the action in a variable called <code>event</code>.</p>
-<p>This tables gives an overview of the <code>event</code> object for most common trigger types.
+<p>This table gives an overview of the <code>event</code> object for most common trigger types.
 For full details, explore <span class='object_link'><a href="OpenHAB/Core/Events.html" title="OpenHAB::Core::Events (module)">OpenHAB::Core::Events</a></span>.</p>
 <table>
 <thead>
@@ -4107,7 +4107,7 @@ gWindowBlinds
 <pre class="code ruby"><code class="ruby"><span class="comment"># direct members</span>
 gTest.members
 
-<span class="comment"># direct members and all their descendents</span>
+<span class="comment"># direct members and all their descendants</span>
 gTest.all_members
 </code></pre>
 <p>Group members work like a <a href="https://docs.ruby-lang.org/en/master/Array.html">Ruby array</a>
@@ -4124,7 +4124,7 @@ gTest.all_members.each <span class="keyword">do</span> |item|
   <span class="comment"># process item</span>
 <span class="keyword">end</span>
 </code></pre>
-<p>Group members are also <a href="https://docs.ruby-lang.org/en/master/Enumerable.html">Enumerable</a>, so can use any of tthose included methods:</p>
+<p>Because group members are <a href="https://docs.ruby-lang.org/en/master/Enumerable.html">Enumerable</a>, all Enumerable methods are available:</p>
 <pre class="code ruby"><code class="ruby">members_that_are_on = gTest.members.select(&amp;<span class="symbol">:on?</span>)
 
 <span class="comment"># exclude state</span>
@@ -4298,7 +4298,7 @@ Note that by default items are not persisted to storage, and will be removed whe
   <span class="keyword">end</span>
   <span class="comment"># passing `thing` to a group item will automatically use it as the base</span>
   <span class="comment"># for item channels</span>
-  group_item <span class="constant">Equipment</span>, <span class="key">tags</span>: <span class="constant">Semantics</span>::<span class="constant">HVAC</span>, <span class="key">thing</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">binding:thing</span><span class="delimiter">&quot;</span></span>
+  group_item <span class="constant">Equipment</span>, <span class="key">tags</span>: <span class="constant">Semantics</span>::<span class="constant">HVAC</span>, <span class="key">thing</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">binding:thing</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
     string_item <span class="constant">Mode</span>, <span class="key">tags</span>: <span class="constant">Semantics</span>::<span class="constant">Control</span>, <span class="key">channel</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">mode</span><span class="delimiter">&quot;</span></span>
   <span class="keyword">end</span>
 
@@ -4430,7 +4430,7 @@ After takes a <a href="#durations">Duration</a> relative to <code>now</code>, e.
 <p>You can access all variables of the current context in the created timers.</p>
 <p>Note: Variables can be mutated (changed) after the timer has been created.
 Be aware that this can lead to unintentional side effects, e.g. when you change the variable after timer creation, which can make debugging quite difficult!</p>
-<pre class="code ruby"><code class="ruby">my_var = <span class="string"><span class="delimiter">&quot;</span><span class="content">Hello world!</span><span class="delimiter">&quot;</span></span>;
+<pre class="code ruby"><code class="ruby">my_var = <span class="string"><span class="delimiter">&quot;</span><span class="content">Hello world!</span><span class="delimiter">&quot;</span></span>
 
 <span class="comment"># Schedule a timer that expires in ten seconds</span>
 after(<span class="integer">10</span>.seconds) <span class="keyword">do</span>
@@ -4962,10 +4962,10 @@ This method can only be done using a file-based rule.</p>
 <h4><a href="#cron-trigger" aria-hidden="true" class="header-anchor" id="cron-trigger">#</a>Cron Trigger</h4>
 <p>Traditional cron trigger:</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">cron rule</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
-  cron <span class="string"><span class="delimiter">&quot;</span><span class="content">0 0,15 15-19 L * ?</span><span class="delimiter">&quot;</span></span><span class="string"><span class="delimiter">&quot;</span><span class="content">
-  run { logger.info </span><span class="delimiter">&quot;</span></span><span class="constant">Cron</span> run<span class="string"><span class="delimiter">&quot;</span><span class="content"> }
-end
-</span></span></code></pre>
+  cron <span class="string"><span class="delimiter">&quot;</span><span class="content">0 0,15 15-19 L * ?</span><span class="delimiter">&quot;</span></span>
+  run { logger.info <span class="string"><span class="delimiter">&quot;</span><span class="content">Cron run</span><span class="delimiter">&quot;</span></span> }
+<span class="keyword">end</span>
+</code></pre>
 <p>Or an easier syntax:</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">cron rule</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
   cron <span class="key">second</span>: <span class="integer">0</span>, <span class="key">minute</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">0,15</span><span class="delimiter">&quot;</span></span>, <span class="key">hour</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">15-19</span><span class="delimiter">&quot;</span></span>, <span class="key">dom</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">L</span><span class="delimiter">&quot;</span></span>
@@ -5080,7 +5080,7 @@ It is handy when combined with Ruby's pretzel-colon operator to act directly on 
 <span class="keyword">end</span>
 </code></pre>
 <h4><a href="#delay-execution-block" aria-hidden="true" class="header-anchor" id="delay-execution-block">#</a>Delay Execution Block</h4>
-<p>A delay exection block is useful for adding a delay inbetween rule executions or even at the beginning of the trigger event without having to manually create a timer.
+<p>A delay execution block is useful for adding a delay inbetween rule executions or even at the beginning of the trigger event without having to manually create a timer.
 Unlike <code>sleep</code>, a delay block does not block the current executing thread.
 It actually sets a timer for you behind the scenes.</p>
 <pre class="code ruby"><code class="ruby">rule <span class="string"><span class="delimiter">&quot;</span><span class="content">Check for offline things 15 minutes after openHAB had started</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
@@ -5225,7 +5225,7 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Wed Jul 29 15:32:02 2026 by
+  Generated on Wed Aug 12 15:04:09 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.2).
 </footer>
