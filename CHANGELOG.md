@@ -1,5 +1,22 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.51.0](https://github.com/openhab/openhab-jruby/tree/v5.51.0) (2026-08-12)
+
+### Features
+
+- Add the `async` parameter on `Rule#run` to enable asynchronous rule execution by [@jimtng](https://github.com/jimtng) in [#550](https://github.com/openhab/openhab-jruby/pull/550)
+- Install openhab-core-model-yaml in the rspec Karaf instance by [@JHK](https://github.com/JHK) in [#553](https://github.com/openhab/openhab-jruby/pull/553)
+- Add `OpenHAB::Core.startlevel` method by [@jimtng](https://github.com/jimtng) in [#555](https://github.com/openhab/openhab-jruby/pull/555)
+
+### Bug Fixes
+
+- add bigdecimal, csv, and irb to gemspec by [@jimtng](https://github.com/jimtng) in [#517](https://github.com/openhab/openhab-jruby/pull/517)
+
+## New Contributors
+- @JHK made their first contribution in [#553](https://github.com/openhab/openhab-jruby/pull/553)
+
+**Full Changelog**: [v5.50.0...v5.51.0](https://github.com/openhab/openhab-jruby/compare/v5.50.0...v5.51.0)
+
 ## [v5.50.0](https://github.com/openhab/openhab-jruby/tree/v5.50.0) (2026-07-20)
 
 ### Features
