@@ -1,5 +1,13 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.51.1](https://github.com/openhab/openhab-jruby/tree/v5.51.1) (2026-08-17)
+
+### Bug Fixes
+
+- Remove irb from gemspec by [@jimtng](https://github.com/jimtng) in [#558](https://github.com/openhab/openhab-jruby/pull/558)
+
+**Full Changelog**: [v5.51.0...v5.51.1](https://github.com/openhab/openhab-jruby/compare/v5.51.0...v5.51.1)
+
 ## [v5.51.0](https://github.com/openhab/openhab-jruby/tree/v5.51.0) (2026-08-12)
 
 ### Features
