@@ -3805,6 +3805,31 @@ response = <span class="constant">HTTP</span>.get(<span class="string"><span cla
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#send_http_patch_request-class_method" title="send_http_patch_request (class method)">.<strong>send_http_patch_request</strong>(url, content_type = nil, content = nil, headers: {}, timeout: nil)  &#x21d2; String<sup>?</sup> </a>
+    
+
+    
+      (also: patch)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sends an HTTP PATCH request and returns the result as a String.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#send_http_post_request-class_method" title="send_http_post_request (class method)">.<strong>send_http_post_request</strong>(url, content_type = nil, content = nil, headers: {}, timeout: nil)  &#x21d2; String<sup>?</sup> </a>
     
 
@@ -3971,21 +3996,15 @@ Underscores in symbolic keys are replaced with dashes.</p>
       <pre class="lines">
 
 
-89
-90
-91
-92
-93
-94</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/http.rb', line 89</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/http.rb', line 99</span>
 
 <span class="keyword">def</span> <span class="function">send_http_delete_request</span>(url, <span class="key">headers</span>: {}, <span class="key">timeout</span>: <span class="predefined-constant">nil</span>)
-  timeout ||= <span class="integer">1_000</span>
-  timeout = timeout.to_millis <span class="keyword">if</span> timeout.is_a?(<span class="constant">Duration</span>)
-
-  sendHttpDeleteRequest(url, headers.transform_keys(&amp;<span class="symbol">:to_s</span>), timeout)
+  request(<span class="symbol">:sendHttpDeleteRequest</span>, url, <span class="key">headers</span>:, <span class="key">timeout</span>:)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4102,19 +4121,177 @@ Underscores in symbolic keys are replaced with dashes.</p>
 
 30
 31
-32
-33
-34
-35</pre>
+32</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/http.rb', line 30</span>
 
 <span class="keyword">def</span> <span class="function">send_http_get_request</span>(url, <span class="key">headers</span>: {}, <span class="key">timeout</span>: <span class="predefined-constant">nil</span>)
-  timeout ||= <span class="integer">5_000</span>
-  timeout = timeout.to_millis <span class="keyword">if</span> timeout.is_a?(<span class="constant">Duration</span>)
+  request(<span class="symbol">:sendHttpGetRequest</span>, url, <span class="key">headers</span>:, <span class="key">timeout</span>:, <span class="key">default_timeout</span>: <span class="integer">5_000</span>)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="send_http_patch_request-class_method">
+  
+    .<strong>send_http_patch_request</strong>(url, content_type = nil, content = nil, headers: {}, timeout: nil)  &#x21d2; <tt>String</tt><sup>?</sup> 
+  
 
-  sendHttpGetRequest(url, headers.transform_keys(&amp;<span class="symbol">:to_s</span>), timeout)
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='patch-class_method'>patch</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sends an HTTP PATCH request and returns the result as a String.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>url</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>content_type</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>content</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>headers</span>
+      
+      
+        <span class='type'>(<tt>Hash&lt;String, String&gt;</tt>, <tt>Hash&lt;<span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span>, String&gt;</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>A hash of headers to send with the request. Symbolic keys will be converted to strings.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>timeout</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../CoreExt/Java/Duration.html" title="OpenHAB::CoreExt::Java::Duration (class)">Duration</a></span></tt>, <tt>int</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Timeout (in milliseconds, if given as an Integer)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the response body</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>if an error occurred</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 5.3</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+83
+84
+85</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/http.rb', line 83</span>
+
+<span class="keyword">def</span> <span class="function">send_http_patch_request</span>(url, content_type = <span class="predefined-constant">nil</span>, content = <span class="predefined-constant">nil</span>, <span class="key">headers</span>: {}, <span class="key">timeout</span>: <span class="predefined-constant">nil</span>)
+  request(<span class="symbol">:sendHttpPatchRequest</span>, url, content_type, content, <span class="key">headers</span>:, <span class="key">timeout</span>:)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4255,21 +4432,15 @@ Underscores in symbolic keys are replaced with dashes.</p>
       <pre class="lines">
 
 
-70
-71
-72
-73
-74
-75</pre>
+64
+65
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/http.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/http.rb', line 64</span>
 
 <span class="keyword">def</span> <span class="function">send_http_post_request</span>(url, content_type = <span class="predefined-constant">nil</span>, content = <span class="predefined-constant">nil</span>, <span class="key">headers</span>: {}, <span class="key">timeout</span>: <span class="predefined-constant">nil</span>)
-  timeout ||= <span class="integer">1_000</span>
-  timeout = timeout.to_millis <span class="keyword">if</span> timeout.is_a?(<span class="constant">Duration</span>)
-
-  sendHttpPostRequest(url, content_type, content, headers.transform_keys(&amp;<span class="symbol">:to_s</span>), timeout)
+  request(<span class="symbol">:sendHttpPostRequest</span>, url, content_type, content, <span class="key">headers</span>:, <span class="key">timeout</span>:)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4410,21 +4581,15 @@ Underscores in symbolic keys are replaced with dashes.</p>
       <pre class="lines">
 
 
-50
-51
-52
-53
-54
-55</pre>
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/http.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/core/actions/http.rb', line 47</span>
 
 <span class="keyword">def</span> <span class="function">send_http_put_request</span>(url, content_type = <span class="predefined-constant">nil</span>, content = <span class="predefined-constant">nil</span>, <span class="key">headers</span>: {}, <span class="key">timeout</span>: <span class="predefined-constant">nil</span>)
-  timeout ||= <span class="integer">1_000</span>
-  timeout = timeout.to_millis <span class="keyword">if</span> timeout.is_a?(<span class="constant">Duration</span>)
-
-  sendHttpPutRequest(url, content_type, content, headers.transform_keys(&amp;<span class="symbol">:to_s</span>), timeout)
+  request(<span class="symbol">:sendHttpPutRequest</span>, url, content_type, content, <span class="key">headers</span>:, <span class="key">timeout</span>:)
 <span class="keyword">end</span></pre>
     </td>
   </tr>
@@ -4436,7 +4601,7 @@ Underscores in symbolic keys are replaced with dashes.</p>
 </div>
 
         <footer>
-  Generated on Mon Aug 17 16:29:07 2026 by
+  Generated on Tue Aug 18 16:30:37 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.2).
 </footer>
