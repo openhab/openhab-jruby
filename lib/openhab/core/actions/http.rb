@@ -28,10 +28,7 @@ module OpenHAB
           # @return [nil] if an error occurred
           #
           def send_http_get_request(url, headers: {}, timeout: nil)
-            timeout ||= 5_000
-            timeout = timeout.to_millis if timeout.is_a?(Duration)
-
-            sendHttpGetRequest(url, headers.transform_keys(&:to_s), timeout)
+            request(:sendHttpGetRequest, url, headers:, timeout:, default_timeout: 5_000)
           end
           alias_method :get, :send_http_get_request
 
@@ -48,10 +45,7 @@ module OpenHAB
           # @return [nil] if an error occurred
           #
           def send_http_put_request(url, content_type = nil, content = nil, headers: {}, timeout: nil)
-            timeout ||= 1_000
-            timeout = timeout.to_millis if timeout.is_a?(Duration)
-
-            sendHttpPutRequest(url, content_type, content, headers.transform_keys(&:to_s), timeout)
+            request(:sendHttpPutRequest, url, content_type, content, headers:, timeout:)
           end
           alias_method :put, :send_http_put_request
 
@@ -68,12 +62,28 @@ module OpenHAB
           # @return [nil] if an error occurred
           #
           def send_http_post_request(url, content_type = nil, content = nil, headers: {}, timeout: nil)
-            timeout ||= 1_000
-            timeout = timeout.to_millis if timeout.is_a?(Duration)
-
-            sendHttpPostRequest(url, content_type, content, headers.transform_keys(&:to_s), timeout)
+            request(:sendHttpPostRequest, url, content_type, content, headers:, timeout:)
           end
           alias_method :post, :send_http_post_request
+
+          #
+          # Sends an HTTP PATCH request and returns the result as a String.
+          #
+          # @param [String] url
+          # @param [String] content_type
+          # @param [String] content
+          # @param [Hash<String, String>, Hash<Symbol, String>] headers
+          #   A hash of headers to send with the request. Symbolic keys will be converted to strings.
+          # @param [Duration, int, nil] timeout Timeout (in milliseconds, if given as an Integer)
+          # @return [String] the response body
+          # @return [nil] if an error occurred
+          #
+          # @since openHAB 5.3
+          #
+          def send_http_patch_request(url, content_type = nil, content = nil, headers: {}, timeout: nil)
+            request(:sendHttpPatchRequest, url, content_type, content, headers:, timeout:)
+          end
+          alias_method :patch, :send_http_patch_request
 
           #
           # Sends an HTTP DELETE request and returns the result as a String.
@@ -87,12 +97,18 @@ module OpenHAB
           # @return [nil] if an error occurred
           #
           def send_http_delete_request(url, headers: {}, timeout: nil)
-            timeout ||= 1_000
-            timeout = timeout.to_millis if timeout.is_a?(Duration)
-
-            sendHttpDeleteRequest(url, headers.transform_keys(&:to_s), timeout)
+            request(:sendHttpDeleteRequest, url, headers:, timeout:)
           end
           alias_method :delete, :send_http_delete_request
+
+          private
+
+          def request(java_method, url, *payload, headers:, timeout:, default_timeout: 1_000)
+            timeout ||= default_timeout
+            timeout = timeout.to_millis if timeout.is_a?(Duration)
+
+            public_send(java_method, url, *payload, headers.transform_keys(&:to_s), timeout)
+          end
         end
       end
     end
