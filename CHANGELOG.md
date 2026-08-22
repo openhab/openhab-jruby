@@ -1,5 +1,17 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.52.0](https://github.com/openhab/openhab-jruby/tree/v5.52.0) (2026-08-22)
+
+### Features
+
+- Support HTTP Patch action by [@jimtng](https://github.com/jimtng) in [#559](https://github.com/openhab/openhab-jruby/pull/559)
+
+### Bug Fixes
+
+- Fix Voice.say incorrectly calling the wrong overloaded Java method by [@jimtng](https://github.com/jimtng) in [#561](https://github.com/openhab/openhab-jruby/pull/561)
+
+**Full Changelog**: [v5.51.1...v5.52.0](https://github.com/openhab/openhab-jruby/compare/v5.51.1...v5.52.0)
+
 ## [v5.51.1](https://github.com/openhab/openhab-jruby/tree/v5.51.1) (2026-08-17)
 
 ### Bug Fixes
