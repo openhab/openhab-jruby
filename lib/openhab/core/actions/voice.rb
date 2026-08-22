@@ -6,9 +6,6 @@ module OpenHAB
       # @see https://www.openhab.org/docs/configuration/multimedia.html#actions-3 Voice Actions
       class Voice
         class << self
-          # @!visibility private
-          alias_method :raw_say, :say if method_defined?(:say)
-
           #
           # Say text via openHAB Text-To-Speech service, Voice.say()
           #
@@ -27,7 +24,15 @@ module OpenHAB
           #
           def say(text, voice: nil, sink: nil, volume: nil)
             volume = PercentType.new(volume) unless volume.is_a?(PercentType) || volume.nil?
-            raw_say(text.to_s, voice&.to_s, sink&.to_s, volume)
+            java_send :say,
+                      [java.lang.Object,
+                       java.lang.String,
+                       java.lang.String,
+                       org.openhab.core.library.types.PercentType],
+                      text.to_s,
+                      voice&.to_s,
+                      sink&.to_s,
+                      volume
           end
         end
       end
