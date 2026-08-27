@@ -229,6 +229,25 @@ module OpenHAB
         karaf.use_root_instance = use_root_instance
         main = karaf.launch
 
+        # Ensure DefaultScriptScopeProvider has registered before loading the DSL.
+        karaf.send(:wait) do |continue|
+          karaf.send(
+            :wait_for_service,
+            "org.openhab.core.automation.module.script.ScriptExtensionProvider",
+            filter: "(component.name=org.openhab.core.automation.module.script" \
+                    ".internal.defaultscope.DefaultScriptScopeProvider)"
+          ) { continue.call }
+        end
+
+        deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + 30
+        until (ir = $se.get("ir"))
+          break if Process.clock_gettime(Process::CLOCK_MONOTONIC) >= deadline
+
+          java.lang.Thread.sleep(100) unless ir
+        end
+
+        raise "$ir was not populated by the default script scope before loading openhab/dsl" unless ir
+
         require "openhab/dsl"
 
         require_relative "mocks/persistence_service"
