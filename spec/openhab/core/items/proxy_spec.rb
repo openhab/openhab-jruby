@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable RSpec/IdenticalEqualityAssertion
+# rubocop:disable-next RSpec/IdenticalEqualityAssertion
 RSpec.describe OpenHAB::Core::Items::Proxy do
   before do
     items.build { switch_item "Switch1" }
@@ -128,7 +128,7 @@ RSpec.describe OpenHAB::Core::Items::Proxy do
     expect { Switch1.members }.to raise_error(NoMethodError)
   end
 
-  # rubocop:disable Style/CaseEquality
+  # rubocop:disable-next Style/CaseEquality
   describe "Comparisons" do
     before do
       items.build { switch_item "Switch2" }
@@ -149,6 +149,4 @@ RSpec.describe OpenHAB::Core::Items::Proxy do
       expect(Switch1).not_to be === Switch2
     end
   end
-  # rubocop:enable Style/CaseEquality
 end
-# rubocop:enable RSpec/IdenticalEqualityAssertion

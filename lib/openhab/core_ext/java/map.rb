@@ -52,7 +52,7 @@ module Java::JavaUtil::Map # rubocop:disable Style/ClassAndModuleChildren
   end
 
   def transform_values
-    map do |k, v| # rubocop:disable Style/MapToHash, Style/HashTransformValues
+    map do |k, v| # rubocop:disable Style/MapToHash
       [k, (yield v)]
     end.to_h
   end

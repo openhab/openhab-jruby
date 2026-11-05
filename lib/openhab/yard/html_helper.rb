@@ -62,7 +62,7 @@ module OpenHAB
 
       # have to completely replace this method. only change is the regex splitting
       # into parts now allows `.` as part of the identifier
-      # rubocop:disable Style/NestedTernaryOperator, Style/StringConcatenation, Style/TernaryParentheses
+      # rubocop:disable-next Style/NestedTernaryOperator, Style/StringConcatenation, Style/TernaryParentheses
       def format_types(typelist, brackets = true) # rubocop:disable Style/OptionalBooleanParameter
         return unless typelist.is_a?(Array)
 
@@ -73,7 +73,6 @@ module OpenHAB
         end
         list.empty? ? "" : (brackets ? "(#{list.join(", ")})" : list.join(", "))
       end
-      # rubocop:enable Style/NestedTernaryOperator, Style/StringConcatenation, Style/TernaryParentheses
     end
   end
 end

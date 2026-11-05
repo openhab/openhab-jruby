@@ -20,7 +20,7 @@ RSpec.describe OpenHAB::Core::Things::ThingUID do
   end
 
   describe "useful string interrogations work" do
-    # rubocop:disable Performance/StringInclude
+    # rubocop:disable-next Performance/StringInclude
     it "supports them" do
       expect(uid.start_with?("astro:")).to be true
       expect(uid.end_with?(":home")).to be true
@@ -37,7 +37,6 @@ RSpec.describe OpenHAB::Core::Things::ThingUID do
       expect(uid =~ /binding:sun/).to be_nil
       expect(uid.match(/binding:sun/)).to be_nil
     end
-    # rubocop:enable Performance/StringInclude
   end
 
   describe "#binding_id" do
