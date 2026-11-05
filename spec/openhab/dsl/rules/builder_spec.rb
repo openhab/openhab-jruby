@@ -112,6 +112,49 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       end
     end
 
+    describe "module id inference" do
+      it "infers trigger ids from the rule uid" do
+        items.build { switch_item "MySwitch" }
+        my_rule = rule id: "my_test_rule" do
+          changed MySwitch
+          run { nil }
+        end
+        expect(my_rule.triggers.first.id).to eq "my_test_rule:1"
+      end
+
+      it "infers sequential trigger ids for multiple triggers" do
+        items.build do
+          switch_item "MySwitch1"
+          switch_item "MySwitch2"
+        end
+        my_rule = rule id: "my_test_rule" do
+          changed MySwitch1
+          changed MySwitch2
+          run { nil }
+        end
+        expect(my_rule.triggers.map(&:id)).to eq %w[my_test_rule:1 my_test_rule:2]
+      end
+
+      it "uses a uuid as fallback trigger id when no rule uid is available" do
+        items.build { switch_item "MySwitch" }
+        rule_triggers = OpenHAB::DSL::Rules::RuleTriggers.new
+        trigger = rule_triggers.append_trigger(
+          type: "core.ItemStateChangeTrigger",
+          config: { "itemName" => "MySwitch" }
+        )
+        expect(trigger.id).to match(/\A[0-9a-f-]{36}\z/)
+      end
+
+      it "infers on_load module id from the rule uid" do
+        attachment = nil
+        rule id: "my_load_rule" do
+          on_load attach: :test_attach
+          run { |event| attachment = event.attachment }
+        end
+        expect(attachment).to eq :test_attach
+      end
+    end
+
     describe "#on_start" do
       it "works with default level" do
         rule = rule do
