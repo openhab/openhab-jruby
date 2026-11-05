@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "forwardable"
+require "openhab/core_ext/gems/method_source"
 
 Dir[File.expand_path("**/*.rb", __dir__)].reject { |f| f == __FILE__ }.each do |f|
   require f
@@ -72,7 +73,7 @@ module OpenHAB
           raise ArgumentError, "Block is required" unless block
 
           id ||= inferred_id = NameInference.infer_rule_id_from_block(block)
-          script ||= block.source rescue nil # rubocop:disable Style/RescueModifier
+          script ||= script_source(block)
 
           builder = nil
 
@@ -155,7 +156,7 @@ module OpenHAB
           inferred_id = nil # rubocop:disable Lint/UselessAssignment -- it is used below
           id ||= inferred_id = NameInference.infer_rule_id_from_block(block)
           name ||= id
-          script ||= block.source rescue nil # rubocop:disable Style/RescueModifier
+          script ||= script_source(block)
 
           if replace
             logger.debug { "Removing existing rule '#{id}'." } if DSL.rules.remove(id)
@@ -203,7 +204,7 @@ module OpenHAB
           inferred_id = nil # rubocop:disable Lint/UselessAssignment
           id ||= inferred_id = NameInference.infer_rule_id_from_block(block)
           name ||= id
-          script ||= block.source rescue nil # rubocop:disable Style/RescueModifier
+          script ||= script_source(block)
 
           if replace
             logger.debug { "Removing existing rule '#{id}'." } if DSL.rules.remove(id)
@@ -224,6 +225,26 @@ module OpenHAB
             logger.trace { builder.inspect }
             builder.build(provider, script)
           end
+        end
+
+        private
+
+        def script_source(block)
+          file, line = block.source_location
+          return unless line
+
+          location = if file == "<script>"
+                       "script:#{$ctx&.[]("ruleUID")}"
+                     else
+                       Pathname.new(file).relative_path_from(OpenHAB::Core.config_folder) rescue file # rubocop:disable Style/RescueModifier
+                     end
+
+          comment = block.comment&.strip rescue nil # rubocop:disable Style/RescueModifier
+          comment = nil if comment&.empty?
+
+          ["# Source: #{location}:#{line}", comment, block.source].compact.join("\n")
+        rescue
+          nil
         end
       end
 
