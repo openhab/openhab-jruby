@@ -557,7 +557,7 @@ end
 # @!parse Semantics = OpenHAB::Core::Items::Semantics
 
 # Additions to Enumerable to allow easily filtering groups of items based on the semantic model
-module Enumerable
+module Enumerable # rubocop:disable Style/OneClassPerFile
   #
   # @!group Filtering Methods
   #

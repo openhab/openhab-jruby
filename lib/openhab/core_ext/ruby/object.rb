@@ -11,7 +11,7 @@ module OpenHAB
           def method_added(method)
             return super unless equal?(::Object)
 
-            if DSL.private_instance_methods.include?(method)
+            if DSL.private_method_defined?(method)
               # Duplicate methods that conflict with DSL onto `main`'s singleton class,
               # so that they'll take precedence over DSL's method.
               TOPLEVEL_BINDING.receiver.singleton_class.define_method(method, instance_method(method))

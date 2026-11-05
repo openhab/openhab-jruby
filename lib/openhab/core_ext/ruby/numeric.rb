@@ -63,7 +63,7 @@ class Integer
 end
 
 # Extensions to Float
-class Float
+class Float # rubocop:disable Style/OneClassPerFile
   #
   # Create {Duration} of `self` milliseconds
   #
@@ -136,7 +136,7 @@ class Float
   alias_method :year, :years
 end
 
-module OpenHAB
+module OpenHAB # rubocop:disable Style/OneClassPerFile
   module CoreExt
     module Ruby
       #

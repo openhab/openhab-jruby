@@ -1415,7 +1415,7 @@ module OpenHAB
           missing_args = (REQUIRED_BUTTON_ARGS - kwargs.keys).compact
           unless missing_args.empty?
             args = kwargs.map { |k, v| "#{k}: #{v.inspect}" }.join(", ")
-            missing_args = missing_args.map(&:to_s).join(", ")
+            missing_args = missing_args.join(", ")
             raise ArgumentError, "button(#{args}) missing required parameters: #{missing_args}"
           end
 

@@ -102,14 +102,13 @@ module OpenHAB
             raise ArgumentError, "Specify one of bundle_or_actor, bundle or actor"
           end
 
-          # rubocop:disable Style/CaseEquality
+          # rubocop:disable-next Style/CaseEquality
           components.any? do |sender|
             (bundle && bundle === sender.bundle) ||
               (actor && actor === sender.actor) ||
               (bundle_or_actor && bundle_or_actor === sender.bundle) ||
               (bundle_or_actor && bundle_or_actor === sender.actor)
           end
-          # rubocop:enable Style/CaseEquality
         end
 
         #

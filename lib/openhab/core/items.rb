@@ -128,10 +128,10 @@ module OpenHAB
                .select { |k| k <= GenericItem && k != GroupItem && k != StringItem }
                .sort { |a, b| (a < b) ? 1 : -1 }
                .each do |klass|
-                 klass.field_reader :ACCEPTED_COMMAND_TYPES, :ACCEPTED_DATA_TYPES unless klass == GenericItem
+        klass.field_reader :ACCEPTED_COMMAND_TYPES, :ACCEPTED_DATA_TYPES unless klass == GenericItem
 
-                 def_predicate_methods(klass)
-                 def_command_methods(klass)
+        def_predicate_methods(klass)
+        def_command_methods(klass)
       end
 
       prepend_accepted_data_types

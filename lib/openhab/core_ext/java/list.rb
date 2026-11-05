@@ -14,8 +14,6 @@ module Java::JavaUtil::List # rubocop:disable Style/ClassAndModuleChildren
                  :intersection,
                  :pack,
                  :product,
-                 :repeated_combination,
-                 :repeated_permutation,
                  :reverse,
                  :rotate,
                  :sample,
@@ -88,7 +86,7 @@ module Java::JavaUtil::List # rubocop:disable Style/ClassAndModuleChildren
     raise NotImplementedError unless block_given?
 
     itr = list_iterator
-    while itr.has_next? # rubocop:disable Style/WhileUntilModifier
+    while itr.has_next?
       itr.remove if yield(itr.next)
     end
     self
@@ -224,7 +222,7 @@ module Java::JavaUtil::List # rubocop:disable Style/ClassAndModuleChildren
     raise NotImplementedError unless block_given?
 
     itr = list_iterator
-    while itr.has_next? # rubocop:disable Style/WhileUntilModifier
+    while itr.has_next?
       itr.remove unless yield(itr.next)
     end
     self
