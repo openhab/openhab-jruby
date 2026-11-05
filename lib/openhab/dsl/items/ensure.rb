@@ -33,8 +33,6 @@ module OpenHAB
           # check if this item is in the command's state before actually
           # sending the command
           %i[command update].each do |ensured_method|
-            # rubocop:disable Style/IfUnlessModifier
-
             # def command(state, **kwargs)
             #   # immediately send the command if it's a command, but not a state (like REFRESH)
             #   return super(state, **kwargs) if state.is_a?(Command) && !state.is_a?(State)
@@ -63,7 +61,6 @@ module OpenHAB
                 super(formatted_state, **kwargs)
               end
             RUBY
-            # rubocop:enable Style/IfUnlessModifier
           end
         end
 

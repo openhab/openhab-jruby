@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Naming/MethodName, Naming/AccessorMethodName
+# rubocop:disable Naming/AccessorMethodName
 
 require "singleton"
 
@@ -83,4 +83,4 @@ module OpenHAB
     end
   end
 end
-# rubocop:enable Naming/MethodName, Naming/AccessorMethodName
+# rubocop:enable Naming/AccessorMethodName

@@ -43,9 +43,7 @@ module OpenHAB
       end
     end
   end
-end
 
-module OpenHAB
   module RSpec
     #
     # Provides helper methods for use in specs, to easily work with and adjust
@@ -201,7 +199,7 @@ module OpenHAB
           .split(File::PATH_SEPARATOR)
             .reject(&:empty?)
             .reject do |path|
-              $LOAD_PATH.include?(path)
+                             $LOAD_PATH.include?(path)
                            end)
 
         requires = jrubyscripting_config&.get("require") || ""
@@ -275,16 +273,16 @@ module OpenHAB
             OSGi.service_component_classes(bundle)
                 .select { |klass, _services| klass.ancestors.include?(ast.java_class) }
                 .each do |klass, services|
-                  new_ast_klass = Class.new(ast)
-                  new_ast_klass.become_java!
-                  wrapped_storage_service = Mocks::AbstractStorageBasedTypeProviderWrappedStorageService
-                                            .new(storage_service,
-                                                 new_ast_klass.java_class,
-                                                 klass)
-                  new_ast = new_ast_klass.new(wrapped_storage_service)
+              new_ast_klass = Class.new(ast)
+              new_ast_klass.become_java!
+              wrapped_storage_service = Mocks::AbstractStorageBasedTypeProviderWrappedStorageService
+                                        .new(storage_service,
+                                             new_ast_klass.java_class,
+                                             klass)
+              new_ast = new_ast_klass.new(wrapped_storage_service)
 
-                  services -= [klass.name]
-                  OSGi.register_service(new_ast, *services, bundle: ast_bundle)
+              services -= [klass.name]
+              OSGi.register_service(new_ast, *services, bundle: ast_bundle)
             end
           end
         end
