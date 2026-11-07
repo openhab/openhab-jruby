@@ -12,6 +12,13 @@ module OpenHAB
     module IRB
       class Exit < Exception; end # rubocop:disable Lint/InheritException
 
+      module InteractiveStdin
+        def tty?
+          $stdin.tty?
+        end
+      end
+      STDIN.singleton_class.prepend(InteractiveStdin) # rubocop:disable Style/GlobalStdStream
+
       module Irb
         # Define #exit instead of using Kernel#exit, to raise an error if we're not
         # on the main thread (i.e. in the signal handler)
