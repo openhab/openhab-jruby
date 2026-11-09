@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  RUBY_VERSION: 3.4.2
+  RUBY_VERSION: 3.4
   GITHUB_TOKEN: ${{ github.token }}
 
 jobs:
@@ -130,7 +130,7 @@ jobs:
 
   rspec:
     needs: [openhab-snapshot-date, openhab-setup]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: "!contains(github.event.head_commit.message, 'ci skip')"
     strategy:
       matrix:
