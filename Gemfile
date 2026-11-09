@@ -19,7 +19,7 @@ end
 group :development, :test do
   gem "coderay", "~> 1.1.3", platform: :mri
   gem "commonmarker", "~> 2.0", platform: :mri
-  gem "nokogiri", "~> 1.15", require: false
+  gem "nokogiri", "~> 1.19", require: false
   gem "process_exists", "~> 0.2", require: false
   gem "rake", "~> 13.0", require: false
   gem "rubocop-inst", "~> 1.0", require: false
