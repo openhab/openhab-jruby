@@ -6,10 +6,11 @@ if defined?($dependencyListener)
   klass = Class.new(org.jruby.util.collections.StringArraySet) do
     def initialize(other)
       super(JRuby.runtime)
-      other.each { |feature| append(feature) }
+      other.each { |feature| append(JRuby.runtime.current_context, feature) }
     end
 
-    def append(name)
+    # JRuby's load service uses the overload that takes a ThreadContext.
+    def append(context, name)
       $dependencyListener.accept(name)
 
       super
