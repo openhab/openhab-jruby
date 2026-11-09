@@ -39,7 +39,7 @@ Code documentation is written in [Yard](https://yardoc.org/) and the current doc
 1. Write your code.
 1. Verify your tests now pass by running `bin/rspec spec/<your spec file>_spec.rb`. This requires JRuby.
 1. Update the documentation, run `bin/yardoc` to view the rendered documentation locally
-1. Lint your code with `bundle exec rake lint:rubocop` and ensure you have not created any [Rubocop](https://github.com/rubocop-hq/rubocop) violations.
+1. Lint your code with `bin/rubocop` and ensure you have not created any [Rubocop](https://github.com/rubocop-hq/rubocop) violations. Prefer MRI Ruby for running RuboCop, since there's no need to run it under JRuby, and it's much slower under JRuby.
 1. Submit your PR(s)!
 
 If you get stuck or need help along the way, please open an issue.
