@@ -841,6 +841,84 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
   end
 
+  describe "nested sitemaps" do
+    # @deprecated OH 5.3: remove the conditional when dropping support for OH 5.2
+    if OpenHAB::Core::Sitemaps::Provider.registry &&
+       OpenHAB::Core::Sitemaps::Provider.factory.get_supported_widget_types.include?("Sitemap")
+      it "links to a sitemap without registering or replacing it" do
+        child = sitemaps.build do
+          sitemap "child" do
+            switch item: "Light"
+          end
+        end
+        parent = sitemaps.build do
+          sitemap "parent" do
+            sitemap "child", label: "Child Sitemap", icon: "house", visibility: "Light == ON"
+          end
+        end
+
+        nested = parent.widgets.first
+        expect(nested.widget_type).to eq "Sitemap"
+        expect(nested.name).to eq "child"
+        expect(nested.label).to eq "Child Sitemap"
+        expect(nested.icon).to eq "house"
+        expect(nested.visibility.first.conditions.first.item).to eq "Light"
+        expect(sitemaps["child"]).to eq child
+        expect(sitemaps["child"].widgets.first.item).to eq "Light"
+        expect(OpenHAB::Core::Sitemaps::Provider.current.all.size).to eq 2
+      end
+
+      it "supports an item supplying the sitemap name inside a frame" do
+        items.build { string_item "SitemapName" }
+        parent = sitemaps.build do
+          sitemap "parent" do
+            frame do
+              sitemap item: SitemapName, label: "Selected Sitemap"
+            end
+          end
+        end
+
+        nested = parent.widgets.first.widgets.first
+        expect(nested.name).to be_nil
+        expect(nested.item).to eq "SitemapName"
+        expect(nested.label).to eq "Selected Sitemap"
+        expect(OpenHAB::Core::Sitemaps::Provider.current.all.size).to eq 1
+      end
+
+      it "supports builder proxies and widget configuration blocks" do
+        sitemaps.build do |builder|
+          builder.sitemap "parent" do
+            builder.text label: "Navigation" do
+              builder.sitemap "child" do |widget|
+                widget.name = "other"
+                widget.label = "Other Sitemap"
+              end
+              builder.switch item: "Light"
+            end
+          end
+          builder.sitemap "child"
+        end
+
+        widgets = sitemaps["parent"].widgets.first.widgets
+        expect(widgets.first.name).to eq "other"
+        expect(widgets.first.label).to eq "Other Sitemap"
+        expect(widgets.last.item).to eq "Light"
+        expect(sitemaps["child"]).not_to be_nil
+        expect(sitemaps["other"]).to be_nil
+      end
+    else
+      it "rejects nested sitemaps on unsupported openHAB versions" do
+        expect do
+          sitemaps.build do
+            sitemap "parent" do
+              sitemap "child"
+            end
+          end
+        end.to raise_error(ArgumentError, /Nested sitemaps require openHAB 5.3/)
+      end
+    end
+  end
+
   context "when redefining a sitemap" do
     it "with update: false, complains if you try to create a sitemap with the same name" do
       sitemaps.build(update: false) { sitemap "default" }
