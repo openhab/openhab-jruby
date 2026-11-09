@@ -24,4 +24,17 @@ RSpec.describe "OpenHAB::Console::IRB", :console do
     $stdin.ungetc("\x04") # just immediately exit
     IRB.start("karaf")
   end
+
+  it "reports the replacement stdin's terminal status to IRB" do
+    allow($stdin).to receive(:tty?).and_return(true)
+    allow(ENV).to receive(:[]).and_call_original
+    allow(ENV).to receive(:[]).with("TERM").and_return("xterm")
+
+    IRB.init_config("karaf")
+    expect(STDIN.tty?).to be(true) # rubocop:disable Style/GlobalStdStream
+
+    irb = IRB::Irb.new
+    expect(irb.context.io).to be_a(IRB::RelineInputMethod)
+    expect(irb.context.prompt_i).not_to be_nil
+  end
 end
