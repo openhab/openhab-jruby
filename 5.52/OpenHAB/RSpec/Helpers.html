@@ -4082,6 +4082,8 @@ explicitly.</p>
       <pre class="lines">
 
 
+193
+194
 195
 196
 197
@@ -4096,12 +4098,10 @@ explicitly.</p>
 206
 207
 208
-209
-210
-211</pre>
+209</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 195</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 193</span>
 
 <span class="keyword">def</span> <span class="function">autorequires</span>
   <span class="predefined-constant">ENV</span>[<span class="string"><span class="delimiter">&quot;</span><span class="content">RUBYLIB</span><span class="delimiter">&quot;</span></span>] ||= <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>
@@ -4112,7 +4112,7 @@ explicitly.</p>
     .split(<span class="constant">File</span>::<span class="constant">PATH_SEPARATOR</span>)
       .reject(&amp;<span class="symbol">:empty?</span>)
       .reject <span class="keyword">do</span> |path|
-        <span class="global-variable">$LOAD_PATH</span>.include?(path)
+                       <span class="global-variable">$LOAD_PATH</span>.include?(path)
                      <span class="keyword">end</span>)
 
   requires = jrubyscripting_config&amp;.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">require</span><span class="delimiter">&quot;</span></span>) || <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>
@@ -4152,12 +4152,12 @@ explicitly.</p>
       <pre class="lines">
 
 
-81
-82
-83</pre>
+79
+80
+81</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 79</span>
 
 <span class="keyword">def</span> <span class="function">autoupdate_all_items</span>
   <span class="comment"># no-op</span>
@@ -4192,17 +4192,17 @@ explicitly.</p>
       <pre class="lines">
 
 
+117
+118
 119
 120
 121
 122
 123
-124
-125
-126</pre>
+124</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 119</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 117</span>
 
 <span class="keyword">def</span> <span class="function">execute_timers</span>
   raise <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot execute timers when timers aren't mocked</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> <span class="predefined-constant">self</span>.class.mock_timers?
@@ -4247,6 +4247,8 @@ immediately.</p>
       <pre class="lines">
 
 
+94
+95
 96
 97
 98
@@ -4261,12 +4263,10 @@ immediately.</p>
 107
 108
 109
-110
-111
-112</pre>
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 94</span>
 
 <span class="keyword">def</span> <span class="function">initialize_missing_thing_types</span>
   thing_manager = <span class="constant">OpenHAB</span>::<span class="constant">OSGi</span>.service(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.thing.ThingManager</span><span class="delimiter">&quot;</span></span>)
@@ -4369,6 +4369,8 @@ The addon's bundle id is used as the identifier.</p>
       <pre class="lines">
 
 
+368
+369
 370
 371
 372
@@ -4400,12 +4402,10 @@ The addon's bundle id is used as the identifier.</p>
 398
 399
 400
-401
-402
-403</pre>
+401</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 370</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 368</span>
 
 <span class="keyword">def</span> <span class="function">install_addon</span>(addon_id, <span class="key">wait</span>: <span class="predefined-constant">true</span>, <span class="key">ready_markers</span>: <span class="predefined-constant">nil</span>)
   service_filter = <span class="string"><span class="delimiter">&quot;</span><span class="content">(component.name=org.openhab.core.karafaddons)</span><span class="delimiter">&quot;</span></span>
@@ -4479,6 +4479,8 @@ The addon's bundle id is used as the identifier.</p>
       <pre class="lines">
 
 
+219
+220
 221
 222
 223
@@ -4561,12 +4563,10 @@ The addon's bundle id is used as the identifier.</p>
 300
 301
 302
-303
-304
-305</pre>
+303</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 219</span>
 
 <span class="keyword">def</span> <span class="function">launch_karaf</span>(<span class="key">include_bindings</span>: <span class="predefined-constant">true</span>,
                  <span class="key">include_jsondb</span>: <span class="predefined-constant">true</span>,
@@ -4625,16 +4625,16 @@ The addon's bundle id is used as the identifier.</p>
       <span class="constant">OSGi</span>.service_component_classes(bundle)
           .select { |klass, _services| klass.ancestors.include?(ast.java_class) }
           .each <span class="keyword">do</span> |klass, services|
-            new_ast_klass = <span class="constant">Class</span>.new(ast)
-            new_ast_klass.become_java!
-            wrapped_storage_service = <span class="constant">Mocks</span>::<span class="constant">AbstractStorageBasedTypeProviderWrappedStorageService</span>
-                                      .new(storage_service,
-                                           new_ast_klass.java_class,
-                                           klass)
-            new_ast = new_ast_klass.new(wrapped_storage_service)
+        new_ast_klass = <span class="constant">Class</span>.new(ast)
+        new_ast_klass.become_java!
+        wrapped_storage_service = <span class="constant">Mocks</span>::<span class="constant">AbstractStorageBasedTypeProviderWrappedStorageService</span>
+                                  .new(storage_service,
+                                       new_ast_klass.java_class,
+                                       klass)
+        new_ast = new_ast_klass.new(wrapped_storage_service)
 
-            services -= [klass.name]
-            <span class="constant">OSGi</span>.register_service(new_ast, *services, <span class="key">bundle</span>: ast_bundle)
+        services -= [klass.name]
+        <span class="constant">OSGi</span>.register_service(new_ast, *services, <span class="key">bundle</span>: ast_bundle)
       <span class="keyword">end</span>
     <span class="keyword">end</span>
   <span class="keyword">end</span>
@@ -4684,6 +4684,8 @@ The addon's bundle id is used as the identifier.</p>
       <pre class="lines">
 
 
+312
+313
 314
 315
 316
@@ -4700,12 +4702,10 @@ The addon's bundle id is used as the identifier.</p>
 327
 328
 329
-330
-331
-332</pre>
+330</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 314</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 312</span>
 
 <span class="keyword">def</span> <span class="function">load_rules</span>
   automation_paths = Array(::<span class="constant">RSpec</span>.configuration.openhab_automation_search_paths)
@@ -4760,6 +4760,8 @@ recognized.</p>
       <pre class="lines">
 
 
+343
+344
 345
 346
 347
@@ -4772,12 +4774,10 @@ recognized.</p>
 354
 355
 356
-357
-358
-359</pre>
+357</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 345</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 343</span>
 
 <span class="keyword">def</span> <span class="function">load_transforms</span>
   transform_path = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>org.openhab.core.OpenHAB.config_folder<span class="inline-delimiter">}</span></span><span class="content">/transform</span><span class="delimiter">&quot;</span></span>
@@ -4841,12 +4841,12 @@ recognized.</p>
       <pre class="lines">
 
 
-406
-407
-408</pre>
+404
+405
+406</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 406</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 404</span>
 
 <span class="keyword">def</span> <span class="function">log_file</span>
   <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>java.lang.System.get_property(<span class="string"><span class="delimiter">&quot;</span><span class="content">openhab.logdir</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">nil</span>)<span class="inline-delimiter">}</span></span><span class="content">/openhab.log</span><span class="delimiter">&quot;</span></span>
@@ -4909,6 +4909,8 @@ recognized.</p>
       <pre class="lines">
 
 
+417
+418
 419
 420
 421
@@ -4925,12 +4927,10 @@ recognized.</p>
 432
 433
 434
-435
-436
-437</pre>
+435</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 419</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 417</span>
 
 <span class="keyword">def</span> <span class="function">spec_log_lines</span>
   lines = []
@@ -4998,12 +4998,12 @@ recognized.</p>
       <pre class="lines">
 
 
-150
-151
-152</pre>
+148
+149
+150</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 150</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 148</span>
 
 <span class="keyword">def</span> <span class="function">suspend_rules</span>(&amp;)
   <span class="constant">SuspendRules</span>.suspend_rules(&amp;)
@@ -5040,17 +5040,17 @@ will just sleep for <code>duration</code></p>
       <pre class="lines">
 
 
+134
+135
 136
 137
 138
 139
 140
-141
-142
-143</pre>
+141</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 134</span>
 
 <span class="keyword">def</span> <span class="function">time_travel_and_execute_timers</span>(duration)
   <span class="keyword">if</span> <span class="predefined-constant">self</span>.class.mock_timers?
@@ -5126,15 +5126,15 @@ will just sleep for <code>duration</code></p>
       <pre class="lines">
 
 
+179
+180
 181
 182
 183
-184
-185
-186</pre>
+184</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 181</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 179</span>
 
 <span class="keyword">def</span> <span class="function">trigger_channel</span>(channel, event = <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>)
   channel = org.openhab.core.thing.ChannelUID.new(channel) <span class="keyword">if</span> channel.is_a?(<span class="constant">String</span>)
@@ -5206,6 +5206,8 @@ will just sleep for <code>duration</code></p>
       <pre class="lines">
 
 
+158
+159
 160
 161
 162
@@ -5216,12 +5218,10 @@ will just sleep for <code>duration</code></p>
 167
 168
 169
-170
-171
-172</pre>
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 158</span>
 
 <span class="keyword">def</span> <span class="function">wait</span>(how_long = <span class="integer">2</span>.seconds)
   start = <span class="constant">Process</span>.clock_gettime(<span class="constant">Process</span>::<span class="constant">CLOCK_MONOTONIC</span>)
@@ -5246,9 +5246,9 @@ will just sleep for <code>duration</code></p>
 </div>
 
         <footer>
-  Generated on Sat Aug 22 14:39:37 2026 by
+  Generated on Mon Nov  9 22:08:51 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.37 (ruby-3.4.2).
+  0.9.37 (ruby-3.4.12).
 </footer>
 
       </main>

@@ -4464,7 +4464,7 @@ such as the Run Rules action.</p>
 <span class="keyword">def</span> <span class="function">scene</span>(name = <span class="predefined-constant">nil</span>, <span class="key">description</span>: <span class="predefined-constant">nil</span>, <span class="key">id</span>: <span class="predefined-constant">nil</span>, <span class="key">tag</span>: <span class="predefined-constant">nil</span>, <span class="key">tags</span>: <span class="predefined-constant">nil</span>, <span class="key">replace</span>: <span class="predefined-constant">false</span>, <span class="key">script</span>: <span class="predefined-constant">nil</span>, &amp;block)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Block is required</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block
 
-  inferred_id = <span class="predefined-constant">nil</span> <span class="comment"># rubocop:disable Lint/UselessAssignment</span>
+  inferred_id = <span class="predefined-constant">nil</span>
   id ||= inferred_id = <span class="constant">NameInference</span>.infer_rule_id_from_block(block)
   name ||= id
   script ||= block.source <span class="keyword">rescue</span> <span class="predefined-constant">nil</span> <span class="comment"># rubocop:disable Style/RescueModifier</span>
@@ -4733,7 +4733,7 @@ rules.scripts[<span class="string"><span class="delimiter">&quot;</span><span cl
 <span class="keyword">def</span> <span class="function">script</span>(name = <span class="predefined-constant">nil</span>, <span class="key">description</span>: <span class="predefined-constant">nil</span>, <span class="key">id</span>: <span class="predefined-constant">nil</span>, <span class="key">tag</span>: <span class="predefined-constant">nil</span>, <span class="key">tags</span>: <span class="predefined-constant">nil</span>, <span class="key">replace</span>: <span class="predefined-constant">false</span>, <span class="key">script</span>: <span class="predefined-constant">nil</span>, &amp;block)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Block is required</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block
 
-  inferred_id = <span class="predefined-constant">nil</span> <span class="comment"># rubocop:disable Lint/UselessAssignment -- it is used below</span>
+  inferred_id = <span class="predefined-constant">nil</span>
   id ||= inferred_id = <span class="constant">NameInference</span>.infer_rule_id_from_block(block)
   name ||= id
   script ||= block.source <span class="keyword">rescue</span> <span class="predefined-constant">nil</span> <span class="comment"># rubocop:disable Style/RescueModifier</span>
@@ -4768,9 +4768,9 @@ rules.scripts[<span class="string"><span class="delimiter">&quot;</span><span cl
 </div>
 
         <footer>
-  Generated on Sat Aug 22 14:39:42 2026 by
+  Generated on Mon Nov  9 22:08:55 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.37 (ruby-3.4.2).
+  0.9.37 (ruby-3.4.12).
 </footer>
 
       </main>
