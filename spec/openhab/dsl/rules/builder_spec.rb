@@ -1528,7 +1528,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       end
     end
 
-    # rubocop:disable RSpec/InstanceVariable
+    # rubocop:disable-next RSpec/InstanceVariable
     describe "#watch" do
       #
       # NOTE: OH4's watch service suppresses successive file change events
@@ -1784,7 +1784,6 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         end
       end
     end
-    # rubocop:enable RSpec/InstanceVariable
   end
 
   describe "execution blocks" do
@@ -2006,7 +2005,7 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
       end
     end
 
-    # rubocop:disable RSpec/InstanceVariable
+    # rubocop:disable-next RSpec/InstanceVariable
     context "with guards" do
       describe "#only_if" do
         def run_rule
@@ -2255,7 +2254,6 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
         end
       end
     end
-    # rubocop:enable RSpec/InstanceVariable
   end
 
   describe "#description" do
