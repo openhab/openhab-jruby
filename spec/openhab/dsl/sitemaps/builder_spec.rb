@@ -1,13 +1,20 @@
 # frozen_string_literal: true
 
 RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
-  # @deprecated when dropping OH 5.1, remove these helpers
-  # also remove the .to_s from the condition.to_s calls
+  # @deprecated when dropping OH 5.1, remove the .state branch
+  #   also remove the .to_s from the callsites
+  # @deprecated when dropping OH 5.2, use condition.argument directly
   def condition_value(condition)
+    return condition.argument if condition.respond_to?(:argument)
+
     condition.respond_to?(:value) ? condition.value : condition.state
   end
 
+  # @deprecated when dropping OH 5.1, remove the .arg branch
+  # @deprecated when dropping OH 5.2, use rule.value directly
   def rule_argument(rule)
+    return rule.value if rule.respond_to?(:value)
+
     rule.respond_to?(:argument) ? rule.argument : rule.arg
   end
 
@@ -308,11 +315,19 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
   end
 
   it "supports AND conditions on visibility" do
-    sitemaps.build do
+    s = sitemaps.build do
       sitemap "default", label: "My Residence" do
-        switch item: "Switch1", visibility: [["Switch1 == ON"]]
+        switch item: "Switch1", visibility: [["Switch1 == ON", "Temperature < -10"]]
       end
     end
+
+    rules = s.widgets.first.visibility
+    expect(rules.size).to eq 1
+    conditions = rules.first.conditions
+    expect(conditions.size).to eq 2
+    expect(conditions.map(&:item)).to eq %w[Switch1 Temperature]
+    expect(conditions.map { |condition| condition.condition.to_s }).to eq ["==", "<"]
+    expect(conditions.map { |condition| condition_value(condition) }).to eq ["ON", "-10"]
   end
 
   it "supports AND conditions on colors" do
