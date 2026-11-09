@@ -7,12 +7,21 @@ module OpenHAB
       # Compatibility helpers for old model-backed sitemaps and the new core sitemap registry.
       #
       # @deprecated OH 5.2: Remove entire module when dropping OH 5.1, collapsing calls to match the registry branch
-      # Don't forget to remove the reference to it in .yardopts
+      #   Don't forget to remove the reference to it in .yardopts
+      # @deprecated OH 5.3: Directly use argument for conditions and value for rules
       # @!visibility private
       module Compatibility
         class << self
           def factory
             Provider.factory
+          end
+
+          def set_rule_value(rule, value)
+            if rule.respond_to?(:value=)
+              rule.value = value
+            else
+              rule.argument = value
+            end
           end
 
           if Provider.registry
@@ -35,7 +44,11 @@ module OpenHAB
             end
 
             def set_condition(condition, sign:, state:)
-              condition.value = "#{sign}#{state}"
+              if condition.respond_to?(:argument=)
+                condition.argument = "#{sign}#{state}"
+              else
+                condition.value = "#{sign}#{state}"
+              end
             end
           else
             def supported_widget_type?(type)

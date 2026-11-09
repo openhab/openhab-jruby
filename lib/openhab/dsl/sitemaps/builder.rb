@@ -257,14 +257,14 @@ module OpenHAB
           colors.delete(:default)&.tap { |default_color| colors.merge!(nil => default_color) }
 
           add_conditions(widget, method, colors.keys, :color) do |rule, key|
-            rule.argument = colors[key]
+            Core::Sitemaps::Compatibility.set_rule_value(rule, colors[key])
           end
         end
 
         def add_icons(widget)
           icon.delete(:default)&.tap { |default_icon| icon.merge!(nil => default_icon) }
           add_conditions(widget, :icon_rules, icon.keys, :icon) do |rule, key|
-            rule.argument = icon[key]
+            Core::Sitemaps::Compatibility.set_rule_value(rule, icon[key])
           end
         end
 
