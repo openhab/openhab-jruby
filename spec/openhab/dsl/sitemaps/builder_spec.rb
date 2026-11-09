@@ -166,6 +166,77 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
     end
   end
 
+  describe "#confirm" do
+    def confirmation_widget(value)
+      sitemaps.build do
+        sitemap "default" do
+          switch item: "Switch1", confirm: value
+        end
+      end.widgets.first
+    end
+
+    # @deprecated OH 5.3 - remove the condition when dropping OH 5.2
+    if OpenHAB::Core::Sitemaps::Compatibility.create_widget(:switch).respond_to?(:confirm_cmd=)
+      [true, false].each do |value|
+        it "supports #{value}" do
+          widget = confirmation_widget(value)
+          expect(widget.confirm_cmd).to be value
+          expect(widget.confirm_cmd_rules).to be_empty
+        end
+      end
+
+      it "leaves confirmation disabled when omitted" do
+        widget = confirmation_widget(nil)
+        expect(widget.confirm_cmd).to be false
+        expect(widget.confirm_cmd_rules).to be_empty
+      end
+
+      it "supports an unconditional custom message" do
+        rule = confirmation_widget("Set x=10?").confirm_cmd_rules.first
+        expect(rule_argument(rule)).to eq "Set x=10?"
+        expect(rule.conditions).to be_empty
+      end
+
+      it "supports conditional messages and puts the default last without mutating the hash" do
+        rules = { :default => "Continue?", ["Switch1 == ON", "Temperature < -10"] => "Turn off?", "OFF" => nil }
+        widget = confirmation_widget(rules.freeze)
+        expect(widget.confirm_cmd_rules.map { |rule| rule_argument(rule) }).to eq ["Turn off?", nil, "Continue?"]
+        conditions = widget.confirm_cmd_rules.first.conditions
+        expect(conditions.map(&:item)).to eq %w[Switch1 Temperature]
+        expect(conditions.map(&:condition)).to eq ["==", "<"]
+        expect(conditions.map { |condition| condition_value(condition) }).to eq ["ON", "-10"]
+        expect(widget.confirm_cmd_rules.last.conditions).to be_empty
+        expect(rules.keys.first).to eq :default
+      end
+
+      it "supports alternative and combined conditions with default messages" do
+        widget = confirmation_widget([ON, ["Switch1 == OFF", "Temperature > 30"]])
+        expect(widget.confirm_cmd_rules.map { |rule| rule_argument(rule) }).to eq [nil, nil]
+        expect(widget.confirm_cmd_rules.map { |rule| rule.conditions.size }).to eq [1, 2]
+        expect(condition_value(widget.confirm_cmd_rules.first.conditions.first)).to eq "ON"
+      end
+
+      it "supports configuring confirmation in a widget block" do
+        sitemap = sitemaps.build do
+          sitemap "default" do
+            slider item: "Temperature" do
+              confirm "Change the temperature?"
+            end
+          end
+        end
+        expect(rule_argument(sitemap.widgets.first.confirm_cmd_rules.first)).to eq "Change the temperature?"
+      end
+
+      it "rejects invalid confirmation values" do
+        expect { confirmation_widget(42) }.to raise_error(ArgumentError, /confirm must be/)
+      end
+    else
+      it "rejects confirmation on unsupported openHAB versions" do
+        expect { confirmation_widget(true) }.to raise_error(ArgumentError, /requires openHAB 5.2/)
+      end
+    end
+  end
+
   describe "#visibility" do
     it "supports a simple condition" do
       s = sitemaps.build do
