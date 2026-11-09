@@ -12,7 +12,7 @@ gemspec
 group :development do
   gem "debug", "~> 1.9", platform: :mri
   gem "gem-release", "~> 2.2"
-  gem "puma", "~> 6.6", platform: :mri
+  gem "puma", "~> 8.0", platform: :mri
   gem "rackup", "~> 2.2", platform: :mri
 end
 
