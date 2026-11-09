@@ -1,5 +1,20 @@
 # JRuby openHAB Scripting Change Log
 
+## [v5.52.1](https://github.com/openhab/openhab-jruby/tree/v5.52.1) (2026-11-09)
+
+### Features
+
+- Update to JRuby 10.1.2.0 by [@jimtng](https://github.com/jimtng) in [#563](https://github.com/openhab/openhab-jruby/pull/563)
+- allow updating marcel dependency by [@ccutrer](https://github.com/ccutrer) in [#564](https://github.com/openhab/openhab-jruby/pull/564)
+
+### Bug Fixes
+
+- fix compatibility with changes to openHAB 5.3 sitemaps by [@ccutrer](https://github.com/ccutrer) in [#573](https://github.com/openhab/openhab-jruby/pull/573)
+- Use Karaf stdin for IRB TTY detection by [@jimtng](https://github.com/jimtng) in [#567](https://github.com/openhab/openhab-jruby/pull/567)
+- fix dependency tracking by [@ccutrer](https://github.com/ccutrer) in [#575](https://github.com/openhab/openhab-jruby/pull/575)
+
+**Full Changelog**: [v5.52.0...v5.52.1](https://github.com/openhab/openhab-jruby/compare/v5.52.0...v5.52.1)
+
 ## [v5.52.0](https://github.com/openhab/openhab-jruby/tree/v5.52.0) (2026-08-22)
 
 ### Features
