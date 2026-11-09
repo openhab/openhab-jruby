@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "openhab_rest"
+require_relative "../../config/openhab_dev"
 require "English"
 require "singleton"
 require "tty-command"
@@ -14,7 +15,7 @@ end
 
 def openhab_client(command)
   cmd = TTY::Command.new(printer: :null)
-  cmd.run!(File.join(openhab_dir, "runtime/bin/client -p habopen  '#{command}'"), only_output_on_error: true)
+  cmd.run(*OpenHABDev.command(openhab_dir, *OpenHABDev.client_args, command), only_output_on_error: true)
 end
 
 def items_dir
@@ -51,7 +52,7 @@ end
 
 def ensure_openhab_running
   cmd = TTY::Command.new(printer: :null)
-  cmd.run(File.join(openhab_dir, "runtime/bin/status"), only_output_on_error: true)
+  cmd.run(*OpenHABDev.command(openhab_dir, "runtime/bin/status"), only_output_on_error: true)
 end
 
 def check_log?(entry)
