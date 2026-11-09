@@ -31,7 +31,7 @@ group :development, :test do
 end
 
 group :test do
-  gem "cucumber", "~> 11.1", require: false
+  gem "cucumber", "~> 12.0", require: false
   gem "cuke_linter", "~> 1.4", require: false
   gem "httparty", "~> 0.20", require: false
   gem "irb", "~> 1.15", require: false
