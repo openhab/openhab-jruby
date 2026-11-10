@@ -3072,6 +3072,19 @@
   
   <li class="">
     <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="NestedSitemapBuilder.html" title="OpenHAB::DSL::Sitemaps::NestedSitemapBuilder (class)">NestedSitemapBuilder</a></span>
+      
+        &lt; WidgetBuilder
+      
+      
+    </span>
+    
+    
+  </li>
+
+  
+  <li class="">
+    <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="SelectionBuilder.html" title="OpenHAB::DSL::Sitemaps::SelectionBuilder (class)">SelectionBuilder</a></span>
       
         &lt; SwitchBuilder
@@ -3729,7 +3742,7 @@
 
 </div><div id="subclasses">
   <h2>Direct Known Subclasses</h2>
-  <p class="children"><span class='object_link'><a href="ButtonBuilder.html" title="OpenHAB::DSL::Sitemaps::ButtonBuilder (class)">ButtonBuilder</a></span>, <span class='object_link'><a href="ChartBuilder.html" title="OpenHAB::DSL::Sitemaps::ChartBuilder (class)">ChartBuilder</a></span>, <span class='object_link'><a href="ColorpickerBuilder.html" title="OpenHAB::DSL::Sitemaps::ColorpickerBuilder (class)">ColorpickerBuilder</a></span>, <span class='object_link'><a href="ColortemperaturepickerBuilder.html" title="OpenHAB::DSL::Sitemaps::ColortemperaturepickerBuilder (class)">ColortemperaturepickerBuilder</a></span>, <span class='object_link'><a href="DefaultBuilder.html" title="OpenHAB::DSL::Sitemaps::DefaultBuilder (class)">DefaultBuilder</a></span>, <span class='object_link'><a href="InputBuilder.html" title="OpenHAB::DSL::Sitemaps::InputBuilder (class)">InputBuilder</a></span>, <span class='object_link'><a href="LinkableWidgetBuilder.html" title="OpenHAB::DSL::Sitemaps::LinkableWidgetBuilder (class)">LinkableWidgetBuilder</a></span>, <span class='object_link'><a href="SetpointBuilder.html" title="OpenHAB::DSL::Sitemaps::SetpointBuilder (class)">SetpointBuilder</a></span>, <span class='object_link'><a href="SwitchBuilder.html" title="OpenHAB::DSL::Sitemaps::SwitchBuilder (class)">SwitchBuilder</a></span>, <span class='object_link'><a href="VideoBuilder.html" title="OpenHAB::DSL::Sitemaps::VideoBuilder (class)">VideoBuilder</a></span></p>
+  <p class="children"><span class='object_link'><a href="ButtonBuilder.html" title="OpenHAB::DSL::Sitemaps::ButtonBuilder (class)">ButtonBuilder</a></span>, <span class='object_link'><a href="ChartBuilder.html" title="OpenHAB::DSL::Sitemaps::ChartBuilder (class)">ChartBuilder</a></span>, <span class='object_link'><a href="ColorpickerBuilder.html" title="OpenHAB::DSL::Sitemaps::ColorpickerBuilder (class)">ColorpickerBuilder</a></span>, <span class='object_link'><a href="ColortemperaturepickerBuilder.html" title="OpenHAB::DSL::Sitemaps::ColortemperaturepickerBuilder (class)">ColortemperaturepickerBuilder</a></span>, <span class='object_link'><a href="DefaultBuilder.html" title="OpenHAB::DSL::Sitemaps::DefaultBuilder (class)">DefaultBuilder</a></span>, <span class='object_link'><a href="InputBuilder.html" title="OpenHAB::DSL::Sitemaps::InputBuilder (class)">InputBuilder</a></span>, <span class='object_link'><a href="LinkableWidgetBuilder.html" title="OpenHAB::DSL::Sitemaps::LinkableWidgetBuilder (class)">LinkableWidgetBuilder</a></span>, <span class='object_link'><a href="NestedSitemapBuilder.html" title="OpenHAB::DSL::Sitemaps::NestedSitemapBuilder (class)">NestedSitemapBuilder</a></span>, <span class='object_link'><a href="SetpointBuilder.html" title="OpenHAB::DSL::Sitemaps::SetpointBuilder (class)">SetpointBuilder</a></span>, <span class='object_link'><a href="SwitchBuilder.html" title="OpenHAB::DSL::Sitemaps::SwitchBuilder (class)">SwitchBuilder</a></span>, <span class='object_link'><a href="VideoBuilder.html" title="OpenHAB::DSL::Sitemaps::VideoBuilder (class)">VideoBuilder</a></span></p>
 </div>
 
 
@@ -3967,6 +3980,29 @@
     
 
     <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#confirm-instance_method" title="#confirm (instance method)">#<strong>confirm</strong>(value)  &#x21d2; true, ... </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Configures command confirmation.</p>
+</div></span>
+  
+</li>
+
       
         <li class="public ">
   <span class="summary_signature">
@@ -4618,7 +4654,108 @@ This is mutually exclusive with <span class='object_link'><a href="#icon-instanc
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="icon_color-instance_method">
+  <h3 class="signature first" id="confirm-instance_method">
+  
+    #<strong>confirm</strong>(value)  &#x21d2; <tt>true</tt>, ... 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Configures command confirmation. A boolean enables or disables the default prompt;
+a String supplies an unconditional message. A Hash maps conditions to messages
+(nil uses the default message), with an optional :default message. An Array
+supplies conditions using the default message. Nested arrays combine conditions
+with AND; separate entries are alternatives, evaluated in order.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+      <pre class="example code"><code>switch <span class="key">item</span>: <span class="constant">Heater</span>, <span class="key">confirm</span>: <span class="predefined-constant">true</span>
+switch <span class="key">item</span>: <span class="constant">Heater</span>, <span class="key">confirm</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Change the heating?</span><span class="delimiter">&quot;</span></span>
+switch <span class="key">item</span>: <span class="constant">Heater</span>, <span class="key">confirm</span>: [<span class="string"><span class="delimiter">&quot;</span><span class="content">!= ON</span><span class="delimiter">&quot;</span></span>]
+switch <span class="key">item</span>: <span class="constant">Heater</span>, <span class="key">confirm</span>: { <span class="string"><span class="delimiter">&quot;</span><span class="content">!= ON</span><span class="delimiter">&quot;</span></span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">Turn on the heating?</span><span class="delimiter">&quot;</span></span> }
+switch <span class="key">item</span>: <span class="constant">Heater</span> <span class="keyword">do</span>
+  confirm [<span class="string"><span class="delimiter">&quot;</span><span class="content">Alarm == ON</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Temperature &gt; 30</span><span class="delimiter">&quot;</span></span>] =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">Continue?</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>, <tt>String</tt>, <tt>Hash</tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>, <tt>String</tt>, <tt>Hash</tt>, <tt><span class='object_link'><a href="../../../Array.html" title="Array (class)">Array</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>openHAB 5.3</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+230
+231
+232</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 230</span>
+
+<span class="keyword">def</span> <span class="function">confirm</span>(value)
+  <span class="instance-variable">@confirm</span> = value
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="icon_color-instance_method">
   
     #<strong>icon_color</strong>(rules)  &#x21d2; <tt>Hash&lt;String, String&gt;</tt> 
   
@@ -4659,13 +4796,13 @@ This is mutually exclusive with <span class='object_link'><a href="#icon-instanc
       <pre class="lines">
 
 
-198
-199
-200
-201</pre>
+201
+202
+203
+204</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 198</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 201</span>
 
 <span class="keyword">def</span> <span class="function">icon_color</span>(rules)
   rules = { <span class="key">default</span>: rules } <span class="keyword">if</span> rules.is_a?(<span class="constant">String</span>)
@@ -4718,13 +4855,13 @@ This is mutually exclusive with <span class='object_link'><a href="#icon-instanc
       <pre class="lines">
 
 
-184
-185
-186
-187</pre>
+187
+188
+189
+190</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 184</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 187</span>
 
 <span class="keyword">def</span> <span class="function">label_color</span>(rules)
   rules = { <span class="key">default</span>: rules } <span class="keyword">if</span> rules.is_a?(<span class="constant">String</span>)
@@ -4777,13 +4914,13 @@ This is mutually exclusive with <span class='object_link'><a href="#icon-instanc
       <pre class="lines">
 
 
-191
-192
-193
-194</pre>
+194
+195
+196
+197</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 191</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 194</span>
 
 <span class="keyword">def</span> <span class="function">value_color</span>(rules)
   rules = { <span class="key">default</span>: rules } <span class="keyword">if</span> rules.is_a?(<span class="constant">String</span>)
@@ -4836,12 +4973,12 @@ This is mutually exclusive with <span class='object_link'><a href="#icon-instanc
       <pre class="lines">
 
 
-205
-206
-207</pre>
+208
+209
+210</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 205</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/sitemaps/builder.rb', line 208</span>
 
 <span class="keyword">def</span> <span class="function">visibility</span>(*rules)
   <span class="instance-variable">@visibilities</span>.concat(rules)
@@ -4856,7 +4993,7 @@ This is mutually exclusive with <span class='object_link'><a href="#icon-instanc
 </div>
 
         <footer>
-  Generated on Tue Nov 10 13:25:59 2026 by
+  Generated on Tue Nov 10 22:30:40 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.12).
 </footer>
