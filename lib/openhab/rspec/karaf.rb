@@ -612,8 +612,7 @@ module OpenHAB
       end
 
       def find_jar_version(path, bundle)
-        prefix = "#{path}/#{bundle}-"
-        Dir["#{prefix}*.jar"].map { |jar| jar.split("-", 2).last[0...-4] }.max
+        Dir["#{path}/#{bundle}-*.jar"].map { |jar| File.basename(jar).delete_prefix("#{bundle}-")[0...-4] }.max
       end
 
       def load_boot_jars
