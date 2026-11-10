@@ -1224,6 +1224,34 @@ module OpenHAB
           RUBY
         end
 
+        # Adds a link to another sitemap.
+        #
+        # When name is omitted, the linked sitemap's
+        # name is taken from the state of the supplied String item.
+        # This references an existing sitemap; it does not define or register one.
+        #
+        # @example
+        #   sitemaps.build do
+        #     sitemap "parent" do
+        #       sitemap "child", label: "Child Sitemap"
+        #       sitemap item: SitemapNameItem, label: "Selected Sitemap"
+        #     end
+        #     sitemap "child" do
+        #       switch item: Light
+        #     end
+        #   end
+        #
+        # @param name [String, nil] The name of the linked sitemap
+        # @see WidgetBuilder#initialize For common widget options
+        # @yield Block executed in the context of a {NestedSitemapBuilder}
+        # @return [NestedSitemapBuilder]
+        # @since openHAB 5.3
+        def sitemap(name = nil, **, &)
+          NestedSitemapBuilder.new(name, @builder_proxy, **, &).tap do |widget|
+            children << widget
+          end
+        end
+
         # (see WidgetBuilder#initialize)
         # @!method initialize(item: nil, label: nil, icon: nil, static_icon: nil, label_color: nil, value_color: nil, icon_color: nil, confirm: nil, visibility: nil)
         # @!visibility private
@@ -1245,6 +1273,35 @@ module OpenHAB
           end
 
           widget
+        end
+      end
+
+      # Builds a link to another sitemap.
+      # @since openHAB 5.3
+      # @see org.openhab.core.sitemap.NestedSitemap
+      class NestedSitemapBuilder < WidgetBuilder
+        # The name of the linked sitemap. If nil, the item's state supplies the name.
+        # @return [String, nil]
+        attr_accessor :name
+
+        # (see WidgetBuilder#initialize)
+        # @param name [String, nil] The name of the linked sitemap
+        # @!visibility private
+        def initialize(name, builder_proxy, **, &)
+          unless Core::Sitemaps::Provider.registry &&
+                 SitemapBuilder.factory.get_supported_widget_types.include?("Sitemap")
+            raise ArgumentError, "Nested sitemaps require openHAB 5.3 or later"
+          end
+
+          @name = name
+          super(:sitemap, builder_proxy, **, &)
+        end
+
+        # @!visibility private
+        def build
+          super.tap do |widget|
+            widget.name = name
+          end
         end
       end
 
