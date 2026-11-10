@@ -86,6 +86,16 @@ RSpec.describe OpenHAB::RSpec::Karaf do
       expect(clone_files).to eq %w[uuid]
     end
 
+    it "leaves out the backups of the config store, and keeps the configs" do
+      write("#{root}/config/org/openhab/addons.config")
+      write("#{root}/config/org/openhab/addons.config.bak")
+      write("#{root}/config/profile.config.bak")
+
+      copy
+
+      expect(clone_files).to eq %w[config/org/openhab/addons.config]
+    end
+
     it "copies a symlinked file as an ordinary file" do
       write("#{scratch}/elsewhere/log4j2.xml", "<Configuration/>")
       FileUtils.mkdir_p("#{root}/etc")

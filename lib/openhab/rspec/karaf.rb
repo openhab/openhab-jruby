@@ -106,6 +106,11 @@ module OpenHAB
       UNCOPIED_USERDATA = %w[cache openhab-start-level].freeze
       private_constant :UNCOPIED_USERDATA
 
+      # ConfigAdmin's backup of each config. They name the real instance's files just like the configs do, and nothing
+      # in a clone needs them.
+      CONFIG_BACKUP = /\.config\.bak\z/
+      private_constant :CONFIG_BACKUP
+
       # The harness's java.io.tmpdir is inside the clone, so tmp itself has to exist
       EMPTY_USERDATA = %w[tmp].freeze
       private_constant :EMPTY_USERDATA
@@ -132,7 +137,7 @@ module OpenHAB
       def copy_instance(source, target, top_level: true)
         FileUtils.mkdir_p(target)
         Dir.children(source).each do |name|
-          next if KARAF_UNCOPIED.match?(name)
+          next if KARAF_UNCOPIED.match?(name) || CONFIG_BACKUP.match?(name)
           next if top_level && (UNCOPIED_USERDATA.include?(name) || name.start_with?("."))
 
           empty = top_level && EMPTY_USERDATA.include?(name)
