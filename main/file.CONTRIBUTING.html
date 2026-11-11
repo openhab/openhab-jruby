@@ -3691,12 +3691,12 @@
 <li>Fork <a href="https://github.com/openhab/openhab-jruby">the repo</a> and clone it</li>
 <li>Install <a href="https://bundler.io/">bundler</a></li>
 <li>Run <code>bundler install</code> from inside of the repo directory</li>
-<li>To avoid conflicts, the openHAB development instance can use custom ports by defining these environment variables:
+<li>The local openHAB instance uses separate development ports and an isolated environment. Override its ports with these development-only variables (global <code>OPENHAB_*</code> settings are not used):
 <ul>
-<li><code>OPENHAB_HTTP_PORT</code></li>
-<li><code>OPENHAB_HTTPS_PORT</code></li>
-<li><code>OPENHAB_SSH_PORT</code></li>
-<li><code>OPENHAB_LSP_PORT</code></li>
+<li><code>OPENHAB_DEV_HTTP_PORT</code> (default: 8081)</li>
+<li><code>OPENHAB_DEV_HTTPS_PORT</code> (default: 8444)</li>
+<li><code>OPENHAB_DEV_SSH_PORT</code> (default: 8102)</li>
+<li><code>OPENHAB_DEV_LSP_PORT</code> (default: 5008)</li>
 </ul>
 </li>
 <li>Run <code>bundle exec rake openhab:setup</code> from inside of the repo directory.  This will download a copy of openHAB local in your development environment, start it and prepare it for JRuby openHAB Scripting Development</li>
@@ -3737,7 +3737,7 @@ can be added by creating and <em>closing</em> an issue labelled <code>release-su
 </div></div>
 
         <footer>
-  Generated on Wed Nov 11 17:34:47 2026 by
+  Generated on Wed Nov 11 17:40:27 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.12).
 </footer>
