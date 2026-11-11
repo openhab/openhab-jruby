@@ -51,6 +51,26 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
       expect(File.directory?("#{clone_path}/tmp")).to be true
     end
 
+    it "copies a userdata directory that is named like an entry to skip" do
+      root_bak = "#{scratch}/openhab.bak"
+      write("#{root_bak}/uuid")
+
+      instance_service.send(:copy, root_bak, clone_path)
+
+      expect(clone_files).to eq %w[uuid]
+    end
+
+    it "leaves out any entry with instances or lib in its name, at any depth" do
+      write("#{root}/uuid")
+      write("#{root}/jsondb/library.json")
+      write("#{root}/instances/instance.properties")
+      write("#{root}/etc/my_instances.cfg")
+
+      copy
+
+      expect(clone_files).to eq %w[uuid]
+    end
+
     it "makes tmp even when the userdata has none" do
       write("#{root}/uuid")
 
@@ -281,6 +301,30 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
     end
   end
 
+  describe "#fill_management_config" do
+    def fill = instance_service.send(:fill_management_config, clone_path)
+
+    it "fills in an empty management config" do
+      write("#{clone_path}/etc/org.apache.karaf.management.cfg", "")
+
+      fill
+
+      expect(File.read("#{clone_path}/etc/org.apache.karaf.management.cfg")).to include "rmiRegistryPort = 1099"
+    end
+
+    it "leaves a config that has contents alone" do
+      write("#{clone_path}/etc/org.apache.karaf.management.cfg", "rmiRegistryPort = 2000\n")
+
+      fill
+
+      expect(File.read("#{clone_path}/etc/org.apache.karaf.management.cfg")).to eq "rmiRegistryPort = 2000\n"
+    end
+
+    it "does nothing when there is no management config" do
+      expect { fill }.not_to raise_error
+    end
+  end
+
   describe "#clone_instance" do
     let(:karaf) { OpenHAB::RSpec::Karaf.new(clone_path) }
     let(:karaf_service) { org.apache.karaf.instance.core.internal.InstanceServiceImpl.new }
@@ -352,6 +396,45 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
       expect(fresh_service.get_instance("openhab").location).to eq root
       expect(fresh_service.get_instance("rspec")).not_to be_root
       expect(fresh_service.get_instance("rspec").location).to eq clone_path
+    end
+
+    it "makes each of the files Karaf filters name the clone" do
+      files = %w[etc/custom.properties
+                 etc/org.apache.karaf.management.cfg
+                 etc/org.apache.karaf.shell.cfg
+                 etc/system.properties
+                 bin/karaf
+                 bin/start
+                 bin/stop
+                 bin/karaf.bat
+                 bin/start.bat
+                 bin/stop.bat]
+      files.each { |file| write("#{root}/#{file}", "path = #{root}\nname = openhab\n") }
+
+      clone_instance
+
+      files.each do |file|
+        expect(File.read("#{clone_path}/#{file}")).to eq("path = #{clone_path}\nname = rspec\n"), file
+      end
+    end
+
+    it "fills in an empty management config before the clone is registered" do
+      write("#{root}/etc/org.apache.karaf.management.cfg", "")
+
+      clone_instance
+
+      expect(File.read("#{clone_path}/etc/org.apache.karaf.management.cfg")).to include "rmiRegistryPort = 1099"
+    end
+
+    it "doesn't register the clone when it can't be finished" do
+      write("#{root}/etc/org.apache.karaf.management.cfg", "")
+      allow(File).to receive(:write).and_call_original
+      allow(File).to receive(:write).with(/org\.apache\.karaf\.management\.cfg\z/, anything).and_raise(Errno::ENOSPC)
+
+      expect { clone_instance }.to raise_error(Errno::ENOSPC)
+
+      fresh_service = org.apache.karaf.instance.core.internal.InstanceServiceImpl.new
+      expect(fresh_service.get_instance("rspec")).to be_nil
     end
 
     it "refuses to clone an instance that has been cloned" do
