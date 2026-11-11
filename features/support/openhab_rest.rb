@@ -2,6 +2,7 @@
 
 require "httparty"
 require "persistent_httparty"
+require_relative "../../config/openhab_dev"
 
 #
 # Rest interface for openHAB
@@ -11,12 +12,8 @@ class Rest
 
   persistent_connection_adapter
 
-  def self.openhab_port
-    @openhab_port ||= ENV["OPENHAB_HTTP_PORT"] || 8080
-  end
-
   format :json
-  base_uri "http://127.0.0.1:#{openhab_port}"
+  base_uri "http://127.0.0.1:#{OpenHABDev.http_port}"
   basic_auth "foo", "foo"
 
   def self.rules

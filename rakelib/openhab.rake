@@ -7,18 +7,16 @@ require "process_exists"
 require "erb"
 require "digest/md5"
 require "net/http"
+require_relative "../config/openhab_dev"
 
 # Disabled due to part of buid / potentially refactor into classes
 # rubocop: disable Rake/MethodDefinitionInTask -- Legacy code
 namespace :openhab do
   @openhab_version = ENV["OPENHAB_VERSION"] || "5.3.0-SNAPSHOT"
   @port_numbers = {
-    ssh: { port: ENV["OPENHAB_SSH_PORT"] || 8101, config: "org.apache.karaf.shell:sshPort" },
-    lsp: { port: ENV["OPENHAB_LSP_PORT"] || 5007, config: "org.openhab.lsp:port" }
+    ssh: { port: OpenHABDev.ssh_port, config: "org.apache.karaf.shell:sshPort" },
+    lsp: { port: ENV["OPENHAB_DEV_LSP_PORT"] || 5008, config: "org.openhab.lsp:port" }
   }
-  karaf_client_path = File.join(OPENHAB_DIR, "runtime/bin/client")
-  karaf_client_args = [karaf_client_path, "-a", @port_numbers[:ssh][:port], "-p", "habopen"].freeze
-  @karaf_client = karaf_client_args.join(" ")
   @cache_dir = File.expand_path("cache")
   @deploy_dir = File.join(OPENHAB_DIR, "conf/automation/jsr223/ruby/personal")
   @state_dir = File.join(OPENHAB_DIR, "rake_state")
@@ -32,33 +30,23 @@ namespace :openhab do
   CLOBBER << TMP_DIR
   CLEAN << @deploy_dir
 
-  def command_success?(command)
-    cmd = TTY::Command.new(printer: :null)
-    cmd.run!(command).success?
-  end
-
   def running?(fail_on_error: false)
-    karaf_status = File.join(OPENHAB_DIR, "runtime/bin/status")
+    return false unless File.exist?(File.join(OPENHAB_DIR, "runtime/bin/status"))
 
-    return false unless File.exist? karaf_status
-
+    command = OpenHABDev.command(OPENHAB_DIR, "runtime/bin/status")
     if fail_on_error
-      fail_on_error(karaf_status)
+      fail_on_error(*command)
       true
     else
-      command_success? karaf_status
+      TTY::Command.new(printer: :null).run!(*command).success?
     end
   end
 
-  # Get openhab http port
   def openhab_port
-    command = "#{@karaf_client} 'system:property org.osgi.service.http.port'"
-
-    cmd = TTY::Command.new(printer: :null)
-    cmd.run!(command).out.chomp
+    karaf_query("system:property org.osgi.service.http.port")
   end
 
-  # Check if openhab is listening on port 8080
+  # Check if openhab is listening on its configured HTTP port
   def http_ready?
     uri = URI("http://127.0.0.1/")
     uri.port = openhab_port
@@ -73,10 +61,7 @@ namespace :openhab do
   def ready?(fail_on_error: false)
     return false unless running?
 
-    command = "#{@karaf_client} 'system:start-level'"
-
-    cmd = TTY::Command.new(printer: :null)
-    ready = cmd.run!(command).out.chomp.casecmp?("Level 100")
+    ready = karaf_query("system:start-level").casecmp?("Level 100")
     ready &&= http_ready?
     raise "openHAB is not ready" if !ready && fail_on_error
 
@@ -92,14 +77,19 @@ namespace :openhab do
     $stdout.flush
   end
 
-  def fail_on_error(command, env = {})
+  def fail_on_error(*command, env: {})
     cmd = TTY::Command.new
-    out, = cmd.run(command, env:, only_output_on_error: true)
+    out, = cmd.run(*command, env:, only_output_on_error: true)
     out
   end
 
   def karaf(command)
-    fail_on_error("#{@karaf_client} '#{command}'")
+    fail_on_error(*OpenHABDev.command(OPENHAB_DIR, *OpenHABDev.client_args, command))
+  end
+
+  def karaf_query(command)
+    cmd = TTY::Command.new(printer: :null)
+    cmd.run!(*OpenHABDev.command(OPENHAB_DIR, *OpenHABDev.client_args, command)).out.chomp
   end
 
   def wait_for(duration, task)
@@ -231,10 +221,6 @@ namespace :openhab do
     end
   end
 
-  def karaf_log
-    File.join(TMP_DIR, "karaf.log")
-  end
-
   def restart
     puts "Restarting openHAB"
     stop
@@ -250,20 +236,6 @@ namespace :openhab do
     abort "openHAB did not become ready" unless ready?(fail_on_error: true)
   end
 
-  def openhab_env
-    {
-      "CHECK_ROOT_INSTANCE_RUNNING" => "false",
-      "LANG" => ENV.fetch("LANG", nil),
-      "JAVA_HOME" => ENV.fetch("JAVA_HOME", nil),
-      "KARAF_REDIRECT" => karaf_log,
-      "EXTRA_JAVA_OPTS" => "-Xmx4g",
-      "OPENHAB_HTTP_PORT" => ENV["OPENHAB_HTTP_PORT"] || "8080",
-      "OPENHAB_HTTPS_PORT" => ENV["OPENHAB_HTTPS_PORT"] || "8443",
-      "HOME" => OPENHAB_DIR,
-      "PATH" => ENV.fetch("PATH", nil)
-    }
-  end
-
   def start
     return puts "openHAB already running" if running?
 
@@ -271,7 +243,7 @@ namespace :openhab do
       puts "Starting openHAB"
       # Running inside of bundler breaks GEM_HOME, so we run with a clean environment passing through
       # only specific variables
-      pid = spawn(openhab_env, "runtime/bin/start", unsetenv_others: true)
+      pid = spawn(*OpenHABDev.command(OPENHAB_DIR, "runtime/bin/start"))
       Process.detach(pid)
     end
     wait_till_running
@@ -285,15 +257,13 @@ namespace :openhab do
 
   desc "Start openHAB Karaf Client"
   task :client do
-    exec(@karaf_client)
+    exec(*OpenHABDev.command(OPENHAB_DIR, *OpenHABDev.client_args))
   end
 
   def stop
     if running?
       pid = File.read(File.join(OPENHAB_DIR, "userdata/tmp/karaf.pid")).chomp.to_i
-      Dir.chdir(OPENHAB_DIR) do
-        fail_on_error("runtime/bin/stop")
-      end
+      fail_on_error(*OpenHABDev.command(OPENHAB_DIR, "runtime/bin/stop"))
       stopped = wait_for(60, "openHAB to stop") { Process.exists?(pid) == false }
       abort "Unable to stop openHAB" unless stopped
     end
@@ -337,12 +307,14 @@ namespace :openhab do
   task deploy: %i[download build] do |_task|
     mkdir_p gem_home
     gem_file = File.join(PACKAGE_DIR, "openhab-scripting-#{OpenHAB::DSL::VERSION}.gem")
-    fail_on_error("gem install #{gem_file} -i #{gem_home} --no-document --force")
+    Bundler.with_unbundled_env do
+      fail_on_error("gem install #{gem_file} -i #{gem_home} --no-document --force")
+    end
   end
 
   desc "Clean up local gems"
   task :cleanupgems do
-    fail_on_error("gem uninstall openhab-scripting -a", ruby_env)
+    fail_on_error("gem uninstall openhab-scripting -a", env: ruby_env)
   end
 
   desc "Deploy adhoc test Openhab"
