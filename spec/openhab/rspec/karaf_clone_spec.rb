@@ -248,10 +248,29 @@ RSpec.describe OpenHAB::RSpec::Karaf do
       end
     end
 
+    # When the suite has already launched openHAB, JRuby's loaders include the harness's own, which are Ruby objects
+    # without #class_loader. Always have one, that finds nothing, so this doesn't depend on what ran before. The Java
+    # classes are looked up first: JRuby asks every loader to find a class it doesn't know yet, this one included.
+    let(:bundle_loader) do
+      not_found = java.lang.ClassNotFoundException
+      no_resources = java.util.Collections.empty_enumeration
+      bundle = Object.new
+      bundle.define_singleton_method(:get_resource) { |_path| nil }
+      bundle.define_singleton_method(:get_resources) { |_path| no_resources }
+      bundle.define_singleton_method(:load_class) do |name|
+        error = not_found.new(name)
+        raise error
+      end
+      OpenHAB::RSpec::JRuby::OSGiBundleClassLoader.new(bundle)
+    end
+
+    before { JRuby.runtime.instance_config.add_loader(bundle_loader) }
+
     after do
       extra_loaders = JRuby.runtime.instance_config.extra_loaders
-      loader = extra_loaders.find { |l| l.class_loader == karaf.instance_variable_get(:@karaf_instance_loader) }
-      extra_loaders.remove(loader)
+      extra_loaders.remove(bundle_loader)
+      karaf_loader = karaf.instance_variable_get(:@karaf_instance_loader)
+      extra_loaders.remove(extra_loaders.find { |l| l.respond_to?(:class_loader) && l.class_loader == karaf_loader })
     end
 
     it "adds the clone to the instance list, where Karaf itself finds it" do
