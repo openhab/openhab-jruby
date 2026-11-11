@@ -232,7 +232,7 @@ RSpec.describe OpenHAB::DSL::Sitemaps::Builder do
       end
     else
       it "rejects confirmation on unsupported openHAB versions" do
-        expect { confirmation_widget(true) }.to raise_error(ArgumentError, /requires openHAB 5.2/)
+        expect { confirmation_widget(true) }.to raise_error(ArgumentError, /requires openHAB 5.3 or later/)
       end
     end
   end
