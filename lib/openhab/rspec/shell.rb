@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "shellwords"
+
 module OpenHAB
   module RSpec
     # based on https://stackoverflow.com/questions/1197224/source-shell-script-into-environment-within-a-ruby-script#19826329
@@ -27,7 +29,9 @@ module OpenHAB
         # Source a given file, and compare environment before and after.
         #   Returns Hash of any keys that have changed.
         def shell_source(file)
-          (shell_env(". #{File.realpath(file)}") - shell_env).to_h
+          realpath = File.realpath(file)
+          escaped_realpath = Shellwords.escape(realpath)
+          (shell_env(". #{escaped_realpath}") - shell_env).to_h
         end
 
         # Find variables changed as a result of sourcing the given file,
