@@ -4,6 +4,7 @@ require "fileutils"
 require "shellwords"
 require "time"
 
+require_relative "instance_service"
 require_relative "jruby"
 require_relative "shell"
 require_relative "mocks/synchronous_executor"
@@ -84,119 +85,12 @@ module OpenHAB
 
         return if service.get_instance("rspec")
 
-        copy_instance(root_instance.location, path)
-        filter_clone_files(root_instance.name, root_instance.location)
+        InstanceService.new(service).clone_instance(root_instance.name, "rspec", path)
         fix_rmi_registry_npe
-        register_clone
       ensure
         extra_loaders = ::JRuby.runtime.instance_config.extra_loaders
         loader = extra_loaders.find { |l| l.class_loader == @karaf_instance_loader }
         extra_loaders.remove(loader)
-      end
-
-      # Entries Karaf's own InstanceServiceImpl#copy leaves out, at any depth. Keep them, so that the clone has the
-      # contents it always had. (Its "contains" test for instances and lib is as loose as it looks.)
-      KARAF_UNCOPIED = /\A(lock|cache\.lock|transaction_\d+\.log)\z|\.instance\z|instances|lib/
-      private_constant :KARAF_UNCOPIED
-
-      # Skipped in the top level of the real userdata only. The harness deletes the cache and the contents of tmp before
-      # it starts the clone, so copying them is wasted work, and openHAB creates entries in them that the user running
-      # rspec can't read. The same goes for openhab-start-level. Hidden entries are the openHAB user's home directory
-      # clutter (.cache, .npm, .ssh, ...) when userdata is that user's home, as it is for the Debian package.
-      UNCOPIED_USERDATA = %w[cache openhab-start-level].freeze
-      private_constant :UNCOPIED_USERDATA
-
-      # ConfigAdmin's backup of each config. They name the real instance's files just like the configs do, and nothing
-      # in a clone needs them.
-      CONFIG_BACKUP = /\.config\.bak\z/
-      private_constant :CONFIG_BACKUP
-
-      # The harness's java.io.tmpdir is inside the clone, so tmp itself has to exist
-      EMPTY_USERDATA = %w[tmp].freeze
-      private_constant :EMPTY_USERDATA
-
-      # The files Karaf rewrites in a clone to say that it is the clone, not the instance it was copied from
-      CLONE_FILTERED_FILES = %w[
-        etc/custom.properties
-        etc/org.apache.karaf.management.cfg
-        etc/org.apache.karaf.shell.cfg
-        etc/system.properties
-        bin/karaf
-        bin/start
-        bin/stop
-        bin/karaf.bat
-        bin/start.bat
-        bin/stop.bat
-      ].freeze
-      private_constant :CLONE_FILTERED_FILES
-
-      # Karaf's InstanceServiceImpl#cloneInstance can't be told to skip anything: it fails on the first entry the user
-      # running rspec can't read (and the real instance creates some itself, with explicit modes), so copy the instance
-      # here and skip what can't be copied. The real instance is running, so an entry can also disappear while it is
-      # copied.
-      def copy_instance(source, target, top_level: true)
-        FileUtils.mkdir_p(target)
-        Dir.children(source).each do |name|
-          next if KARAF_UNCOPIED.match?(name) || CONFIG_BACKUP.match?(name)
-          next if top_level && (UNCOPIED_USERDATA.include?(name) || name.start_with?("."))
-
-          empty = top_level && EMPTY_USERDATA.include?(name)
-          copy_instance_entry(File.join(source, name), File.join(target, name), empty:)
-        end
-      end
-
-      def copy_instance_entry(from, to, empty:)
-        # Only created, so there is nothing in it to read
-        return FileUtils.mkdir_p(to) if empty
-
-        unless File.readable?(from) && (!File.directory?(from) || File.executable?(from))
-          warn "Not cloning #{from}: the user running the specs can't read it"
-          return
-        end
-
-        if File.directory?(from)
-          copy_instance(from, to, top_level: false)
-        else
-          # Not FileUtils.copy_file, which keeps the mode: a read-only file would be a read-only file in the clone,
-          # and the harness rewrites some of them.
-          IO.copy_stream(from, to)
-        end
-      # Readability was checked above, so this is an entry that disappeared. Any other failure, a full disk say, would
-      # leave a clone that is registered and then reused, so it is raised.
-      rescue Errno::ENOENT, Errno::ENOTDIR => e
-        FileUtils.rm_f(to) if File.file?(to)
-        warn "Not cloning #{from}: #{e.message}"
-      end
-
-      # What Karaf does after it copies: the first occurrence in each line of the instance's name and of its location
-      # become the clone's. They are replaced in one pass, so a clone path that contains the instance's name isn't
-      # rewritten again.
-      def filter_clone_files(root_name, root_location)
-        # Binary, since a properties file is Latin-1 as often as it is UTF-8
-        replacements = { root_location.b => path.b, root_name.b => "rspec".b }
-        pattern = Regexp.union(replacements.keys)
-        CLONE_FILTERED_FILES.map { |file| File.join(path, file) }.select { |file| File.file?(file) }.each do |file|
-          lines = File.binread(file).each_line.map do |line|
-            todo = replacements.dup
-            line.gsub(pattern) { |match| todo.delete(match) { match } }
-          end
-          File.binwrite(file, lines.join)
-        end
-      end
-
-      # Add the clone to the instance list that redirect_instances made, the way InstanceServiceImpl does
-      def register_clone
-        instance_list = java.io.File.new("#{path}/instances/instance.properties")
-        properties = org.apache.felix.utils.properties.Properties.new(instance_list)
-        index = properties.get("count").to_i
-        properties.put("count", (index + 1).to_s)
-        properties.put("item.#{index}.name", "rspec")
-        properties.put("item.#{index}.root", "false")
-        properties.put("item.#{index}.loc", path)
-        properties.put("item.#{index}.pid", "0")
-        java_opts = org.apache.karaf.instance.core.internal.InstanceServiceImpl::DEFAULT_JAVA_OPTS
-        properties.put("item.#{index}.opts", java_opts)
-        properties.save
       end
 
       def start_instance
