@@ -1285,6 +1285,7 @@ module OpenHAB
         attr_accessor :name
 
         # (see WidgetBuilder#initialize)
+        # @!method initialize(name, item: nil, label: nil, icon: nil, static_icon: nil, url: nil, refresh: nil, label_color: nil, value_color: nil, icon_color: nil, confirm: nil, visibility: nil)
         # @param name [String, nil] The name of the linked sitemap
         # @!visibility private
         def initialize(name, builder_proxy, **, &)
