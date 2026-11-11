@@ -2,10 +2,8 @@
 
 RSpec.describe "mocks" do
   it "runs callbacks synchronously before OpenHAB::Core is initialized" do
-    executor = OpenHAB::RSpec::Mocks::SynchronousExecutor.instance
-    main_thread = executor.main_thread
-    executor.main_thread = Thread.current
-    hide_const("OpenHAB::Core")
+    executor = OpenHAB::RSpec::Mocks::SynchronousExecutor.send(:new)
+    allow(executor).to receive(:core_version).and_return(nil)
 
     submitted_on = nil
     submit_caller = Thread.new do
@@ -22,8 +20,6 @@ RSpec.describe "mocks" do
     end
     execute_caller.value
     expect(executed_on).to be execute_caller
-  ensure
-    executor.main_thread = main_thread
   end
 
   it "mocks against the actual item" do
