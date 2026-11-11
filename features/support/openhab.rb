@@ -15,7 +15,7 @@ end
 
 def openhab_client(command)
   cmd = TTY::Command.new(printer: :null)
-  cmd.run(*OpenHABDev.command(openhab_dir, *OpenHABDev.client_args, command), only_output_on_error: true)
+  cmd.run!(*OpenHABDev.command(openhab_dir, *OpenHABDev.client_args, command), only_output_on_error: true)
 end
 
 def items_dir
