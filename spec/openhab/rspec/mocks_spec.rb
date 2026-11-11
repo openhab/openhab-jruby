@@ -9,7 +9,7 @@ RSpec.describe "mocks" do
 
     submitted = false
     runnable = java.lang.Runnable.impl { submitted = true }
-    expect(executor.submit(runnable).get(5, java.util.concurrent.TimeUnit::SECONDS)).to be_nil
+    expect(executor.submit(runnable).get(5, java.util.concurrent.TimeUnit::SECONDS)).to be true
     expect(submitted).to be true
 
     executed = false
