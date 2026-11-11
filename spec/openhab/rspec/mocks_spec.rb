@@ -1,21 +1,27 @@
 # frozen_string_literal: true
 
 RSpec.describe "mocks" do
-  it "runs callbacks on the main thread before OpenHAB::Core is initialized" do
+  it "runs callbacks synchronously before OpenHAB::Core is initialized" do
     executor = OpenHAB::RSpec::Mocks::SynchronousExecutor.instance
     main_thread = executor.main_thread
     executor.main_thread = Thread.current
     hide_const("OpenHAB::Core")
 
-    submitted = false
-    runnable = java.lang.Runnable.impl { submitted = true }
-    expect(executor.submit(runnable).get(5, java.util.concurrent.TimeUnit::SECONDS)).to be true
-    expect(submitted).to be true
+    submitted_on = nil
+    submit_caller = Thread.new do
+      runnable = java.lang.Runnable.impl { submitted_on = Thread.current }
+      executor.submit(runnable).get(5, java.util.concurrent.TimeUnit::SECONDS)
+    end
+    submit_caller.value
+    expect(submitted_on).to be submit_caller
 
-    executed = false
-    runnable = java.lang.Runnable.impl { executed = true }
-    executor.execute(runnable)
-    expect(executed).to be true
+    executed_on = nil
+    execute_caller = Thread.new do
+      runnable = java.lang.Runnable.impl { executed_on = Thread.current }
+      executor.execute(runnable)
+    end
+    execute_caller.value
+    expect(executed_on).to be execute_caller
   ensure
     executor.main_thread = main_thread
   end

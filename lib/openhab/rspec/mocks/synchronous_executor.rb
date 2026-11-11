@@ -26,7 +26,7 @@ module OpenHAB
         end
 
         def submit(runnable)
-          if !defined?(OpenHAB::Core) || OpenHAB::Core.version < "5.1.0" # @deprecated OH5.1 remove the version guard
+          if defined?(OpenHAB::Core) && OpenHAB::Core.version < "5.1.0" # @deprecated OH5.1 remove the version guard
             return super unless Thread.current == main_thread # rubocop:disable Style/SoleNestedConditional
           end
 
@@ -35,7 +35,7 @@ module OpenHAB
         end
 
         def execute(runnable)
-          if !defined?(OpenHAB::Core) || OpenHAB::Core.version < "5.1.0" # @deprecated OH5.1 remove the version guard
+          if defined?(OpenHAB::Core) && OpenHAB::Core.version < "5.1.0" # @deprecated OH5.1 remove the version guard
             return super unless Thread.current == main_thread # rubocop:disable Style/SoleNestedConditional
           end
 
