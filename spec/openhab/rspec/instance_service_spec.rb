@@ -51,6 +51,14 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
       expect(File.directory?("#{clone_path}/tmp")).to be true
     end
 
+    it "makes tmp even when the userdata has none" do
+      write("#{root}/uuid")
+
+      copy
+
+      expect(File.directory?("#{clone_path}/tmp")).to be true
+    end
+
     it "leaves out the hidden entries of the userdata directory, which is a home directory for some installs" do
       write("#{root}/.cache/pnpm/metadata")
       write("#{root}/.ssh/id_ed25519")
@@ -154,9 +162,10 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
       write("#{root}/gone.json")
       write("#{root}/uuid")
       allow(IO).to receive(:copy_stream).and_wrap_original do |original, from, *args|
-        raise Errno::ENOENT, from if File.basename(from) == "gone.json"
+        next original.call(from, *args) unless File.basename(from) == "gone.json"
 
-        original.call(from, *args)
+        File.delete(from)
+        raise Errno::ENOENT, from
       end
 
       expect { copy }.to output(%r{Not cloning #{Regexp.escape(root)}/gone.json}).to_stderr
@@ -171,6 +180,7 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
         next original.call(from, to) unless File.basename(from) == "broken.json"
 
         File.write(to, "half")
+        File.delete(from)
         raise Errno::ENOENT, from
       end
 
@@ -186,13 +196,30 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
       expect { copy }.to raise_error(Errno::ENOSPC)
     end
 
+    it "raises, and doesn't call the entry gone, when a missing directory is on the clone's side" do
+      write("#{root}/uuid")
+      allow(IO).to receive(:copy_stream).and_raise(Errno::ENOTDIR)
+
+      expect { copy }.to raise_error(Errno::ENOTDIR)
+    end
+
+    it "skips a pipe instead of waiting for a writer, with a warning" do
+      write("#{root}/uuid")
+      File.mkfifo("#{root}/pipe")
+
+      expect { copy }.to output(%r{Not cloning #{Regexp.escape(root)}/pipe}).to_stderr
+
+      expect(clone_files).to eq %w[uuid]
+    end
+
     it "makes a read-only file writable in the clone, as Karaf's copy did" do
       write("#{root}/uuid")
       File.chmod(0o444, "#{root}/uuid")
 
       copy
 
-      expect(File.writable?("#{clone_path}/uuid")).to be true
+      # Not File.writable?, which is true for root whatever the mode
+      expect(File.stat("#{clone_path}/uuid").mode & 0o200).to eq 0o200
     end
   end
 

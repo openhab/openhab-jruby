@@ -816,8 +816,8 @@ module OpenHAB
         XML
       end
 
-      # An openHAB install can have an empty management config, which Karaf's port lookup used to choke on. Repair the
-      # clone's copy, never the real instance's.
+      # An openHAB install can have an empty management config. Give the clone the default ports, in its own copy and
+      # never in the real instance's.
       def fix_rmi_registry_npe
         full_path = File.join(path, "etc/org.apache.karaf.management.cfg")
         return unless File.file?(full_path) && File.empty?(full_path)

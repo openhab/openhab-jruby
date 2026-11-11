@@ -26,7 +26,8 @@ module OpenHAB
       UNCOPIED_USERDATA = %w[cache openhab-start-level].freeze
       private_constant :UNCOPIED_USERDATA
 
-      # Not Karaf: made but left empty. The harness's java.io.tmpdir is inside the clone, so tmp itself has to exist.
+      # Not Karaf: made, empty, whether or not the real userdata has them. The harness's java.io.tmpdir is inside the
+      # clone, so tmp itself has to exist.
       EMPTY_USERDATA = %w[tmp].freeze
       private_constant :EMPTY_USERDATA
 
@@ -86,18 +87,20 @@ module OpenHAB
           warn "Not cloning #{source}: the user running the specs can't read it"
           return
         end
+        # Opening a pipe would wait for a writer, and a socket or a device can't be copied
+        if special_file?(source)
+          warn "Not cloning #{source}: it is neither a file nor a directory"
+          return
+        end
 
         if File.directory?(source)
           FileUtils.mkdir_p(destination)
+          EMPTY_USERDATA.each { |child| FileUtils.mkdir_p(File.join(destination, child)) } if top_level
           Dir.children(source).each do |child|
             next if child.include?("instances") || child.include?("lib")
-            next if top_level && (UNCOPIED_USERDATA.include?(child) || child.start_with?("."))
+            next if top_level && (child.start_with?(".") || (UNCOPIED_USERDATA + EMPTY_USERDATA).include?(child))
 
-            if top_level && EMPTY_USERDATA.include?(child)
-              FileUtils.mkdir_p(File.join(destination, child))
-            else
-              copy(File.join(source, child), File.join(destination, child), top_level: false)
-            end
+            copy(File.join(source, child), File.join(destination, child), top_level: false)
           end
         else
           # Not FileUtils.copy_file, which keeps the mode: a read-only file would be a read-only file in the clone, and
@@ -105,9 +108,10 @@ module OpenHAB
           IO.copy_stream(source, destination)
         end
       # Readability was checked above, so this is an entry that disappeared: the real instance is running. Any other
-      # failure, a full disk say, would leave a clone that is registered and then reused, so it is raised.
+      # failure, one on the clone's side or a full disk say, would leave a clone that is registered and then reused, so
+      # it is raised.
       rescue Errno::ENOENT, Errno::ENOTDIR => e
-        raise if top_level
+        raise if top_level || File.exist?(source)
 
         FileUtils.rm_f(destination) if File.file?(destination)
         warn "Not cloning #{source}: #{e.message}"
@@ -115,6 +119,10 @@ module OpenHAB
 
       def readable?(path)
         File.readable?(path) && (!File.directory?(path) || File.executable?(path))
+      end
+
+      def special_file?(path)
+        File.exist?(path) && !File.file?(path) && !File.directory?(path)
       end
 
       def filter_resource(basedir, path, props)
