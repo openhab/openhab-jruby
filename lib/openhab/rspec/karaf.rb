@@ -146,21 +146,24 @@ module OpenHAB
       end
 
       def copy_instance_entry(from, to, empty:)
+        # Only created, so there is nothing in it to read
+        return FileUtils.mkdir_p(to) if empty
+
         unless File.readable?(from) && (!File.directory?(from) || File.executable?(from))
           warn "Not cloning #{from}: the user running the specs can't read it"
           return
         end
 
-        if !File.directory?(from)
+        if File.directory?(from)
+          copy_instance(from, to, top_level: false)
+        else
           # Not FileUtils.copy_file, which keeps the mode: a read-only file would be a read-only file in the clone,
           # and the harness rewrites some of them.
           IO.copy_stream(from, to)
-        elsif empty
-          FileUtils.mkdir_p(to)
-        else
-          copy_instance(from, to, top_level: false)
         end
-      rescue SystemCallError => e
+      # Readability was checked above, so this is an entry that disappeared. Any other failure, a full disk say, would
+      # leave a clone that is registered and then reused, so it is raised.
+      rescue Errno::ENOENT, Errno::ENOTDIR => e
         FileUtils.rm_f(to) if File.file?(to)
         warn "Not cloning #{from}: #{e.message}"
       end

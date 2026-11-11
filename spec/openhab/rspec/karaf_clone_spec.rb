@@ -137,6 +137,15 @@ RSpec.describe OpenHAB::RSpec::Karaf do
 
         expect(clone_files).to eq %w[jsondb/readable.json]
       end
+
+      it "still makes tmp, which only has to exist" do
+        write("#{root}/tmp/file")
+        File.chmod(0o000, "#{root}/tmp")
+
+        expect { copy }.not_to output.to_stderr
+
+        expect(File.directory?("#{clone_path}/tmp")).to be true
+      end
     end
 
     it "skips an entry that disappears while it is being copied, with a warning" do
@@ -153,19 +162,26 @@ RSpec.describe OpenHAB::RSpec::Karaf do
       expect(clone_files).to eq %w[uuid]
     end
 
-    it "doesn't leave half a file behind when copying it fails" do
+    it "doesn't leave half a file behind when the entry disappears part way through" do
       write("#{root}/broken.json")
       write("#{root}/uuid")
       allow(IO).to receive(:copy_stream).and_wrap_original do |original, from, to|
         next original.call(from, to) unless File.basename(from) == "broken.json"
 
         File.write(to, "half")
-        raise Errno::EIO, from
+        raise Errno::ENOENT, from
       end
 
       expect { copy }.to output(/Not cloning/).to_stderr
 
       expect(clone_files).to eq %w[uuid]
+    end
+
+    it "raises when the clone can't be written, instead of skipping the entry" do
+      write("#{root}/uuid")
+      allow(IO).to receive(:copy_stream).and_raise(Errno::ENOSPC)
+
+      expect { copy }.to raise_error(Errno::ENOSPC)
     end
 
     it "makes a read-only file writable in the clone, as Karaf's copy did" do
