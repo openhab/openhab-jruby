@@ -17,6 +17,7 @@ module OpenHAB
           private_constant :STRATEGIES
 
           class << self
+            # @!visibility private
             def declaration(strategies, service:, every:, cron:, filter:)
               strategies = Array(strategies).map do |strategy|
                 STRATEGIES.fetch(strategy) { raise ArgumentError, "Unknown persistence strategy: #{strategy.inspect}" }
@@ -54,6 +55,7 @@ module OpenHAB
               { service:, strategies: strategies.uniq, expressions: expressions.uniq, filters: filters.uniq }
             end
 
+            # @!visibility private
             def apply(name, declarations)
               return block_given? ? yield : nil if declarations.empty?
 
@@ -91,6 +93,7 @@ module OpenHAB
               end
             end
 
+            # @!visibility private
             def remove(*names)
               return if names.empty?
 
