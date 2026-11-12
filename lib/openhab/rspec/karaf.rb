@@ -222,6 +222,7 @@ module OpenHAB
           prune_startlevels
 
           set_up_service_listener
+          set_up_bundle_resolver
           # replace event infrastructure with synchronous versions
           wait_for_service("org.osgi.service.event.EventAdmin") do |service|
             next if defined?(Mocks::EventAdmin) && service.is_a?(Mocks::EventAdmin)
@@ -369,6 +370,32 @@ module OpenHAB
       START_LEVEL_OVERRIDES = {}.freeze
       private_constant :START_LEVEL_OVERRIDES
 
+      def set_up_bundle_resolver
+        register = lambda do |bundle|
+          next unless bundle.symbolic_name == "org.openhab.core"
+
+          add_class_loader(bundle)
+          require_relative "mocks/bundle_resolver"
+          bundle.bundle_context.register_service(
+            org.openhab.core.util.BundleResolver.java_class,
+            Mocks::BundleResolver.instance,
+            java.util.Hashtable.new(org.osgi.framework.Constants::SERVICE_RANKING => 1.to_java(:int))
+          )
+        end
+
+        # Components keep the first resolver they receive, even if a higher-ranked
+        # one appears later. Register ours before they start, using the core bundle's
+        # context so they can find it through the same package wiring as the real resolver.
+        listener = org.osgi.framework.SynchronousBundleListener.impl do |_method, event|
+          register.call(event.bundle) if event.type == org.osgi.framework.BundleEvent::STARTING
+        end
+        @bundle_context.add_bundle_listener(listener)
+        @bundle_context.bundles.each do |bundle|
+          register.call(bundle) if [org.osgi.framework.Bundle::STARTING,
+                                    org.osgi.framework.Bundle::ACTIVE].include?(bundle.state)
+        end
+      end
+
       def set_up_bundle_listener
         @thing_type_tracker = @config_description_tracker = nil
         wait_for_service("org.openhab.core.thing.binding.ThingTypeProvider",
@@ -429,13 +456,6 @@ module OpenHAB
             org.openhab.core.common.ThreadPoolManager.pools = Mocks::SynchronousExecutorMap.instance
           end
           if bundle_name == "org.openhab.core.thing"
-            require_relative "mocks/bundle_resolver"
-            bundle.bundle_context.register_service(
-              org.openhab.core.util.BundleResolver.java_class,
-              Mocks::BundleResolver.instance,
-              java.util.Hashtable.new(org.osgi.framework.Constants::SERVICE_RANKING => 1.to_java(:int))
-            )
-
             wait_for_service("org.openhab.core.thing.ThingManager") do |tm|
               require_relative "mocks/safe_caller"
               field = tm.class.java_class.declared_field :safeCaller
