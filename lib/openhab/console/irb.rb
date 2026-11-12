@@ -51,6 +51,9 @@ module OpenHAB
         def initialize
           super
 
+          # These wrappers share the standard file descriptors. Don't let GC close them.
+          @stdin.autoclose = false
+          @stdout.autoclose = false
           @stdin = $stdin
           @stdout = $stdout
         end
