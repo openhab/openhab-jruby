@@ -332,6 +332,254 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
     end
   end
 
+  describe "#real_path" do
+    def real_path(path) = instance_service.send(:real_path, path)
+
+    before do
+      FileUtils.mkdir_p("#{scratch}/real/child")
+      File.symlink("#{scratch}/real/child", "#{scratch}/link")
+    end
+
+    it "follows a symlink before it collapses .." do
+      expect(real_path("#{scratch}/link/..")).to eq "#{scratch}/real"
+    end
+
+    it "collapses .. in the part that doesn't exist yet only after it has resolved what does" do
+      expect(real_path("#{scratch}/link/../new/dir")).to eq "#{scratch}/real/new/dir"
+      expect(real_path("#{scratch}/link/../new/../other")).to eq "#{scratch}/real/other"
+    end
+  end
+
+  describe "#isolate_clone" do
+    let(:config_dir) { "#{clone_path}/config/org/openhab" }
+
+    def isolate(location = root) = instance_service.isolate_clone(location, clone_path)
+
+    def clone_contents
+      Dir.glob("#{clone_path}/**/*").select { |file| File.file?(file) }.to_h { |file| [file, File.read(file)] }
+    end
+
+    before do
+      FileUtils.mkdir_p(config_dir)
+      write("#{clone_path}/etc/config.properties", "felix.fileinstall.enableConfigSave = true\n")
+    end
+
+    it "repoints the real path at the clone in the config store" do
+      write("#{config_dir}/addons.config", <<~TEXT)
+        a="file:#{root}/etc/org.openhab.addons.cfg"
+        b=#{root}/etc/org.openhab.persistence.cfg
+      TEXT
+
+      isolate
+
+      expect(File.read("#{config_dir}/addons.config")).to eq(<<~TEXT)
+        a="file:#{clone_path}/etc/org.openhab.addons.cfg"
+        b=#{clone_path}/etc/org.openhab.persistence.cfg
+      TEXT
+    end
+
+    it "leaves a sibling directory that shares the real path's prefix alone" do
+      siblings = <<~TEXT
+        a="file:#{root}-old/etc/org.openhab.addons.cfg"
+        b="file:#{root}2/etc/org.openhab.addons.cfg"
+        c="file:#{root}+backup/etc/org.openhab.addons.cfg"
+        d="file:#{root}@home/etc/org.openhab.addons.cfg"
+      TEXT
+      write("#{config_dir}/addons.config", siblings)
+
+      expect { isolate }.not_to raise_error
+
+      expect(File.read("#{config_dir}/addons.config")).to eq(siblings)
+    end
+
+    it "doesn't rewrite a longer path that ends with the real path, and stops instead" do
+      longer = %(a="file:/mnt/backup#{root}/etc/org.openhab.addons.cfg"\n)
+      write("#{config_dir}/addons.config", longer)
+
+      expect { isolate }.to raise_error(/still refers to #{Regexp.escape(root)}.*addons\.config/)
+
+      expect(File.read("#{config_dir}/addons.config")).to eq(longer)
+    end
+
+    it "repoints the real path when it is given with a trailing slash" do
+      write("#{config_dir}/addons.config", %(a="file:#{root}/etc/org.openhab.addons.cfg"\n))
+
+      isolate("#{root}/")
+
+      expect(File.read("#{config_dir}/addons.config")).to eq(%(a="file:#{clone_path}/etc/org.openhab.addons.cfg"\n))
+    end
+
+    it "removes the config backups and keeps the configs" do
+      write("#{config_dir}/addons.config", "a=1\n")
+      write("#{config_dir}/addons.config.bak", %(a="file:#{root}/etc/org.openhab.addons.cfg"\n))
+
+      isolate
+
+      expect(Dir.children(config_dir)).to eq(["addons.config"])
+    end
+
+    it "refuses a clone that is inside the instance it was cloned from" do
+      FileUtils.mkdir_p("#{root}/nested-clone")
+
+      expect { instance_service.isolate_clone(root, "#{root}/nested-clone") }
+        .to raise_error(ArgumentError, /instance it was cloned from.*or inside it/)
+    end
+
+    it "refuses a clone that is the instance it was cloned from, and changes nothing in it" do
+      write("#{root}/config.bak", "a=1\n")
+
+      expect { instance_service.isolate_clone(root, root) }.to raise_error(ArgumentError, /instance it was cloned from/)
+
+      expect(File.exist?("#{root}/config.bak")).to be(true)
+    end
+
+    it "repoints a clone path with backslashes in it literally" do
+      backslashed = "#{scratch}/clone\\0dir"
+      write("#{backslashed}/etc/config.properties", "felix.fileinstall.enableConfigSave = true\n")
+      write("#{backslashed}/config/addons.config", %(a="file:#{root}/etc/x.cfg"\n))
+
+      instance_service.isolate_clone(root, backslashed)
+
+      expect(File.read("#{backslashed}/config/addons.config")).to eq(%(a="file:#{backslashed}/etc/x.cfg"\n))
+    end
+
+    it "changes nothing when it runs again on a clone it has already isolated" do
+      write("#{config_dir}/addons.config", %(a="file:#{root}/etc/org.openhab.addons.cfg"\n))
+      isolate
+
+      expect { isolate }.not_to(change { clone_contents })
+    end
+
+    it "turns off fileinstall's config saving" do
+      isolate
+
+      expect(File.read("#{clone_path}/etc/config.properties")).to eq("felix.fileinstall.enableConfigSave = false\n")
+    end
+
+    it "turns off the setting when its line has trailing whitespace and CRLF line endings" do
+      write("#{clone_path}/etc/config.properties",
+            "felix.fileinstall.enableConfigSave = true  \r\nkaraf.shutdown.port = -1\r\n")
+
+      isolate
+
+      expect(File.read("#{clone_path}/etc/config.properties"))
+        .to eq("felix.fileinstall.enableConfigSave = false\r\nkaraf.shutdown.port = -1\r\n")
+    end
+
+    it "turns off an indented setting instead of adding a second one" do
+      write("#{clone_path}/etc/config.properties", "  felix.fileinstall.enableConfigSave = true\n")
+
+      isolate
+
+      expect(File.read("#{clone_path}/etc/config.properties")).to eq("  felix.fileinstall.enableConfigSave = false\n")
+    end
+
+    it "turns off every assignment of the setting, so a later one can't turn it back on" do
+      write("#{clone_path}/etc/config.properties", <<~TEXT)
+        felix.fileinstall.enableConfigSave = true
+        #felix.fileinstall.enableConfigSave = true
+        karaf.shutdown.port = -1
+          felix.fileinstall.enableConfigSave = true
+      TEXT
+
+      isolate
+
+      expect(File.read("#{clone_path}/etc/config.properties")).to eq(<<~TEXT)
+        felix.fileinstall.enableConfigSave = false
+        #felix.fileinstall.enableConfigSave = true
+        karaf.shutdown.port = -1
+          felix.fileinstall.enableConfigSave = false
+      TEXT
+    end
+
+    it "turns off every assignment however it separates the key from the value" do
+      write("#{clone_path}/etc/config.properties", <<~TEXT)
+        felix.fileinstall.enableConfigSave = true
+        felix.fileinstall.enableConfigSave: true
+        felix.fileinstall.enableConfigSave true
+        felix.fileinstall.enableConfigSave\t=\ttrue
+        felix.fileinstall.enableConfigSaveOther = true
+      TEXT
+
+      isolate
+
+      expect(File.read("#{clone_path}/etc/config.properties")).to eq(<<~TEXT)
+        felix.fileinstall.enableConfigSave = false
+        felix.fileinstall.enableConfigSave: false
+        felix.fileinstall.enableConfigSave false
+        felix.fileinstall.enableConfigSave\t=\tfalse
+        felix.fileinstall.enableConfigSaveOther = true
+      TEXT
+    end
+
+    it "keeps the bytes of a config.properties that isn't UTF-8" do
+      File.binwrite("#{clone_path}/etc/config.properties",
+                    "# caf\xE9\nfelix.fileinstall.enableConfigSave = true\n".b)
+
+      isolate
+
+      expect(File.binread("#{clone_path}/etc/config.properties"))
+        .to eq("# caf\xE9\nfelix.fileinstall.enableConfigSave = false\n".b)
+    end
+
+    it "adds the setting when there is none to turn off" do
+      write("#{clone_path}/etc/config.properties", "karaf.shutdown.port = -1\n")
+
+      isolate
+
+      expect(File.read("#{clone_path}/etc/config.properties")).to eq(<<~TEXT)
+        karaf.shutdown.port = -1
+        felix.fileinstall.enableConfigSave = false
+      TEXT
+    end
+
+    it "raises when a file in etc/ still names the real instance" do
+      write("#{clone_path}/etc/custom.properties", "jetty.keystore.path=#{root}/etc/keystore\n")
+
+      expect { isolate }.to raise_error(/still refers to #{Regexp.escape(root)}.*custom\.properties/)
+    end
+
+    context "with a symlink that leads outside the clone" do
+      let(:outside) { "#{scratch}/outside" }
+
+      before { FileUtils.mkdir_p(outside) }
+
+      it "doesn't write through a symlinked config file" do
+        original = %(a="file:#{root}/etc/org.openhab.addons.cfg"\n)
+        write("#{outside}/addons.config", original)
+        File.symlink("#{outside}/addons.config", "#{config_dir}/addons.config")
+
+        expect { isolate }.to raise_error(/leads outside the instance clone/)
+
+        expect(File.read("#{outside}/addons.config")).to eq(original)
+      end
+
+      it "doesn't write or delete through a symlinked config directory" do
+        original = %(a="file:#{root}/etc/org.openhab.addons.cfg"\n)
+        write("#{outside}/addons.config", original)
+        write("#{outside}/addons.config.bak", original)
+        FileUtils.rm_rf("#{clone_path}/config")
+        File.symlink(outside, "#{clone_path}/config")
+
+        expect { isolate }.to raise_error(/leads outside the instance clone/)
+
+        expect(Dir.children(outside)).to contain_exactly("addons.config", "addons.config.bak")
+        expect(File.read("#{outside}/addons.config")).to eq(original)
+      end
+
+      it "doesn't write through a symlinked config.properties" do
+        original = "felix.fileinstall.enableConfigSave = true\n"
+        write("#{outside}/config.properties", original)
+        File.delete("#{clone_path}/etc/config.properties")
+        File.symlink("#{outside}/config.properties", "#{clone_path}/etc/config.properties")
+
+        expect { isolate }.to raise_error(/leads outside the instance clone/)
+
+        expect(File.read("#{outside}/config.properties")).to eq(original)
+      end
+    end
+  end
+
   describe "#clone_instance" do
     let(:karaf) { OpenHAB::RSpec::Karaf.new(clone_path) }
     let(:karaf_service) { org.apache.karaf.instance.core.internal.InstanceServiceImpl.new }
@@ -352,7 +600,9 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
       OpenHAB::RSpec::JRuby::OSGiBundleClassLoader.new(bundle)
     end
 
-    def clone_instance(name = "openhab") = described_class.new(karaf_service).clone_instance(name, "rspec", clone_path)
+    def clone_instance(name = "openhab", to: clone_path)
+      described_class.new(karaf_service).clone_instance(name, "rspec", to)
+    end
 
     around do |example|
       previous = %w[karaf.instances karaf.etc].to_h { |name| [name, java.lang.System.get_property(name)] }
@@ -373,6 +623,7 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
         item.0.pid = 7263
         item.0.root = true
       TEXT
+      write("#{root}/etc/config.properties", "felix.fileinstall.enableConfigSave = true\n")
       # Karaf reads the default ports from these, and logs a stack trace at debug level when it can't
       write("#{clone_path}/etc/org.apache.karaf.shell.cfg", "sshPort = 8101\n")
       write("#{clone_path}/etc/org.apache.karaf.management.cfg", "rmiRegistryPort = 1099\nrmiServerPort = 44444\n")
@@ -442,6 +693,66 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
 
       fresh_service = org.apache.karaf.instance.core.internal.InstanceServiceImpl.new
       expect(fresh_service.get_instance("rspec")).to be_nil
+    end
+
+    it "makes a clone that refers only to itself" do
+      write("#{root}/config/org/openhab/addons.config", %(a="file:#{root}/etc/org.openhab.addons.cfg"\n))
+      write("#{root}/config/org/openhab/addons.config.bak", %(a="file:#{root}/etc/org.openhab.addons.cfg"\n))
+
+      clone_instance
+
+      expect(Dir.children("#{clone_path}/config/org/openhab")).to eq(["addons.config"])
+      expect(File.read("#{clone_path}/config/org/openhab/addons.config"))
+        .to eq(%(a="file:#{clone_path}/etc/org.openhab.addons.cfg"\n))
+      expect(File.read("#{clone_path}/etc/config.properties")).to eq("felix.fileinstall.enableConfigSave = false\n")
+    end
+
+    it "doesn't register a clone that still refers to the instance it was cloned from" do
+      write("#{root}/etc/other.properties", "keystore = #{root}/etc/keystore\n")
+
+      expect { clone_instance }.to raise_error(/still refers to #{Regexp.escape(root)}.*other\.properties/)
+
+      fresh_service = org.apache.karaf.instance.core.internal.InstanceServiceImpl.new
+      expect(fresh_service.get_instance("rspec")).to be_nil
+    end
+
+    it "refuses a clone that is the instance it was cloned from before it copies anything" do
+      write("#{root}/uuid")
+
+      expect { clone_instance(to: root) }.to raise_error(ArgumentError, /instance it was cloned from/)
+
+      expect(File.read("#{root}/uuid")).to eq "contents of uuid"
+    end
+
+    it "refuses a clone that doesn't exist yet but would be inside the instance it was cloned from" do
+      write("#{root}/uuid")
+
+      expect { clone_instance(to: "#{root}/not yet/clone") }.to raise_error(ArgumentError, /or inside it/)
+
+      expect(Dir.children(root)).to contain_exactly("uuid", "etc")
+    end
+
+    context "with a clone path that reaches the instance through a symlink and .." do
+      before do
+        write("#{root}/child/file")
+        File.symlink("#{root}/child", "#{scratch}/link")
+      end
+
+      it "refuses a clone that is the instance before it copies anything" do
+        write("#{root}/uuid")
+
+        expect { clone_instance(to: "#{scratch}/link/..") }.to raise_error(ArgumentError, /instance it was cloned from/)
+
+        expect(File.read("#{root}/uuid")).to eq "contents of uuid"
+        fresh_service = org.apache.karaf.instance.core.internal.InstanceServiceImpl.new
+        expect(fresh_service.get_instance("rspec")).to be_nil
+      end
+
+      it "refuses a clone that doesn't exist yet but would be inside the instance" do
+        expect { clone_instance(to: "#{scratch}/link/../clone") }.to raise_error(ArgumentError, /or inside it/)
+
+        expect(File.exist?("#{root}/clone")).to be(false)
+      end
     end
 
     it "refuses to clone an instance that has been cloned" do

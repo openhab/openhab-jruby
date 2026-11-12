@@ -6,7 +6,8 @@ module OpenHAB
   module RSpec
     # What Karaf's InstanceServiceImpl does to clone an instance, as close to its methods as Ruby allows. Karaf's own
     # cloneInstance can't be told to skip anything: it fails on the first entry the user running rspec can't read, and
-    # the real instance creates some of those itself, with explicit modes. Each difference is commented where it is.
+    # the real instance creates some of those itself, with explicit modes. It also keeps the clone from writing to the
+    # real instance. Each difference is commented where it is.
     #
     # @!visibility private
     class InstanceService
@@ -31,8 +32,8 @@ module OpenHAB
       EMPTY_USERDATA = %w[tmp].freeze
       private_constant :EMPTY_USERDATA
 
-      # @param service [org.apache.karaf.instance.core.internal.InstanceServiceImpl]
-      def initialize(service)
+      # @param service [org.apache.karaf.instance.core.internal.InstanceServiceImpl] only needed by {#clone_instance}
+      def initialize(service = nil)
         @service = service
       end
 
@@ -42,8 +43,9 @@ module OpenHAB
         instance = @service.get_instance(name)
         raise ArgumentError, "Instance #{name} not found" unless instance
 
-        # copy instance directory
         location = instance.location
+        # Not Karaf: before anything is copied, since copying an instance onto itself would empty its files
+        refuse_nested_clone(location, clone_location)
         copy(location, clone_location)
         # create the properties map including the instance name and location
         # Not Karaf: binary, since a properties file is Latin-1 as often as it is UTF-8
@@ -62,6 +64,8 @@ module OpenHAB
         filter_resource(clone_location, "bin/stop.bat", props)
         # Not Karaf: before the clone is registered, so that a clone that is registered is a finished one
         fill_management_config(clone_location)
+        # Not Karaf: so that a clone that is registered can't write to the instance it was cloned from
+        isolate_clone(location, clone_location)
         # add the clone instance to the registry: the instance list that redirect_instances made
         instance_list = java.io.File.new("#{clone_location}/instances/instance.properties")
         properties = org.apache.felix.utils.properties.Properties.new(instance_list)
@@ -76,7 +80,43 @@ module OpenHAB
         properties.save
       end
 
+      # Not Karaf. The clone's ConfigAdmin store still names the files of the instance it was cloned from
+      # (felix.fileinstall.filename), and the clone's fileinstall saves every config update, including the ones made
+      # while starting up, to the file its config names. That would rewrite the real instance's etc/*.cfg files.
+      # So make the clone refer only to itself, stop it from saving configs at all, and refuse to start if anything
+      # still names the real instance.
+      #
+      # This is also called for every launch of the clone, which repairs one made by an older version.
+      def isolate_clone(location, clone_location)
+        location = File.expand_path(location)
+        refuse_nested_clone(location, clone_location)
+        remove_config_backups(clone_location)
+        repoint_configs(location, clone_location)
+        disable_config_save(clone_location)
+        verify_isolation(location, clone_location)
+      end
+
       private
+
+      # Not Karaf. Where the clone is, or is inside the real instance, rewriting its path would match the clone's own
+      # files again on every launch.
+      def refuse_nested_clone(location, clone_location)
+        real_location = real_path(location)
+        real_clone = real_path(clone_location)
+        return unless real_clone == real_location || real_clone.start_with?("#{real_location}/")
+
+        raise ArgumentError,
+              "The instance clone (#{clone_location}) is the instance it was cloned from (#{location}), or inside it"
+      end
+
+      # The clone doesn't exist yet when it is being made: resolve what does, and append the rest. A ".." is only
+      # collapsed in that rest, where there are no symlinks left for it to be wrong about. Not File.realpath, which
+      # in JRuby collapses a ".." that follows a symlink before it follows the symlink.
+      def real_path(path)
+        java.nio.file.Paths.get(path).to_real_path.to_s
+      rescue java.nio.file.NoSuchFileException
+        File.expand_path(File.join(real_path(File.dirname(path)), File.basename(path)))
+      end
 
       # Not Karaf: top_level is the userdata directory itself, whose entries have the skips above
       def copy(source, destination, top_level: true)
@@ -172,6 +212,66 @@ module OpenHAB
       def filter(line, props)
         todo = props.dup
         line.gsub(Regexp.union(props.keys)) { |match| todo.delete(match) { match } }
+      end
+
+      # Not Karaf. A file reached through a symlink, its own or a parent directory's, could belong to the real instance
+      def file_inside_clone(file, clone_location)
+        return file if File.realpath(file).start_with?("#{File.realpath(clone_location)}/")
+
+        raise "#{file} leads outside the instance clone (#{clone_location}); refusing to change it"
+      end
+
+      # Not Karaf. ConfigAdmin falls back to them, and they still name the real instance
+      def remove_config_backups(clone_location)
+        files_under(clone_location, "config").grep(/\.config\.bak\z/).each do |file|
+          File.delete(file_inside_clone(file, clone_location))
+        end
+      end
+
+      # Binary reads, since etc/ holds keystores
+      def files_under(clone_location, *directories)
+        files = directories.flat_map do |directory|
+          base = File.join(clone_location, directory)
+          Dir.glob("**/*", File::FNM_DOTMATCH, base:).map { |file| File.join(base, file) }
+        end
+        files.select { |file| File.file?(file) }
+      end
+
+      # The trailing "/" keeps a sibling that shares the path's prefix (/var/lib/openhab-old) from matching, and the
+      # lookbehind keeps a longer path that ends with this one (/mnt/backup/var/lib/openhab) from being rewritten into
+      # a path that doesn't exist. verify_isolation, which doesn't have the lookbehind, then stops the launch.
+      def repoint_configs(location, clone_location)
+        from = Regexp.new("(?<![\\w.+@%/-])#{Regexp.escape("#{location}/".b)}".b)
+        to = "#{clone_location}/".b
+        files_under(clone_location, "config").each do |file|
+          contents = File.binread(file)
+          repointed = contents.gsub(from) { to }
+          File.binwrite(file_inside_clone(file, clone_location), repointed) unless repointed == contents
+        end
+      end
+
+      # Added when it's missing, so that saving is off whichever way the distribution configures it. Every assignment is
+      # turned off, since the last one wins when the properties are loaded. Binary, since a properties file is Latin-1
+      # as often as it is UTF-8. A key may be indented, and is followed by "=", ":" or only blanks, as in Java
+      # properties.
+      def disable_config_save(clone_location)
+        file = "#{clone_location}/etc/config.properties"
+        config_save = /^([ \t\f]*felix\.fileinstall\.enableConfigSave(?:[ \t\f]*[=:][ \t\f]*|[ \t\f]+))[^\r\n]*/
+        properties = File.binread(file)
+        disabled = if properties.match?(config_save)
+                     properties.gsub(config_save, '\1false')
+                   else
+                     "#{properties.chomp}\nfelix.fileinstall.enableConfigSave = false\n"
+                   end
+        File.binwrite(file_inside_clone(file, clone_location), disabled) unless disabled == properties
+      end
+
+      def verify_isolation(location, clone_location)
+        needle = "#{location}/".b
+        leaks = files_under(clone_location, "config", "etc").select { |file| File.binread(file).include?(needle) }
+        return if leaks.empty?
+
+        raise "The instance clone still refers to #{location}, and could write to it. Files: #{leaks.join(", ")}"
       end
     end
   end

@@ -106,6 +106,7 @@ module OpenHAB
           # set in bin/setenv to OPENHAB_USERDATA; need to move it
           java.lang.System.set_property("felix.cm.dir", felix_cm)
           # not handled by karaf instances
+          @root_userdata = oh_userdata
           java.lang.System.set_property("openhab.userdata", path)
           @oh_userdata = nil
           java.lang.System.set_property("openhab.logdir", "#{path}/logs")
@@ -702,6 +703,8 @@ module OpenHAB
 
       def cleanup_instance
         cleanup_clone
+        # Every launch, not just the one that made the clone, so that a clone made by an older version is repaired too
+        InstanceService.new.isolate_clone(@root_userdata, path) unless use_root_instance
         minimize_installed_features
         filter_addons
       end

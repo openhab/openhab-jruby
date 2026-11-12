@@ -14,6 +14,31 @@ RSpec.describe OpenHAB::RSpec::Karaf do
 
   after { FileUtils.remove_entry(scratch) }
 
+  describe "#cleanup_instance" do
+    let(:instance_service) { instance_double(OpenHAB::RSpec::InstanceService, isolate_clone: nil) }
+
+    before do
+      %i[cleanup_clone minimize_installed_features filter_addons].each { |step| allow(karaf).to receive(step) }
+      allow(OpenHAB::RSpec::InstanceService).to receive(:new).and_return(instance_service)
+    end
+
+    it "isolates a clone from the instance it was cloned from" do
+      karaf.instance_variable_set(:@root_userdata, "#{scratch}/root")
+
+      karaf.send(:cleanup_instance)
+
+      expect(instance_service).to have_received(:isolate_clone).with("#{scratch}/root", clone_path)
+    end
+
+    it "has nothing to isolate when it is the real instance" do
+      karaf.use_root_instance = true
+
+      karaf.send(:cleanup_instance)
+
+      expect(instance_service).not_to have_received(:isolate_clone)
+    end
+  end
+
   describe "#find_jar_version" do
     it "finds the newest version even when the directory's path contains a dash" do
       FileUtils.mkdir_p("#{scratch}/open-hab/boot")
