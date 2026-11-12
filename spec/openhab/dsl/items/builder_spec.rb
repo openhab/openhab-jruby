@@ -11,6 +11,317 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
     end
   end
 
+  describe "persistence configuration" do
+    let(:configuration_registry) do
+      OpenHAB::DSL::Items::Builder::Persistence.send(:configuration_registry)
+    end
+    let(:configuration_mapper) do
+      org.openhab.core.persistence.registry.PersistenceServiceConfigurationDTOMapper
+    end
+    let(:configuration_provider) do
+      provider = configuration_registry.managed_provider
+      provider.is_a?(java.util.Optional) ? provider.get : provider
+    end
+    let(:service_id) { "jruby_builder_spec" }
+    let(:other_service_id) { "jruby_builder_spec_other" }
+
+    def configuration(service = service_id)
+      configuration_registry.get(service)
+    end
+
+    def configure_service(service = service_id)
+      dto = org.openhab.core.persistence.dto.PersistenceServiceConfigurationDTO.new
+      dto.serviceId = service
+      dto.aliases = { "Reading" => "StoredReading" }
+      entry = org.openhab.core.persistence.dto.PersistenceItemConfigurationDTO.new
+      entry.items = %w[Reading Other]
+      entry.strategies = ["everyUpdate"]
+      dto.configs = [entry]
+      configuration_provider.add(configuration_mapper.map(dto))
+    end
+
+    before do
+      configure_service
+      services = OpenHAB::DSL::Items::Builder::Persistence.send(:service_registry)
+      allow(services).to receive(:default_id).and_return(service_id)
+    end
+
+    after do
+      configuration_provider.remove(service_id)
+      configuration_provider.remove(other_service_id)
+    end
+
+    it "updates the existing provider for the default service without creating rules" do
+      previous_rules = rules.to_a
+      items.build { number_item "Reading", persist: :on_change }
+      entries = configuration.configs
+      expect(entries.find { |entry| entry.items.first.item == "Reading" }.strategies.map(&:name))
+        .to eq ["everyChange"]
+      expect(entries.find { |entry| entry.items.first.item == "Other" }.strategies.map(&:name))
+        .to eq ["everyUpdate"]
+      expect(configuration.aliases.to_h).to eq("Reading" => "StoredReading")
+      expect(rules.to_a).to eq previous_rules
+    end
+
+    it "supports multiple services, native schedules, and restore strategies" do
+      configure_service(other_service_id)
+      selected_service = other_service_id
+      items.build do
+        number_item "Reading" do
+          persist %i[on_change restore_on_startup], service: selected_service
+          persist every: 5.minutes
+          persist cron: "0 * * * * ?"
+        end
+      end
+      entries = configuration(other_service_id).configs
+      expect(entries.last.strategies.map(&:name)).to eq %w[everyChange restoreOnStartup]
+      expect(configuration.strategies.map(&:cron_expression)).to contain_exactly("0 */5 * ? * ? *", "0 * * * * ?")
+      expect(configuration.configs.to_a.last(2).flat_map { |entry| entry.strategies.map(&:name) }.uniq.size).to eq 2
+    end
+
+    it "accepts schedule options as a keyword and does not duplicate them on rebuild" do
+      2.times { items.build { number_item "Reading", persist: { cron: "0 * * * * ?" } } }
+      expect(configuration.strategies.size).to eq 1
+      expect(configuration.configs.size).to eq 2
+      expect(configuration.strategies.first.cron_expression).to eq "0 * * * * ?"
+    end
+
+    it "removes an item's persistence entries from every editable service" do
+      configure_service(other_service_id)
+      selected_service = other_service_id
+      items.build do
+        number_item "Reading" do
+          persist :on_change
+          persist :on_update, service: selected_service
+        end
+      end
+      items.remove("Reading")
+      [configuration, configuration(other_service_id)].each do |config|
+        dto = configuration_mapper.map(config)
+        expect(dto.configs.map { |entry| entry.items.to_a }).to eq [["Other"]]
+        expect(dto.aliases).to be_empty
+      end
+    end
+
+    it "cleans up when the Ruby provider removes an item directly" do
+      items.build { number_item "Reading", persist: :on_change }
+      Reading.provider.remove("Reading")
+      expect(configuration_mapper.map(configuration).configs.map { |entry| entry.items.to_a }).to eq [["Other"]]
+    end
+
+    it "cleans up when a transient item provider unloads" do
+      OpenHAB::Core::Items::Provider.new do
+        items.build { number_item "Reading", persist: :on_change }
+      end
+      expect(items["Reading"]).to be_nil
+      expect(configuration_mapper.map(configuration).configs.map { |entry| entry.items.to_a }).to eq [["Other"]]
+    end
+
+    it "updates each affected service once when clearing a Ruby item provider" do
+      configure_service(other_service_id)
+      selected_service = other_service_id
+      items.build do
+        number_item "Reading" do
+          persist every: 5.minutes
+          persist :on_update, service: selected_service
+        end
+        number_item "Other" do
+          persist every: 5.minutes
+          persist :on_change, service: selected_service
+        end
+      end
+      provider = Reading.provider
+      allow(configuration_registry).to receive(:provider_for).and_call_original
+      allow(configuration_registry).to receive(:provider_for).with(configuration).and_return(configuration_provider)
+      allow(configuration_registry).to receive(:provider_for).with(configuration(other_service_id))
+                                                             .and_return(configuration_provider)
+      allow(configuration_provider).to receive(:update).and_call_original
+      provider.clear
+      expect(configuration_provider).to have_received(:update).with(
+        have_attributes(uid: service_id)
+      ).once
+      expect(configuration_provider).to have_received(:update).with(
+        have_attributes(uid: other_service_id)
+      ).once
+      [configuration, configuration(other_service_id)].each do |config|
+        expect(config.configs).to be_empty
+        expect(config.aliases).to be_empty
+        expect(config.strategies).to be_empty
+      end
+      expect(items["Reading"]).to be_nil
+      expect(items["Other"]).to be_nil
+    end
+
+    it "retains persistence for persistent items until they are removed" do
+      OpenHAB::Core::Items::Provider.new do
+        items.build(:persistent) { number_item "Reading", persist: :on_change }
+      end
+      expect(items["Reading"]).not_to be_nil
+      expect(configuration_mapper.map(configuration).configs.map { |entry| entry.items.to_a })
+        .to include(["Reading"])
+      items.remove("Reading")
+      expect(configuration_mapper.map(configuration).configs.map { |entry| entry.items.to_a }).to eq [["Other"]]
+    ensure
+      items.remove("Reading") if items["Reading"]
+    end
+
+    [nil, :persistent].each do |item_provider|
+      it "cleans up recursively removed groups and members with provider #{item_provider.inspect}" do
+        items.build(item_provider) do
+          group_item "Readings", persist: :on_update do
+            group_item "NestedReadings", persist: :on_change do
+              number_item "Reading", persist: :on_change
+            end
+          end
+        end
+        items.remove("Readings", recursive: true)
+        expect(items.to_a.map(&:name)).not_to include("Readings", "NestedReadings", "Reading")
+        expect(configuration_mapper.map(configuration).configs.map { |entry| entry.items.to_a }).to eq [["Other"]]
+      ensure
+        items.remove("Reading") if items["Reading"]
+        items.remove("NestedReadings") if items["NestedReadings"]
+        items.remove("Readings") if items["Readings"]
+      end
+    end
+
+    it "preserves shared schedules until their last item is removed" do
+      items.build do
+        number_item "Reading", persist: { every: 5.minutes }
+        number_item "Other", persist: { every: 5.minutes }
+      end
+      expect(configuration.strategies.size).to eq 1
+      items.remove("Reading")
+      expect(configuration.strategies.size).to eq 1
+      expect(configuration.configs.last.items.first.item).to eq "Other"
+      items.remove("Other")
+      expect(configuration.configs).to be_empty
+      expect(configuration.strategies).to be_empty
+    end
+
+    it "preserves existing configuration when persist is omitted" do
+      original = configuration
+      items.build { number_item "Reading" }
+      expect(configuration).to eq original
+    end
+
+    it "supports group and member declarations" do
+      items.build do
+        group_item "Readings", persist: :on_update do
+          number_item "Reading", persist: :on_change
+        end
+      end
+      names = configuration.configs.flat_map { |entry| entry.items.map(&:item) }
+      expect(names).to contain_exactly("Reading", "Readings", "Other")
+    end
+
+    it "uses named filters configured in the UI and preserves them through serialization" do
+      dto = configuration_mapper.map(configuration)
+      filter = org.openhab.core.persistence.dto.PersistenceFilterDTO.new
+      filter.name = "within_range"
+      filter.lower = java.math.BigDecimal.new("5")
+      filter.upper = java.math.BigDecimal.new("10")
+      filter.inverted = false
+      dto.includeFilters = [filter]
+      configuration_provider.update(configuration_mapper.map(dto))
+      items.build do
+        number_item "Reading" do
+          persist :on_update, filter: :within_range
+        end
+      end
+      restored = configuration_mapper.map(configuration_mapper.map(configuration))
+      entry = restored.configs.last
+      expect(entry.filters.map(&:name)).to eq ["within_range"]
+      Reading.update(3)
+      expect(entry.filters.first.apply(Reading.__getobj__)).to be false
+      Reading.update(7)
+      expect(entry.filters.first.apply(Reading.__getobj__)).to be true
+    end
+
+    it "rejects file-owned configurations without modifying them" do
+      original = configuration
+      provider = instance_double(org.openhab.core.persistence.registry.PersistenceServiceConfigurationProvider)
+      allow(configuration_registry).to receive(:provider_for).with(original).and_return(provider)
+      expect do
+        items.build { number_item "Reading", persist: :on_change }
+      end.to raise_error(FrozenError, /configure persistence through the UI/)
+      expect(configuration).to eq original
+    end
+
+    it "requires a service configuration created in the UI" do
+      missing_service = other_service_id
+      expect do
+        items.build { number_item "Reading", persist: { service: missing_service, cron: "0 * * * * ?" } }
+      end.to raise_error(ArgumentError, /through the UI/)
+      expect(configuration(other_service_id)).to be_nil
+    end
+
+    it "preserves wildcard and group configurations" do
+      dto = configuration_mapper.map(configuration)
+      entry = org.openhab.core.persistence.dto.PersistenceItemConfigurationDTO.new
+      entry.items = ["*", "Readings*"]
+      entry.strategies = ["everyChange"]
+      dto.configs = dto.configs.to_a + [entry]
+      configuration_provider.update(configuration_mapper.map(dto))
+      items.build { number_item "Reading", persist: :on_update }
+      saved = configuration_mapper.map(configuration)
+      expect(saved.configs.map { |config| config.items.to_a }).to include(["*", "Readings*"])
+    end
+
+    it "validates all selected services before changing any configuration" do
+      original = configuration
+      missing_service = other_service_id
+      expect do
+        items.build do
+          number_item "Reading" do
+            persist :on_change
+            persist :on_update, service: missing_service
+          end
+        end
+      end.to raise_error(ArgumentError, /through the UI/)
+      expect(configuration).to eq original
+    end
+
+    it "requires a default service when no service is specified" do
+      services = OpenHAB::DSL::Items::Builder::Persistence.send(:service_registry)
+      allow(services).to receive(:default_id).and_return(nil)
+      expect do
+        items.build { number_item "Reading", persist: :on_change }
+      end.to raise_error(ArgumentError, /No default persistence service/)
+    end
+
+    it "rejects invalid schedules before adding an item" do
+      expect do
+        items.build { number_item "Reading", persist: { cron: "not a cron expression" } }
+      end.to raise_error(ArgumentError, /cron expression/)
+      expect(items["Reading"]).to be_nil
+    end
+
+    it "rejects unknown strategies before adding the item" do
+      expect do
+        items.build { number_item "Reading", persist: :unknown }
+      end.to raise_error(ArgumentError, /strategy/)
+      expect(items["Reading"]).to be_nil
+    end
+
+    it "rejects callable filters instead of UI-configured filter names" do
+      expect do
+        items.build do
+          number_item "Reading" do
+            persist :on_update, filter: ->(value) { value.between?(5, 10) }
+          end
+        end
+      end.to raise_error(ArgumentError, /filters configured in the UI/)
+    end
+
+    it "rejects unknown filters without changing the configuration" do
+      original = configuration
+      expect do
+        items.build { number_item "Reading", persist: { cron: "0 * * * * ?", filter: :unknown } }
+      end.to raise_error(ArgumentError, /Unknown persistence filters/)
+      expect(configuration).to eq original
+    end
+  end
+
   context "when items already exist and build is called" do
     context "with update: false" do
       it "raises an error" do

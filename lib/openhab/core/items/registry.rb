@@ -62,7 +62,7 @@ module OpenHAB
         #
         # The item must be a managed item (typically created by Ruby or in the UI).
         #
-        # Any associated metadata or channel links are also removed.
+        # Any associated metadata, channel links, or editable persistence entries are also removed.
         #
         # @param [String, Item] item_name
         # @param recursive [true, false] Remove the item's members if it's a group
@@ -81,7 +81,14 @@ module OpenHAB
           Things::Links::Provider.registry.providers.grep(ManagedProvider).each do |managed_provider|
             managed_provider.remove_links_for_item(item_name) if managed_provider.respond_to?(:remove_links_for_item)
           end
-          provider.remove(item_name, recursive)
+          return provider.remove(item_name, recursive) if provider.is_a?(Provider)
+
+          names = recursive ? provider.all.map(&:name) : [item_name]
+          removed = provider.remove(item_name, recursive)
+          names.each do |name|
+            DSL::Items::Builder::Persistence.remove(name) unless Provider.registry.get(name)
+          end
+          removed
         end
       end
     end

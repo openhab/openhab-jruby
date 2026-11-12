@@ -28,11 +28,20 @@ module OpenHAB
         # @return [Item, nil] The removed item, if found.
         #
         def remove(item_name, recursive = false) # rubocop:disable Style/OptionalBooleanParameter -- matches Java method
-          return nil unless @elements.key?(item_name)
+          item = @elements[item_name]
+          return nil unless item
 
-          item = super(item_name)
-          item.members.each { |member| remove(member.name, true) } if recursive && item.is_a?(GroupItem)
+          members = (recursive && item.is_a?(GroupItem)) ? item.members.to_a : []
+          DSL::Items::Builder::Persistence.remove(item_name)
+          super(item_name)
+          members.each { |member| remove(member.name, true) }
           item
+        end
+
+        # @!visibility private
+        def clear
+          DSL::Items::Builder::Persistence.remove(*@elements.key_set.to_a)
+          super
         end
 
         private

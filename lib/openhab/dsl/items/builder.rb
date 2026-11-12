@@ -38,6 +38,8 @@ module OpenHAB
       # @see OpenHAB::Core::Items::Registry#build items.build for the arguments to this method
       #
       module Builder
+        autoload :Persistence, "openhab/dsl/items/builder/persistence"
+
         include Core::EntityLookup
 
         self.create_dummy_items = true
@@ -162,6 +164,7 @@ module OpenHAB
               provider.add(item)
             end
 
+            builder.configure_persistence
             item.update(builder.state) unless builder.state.nil?
 
             # make sure to add the item to the registry before linking it
@@ -319,6 +322,7 @@ module OpenHAB
         # @param matter [String, Symbol, Array<(String, Hash<String, Object>)>, nil]
         #   Matter metadata (see {ItemBuilder#matter})
         # @param metadata [Hash<String, Hash>] Generic metadata (see {ItemBuilder#metadata})
+        # @param persist [Symbol, Array<Symbol>, Hash, nil] Persistence strategies or options (see {#persist})
         # @param state [State] Initial state
         def initialize(type,
                        name = nil,
@@ -347,7 +351,8 @@ module OpenHAB
                        homekit: nil,
                        matter: nil,
                        metadata: nil,
-                       state: nil)
+                       state: nil,
+                       persist: nil)
           raise ArgumentError, "`name` cannot be nil" if name.nil?
 
           if dimension
@@ -397,6 +402,12 @@ module OpenHAB
           self.homekit(homekit) if homekit
           self.matter(matter) if matter
           self.state = state
+          @persistence = []
+          if persist.is_a?(Hash)
+            self.persist(**persist)
+          elsif persist
+            self.persist(persist)
+          end
 
           self.group(*group)
           self.groups(*groups)
@@ -406,6 +417,44 @@ module OpenHAB
 
           self.channel(*channel)
           self.channels(*channels)
+        end
+
+        # Configure automatic state persistence.
+        #
+        # Persistence must be configured through the UI to use this feature. The selected
+        # service must already have an editable configuration. Configurations supplied by
+        # `.persist` files are read-only through the framework and will raise an error.
+        #
+        # If the persistence service already has configuration for this item, it will be
+        # replaced. If no persistence configuration is defined in the builder, any existing
+        # configuration is retained. Transient items created in Ruby also remove their
+        # persistence configuration when the item is unloaded.
+        #
+        # @param strategies [Symbol, Array<Symbol>] `:on_change`, `:on_update`,
+        #   `:restore_on_startup`, or `:forecast`
+        # @param service [Symbol, String, nil] Persistence service, or the default service
+        # @param every [Duration, Symbol, nil] Persistence interval
+        # @param cron [String, nil] Cron expression for persistence
+        # @param filter [String, Symbol, Array<String, Symbol>, nil] Names of existing filters configured through the UI
+        # @raise [FrozenError] The service configuration is not editable through the framework
+        # @raise [ArgumentError] The service has no configuration, or an option is invalid
+        # @return [void]
+        # @example
+        #   items.build do
+        #     number_item Temperature, persist: :on_change
+        #     number_item Power do
+        #       persist :on_update, service: :influxdb
+        #       persist every: 5.minutes, filter: :within_range
+        #     end
+        #     number_item Counter, persist: { cron: "0 * * * * ?" }
+        #   end
+        def persist(strategies = [], service: nil, every: nil, cron: nil, filter: nil)
+          @persistence << Builder::Persistence.declaration(strategies, service:, every:, cron:, filter:)
+        end
+
+        # @!visibility private
+        def configure_persistence
+          Builder::Persistence.apply(name, @persistence)
         end
 
         #
