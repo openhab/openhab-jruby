@@ -172,6 +172,13 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
 
         expect { copy }.to raise_error(Errno::EACCES)
       end
+
+      it "raises when the userdata directory can be listed but not searched, since nothing in it could be cloned" do
+        write("#{root}/uuid")
+        File.chmod(0o444, root)
+
+        expect { copy }.to raise_error(Errno::EACCES)
+      end
     end
 
     it "raises when the userdata directory isn't there" do

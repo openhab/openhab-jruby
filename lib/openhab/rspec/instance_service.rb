@@ -85,8 +85,11 @@ module OpenHAB
         # Not Karaf: but not the userdata directory itself, whatever it is called, or nothing would be cloned
         return if !top_level && (IGNORED.match?(name) || BACKUP.match?(name))
 
-        # The userdata directory itself is not an entry to skip: without it there would be no clone
-        unless top_level || readable?(source)
+        if top_level
+          # The userdata directory itself is not an entry to skip: without it there would be no clone. One that can be
+          # listed but not searched would be cloned as nothing but tmp, so it raises like one that can't be listed.
+          raise Errno::EACCES, source if File.exist?(source) && !readable?(source)
+        elsif !readable?(source)
           warn "Not cloning #{source}: the user running the specs can't read it"
           return
         end
