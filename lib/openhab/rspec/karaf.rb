@@ -322,6 +322,7 @@ module OpenHAB
         org.openhab.core.io.monitor
         org.openhab.core.io.rest
         org.openhab.core.io.rest.sse
+        org.openhab.core.io.transport.serial
         org.eclipse.jetty.http2.hpack
       ].freeze
       private_constant :ALLOWED_BUNDLES
@@ -824,6 +825,7 @@ module OpenHAB
                     <f:feature>openhab-core-storage-json</f:feature>
                     <f:feature>openhab-core-ui-icon</f:feature>
                     <f:feature>openhab-transport-http</f:feature>
+                    <f:feature>openhab-transport-serial</f:feature>
                     <f:feature prerequisite="true">wrapper</f:feature>
                     <f:bundle>mvn:org.openhab.core.bundles/org.openhab.core.karaf/#{version}</f:bundle>
                     <!-- openhab-core-model-yaml imports org.openhab.core.ui.components since OH 5.2 -->
