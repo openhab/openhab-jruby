@@ -1,6 +1,27 @@
 # frozen_string_literal: true
 
 RSpec.describe "mocks" do
+  it "runs callbacks synchronously before OpenHAB::Core is initialized" do
+    executor = OpenHAB::RSpec::Mocks::SynchronousExecutor.send(:new)
+    allow(executor).to receive(:core_version).and_return(nil)
+
+    submitted_on = nil
+    submit_caller = Thread.new do
+      runnable = java.lang.Runnable.impl { submitted_on = Thread.current }
+      executor.submit(runnable).get(5, java.util.concurrent.TimeUnit::SECONDS)
+    end
+    submit_caller.value
+    expect(submitted_on).to be submit_caller
+
+    executed_on = nil
+    execute_caller = Thread.new do
+      runnable = java.lang.Runnable.impl { executed_on = Thread.current }
+      executor.execute(runnable)
+    end
+    execute_caller.value
+    expect(executed_on).to be execute_caller
+  end
+
   it "mocks against the actual item" do
     items.build { switch_item Switch1 }
 
