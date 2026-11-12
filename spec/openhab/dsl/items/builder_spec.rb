@@ -25,6 +25,54 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
     let(:service_id) { "jruby_builder_spec" }
     let(:other_service_id) { "jruby_builder_spec_other" }
 
+    def check_concurrent_persistence(operation)
+      persistence = OpenHAB::DSL::Items::Builder::Persistence
+      declarations = [persistence.declaration(:on_change, service: service_id, every: nil, cron: nil, filter: nil)]
+      workers = []
+      release = java.util.concurrent.CountDownLatch.new(1)
+      entered = java.util.concurrent.CountDownLatch.new(1)
+      started = java.util.concurrent.CountDownLatch.new(1)
+      second_thread = java.util.concurrent.atomic.AtomicReference.new
+      workers << Thread.new do
+        persistence.apply("ConcurrentFirst", declarations) do
+          entered.count_down
+          raise "Timed out waiting to commit" unless release.await(10, java.util.concurrent.TimeUnit::SECONDS)
+        end
+      end
+      expect(entered.await(5, java.util.concurrent.TimeUnit::SECONDS)).to be true
+      workers << Thread.new do
+        second_thread.set(java.lang.Thread.current_thread)
+        started.count_down
+        if operation == :apply
+          persistence.apply("ConcurrentSecond", declarations)
+        else
+          persistence.remove("Reading")
+        end
+      end
+      expect(started.await(5, java.util.concurrent.TimeUnit::SECONDS)).to be true
+      deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + 5
+      until second_thread.get.state.to_s == "BLOCKED" || workers.last.join(0) ||
+            Process.clock_gettime(Process::CLOCK_MONOTONIC) >= deadline
+        Thread.pass
+      end
+      expect(second_thread.get.state.to_s).to eq "BLOCKED"
+      release.count_down
+      workers.each do |worker|
+        expect(worker.join(10)).not_to be_nil
+        worker.value
+      end
+      names = configuration_mapper.map(configuration).configs.flat_map { |config| config.items.to_a }
+      expect(names).to include("Other", "ConcurrentFirst")
+      if operation == :apply
+        expect(names).to include("Reading", "ConcurrentSecond")
+      else
+        expect(names).not_to include("Reading")
+      end
+    ensure
+      release&.count_down
+      workers&.each { |worker| worker.kill unless worker.join(10) }
+    end
+
     def configuration(service = service_id)
       configuration_registry.get(service)
     end
@@ -49,6 +97,14 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
     after do
       configuration_provider.remove(service_id)
       configuration_provider.remove(other_service_id)
+    end
+
+    it "serializes concurrent additions" do
+      check_concurrent_persistence(:apply)
+    end
+
+    it "serializes concurrent additions and removals" do
+      check_concurrent_persistence(:remove)
     end
 
     it "updates the existing provider for the default service without creating rules" do
@@ -198,6 +254,51 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
       expect(configuration.strategies).to be_empty
     end
 
+    it "discards obsolete generated schedules when rebuilding an item" do
+      items.build { number_item "Reading", persist: { every: 5.minutes } }
+      items.build { number_item "Reading", persist: { every: 10.minutes } }
+      expect(configuration.strategies.map(&:cron_expression)).to eq ["0 */10 * ? * ? *"]
+      items.build { number_item "Reading", persist: :on_change }
+      expect(configuration.strategies).to be_empty
+    end
+
+    it "preserves schedules used by other items when replacing an item's schedule" do
+      items.build do
+        number_item "Reading", persist: { every: 5.minutes }
+        number_item "Other", persist: { every: 5.minutes }
+      end
+      items.build { number_item "Reading", persist: :on_change }
+      expect(configuration.strategies.map(&:cron_expression)).to eq ["0 */5 * ? * ? *"]
+    end
+
+    it "updates persistence once when recursively removing persistent items" do
+      items.build(:persistent) do
+        group_item "Readings", persist: :on_update do
+          number_item "Reading", persist: :on_change
+        end
+        number_item "Other", persist: :on_update
+      end
+      allow(configuration_registry).to receive(:provider_for).and_call_original
+      allow(configuration_registry).to receive(:provider_for).with(configuration).and_return(configuration_provider)
+      allow(configuration_provider).to receive(:update).and_call_original
+      items.remove("Readings", recursive: true)
+      expect(configuration_provider).to have_received(:update).once
+      expect(configuration_mapper.map(configuration).configs.map { |entry| entry.items.to_a }).to eq [["Other"]]
+      expect(items["Other"]).not_to be_nil
+    ensure
+      items.remove("Readings", recursive: true) if items["Readings"]
+      items.remove("Other") if items["Other"]
+    end
+
+    it "does not commit persistence if item registration fails" do
+      items.build { number_item "Reading" }
+      original = configuration
+      expect do
+        items.build(update: false) { number_item "Reading", persist: :on_change }
+      end.to raise_error(ArgumentError, /already exists/)
+      expect(configuration).to eq original
+    end
+
     it "preserves existing configuration when persist is omitted" do
       original = configuration
       items.build { number_item "Reading" }
@@ -319,6 +420,32 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
         items.build { number_item "Reading", persist: { cron: "0 * * * * ?", filter: :unknown } }
       end.to raise_error(ArgumentError, /Unknown persistence filters/)
       expect(configuration).to eq original
+      expect(items["Reading"]).to be_nil
+    end
+
+    it "leaves existing item properties, metadata, state, and links unchanged on persistence errors" do
+      things.build do
+        thing "a:b:c" do
+          channel "old", "number"
+          channel "new", "number"
+        end
+      end
+      items.build do
+        number_item "Reading", "Original", state: 7, channel: "a:b:c:old", autoupdate: false
+      end
+      original = Reading.__getobj__
+      expect do
+        items.build do
+          number_item "Reading", "Changed", state: 9, channel: "a:b:c:new", autoupdate: true do
+            persist :on_change, filter: :unknown
+          end
+        end
+      end.to raise_error(ArgumentError, /Unknown persistence filters/)
+      expect(Reading.__getobj__).to equal original
+      expect(Reading.label).to eq "Original"
+      expect(Reading.state).to eq 7
+      expect(Reading.metadata[:autoupdate].value).to eq "false"
+      expect(Reading.links.map { |link| link.linked_uid.to_s }).to eq ["a:b:c:old"]
     end
   end
 

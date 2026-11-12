@@ -85,9 +85,8 @@ module OpenHAB
 
           names = recursive ? provider.all.map(&:name) : [item_name]
           removed = provider.remove(item_name, recursive)
-          names.each do |name|
-            DSL::Items::Builder::Persistence.remove(name) unless Provider.registry.get(name)
-          end
+          names.reject! { |name| Provider.registry.get(name) }
+          DSL::Items::Builder::Persistence.remove(*names)
           removed
         end
       end

@@ -134,37 +134,39 @@ module OpenHAB
 
           # @!visibility private
           def add(builder)
-            if (old_item = DSL.items[builder.name])
-              raise ArgumentError, "Item #{builder.name} already exists" unless @update
+            item = builder.configure_persistence do
+              if (old_item = DSL.items[builder.name])
+                raise ArgumentError, "Item #{builder.name} already exists" unless @update
 
-              # Use provider.get because openHAB's ManagedProvider does not support the #[] method.
-              # Note that ManagedProvider stores PersistableItem objects, not the actual item,
-              # so we cannot use provider.get as old_item. We'll get it from the Item Registry instead.
-              unless provider.get(builder.name)
-                raise FrozenError, "Item #{builder.name} is managed by #{old_item.provider}"
-              end
+                # Use provider.get because openHAB's ManagedProvider does not support the #[] method.
+                # Note that ManagedProvider stores PersistableItem objects, not the actual item,
+                # so we cannot use provider.get as old_item. We'll get it from the Item Registry instead.
+                unless provider.get(builder.name)
+                  raise FrozenError, "Item #{builder.name} is managed by #{old_item.provider}"
+                end
 
-              item = builder.build
-              if item.config_eql?(old_item.__getobj__)
-                logger.debug { "Not replacing existing item #{item.uid} because it is identical" }
-                item = old_item.__getobj__
+                item = builder.build
+                if item.config_eql?(old_item.__getobj__)
+                  logger.debug { "Not replacing existing item #{item.uid} because it is identical" }
+                  item = old_item.__getobj__
+                else
+                  logger.debug { "Replacing existing item #{item.uid} because it is not identical" }
+                  provider.update(item)
+                end
+                item.metadata.merge!(builder.metadata)
+                item.metadata
+                    .reject { |namespace, _| builder.metadata.key?(namespace) }
+                    .each do |namespace, metadata|
+                  item.metadata.delete(namespace) if metadata.provider == Core::Items::Metadata::Provider.current
+                end
               else
-                logger.debug { "Replacing existing item #{item.uid} because it is not identical" }
-                provider.update(item)
+                item = builder.build
+                item.metadata.merge!(builder.metadata)
+                provider.add(item)
               end
-              item.metadata.merge!(builder.metadata)
-              item.metadata
-                  .reject { |namespace, _| builder.metadata.key?(namespace) }
-                  .each do |namespace, metadata|
-                item.metadata.delete(namespace) if metadata.provider == Core::Items::Metadata::Provider.current
-              end
-            else
-              item = builder.build
-              item.metadata.merge!(builder.metadata)
-              provider.add(item)
+              item
             end
 
-            builder.configure_persistence
             item.update(builder.state) unless builder.state.nil?
 
             # make sure to add the item to the registry before linking it
@@ -322,7 +324,8 @@ module OpenHAB
         # @param matter [String, Symbol, Array<(String, Hash<String, Object>)>, nil]
         #   Matter metadata (see {ItemBuilder#matter})
         # @param metadata [Hash<String, Hash>] Generic metadata (see {ItemBuilder#metadata})
-        # @param persist [Symbol, Array<Symbol>, Hash, nil] Persistence strategies or options (see {#persist})
+        # @param persist [Symbol, Array<Symbol>, Hash, nil]
+        #   Persistence strategies or options (see {ItemBuilder#persist})
         # @param state [State] Initial state
         def initialize(type,
                        name = nil,
@@ -453,8 +456,8 @@ module OpenHAB
         end
 
         # @!visibility private
-        def configure_persistence
-          Builder::Persistence.apply(name, @persistence)
+        def configure_persistence(&)
+          Builder::Persistence.apply(name, @persistence, &)
         end
 
         #

@@ -55,52 +55,60 @@ module OpenHAB
             end
 
             def apply(name, declarations)
-              return if declarations.empty?
+              return block_given? ? yield : nil if declarations.empty?
 
-              registry = configuration_registry
-              services = service_registry
-              grouped = declarations.group_by do |declaration|
-                service = declaration[:service] || Thread.current[:openhab_persistence_service] || services.default_id
-                raise ArgumentError, "No default persistence service is configured" unless service
+              # The Java registry is shared by all script runtimes. Its monitor protects
+              # the whole read-modify-update operation in both apply and remove.
+              configuration_registry.synchronized do
+                registry = configuration_registry
+                services = service_registry
+                grouped = declarations.group_by do |declaration|
+                  service = declaration[:service] || Thread.current[:openhab_persistence_service] || services.default_id
+                  raise ArgumentError, "No default persistence service is configured" unless service
 
-                service.to_s
-              end
-              # Resolve and validate every selected service before writing any configuration.
-              updates = grouped.map do |service, configs|
-                configuration = registry.get(service)
-                unless configuration
-                  raise ArgumentError, "Configure persistence for #{service} through the UI before using persist"
+                  service.to_s
                 end
+                # Resolve and validate every selected service before writing any configuration.
+                updates = grouped.map do |service, configs|
+                  configuration = registry.get(service)
+                  unless configuration
+                    raise ArgumentError, "Configure persistence for #{service} through the UI before using persist"
+                  end
 
-                provider = registry.provider_for(configuration)
-                unless provider.is_a?(org.openhab.core.common.registry.ManagedProvider)
-                  raise FrozenError, "Persistence configuration for #{service} is not editable through " \
-                                     "the framework; configure persistence through the UI instead of a .persist file"
+                  provider = registry.provider_for(configuration)
+                  unless provider.is_a?(org.openhab.core.common.registry.ManagedProvider)
+                    raise FrozenError, "Persistence configuration for #{service} is not editable through " \
+                                       "the framework; configure persistence through the UI instead of a .persist file"
+                  end
+
+                  dto = mapper.map(configuration)
+                  replace_item(dto, name, configs)
+                  [provider, mapper.map(dto)]
                 end
-
-                dto = mapper.map(configuration)
-                replace_item(dto, name, configs)
-                [provider, mapper.map(dto)]
+                result = yield if block_given?
+                updates.each { |provider, configuration| provider.update(configuration) }
+                result
               end
-              updates.each { |provider, configuration| provider.update(configuration) }
             end
 
             def remove(*names)
               return if names.empty?
 
-              registry = configuration_registry
-              registry.all.each do |configuration|
-                provider = registry.provider_for(configuration)
-                next unless provider.is_a?(org.openhab.core.common.registry.ManagedProvider)
+              configuration_registry.synchronized do
+                registry = configuration_registry
+                registry.all.each do |configuration|
+                  provider = registry.provider_for(configuration)
+                  next unless provider.is_a?(org.openhab.core.common.registry.ManagedProvider)
 
-                dto = mapper.map(configuration)
-                next unless dto.configs.any? { |config| config.items.to_a.intersect?(names) } ||
-                            dto.aliases.keys.to_a.intersect?(names)
+                  dto = mapper.map(configuration)
+                  next unless dto.configs.any? { |config| config.items.to_a.intersect?(names) } ||
+                              dto.aliases.keys.to_a.intersect?(names)
 
-                remove_items(dto, names)
-                dto.aliases = dto.aliases.to_h.except(*names)
-                remove_unused_schedules(dto)
-                provider.update(mapper.map(dto))
+                  remove_items(dto, names)
+                  dto.aliases = dto.aliases.to_h.except(*names)
+                  remove_unused_schedules(dto)
+                  provider.update(mapper.map(dto))
+                end
               end
             end
 
@@ -164,6 +172,7 @@ module OpenHAB
               end
               dto.configs = configs
               dto.cronStrategies = cron_strategies
+              remove_unused_schedules(dto)
             end
           end
         end
