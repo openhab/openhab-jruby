@@ -28,6 +28,7 @@ module OpenHAB
           #     tag: nil,
           #     tags: nil,
           #     on_load: false,
+          #     script: nil,
           #     **kwargs,
           #     &block)
           #   Create a new rule with a $1 trigger.
@@ -39,13 +40,15 @@ module OpenHAB
           #   @param tags [String, Symbol, Semantics::Tag, Array<String, Symbol, Semantics::Tag>, nil]
           #     Fluent alias for `tag`
           #   @param on_load [true, false] If the rule should _also_ trigger immediately when the script loads.
+          #   @param script [String, nil] Explicit source metadata for the rule.
           #   @yield The execution block for the rule.
           #   @return [void]
           #   @see BuilderDSL#$1
           def def_terse_rule(trigger)
             class_eval(<<~RUBY, __FILE__, __LINE__ + 1)
               def #{trigger}(*args, id: nil, name: nil, description: nil,  # def changed(*args, id: nil, name: nil, description: nil,
-                  tag: nil, tags: nil, on_load: false, **kwargs, &block)   #     tag: nil, tags: nil, on_load: false, **kwargs, &block)
+                  tag: nil, tags: nil, on_load: false,                     #     tag: nil, tags: nil, on_load: false,
+                  script: nil, **kwargs, &block)                           #     script: nil, **kwargs, &block)
                 raise ArgumentError, "Block is required" unless block      #   raise ArgumentError, "Block is required" unless block
                                                                            #
                 replace = nil                                              #   replace = nil
@@ -53,7 +56,7 @@ module OpenHAB
                   replace = false                                          #     replace = false
                   id = NameInference.infer_rule_id_from_block(block)       #     id = NameInference.infer_rule_id_from_block(block)
                 end                                                        #   end
-                script = block.source rescue nil                           #   script = block.source rescue nil
+                script ||= Builder.script_source(block)                    #   script ||= Builder.script_source(block)
                 caller_binding = block.binding                             #   caller_binding = block.binding
                 rule name, id: id, replace: replace, script: script,       #   rule name, id: id, replace: replace, script: script
                   binding: caller_binding do                               #     binding: caller_binding do

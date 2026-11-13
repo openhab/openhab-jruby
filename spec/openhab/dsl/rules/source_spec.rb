@@ -59,22 +59,82 @@ RSpec.describe "Rule source metadata" do
     end
   end
 
+  context "with a terse rule" do
+    it "includes the user's location, comments, and definition" do
+      source = "# A daily reminder.\nevery(:day, id: 'terse_source') { nil }\n"
+      evaluate_file(source) do |rule, filename|
+        expect(source_metadata(rule)).to eq "# Source: #{filename}:2\n#{source}"
+      end
+    end
+
+    it "preserves an explicitly supplied script" do
+      evaluate_file("every(:day, id: 'terse_source', script: 'custom source') { nil }\n") do |rule, _filename|
+        expect(source_metadata(rule)).to eq "custom source"
+      end
+    end
+  end
+
   context "with a UI script" do
     around do |example|
       original_context = $ctx
+      original_extension = $scriptExtension
       $ctx = { "ruleUID" => "ui_source" }
       example.run
     ensure
       $ctx = original_context
+      $scriptExtension = original_extension
+    end
+
+    def ui_action(id, source, type: "application/x-ruby", module_type: "script.ScriptAction")
+      org.openhab.core.automation.util.ActionBuilder.create
+         .with_id(id)
+         .with_type_uid(module_type)
+         .with_configuration(OpenHAB::Core::Configuration.new("type" => type, "script" => source))
+         .build
+    end
+
+    def stub_ui_parent(actions, originating_action:)
+      parent = org.openhab.core.automation.util.RuleBuilder.create("ui_source").with_actions(actions).build
+      allow(OpenHAB::DSL.rules).to receive(:[]).with("ui_source").and_return(parent)
+      action = actions.find { |candidate| candidate.id == originating_action }
+      identifier = if action
+                     factory = OpenHAB::Core::Rules.manager.get_module_handler_factory(action.type_uid)
+                     factory.get_handler(action, "ui_source").engine_identifier
+                   else
+                     "missing-engine"
+                   end
+      $scriptExtension = org.openhab.core.automation.module.script.ScriptExtensionManagerWrapper.impl { identifier }
     end
 
     it "reads the definition and comments from the UI rule and includes its UID" do
       source = "# Created in MainUI.\nscript(id: 'nested_script') do\n  nil\nend\n"
-      script(id: "ui_source", script: source) { nil }
+      stub_ui_parent([ui_action("ruby", source)], originating_action: "ruby")
 
       rule = eval(source, binding, "<script>") # rubocop:disable Security/Eval
 
       expect(source_metadata(rule)).to eq "# Source: script:ui_source:2\n#{source}"
+    end
+
+    it "selects the originating Ruby script among multiple actions" do
+      source = "# The second Ruby action.\nscript(id: 'nested_script') do\n  nil\nend\n"
+      actions = [
+        ui_action("command", nil, module_type: "core.ItemCommandAction"),
+        ui_action("javascript", "unrelated source", type: "application/javascript"),
+        ui_action("other_ruby", "# Unrelated Ruby source\nscript(id: 'other') { nil }\n"),
+        ui_action("ruby", source)
+      ]
+      stub_ui_parent(actions, originating_action: "ruby")
+
+      rule = eval(source, binding, "<script>") # rubocop:disable Security/Eval
+
+      expect(source_metadata(rule)).to eq "# Source: script:ui_source:2\n#{source}"
+    end
+
+    it "omits metadata when no action matches the executing engine" do
+      stub_ui_parent([ui_action("other_ruby", "script(id: 'other') { nil }")], originating_action: "missing")
+      rule = eval("script(id: 'nested_script') { nil }", binding, "<script>") # rubocop:disable Style/EvalWithLocation
+
+      expect(source_metadata(rule)).to be_nil
     end
 
     it "still creates the rule when the UI rule cannot be found" do

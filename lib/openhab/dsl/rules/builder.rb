@@ -73,7 +73,7 @@ module OpenHAB
           raise ArgumentError, "Block is required" unless block
 
           id ||= inferred_id = NameInference.infer_rule_id_from_block(block)
-          script ||= script_source(block)
+          script ||= Builder.script_source(block)
 
           builder = nil
 
@@ -156,7 +156,7 @@ module OpenHAB
           inferred_id = nil
           id ||= inferred_id = NameInference.infer_rule_id_from_block(block)
           name ||= id
-          script ||= script_source(block)
+          script ||= Builder.script_source(block)
 
           if replace
             logger.debug { "Removing existing rule '#{id}'." } if DSL.rules.remove(id)
@@ -204,7 +204,7 @@ module OpenHAB
           inferred_id = nil
           id ||= inferred_id = NameInference.infer_rule_id_from_block(block)
           name ||= id
-          script ||= script_source(block)
+          script ||= Builder.script_source(block)
 
           if replace
             logger.debug { "Removing existing rule '#{id}'." } if DSL.rules.remove(id)
@@ -227,9 +227,8 @@ module OpenHAB
           end
         end
 
-        private
-
-        def script_source(block)
+        # @!visibility private
+        def self.script_source(block)
           file, line = block.source_location
           return unless line
 
