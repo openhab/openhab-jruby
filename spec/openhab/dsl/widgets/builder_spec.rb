@@ -105,6 +105,29 @@ RSpec.describe OpenHAB::DSL::Widgets::Builder do
     expect(widget.config["item"]).to eq "FutureLight"
   end
 
+  it "reuses a widget-level builder argument across implicit properties and group blocks" do
+    example = self
+    widget = widgets.build do
+      widget "ruby_light" do |w|
+        w.props do
+          example.expect(w.__getobj__).to example.be_a(OpenHAB::DSL::Widgets::PropertiesBuilder)
+          w.parameter :light_item, :text, context: "item"
+        end
+        w.props do
+          w.group :appearance do
+            w.parameter :title, :text
+          end
+        end
+        example.expect(w.__getobj__).to example.be_a(OpenHAB::DSL::Widgets::WidgetBuilder)
+        w.toggle_card item: "=props.light_item", title: "=props.title"
+      end
+    end
+
+    expect(widget.props.parameters.map(&:name)).to eq %w[light_item title]
+    expect(widget.props.parameters.last.groupName).to eq "appearance"
+    expect(widget.config["item"]).to eq "=props.light_item"
+  end
+
   it "accepts an action property group without parameters and appends repeated props blocks" do
     widget = widgets.build do
       widget "ruby_action" do
@@ -134,7 +157,10 @@ RSpec.describe OpenHAB::DSL::Widgets::Builder do
 
     json = JSON.parse(com.google.gson.Gson.new.to_json(widget))
     parameters = json["props"]["parameters"]
-    expect(parameters[0]).to include("type" => "DECIMAL", "min" => 10, "max" => 30, "step" => 0.5, "unit" => "°C")
+    expect(parameters[0]).to include("type" => "DECIMAL", "min" => 10, "max" => 30, "unit" => "°C")
+    # @deprecated OH 5.0 Remove the stepsize branch when dropping support for openHAB 5.0.
+    step_key = (OpenHAB::Core.version >= OpenHAB::Core::V5_1) ? "step" : "stepsize"
+    expect(parameters[0].fetch(step_key)).to eq 0.5
     expect(parameters[1]["options"]).to eq [{ "value" => "heat", "label" => "Heat" },
                                             { "value" => "cool", "label" => "Cool" }]
     expect(parameters[2]["filterCriteria"]).to eq [{ "name" => "type", "value" => "Switch" }]

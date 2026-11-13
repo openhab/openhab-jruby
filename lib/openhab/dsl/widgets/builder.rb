@@ -56,7 +56,7 @@ module OpenHAB
           super("widget", builder_proxy)
           @uid = uid
           @tags = tags
-          @properties = PropertiesBuilder.new(builder_proxy)
+          @properties_builder = nil
         end
 
         # Declare configurable widget properties using {ConfigDescription::Builder#parameter parameter} and
@@ -76,7 +76,7 @@ module OpenHAB
         # @yieldparam builder [PropertiesBuilder] The property builder
         # @return [Object, nil] The block result, or nil when no block is given
         def props(&)
-          @properties.evaluate(&)
+          properties_builder.evaluate(&)
         end
 
         # @!visibility private
@@ -89,10 +89,16 @@ module OpenHAB
           widget = org.openhab.core.ui.components.RootUIComponent.new(@uid, root.component)
           widget.config = root.config
           widget.slots = root.slots
-          widget.props = @properties.build
+          widget.props = properties_builder.build
           widget.add_tags(@tags.map(&:to_s).to_java(java.lang.String))
           widget.update_timestamp
           widget
+        end
+
+        private
+
+        def properties_builder
+          @properties_builder ||= PropertiesBuilder.new(@builder_proxy)
         end
       end
     end
