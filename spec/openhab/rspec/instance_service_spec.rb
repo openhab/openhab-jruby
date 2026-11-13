@@ -561,6 +561,27 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
       TEXT
     end
 
+    it "turns off the setting in custom.properties, which is loaded after config.properties and wins" do
+      write("#{clone_path}/etc/custom.properties", "log = 1\nfelix.fileinstall.enableConfigSave = true\n")
+
+      isolate
+
+      expect(File.read("#{clone_path}/etc/custom.properties"))
+        .to eq("log = 1\nfelix.fileinstall.enableConfigSave = false\n")
+      expect(File.read("#{clone_path}/etc/config.properties")).to eq("felix.fileinstall.enableConfigSave = false\n")
+    end
+
+    it "doesn't add the setting to a custom.properties that has none, or make one that isn't there" do
+      write("#{clone_path}/etc/custom.properties", "log = 1\n")
+
+      isolate
+
+      expect(File.read("#{clone_path}/etc/custom.properties")).to eq("log = 1\n")
+      FileUtils.rm("#{clone_path}/etc/custom.properties")
+      isolate
+      expect(File.exist?("#{clone_path}/etc/custom.properties")).to be(false)
+    end
+
     it "keeps the bytes of a config.properties that isn't UTF-8" do
       File.binwrite("#{clone_path}/etc/config.properties",
                     "# caf\xE9\nfelix.fileinstall.enableConfigSave = true\n".b)
@@ -641,6 +662,16 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
 
         expect(Dir.children(outside)).to contain_exactly("addons.config", "addons.config.bak")
         expect(File.read("#{outside}/addons.config")).to eq(original)
+      end
+
+      it "doesn't write through a symlinked custom.properties" do
+        original = "felix.fileinstall.enableConfigSave = true\n"
+        write("#{outside}/custom.properties", original)
+        File.symlink("#{outside}/custom.properties", "#{clone_path}/etc/custom.properties")
+
+        expect { isolate }.to raise_error(/leads outside the instance clone/)
+
+        expect(File.read("#{outside}/custom.properties")).to eq(original)
       end
 
       it "doesn't write through a symlinked config.properties" do

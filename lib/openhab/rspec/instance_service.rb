@@ -284,18 +284,27 @@ module OpenHAB
           "(?:#{locations.map { |location| Regexp.escape("#{location}/".b) }.join("|")})"
         end
 
-        # Added when it's missing, so that saving is off whichever way the distribution configures it. Every assignment
-        # is turned off, since the last one wins when the properties are loaded. Binary, since a properties file is
-        # Latin-1 as often as it is UTF-8. A key may be indented, and is followed by "=", ":" or only blanks, as in
-        # Java properties.
+        # config.properties loads custom.properties after itself (its ${includes}), and what that sets wins, so saving
+        # is turned off in both.
         def disable_config_save(clone_location)
-          file = "#{clone_location}/etc/config.properties"
+          turn_off_config_save("#{clone_location}/etc/config.properties", clone_location, add_if_missing: true)
+          custom = "#{clone_location}/etc/custom.properties"
+          turn_off_config_save(custom, clone_location, add_if_missing: false) if File.file?(custom)
+        end
+
+        # Added when it's missing, if asked to, so that saving is off whichever way the distribution configures it.
+        # Every assignment is turned off, since the last one wins when the properties are loaded. Binary, since a
+        # properties file is Latin-1 as often as it is UTF-8. A key may be indented, and is followed by "=", ":" or only
+        # blanks, as in Java properties.
+        def turn_off_config_save(file, clone_location, add_if_missing:)
           config_save = /^([ \t\f]*felix\.fileinstall\.enableConfigSave(?:[ \t\f]*[=:][ \t\f]*|[ \t\f]+))[^\r\n]*/
           properties = File.binread(file)
           disabled = if properties.match?(config_save)
                        properties.gsub(config_save, '\1false')
-                     else
+                     elsif add_if_missing
                        "#{properties.chomp}\nfelix.fileinstall.enableConfigSave = false\n"
+                     else
+                       properties
                      end
           File.binwrite(file_inside_clone(file, clone_location), disabled) unless disabled == properties
         end
