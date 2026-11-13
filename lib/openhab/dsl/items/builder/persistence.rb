@@ -56,12 +56,17 @@ module OpenHAB
             end
 
             # @!visibility private
-            def apply(name, declarations)
-              return block_given? ? yield : nil if declarations.empty?
+            def synchronize(&)
+              configuration_registry.synchronized(&)
+            end
 
+            # @!visibility private
+            def apply(name, declarations)
               # The Java registry is shared by all script runtimes. Its monitor protects
               # the whole read-modify-update operation in both apply and remove.
-              configuration_registry.synchronized do
+              synchronize do
+                return block_given? ? yield : nil if declarations.empty?
+
                 registry = configuration_registry
                 services = service_registry
                 grouped = declarations.group_by do |declaration|
@@ -97,7 +102,7 @@ module OpenHAB
             def remove(*names)
               return if names.empty?
 
-              configuration_registry.synchronized do
+              synchronize do
                 registry = configuration_registry
                 registry.all.each do |configuration|
                   provider = registry.provider_for(configuration)

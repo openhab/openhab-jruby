@@ -25,6 +25,65 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
     let(:service_id) { "jruby_builder_spec" }
     let(:other_service_id) { "jruby_builder_spec_other" }
 
+    def expect_blocked_worker(worker, java_thread)
+      deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + 5
+      until java_thread.get.state.to_s == "BLOCKED" || worker.join(0) ||
+            Process.clock_gettime(Process::CLOCK_MONOTONIC) >= deadline
+        Thread.pass
+      end
+      expect(java_thread.get.state.to_s).to eq "BLOCKED"
+    end
+
+    def check_removal_and_rebuild(operation)
+      persistence = OpenHAB::DSL::Items::Builder::Persistence
+      selected_service = service_id
+      item_provider = (operation == :managed) ? :persistent : nil
+      items.build(item_provider) { number_item "Reading", persist: :on_change }
+      provider = Reading.provider
+      workers = []
+      entered = java.util.concurrent.CountDownLatch.new(1)
+      release = java.util.concurrent.CountDownLatch.new(1)
+      started = java.util.concurrent.CountDownLatch.new(1)
+      rebuilding_thread = java.util.concurrent.atomic.AtomicReference.new
+      allow(persistence).to receive(:remove).and_wrap_original do |original, *names|
+        entered.count_down
+        raise "Timed out waiting to remove" unless release.await(10, java.util.concurrent.TimeUnit::SECONDS)
+
+        original.call(*names)
+      end
+      workers << Thread.new do
+        case operation
+        when :managed then items.remove("Reading")
+        when :clear then provider.clear
+        else provider.remove("Reading")
+        end
+      end
+      expect(entered.await(5, java.util.concurrent.TimeUnit::SECONDS)).to be true
+      workers << Thread.new do
+        rebuilding_thread.set(java.lang.Thread.current_thread)
+        started.count_down
+        items.build(provider) do
+          number_item "Reading" do
+            persist :on_update, service: selected_service
+          end
+        end
+      end
+      expect(started.await(5, java.util.concurrent.TimeUnit::SECONDS)).to be true
+      expect_blocked_worker(workers.last, rebuilding_thread)
+      release.count_down
+      workers.each do |worker|
+        expect(worker.join(10)).not_to be_nil
+        worker.value
+      end
+      expect(items["Reading"]).not_to be_nil
+      entry = configuration.configs.find { |config| config.items.first.item == "Reading" }
+      expect(entry.strategies.map(&:name)).to eq ["everyUpdate"]
+    ensure
+      release&.count_down
+      workers&.each { |worker| worker.kill unless worker.join(10) }
+      items.remove("Reading") if operation == :managed && items["Reading"]
+    end
+
     def check_concurrent_persistence(operation)
       persistence = OpenHAB::DSL::Items::Builder::Persistence
       declarations = [persistence.declaration(:on_change, service: service_id, every: nil, cron: nil, filter: nil)]
@@ -50,12 +109,7 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
         end
       end
       expect(started.await(5, java.util.concurrent.TimeUnit::SECONDS)).to be true
-      deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + 5
-      until second_thread.get.state.to_s == "BLOCKED" || workers.last.join(0) ||
-            Process.clock_gettime(Process::CLOCK_MONOTONIC) >= deadline
-        Thread.pass
-      end
-      expect(second_thread.get.state.to_s).to eq "BLOCKED"
+      expect_blocked_worker(workers.last, second_thread)
       release.count_down
       workers.each do |worker|
         expect(worker.join(10)).not_to be_nil
@@ -105,6 +159,18 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
 
     it "serializes concurrent additions and removals" do
       check_concurrent_persistence(:remove)
+    end
+
+    it "serializes Ruby item removal and a concurrent rebuild" do
+      check_removal_and_rebuild(:remove)
+    end
+
+    it "serializes Ruby provider clearing and a concurrent rebuild" do
+      check_removal_and_rebuild(:clear)
+    end
+
+    it "serializes managed item removal and a concurrent rebuild" do
+      check_removal_and_rebuild(:managed)
     end
 
     it "updates the existing provider for the default service without creating rules" do
@@ -252,6 +318,55 @@ RSpec.describe OpenHAB::DSL::Items::Builder do
       items.remove("Other")
       expect(configuration.configs).to be_empty
       expect(configuration.strategies).to be_empty
+    end
+
+    it "updates persistence once when recursively removing Ruby items" do
+      items.build do
+        group_item "Readings", persist: :on_update do
+          group_item "NestedReadings", persist: :on_change do
+            number_item "Reading", persist: :on_change
+          end
+        end
+      end
+      allow(configuration_registry).to receive(:provider_for).and_call_original
+      allow(configuration_registry).to receive(:provider_for).with(configuration).and_return(configuration_provider)
+      allow(configuration_provider).to receive(:update).and_call_original
+      removed = Readings.provider.remove("Readings", true)
+      expect(removed.name).to eq "Readings"
+      expect(configuration_provider).to have_received(:update).once
+      expect(configuration_mapper.map(configuration).configs.map { |entry| entry.items.to_a }).to eq [["Other"]]
+      expect(items.to_a.map(&:name)).not_to include("Readings", "NestedReadings", "Reading")
+    end
+
+    it "preserves items and persistence owned by another Ruby provider during recursive removal" do
+      items.build { group_item "Readings", persist: :on_update }
+      provider = Readings.provider
+      OpenHAB::Core::Items::Provider.new do
+        items.build { number_item "Reading", group: "Readings", persist: :on_change }
+        provider.remove("Readings", true)
+        expect(items["Readings"]).to be_nil
+        expect(items["Reading"]).not_to be_nil
+        entries = configuration_mapper.map(configuration).configs.map { |entry| entry.items.to_a }
+        expect(entries).to contain_exactly(["Reading"], ["Other"])
+      end
+    end
+
+    it "cleans up only deleted items when recursive removal fails" do
+      items.build do
+        group_item "Readings", persist: :on_update do
+          number_item "Reading", persist: :on_change
+        end
+      end
+      provider = Readings.provider
+      allow(provider).to receive(:notify_listeners_about_removed_element).and_wrap_original do |original, item|
+        original.call(item)
+        raise "Removal failed" if item.name == "Readings"
+      end
+      expect { provider.remove("Readings", true) }.to raise_error("Removal failed")
+      expect(items["Readings"]).to be_nil
+      expect(items["Reading"]).not_to be_nil
+      entries = configuration_mapper.map(configuration).configs.map { |entry| entry.items.to_a }
+      expect(entries).to contain_exactly(["Reading"], ["Other"])
     end
 
     it "discards obsolete generated schedules when rebuilding an item" do

@@ -68,26 +68,30 @@ module OpenHAB
         # @param recursive [true, false] Remove the item's members if it's a group
         # @return [Item, nil] The removed item, if found.
         def remove(item_name, recursive: false)
-          item_name = item_name.name if item_name.is_a?(Item)
-          provider = Provider.registry.provider_for(item_name)
-          unless provider.is_a?(ManagedProvider)
-            raise "Cannot remove item #{item_name} from non-managed provider #{provider.inspect}"
-          end
+          DSL::Items::Builder::Persistence.synchronize do
+            item_name = item_name.name if item_name.is_a?(Item)
+            provider = Provider.registry.provider_for(item_name)
+            unless provider.is_a?(ManagedProvider)
+              raise "Cannot remove item #{item_name} from non-managed provider #{provider.inspect}"
+            end
 
-          Metadata::Provider.registry.providers.grep(ManagedProvider).each do |managed_provider|
-            managed_provider.remove_item_metadata(item_name)
-          end
+            Metadata::Provider.registry.providers.grep(ManagedProvider).each do |managed_provider|
+              managed_provider.remove_item_metadata(item_name)
+            end
 
-          Things::Links::Provider.registry.providers.grep(ManagedProvider).each do |managed_provider|
-            managed_provider.remove_links_for_item(item_name) if managed_provider.respond_to?(:remove_links_for_item)
-          end
-          return provider.remove(item_name, recursive) if provider.is_a?(Provider)
+            Things::Links::Provider.registry.providers.grep(ManagedProvider).each do |managed_provider|
+              managed_provider.remove_links_for_item(item_name) if managed_provider.respond_to?(:remove_links_for_item)
+            end
+            return provider.remove(item_name, recursive) if provider.is_a?(Provider)
 
-          names = recursive ? provider.all.map(&:name) : [item_name]
-          removed = provider.remove(item_name, recursive)
-          names.reject! { |name| Provider.registry.get(name) }
-          DSL::Items::Builder::Persistence.remove(*names)
-          removed
+            names = recursive ? provider.all.map(&:name) : [item_name]
+            begin
+              provider.remove(item_name, recursive)
+            ensure
+              names.reject! { |name| Provider.registry.get(name) }
+              DSL::Items::Builder::Persistence.remove(*names)
+            end
+          end
         end
       end
     end
