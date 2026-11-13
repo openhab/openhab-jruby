@@ -30,7 +30,6 @@ module OpenHAB
           @triggers = []
           @trigger_conditions = Hash.new(Triggers::Conditions::Generic::ANY)
           @attachments = {}
-          @module_counter = 0
         end
 
         #
@@ -44,9 +43,7 @@ module OpenHAB
         #
         def append_trigger(type:, config:, attach: nil, conditions: nil, label: nil)
           config.transform_keys!(&:to_s)
-          @module_counter += 1
-          id = infer_module_id(@module_counter)
-          RuleTriggers.trigger(type:, config:, label:, id:).tap do |trigger|
+          RuleTriggers.trigger(type:, config:, label:).tap do |trigger|
             logger.trace { "Appending trigger (#{trigger.inspect}) attach (#{attach}) conditions(#{conditions})" }
             @triggers << trigger
             @attachments[trigger.id] = attach if attach
@@ -89,21 +86,19 @@ module OpenHAB
           TEXT
         end
 
-        private
+        # Assign module IDs once the rule UID is final, preserving attachment and condition mappings.
+        # @param [String] rule_uid The finalized rule UID
+        # @return [void]
+        def finalize_ids(rule_uid)
+          return unless rule_uid
 
-        #
-        # Generate a deterministic module ID for a trigger based on the rule's UID and the module index
-        #
-        # Falls back to a random UUID if no rule UID is available in the thread context.
-        #
-        # @param [Integer] index The 1-based index of the module within the rule
-        # @return [String] The inferred module ID
-        #
-        def infer_module_id(index)
-          rule_uid = Thread.current[:openhab_rule_uid]
-          return SecureRandom.uuid unless rule_uid
-
-          "#{rule_uid}:#{index}"
+          prefix = rule_uid.gsub(/[^A-Za-z0-9_-]/, "_")
+          @triggers = triggers.each_with_index.map do |trigger, index|
+            id = "#{prefix}-#{index + 1}"
+            attachments[id] = attachments.delete(trigger.id) if attachments.key?(trigger.id)
+            trigger_conditions[id] = trigger_conditions.delete(trigger.id) if trigger_conditions.key?(trigger.id)
+            org.openhab.core.automation.util.TriggerBuilder.create(trigger).with_id(id).build
+          end
         end
       end
     end

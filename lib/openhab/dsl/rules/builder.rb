@@ -1462,9 +1462,7 @@ module OpenHAB
           # prevent overwriting @on_load
           raise ArgumentError, "on_load can only be used once within a rule" if @on_load
 
-          rule_uid = Thread.current[:openhab_rule_uid]
-          module_id = rule_uid ? "#{rule_uid}:on_load" : SecureRandom.uuid
-          @on_load = { module: module_id, delay: }
+          @on_load = { module: SecureRandom.uuid, delay: }
           attachments[@on_load[:module]] = attach
         end
 
@@ -2190,6 +2188,19 @@ module OpenHAB
         def build(provider, script)
           return unless create_rule?
 
+          base_uid = uid
+          duplicate_index = 1
+          while $rules.get(uid)
+            duplicate_index += 1
+            uid("#{base_uid} (#{duplicate_index})")
+          end
+          @rule_triggers.finalize_ids(uid)
+          if @on_load && uid
+            module_id = "#{uid.gsub(/[^A-Za-z0-9_-]/, "_")}-on_load"
+            attachments[module_id] = attachments.delete(@on_load[:module])
+            @on_load[:module] = module_id
+          end
+
           rule = AutomationRule.new(self)
           added_rule = add_rule(provider, rule)
           # add config so that MainUI can show the script
@@ -2278,12 +2289,6 @@ module OpenHAB
         # @param [org.openhab.core.automation.module.script.rulesupport.shared.simple.SimpleRule] rule to add
         #
         def add_rule(provider, rule)
-          base_uid = rule.uid
-          duplicate_index = 1
-          while $rules.get(rule.uid)
-            duplicate_index += 1
-            rule.uid = "#{base_uid} (#{duplicate_index})"
-          end
           logger.trace { "Adding rule: #{rule}" }
           unmanaged_rule = Core.automation_manager.add_unmanaged_rule(rule)
           provider.add(unmanaged_rule)
