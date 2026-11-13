@@ -374,14 +374,16 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
     it "repoints the real path at the clone in the config store" do
       write("#{config_dir}/addons.config", <<~TEXT)
         a="file:#{root}/etc/org.openhab.addons.cfg"
-        b=#{root}/etc/org.openhab.persistence.cfg
+        b="file://#{root}/etc/org.openhab.persistence.cfg"
+        c="#{root}/etc/org.openhab.ephemeris.cfg"
       TEXT
 
       isolate
 
       expect(File.read("#{config_dir}/addons.config")).to eq(<<~TEXT)
         a="file:#{clone_path}/etc/org.openhab.addons.cfg"
-        b=#{clone_path}/etc/org.openhab.persistence.cfg
+        b="file://#{clone_path}/etc/org.openhab.persistence.cfg"
+        c="#{clone_path}/etc/org.openhab.ephemeris.cfg"
       TEXT
     end
 
@@ -399,13 +401,42 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
       expect(File.read("#{config_dir}/addons.config")).to eq(siblings)
     end
 
-    it "doesn't rewrite a longer path that ends with the real path, and stops instead" do
+    it "leaves a longer path that ends with the real path alone, since it isn't the real instance" do
       longer = %(a="file:/mnt/backup#{root}/etc/org.openhab.addons.cfg"\n)
       write("#{config_dir}/addons.config", longer)
 
-      expect { isolate }.to raise_error(/still refers to #{Regexp.escape(root)}.*addons\.config/)
+      expect { isolate }.not_to raise_error
 
       expect(File.read("#{config_dir}/addons.config")).to eq(longer)
+    end
+
+    it "doesn't rewrite the real path where a space precedes it, and stops instead" do
+      ambiguous = %(a="file:/mnt/backup #{root}/etc/org.openhab.addons.cfg"\n)
+      write("#{config_dir}/addons.config", ambiguous)
+
+      expect { isolate }.to raise_error(/still refers to #{Regexp.escape(root)}.*addons\.config/)
+
+      expect(File.read("#{config_dir}/addons.config")).to eq(ambiguous)
+    end
+
+    it "doesn't take the clone's own path for the real one when it is under a directory named like it" do
+      clone = "#{scratch}/home#{root}/clone"
+      write("#{clone}/etc/config.properties", "felix.fileinstall.enableConfigSave = true\n")
+      write("#{clone}/config/addons.config", %(a="file:#{clone}/etc/org.openhab.addons.cfg"\n))
+
+      expect { described_class.isolate_clone(root, clone) }.not_to raise_error
+
+      expect(File.read("#{clone}/config/addons.config")).to eq(%(a="file:#{clone}/etc/org.openhab.addons.cfg"\n))
+    end
+
+    it "repoints the path the store spells the way the real instance resolves, given a symlink to it" do
+      FileUtils.mkdir_p(root)
+      File.symlink(root, "#{scratch}/link")
+      write("#{config_dir}/addons.config", %(a="file:#{root}/etc/org.openhab.addons.cfg"\n))
+
+      isolate("#{scratch}/link")
+
+      expect(File.read("#{config_dir}/addons.config")).to eq(%(a="file:#{clone_path}/etc/org.openhab.addons.cfg"\n))
     end
 
     it "repoints the real path when it is given with a trailing slash" do

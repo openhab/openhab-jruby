@@ -191,9 +191,11 @@ module OpenHAB
           refuse_nested_clone(location, clone_location)
           refuse_symlinks(clone_location)
           remove_config_backups(clone_location)
-          repoint_configs(location, clone_location)
+          # The store can spell the path the way it was recorded or the way it resolves, as when userdata is a symlink
+          locations = [location, real_path(location)].uniq
+          repoint_configs(locations, clone_location)
           disable_config_save(clone_location)
-          verify_isolation(location, clone_location)
+          verify_isolation(locations, clone_location)
         end
 
         # Not Karaf. Where the clone is, or is inside the real instance, rewriting its path would match the clone's own
@@ -263,17 +265,23 @@ module OpenHAB
           files.select { |file| File.file?(file) }
         end
 
-        # The trailing "/" keeps a sibling that shares the path's prefix (/var/lib/openhab-old) from matching, and the
-        # lookbehind keeps a longer path that ends with this one (/mnt/backup/var/lib/openhab) from being rewritten into
-        # a path that doesn't exist. verify_isolation, which doesn't have the lookbehind, then stops the launch.
-        def repoint_configs(location, clone_location)
-          from = Regexp.new("(?<![\\w.+@%/-])#{Regexp.escape("#{location}/".b)}".b)
+        # A config's value starts with a quote, and a file: URL after it, so that is where the real path is rewritten.
+        # What follows a space, or a longer path that merely ends with the real one (/mnt/backup/var/lib/openhab),
+        # isn't, since rewriting part of another path leaves one that doesn't exist. verify_isolation looks for a leak
+        # after a space too, so a path that is left alone there still stops the launch.
+        def repoint_configs(locations, clone_location)
+          from = Regexp.new("(?<=\"|file:|file://)#{real_path_alternatives(locations)}".b)
           to = "#{clone_location}/".b
           files_under(clone_location, "config").each do |file|
             contents = File.binread(file)
             repointed = contents.gsub(from) { to }
             File.binwrite(file_inside_clone(file, clone_location), repointed) unless repointed == contents
           end
+        end
+
+        # The trailing "/" keeps a sibling that shares the path's prefix (/var/lib/openhab-old) from matching
+        def real_path_alternatives(locations)
+          "(?:#{locations.map { |location| Regexp.escape("#{location}/".b) }.join("|")})"
         end
 
         # Added when it's missing, so that saving is off whichever way the distribution configures it. Every assignment
@@ -292,12 +300,15 @@ module OpenHAB
           File.binwrite(file_inside_clone(file, clone_location), disabled) unless disabled == properties
         end
 
-        def verify_isolation(location, clone_location)
-          needle = "#{location}/".b
-          leaks = files_under(clone_location, "config", "etc").select { |file| File.binread(file).include?(needle) }
+        # Not Karaf. Not a path that merely ends with the real one, or the clone's own path would be a leak whenever it
+        # is under a directory named like the real one (userdata /data, clone /home/me/data/rules/.karaf)
+        def verify_isolation(locations, clone_location)
+          leak = Regexp.new("(?<![\\w.+@%/-])#{real_path_alternatives(locations)}".b)
+          leaks = files_under(clone_location, "config", "etc").select { |file| File.binread(file).match?(leak) }
           return if leaks.empty?
 
-          raise "The instance clone still refers to #{location}, and could write to it. Files: #{leaks.join(", ")}"
+          raise "The instance clone still refers to #{locations.join(", ")}, and could write to it. " \
+                "Files: #{leaks.join(", ")}"
         end
       end
     end
