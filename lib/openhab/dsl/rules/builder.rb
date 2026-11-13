@@ -240,7 +240,7 @@ module OpenHAB
                      end
 
           comment = block.comment&.strip rescue nil # rubocop:disable Style/RescueModifier
-          comment = nil if comment&.empty?
+          comment = nil if comment && comment.empty?
 
           ["# Source: #{location}:#{line}", comment, block.source].compact.join("\n")
         rescue
