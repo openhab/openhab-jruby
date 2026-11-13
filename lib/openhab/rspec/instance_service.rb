@@ -310,9 +310,10 @@ module OpenHAB
         end
 
         # Not Karaf. Not a path that merely ends with the real one, or the clone's own path would be a leak whenever it
-        # is under a directory named like the real one (userdata /data, clone /home/me/data/rules/.karaf)
+        # is under a directory named like the real one (userdata /data, clone /home/me/data/rules/.karaf). The "/" that
+        # starts a path after "file://" is the exception: that is the real one.
         def verify_isolation(locations, clone_location)
-          leak = Regexp.new("(?<![\\w.+@%/-])#{real_path_alternatives(locations)}".b)
+          leak = Regexp.new("(?:(?<![\\w.+@%/-])|(?<=file://))#{real_path_alternatives(locations)}".b)
           leaks = files_under(clone_location, "config", "etc").select { |file| File.binread(file).match?(leak) }
           return if leaks.empty?
 

@@ -609,6 +609,12 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
       expect { isolate }.to raise_error(/still refers to #{Regexp.escape(root)}.*custom\.properties/)
     end
 
+    it "raises when a file in etc/ names the real instance as a file:/// URL" do
+      write("#{clone_path}/etc/other.properties", %(keystore = "file://#{root}/etc/keystore"\n))
+
+      expect { isolate }.to raise_error(/still refers to #{Regexp.escape(root)}.*other\.properties/)
+    end
+
     context "with a symlink in the clone" do
       let(:outside) { "#{scratch}/outside" }
 
