@@ -11,7 +11,7 @@ require_relative "core"
 
 Dir[File.expand_path("dsl/**/*.rb", __dir__)].each do |f|
   # some files are excluded because they're autoloaded
-  require f unless f.include?("/rules/") || f =~ %r{dsl/(items|sitemaps|things)/builder.rb$}
+  require f unless f.match?(%r{/(rules|pages|ui)/}) || f =~ %r{dsl/(items|sitemaps|things)/builder.rb$}
 end
 
 require_relative "core_ext"
@@ -28,6 +28,10 @@ module OpenHAB
   # inside of other classes, or include the module.
   #
   module DSL
+    module Pages
+      autoload :Builder, "openhab/dsl/pages/builder"
+    end
+
     module Items
       autoload :Builder, "openhab/dsl/items/builder"
       autoload :BaseBuilderDSL, "openhab/dsl/items/builder"
@@ -291,6 +295,13 @@ module OpenHAB
     # @return [Core::Sitemaps::Registry]
     def sitemaps
       Core::Sitemaps::Registry.instance
+    end
+
+    # MainUI pages, including those provided by other scripts and MainUI.
+    #
+    # @return [Core::Pages::Registry]
+    def pages
+      Core::Pages::Registry.instance
     end
 
     #

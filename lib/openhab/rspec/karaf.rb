@@ -362,7 +362,15 @@ module OpenHAB
         "org.openhab.core.model.rule.runtime" => nil,
         "org.openhab.core.model.rule" => nil,
         "org.openhab.core.model.sitemap.runtime" => nil,
-        "org.openhab.core.ui" => nil,
+        # Keep component registries available for page/widget builders, without
+        # starting the UI's servlets, sitemap provider, or item presentation layer.
+        "org.openhab.core.ui" => %w[
+          org.openhab.core.ui.internal.chart.ChartServlet
+          org.openhab.core.ui.internal.components.UIComponentSitemapProvider
+          org.openhab.core.ui.internal.items.ItemUIRegistryImpl
+          org.openhab.core.ui.internal.proxy.ProxyServletService
+          org.openhab.core.ui.tiles
+        ].freeze,
         "org.openhab.core.voice" => nil
       }.freeze
       private_constant :BLOCKED_COMPONENTS
