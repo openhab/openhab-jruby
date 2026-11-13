@@ -239,10 +239,13 @@ module OpenHAB
                        Pathname.new(file).relative_path_from(OpenHAB::Core.config_folder) rescue file # rubocop:disable Style/RescueModifier
                      end
 
-          comment = block.comment&.strip rescue nil # rubocop:disable Style/RescueModifier
+          # Use the captured location: Proc#inspect in method_source can change it on older JRuby versions.
+          # @deprecated Remove helper calls when the minimum supported JRuby is 10.0.5.0 or later;
+          # use block.comment and block.source instead.
+          comment = MethodSource.comment_helper([file, line])&.strip rescue nil # rubocop:disable Style/RescueModifier
           comment = nil if comment && comment.empty?
 
-          ["# Source: #{location}:#{line}", comment, block.source].compact.join("\n")
+          ["# Source: #{location}:#{line}", comment, MethodSource.source_helper([file, line])].compact.join("\n")
         rescue
           nil
         end
