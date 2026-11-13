@@ -27,6 +27,7 @@ module OpenHAB
         def evaluate(&block)
           return unless block
 
+          previous_proxy = @builder_proxy
           @builder_proxy ||= SimpleDelegator.new(nil) if block.arity == 1
           if @builder_proxy
             previous = @builder_proxy.__getobj__
@@ -35,6 +36,7 @@ module OpenHAB
               ThreadLocal.thread_local(openhab_create_dummy_items: true) { yield(@builder_proxy) }
             ensure
               @builder_proxy.__setobj__(previous)
+              @builder_proxy = previous_proxy
             end
           else
             instance_eval_with_dummy_items(&block)
