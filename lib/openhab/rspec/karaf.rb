@@ -704,7 +704,7 @@ module OpenHAB
       def cleanup_instance
         cleanup_clone
         # Every launch, not just the one that made the clone, so that a clone made by an older version is repaired too
-        InstanceService.new.isolate_clone(@root_userdata, path) unless use_root_instance
+        InstanceService.isolate_clone(@root_userdata, path) unless use_root_instance
         minimize_installed_features
         filter_addons
       end

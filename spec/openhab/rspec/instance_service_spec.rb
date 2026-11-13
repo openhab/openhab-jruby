@@ -333,7 +333,7 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
   end
 
   describe "#real_path" do
-    def real_path(path) = instance_service.send(:real_path, path)
+    def real_path(path) = described_class.send(:real_path, path)
 
     before do
       FileUtils.mkdir_p("#{scratch}/real/child")
@@ -353,7 +353,7 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
   describe "#isolate_clone" do
     let(:config_dir) { "#{clone_path}/config/org/openhab" }
 
-    def isolate(location = root) = instance_service.isolate_clone(location, clone_path)
+    def isolate(location = root) = described_class.isolate_clone(location, clone_path)
 
     def clone_contents
       Dir.glob("#{clone_path}/**/*").select { |file| File.file?(file) }.to_h { |file| [file, File.read(file)] }
@@ -421,14 +421,14 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
     it "refuses a clone that is inside the instance it was cloned from" do
       FileUtils.mkdir_p("#{root}/nested-clone")
 
-      expect { instance_service.isolate_clone(root, "#{root}/nested-clone") }
+      expect { described_class.isolate_clone(root, "#{root}/nested-clone") }
         .to raise_error(ArgumentError, /instance it was cloned from.*or inside it/)
     end
 
     it "refuses a clone that is the instance it was cloned from, and changes nothing in it" do
       write("#{root}/config.bak", "a=1\n")
 
-      expect { instance_service.isolate_clone(root, root) }.to raise_error(ArgumentError, /instance it was cloned from/)
+      expect { described_class.isolate_clone(root, root) }.to raise_error(ArgumentError, /instance it was cloned from/)
 
       expect(File.exist?("#{root}/config.bak")).to be(true)
     end
@@ -438,7 +438,7 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
       write("#{backslashed}/etc/config.properties", "felix.fileinstall.enableConfigSave = true\n")
       write("#{backslashed}/config/addons.config", %(a="file:#{root}/etc/x.cfg"\n))
 
-      instance_service.isolate_clone(root, backslashed)
+      described_class.isolate_clone(root, backslashed)
 
       expect(File.read("#{backslashed}/config/addons.config")).to eq(%(a="file:#{backslashed}/etc/x.cfg"\n))
     end
