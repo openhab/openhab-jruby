@@ -11,7 +11,7 @@ require_relative "core"
 
 Dir[File.expand_path("dsl/**/*.rb", __dir__)].each do |f|
   # some files are excluded because they're autoloaded
-  require f unless f.match?(%r{/(rules|pages|ui)/}) || f =~ %r{dsl/(items|sitemaps|things)/builder.rb$}
+  require f unless f.match?(%r{/(rules|pages|widgets|ui)/}) || f =~ %r{dsl/(items|sitemaps|things)/builder.rb$}
 end
 
 require_relative "core_ext"
@@ -28,8 +28,18 @@ module OpenHAB
   # inside of other classes, or include the module.
   #
   module DSL
+    module Widgets
+      autoload :Builder, "openhab/dsl/widgets/builder"
+    end
+
     module Pages
       autoload :Builder, "openhab/dsl/pages/builder"
+      autoload :PageBuilder, "openhab/dsl/pages/builder"
+      autoload :LayoutPageBuilder, "openhab/dsl/pages/builder"
+      autoload :MapPageBuilder, "openhab/dsl/pages/builder"
+      autoload :PlanPageBuilder, "openhab/dsl/pages/builder"
+      autoload :ChartPageBuilder, "openhab/dsl/pages/builder"
+      autoload :TabsPageBuilder, "openhab/dsl/pages/builder"
     end
 
     module Items
@@ -302,6 +312,13 @@ module OpenHAB
     # @return [Core::Pages::Registry]
     def pages
       Core::Pages::Registry.instance
+    end
+
+    # Reusable MainUI widgets, including those provided by other scripts and MainUI.
+    #
+    # @return [Core::Widgets::Registry]
+    def widgets
+      Core::Widgets::Registry.instance
     end
 
     #

@@ -120,7 +120,7 @@ module OpenHAB
               end
               p[:minimum] = p.delete(:min)&.to_d&.to_java
               p[:maximum] = p.delete(:max)&.to_d&.to_java
-              p[:step] = p.delete(:step)&.to_d&.to_java
+              p[:step_size] = p.delete(:step)&.to_d&.to_java
               p[:group_name] ||= @current_group
               type = org.openhab.core.config.core.ConfigDescriptionParameter::Type.value_of(type.to_s.upcase)
 
