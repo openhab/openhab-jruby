@@ -57,26 +57,19 @@ module OpenHAB
         # @param [String] type of trigger
         # @param [Map] config map
         # @param [String] label for the trigger
+        # @param [String] id for the trigger
         #
         # @return [org.openhab.core.automation.Trigger] configured by type and supplied config
         #
-        def self.trigger(type:, config:, label: nil)
+        def self.trigger(type:, config:, label: nil, id: nil)
+          id ||= SecureRandom.uuid
           logger.trace { "Creating trigger of type '#{type}' config: #{config}" }
           org.openhab.core.automation.util.TriggerBuilder.create
-             .with_id(uuid)
+             .with_id(id)
              .with_type_uid(type)
              .with_configuration(Core::Configuration.new(config))
              .with_label(label)
              .build
-        end
-
-        #
-        # Generate a UUID for triggers
-        #
-        # @return [String] UUID
-        #
-        def self.uuid
-          SecureRandom.uuid
         end
 
         #
@@ -91,6 +84,21 @@ module OpenHAB
             UIDs: #{triggers.map(&:id).inspect}
             Attachments: #{attachments.inspect}>
           TEXT
+        end
+
+        # Assign module IDs once the rule UID is final, preserving attachment and condition mappings.
+        # @param [String] rule_uid The finalized rule UID
+        # @return [void]
+        def finalize_ids(rule_uid)
+          return unless rule_uid
+
+          prefix = rule_uid.gsub(/[^A-Za-z0-9_-]/, "_")
+          @triggers = triggers.each_with_index.map do |trigger, index|
+            id = "#{prefix}-#{index + 1}"
+            attachments[id] = attachments.delete(trigger.id) if attachments.key?(trigger.id)
+            trigger_conditions[id] = trigger_conditions.delete(trigger.id) if trigger_conditions.key?(trigger.id)
+            org.openhab.core.automation.util.TriggerBuilder.create(trigger).with_id(id).build
+          end
         end
       end
     end
