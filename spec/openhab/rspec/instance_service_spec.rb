@@ -348,6 +348,13 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
       expect(real_path("#{scratch}/link/../new/dir")).to eq "#{scratch}/real/new/dir"
       expect(real_path("#{scratch}/link/../new/../other")).to eq "#{scratch}/real/other"
     end
+
+    it "names the path when part of it can't be resolved" do
+      write("#{scratch}/file")
+      path = "#{scratch}/file/clone"
+
+      expect { real_path(path) }.to raise_error(ArgumentError, /Can't resolve #{Regexp.escape(path)}/)
+    end
   end
 
   describe "#isolate_clone" do
@@ -431,6 +438,17 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
       expect { described_class.isolate_clone(root, root) }.to raise_error(ArgumentError, /instance it was cloned from/)
 
       expect(File.exist?("#{root}/config.bak")).to be(true)
+    end
+
+    it "refuses a clone that contains the instance it was cloned from, and changes nothing in it" do
+      inside = "#{clone_path}/config/real-userdata"
+      write("#{inside}/config/org/openhab/addons.config.bak", "a=1\n")
+      write("#{inside}/etc/config.properties", "felix.fileinstall.enableConfigSave = true\n")
+
+      expect { described_class.isolate_clone(inside, clone_path) }.to raise_error(ArgumentError, /or contains it/)
+
+      expect(File.exist?("#{inside}/config/org/openhab/addons.config.bak")).to be(true)
+      expect(File.read("#{inside}/etc/config.properties")).to eq("felix.fileinstall.enableConfigSave = true\n")
     end
 
     it "repoints a clone path with backslashes in it literally" do
@@ -539,7 +557,7 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
       expect { isolate }.to raise_error(/still refers to #{Regexp.escape(root)}.*custom\.properties/)
     end
 
-    context "with a symlink that leads outside the clone" do
+    context "with a symlink in the clone" do
       let(:outside) { "#{scratch}/outside" }
 
       before { FileUtils.mkdir_p(outside) }
@@ -549,9 +567,36 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
         write("#{outside}/addons.config", original)
         File.symlink("#{outside}/addons.config", "#{config_dir}/addons.config")
 
-        expect { isolate }.to raise_error(/leads outside the instance clone/)
+        expect { isolate }.to raise_error(/symlinks in its config store.*addons\.config/)
 
         expect(File.read("#{outside}/addons.config")).to eq(original)
+      end
+
+      it "doesn't write or delete through a symlinked directory inside the config store" do
+        original = %(a="file:#{root}/etc/org.openhab.addons.cfg"\n)
+        write("#{outside}/addons.config", original)
+        write("#{outside}/addons.config.bak", original)
+        File.symlink(outside, "#{config_dir}/linked")
+
+        expect { isolate }.to raise_error(/symlinks in its config store.*linked/)
+
+        expect(Dir.children(outside)).to contain_exactly("addons.config", "addons.config.bak")
+        expect(File.read("#{outside}/addons.config")).to eq(original)
+      end
+
+      it "doesn't leave a dangling symlink for something to create the target of" do
+        File.symlink("#{outside}/new.config", "#{config_dir}/new.config")
+
+        expect { isolate }.to raise_error(/symlinks in its config store.*new\.config/)
+
+        expect(File.exist?("#{outside}/new.config")).to be(false)
+      end
+
+      it "refuses a symlink in the config store even when it leads inside the clone" do
+        write("#{clone_path}/etc/addons.config", "a=1\n")
+        File.symlink("#{clone_path}/etc/addons.config", "#{config_dir}/addons.config")
+
+        expect { isolate }.to raise_error(/symlinks in its config store/)
       end
 
       it "doesn't write or delete through a symlinked config directory" do
@@ -561,7 +606,7 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
         FileUtils.rm_rf("#{clone_path}/config")
         File.symlink(outside, "#{clone_path}/config")
 
-        expect { isolate }.to raise_error(/leads outside the instance clone/)
+        expect { isolate }.to raise_error(/symlinks in its config store/)
 
         expect(Dir.children(outside)).to contain_exactly("addons.config", "addons.config.bak")
         expect(File.read("#{outside}/addons.config")).to eq(original)
@@ -730,6 +775,15 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
       expect { clone_instance(to: "#{root}/not yet/clone") }.to raise_error(ArgumentError, /or inside it/)
 
       expect(Dir.children(root)).to contain_exactly("uuid", "etc")
+    end
+
+    it "refuses a clone that contains the instance it was cloned from before it copies anything" do
+      write("#{root}/uuid")
+
+      expect { clone_instance(to: scratch) }.to raise_error(ArgumentError, /or contains it/)
+
+      expect(File.read("#{root}/uuid")).to eq "contents of uuid"
+      expect(File.exist?("#{scratch}/etc")).to be(false)
     end
 
     context "with a clone path that reaches the instance through a symlink and .." do

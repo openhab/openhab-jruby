@@ -702,9 +702,11 @@ module OpenHAB
       end
 
       def cleanup_instance
-        cleanup_clone
-        # Every launch, not just the one that made the clone, so that a clone made by an older version is repaired too
+        # Every launch, not just the one that made the clone, so that a clone made by an older version is repaired too.
+        # Before cleanup_clone, which deletes files in the clone: isolation refuses a clone whose config store leads
+        # to the real instance, and those deletes could go there.
         InstanceService.isolate_clone(@root_userdata, path) unless use_root_instance
+        cleanup_clone
         minimize_installed_features
         filter_addons
       end

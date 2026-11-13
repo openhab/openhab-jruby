@@ -28,6 +28,15 @@ RSpec.describe OpenHAB::RSpec::Karaf do
       expect(OpenHAB::RSpec::InstanceService).to have_received(:isolate_clone).with("#{scratch}/root", clone_path)
     end
 
+    it "isolates the clone before it cleans it up, which deletes files in it" do
+      karaf.instance_variable_set(:@root_userdata, "#{scratch}/root")
+
+      karaf.send(:cleanup_instance)
+
+      expect(OpenHAB::RSpec::InstanceService).to have_received(:isolate_clone).ordered
+      expect(karaf).to have_received(:cleanup_clone).ordered
+    end
+
     it "has nothing to isolate when it is the real instance" do
       karaf.use_root_instance = true
 

@@ -189,6 +189,7 @@ module OpenHAB
         def isolate_clone(location, clone_location)
           location = File.expand_path(location)
           refuse_nested_clone(location, clone_location)
+          refuse_symlinks(clone_location)
           remove_config_backups(clone_location)
           repoint_configs(location, clone_location)
           disable_config_save(clone_location)
@@ -196,14 +197,16 @@ module OpenHAB
         end
 
         # Not Karaf. Where the clone is, or is inside the real instance, rewriting its path would match the clone's own
-        # files again on every launch.
+        # files again on every launch. Where the real instance is inside the clone, the clone's files include the real
+        # instance's, and they would be rewritten and deleted.
         def refuse_nested_clone(location, clone_location)
           real_location = real_path(location)
           real_clone = real_path(clone_location)
-          return unless real_clone == real_location || real_clone.start_with?("#{real_location}/")
+          return unless inside?(real_clone, real_location) || inside?(real_location, real_clone)
 
           raise ArgumentError,
-                "The instance clone (#{clone_location}) is the instance it was cloned from (#{location}), or inside it"
+                "The instance clone (#{clone_location}) is the instance it was cloned from (#{location}), " \
+                "or inside it, or contains it"
         end
 
         private
@@ -215,12 +218,31 @@ module OpenHAB
           java.nio.file.Paths.get(path).to_real_path.to_s
         rescue java.nio.file.NoSuchFileException
           File.expand_path(File.join(real_path(File.dirname(path)), File.basename(path)))
+        rescue java.nio.file.FileSystemException => e
+          raise ArgumentError, "Can't resolve #{path}: #{e.message}"
+        end
+
+        def inside?(path, directory)
+          path == directory || path.start_with?("#{directory}/")
+        end
+
+        # Not Karaf. Karaf's copy and the harness give the clone no symlinks. One in the config store could lead to the
+        # real instance: the glob doesn't descend into a symlinked directory, a dangling link has no path to resolve,
+        # and the cleanup of the clone deletes in config/. So refuse to go on.
+        def refuse_symlinks(clone_location)
+          config = File.join(clone_location, "config")
+          entries = Dir.glob("**/*", File::FNM_DOTMATCH, base: config).map { |entry| File.join(config, entry) }
+          links = ([config] + entries).select { |entry| File.symlink?(entry) }
+          return if links.empty?
+
+          raise "The instance clone has symlinks in its config store, which could lead to the instance it was cloned " \
+                "from: #{links.join(", ")}; refusing to change anything through them"
         end
 
         # Not Karaf. A file reached through a symlink, its own or a parent directory's, could belong to the real
         # instance
         def file_inside_clone(file, clone_location)
-          return file if File.realpath(file).start_with?("#{File.realpath(clone_location)}/")
+          return file if inside?(real_path(file), real_path(clone_location))
 
           raise "#{file} leads outside the instance clone (#{clone_location}); refusing to change it"
         end
