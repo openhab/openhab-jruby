@@ -8,6 +8,12 @@ module OpenHAB
       autoload :Registry, "openhab/core/sitemaps/registry"
     end
 
+    module IO
+      module Transport
+        autoload :Serial, "openhab/core/io/transport/serial"
+      end
+    end
+
     # The openHAB Version. >= 4.1 is required.
     # @return [String]
     VERSION = org.openhab.core.OpenHAB.version.freeze
@@ -205,7 +211,7 @@ Dir[File.expand_path("core/**/*.rb", __dir__)].each do |f|
   # already been run by either a binstub, or the addon
   next if f.end_with?("gem.rb")
   # autoloaded things
-  next if f.include?("/metadata/") || f.include?("/sitemaps/")
+  next if f.include?("/metadata/") || f.include?("/sitemaps/") || f.include?("/io/")
 
   require f
 end
