@@ -2354,6 +2354,38 @@ Note that all methods on this module are also availabe directly on OpenHAB::DSL.
   
   <li class="collapsed">
     <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../CoreExt/Gems.html" title="OpenHAB::CoreExt::Gems (module)">Gems</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-3" href="../../CoreExt/Gems/MethodSourceScriptPatch.html" title="OpenHAB::CoreExt::Gems::MethodSourceScriptPatch (module)">MethodSourceScriptPatch</a></span>
+      
+      
+    </span>
+    
+    
+  </li>
+
+
+        
+      </ul>
+    
+  </li>
+
+  
+  <li class="collapsed">
+    <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="../../CoreExt/Java.html" title="OpenHAB::CoreExt::Java (module)">Java</a></span>
       
       
@@ -3933,12 +3965,12 @@ Note that all methods on this module are also availabe directly on OpenHAB::DSL.
       <pre class="lines">
 
 
-28
 29
-30</pre>
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 29</span>
 
 <span class="keyword">def</span> <span class="function">initialize</span>(provider)
   <span class="instance-variable">@provider</span> = <span class="constant">Core</span>::<span class="constant">Rules</span>::<span class="constant">Provider</span>.current(provider)
@@ -4002,12 +4034,12 @@ Note that all methods on this module are also availabe directly on OpenHAB::DSL.
       <pre class="lines">
 
 
-26
 27
-28</pre>
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 27</span>
 
 <span class="keyword">def</span> <span class="function">provider</span>
   <span class="instance-variable">@provider</span>
@@ -4193,7 +4225,6 @@ the rule will not be created, and the method will return nil.</p>
       <pre class="lines">
 
 
-71
 72
 73
 74
@@ -4228,16 +4259,17 @@ the rule will not be created, and the method will return nil.</p>
 103
 104
 105
-106</pre>
+106
+107</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 72</span>
 
 <span class="keyword">def</span> <span class="function">rule</span>(name = <span class="predefined-constant">nil</span>, <span class="key">id</span>: <span class="predefined-constant">nil</span>, <span class="key">replace</span>: <span class="predefined-constant">nil</span>, <span class="key">script</span>: <span class="predefined-constant">nil</span>, <span class="key">binding</span>: <span class="predefined-constant">nil</span>, &amp;block)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Block is required</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block
 
   id ||= inferred_id = <span class="constant">NameInference</span>.infer_rule_id_from_block(block)
-  script ||= block.source <span class="keyword">rescue</span> <span class="predefined-constant">nil</span> <span class="comment"># rubocop:disable Style/RescueModifier</span>
+  script ||= <span class="constant">Builder</span>.script_source(block)
 
   builder = <span class="predefined-constant">nil</span>
 
@@ -4442,7 +4474,6 @@ such as the Run Rules action.</p>
       <pre class="lines">
 
 
-200
 201
 202
 203
@@ -4469,10 +4500,11 @@ such as the Run Rules action.</p>
 224
 225
 226
-227</pre>
+227
+228</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 200</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 201</span>
 
 <span class="keyword">def</span> <span class="function">scene</span>(name = <span class="predefined-constant">nil</span>, <span class="key">description</span>: <span class="predefined-constant">nil</span>, <span class="key">id</span>: <span class="predefined-constant">nil</span>, <span class="key">tag</span>: <span class="predefined-constant">nil</span>, <span class="key">tags</span>: <span class="predefined-constant">nil</span>, <span class="key">replace</span>: <span class="predefined-constant">false</span>, <span class="key">script</span>: <span class="predefined-constant">nil</span>, &amp;block)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Block is required</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block
@@ -4480,7 +4512,7 @@ such as the Run Rules action.</p>
   inferred_id = <span class="predefined-constant">nil</span>
   id ||= inferred_id = <span class="constant">NameInference</span>.infer_rule_id_from_block(block)
   name ||= id
-  script ||= block.source <span class="keyword">rescue</span> <span class="predefined-constant">nil</span> <span class="comment"># rubocop:disable Style/RescueModifier</span>
+  script ||= <span class="constant">Builder</span>.script_source(block)
 
   <span class="keyword">if</span> replace
     logger.debug { <span class="string"><span class="delimiter">&quot;</span><span class="content">Removing existing rule '</span><span class="inline"><span class="inline-delimiter">#{</span>id<span class="inline-delimiter">}</span></span><span class="content">'.</span><span class="delimiter">&quot;</span></span> } <span class="keyword">if</span> <span class="constant">DSL</span>.rules.remove(id)
@@ -4711,7 +4743,6 @@ rules.scripts[<span class="string"><span class="delimiter">&quot;</span><span cl
       <pre class="lines">
 
 
-152
 153
 154
 155
@@ -4738,10 +4769,11 @@ rules.scripts[<span class="string"><span class="delimiter">&quot;</span><span cl
 176
 177
 178
-179</pre>
+179
+180</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 152</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/rules/builder.rb', line 153</span>
 
 <span class="keyword">def</span> <span class="function">script</span>(name = <span class="predefined-constant">nil</span>, <span class="key">description</span>: <span class="predefined-constant">nil</span>, <span class="key">id</span>: <span class="predefined-constant">nil</span>, <span class="key">tag</span>: <span class="predefined-constant">nil</span>, <span class="key">tags</span>: <span class="predefined-constant">nil</span>, <span class="key">replace</span>: <span class="predefined-constant">false</span>, <span class="key">script</span>: <span class="predefined-constant">nil</span>, &amp;block)
   raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Block is required</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> block
@@ -4749,7 +4781,7 @@ rules.scripts[<span class="string"><span class="delimiter">&quot;</span><span cl
   inferred_id = <span class="predefined-constant">nil</span>
   id ||= inferred_id = <span class="constant">NameInference</span>.infer_rule_id_from_block(block)
   name ||= id
-  script ||= block.source <span class="keyword">rescue</span> <span class="predefined-constant">nil</span> <span class="comment"># rubocop:disable Style/RescueModifier</span>
+  script ||= <span class="constant">Builder</span>.script_source(block)
 
   <span class="keyword">if</span> replace
     logger.debug { <span class="string"><span class="delimiter">&quot;</span><span class="content">Removing existing rule '</span><span class="inline"><span class="inline-delimiter">#{</span>id<span class="inline-delimiter">}</span></span><span class="content">'.</span><span class="delimiter">&quot;</span></span> } <span class="keyword">if</span> <span class="constant">DSL</span>.rules.remove(id)
@@ -4781,7 +4813,7 @@ rules.scripts[<span class="string"><span class="delimiter">&quot;</span><span cl
 </div>
 
         <footer>
-  Generated on Fri Nov 13 21:34:16 2026 by
+  Generated on Sat Nov 14 00:01:04 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.12).
 </footer>
