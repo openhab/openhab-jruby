@@ -482,6 +482,20 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
       expect(File.read("#{inside}/etc/config.properties")).to eq("felix.fileinstall.enableConfigSave = true\n")
     end
 
+    it "refuses a clone that is the instance when the instance is named through a symlink and .." do
+      write("#{root}/child/file")
+      write("#{root}/config/org/openhab/addons.config.bak", "a=1\n")
+      write("#{root}/etc/config.properties", "felix.fileinstall.enableConfigSave = true\n")
+      FileUtils.mkdir_p("#{scratch}/alias")
+      File.symlink("#{root}/child", "#{scratch}/alias/link")
+
+      expect { described_class.isolate_clone("#{scratch}/alias/link/..", root) }
+        .to raise_error(ArgumentError, /instance it was cloned from/)
+
+      expect(File.exist?("#{root}/config/org/openhab/addons.config.bak")).to be(true)
+      expect(File.read("#{root}/etc/config.properties")).to eq("felix.fileinstall.enableConfigSave = true\n")
+    end
+
     it "repoints a clone path with backslashes in it literally" do
       backslashed = "#{scratch}/clone\\0dir"
       write("#{backslashed}/etc/config.properties", "felix.fileinstall.enableConfigSave = true\n")

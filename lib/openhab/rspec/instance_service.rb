@@ -187,7 +187,7 @@ module OpenHAB
         #
         # This is also called for every launch of the clone, which repairs one made by an older version.
         def isolate_clone(location, clone_location)
-          location = File.expand_path(location)
+          location = absolute_path(location)
           refuse_nested_clone(location, clone_location)
           refuse_symlinks(clone_location)
           remove_config_backups(clone_location)
@@ -222,6 +222,11 @@ module OpenHAB
           File.expand_path(File.join(real_path(File.dirname(path)), File.basename(path)))
         rescue java.nio.file.FileSystemException => e
           raise ArgumentError, "Can't resolve #{path}: #{e.message}"
+        end
+
+        # Not File.expand_path, which collapses a ".." before real_path can follow the symlink it comes after
+        def absolute_path(path)
+          java.nio.file.Paths.get(path).to_absolute_path.to_s
         end
 
         def inside?(path, directory)
