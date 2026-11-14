@@ -1,0 +1,147 @@
+# frozen_string_literal: true
+
+require "tempfile"
+
+RSpec.describe "Rule source metadata" do
+  def source_metadata(rule)
+    rule.actions.first.configuration["script"]
+  end
+
+  def evaluate_file(source)
+    Tempfile.create(["rule_source", ".rb"], OpenHAB::Core.config_folder.to_s) do |file|
+      file.write(source)
+      file.flush
+      yield eval(source, binding, file.path), File.basename(file.path) # rubocop:disable Security/Eval
+    end
+  end
+
+  %i[rule script scene].each do |type|
+    describe "##{type}" do
+      let(:definition) do
+        body = (type == :rule) ? "every :day\n  run { nil }" : "nil"
+        "#{type}(id: 'source_test') do\n  #{body}\nend\n"
+      end
+
+      it "includes the relative file path, line number, preceding comments, and definition" do
+        comments = "# Explain the automation.\n# Keep this context in MainUI."
+
+        evaluate_file("\n#{comments}\n#{definition}") do |rule, filename|
+          expect(source_metadata(rule)).to eq "# Source: #{filename}:4\n#{comments}\n#{definition}"
+        end
+      end
+
+      it "does not add an empty comment section when there are no comments" do
+        evaluate_file(definition) do |rule, filename|
+          expect(source_metadata(rule)).to eq "# Source: #{filename}:1\n#{definition}"
+        end
+      end
+
+      it "ignores whitespace before the definition" do
+        evaluate_file("  \n\t\n#{definition}") do |rule, filename|
+          expect(source_metadata(rule)).to eq "# Source: #{filename}:3\n#{definition}"
+        end
+      end
+
+      it "preserves an explicitly supplied script" do
+        source = definition.sub("id: 'source_test'", "id: 'source_test', script: 'custom source'")
+
+        evaluate_file(source) do |rule, _filename|
+          expect(source_metadata(rule)).to eq "custom source"
+        end
+      end
+
+      it "still creates the rule when its source cannot be read" do
+        rule = eval(definition, binding, "missing_rule_source.rb") # rubocop:disable Security/Eval
+
+        expect(rule).not_to be_nil
+        expect(source_metadata(rule)).to be_nil
+      end
+    end
+  end
+
+  context "with a terse rule" do
+    it "includes the user's location, comments, and definition" do
+      source = "# A daily reminder.\nevery(:day, id: 'terse_source') { nil }\n"
+      evaluate_file(source) do |rule, filename|
+        expect(source_metadata(rule)).to eq "# Source: #{filename}:2\n#{source}"
+      end
+    end
+
+    it "preserves an explicitly supplied script" do
+      evaluate_file("every(:day, id: 'terse_source', script: 'custom source') { nil }\n") do |rule, _filename|
+        expect(source_metadata(rule)).to eq "custom source"
+      end
+    end
+  end
+
+  context "with a UI script" do
+    around do |example|
+      original_context = $ctx
+      original_extension = $scriptExtension
+      $ctx = { "ruleUID" => "ui_source" }
+      example.run
+    ensure
+      $ctx = original_context
+      $scriptExtension = original_extension
+    end
+
+    def ui_action(id, source, type: "application/x-ruby", module_type: "script.ScriptAction")
+      org.openhab.core.automation.util.ActionBuilder.create
+         .with_id(id)
+         .with_type_uid(module_type)
+         .with_configuration(OpenHAB::Core::Configuration.new("type" => type, "script" => source))
+         .build
+    end
+
+    def stub_ui_parent(actions, originating_action:)
+      parent = org.openhab.core.automation.util.RuleBuilder.create("ui_source").with_actions(actions).build
+      allow(OpenHAB::DSL.rules).to receive(:[]).with("ui_source").and_return(parent)
+      action = actions.find { |candidate| candidate.id == originating_action }
+      identifier = if action
+                     factory = OpenHAB::Core::Rules.manager.get_module_handler_factory(action.type_uid)
+                     factory.get_handler(action, "ui_source").engine_identifier
+                   else
+                     "missing-engine"
+                   end
+      $scriptExtension = org.openhab.core.automation.module.script.ScriptExtensionManagerWrapper.impl { identifier }
+    end
+
+    it "reads the definition and comments from the UI rule and includes its UID" do
+      source = "# Created in MainUI.\nscript(id: 'nested_script') do\n  nil\nend\n"
+      stub_ui_parent([ui_action("ruby", source)], originating_action: "ruby")
+
+      rule = eval(source, binding, "<script>") # rubocop:disable Security/Eval
+
+      expect(source_metadata(rule)).to eq "# Source: script:ui_source:2\n#{source}"
+    end
+
+    it "selects the originating Ruby script among multiple actions" do
+      source = "# The second Ruby action.\nscript(id: 'nested_script') do\n  nil\nend\n"
+      actions = [
+        ui_action("command", nil, module_type: "core.ItemCommandAction"),
+        ui_action("javascript", "unrelated source", type: "application/javascript"),
+        ui_action("other_ruby", "# Unrelated Ruby source\nscript(id: 'other') { nil }\n"),
+        ui_action("ruby", source)
+      ]
+      stub_ui_parent(actions, originating_action: "ruby")
+
+      rule = eval(source, binding, "<script>") # rubocop:disable Security/Eval
+
+      expect(source_metadata(rule)).to eq "# Source: script:ui_source:2\n#{source}"
+    end
+
+    it "omits metadata when no action matches the executing engine" do
+      stub_ui_parent([ui_action("other_ruby", "script(id: 'other') { nil }")], originating_action: "missing")
+      rule = eval("script(id: 'nested_script') { nil }", binding, "<script>") # rubocop:disable Style/EvalWithLocation
+
+      expect(source_metadata(rule)).to be_nil
+    end
+
+    it "still creates the rule when the UI rule cannot be found" do
+      rule = eval("script(id: 'nested_script') { nil }", binding, "<script>") # rubocop:disable Style/EvalWithLocation
+
+      expect(rule).not_to be_nil
+      expect(source_metadata(rule)).to be_nil
+    end
+  end
+end

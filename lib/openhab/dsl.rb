@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "java"
-require "method_source"
 
 require "bundler/inline"
 
