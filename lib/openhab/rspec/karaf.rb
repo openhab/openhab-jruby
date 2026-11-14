@@ -105,8 +105,9 @@ module OpenHAB
           java.lang.System.set_property("karaf.startRemoteShell", "false")
           # set in bin/setenv to OPENHAB_USERDATA; need to move it
           java.lang.System.set_property("felix.cm.dir", felix_cm)
-          # not handled by karaf instances
+          # the real userdata, for isolate_clone: read before openhab.userdata is pointed at the clone
           @root_userdata = oh_userdata
+          # not handled by karaf instances
           java.lang.System.set_property("openhab.userdata", path)
           @oh_userdata = nil
           java.lang.System.set_property("openhab.logdir", "#{path}/logs")

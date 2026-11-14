@@ -238,8 +238,7 @@ module OpenHAB
         # and the cleanup of the clone deletes in config/. So refuse to go on.
         def refuse_symlinks(clone_location)
           config = File.join(clone_location, "config")
-          entries = Dir.glob("**/*", File::FNM_DOTMATCH, base: config).map { |entry| File.join(config, entry) }
-          links = ([config] + entries).select { |entry| File.symlink?(entry) }
+          links = ([config] + entries_under(clone_location, "config")).select { |entry| File.symlink?(entry) }
           return if links.empty?
 
           raise "The instance clone has symlinks in its config store, which could lead to the instance it was cloned " \
@@ -261,13 +260,17 @@ module OpenHAB
           end
         end
 
+        # Every file, directory and symlink under them, as full paths
+        def entries_under(clone_location, *directories)
+          directories.flat_map do |directory|
+            base = File.join(clone_location, directory)
+            Dir.glob("**/*", File::FNM_DOTMATCH, base:).map { |entry| File.join(base, entry) }
+          end
+        end
+
         # Binary reads, since etc/ holds keystores
         def files_under(clone_location, *directories)
-          files = directories.flat_map do |directory|
-            base = File.join(clone_location, directory)
-            Dir.glob("**/*", File::FNM_DOTMATCH, base:).map { |file| File.join(base, file) }
-          end
-          files.select { |file| File.file?(file) }
+          entries_under(clone_location, *directories).select { |entry| File.file?(entry) }
         end
 
         # A config's value starts with a quote, and a file: URL after it, so that is where the real path is rewritten.
