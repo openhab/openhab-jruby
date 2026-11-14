@@ -105,6 +105,8 @@ module OpenHAB
           java.lang.System.set_property("karaf.startRemoteShell", "false")
           # set in bin/setenv to OPENHAB_USERDATA; need to move it
           java.lang.System.set_property("felix.cm.dir", felix_cm)
+          # the real userdata, for isolate_clone: read before openhab.userdata is pointed at the clone
+          @root_userdata = oh_userdata
           # not handled by karaf instances
           java.lang.System.set_property("openhab.userdata", path)
           @oh_userdata = nil
@@ -702,6 +704,10 @@ module OpenHAB
       end
 
       def cleanup_instance
+        # Every launch, not just the one that made the clone, so that a clone made by an older version is repaired too.
+        # Before cleanup_clone, which deletes files in the clone: isolation refuses a clone whose config store leads
+        # to the real instance, and those deletes could go there.
+        InstanceService.isolate_clone(@root_userdata, path) unless use_root_instance
         cleanup_clone
         minimize_installed_features
         filter_addons
