@@ -206,6 +206,8 @@ module OpenHAB
       def execute
         Thread.current[:openhab_rescheduled_timer] = self
         DSL::ThreadLocal.thread_local(**@thread_locals) { @block.call(self) }
+      ensure
+        # A block that raises must still deregister the timer, otherwise it lingers in the TimerManager
         DSL.timers.delete(self) unless Thread.current[:openhab_rescheduled_timer] == true
         Thread.current[:openhab_rescheduled_timer] = nil
       end
