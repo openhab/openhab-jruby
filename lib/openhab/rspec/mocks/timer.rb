@@ -137,9 +137,12 @@ module OpenHAB
         end
 
         def cancel
+          # A terminated timer can still be registered, and TimerManager#cancel_all
+          # spins until its timers are gone, so always deregister it, as the real
+          # Core::Timer#cancel does.
+          DSL::TimerManager.instance.delete(self)
           return false if terminated? || cancelled?
 
-          DSL::TimerManager.instance.delete(self)
           cancel!
           true
         end
