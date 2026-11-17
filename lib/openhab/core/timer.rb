@@ -206,6 +206,7 @@ module OpenHAB
       def execute
         Thread.current[:openhab_rescheduled_timer] = self
         DSL::ThreadLocal.thread_local(**@thread_locals) { @block.call(self) }
+      ensure
         DSL.timers.delete(self) unless Thread.current[:openhab_rescheduled_timer] == true
         Thread.current[:openhab_rescheduled_timer] = nil
       end

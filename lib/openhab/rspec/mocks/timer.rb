@@ -137,9 +137,9 @@ module OpenHAB
         end
 
         def cancel
+          DSL::TimerManager.instance.delete(self)
           return false if terminated? || cancelled?
 
-          DSL::TimerManager.instance.delete(self)
           cancel!
           true
         end
