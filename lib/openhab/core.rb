@@ -3,6 +3,11 @@
 module OpenHAB
   # Contains classes and modules that wrap actual openHAB objects
   module Core
+    module Widgets
+      autoload :Provider, "openhab/core/widgets/registry"
+      autoload :Registry, "openhab/core/widgets/registry"
+    end
+
     module Pages
       autoload :Provider, "openhab/core/pages/registry"
       autoload :Registry, "openhab/core/pages/registry"
@@ -216,7 +221,7 @@ Dir[File.expand_path("core/**/*.rb", __dir__)].each do |f|
   # already been run by either a binstub, or the addon
   next if f.end_with?("gem.rb")
   # autoloaded things
-  next if f.match?(%r{/(io|metadata|sitemaps|pages|ui)/})
+  next if f.match?(%r{/(io|metadata|sitemaps|pages|ui|widgets)/})
 
   require f
 end
