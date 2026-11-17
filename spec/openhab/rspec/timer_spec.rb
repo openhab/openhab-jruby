@@ -37,7 +37,7 @@ RSpec.describe "timers" do
   end
 
   it "lets cancel_all finish even if a terminated timer is still registered" do
-    timer = after(1.second, id: :lingering) {}
+    timer = after(1.second, id: :lingering) { nil }
     Timecop.travel(2.seconds)
     execute_timers
     OpenHAB::DSL::TimerManager.instance.add(timer)
