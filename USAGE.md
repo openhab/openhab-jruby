@@ -718,6 +718,34 @@ items.build do
 end
 ```
 
+Use {OpenHAB::DSL::Items::ItemBuilder#persist persist} to configure automatic state persistence:
+
+**Persistence must be configured through the UI to use this feature.** The selected
+service must already have an editable configuration. Configurations supplied by
+`.persist` files are read-only through the framework and will raise an error.
+
+```ruby
+items.build do
+  number_item Temperature, persist: :on_change
+  number_item Power do
+    persist :on_update, service: :influxdb
+    persist every: 5.minutes, filter: :within_range
+  end
+  number_item Counter, persist: { cron: "0 * * * * ?" }
+end
+```
+
+Strategies can also be an array, such as `%i[on_change restore_on_startup]`.
+The default persistence service is used unless `service:` is specified.
+`filter:` names an existing filter configured through the UI (such as
+`within_range` above).
+
+If the persistence service already has configuration for the item in question,
+it will be replaced. Conversely, if you don't define a persistence configuration
+in the builder, any existing configuration will be retained. Transient items
+created in Ruby will also remove their persistence configuration when the item
+is unloaded.
+
 ### Things
 
 The {OpenHAB::DSL.things things} object allows interactions with openHAB things.
