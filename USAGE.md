@@ -209,7 +209,7 @@ If the Gemfile doesn't exist, the [gems](#gems) setting will take effect, and bu
 The [bundler init console command](#console-commands) can be used to create a new Gemfile, or you can create it manually.
 When this Gemfile exists, the [gems](#gems) setting will be ignored, and only the gems specified in your Gemfile will be installed and used.
 
-Note that by default, the gems listed in the Gemfile will also be required, so it's not necessary to require them again in the [require](#require) setting.
+openHAB will automatically require all gems in the `:default` group of the Gemfile, as well as the `:openhab` group (openHAB 5.3+), so it's not necessary to require them again in the [require](#require) setting.
 To disable this behavior for a specific gem, add a `require: false` argument to the `gem` command within the Gemfile.
 
 ### check_update <!-- omit from toc -->

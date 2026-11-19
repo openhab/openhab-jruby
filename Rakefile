@@ -1,8 +1,19 @@
 # frozen_string_literal: true
 
+require "rake/clean"
 require "rake/packagetask"
 
-require "bundler/gem_tasks"
+CLOBBER.include("pkg")
+
+require "bundler/gem_helper"
+
+namespace :bundler_plugin do
+  Bundler::GemHelper.new(nil, "bundler-openhab-stub")
+                    .tap { |helper| helper.tag_prefix = "bundler_plugin_" }
+                    .install
+end
+
+Bundler::GemHelper.install_tasks(name: "openhab-scripting")
 
 require "English"
 require "time"
