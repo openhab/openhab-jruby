@@ -3887,14 +3887,18 @@ require <span class="string"><span class="delimiter">&quot;</span><span class="c
 <li><code>on_load</code> triggers are <em>not</em> honored. Items will be reset to <span class='object_link'><a href="OpenHAB/Core/Types/UnDefType.html#NULL-constant" title="OpenHAB::Core::Types::UnDefType::NULL (constant)">NULL</a></span> before
 the next spec anyway, so just don't waste the energy running them. You
 can still trigger rules manually.</li>
-<li>Rule triggers besides item related triggers (such as cron or watchers)
-are not triggered. You can test them with <span class='object_link'><a href="OpenHAB/Core/Rules/Rule.html#trigger-instance_method" title="OpenHAB::Core::Rules::Rule#trigger (method)">trigger</a></span>.</li>
+<li>Other rule triggers, such as watchers, can be tested with
+<span class='object_link'><a href="OpenHAB/Core/Rules/Rule.html#trigger-instance_method" title="OpenHAB::Core::Rules::Rule#trigger (method)">trigger</a></span>.</li>
 <li>You can trigger channels directly with <span class='object_link'>OpenHAB::RSpec::Helpers#trigger_channel</span>.</li>
 <li>Timers aren't triggered automatically. Use the <span class='object_link'>OpenHAB::RSpec::Helpers#execute_timers</span>
 helper to execute any timers that are ready to run. The <code>timecop</code> gem is
 automatically included, so use <code>Timecop.travel(5.seconds)</code> (for example)
 to travel forward in time and have timers ready to execute. Note that this
-includes implicit timers created by rules that use the <code>for:</code> feature.</li>
+includes implicit timers created by rules that use the <code>for:</code> feature, as well
+as time-based rule triggers. Recurring triggers fire once per call and then
+advance to their next future occurrence, skipping missed occurrences.
+Item updates reschedule item-based time triggers; disabling or removing a rule
+cancels its pending triggers.</li>
 <li>Logging levels can be changed in your code. Setting a log level for a logger
 further up the chain (separated by dots) applies to all loggers underneath
 it.</li>
@@ -3991,7 +3995,7 @@ require <span class="string"><span class="delimiter">&quot;</span><span class="c
 </div></div>
 
         <footer>
-  Generated on Fri Nov 20 17:41:18 2026 by
+  Generated on Fri Nov 20 18:44:33 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.13).
 </footer>
