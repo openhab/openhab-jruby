@@ -731,7 +731,7 @@ module OpenHAB
         return unless File.exist?(config_file)
 
         config = File.read(config_file)
-        new_config = config.sub(/^(felix\.fileinstall\.filter\s+=)[^\n]+$/, "\\1 .*/openhab-addons-[^/]+\\.kar")
+        new_config = config.sub(/^(felix\.fileinstall\.filter\s+=)[^\n]+$/, "\\1 openhab-addons-[^/]+\\\\\\\\.kar")
 
         return if config == new_config
 
