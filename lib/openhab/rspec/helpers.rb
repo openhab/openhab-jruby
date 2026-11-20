@@ -186,6 +186,20 @@ module OpenHAB
       end
 
       #
+      # Send an openHAB event through the event bus, triggering matching rules.
+      # The event supplies its own type, topic, payload, and source.
+      #
+      # @param [org.openhab.core.events.Event] event The event to send.
+      # @return [void]
+      #
+      # @example
+      #   trigger_event(OpenHAB::Core::Events::ItemEventFactory.create_command_event("Light", ON))
+      #
+      def trigger_event(event)
+        Core::Events.publisher.post(event)
+      end
+
+      #
       # Require all files configured to be autorequired with the jrubyscripting addon in openHAB.
       #
       # This method is normally called by RSpec hooks.
