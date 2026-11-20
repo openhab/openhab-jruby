@@ -14,6 +14,20 @@ RSpec.describe OpenHAB::RSpec::Karaf do
 
   after { FileUtils.remove_entry(scratch) }
 
+  describe "#initialize" do
+    it "defaults to .karaf in the current working directory" do
+      expect(described_class.new.path).to eq File.join(Dir.pwd, ".karaf")
+    end
+
+    it "uses the default path when explicitly passed nil" do
+      expect(described_class.new(nil).path).to eq File.join(Dir.pwd, ".karaf")
+    end
+
+    it "preserves an explicit path" do
+      expect(karaf.path).to eq clone_path
+    end
+  end
+
   describe "#prepare" do
     let(:userdata) { "#{scratch}/userdata" }
     let(:registered_root) { "#{scratch}/registered root" }

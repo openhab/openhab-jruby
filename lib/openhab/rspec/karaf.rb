@@ -37,7 +37,7 @@ module OpenHAB
       attr_accessor :include_bindings, :include_jsondb, :private_confdir, :use_root_instance
 
       def initialize(path = nil)
-        @path = path
+        @path = path || File.join(Dir.pwd, ".karaf")
         @include_bindings = true
         @include_jsondb = true
         @private_confdir = false

@@ -99,6 +99,15 @@ require "openhab/karaf/tasks"
 OpenHAB::Karaf::Tasks.new
 ```
 
+The tasks default to `OpenHAB::RSpec::Configuration.karaf_path`. To override it
+for the tasks, configure them with a block:
+
+```ruby
+OpenHAB::Karaf::Tasks.new do |tasks|
+  tasks.karaf_path = ENV["OPENHAB_RSPEC_KARAF_PATH"]
+end
+```
+
 This will add new Rake tasks:
 
 ```shell
@@ -176,6 +185,23 @@ OpenHAB::Log.events.level = :info
   with a REPL.
 
 ## Configuration
+
+To change the test instance location, set
+`OpenHAB::RSpec::Configuration.karaf_path` before requiring `openhab/rspec`.
+For example, in `spec/spec_helper.rb`, you can use an environment variable:
+
+```ruby
+require "openhab/rspec/configuration"
+
+OpenHAB::RSpec::Configuration.karaf_path = ENV["OPENHAB_RSPEC_KARAF_PATH"]
+
+require "openhab/rspec"
+```
+
+Then run `OPENHAB_RSPEC_KARAF_PATH=/path/to/test-instance bundle exec rspec`.
+The environment variable is read by this example configuration; the harness
+defaults to `.karaf` in the current working directory. Use the same configuration
+in your `Rakefile` before creating the tasks to share the location.
 
 There are a few environment variables you can set to help the gem find the
 necessary dependencies. The default should work for an OpenHABian install

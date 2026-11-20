@@ -232,11 +232,12 @@ module OpenHAB
       # @return [void]
       # @see Configuration
       #
-      def launch_karaf(include_bindings: true,
+      def launch_karaf(path: nil,
+                       include_bindings: true,
                        include_jsondb: true,
                        private_confdir: false,
                        use_root_instance: false)
-        karaf = Karaf.new("#{Dir.pwd}/.karaf")
+        karaf = Karaf.new(path)
         karaf.include_bindings = include_bindings
         karaf.include_jsondb = include_jsondb
         karaf.private_confdir = private_confdir
