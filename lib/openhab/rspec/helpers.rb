@@ -349,6 +349,7 @@ module OpenHAB
             lib_dirs.any? { |l| f.start_with?(l) }
           end
           files.sort_by { |f| [get_start_level(f), f] }.each do |f|
+            logger.info { "(Re-)Loading script '#{File.expand_path(f)}'" }
             load f
           rescue Exception => e
             warn "Failed loading #{f}: #{e.inspect}"
