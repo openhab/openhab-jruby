@@ -20,6 +20,7 @@ module OpenHAB
     end
 
     Helpers.launch_karaf(
+      path: Configuration.karaf_path,
       include_bindings: Configuration.include_bindings,
       include_jsondb: Configuration.include_jsondb,
       private_confdir: Configuration.private_confdir,
