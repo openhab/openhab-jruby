@@ -483,7 +483,7 @@ module OpenHAB
       end
 
       def get_start_level(file)
-        return ($1 || $2).to_i if file =~ %r{/sl(\d{2})/[^/]+$|\.sl(\d{2})\.[^/.]+$}
+        return ($1 || $2).to_i if file =~ %r{/sl(\d{2})/|\.sl(\d{2})\.[^/.]+$}
 
         50
       end
