@@ -3807,29 +3807,31 @@ running, so any commands sent to items that aren't marked as <code>autoupdate="f
 update automatically.</p>
 <h2 id="usage">Usage<a href="#usage" aria-label="Link to heading 'Usage'" data-heading-content="Usage" class="header-anchor">#</a></h2>
 <p>You must run tests on a system with an actual openHAB instance installed, with your
-configuration. JRuby &gt;= 9.3.8.0 must also be installed.</p>
+configuration. JRuby &gt;= 10.0.0.1 must also be installed, though it's recommended you
+use the same version of JRuby that openHAB is using internally.</p>
 <ul>
 <li>Install and activate JRuby (by your method of choice - chruby, rbenv, etc.).</li>
 <li>Either create an empty directory, or use <code>$OPENHAB_CONF</code> itself (the former
 is untested)</li>
-<li>Create a <code>Gemfile</code> with the following contents (or add to an existing one):</li>
+<li>Create a <code>Gemfile</code>, with the following contents (you can configure your actual
+openHAB Gemfile to point here, ensure both environments stay in sync):</li>
 </ul>
 <pre class="code ruby"><code class="ruby">source <span class="string"><span class="delimiter">&quot;</span><span class="content">https://rubygems.org</span><span class="delimiter">&quot;</span></span>
 
-group(<span class="symbol">:test</span>) <span class="keyword">do</span>
+plugin <span class="string"><span class="delimiter">&quot;</span><span class="content">bundler-openhab-stub</span><span class="delimiter">&quot;</span></span>
+
+group <span class="symbol">:test</span> <span class="keyword">do</span>
   gem <span class="string"><span class="delimiter">&quot;</span><span class="content">rspec</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">~&gt; 3.11</span><span class="delimiter">&quot;</span></span>
-  gem <span class="string"><span class="delimiter">&quot;</span><span class="content">openhab-scripting</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">~&gt; 5.0</span><span class="delimiter">&quot;</span></span>
   gem <span class="string"><span class="delimiter">&quot;</span><span class="content">timecop</span><span class="delimiter">&quot;</span></span>
 <span class="keyword">end</span>
 
-group(<span class="symbol">:rules</span>) <span class="keyword">do</span>
-  <span class="comment"># include any gems you reference from `gemfile` calls in your rules so that</span>
-  <span class="comment"># they'll already be available in the rules, and won't need to be</span>
-  <span class="comment"># re-installed on every run, slowing down spec runs considerably</span>
+group <span class="symbol">:openhab</span> <span class="keyword">do</span>
+  gem <span class="string"><span class="delimiter">&quot;</span><span class="content">openhab-scripting</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">~&gt; 5.0</span><span class="delimiter">&quot;</span></span>
+
+  <span class="comment"># include any other gems you want to use in your rules</span>
 <span class="keyword">end</span>
 </code></pre>
 <ul>
-<li>Run <code>gem install bundler</code></li>
 <li>Run <code>bundle install</code></li>
 <li>Run <code>bundle exec rspec --init</code></li>
 <li>Edit the generated <code>spec/spec_helper.rb</code> to satisfy your preferences, and
@@ -3838,7 +3840,7 @@ add:</li>
 <pre class="code ruby"><code class="ruby">require <span class="string"><span class="delimiter">&quot;</span><span class="content">rubygems</span><span class="delimiter">&quot;</span></span>
 require <span class="string"><span class="delimiter">&quot;</span><span class="content">bundler</span><span class="delimiter">&quot;</span></span>
 
-<span class="constant">Bundler</span>.require(<span class="symbol">:default</span>, <span class="symbol">:test</span>)
+<span class="constant">Bundler</span>.require(<span class="symbol">:default</span>, <span class="symbol">:openhab</span>, <span class="symbol">:test</span>)
 
 require <span class="string"><span class="delimiter">&quot;</span><span class="content">openhab/rspec</span><span class="delimiter">&quot;</span></span>
 
@@ -3969,7 +3971,7 @@ create bin/console with the following contents, and then run it:</p>
 
 require <span class="string"><span class="delimiter">&quot;</span><span class="content">bundler/setup</span><span class="delimiter">&quot;</span></span>
 
-<span class="constant">Bundler</span>.require
+<span class="constant">Bundler</span>.require(<span class="symbol">:default</span>, <span class="symbol">:openhab</span>)
 
 require <span class="string"><span class="delimiter">&quot;</span><span class="content">irb</span><span class="delimiter">&quot;</span></span>
 
@@ -3989,9 +3991,9 @@ require <span class="string"><span class="delimiter">&quot;</span><span class="c
 </div></div>
 
         <footer>
-  Generated on Tue Nov 17 21:26:40 2026 by
+  Generated on Fri Nov 20 15:11:01 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.37 (ruby-3.4.12).
+  0.9.37 (ruby-3.4.13).
 </footer>
 
       </main>

@@ -4069,7 +4069,7 @@ The default is <code>Gemfile</code>.</p>
 <p>If the Gemfile doesn't exist, the <a href="#gems">gems</a> setting will take effect, and bundler will not be used.</p>
 <p>The <a href="#console-commands">bundler init console command</a> can be used to create a new Gemfile, or you can create it manually.
 When this Gemfile exists, the <a href="#gems">gems</a> setting will be ignored, and only the gems specified in your Gemfile will be installed and used.</p>
-<p>Note that by default, the gems listed in the Gemfile will also be required, so it's not necessary to require them again in the <a href="#require">require</a> setting.
+<p>openHAB will automatically require all gems in the <code>:default</code> group of the Gemfile, as well as the <code>:openhab</code> group (openHAB 5.3+), so it's not necessary to require them again in the <a href="#require">require</a> setting.
 To disable this behavior for a specific gem, add a <code>require: false</code> argument to the <code>gem</code> command within the Gemfile.</p>
 <h3 id="check_update">check_update<a href="#check_update" aria-label="Link to heading 'check_update'" data-heading-content="check_update" class="header-anchor">#</a></h3>
 <p>Check RubyGems for updates to the above gems when openHAB starts or JRuby settings are changed.
@@ -5358,9 +5358,9 @@ formatter = java.time.format.DateTimeFormatter.of_pattern(<span class="string"><
 </div></div>
 
         <footer>
-  Generated on Tue Nov 17 21:26:40 2026 by
+  Generated on Fri Nov 20 15:11:00 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.37 (ruby-3.4.12).
+  0.9.37 (ruby-3.4.13).
 </footer>
 
       </main>
