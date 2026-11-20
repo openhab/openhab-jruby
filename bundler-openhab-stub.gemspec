@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = "bundler-openhab-stub"
-  spec.version       = "1.0.0"
+  spec.version       = "1.0.1"
   spec.licenses      = ["EPL-2.0"]
   spec.authors       = ["Cody Cutrer"]
   spec.email         = ["cody@cutrer.us"]
@@ -22,6 +22,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "bundler", "~> 4.1"
 
-  spec.files         = %w[plugins.rb]
+  spec.files         = %w[plugins.rb lib/bundler-openhab-stub.rb]
   spec.require_paths = ["lib"]
 end

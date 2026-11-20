@@ -28,6 +28,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "method_source", "~> 1.0"
   spec.add_dependency "openhab", ">= 5.0.0", "< 5.4"
 
-  spec.files = Dir["{lib}/**/*"]
+  spec.files = Dir["{lib}/**/*"] - ["lib/bundler-openhab-stub.rb"]
   spec.require_paths = ["lib"]
 end
