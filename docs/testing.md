@@ -99,14 +99,18 @@ end
 - `on_load` triggers are _not_ honored. Items will be reset to {NULL} before
    the next spec anyway, so just don't waste the energy running them. You
    can still trigger rules manually.
-- Rule triggers besides item related triggers (such as cron or watchers)
-   are not triggered. You can test them with {OpenHAB::Core::Rules::Rule#trigger trigger}.
+- Other rule triggers, such as watchers, can be tested with
+   {OpenHAB::Core::Rules::Rule#trigger trigger}.
 - You can trigger channels directly with {OpenHAB::RSpec::Helpers#trigger_channel}.
 - Timers aren't triggered automatically. Use the {OpenHAB::RSpec::Helpers#execute_timers}
    helper to execute any timers that are ready to run. The `timecop` gem is
    automatically included, so use `Timecop.travel(5.seconds)` (for example)
    to travel forward in time and have timers ready to execute. Note that this
-   includes implicit timers created by rules that use the `for:` feature.
+   includes implicit timers created by rules that use the `for:` feature, as well
+   as time-based rule triggers. Recurring triggers fire once per call and then
+   advance to their next future occurrence, skipping missed occurrences.
+   Item updates reschedule item-based time triggers; disabling or removing a rule
+   cancels its pending triggers.
 - Logging levels can be changed in your code. Setting a log level for a logger
    further up the chain (separated by dots) applies to all loggers underneath
    it.
