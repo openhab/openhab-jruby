@@ -63,6 +63,8 @@ module OpenHAB
           private
 
           def reschedule(now)
+            now = now.with_zone_same_instant(java.time.ZoneId.system_default)
+
             if @adjuster.is_done(now)
               complete(nil)
               CronScheduler.schedules.remove(self)
