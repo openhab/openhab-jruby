@@ -110,7 +110,8 @@ module OpenHAB
       end
 
       #
-      # Execute all pending timers
+      # Execute all due time-based rule triggers and pending timers.
+      # Recurring rule triggers fire once per call, skipping missed occurrences.
       #
       # @return [void]
       #
@@ -118,6 +119,7 @@ module OpenHAB
         raise "Cannot execute timers when timers aren't mocked" unless self.class.mock_timers?
 
         now = ZonedDateTime.now
+        Mocks::CronScheduler.execute_timers(now)
         DSL::TimerManager.instance.instance_variable_get(:@timers).each_key do |t|
           t.execute if t.active? && t.execution_time <= now
         end

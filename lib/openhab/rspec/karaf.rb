@@ -288,6 +288,14 @@ module OpenHAB
             props.put("dayset-weekend", %w[SATURDAY SUNDAY])
             cfg.update(props)
           end
+          wait_for_service("org.openhab.core.automation.handler.ModuleHandlerFactory",
+                           filter: "(component.name=org.openhab.core.automation.internal.module.handler." \
+                                   "TimerModuleHandlerFactory)") do |factory|
+            require_relative "mocks/cron_scheduler"
+            field = factory.class.java_class.declared_field(:scheduler)
+            field.accessible = true
+            field.set(factory, Mocks::CronScheduler.new(field.get(factory)))
+          end
           wait_for_service("org.openhab.core.automation.RuleManager") do |re|
             # overwrite thCallbacks to one that will spy to remove threading
             field = re.class.java_class.declared_field :thCallbacks

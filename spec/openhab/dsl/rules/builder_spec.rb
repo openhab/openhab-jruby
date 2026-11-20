@@ -1423,9 +1423,8 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           cron (Time.now + 2).strftime("%S %M %H ? * ?"), attach: 1
           run { |event| attachment = event.attachment }
         end
-        wait(4.seconds) do
-          expect(attachment).to be 1
-        end
+        time_travel_and_execute_timers(4.seconds)
+        expect(attachment).to be 1
       end
 
       context "with field specifiers" do
@@ -1486,9 +1485,8 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           run { triggered = true }
         end
         MyDateTimeItem.update(Time.now + 2)
-        wait(4.seconds) do
-          expect(triggered).to be true
-        end
+        time_travel_and_execute_timers(4.seconds)
+        expect(triggered).to be true
       end
 
       { "Duration" => 2.hours + 1.seconds, "Integer" => 2.hours.to_i + 1 }.each do |type, offset|
@@ -1502,9 +1500,8 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           end
 
           MyDateTimeItem.update(2.hours.ago) # without an offset, this would not have triggered the rule
-          wait(4.seconds) do
-            expect(triggered).to be true
-          end
+          time_travel_and_execute_timers(4.seconds)
+          expect(triggered).to be true
         end
       end
     end
@@ -1567,9 +1564,8 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           expect(handler.getTemporalAdjuster).not_to be_nil
 
           item.update(Time.now + 2 - 2.days)
-          wait(4.seconds) do
-            expect(triggered).to be true
-          end
+          time_travel_and_execute_timers(4.seconds)
+          expect(triggered).to be true
         end
 
         it "supports attachments" do
@@ -1577,9 +1573,8 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
           every(:day, id: "dynamic_at_rule", at: item, attach: 1) { |event| triggered = event.attachment }
 
           item.update(Time.now + 2 - 2.days)
-          wait(4.seconds) do
-            expect(triggered).to be 1
-          end
+          time_travel_and_execute_timers(4.seconds)
+          expect(triggered).to be 1
         end
 
         it "complains about dynamic at that's not daily" do
@@ -1596,9 +1591,8 @@ RSpec.describe OpenHAB::DSL::Rules::Builder do
             every(:day, at: MyDateTimeItem, offset:) { triggered = true }
 
             MyDateTimeItem.update(2.hours.ago) # without an offset, this would not have triggered the rule
-            wait(4.seconds) do
-              expect(triggered).to be true
-            end
+            time_travel_and_execute_timers(4.seconds)
+            expect(triggered).to be true
           end
         end
       end

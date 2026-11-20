@@ -1,6 +1,72 @@
 # frozen_string_literal: true
 
 RSpec.describe "timers" do
+  it "executes due recurring rule triggers once per call without replaying missed occurrences" do
+    Timecop.freeze(Time.utc(2026, 1, 1))
+    executed = 0
+    every(1.second) { executed += 1 }
+
+    execute_timers
+    expect(executed).to eq 0
+    Timecop.travel(10.seconds)
+    expect(executed).to eq 0
+    execute_timers
+    expect(executed).to eq 1
+    execute_timers
+    expect(executed).to eq 1
+    time_travel_and_execute_timers(1.second)
+    expect(executed).to eq 2
+  end
+
+  it "executes literal time triggers and timers created by their rules" do
+    Timecop.freeze(Time.utc(2026, 1, 1, 11, 59))
+    executed = false
+    every(:day, at: "12:00") { after(0.seconds) { executed = true } }
+
+    time_travel_and_execute_timers(59.seconds)
+    expect(executed).to be false
+    time_travel_and_execute_timers(1.second)
+    expect(executed).to be true
+  end
+
+  it "replaces item-based schedules when the item changes and cancels them for NULL" do
+    Timecop.freeze(Time.utc(2026, 1, 1))
+    item = items.build { date_time_item "ScheduledTime", state: Time.now + 60 }
+    executed = 0
+    rule do
+      at item
+      run { executed += 1 }
+    end
+
+    item.update(Time.now + 120)
+    time_travel_and_execute_timers(60.seconds)
+    expect(executed).to eq 0
+    time_travel_and_execute_timers(60.seconds)
+    expect(executed).to eq 1
+    time_travel_and_execute_timers(1.day)
+    expect(executed).to eq 1
+
+    item.update(Time.now + 60)
+    item.update(NULL)
+    time_travel_and_execute_timers(60.seconds)
+    expect(executed).to eq 1
+  end
+
+  it "cancels pending rule triggers when rules are disabled or removed" do
+    Timecop.freeze(Time.utc(2026, 1, 1))
+    executed = 0
+    disabled_rule = every(1.second) { executed += 1 }
+    removed_rule = every(1.second) { executed += 1 }
+    disabled_rule.disable
+    rules.remove(removed_rule.uid)
+
+    time_travel_and_execute_timers(2.seconds)
+    expect(executed).to eq 0
+    disabled_rule.enable
+    time_travel_and_execute_timers(1.second)
+    expect(executed).to eq 1
+  end
+
   it "only executes after time has moved, and you explicitly execute them" do
     executed = false
     after(5.minutes) { executed = true }
