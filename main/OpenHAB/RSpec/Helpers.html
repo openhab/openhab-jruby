@@ -4193,6 +4193,29 @@ explicitly.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#trigger_event-class_method" title="trigger_event (class method)">.<strong>trigger_event</strong>(event)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Send an openHAB event through the event bus, triggering matching rules.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#wait-class_method" title="wait (class method)">.<strong>wait</strong>(how_long = 2.seconds) { ... } &#x21d2; void </a>
     
 
@@ -4249,26 +4272,26 @@ explicitly.</p>
       <pre class="lines">
 
 
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
 209
 210
-211</pre>
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 195</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 209</span>
 
 <span class="keyword">def</span> <span class="function">autorequires</span>
   <span class="predefined-constant">ENV</span>[<span class="string"><span class="delimiter">&quot;</span><span class="content">RUBYLIB</span><span class="delimiter">&quot;</span></span>] ||= <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>
@@ -4539,20 +4562,6 @@ The addon's bundle id is used as the identifier.</p>
       <pre class="lines">
 
 
-397
-398
-399
-400
-401
-402
-403
-404
-405
-406
-407
-408
-409
-410
 411
 412
 413
@@ -4572,10 +4581,24 @@ The addon's bundle id is used as the identifier.</p>
 427
 428
 429
-430</pre>
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 397</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 411</span>
 
 <span class="keyword">def</span> <span class="function">install_addon</span>(addon_id, <span class="key">wait</span>: <span class="predefined-constant">true</span>, <span class="key">ready_markers</span>: <span class="predefined-constant">nil</span>)
   service_filter = <span class="string"><span class="delimiter">&quot;</span><span class="content">(component.name=org.openhab.core.karafaddons)</span><span class="delimiter">&quot;</span></span>
@@ -4649,20 +4672,6 @@ The addon's bundle id is used as the identifier.</p>
       <pre class="lines">
 
 
-221
-222
-223
-224
-225
-226
-227
-228
-229
-230
-231
-232
-233
-234
 235
 236
 237
@@ -4733,10 +4742,24 @@ The addon's bundle id is used as the identifier.</p>
 302
 303
 304
-305</pre>
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 235</span>
 
 <span class="keyword">def</span> <span class="function">launch_karaf</span>(<span class="key">include_bindings</span>: <span class="predefined-constant">true</span>,
                  <span class="key">include_jsondb</span>: <span class="predefined-constant">true</span>,
@@ -4854,29 +4877,29 @@ The addon's bundle id is used as the identifier.</p>
       <pre class="lines">
 
 
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
 354
 355
 356
 357
 358
-359</pre>
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 340</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 354</span>
 
 <span class="keyword">def</span> <span class="function">load_rules</span>
   automation_paths = Array(::<span class="constant">RSpec</span>.configuration.openhab_automation_search_paths)
@@ -4932,24 +4955,24 @@ recognized.</p>
       <pre class="lines">
 
 
-372
-373
-374
-375
-376
-377
-378
-379
-380
-381
-382
-383
-384
-385
-386</pre>
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 372</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 386</span>
 
 <span class="keyword">def</span> <span class="function">load_transforms</span>
   transform_path = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>org.openhab.core.OpenHAB.config_folder<span class="inline-delimiter">}</span></span><span class="content">/transform</span><span class="delimiter">&quot;</span></span>
@@ -5013,12 +5036,12 @@ recognized.</p>
       <pre class="lines">
 
 
-433
-434
-435</pre>
+447
+448
+449</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 433</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 447</span>
 
 <span class="keyword">def</span> <span class="function">log_file</span>
   <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>java.lang.System.get_property(<span class="string"><span class="delimiter">&quot;</span><span class="content">openhab.logdir</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">nil</span>)<span class="inline-delimiter">}</span></span><span class="content">/openhab.log</span><span class="delimiter">&quot;</span></span>
@@ -5081,28 +5104,28 @@ recognized.</p>
       <pre class="lines">
 
 
-446
-447
-448
-449
-450
-451
-452
-453
-454
-455
-456
-457
-458
-459
 460
 461
 462
 463
-464</pre>
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 446</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 460</span>
 
 <span class="keyword">def</span> <span class="function">spec_log_lines</span>
   lines = []
@@ -5320,6 +5343,74 @@ will just sleep for <code>duration</code></p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="trigger_event-class_method">
+  
+    .<strong>trigger_event</strong>(event)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Send an openHAB event through the event bus, triggering matching rules.
+The event supplies its own type, topic, payload, and source.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+      <pre class="example code"><code>trigger_event(<span class="constant">OpenHAB</span>::<span class="constant">Core</span>::<span class="constant">Events</span>::<span class="constant">ItemEventFactory</span>.create_command_event(<span class="string"><span class="delimiter">&quot;</span><span class="content">Light</span><span class="delimiter">&quot;</span></span>, <span class="constant">ON</span>))</code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>event</span>
+      
+      
+        <span class='type'>(<tt><a href="https://www.openhab.org/javadoc/latest/org/openhab/core/events/Event.html" target="_parent" title="org.openhab.core.events.Event">org.openhab.core.events.Event</a></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The event to send.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+198
+199
+200</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 198</span>
+
+<span class="keyword">def</span> <span class="function">trigger_event</span>(event)
+  <span class="constant">Core</span>::<span class="constant">Events</span>.publisher.post(event)
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="wait-class_method">
   
     .<strong>wait</strong>(how_long = 2.seconds) { ... } &#x21d2; <tt>void</tt> 
@@ -5418,7 +5509,7 @@ will just sleep for <code>duration</code></p>
 </div>
 
         <footer>
-  Generated on Fri Nov 20 21:09:32 2026 by
+  Generated on Fri Nov 20 21:41:30 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.13).
 </footer>
