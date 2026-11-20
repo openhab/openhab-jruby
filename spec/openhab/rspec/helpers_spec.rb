@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "tmpdir"
+
 # rubocop:disable-next RSpec/NamedSubject -- I need to use the implicit subject
 RSpec.describe OpenHAB::RSpec::Helpers do
   describe "trigger_event" do
@@ -30,6 +32,54 @@ RSpec.describe OpenHAB::RSpec::Helpers do
   end
 
   describe "load_rules" do
+    [false, true].each do |raise_error|
+      it "restores thread locals between files#{" even when loading fails" if raise_error}" do
+        allow(RSpec.configuration).to receive(:openhab_automation_search_paths).and_return(["automation"])
+        allow(Dir).to receive(:[]).and_return(%w[automation/a.rb automation/b.rb])
+        original = OpenHAB::DSL::ThreadLocal.persist
+        allow(subject).to receive(:load).with("automation/a.rb") do
+          OpenHAB::DSL::ThreadLocal::KNOWN_KEYS.each { |key| Thread.current[key] = :changed }
+          raise "Failed script" if raise_error
+        end
+        allow(subject).to receive(:load).with("automation/b.rb") do
+          expect(OpenHAB::DSL::ThreadLocal.persist).to eq original
+        end
+        allow(subject).to receive(:warn) if raise_error
+
+        OpenHAB::DSL::ThreadLocal.thread_local(**original) do
+          subject.load_rules
+          expect(OpenHAB::DSL::ThreadLocal.persist).to eq original
+        end
+      end
+    end
+
+    it "keeps file settings in rules without suppressing repeated updates in examples" do
+      items.build do
+        number_item "Source593"
+        switch_item "Target593"
+      end
+
+      Dir.mktmpdir do |directory|
+        File.write("#{directory}/mirror.rb", <<~RUBY)
+          ensure_states!
+          rule "mirror593" do
+            updated Source593
+            run { Target593.command(ON) if Thread.current[:openhab_ensure_states] }
+          end
+        RUBY
+        allow(RSpec.configuration).to receive(:openhab_automation_search_paths).and_return([directory])
+
+        OpenHAB::DSL::ThreadLocal.thread_local(openhab_ensure_states: false) do
+          subject.load_rules
+          Source593.update(1)
+          expect(Target593).to be_on
+          Target593.update(OFF)
+          Source593.update(1)
+          expect(Target593).to be_on
+        end
+      end
+    end
+
     it "respects start levels" do
       allow(RSpec.configuration).to receive(:openhab_automation_search_paths).and_return(["automation"])
       allow(Dir).to receive(:[]).and_return(%w[automation/filea.rb
