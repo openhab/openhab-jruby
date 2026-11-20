@@ -15,30 +15,32 @@ update automatically.
 ## Usage
 
 You must run tests on a system with an actual openHAB instance installed, with your
-configuration. JRuby >= 9.3.8.0 must also be installed.
+configuration. JRuby >= 10.0.0.1 must also be installed, though it's recommended you
+use the same version of JRuby that openHAB is using internally.
 
 - Install and activate JRuby (by your method of choice - chruby, rbenv, etc.).
 - Either create an empty directory, or use `$OPENHAB_CONF` itself (the former
    is untested)
-- Create a `Gemfile` with the following contents (or add to an existing one):
+- Create a `Gemfile`, with the following contents (you can configure your actual
+  openHAB Gemfile to point here, ensure both environments stay in sync):
 
 ```ruby
 source "https://rubygems.org"
 
-group(:test) do
+plugin "bundler-openhab-stub"
+
+group :test do
   gem "rspec", "~> 3.11"
-  gem "openhab-scripting", "~> 5.0"
   gem "timecop"
 end
 
-group(:rules) do
-  # include any gems you reference from `gemfile` calls in your rules so that
-  # they'll already be available in the rules, and won't need to be
-  # re-installed on every run, slowing down spec runs considerably
+group :openhab do
+  gem "openhab-scripting", "~> 5.0"
+
+  # include any other gems you want to use in your rules
 end
 ```
 
-- Run `gem install bundler`
 - Run `bundle install`
 - Run `bundle exec rspec --init`
 - Edit the generated `spec/spec_helper.rb` to satisfy your preferences, and
@@ -48,7 +50,7 @@ end
 require "rubygems"
 require "bundler"
 
-Bundler.require(:default, :test)
+Bundler.require(:default, :openhab, :test)
 
 require "openhab/rspec"
 
@@ -176,7 +178,7 @@ create bin/console with the following contents, and then run it:
 
 require "bundler/setup"
 
-Bundler.require
+Bundler.require(:default, :openhab)
 
 require "irb"
 
