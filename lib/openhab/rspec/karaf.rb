@@ -37,7 +37,8 @@ module OpenHAB
       attr_accessor :include_bindings, :include_jsondb, :private_confdir, :use_root_instance
 
       def initialize(path = nil)
-        @path = path || File.join(Dir.pwd, ".karaf")
+        # Preserve symlink-sensitive .. components until the filesystem resolves them.
+        @path = java.nio.file.Paths.get((path || File.join(Dir.pwd, ".karaf")).to_s).to_absolute_path.to_s
         @include_bindings = true
         @include_jsondb = true
         @private_confdir = false
@@ -62,6 +63,16 @@ module OpenHAB
         set_java_properties
         set_java_properties_from_env
         return if use_root_instance
+
+        @root_conf ||= oh_conf
+        [oh_home, oh_runtime, @root_conf, oh_userdata].each do |location|
+          InstanceService.refuse_nested_clone(location, path)
+        end
+        if private_confdir
+          @oh_conf = ENV["OPENHAB_CONF"] = "#{path}/conf"
+          java.lang.System.set_property("openhab.conf", @oh_conf)
+          create_private_confdir
+        end
 
         redirect_instances
         create_instance(rebuild:)
@@ -682,10 +693,6 @@ module OpenHAB
       def set_env
         ENV["DIRNAME"] = "#{oh_runtime}/bin"
         ENV["KARAF_HOME"] = oh_runtime
-        if private_confdir
-          ENV["OPENHAB_CONF"] = "#{path}/conf"
-          create_private_confdir
-        end
         Shell.source_env_from("#{oh_runtime}/bin/setenv")
       end
 
