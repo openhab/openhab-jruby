@@ -29,6 +29,10 @@ source "https://rubygems.org"
 
 plugin "bundler-openhab-stub"
 
+group :development do
+  gem "rake", "~> 13.0", require: false
+end
+
 group :test do
   gem "rspec", "~> 3.11"
   gem "timecop"
@@ -83,6 +87,32 @@ end
 ```
 
 - Run your specs: `bundle exec rspec`
+
+### Maintaining the test instance
+
+The test harness reuses a `.karaf` directory in your project directory. To update
+its copy of your openHAB installation add a `Rakefile`:
+
+```ruby
+require "openhab/karaf/tasks"
+
+OpenHAB::Karaf::Tasks.new
+```
+
+This will add new Rake tasks:
+
+```shell
+bundle exec rake karaf:rebuild
+bundle exec rake karaf:refresh
+```
+
+`karaf:rebuild` completely removes `.karaf` and creates a new clone from your
+installed openHAB instance. Use it after upgrading openHAB or when you need a
+fresh test environment. It builds the clone without starting the runtime.
+
+`karaf:refresh` replaces only `.karaf/jsondb` and `.karaf/persistence` with fresh
+copies from openHAB's userdata directory. This will update your test copy of
+openHAB with changes to managed items, things, and the latest persisted data.
 
 ### Spec Writing Tips
 
