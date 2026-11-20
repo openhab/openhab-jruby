@@ -4502,10 +4502,6 @@ The addon's bundle id is used as the identifier.</p>
       <pre class="lines">
 
 
-390
-391
-392
-393
 394
 395
 396
@@ -4535,10 +4531,14 @@ The addon's bundle id is used as the identifier.</p>
 420
 421
 422
-423</pre>
+423
+424
+425
+426
+427</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 390</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 394</span>
 
 <span class="keyword">def</span> <span class="function">install_addon</span>(addon_id, <span class="key">wait</span>: <span class="predefined-constant">true</span>, <span class="key">ready_markers</span>: <span class="predefined-constant">nil</span>)
   service_filter = <span class="string"><span class="delimiter">&quot;</span><span class="content">(component.name=org.openhab.core.karafaddons)</span><span class="delimiter">&quot;</span></span>
@@ -4692,7 +4692,11 @@ The addon's bundle id is used as the identifier.</p>
 296
 297
 298
-299</pre>
+299
+300
+301
+302
+303</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 219</span>
@@ -4746,13 +4750,17 @@ The addon's bundle id is used as the identifier.</p>
 
   rs = <span class="constant">OSGi</span>.service(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.service.ReadyService</span><span class="delimiter">&quot;</span></span>)
 
-  <span class="comment"># wait for the rule engine</span>
-  filter = org.openhab.core.service.ReadyMarkerFilter.new
-              .with_type(org.openhab.core.service.StartLevelService::<span class="constant">STARTLEVEL_MARKER_TYPE</span>)
-              .with_identifier(org.openhab.core.service.StartLevelService::<span class="constant">STARTLEVEL_RULEENGINE</span>.to_s)
+  <span class="comment"># Wait for model loading (20), state restoration (30), and the rule engine (50).</span>
+  [org.openhab.core.service.StartLevelService::<span class="constant">STARTLEVEL_MODEL</span>,
+   org.openhab.core.service.StartLevelService::<span class="constant">STARTLEVEL_STATES</span>,
+   org.openhab.core.service.StartLevelService::<span class="constant">STARTLEVEL_RULEENGINE</span>].each <span class="keyword">do</span> |level|
+    filter = org.openhab.core.service.ReadyMarkerFilter.new
+                .with_type(org.openhab.core.service.StartLevelService::<span class="constant">STARTLEVEL_MARKER_TYPE</span>)
+                .with_identifier(level.to_s)
 
-  karaf.send(<span class="symbol">:wait</span>) <span class="keyword">do</span> |continue|
-    rs.register_tracker(org.openhab.core.service.ReadyService::<span class="constant">ReadyTracker</span>.impl { continue.call }, filter)
+    karaf.send(<span class="symbol">:wait</span>) <span class="keyword">do</span> |continue|
+      rs.register_tracker(org.openhab.core.service.ReadyService::<span class="constant">ReadyTracker</span>.impl { continue.call }, filter)
+    <span class="keyword">end</span>
   <span class="keyword">end</span>
 
   <span class="comment"># openHAB 5.2.0.M5+ can leave RuleEngineImpl.started false in the rspec</span>
@@ -4809,10 +4817,6 @@ The addon's bundle id is used as the identifier.</p>
       <pre class="lines">
 
 
-334
-335
-336
-337
 338
 339
 340
@@ -4827,10 +4831,14 @@ The addon's bundle id is used as the identifier.</p>
 349
 350
 351
-352</pre>
+352
+353
+354
+355
+356</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 334</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 338</span>
 
 <span class="keyword">def</span> <span class="function">load_rules</span>
   automation_paths = Array(::<span class="constant">RSpec</span>.configuration.openhab_automation_search_paths)
@@ -4885,10 +4893,6 @@ recognized.</p>
       <pre class="lines">
 
 
-365
-366
-367
-368
 369
 370
 371
@@ -4899,10 +4903,14 @@ recognized.</p>
 376
 377
 378
-379</pre>
+379
+380
+381
+382
+383</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 365</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 369</span>
 
 <span class="keyword">def</span> <span class="function">load_transforms</span>
   transform_path = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>org.openhab.core.OpenHAB.config_folder<span class="inline-delimiter">}</span></span><span class="content">/transform</span><span class="delimiter">&quot;</span></span>
@@ -4966,12 +4974,12 @@ recognized.</p>
       <pre class="lines">
 
 
-426
-427
-428</pre>
+430
+431
+432</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 426</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 430</span>
 
 <span class="keyword">def</span> <span class="function">log_file</span>
   <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>java.lang.System.get_property(<span class="string"><span class="delimiter">&quot;</span><span class="content">openhab.logdir</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">nil</span>)<span class="inline-delimiter">}</span></span><span class="content">/openhab.log</span><span class="delimiter">&quot;</span></span>
@@ -5034,10 +5042,6 @@ recognized.</p>
       <pre class="lines">
 
 
-439
-440
-441
-442
 443
 444
 445
@@ -5052,10 +5056,14 @@ recognized.</p>
 454
 455
 456
-457</pre>
+457
+458
+459
+460
+461</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 439</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 443</span>
 
 <span class="keyword">def</span> <span class="function">spec_log_lines</span>
   lines = []
@@ -5371,7 +5379,7 @@ will just sleep for <code>duration</code></p>
 </div>
 
         <footer>
-  Generated on Fri Nov 20 16:36:05 2026 by
+  Generated on Fri Nov 20 16:42:54 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.13).
 </footer>
