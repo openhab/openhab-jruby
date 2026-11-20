@@ -265,13 +265,17 @@ module OpenHAB
 
         rs = OSGi.service("org.openhab.core.service.ReadyService")
 
-        # wait for the rule engine
-        filter = org.openhab.core.service.ReadyMarkerFilter.new
-                    .with_type(org.openhab.core.service.StartLevelService::STARTLEVEL_MARKER_TYPE)
-                    .with_identifier(org.openhab.core.service.StartLevelService::STARTLEVEL_RULEENGINE.to_s)
+        # Wait for model loading (20), state restoration (30), and the rule engine (50).
+        [org.openhab.core.service.StartLevelService::STARTLEVEL_MODEL,
+         org.openhab.core.service.StartLevelService::STARTLEVEL_STATES,
+         org.openhab.core.service.StartLevelService::STARTLEVEL_RULEENGINE].each do |level|
+          filter = org.openhab.core.service.ReadyMarkerFilter.new
+                      .with_type(org.openhab.core.service.StartLevelService::STARTLEVEL_MARKER_TYPE)
+                      .with_identifier(level.to_s)
 
-        karaf.send(:wait) do |continue|
-          rs.register_tracker(org.openhab.core.service.ReadyService::ReadyTracker.impl { continue.call }, filter)
+          karaf.send(:wait) do |continue|
+            rs.register_tracker(org.openhab.core.service.ReadyService::ReadyTracker.impl { continue.call }, filter)
+          end
         end
 
         # openHAB 5.2.0.M5+ can leave RuleEngineImpl.started false in the rspec
