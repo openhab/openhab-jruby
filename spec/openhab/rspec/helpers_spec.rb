@@ -41,13 +41,15 @@ RSpec.describe OpenHAB::RSpec::Helpers do
           OpenHAB::DSL::ThreadLocal::KNOWN_KEYS.each { |key| Thread.current[key] = :changed }
           raise "Failed script" if raise_error
         end
+        second_file_states = []
         allow(subject).to receive(:load).with("automation/b.rb") do
-          expect(OpenHAB::DSL::ThreadLocal.persist).to eq original
+          second_file_states << OpenHAB::DSL::ThreadLocal.persist
         end
         allow(subject).to receive(:warn) if raise_error
 
         OpenHAB::DSL::ThreadLocal.thread_local(**original) do
           subject.load_rules
+          expect(second_file_states).to eq [original]
           expect(OpenHAB::DSL::ThreadLocal.persist).to eq original
         end
       end
