@@ -3451,6 +3451,40 @@
   </li>
 
   
+  <li class="collapsed">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-1" href="OpenHAB/Karaf.html" title="OpenHAB::Karaf (module)">Karaf</a></span>
+      
+      
+        <a class="arrow toggle right"></a>
+      
+    </span>
+    
+    
+      
+      <ul>
+        
+        
+  
+  <li class="">
+    <span class="sidebar-link">
+      <span class='object_link'><a class="sidebar-link sidebar-link-depth-2" href="OpenHAB/Karaf/Tasks.html" title="OpenHAB::Karaf::Tasks (class)">Tasks</a></span>
+      
+        &lt; TaskLib
+      
+      
+    </span>
+    
+    
+  </li>
+
+
+        
+      </ul>
+    
+  </li>
+
+  
   <li class="">
     <span class="sidebar-link">
       <span class='object_link'><a class="sidebar-link sidebar-link-depth-1" href="OpenHAB/Log.html" title="OpenHAB::Log (module)">Log</a></span>
@@ -3820,6 +3854,10 @@ openHAB Gemfile to point here, ensure both environments stay in sync):</li>
 
 plugin <span class="string"><span class="delimiter">&quot;</span><span class="content">bundler-openhab-stub</span><span class="delimiter">&quot;</span></span>
 
+group <span class="symbol">:development</span> <span class="keyword">do</span>
+  gem <span class="string"><span class="delimiter">&quot;</span><span class="content">rake</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">~&gt; 13.0</span><span class="delimiter">&quot;</span></span>, <span class="key">require</span>: <span class="predefined-constant">false</span>
+<span class="keyword">end</span>
+
 group <span class="symbol">:test</span> <span class="keyword">do</span>
   gem <span class="string"><span class="delimiter">&quot;</span><span class="content">rspec</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">~&gt; 3.11</span><span class="delimiter">&quot;</span></span>
   gem <span class="string"><span class="delimiter">&quot;</span><span class="content">timecop</span><span class="delimiter">&quot;</span></span>
@@ -3873,6 +3911,23 @@ require <span class="string"><span class="delimiter">&quot;</span><span class="c
 <ul>
 <li>Run your specs: <code>bundle exec rspec</code></li>
 </ul>
+<h3 id="maintaining-the-test-instance">Maintaining the test instance<a href="#maintaining-the-test-instance" aria-label="Link to heading 'Maintaining the test instance'" data-heading-content="Maintaining the test instance" class="header-anchor">#</a></h3>
+<p>The test harness reuses a <code>.karaf</code> directory in your project directory. To update
+its copy of your openHAB installation add a <code>Rakefile</code>:</p>
+<pre class="code ruby"><code class="ruby">require <span class="string"><span class="delimiter">&quot;</span><span class="content">openhab/karaf/tasks</span><span class="delimiter">&quot;</span></span>
+
+<span class="constant">OpenHAB</span>::<span class="constant">Karaf</span>::<span class="constant">Tasks</span>.new
+</code></pre>
+<p>This will add new Rake tasks:</p>
+<pre class="code shell"><code class="shell">bundle exec rake karaf:rebuild
+bundle exec rake karaf:refresh
+</code></pre>
+<p><code>karaf:rebuild</code> completely removes <code>.karaf</code> and creates a new clone from your
+installed openHAB instance. Use it after upgrading openHAB or when you need a
+fresh test environment. It builds the clone without starting the runtime.</p>
+<p><code>karaf:refresh</code> replaces only <code>.karaf/jsondb</code> and <code>.karaf/persistence</code> with fresh
+copies from openHAB's userdata directory. This will update your test copy of
+openHAB with changes to managed items, things, and the latest persisted data.</p>
 <h3 id="spec-writing-tips">Spec Writing Tips<a href="#spec-writing-tips" aria-label="Link to heading 'Spec Writing Tips'" data-heading-content="Spec Writing Tips" class="header-anchor">#</a></h3>
 <ul>
 <li>By default ruby files are looked for in <code>$OPENHAB_CONF/automation/ruby</code> and in <code>$OPENHAB_CONF/automation/jsr223</code>. You can override and/or append to this by setting the <code>openhab_automation_search_paths</code> RSpec configuration setting in your <code>spec_helper.rb</code>. This can be useful to add staging directory for testing your rules.</li>
@@ -3995,7 +4050,7 @@ require <span class="string"><span class="delimiter">&quot;</span><span class="c
 </div></div>
 
         <footer>
-  Generated on Fri Nov 20 20:46:43 2026 by
+  Generated on Fri Nov 20 21:09:31 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.13).
 </footer>
