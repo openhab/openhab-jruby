@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "fileutils"
+require "jruby"
 require "shellwords"
 require "time"
 
@@ -44,7 +45,15 @@ module OpenHAB
       end
 
       def launch
+        prepare
+        start_instance
+      end
+
+      # Create the test instance without starting the runtime.
+      # @return [void]
+      def prepare(rebuild: false)
         raise ArgumentError, "Path must be supplied if use_root_instance is false" unless path || use_root_instance
+        raise ArgumentError, "Cannot rebuild the root instance" if rebuild && use_root_instance
 
         @path = oh_home if use_root_instance
 
@@ -52,11 +61,19 @@ module OpenHAB
         set_env
         set_java_properties
         set_java_properties_from_env
-        unless use_root_instance
-          redirect_instances
-          create_instance
-        end
-        start_instance
+        return if use_root_instance
+
+        redirect_instances
+        create_instance(rebuild:)
+      end
+
+      # Replace the test instance's JSONDB and persistence data with fresh copies.
+      # @return [void]
+      def refresh
+        raise ArgumentError, "Cannot refresh the root instance" if use_root_instance
+
+        prepare
+        InstanceService.new(nil).refresh_configuration(oh_userdata, path)
       end
 
       private
@@ -76,20 +93,33 @@ module OpenHAB
         FileUtils.cp("#{orig_instances}/instance.properties", new_instance_properties)
       end
 
-      def create_instance
+      def create_instance(rebuild: false)
         find_karaf_instance_jar
         # OSGi isn't up yet, so have to create the service directly
         service = org.apache.karaf.instance.core.internal.InstanceServiceImpl.new
         root_instance = service.instances.find(&:root?)
         raise ArgumentError, "No root instance found to clone... has openHAB run yet?" unless root_instance
 
+        if rebuild
+          rebuild_instance(root_instance)
+          service = org.apache.karaf.instance.core.internal.InstanceServiceImpl.new
+        end
+
         return if service.get_instance("rspec")
 
         InstanceService.new(service).clone_instance(root_instance.name, "rspec", path)
       ensure
         extra_loaders = ::JRuby.runtime.instance_config.extra_loaders
-        loader = extra_loaders.find { |l| l.class_loader == @karaf_instance_loader }
+        loader = extra_loaders.find { |l| l.get_class_loader == @karaf_instance_loader }
         extra_loaders.remove(loader)
+      end
+
+      def rebuild_instance(root_instance)
+        InstanceService.refuse_nested_clone(oh_userdata, path)
+        InstanceService.refuse_nested_clone(root_instance.location, path)
+        FileUtils.rm_rf(path)
+        create_private_confdir if private_confdir
+        redirect_instances
       end
 
       def start_instance
@@ -654,17 +684,14 @@ module OpenHAB
         ENV["KARAF_HOME"] = oh_runtime
         if private_confdir
           ENV["OPENHAB_CONF"] = "#{path}/conf"
-          FileUtils.mkdir_p([
-                              "#{path}/conf/items",
-                              "#{path}/conf/things",
-                              "#{path}/conf/scripts",
-                              "#{path}/conf/rules",
-                              "#{path}/conf/persistence",
-                              "#{path}/conf/sitemaps",
-                              "#{path}/conf/transform"
-                            ])
+          create_private_confdir
         end
         Shell.source_env_from("#{oh_runtime}/bin/setenv")
+      end
+
+      def create_private_confdir
+        directories = %w[items things scripts rules persistence sitemaps transform]
+        FileUtils.mkdir_p(directories.map { |directory| "#{path}/conf/#{directory}" })
       end
 
       def set_java_properties

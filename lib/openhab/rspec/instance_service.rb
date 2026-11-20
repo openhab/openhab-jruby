@@ -37,6 +37,17 @@ module OpenHAB
         @service = service
       end
 
+      # Refresh only the mutable configuration/data copied from userdata.
+      def refresh_configuration(location, clone_location)
+        self.class.isolate_clone(location, clone_location)
+        %w[jsondb persistence].each do |directory|
+          source = File.join(location, directory)
+          destination = File.join(clone_location, directory)
+          FileUtils.rm_rf(destination)
+          copy(source, destination, top_level: false, filter: false) if File.exist?(source)
+        end
+      end
+
       def clone_instance(name, clone_name, clone_location)
         raise ArgumentError, "Instance #{clone_name} already exists" if @service.get_instance(clone_name)
 
@@ -83,11 +94,11 @@ module OpenHAB
       private
 
       # Not Karaf: top_level is the userdata directory itself, whose entries have the skips above
-      def copy(source, destination, top_level: true)
+      def copy(source, destination, top_level: true, filter: true)
         name = File.basename(source)
         # ignore lock files, active txlog files and instance bundles cache
         # Not Karaf: but not the userdata directory itself, whatever it is called, or nothing would be cloned
-        return if !top_level && (IGNORED.match?(name) || BACKUP.match?(name))
+        return if filter && !top_level && (IGNORED.match?(name) || BACKUP.match?(name))
 
         if top_level
           # The userdata directory itself is not an entry to skip: without it there would be no clone. One that can be
@@ -109,10 +120,10 @@ module OpenHAB
           Dir.children(source).each do |child|
             # Karaf's test is "contains", and it is as loose as it looks: an entry at any depth with instances or lib
             # anywhere in its name is left out
-            next if child.include?("instances") || child.include?("lib")
+            next if filter && (child.include?("instances") || child.include?("lib"))
             next if top_level && (child.start_with?(".") || (UNCOPIED_USERDATA + EMPTY_USERDATA).include?(child))
 
-            copy(File.join(source, child), File.join(destination, child), top_level: false)
+            copy(File.join(source, child), File.join(destination, child), top_level: false, filter:)
           end
         else
           # Not FileUtils.copy_file, which keeps the mode: a read-only file would be a read-only file in the clone, and

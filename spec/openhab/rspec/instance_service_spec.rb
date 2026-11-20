@@ -27,6 +27,50 @@ RSpec.describe OpenHAB::RSpec::InstanceService do
     FileUtils.remove_entry(scratch)
   end
 
+  describe "#refresh_configuration" do
+    before { allow(described_class).to receive(:isolate_clone) }
+
+    it "replaces JSONDB and persistence, including stale files, while retaining the rest of the clone" do
+      write("#{root}/jsondb/items.json", "new items")
+      write("#{root}/jsondb/.hidden.json")
+      write("#{root}/jsondb/library.json")
+      write("#{root}/persistence/mapdb/items.db", "new data")
+      write("#{clone_path}/jsondb/stale.json")
+      write("#{clone_path}/persistence/old.db")
+      write("#{clone_path}/etc/custom.properties", "keep me")
+
+      instance_service.refresh_configuration(root, clone_path)
+
+      expect(clone_files).to eq %w[etc/custom.properties
+                                   jsondb/.hidden.json
+                                   jsondb/items.json
+                                   jsondb/library.json
+                                   persistence/mapdb/items.db]
+      expect(File.read("#{clone_path}/jsondb/items.json")).to eq "new items"
+      expect(File.read("#{clone_path}/persistence/mapdb/items.db")).to eq "new data"
+      expect(File.read("#{clone_path}/etc/custom.properties")).to eq "keep me"
+      expect(Dir.exist?("#{clone_path}/jsondb/tmp")).to be false
+      expect(described_class).to have_received(:isolate_clone).with(root, clone_path)
+    end
+
+    it "removes stale data when the source directories no longer exist" do
+      write("#{clone_path}/jsondb/stale.json")
+      write("#{clone_path}/persistence/old.db")
+
+      instance_service.refresh_configuration(root, clone_path)
+
+      expect(clone_files).to be_empty
+    end
+
+    it "leaves the clone untouched if isolation fails" do
+      write("#{clone_path}/jsondb/items.json", "keep me")
+      allow(described_class).to receive(:isolate_clone).and_raise(ArgumentError, "unsafe clone")
+
+      expect { instance_service.refresh_configuration(root, clone_path) }.to raise_error(ArgumentError, "unsafe clone")
+      expect(File.read("#{clone_path}/jsondb/items.json")).to eq "keep me"
+    end
+  end
+
   describe "#copy" do
     it "copies files, including nested hidden ones, and makes the target if it doesn't exist" do
       write("#{root}/etc/custom.properties")
