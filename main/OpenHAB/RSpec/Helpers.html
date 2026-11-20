@@ -4505,7 +4505,6 @@ The addon's bundle id is used as the identifier.</p>
       <pre class="lines">
 
 
-396
 397
 398
 399
@@ -4538,10 +4537,11 @@ The addon's bundle id is used as the identifier.</p>
 426
 427
 428
-429</pre>
+429
+430</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 396</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 397</span>
 
 <span class="keyword">def</span> <span class="function">install_addon</span>(addon_id, <span class="key">wait</span>: <span class="predefined-constant">true</span>, <span class="key">ready_markers</span>: <span class="predefined-constant">nil</span>)
   service_filter = <span class="string"><span class="delimiter">&quot;</span><span class="content">(component.name=org.openhab.core.karafaddons)</span><span class="delimiter">&quot;</span></span>
@@ -4838,7 +4838,8 @@ The addon's bundle id is used as the identifier.</p>
 355
 356
 357
-358</pre>
+358
+359</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 340</span>
@@ -4855,6 +4856,7 @@ The addon's bundle id is used as the identifier.</p>
       lib_dirs.any? { |l| f.start_with?(l) }
     <span class="keyword">end</span>
     files.sort_by { |f| [get_start_level(f), f] }.each <span class="keyword">do</span> |f|
+      logger.info { <span class="string"><span class="delimiter">&quot;</span><span class="content">(Re-)Loading script '</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">File</span>.expand_path(f)<span class="inline-delimiter">}</span></span><span class="content">'</span><span class="delimiter">&quot;</span></span> }
       load f
     <span class="keyword">rescue</span> <span class="constant">Exception</span> =&gt; e
       warn <span class="string"><span class="delimiter">&quot;</span><span class="content">Failed loading </span><span class="inline"><span class="inline-delimiter">#{</span>f<span class="inline-delimiter">}</span></span><span class="content">: </span><span class="inline"><span class="inline-delimiter">#{</span>e.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
@@ -4896,7 +4898,6 @@ recognized.</p>
       <pre class="lines">
 
 
-371
 372
 373
 374
@@ -4910,10 +4911,11 @@ recognized.</p>
 382
 383
 384
-385</pre>
+385
+386</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 371</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 372</span>
 
 <span class="keyword">def</span> <span class="function">load_transforms</span>
   transform_path = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>org.openhab.core.OpenHAB.config_folder<span class="inline-delimiter">}</span></span><span class="content">/transform</span><span class="delimiter">&quot;</span></span>
@@ -4977,12 +4979,12 @@ recognized.</p>
       <pre class="lines">
 
 
-432
 433
-434</pre>
+434
+435</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 432</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 433</span>
 
 <span class="keyword">def</span> <span class="function">log_file</span>
   <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>java.lang.System.get_property(<span class="string"><span class="delimiter">&quot;</span><span class="content">openhab.logdir</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">nil</span>)<span class="inline-delimiter">}</span></span><span class="content">/openhab.log</span><span class="delimiter">&quot;</span></span>
@@ -5045,7 +5047,6 @@ recognized.</p>
       <pre class="lines">
 
 
-445
 446
 447
 448
@@ -5063,10 +5064,11 @@ recognized.</p>
 460
 461
 462
-463</pre>
+463
+464</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 445</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 446</span>
 
 <span class="keyword">def</span> <span class="function">spec_log_lines</span>
   lines = []
@@ -5382,7 +5384,7 @@ will just sleep for <code>duration</code></p>
 </div>
 
         <footer>
-  Generated on Fri Nov 20 19:15:36 2026 by
+  Generated on Fri Nov 20 20:46:45 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.13).
 </footer>
