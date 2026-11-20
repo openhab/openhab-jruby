@@ -281,30 +281,7 @@ module OpenHAB
         rule_manager.class.field_accessor :started
         rule_manager.started = true unless rule_manager.started
 
-        begin
-          # load storage based type providers
-          ast = org.openhab.core.thing.binding.AbstractStorageBasedTypeProvider
-          ast_bundle = org.osgi.framework.FrameworkUtil.get_bundle(ast.java_class)
-          storage_service = OSGi.service("org.openhab.core.storage.StorageService")
-          require_relative "mocks/abstract_storage_based_type_provider_wrapped_storage_service"
-
-          OSGi.bundle_context.bundles.each do |bundle|
-            OSGi.service_component_classes(bundle)
-                .select { |klass, _services| klass.ancestors.include?(ast.java_class) }
-                .each do |klass, services|
-              new_ast_klass = Class.new(ast)
-              new_ast_klass.become_java!
-              wrapped_storage_service = Mocks::AbstractStorageBasedTypeProviderWrappedStorageService
-                                        .new(storage_service,
-                                             new_ast_klass.java_class,
-                                             klass)
-              new_ast = new_ast_klass.new(wrapped_storage_service)
-
-              services -= [klass.name]
-              OSGi.register_service(new_ast, *services, bundle: ast_bundle)
-            end
-          end
-        end
+        load_storage_based_type_providers
 
         # RSpec additions
         require_relative "suspend_rules"
@@ -319,6 +296,32 @@ module OpenHAB
         puts e.inspect
         puts e.backtrace
         raise
+      end
+
+      # @!visibility private
+      def load_storage_based_type_providers
+        ast = org.openhab.core.thing.binding.AbstractStorageBasedTypeProvider
+        ast_bundle = org.osgi.framework.FrameworkUtil.get_bundle(ast.java_class)
+        storage_service = OSGi.service("org.openhab.core.storage.StorageService")
+        require_relative "mocks/abstract_storage_based_type_provider_wrapped_storage_service"
+
+        OSGi.bundle_context.bundles.each do |bundle|
+          OSGi.service_component_classes(bundle)
+              .select { |klass, _services| klass.ancestors.include?(ast.java_class) }
+              .each do |klass, services|
+            new_ast_klass = Class.new(ast)
+            new_ast_klass.become_java!
+            wrapped_storage_service = Mocks::AbstractStorageBasedTypeProviderWrappedStorageService
+                                      .new(storage_service,
+                                           new_ast_klass.java_class,
+                                           klass)
+            new_ast = new_ast_klass.new(wrapped_storage_service)
+
+            # A binding may advertise services that the generic replacement does not implement.
+            services = services.select { |service| bundle.load_class(service).is_instance(new_ast) }
+            OSGi.register_service(new_ast, *services, bundle: ast_bundle)
+          end
+        end
       end
 
       #
