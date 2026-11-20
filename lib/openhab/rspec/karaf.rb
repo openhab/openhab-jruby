@@ -710,7 +710,7 @@ module OpenHAB
         InstanceService.isolate_clone(@root_userdata, path) unless use_root_instance
         cleanup_clone
         minimize_installed_features
-        filter_addons
+        filter_addons unless include_bindings
       end
 
       def cleanup_clone
