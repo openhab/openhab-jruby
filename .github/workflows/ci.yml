@@ -175,7 +175,11 @@ jobs:
         if: matrix.thermos
         run: |
           mkdir -p tmp/openhab/conf/services
-          echo "org.openhab.automation.jrubyscripting:bundle_gemfile=$GITHUB_WORKSPACE/Gemfile" >> tmp/openhab/conf/services/jruby.cfg
+          ruby -rrubygems -e '
+            puts "org.openhab.automation.jrubyscripting:bundle_gemfile=#{ENV.fetch("GITHUB_WORKSPACE")}/Gemfile"
+            puts "org.openhab.automation.jrubyscripting:gem_home=#{Gem.dir}"
+            puts "org.openhab.automation.jrubyscripting:check_update=false"
+          ' >> tmp/openhab/conf/services/jruby.cfg
       - name: RSpec
         env:
           DISABLE_THERMOS: ${{ matrix.thermos && '0' || '1' }}
