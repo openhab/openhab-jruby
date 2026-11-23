@@ -171,6 +171,11 @@ jobs:
           path: tmp/
           key: openHAB-setup-4-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.date || '' }}-java-${{ matrix.java_version }}
           fail-on-cache-miss: true
+      - name: Configure JRuby Scripting Gemfile
+        if: matrix.thermos
+        run: |
+          mkdir -p tmp/openhab/conf/services
+          echo "org.openhab.automation.jrubyscripting:bundle_gemfile=$GITHUB_WORKSPACE/Gemfile" >> tmp/openhab/conf/services/jruby.cfg
       - name: RSpec
         env:
           DISABLE_THERMOS: ${{ matrix.thermos && '0' || '1' }}
