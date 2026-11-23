@@ -17,6 +17,9 @@ module OpenHAB
       attr_reader :env
 
       def initialize(foreground: false, env: nil)
+        @runtime_mutex = Mutex.new
+        @clients = {}
+        @clients_mutex = Mutex.new
         @foreground = foreground
         @env = env || Env.new(log_file: (foreground && !ENV["THERMOS_SERVER_LOG"]) ? $stdout : nil)
         @pidfile = @env.pidfile_path.open("a")
@@ -47,12 +50,19 @@ module OpenHAB
         FileUtils.rm_f(env.socket_path)
         @server = UNIXServer.open(env.socket_name)
         log "started on #{env.socket_name}"
-        loop { serve(@server.accept) }
+        loop do
+          Thread.new(@server.accept) { |client| serve(client) }
+        end
       rescue Interrupt
         nil
       end
 
       def serve(client)
+        @clients_mutex.synchronize do
+          return if @stopping
+
+          @clients[Thread.current] = client
+        end
         client.puts env.version
         runtime_client = client.recv_io(UNIXSocket)
         request = JSON.parse(client.read(client.gets.to_i))
@@ -60,20 +70,31 @@ module OpenHAB
         return unless Thermos.command?(args.first)
 
         client.puts
-        if @runtime && (@runtime.spawn_env != spawn_env || @reset_env != reset_env)
-          @runtime.stop
-          @runtime = nil
+        @runtime_mutex.synchronize do
+          return if @stopping
+
+          if @runtime && (@runtime.spawn_env != spawn_env || @reset_env != reset_env)
+            @runtime.stop
+            @runtime = nil
+          end
+          @reset_env = reset_env
+          @runtime ||= RuntimeManager.new(spawn_env || {}, env)
+          @runtime.run(runtime_client)
         end
-        @reset_env = reset_env
-        @runtime ||= RuntimeManager.new(spawn_env || {}, env)
-        @runtime.run(runtime_client)
       rescue Errno::EPIPE, Errno::ECONNRESET
         log "client disconnected"
       rescue => e
         log e.full_message
       ensure
         runtime_client&.close unless runtime_client&.closed?
+        close_client(client)
+        @clients_mutex.synchronize { @clients.delete(Thread.current) }
+      end
+
+      def close_client(client)
         client.close
+      rescue IOError
+        nil
       end
 
       def write_pidfile
@@ -90,6 +111,16 @@ module OpenHAB
         return unless @owns_pidfile
 
         begin
+          @server&.close
+          clients = @clients_mutex.synchronize do
+            @stopping = true
+            @clients.dup
+          end
+          clients.each do |thread, client|
+            thread.kill
+            close_client(client)
+          end
+          clients.each_key(&:join)
           @runtime&.stop
         ensure
           @server&.close

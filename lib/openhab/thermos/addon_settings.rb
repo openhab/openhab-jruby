@@ -5,9 +5,11 @@
 
 module OpenHAB
   module Thermos
-    # Reads ConfigAdmin's persisted addon settings before OSGi is running.
+    # Reads persisted and file-based addon settings before OSGi is running.
     # @!visibility private
     class AddonSettings
+      PID = "org.openhab.automation.jrubyscripting"
+
       def gem_home
         config = ENV.fetch("OPENHAB_CONF", "/etc/openhab")
         template = properties["gem_home"] || File.join(config, "automation/ruby/.gem/{RUBY_ENGINE_VERSION}")
@@ -20,6 +22,46 @@ module OpenHAB
       private
 
       def properties
+        result = persisted_properties.to_h
+        config = ENV.fetch("OPENHAB_CONF", "/etc/openhab")
+        files = Dir.glob(File.join(config, "services/*.cfg")).select { |path| File.file?(path) }
+        exclusive = false
+        files.sort_by { |path| [File.mtime(path), path] }.each do |path|
+          exclusive = apply_file(path, result, exclusive)
+        end
+        result
+      end
+
+      # ConfigDispatcher applies files oldest first and overlays their values on ConfigAdmin.
+      def apply_file(path, result, exclusive)
+        lines = File.readlines(path, encoding: "UTF-8")
+        exclusive_pid = lines.first&.match(/\Apid:\s*(.+?)\s*$/)&.captures&.first
+        return exclusive if exclusive && exclusive_pid != PID
+
+        pid = exclusive_pid || File.basename(path, ".cfg")
+        pid = "org.openhab.#{pid}" unless pid.include?(".")
+        values = result.dup
+        values.clear if exclusive_pid == PID
+        lines.each do |line|
+          line = line.strip
+          next if line.empty? || line.start_with?("#", "pid:")
+
+          key, separator, value = line.partition("=")
+          next if separator.empty?
+
+          if key.include?(":")
+            pid, key = key.split(":", 2).map(&:strip)
+            pid = "org.openhab.#{pid}" unless pid.include?(".")
+          end
+          return exclusive if exclusive_pid && pid != exclusive_pid
+
+          values[key.strip] = value.strip if pid == PID
+        end
+        result.replace(values)
+        exclusive || exclusive_pid == PID
+      end
+
+      def persisted_properties
         userdata = ENV.fetch("OPENHAB_USERDATA", "/var/lib/openhab")
         path = File.join(userdata, "config/org/openhab/automation/jrubyscripting.config")
         return {} unless File.file?(path)

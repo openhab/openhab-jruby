@@ -125,10 +125,10 @@ Thermos locates the JRuby embedded in the jrubyscripting addon and launches it
 using `$JAVA_HOME/bin/java` (or `java` on `$PATH`). If no addon
 is found, start the server with an installed JRuby instead. The embedded launcher
 clears CRuby gem paths and startup options. It reads `gem_home` from the addon’s persisted
-settings in `$OPENHAB_USERDATA/config/org/openhab/automation/jrubyscripting.config`,
-expanding the addon’s Ruby version placeholders. When unset, the addon default is
-`$OPENHAB_CONF/automation/ruby/.gem/<JRuby version>`. An explicitly empty setting
-leaves JRuby’s default gem paths in use.
+settings in `$OPENHAB_USERDATA/config/org/openhab/automation/jrubyscripting.config`
+and `$OPENHAB_CONF/services/*.cfg` expanding the addon’s Ruby version placeholders.
+When unset, the addon default is `$OPENHAB_CONF/automation/ruby/.gem/<JRuby version>`.
+An explicitly empty setting leaves JRuby’s default gem paths in use.
 
 `thermos server` starts the server in the foreground; add `--background`
 to start it without running a command.

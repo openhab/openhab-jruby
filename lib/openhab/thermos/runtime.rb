@@ -45,7 +45,7 @@ module OpenHAB
       def prepare_engine_factory
         return if @factory
 
-        OpenHAB::RSpec::Helpers.install_addon("automation-jrubyscripting")
+        OpenHAB::RSpec::Helpers.install_addon("automation-jrubyscripting", wait: false)
         filter = OpenHAB::OSGi.bundle_context.create_filter(
           "(&(objectClass=org.openhab.core.automation.module.script.ScriptEngineFactory)" \
           "(service.pid=org.openhab.automation.jrubyscripting))"
