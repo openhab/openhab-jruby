@@ -135,8 +135,12 @@ jobs:
     needs: [openhab-snapshot-date, openhab-setup]
     runs-on: ubuntu-24.04
     if: "!contains(github.event.head_commit.message, 'ci skip')"
+    env:
+      THERMOS_TMP_PATH: ${{ github.workspace }}/tmp/thermos
     strategy:
       matrix:
+        openhab_version: [5.0.3, 5.1.4, 5.2.4, 5.3.0-SNAPSHOT]
+        thermos: [false, true]
         include:
           - java_version: 21
             jruby_version: jruby-10.0.0.1
@@ -168,20 +172,43 @@ jobs:
           key: openHAB-setup-4-${{ matrix.openhab_version }}${{ endsWith(matrix.openhab_version, 'SNAPSHOT') && needs.openhab-snapshot-date.outputs.date || '' }}-java-${{ matrix.java_version }}
           fail-on-cache-miss: true
       - name: RSpec
+        env:
+          DISABLE_THERMOS: ${{ matrix.thermos && '0' || '1' }}
         run: bin/rspec --format progress --format html --out rspec.html
         timeout-minutes: 6
+      - name: Read JRuby Ruby compatibility version
+        if: matrix.thermos
+        id: ruby-compatibility
+        run: ruby -e 'puts "version=#{RUBY_VERSION}"' >> "$GITHUB_OUTPUT"
+      - name: Setup CRuby
+        if: matrix.thermos
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ steps.ruby-compatibility.outputs.version }}
+          bundler-cache: true
+      - name: CRuby standalone specs
+        if: matrix.thermos
+        env:
+          DISABLE_THERMOS: '1'
+        run: bin/rake spec:standalone
+        timeout-minutes: 2
+      - name: Stop Thermos
+        if: always() && matrix.thermos
+        run: bin/thermos stop
       - name: Upload openHAB Logs
         uses: actions/upload-artifact@v6
         if: failure()
         with:
-          name: RSpec-logs-${{ matrix.openhab_version }}-${{ matrix.jruby_version }}-java-${{ matrix.java_version }}
-          path: tmp/openhab/userdata/logs
+          name: RSpec-logs-${{ matrix.openhab_version }}-${{ matrix.jruby_version }}-java-${{ matrix.java_version }}-thermos-${{ matrix.thermos }}
+          path: |
+            tmp/openhab/userdata/logs
+            tmp/thermos
           retention-days: 2
       - name: Upload RSpec results
         uses: actions/upload-artifact@v6
         if: success() || failure()
         with:
-          name: RSpec-results-openHAB-${{ matrix.openhab_version }}-jruby-${{ matrix.jruby_version }}-java-${{ matrix.java_version }}
+          name: RSpec-results-openHAB-${{ matrix.openhab_version }}-jruby-${{ matrix.jruby_version }}-java-${{ matrix.java_version }}-thermos-${{ matrix.thermos }}
           path: rspec.html
 
   cucumber:

@@ -18,7 +18,9 @@ module OpenHAB
       def add_script(modules, script)
         full_name = modules.join("/")
         name = modules.pop
-        (@scripts ||= {})[full_name] = engine_factory.script_engine.compile(script)
+        engine = engine_factory.script_engine
+        (@scripts ||= {})[full_name] = [engine, script]
+        Core::ScriptHandlingCallbacks.script_unloaded_hooks[0] << proc { engine.close }
 
         mod = modules.inject(self) { |m, n| m.const_get(n, false) }
         mod.singleton_class.define_method(name) do |input, **kwargs|
@@ -33,12 +35,14 @@ module OpenHAB
       end
 
       def transform(name, input, kwargs)
-        script = @scripts[name]
-        ctx = script.engine.context
+        engine, source, script = @scripts.fetch(name)
+        ctx = engine.context
         ctx.set_attribute("input", input.to_s, javax.script.ScriptContext::ENGINE_SCOPE)
         kwargs.each do |(k, v)|
           ctx.set_attribute(k.to_s, v.to_s, javax.script.ScriptContext::ENGINE_SCOPE)
         end
+        # Parse after input and parameters have been injected as local variables.
+        script ||= @scripts[name][2] = engine.compile(source)
         script.eval
       end
     end
@@ -236,6 +240,8 @@ module OpenHAB
                        include_jsondb: true,
                        private_confdir: false,
                        use_root_instance: false)
+        return attach_runtime if defined?(OpenHAB::Thermos.context) && OpenHAB::Thermos.context
+
         karaf = Karaf.new("#{Dir.pwd}/.karaf")
         karaf.include_bindings = include_bindings
         karaf.include_jsondb = include_jsondb
@@ -262,22 +268,7 @@ module OpenHAB
 
         raise "$ir was not populated by the default script scope before loading openhab/dsl" unless ir
 
-        require "openhab/dsl"
-
-        require_relative "mocks/persistence_service"
-        require_relative "mocks/timer"
-
-        # override several DSL methods
-        require_relative "openhab/core/items/proxy"
-        require_relative "openhab/core/things/proxy"
-        require_relative "openhab/core/actions"
-
-        ps = Mocks::PersistenceService.instance
-        persistence_bundle = org.osgi.framework.FrameworkUtil
-                                .get_bundle(org.openhab.core.persistence.PersistenceService.java_class)
-        persistence_bundle.bundle_context.register_service(org.openhab.core.persistence.PersistenceService.java_class,
-                                                           ps,
-                                                           nil)
+        prepare_runtime
 
         rs = OSGi.service("org.openhab.core.service.ReadyService")
 
@@ -316,6 +307,60 @@ module OpenHAB
         puts e.inspect
         puts e.backtrace
         raise
+      end
+
+      # @!visibility private
+      def attach_runtime
+        require "openhab/osgi"
+        OSGi.instance_variable_set(:@bundle, OpenHAB::Thermos.context.fetch("framework"))
+        OSGi.instance_variable_set(:@bundle_context, OpenHAB::Thermos.context.fetch("framework").bundle_context)
+        require_relative "jruby"
+        OSGi.bundle_context.bundles.each do |bundle|
+          next if bundle.bundle_id.zero? || bundle.symbolic_name == "org.apache.aries.javax.jax.rs-api"
+          next unless [org.osgi.framework.Bundle::ACTIVE, org.osgi.framework.Bundle::RESOLVED].include?(bundle.state)
+
+          ::JRuby.runtime.instance_config.add_loader(JRuby::OSGiBundleClassLoader.new(bundle, isolated: true))
+        end
+        prepare_runtime
+        require_relative "mocks/cron_scheduler"
+        timer_factory = OSGi.service(
+          "org.openhab.core.automation.handler.ModuleHandlerFactory",
+          filter: "(component.name=org.openhab.core.automation.internal.module.handler.TimerModuleHandlerFactory)"
+        )
+        field = timer_factory.class.java_class.declared_field(:scheduler)
+        field.accessible = true
+        field.set(timer_factory, Mocks::CronScheduler.new(OpenHAB::Thermos.context.fetch("scheduler")))
+        Core::ScriptHandlingCallbacks.script_unloaded_hooks[1000] << proc do
+          Mocks::CronScheduler.schedules.to_a.each { |schedule| schedule.cancel(true) }
+        end
+        require_relative "suspend_rules"
+        ::RSpec.configure { |config| config.include OpenHAB::DSL }
+      end
+
+      # @!visibility private
+      def prepare_runtime
+        require "openhab/dsl"
+
+        require_relative "mocks/persistence_service"
+        require_relative "mocks/timer"
+
+        # override several DSL methods
+        require_relative "openhab/core/items/proxy"
+        require_relative "openhab/core/things/proxy"
+        require_relative "openhab/core/actions"
+
+        ps = Mocks::PersistenceService.instance
+        persistence_bundle = org.osgi.framework.FrameworkUtil
+                                .get_bundle(org.openhab.core.persistence.PersistenceService.java_class)
+        properties = java.util.Hashtable.new
+        attached = defined?(OpenHAB::Thermos.context) && OpenHAB::Thermos.context
+        properties.put(org.osgi.framework.Constants::SERVICE_RANKING, 100.to_java(:int)) if attached
+        registration = persistence_bundle.bundle_context.register_service(
+          org.openhab.core.persistence.PersistenceService.java_class, ps, properties
+        )
+        return unless attached
+
+        Core::ScriptHandlingCallbacks.script_unloaded_hooks[0] << proc { registration.unregister }
       end
 
       # @!visibility private

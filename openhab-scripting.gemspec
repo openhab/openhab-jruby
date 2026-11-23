@@ -5,7 +5,7 @@ require_relative "lib/openhab/dsl/version"
 Gem::Specification.new do |spec|
   spec.name          = "openhab-scripting"
   spec.version       = OpenHAB::DSL::VERSION
-  spec.licenses      = ["EPL-2.0"]
+  spec.licenses      = ["EPL-2.0", "MIT"]
   spec.authors       = ["Brian O'Connell", "Cody Cutrer", "Jimmy Tanagra"]
   spec.email         = ["broconne+github@gmail.com", "cody@cutrer.us", "jcode@tanagra.id.au"]
 
@@ -28,6 +28,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "method_source", "~> 1.0"
   spec.add_dependency "openhab", ">= 5.0.0", "< 5.4"
 
-  spec.files = Dir["{lib}/**/*"] - ["lib/bundler-openhab-stub.rb"]
+  spec.files = Dir["{exe,lib}/**/*"] - ["lib/bundler-openhab-stub.rb"]
+  spec.bindir = "exe"
+  spec.executables = ["thermos"]
   spec.require_paths = ["lib"]
 end

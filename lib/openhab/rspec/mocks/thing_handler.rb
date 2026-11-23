@@ -3,6 +3,7 @@
 # rubocop:disable Naming/AccessorMethodName
 
 require "singleton"
+require "jruby/core_ext/class"
 
 module OpenHAB
   module RSpec
@@ -10,19 +11,22 @@ module OpenHAB
       class ThingHandler
         include org.openhab.core.thing.binding.BridgeHandler
 
-        attr_reader :thing, :callback
+        attr_reader :thing
 
-        def initialize(thing = nil)
-          # have to handle the interface method
-          if thing.nil?
-            status_info = org.openhab.core.thing.binding.builder.ThingStatusInfoBuilder
-                             .create(org.openhab.core.thing.ThingStatus::ONLINE).build
-            @callback.status_updated(self.thing, status_info)
-            return
-          end
+        # These helpers must also be visible to script engines in other Ruby runtimes.
+        java_signature "org.openhab.core.thing.binding.ThingHandlerCallback callback()"
+        def callback # rubocop:disable Style/TrivialAccessors
+          @callback
+        end
 
-          # ruby initializer here
+        def initialize(thing)
           @thing = thing
+        end
+
+        def initialize_handler
+          status_info = org.openhab.core.thing.binding.builder.ThingStatusInfoBuilder
+                           .create(org.openhab.core.thing.ThingStatus::ONLINE).build
+          @callback.status_updated(thing, status_info)
         end
 
         def thing_updated(thing)
@@ -37,6 +41,7 @@ module OpenHAB
           callback&.state_updated(channel_uid, command) if command.is_a?(Core::Types::State)
         end
 
+        java_signature "void send_time_series(org.openhab.core.thing.ChannelUID, org.openhab.core.types.TimeSeries)"
         def send_time_series(channel_uid, time_series)
           @callback&.send_time_series(channel_uid, time_series)
         end
@@ -52,6 +57,19 @@ module OpenHAB
         def channel_unlinked(_channel_uid); end
 
         def dispose; end
+
+        # Reification exports the helpers above as well as the complete Java interface.
+        alias_method :getThing, :thing
+        alias_method :setCallback, :set_callback
+        alias_method :thingUpdated, :thing_updated
+        alias_method :handleCommand, :handle_command
+        alias_method :channelLinked, :channel_linked
+        alias_method :channelUnlinked, :channel_unlinked
+        alias_method :childHandlerInitialized, :child_handler_initialized
+        alias_method :childHandlerDisposed, :child_handler_disposed
+        java_signature "void initialize()"
+        configure_java_class includes: [:initialize], proxy_dispatches: { initialize: :initialize_handler }
+        become_java!
       end
 
       class ThingHandlerFactory < org.openhab.core.thing.binding.BaseThingHandlerFactory

@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 Bundler::Plugin.add_hook(Bundler::Plugin::Events::GEM_BEFORE_EVAL) do |gemfile, _lockfile|
-  # We're already running inside of openHAB; do nothing
-  next if defined?(org.openhab.core.OpenHAB.version)
-
-  # We're running from inside of the openhab-scripting repository
+  # The repository shares a fixed lockfile across openHAB versions, including
+  # when its specs run inside an addon-created ScriptEngine.
   version = "5.0.3" if File.exist?(File.join(File.dirname(gemfile), "openhab-scripting.gemspec"))
+
+  # For user projects, the addon already supplies the actual openHAB gem.
+  next if !version && defined?(org.openhab.core.OpenHAB.version)
 
   version ||= ENV["OPENHAB_VERSION"]&.tr("-", ".")
 

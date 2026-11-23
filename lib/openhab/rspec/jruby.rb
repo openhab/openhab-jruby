@@ -10,8 +10,9 @@ module OpenHAB
       class OSGiBundleClassLoader
         include org.jruby.util.Loader
 
-        def initialize(bundle)
+        def initialize(bundle, isolated: false)
           @bundle = bundle
+          @isolated = isolated
         end
 
         def get_resource(path)
@@ -23,6 +24,11 @@ module OpenHAB
         end
 
         def load_class(name)
+          # Bundle boot delegation can otherwise return classes from the launcher's JRuby.
+          if @isolated && name.start_with?("org.jruby.", "org.jcodings.", "org.joni.")
+            raise java.lang.ClassNotFoundException.new(name) # rubocop:disable Style/RaiseArgs
+          end
+
           @bundle.load_class(name)
         end
 
