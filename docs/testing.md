@@ -132,6 +132,15 @@ end
   files in the test runtime, while the other production rules still load. Once the
   tests pass, copy the updated files to the production install.
 
+- Skip automatic loading of specific files or directories by setting
+  `config.openhab_automation_exclude_paths = ["lighting.rb", "experimental"]`.
+  Paths are relative to the automation search paths; excluding a directory skips
+  all files beneath it across all search paths.
+- Use `load_rule("experimental/lighting.rb")` in a spec or hook to explicitly load
+  a rule, including an excluded rule. Include the `.rb` extension and use a path
+  relative to an automation search path. `load_rule` is idempotent, so you don't
+  have to worry about if a file has already been loaded before calling it.
+
 - See {OpenHAB::RSpec::Helpers} for all helper methods available in specs.
 - All items are reset to {NULL} before each spec.
 - `on_load` triggers are _not_ honored. Items will be reset to {NULL} before

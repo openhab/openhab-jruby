@@ -368,14 +368,44 @@ module OpenHAB
               files[file.delete_prefix(prefix)] = file
             end
           end
+          excluded = Array(::RSpec.configuration.openhab_automation_exclude_paths)
+          files.reject! do |relative, _file|
+            excluded.any? do |path|
+              path = path.to_s.delete_suffix("/")
+              relative == path || relative.start_with?("#{path}/")
+            end
+          end
           files.values.sort_by { |f| [get_start_level(f), f] }.each do |f|
-            logger.info { "(Re-)Loading script '#{File.expand_path(f)}'" }
-            load f
+            load_rule_file(f)
           rescue Exception => e
             warn "Failed loading #{f}: #{e.inspect}"
             warn e.backtrace
           end
         end
+      end
+
+      #
+      # Load a rule once, using a path relative to an automation search path.
+      # Later search paths take precedence, just as with {#load_rules}.
+      # Explicit loading ignores `openhab_automation_exclude_paths`.
+      #
+      # @param [String] path relative filename, including the .rb extension
+      # @return [true, false] whether the file was loaded
+      # @raise [ArgumentError] if the path is absolute or escapes a search path
+      # @raise [LoadError] if the file cannot be found
+      #
+      def load_rule(path)
+        path = path.to_s
+        if path.empty? || path.start_with?("/") || path.split("/").include?("..")
+          raise ArgumentError, "Expected a path relative to an automation search path"
+        end
+
+        paths = Array(::RSpec.configuration.openhab_automation_search_paths)
+        files = paths.reverse.map { |base| File.join(base, path) }
+        file = files.find { |candidate| File.file?(candidate) }
+        raise LoadError, "Cannot find rule #{path.inspect} in automation search paths" unless file
+
+        SuspendRules.suspend_rules { load_rule_file(file) }
       end
 
       #
@@ -484,6 +514,17 @@ module OpenHAB
       end
 
       private
+
+      def load_rule_file(file)
+        loaded = Helpers.instance_variable_get(:@loaded_rule_files) ||
+                 Helpers.instance_variable_set(:@loaded_rule_files, {})
+        key = File.expand_path(file)
+        return false if loaded[key]
+
+        logger.info { "Loading script '#{key}'" }
+        load file
+        loaded[key] = true
+      end
 
       def jrubyscripting_config
         ca = OSGi.service("org.osgi.service.cm.ConfigurationAdmin")
