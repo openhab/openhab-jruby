@@ -7,8 +7,8 @@ module OpenHAB
   module Thermos
     module Commands
       class Console
-        # IRB normally reopens the descriptors, creating additional owners of the
-        # server's streams. Reuse the engine's non-owning views instead.
+        # IRB normally reopens the descriptors. Reuse the engine's IO objects
+        # instead of creating multiple owners of each descriptor.
         module StdioInputMethod
           def initialize
             @line_no = 0

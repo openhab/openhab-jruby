@@ -46,10 +46,13 @@ module OpenHAB
         return if @factory
 
         OpenHAB::RSpec::Helpers.install_addon("automation-jrubyscripting")
-        @factory = OpenHAB::OSGi.service(
-          "org.openhab.core.automation.module.script.ScriptEngineFactory",
-          filter: "(service.pid=org.openhab.automation.jrubyscripting)"
+        filter = OpenHAB::OSGi.bundle_context.create_filter(
+          "(&(objectClass=org.openhab.core.automation.module.script.ScriptEngineFactory)" \
+          "(service.pid=org.openhab.automation.jrubyscripting))"
         )
+        @factory_tracker = org.osgi.util.tracker.ServiceTracker.new(OpenHAB::OSGi.bundle_context, filter, nil)
+        @factory_tracker.open
+        @factory = @factory_tracker.wait_for_service(Thermos.boot_timeout * 1000)
         raise "JRuby Scripting engine factory is unavailable" unless @factory
       end
 
@@ -72,6 +75,7 @@ module OpenHAB
           serve(manager.recv_io(UNIXSocket))
         end
       ensure
+        @factory_tracker&.close
         manager.close
         @interrupt.each(&:close)
       end
@@ -171,6 +175,8 @@ module OpenHAB
           "tty" => request.fetch("tty", false)
         )
         @context = context
+        completed = java.util.concurrent.atomic.AtomicBoolean.new(false)
+        client.nonblock = true
         control = Thread.new do
           while (signal = client.gets)
             next unless %w[INT QUIT TERM].include?(signal.chomp)
@@ -180,6 +186,11 @@ module OpenHAB
           end
         rescue IOError, SystemCallError
           nil
+        ensure
+          unless completed.get
+            context.put("signal", "TERM")
+            context.get("interrupt")&.run
+          end
         end
         runner = File.expand_path("runner.rb", __dir__)
         engine.context.set_attribute(javax.script.ScriptEngine::FILENAME, runner, javax.script.ScriptContext::ENGINE_SCOPE)
@@ -189,6 +200,7 @@ module OpenHAB
         end
         context.get("status").to_i
       ensure
+        completed&.set(true)
         control&.kill
         @context = nil
         scheduler_field.set(timer_factory, previous_scheduler) if previous_scheduler
@@ -209,7 +221,7 @@ module OpenHAB
       def terminate
         @terminating = true
         @context&.put("signal", "TERM")
-        @context&.get("interrupt")&.run
+        @context&.get("interrupt")&.run if @context && @context.get("status").nil?
         @interrupt.last.write(".")
       rescue IOError, SystemCallError
         nil

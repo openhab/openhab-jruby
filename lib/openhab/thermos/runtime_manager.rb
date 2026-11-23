@@ -3,6 +3,8 @@
 # SPDX-License-Identifier: MIT
 # Derived from Spring; see lib/openhab/thermos/LICENSE and NOTICE.md.
 
+require "io/nonblock"
+
 module OpenHAB
   module Thermos
     # Owns one runtime process; individual commands use ScriptEngines in that process.
@@ -84,6 +86,8 @@ module OpenHAB
         end
 
         @child = listener.accept
+        # Keep Ruby-level reads interruptible while waiting for a running command.
+        @child.nonblock = true
         raise "Runtime failed to start" unless child.gets
       ensure
         listener&.close

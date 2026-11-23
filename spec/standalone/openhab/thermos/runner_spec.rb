@@ -4,6 +4,7 @@ if RUBY_ENGINE == "jruby"
   require "java"
   require "tmpdir"
   require "timeout"
+  require "io/nonblock"
 
   RSpec.describe "Thermos runner IO" do
     it "reads a line before EOF and leaves the original descriptors open after engine shutdown" do
@@ -17,6 +18,7 @@ if RUBY_ENGINE == "jruby"
 
         input.last.write("still open\n")
         expect(input.first.gets).to eq "still open\n"
+        expect(input.first.nonblock?).to be false
         output.last.write("still writable\n")
         expect(output.first.gets).to eq "still writable\n"
       end
@@ -37,7 +39,16 @@ if RUBY_ENGINE == "jruby"
       end
     end
 
-    def with_runner(code)
+    it "cancels a request disconnected before the command starts and restores stdin flags" do
+      with_runner('raise "command must not run"', signal: "TERM") do |_close_engine, context, worker, input|
+        expect(worker.join(5)).not_to be_nil
+        worker.value
+        expect(context.get("status")).to eq 143
+        expect(input.first.nonblock?).to be false
+      end
+    end
+
+    def with_runner(code, signal: nil)
       Dir.mktmpdir("thermos-runner") do |directory|
         gemfile = File.join(directory, "Gemfile")
         File.write(gemfile, "")
@@ -58,6 +69,7 @@ if RUBY_ENGINE == "jruby"
           "command" => "io-probe",
           "tty" => false
         )
+        context.put("signal", signal) if signal
         scope_property = "org.jruby.embed.localcontext.scope"
         previous_scope = java.lang.System.get_property(scope_property)
         java.lang.System.set_property(scope_property, "singlethread")
