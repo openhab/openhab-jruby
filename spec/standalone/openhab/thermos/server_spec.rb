@@ -40,6 +40,7 @@ RSpec.describe OpenHAB::Thermos::Server do
       "BUNDLE_GEMFILE" => File.join(directory, "Gemfile"),
       "THERMOS_TMP_PATH" => directory,
       "RUBYOPT" => nil,
+      "BUNDLER_SETUP" => nil,
       "BUNDLE_LOCKFILE" => nil
     }
     command = [RbConfig.ruby, "-I", lib, "-e", script]

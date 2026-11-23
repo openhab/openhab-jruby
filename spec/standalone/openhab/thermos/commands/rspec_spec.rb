@@ -40,6 +40,6 @@ RSpec.describe "RSpec command setup" do
     RUBY
     lib = File.expand_path("../../../../../lib", __dir__)
     command = [RbConfig.ruby, "-I", lib, "-e", script]
-    Open3.capture3({ "SPEC_OPTS" => nil, "RUBYOPT" => nil }, *command, chdir: directory)
+    Open3.capture3({ "SPEC_OPTS" => nil, "RUBYOPT" => nil, "BUNDLER_SETUP" => nil }, *command, chdir: directory)
   end
 end

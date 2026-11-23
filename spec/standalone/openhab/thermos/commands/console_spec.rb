@@ -15,7 +15,11 @@ RSpec.describe OpenHAB::Thermos::Commands::Console do
     expect(command.binstub_name).to eq "bin/console"
   end
 
-  it "runs IRB using the provided streams without reopening their descriptors" do
+  it "runs IRB using the provided streams without reopening descriptors or inheriting Ruby startup hooks" do
+    previous_rubyopt = ENV["RUBYOPT"]
+    previous_bundler_setup = ENV["BUNDLER_SETUP"]
+    ENV["RUBYOPT"] = "-rthermos_unexpected_bootstrap"
+    ENV["BUNDLER_SETUP"] = "/thermos_unexpected_bootstrap.rb"
     script = <<~RUBY
       require "openhab/thermos/commands"
       require "irb"
@@ -37,17 +41,24 @@ RSpec.describe OpenHAB::Thermos::Commands::Console do
       OpenHAB::Thermos.register_command("rspec", bootstrap)
       OpenHAB::Thermos.context = {}
       ARGV.replace(%w[-f --simple-prompt --noreadline])
-      def IO.open(*)
-        raise "IRB reopened a borrowed descriptor"
+      original_open = IO.method(:open)
+      IO.define_singleton_method(:open) do |descriptor, *args, **kwargs, &block|
+        if [STDIN.fileno, STDOUT.fileno, STDERR.fileno].include?(descriptor)
+          raise "IRB reopened a borrowed descriptor"
+        end
+        original_open.call(descriptor, *args, **kwargs, &block)
       end
       OpenHAB::Thermos::Commands::Console.new.call
     RUBY
     lib = File.expand_path("../../../../../lib", __dir__)
     command = [RbConfig.ruby, "-I", lib, "-e", script]
     input = "puts :THERMOS_CONSOLE_INPUT_OK\nexit\n"
-    output, error, status = Open3.capture3(*command, stdin_data: input)
+    output, error, status = Open3.capture3({ "RUBYOPT" => nil, "BUNDLER_SETUP" => nil }, *command, stdin_data: input)
     expect(status.success?).to be(true), error
     expect(output).to include("THERMOS_CONSOLE_INPUT_OK")
+  ensure
+    ENV["RUBYOPT"] = previous_rubyopt
+    ENV["BUNDLER_SETUP"] = previous_bundler_setup
   end
 
   it "shares the RSpec command's cached runtime setup" do

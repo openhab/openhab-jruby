@@ -22,7 +22,11 @@ RSpec.describe OpenHAB::Thermos::Launcher do
   it "removes CRuby gem paths and startup hooks from the server environment" do
     stub_const("RUBY_ENGINE", "ruby")
     environment = described_class.new(directory).environment
-    expect(environment).to include("GEM_HOME" => nil, "GEM_PATH" => nil, "RUBYOPT" => nil, "RUBYLIB" => nil)
+    expect(environment).to include("GEM_HOME" => nil,
+                                   "GEM_PATH" => nil,
+                                   "RUBYOPT" => nil,
+                                   "RUBYLIB" => nil,
+                                   "BUNDLER_SETUP" => nil)
     expect(environment).not_to have_key("OPENHAB_RUNTIME")
   end
 

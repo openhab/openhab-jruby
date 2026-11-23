@@ -22,18 +22,18 @@ RSpec.describe OpenHAB::Thermos::Client::Binstub do
     FileUtils.mkdir_p("bin")
     original = "#!/usr/bin/env ruby\n# frozen_string_literal: true\nputs ARGV.inspect\n"
     File.write("bin/rspec", original)
-    described_class.call(%w[binstub rspec])
+    expect { described_class.call(%w[binstub rspec]) }.to output("* bin/rspec: thermos inserted\n").to_stdout
     enabled = File.read("bin/rspec")
     expect(enabled.sub(described_class::LOADER, "")).to eq original
     expect(File.read("bin/thermos")).to eq described_class::LAUNCHER
     expect(File.executable?("bin/thermos")).to be true
     expect(described_class::LAUNCHER).not_to include('require "bundler/setup"', '"spring"')
-    described_class.call(%w[binstub rspec])
+    expect { described_class.call(%w[binstub rspec]) }.to output("* bin/rspec: thermos already present\n").to_stdout
     expect(File.read("bin/rspec")).to eq enabled
   end
 
   it "generates a missing registered executable" do
-    described_class.call(%w[binstub rspec])
+    expect { described_class.call(%w[binstub rspec]) }.to output("* bin/rspec: generated with thermos\n").to_stdout
     expect(File.read("bin/rspec")).to include('load Gem.bin_path("rspec-core", "rspec")')
   end
 
@@ -41,10 +41,18 @@ RSpec.describe OpenHAB::Thermos::Client::Binstub do
     OpenHAB::Thermos.register_command("custom")
     FileUtils.mkdir_p("bin")
     File.write("bin/custom", "#!/usr/bin/env ruby\nputs :custom\n")
-    described_class.call(["binstub", "--all"])
+    expect { described_class.call(["binstub", "--all"]) }.to output(<<~TEXT).to_stdout
+      * bin/rspec: generated with thermos
+      * bin/console: generated with thermos
+      * bin/custom: thermos inserted
+    TEXT
     expect(File.read("bin/rspec")).to include(described_class::LOADER)
     expect(File.read("bin/custom")).to include(described_class::LOADER)
-    described_class.call(["binstub", "--remove", "--all"])
+    expect { described_class.call(["binstub", "--remove", "--all"]) }.to output(<<~TEXT).to_stdout
+      * bin/rspec: thermos removed
+      * bin/console: thermos removed
+      * bin/custom: thermos removed
+    TEXT
     expect(File.exist?("bin/thermos")).to be false
     expect(File.read("bin/custom")).to eq "#!/usr/bin/env ruby\nputs :custom\n"
   end
@@ -56,7 +64,10 @@ RSpec.describe OpenHAB::Thermos::Client::Binstub do
   end
 
   it "rejects unknown commands before writing files" do
-    expect { described_class.call(["binstub", "../rspec"]) }.to raise_error(SystemExit)
+    expect do
+      expect { described_class.call(["binstub", "../rspec"]) }
+        .to raise_error(SystemExit) { |error| expect(error.status).to eq 1 }
+    end.to output("The '../rspec' command is not known to thermos.\n").to_stderr
     expect(File.exist?("bin/thermos")).to be false
   end
 end

@@ -18,7 +18,8 @@ module OpenHAB
                             RUBY_VERSION
                             RUBYOPT
                             RUBYLIB
-                            BUNDLE_BIN_PATH].freeze
+                            BUNDLE_BIN_PATH
+                            BUNDLER_SETUP].freeze
       JVM_OPTIONS = %w[--add-opens=java.base/java.io=ALL-UNNAMED
                        --add-opens=java.base/java.nio.channels=ALL-UNNAMED
                        --add-opens=java.base/sun.nio.ch=ALL-UNNAMED].freeze
