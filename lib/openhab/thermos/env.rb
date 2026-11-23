@@ -7,7 +7,7 @@ require "fileutils"
 require "json"
 require "rbconfig"
 require "socket"
-require "digest"
+require "digest/md5"
 require "tmpdir"
 
 require_relative "configuration"
@@ -63,18 +63,15 @@ module OpenHAB
       end
 
       def tmp_path
-        require "tmpdir"
         path = Pathname.new(
           ENV["THERMOS_TMP_PATH"] ||
             File.join(ENV["XDG_RUNTIME_DIR"] || Dir.tmpdir, "thermos-#{Process.uid}")
         )
-        require "fileutils"
         FileUtils.mkdir_p(path, mode: 0o700) unless path.exist?
         path
       end
 
       def project_id
-        require "digest/md5"
         ENV["THERMOS_PROJECT_ID"] || Digest::MD5.hexdigest(project_root.to_s)
       end
 

@@ -54,6 +54,8 @@ begin
     Object.const_set(name, stream)
   end
 
+  # The addon may bundle an older Bundler than the one that loaded the project.
+  $LOAD_PATH.unshift(context.fetch("bundler_lib")) if context["bundler_lib"]
   require "bundler/setup"
   require "openhab/thermos/commands"
 

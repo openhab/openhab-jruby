@@ -7,11 +7,14 @@ if RUBY_ENGINE == "jruby"
   require "io/nonblock"
 
   RSpec.describe "Thermos runner IO" do
+    # Fresh addon engines must load the project Bundler before running the probe.
+    let(:engine_timeout) { 20 }
+
     it "reads a line before EOF and leaves the original descriptors open after engine shutdown" do
       with_runner('puts "READ: " + $stdin.gets.chomp') do |close_engine, context, worker, input, output|
         input.last.write("hello 🌏\n")
-        expect(Timeout.timeout(5) { output.first.gets }).to eq "READ: hello 🌏\n"
-        expect(worker.join(5)).not_to be_nil
+        expect(Timeout.timeout(engine_timeout) { output.first.gets }).to eq "READ: hello 🌏\n"
+        expect(worker.join(engine_timeout)).not_to be_nil
         worker.value
         expect(context.get("status")).to eq 0
         close_engine.call
@@ -32,8 +35,8 @@ if RUBY_ENGINE == "jruby"
         $stdin.gets
       RUBY
       with_runner(code) do |_close_engine, context, worker, _input, output|
-        expect(Timeout.timeout(5) { output.first.gets }).to eq "READY\n"
-        expect(worker.join(5)).not_to be_nil
+        expect(Timeout.timeout(engine_timeout) { output.first.gets }).to eq "READY\n"
+        expect(worker.join(engine_timeout)).not_to be_nil
         worker.value
         expect(context.get("status")).to eq 130
       end
@@ -41,14 +44,29 @@ if RUBY_ENGINE == "jruby"
 
     it "cancels a request disconnected before the command starts and restores stdin flags" do
       with_runner('raise "command must not run"', signal: "TERM") do |_close_engine, context, worker, input|
-        expect(worker.join(5)).not_to be_nil
+        expect(worker.join(engine_timeout)).not_to be_nil
         worker.value
         expect(context.get("status")).to eq 143
         expect(input.first.nonblock?).to be false
       end
     end
 
-    def with_runner(code, signal: nil)
+    it "uses the runtime's Bundler instead of the addon's default" do
+      require "bundler"
+      Dir.mktmpdir("thermos-default-bundler") do |directory|
+        FileUtils.mkdir_p(File.join(directory, "bundler"))
+        File.write(File.join(directory, "bundler/setup.rb"), 'raise "incompatible default Bundler loaded"')
+        with_runner('puts "BUNDLER: " + Bundler::VERSION',
+                    default_load_path: directory) do |_, context, worker, _, output|
+          expect(Timeout.timeout(engine_timeout) { output.first.gets }).to eq "BUNDLER: #{Bundler::VERSION}\n"
+          expect(worker.join(engine_timeout)).not_to be_nil
+          worker.value
+          expect(context.get("status")).to eq 0
+        end
+      end
+    end
+
+    def with_runner(code, signal: nil, default_load_path: nil)
       Dir.mktmpdir("thermos-runner") do |directory|
         gemfile = File.join(directory, "Gemfile")
         File.write(gemfile, "")
@@ -56,10 +74,11 @@ if RUBY_ENGINE == "jruby"
         output = IO.pipe
         error = IO.pipe
         output.last.sync = true
-        env = ENV.to_h.merge("BUNDLE_GEMFILE" => gemfile)
+        env = ENV.to_h.merge("BUNDLE_GEMFILE" => gemfile, "BUNDLE_FROZEN" => "false", "BUNDLE_DEPLOYMENT" => "false")
         env.delete("BUNDLE_LOCKFILE")
         env.delete("RUBYOPT")
         context = java.util.HashMap.new(
+          "bundler_lib" => Gem.loaded_specs["bundler"]&.full_require_paths&.first,
           "stdin" => input.first.fileno,
           "stdout" => output.last.fileno,
           "stderr" => error.last.fileno,
@@ -90,6 +109,8 @@ if RUBY_ENGINE == "jruby"
           closed = true
           engine.close
         end
+        # rubocop:disable-next Style/DocumentDynamicEvalDefinition
+        engine.eval("$LOAD_PATH.unshift(#{default_load_path.dump})") if default_load_path
         # Define the IO probe in the engine that will load the runner.
         engine.eval(<<~RUBY) # rubocop:disable Style/DocumentDynamicEvalDefinition
           require #{commands.dump}

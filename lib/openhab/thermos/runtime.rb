@@ -163,6 +163,7 @@ module OpenHAB
           client_env.merge!(ENV.to_h.slice(*ruby_variables))
         end
         context = java.util.HashMap.new(
+          "bundler_lib" => Gem.loaded_specs.fetch("bundler").full_require_paths.first,
           "framework" => OpenHAB::OSGi.bundle,
           "scheduler" => previous_scheduler.instance_variable_get(:@scheduler),
           "stdin" => input.fileno,
