@@ -23,7 +23,7 @@ module OpenHAB
           raise ClientError, "Error connecting to the thermos server" unless version
           if version != env.version
             raise ClientError, "Version mismatch: thermos client #{env.version}, server #{version}. " \
-                               "Stop the server and restart it with JRuby."
+                               "Stop the server and restart it."
           end
           runtime, client = UNIXSocket.pair
           # CRuby creates nonblocking sockets; JRuby's recv_io wrapper assumes a blocking channel.
@@ -50,10 +50,10 @@ module OpenHAB
         end
 
         def boot_server
-          env.require_jruby!
           unless env.server_running?
             FileUtils.rm_f(env.socket_path)
-            pid = Process.spawn(*env.server_command,
+            pid = Process.spawn(env.server_environment,
+                                *env.server_command,
                                 out: File::NULL,
                                 err: env.log_file,
                                 chdir: env.project_root.to_s)
@@ -91,7 +91,10 @@ module OpenHAB
                     "cwd" => Dir.pwd,
                     "ruby_engine" => RUBY_ENGINE,
                     "tty" => $stdout.tty?)
-          exit 1 unless runtime.gets&.chomp == "0"
+          ready = runtime.gets
+          raise ClientError, "The thermos runtime failed to start; see #{env.log_file.path}" unless ready
+
+          exit 1 unless ready.chomp == "0"
 
           raise ClientError, "The thermos runtime disconnected" unless runtime.gets
 

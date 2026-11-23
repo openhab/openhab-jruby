@@ -3,8 +3,6 @@
 # SPDX-License-Identifier: MIT
 # Derived from Spring; see lib/openhab/thermos/LICENSE and NOTICE.md.
 
-require "bundler/setup"
-
 require_relative "../runtime"
 
 Process.setsid

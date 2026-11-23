@@ -11,6 +11,7 @@ require "digest"
 require "tmpdir"
 
 require_relative "configuration"
+require_relative "launcher"
 
 module OpenHAB
   module Thermos
@@ -39,13 +40,15 @@ module OpenHAB
         end
       end
 
-      def server_command
-        [RbConfig.ruby,
+      def server_environment = Launcher.new(project_root).environment
+
+      def server_command(foreground: false)
+        [*Launcher.new(project_root).command,
          "-I",
          File.expand_path("../..", __dir__),
          "-ropenhab/thermos/server",
          "-e",
-         "OpenHAB::Thermos::Server.boot"]
+         "OpenHAB::Thermos::Server.boot(foreground: #{foreground})"]
       end
 
       def require_jruby!

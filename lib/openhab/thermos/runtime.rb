@@ -158,7 +158,7 @@ module OpenHAB
         client_env = request.fetch("env").dup
         if request.fetch("ruby_engine", "jruby") != "jruby"
           # The client may use CRuby, but embedded engines must use the server's JRuby gems.
-          ruby_variables = %w[GEM_HOME GEM_PATH RUBYOPT]
+          ruby_variables = Launcher::RUBY_ENVIRONMENT
           ruby_variables.each { |key| client_env.delete(key) }
           client_env.merge!(ENV.to_h.slice(*ruby_variables))
         end

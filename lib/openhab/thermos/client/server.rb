@@ -12,8 +12,9 @@ module OpenHAB
         def self.description = "Explicitly start an openHAB runtime in the foreground; --background detaches it."
 
         def call
-          env.require_jruby!
           if foreground?
+            exec(env.server_environment, *env.server_command(foreground: true)) unless RUBY_ENGINE == "jruby"
+
             require_relative "../server"
             Thermos::Server.boot(foreground: true)
           else

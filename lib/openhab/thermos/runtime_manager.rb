@@ -62,10 +62,11 @@ module OpenHAB
         @pid = Process.spawn(
           spawn_env.merge("THERMOS_ORIGINAL_ENV" => JSON.dump(ORIGINAL_ENV),
                           "THERMOS_MANAGER_SOCKET" => socket_path.to_s),
-          RbConfig.ruby,
-          "-J--add-opens=java.base/java.io=ALL-UNNAMED",
-          "-J--add-opens=java.base/java.nio.channels=ALL-UNNAMED",
-          "-J--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
+          *Launcher.new(background_env.project_root).command(jvm_options: [
+                                                               "--add-opens=java.base/java.io=ALL-UNNAMED",
+                                                               "--add-opens=java.base/java.nio.channels=ALL-UNNAMED",
+                                                               "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"
+                                                             ]),
           "-I",
           File.expand_path("../..", __dir__),
           "-e",

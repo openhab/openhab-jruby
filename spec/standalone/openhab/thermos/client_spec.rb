@@ -125,26 +125,37 @@ RSpec.describe OpenHAB::Thermos::Client do
   end
 
   context "when the client uses CRuby" do
-    before { stub_const("RUBY_ENGINE", "ruby") }
+    before do
+      stub_const("RUBY_ENGINE", "ruby")
+      allow(Dir).to receive(:glob).and_return([])
+    end
 
-    it "explains how to start a missing server without spawning CRuby" do
+    it "explains how to start a missing server when no addon is available" do
       expect do
         expect { described_class.run(["rspec"]) }.to raise_error(SystemExit) { |exit| expect(exit.status).to eq 1 }
-      end.to output(/Retry with JRuby; once the server is running, you can switch to CRuby/).to_stderr
+      end.to output(/retry with JRuby; once the server is running, you can switch to CRuby/).to_stderr
       expect(OpenHAB::Thermos::Env.new.pid).to be_nil
     end
 
-    it "reports the JRuby startup requirement when a stale socket is left behind" do
+    it "reports a missing addon when a stale socket is left behind" do
       UNIXServer.new(OpenHAB::Thermos::Env.new.socket_name).close
       expect do
         expect { described_class.run(["console"]) }.to raise_error(SystemExit) { |exit| expect(exit.status).to eq 1 }
-      end.to output(/Retry with JRuby; once the server is running, you can switch to CRuby/).to_stderr
+      end.to output(/retry with JRuby; once the server is running, you can switch to CRuby/).to_stderr
     end
 
-    it "rejects a foreground server before loading Java" do
+    it "executes a foreground server with the embedded launcher" do
+      command = OpenHAB::Thermos::Client::Server.new(["server"])
+      launcher = ["java", "-cp", "/addon.jar", "org.jruby.Main", "-e", "foreground"]
+      allow(command.env).to receive(:server_command).with(foreground: true).and_return(launcher)
+      expect(command).to receive(:exec).with(command.env.server_environment, *launcher).and_raise(SystemExit.new(0))
+      expect { command.call }.to raise_error(SystemExit) { |error| expect(error.status).to eq 0 }
+    end
+
+    it "reports a missing addon before launching a foreground server" do
       expect do
         expect { described_class.run(["server"]) }.to raise_error(SystemExit) { |exit| expect(exit.status).to eq 1 }
-      end.to output(/server must be started under JRuby/).to_stderr
+      end.to output(/Cannot find the jrubyscripting addon/).to_stderr
     end
   end
 end

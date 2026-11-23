@@ -120,9 +120,15 @@ bin/thermos stop
 DISABLE_THERMOS=1 bin/rspec
 ```
 
-The server must be started under JRuby. Once it is running, clients can use
-CRuby for faster startup. A CRuby client reports an error if no server is running;
-it does not try to locate or launch JRuby.
+Clients can use CRuby for convencience and faster startup. When starting a server from CRuby,
+Thermos locates the JRuby embedded in the jrubyscripting addon and launches it
+using `$JAVA_HOME/bin/java` (or `java` on `$PATH`). If no addon
+is found, start the server with an installed JRuby instead. The embedded launcher
+clears CRuby gem paths and startup options. It reads `gem_home` from the addon’s persisted
+settings in `$OPENHAB_USERDATA/config/org/openhab/automation/jrubyscripting.config`,
+expanding the addon’s Ruby version placeholders. When unset, the addon default is
+`$OPENHAB_CONF/automation/ruby/.gem/<JRuby version>`. An explicitly empty setting
+leaves JRuby’s default gem paths in use.
 
 `thermos server` starts the server in the foreground; add `--background`
 to start it without running a command.
@@ -278,20 +284,6 @@ in the Thermos matrix jobs.
 
 ## IRB
 
-With Thermos installed, start an IRB sandbox using the preloaded openHAB runtime:
-
-```shell
-bin/thermos console
-```
-
-The console uses the same RSpec auto-requires to set up openHAB, then loads
-configured addon auto-requires, transformations, and user rules in a fresh
-JRuby ScriptEngine. Its input and output are connected to your terminal.
-The server must first be started under JRuby; a running server also accepts
-CRuby console clients. Use `exit` to close the console and keep the server running.
-
-### Without Thermos
-
 If you would like to use a REPL sandbox to play with your items,
 create bin/console with the following contents, and then run it:
 
@@ -318,3 +310,6 @@ end
 
 IRB.start(__FILE__)
 ```
+
+You can also use Thermos to speed up launching IRB by running
+`bin/thermos binstub --all` once after creating `bin/console`.
