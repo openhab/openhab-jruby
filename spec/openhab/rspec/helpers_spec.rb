@@ -30,6 +30,27 @@ RSpec.describe OpenHAB::RSpec::Helpers do
   end
 
   describe "load_rules" do
+    it "overrides matching relative paths while preserving filenames in different subdirectories" do
+      allow(RSpec.configuration).to receive(:openhab_automation_search_paths)
+        .and_return(%w[automation staging local])
+      allow(Dir).to receive(:[]).with("automation/**/*.rb")
+                                .and_return(%w[automation/sl10/lighting.rb
+                                               automation/heating.rb
+                                               automation/lighting.rb])
+      allow(Dir).to receive(:[]).with("staging/**/*.rb")
+                                .and_return(%w[staging/sl10/lighting.rb staging/new_rule.rb])
+      allow(Dir).to receive(:[]).with("local/**/*.rb")
+                                .and_return(%w[local/sl10/lighting.rb local/nested/lighting.rb])
+
+      expect(subject).to receive(:load).with("local/sl10/lighting.rb").ordered
+      expect(subject).to receive(:load).with("automation/heating.rb").ordered
+      expect(subject).to receive(:load).with("automation/lighting.rb").ordered
+      expect(subject).to receive(:load).with("local/nested/lighting.rb").ordered
+      expect(subject).to receive(:load).with("staging/new_rule.rb").ordered
+
+      subject.load_rules
+    end
+
     it "respects start levels" do
       allow(RSpec.configuration).to receive(:openhab_automation_search_paths).and_return(["automation"])
       allow(Dir).to receive(:[]).and_return(%w[automation/filea.rb

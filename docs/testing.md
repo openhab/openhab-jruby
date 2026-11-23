@@ -116,13 +116,21 @@ openHAB with changes to managed items, things, and the latest persisted data.
 
 ### Spec Writing Tips
 
-- By default ruby files are looked for in `$OPENHAB_CONF/automation/ruby` and in `$OPENHAB_CONF/automation/jsr223`. You can override and/or append to this by setting the `openhab_automation_search_paths` RSpec configuration setting in your `spec_helper.rb`. This can be useful to add staging directory for testing your rules.
+- By default Ruby files are looked for in `$OPENHAB_CONF/automation/ruby` and in `$OPENHAB_CONF/automation/jsr223`. You can replace or append to these paths with the `openhab_automation_search_paths` RSpec configuration setting in your `spec_helper.rb`. When multiple files have the same path relative to their search directory, only the file from the last search path is loaded. For example, `staging/sl10/lighting.rb` overrides `automation/ruby/sl10/lighting.rb`, while `staging/lighting.rb` does not. Start levels determine the load order after these overrides are applied.
 
  ```ruby
 RSpec.configure do |config|
-  config.openhab_automation_search_paths += "/my/staging/directory"
+  config.openhab_automation_search_paths += ["/my/staging/directory"]
 end
  ```
+
+  To develop and test rule changes before modifying a production install, copy the
+  rules you want to change into a staging directory outside the production automation
+  directories, preserving their relative paths (including subdirectories), and
+  append that directory as shown above.
+  Edit the staged copies and run your specs: they replace the matching production
+  files in the test runtime, while the other production rules still load. Once the
+  tests pass, copy the updated files to the production install.
 
 - See {OpenHAB::RSpec::Helpers} for all helper methods available in specs.
 - All items are reset to {NULL} before each spec.

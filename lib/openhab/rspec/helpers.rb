@@ -358,11 +358,17 @@ module OpenHAB
         lib_dirs << File.join(gem_home, "")
 
         SuspendRules.suspend_rules do
-          files = automation_paths.map { |p| Dir["#{p}/**/*.rb"] }.flatten
-          files.reject! do |f|
-            lib_dirs.any? { |l| f.start_with?(l) }
+          files = {}
+          automation_paths.each do |path|
+            prefix = File.join(path, "")
+            Dir["#{prefix}**/*.rb"].each do |file|
+              next if lib_dirs.any? { |lib| file.start_with?(lib) }
+
+              # Later search paths override matching paths relative to the base directory.
+              files[file.delete_prefix(prefix)] = file
+            end
           end
-          files.sort_by { |f| [get_start_level(f), f] }.each do |f|
+          files.values.sort_by { |f| [get_start_level(f), f] }.each do |f|
             logger.info { "(Re-)Loading script '#{File.expand_path(f)}'" }
             load f
           rescue Exception => e
