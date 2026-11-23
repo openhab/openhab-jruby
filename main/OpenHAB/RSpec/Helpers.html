@@ -4562,12 +4562,6 @@ The addon's bundle id is used as the identifier.</p>
       <pre class="lines">
 
 
-411
-412
-413
-414
-415
-416
 417
 418
 419
@@ -4595,10 +4589,16 @@ The addon's bundle id is used as the identifier.</p>
 441
 442
 443
-444</pre>
+444
+445
+446
+447
+448
+449
+450</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 411</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 417</span>
 
 <span class="keyword">def</span> <span class="function">install_addon</span>(addon_id, <span class="key">wait</span>: <span class="predefined-constant">true</span>, <span class="key">ready_markers</span>: <span class="predefined-constant">nil</span>)
   service_filter = <span class="string"><span class="delimiter">&quot;</span><span class="content">(component.name=org.openhab.core.karafaddons)</span><span class="delimiter">&quot;</span></span>
@@ -4896,7 +4896,13 @@ The addon's bundle id is used as the identifier.</p>
 370
 371
 372
-373</pre>
+373
+374
+375
+376
+377
+378
+379</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 354</span>
@@ -4908,11 +4914,17 @@ The addon's bundle id is used as the identifier.</p>
   lib_dirs &lt;&lt; <span class="constant">File</span>.join(gem_home, <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>)
 
   <span class="constant">SuspendRules</span>.suspend_rules <span class="keyword">do</span>
-    files = automation_paths.map { |p| <span class="constant">Dir</span>[<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>p<span class="inline-delimiter">}</span></span><span class="content">/**/*.rb</span><span class="delimiter">&quot;</span></span>] }.flatten
-    files.reject! <span class="keyword">do</span> |f|
-      lib_dirs.any? { |l| f.start_with?(l) }
+    files = {}
+    automation_paths.each <span class="keyword">do</span> |path|
+      prefix = <span class="constant">File</span>.join(path, <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>)
+      <span class="constant">Dir</span>[<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>prefix<span class="inline-delimiter">}</span></span><span class="content">**/*.rb</span><span class="delimiter">&quot;</span></span>].each <span class="keyword">do</span> |file|
+        <span class="keyword">next</span> <span class="keyword">if</span> lib_dirs.any? { |lib| file.start_with?(lib) }
+
+        <span class="comment"># Later search paths override matching paths relative to the base directory.</span>
+        files[file.delete_prefix(prefix)] = file
+      <span class="keyword">end</span>
     <span class="keyword">end</span>
-    files.sort_by { |f| [get_start_level(f), f] }.each <span class="keyword">do</span> |f|
+    files.values.sort_by { |f| [get_start_level(f), f] }.each <span class="keyword">do</span> |f|
       logger.info { <span class="string"><span class="delimiter">&quot;</span><span class="content">(Re-)Loading script '</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">File</span>.expand_path(f)<span class="inline-delimiter">}</span></span><span class="content">'</span><span class="delimiter">&quot;</span></span> }
       load f
     <span class="keyword">rescue</span> <span class="constant">Exception</span> =&gt; e
@@ -4955,12 +4967,6 @@ recognized.</p>
       <pre class="lines">
 
 
-386
-387
-388
-389
-390
-391
 392
 393
 394
@@ -4969,10 +4975,16 @@ recognized.</p>
 397
 398
 399
-400</pre>
+400
+401
+402
+403
+404
+405
+406</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 386</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 392</span>
 
 <span class="keyword">def</span> <span class="function">load_transforms</span>
   transform_path = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>org.openhab.core.OpenHAB.config_folder<span class="inline-delimiter">}</span></span><span class="content">/transform</span><span class="delimiter">&quot;</span></span>
@@ -5036,12 +5048,12 @@ recognized.</p>
       <pre class="lines">
 
 
-447
-448
-449</pre>
+453
+454
+455</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 447</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 453</span>
 
 <span class="keyword">def</span> <span class="function">log_file</span>
   <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>java.lang.System.get_property(<span class="string"><span class="delimiter">&quot;</span><span class="content">openhab.logdir</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">nil</span>)<span class="inline-delimiter">}</span></span><span class="content">/openhab.log</span><span class="delimiter">&quot;</span></span>
@@ -5104,12 +5116,6 @@ recognized.</p>
       <pre class="lines">
 
 
-460
-461
-462
-463
-464
-465
 466
 467
 468
@@ -5122,10 +5128,16 @@ recognized.</p>
 475
 476
 477
-478</pre>
+478
+479
+480
+481
+482
+483
+484</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 460</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 466</span>
 
 <span class="keyword">def</span> <span class="function">spec_log_lines</span>
   lines = []
@@ -5509,7 +5521,7 @@ The event supplies its own type, topic, payload, and source.</p>
 </div>
 
         <footer>
-  Generated on Fri Nov 20 21:41:30 2026 by
+  Generated on Mon Nov 23 22:20:21 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.13).
 </footer>

@@ -3930,12 +3930,19 @@ copies from openHAB's userdata directory. This will update your test copy of
 openHAB with changes to managed items, things, and the latest persisted data.</p>
 <h3 id="spec-writing-tips">Spec Writing Tips<a href="#spec-writing-tips" aria-label="Link to heading 'Spec Writing Tips'" data-heading-content="Spec Writing Tips" class="header-anchor">#</a></h3>
 <ul>
-<li>By default ruby files are looked for in <code>$OPENHAB_CONF/automation/ruby</code> and in <code>$OPENHAB_CONF/automation/jsr223</code>. You can override and/or append to this by setting the <code>openhab_automation_search_paths</code> RSpec configuration setting in your <code>spec_helper.rb</code>. This can be useful to add staging directory for testing your rules.</li>
+<li>By default Ruby files are looked for in <code>$OPENHAB_CONF/automation/ruby</code> and in <code>$OPENHAB_CONF/automation/jsr223</code>. You can replace or append to these paths with the <code>openhab_automation_search_paths</code> RSpec configuration setting in your <code>spec_helper.rb</code>. When multiple files have the same path relative to their search directory, only the file from the last search path is loaded. For example, <code>staging/sl10/lighting.rb</code> overrides <code>automation/ruby/sl10/lighting.rb</code>, while <code>staging/lighting.rb</code> does not. Start levels determine the load order after these overrides are applied.</li>
 </ul>
 <pre class="code ruby"><code class="ruby"><span class="constant">RSpec</span>.configure <span class="keyword">do</span> |config|
- config.openhab_automation_search_paths += <span class="string"><span class="delimiter">&quot;</span><span class="content">/my/staging/directory</span><span class="delimiter">&quot;</span></span>
+ config.openhab_automation_search_paths += [<span class="string"><span class="delimiter">&quot;</span><span class="content">/my/staging/directory</span><span class="delimiter">&quot;</span></span>]
 <span class="keyword">end</span>
 </code></pre>
+<p>To develop and test rule changes before modifying a production install, copy the
+rules you want to change into a staging directory outside the production automation
+directories, preserving their relative paths (including subdirectories), and
+append that directory as shown above.
+Edit the staged copies and run your specs: they replace the matching production
+files in the test runtime, while the other production rules still load. Once the
+tests pass, copy the updated files to the production install.</p>
 <ul>
 <li>See <span class='object_link'><a href="OpenHAB/RSpec/Helpers.html" title="OpenHAB::RSpec::Helpers (module)">OpenHAB::RSpec::Helpers</a></span> for all helper methods available in specs.</li>
 <li>All items are reset to <span class='object_link'><a href="OpenHAB/Core/Types/UnDefType.html#NULL-constant" title="OpenHAB::Core::Types::UnDefType::NULL (constant)">NULL</a></span> before each spec.</li>
@@ -4050,7 +4057,7 @@ require <span class="string"><span class="delimiter">&quot;</span><span class="c
 </div></div>
 
         <footer>
-  Generated on Fri Nov 20 21:41:29 2026 by
+  Generated on Mon Nov 23 22:20:20 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.13).
 </footer>
