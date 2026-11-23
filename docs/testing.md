@@ -22,7 +22,7 @@ use the same version of JRuby that openHAB is using internally.
 - Either create an empty directory, or use `$OPENHAB_CONF` itself (the former
    is untested)
 - Create a `Gemfile`, with the following contents (you can configure your actual
-  openHAB Gemfile to point here, ensure both environments stay in sync):
+  openHAB Gemfile to point here to ensure both environments stay in sync):
 
 ```ruby
 source "https://rubygems.org"
