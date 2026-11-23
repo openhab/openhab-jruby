@@ -3944,15 +3944,38 @@ Edit the staged copies and run your specs: they replace the matching production
 files in the test runtime, while the other production rules still load. Once the
 tests pass, copy the updated files to the production install.</p>
 <ul>
-<li>See <span class='object_link'><a href="OpenHAB/RSpec/Helpers.html" title="OpenHAB::RSpec::Helpers (module)">OpenHAB::RSpec::Helpers</a></span> for all helper methods available in specs.</li>
-<li>All items are reset to <span class='object_link'><a href="OpenHAB/Core/Types/UnDefType.html#NULL-constant" title="OpenHAB::Core::Types::UnDefType::NULL (constant)">NULL</a></span> before each spec.</li>
-<li><code>on_load</code> triggers are <em>not</em> honored. Items will be reset to <span class='object_link'><a href="OpenHAB/Core/Types/UnDefType.html#NULL-constant" title="OpenHAB::Core::Types::UnDefType::NULL (constant)">NULL</a></span> before
+<li>
+<p>Skip automatic loading of specific files or directories by setting
+<code>config.openhab_automation_exclude_paths = ["lighting.rb", "experimental"]</code>.
+Paths are relative to the automation search paths; excluding a directory skips
+all files beneath it across all search paths.</p>
+</li>
+<li>
+<p>Use <code>load_rule("experimental/lighting.rb")</code> in a spec or hook to explicitly load
+a rule, including an excluded rule. Include the <code>.rb</code> extension and use a path
+relative to an automation search path. <code>load_rule</code> is idempotent, so you don't
+have to worry about if a file has already been loaded before calling it.</p>
+</li>
+<li>
+<p>See <span class='object_link'><a href="OpenHAB/RSpec/Helpers.html" title="OpenHAB::RSpec::Helpers (module)">OpenHAB::RSpec::Helpers</a></span> for all helper methods available in specs.</p>
+</li>
+<li>
+<p>All items are reset to <span class='object_link'><a href="OpenHAB/Core/Types/UnDefType.html#NULL-constant" title="OpenHAB::Core::Types::UnDefType::NULL (constant)">NULL</a></span> before each spec.</p>
+</li>
+<li>
+<p><code>on_load</code> triggers are <em>not</em> honored. Items will be reset to <span class='object_link'><a href="OpenHAB/Core/Types/UnDefType.html#NULL-constant" title="OpenHAB::Core::Types::UnDefType::NULL (constant)">NULL</a></span> before
 the next spec anyway, so just don't waste the energy running them. You
-can still trigger rules manually.</li>
-<li>Other rule triggers, such as watchers, can be tested with
-<span class='object_link'><a href="OpenHAB/Core/Rules/Rule.html#trigger-instance_method" title="OpenHAB::Core::Rules::Rule#trigger (method)">trigger</a></span>.</li>
-<li>You can trigger channels directly with <span class='object_link'>OpenHAB::RSpec::Helpers#trigger_channel</span>.</li>
-<li>Timers aren't triggered automatically. Use the <span class='object_link'>OpenHAB::RSpec::Helpers#execute_timers</span>
+can still trigger rules manually.</p>
+</li>
+<li>
+<p>Other rule triggers, such as watchers, can be tested with
+<span class='object_link'><a href="OpenHAB/Core/Rules/Rule.html#trigger-instance_method" title="OpenHAB::Core::Rules::Rule#trigger (method)">trigger</a></span>.</p>
+</li>
+<li>
+<p>You can trigger channels directly with <span class='object_link'>OpenHAB::RSpec::Helpers#trigger_channel</span>.</p>
+</li>
+<li>
+<p>Timers aren't triggered automatically. Use the <span class='object_link'>OpenHAB::RSpec::Helpers#execute_timers</span>
 helper to execute any timers that are ready to run. The <code>timecop</code> gem is
 automatically included, so use <code>Timecop.travel(5.seconds)</code> (for example)
 to travel forward in time and have timers ready to execute. Note that this
@@ -3960,10 +3983,13 @@ includes implicit timers created by rules that use the <code>for:</code> feature
 as time-based rule triggers. Recurring triggers fire once per call and then
 advance to their next future occurrence, skipping missed occurrences.
 Item updates reschedule item-based time triggers; disabling or removing a rule
-cancels its pending triggers.</li>
-<li>Logging levels can be changed in your code. Setting a log level for a logger
+cancels its pending triggers.</p>
+</li>
+<li>
+<p>Logging levels can be changed in your code. Setting a log level for a logger
 further up the chain (separated by dots) applies to all loggers underneath
-it.</li>
+it.</p>
+</li>
 </ul>
 <pre class="code ruby"><code class="ruby"><span class="constant">OpenHAB</span>::<span class="constant">Log</span>.logger(<span class="string"><span class="delimiter">&quot;</span><span class="content">org.openhab.core.automation.internal.RuleEngineImpl</span><span class="delimiter">&quot;</span></span>).level = <span class="symbol">:debug</span>
 <span class="constant">OpenHAB</span>::<span class="constant">Log</span>.gem_root.level = <span class="symbol">:debug</span>
@@ -4057,7 +4083,7 @@ require <span class="string"><span class="delimiter">&quot;</span><span class="c
 </div></div>
 
         <footer>
-  Generated on Mon Nov 23 22:20:20 2026 by
+  Generated on Mon Nov 23 23:03:51 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.13).
 </footer>

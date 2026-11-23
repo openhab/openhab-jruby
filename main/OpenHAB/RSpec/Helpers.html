@@ -4032,6 +4032,29 @@ explicitly.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#load_rule-class_method" title="load_rule (class method)">.<strong>load_rule</strong>(path)  &#x21d2; true, false </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Load a rule once, using a path relative to an automation search path.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#load_rules-class_method" title="load_rules (class method)">.<strong>load_rules</strong>  &#x21d2; void </a>
     
 
@@ -4562,43 +4585,43 @@ The addon's bundle id is used as the identifier.</p>
       <pre class="lines">
 
 
-417
-418
-419
-420
-421
-422
-423
-424
-425
-426
-427
-428
-429
-430
-431
-432
-433
-434
-435
-436
-437
-438
-439
-440
-441
-442
-443
-444
-445
-446
 447
 448
 449
-450</pre>
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 417</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 447</span>
 
 <span class="keyword">def</span> <span class="function">install_addon</span>(addon_id, <span class="key">wait</span>: <span class="predefined-constant">true</span>, <span class="key">ready_markers</span>: <span class="predefined-constant">nil</span>)
   service_filter = <span class="string"><span class="delimiter">&quot;</span><span class="content">(component.name=org.openhab.core.karafaddons)</span><span class="delimiter">&quot;</span></span>
@@ -4852,6 +4875,134 @@ The addon's bundle id is used as the identifier.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="load_rule-class_method">
+  
+    .<strong>load_rule</strong>(path)  &#x21d2; <tt>true</tt>, <tt>false</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Load a rule once, using a path relative to an automation search path.
+Later search paths take precedence, just as with <span class='object_link'>#load_rules</span>.
+Explicit loading ignores <code>openhab_automation_exclude_paths</code>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>path</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>relative filename, including the .rb extension</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>whether the file was loaded</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>if the path is absolute or escapes a search path</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>LoadError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>if the file cannot be found</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 397</span>
+
+<span class="keyword">def</span> <span class="function">load_rule</span>(path)
+  path = path.to_s
+  <span class="keyword">if</span> path.empty? || path.start_with?(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>) || path.split(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>).include?(<span class="string"><span class="delimiter">&quot;</span><span class="content">..</span><span class="delimiter">&quot;</span></span>)
+    raise <span class="constant">ArgumentError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Expected a path relative to an automation search path</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
+
+  paths = Array(::<span class="constant">RSpec</span>.configuration.openhab_automation_search_paths)
+  files = paths.reverse.map { |base| <span class="constant">File</span>.join(base, path) }
+  file = files.find { |candidate| <span class="constant">File</span>.file?(candidate) }
+  raise <span class="constant">LoadError</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot find rule </span><span class="inline"><span class="inline-delimiter">#{</span>path.inspect<span class="inline-delimiter">}</span></span><span class="content"> in automation search paths</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> file
+
+  <span class="constant">SuspendRules</span>.suspend_rules { load_rule_file(file) }
+<span class="keyword">end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="load_rules-class_method">
   
     .<strong>load_rules</strong>  &#x21d2; <tt>void</tt> 
@@ -4902,7 +5053,13 @@ The addon's bundle id is used as the identifier.</p>
 376
 377
 378
-379</pre>
+379
+380
+381
+382
+383
+384
+385</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 354</span>
@@ -4924,9 +5081,15 @@ The addon's bundle id is used as the identifier.</p>
         files[file.delete_prefix(prefix)] = file
       <span class="keyword">end</span>
     <span class="keyword">end</span>
+    excluded = Array(::<span class="constant">RSpec</span>.configuration.openhab_automation_exclude_paths)
+    files.reject! <span class="keyword">do</span> |relative, _file|
+      excluded.any? <span class="keyword">do</span> |path|
+        path = path.to_s.delete_suffix(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>)
+        relative == path || relative.start_with?(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>path<span class="inline-delimiter">}</span></span><span class="content">/</span><span class="delimiter">&quot;</span></span>)
+      <span class="keyword">end</span>
+    <span class="keyword">end</span>
     files.values.sort_by { |f| [get_start_level(f), f] }.each <span class="keyword">do</span> |f|
-      logger.info { <span class="string"><span class="delimiter">&quot;</span><span class="content">(Re-)Loading script '</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">File</span>.expand_path(f)<span class="inline-delimiter">}</span></span><span class="content">'</span><span class="delimiter">&quot;</span></span> }
-      load f
+      load_rule_file(f)
     <span class="keyword">rescue</span> <span class="constant">Exception</span> =&gt; e
       warn <span class="string"><span class="delimiter">&quot;</span><span class="content">Failed loading </span><span class="inline"><span class="inline-delimiter">#{</span>f<span class="inline-delimiter">}</span></span><span class="content">: </span><span class="inline"><span class="inline-delimiter">#{</span>e.inspect<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
       warn e.backtrace
@@ -4967,24 +5130,24 @@ recognized.</p>
       <pre class="lines">
 
 
-392
-393
-394
-395
-396
-397
-398
-399
-400
-401
-402
-403
-404
-405
-406</pre>
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 392</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 422</span>
 
 <span class="keyword">def</span> <span class="function">load_transforms</span>
   transform_path = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>org.openhab.core.OpenHAB.config_folder<span class="inline-delimiter">}</span></span><span class="content">/transform</span><span class="delimiter">&quot;</span></span>
@@ -5048,12 +5211,12 @@ recognized.</p>
       <pre class="lines">
 
 
-453
-454
-455</pre>
+483
+484
+485</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 453</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 483</span>
 
 <span class="keyword">def</span> <span class="function">log_file</span>
   <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>java.lang.System.get_property(<span class="string"><span class="delimiter">&quot;</span><span class="content">openhab.logdir</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">nil</span>)<span class="inline-delimiter">}</span></span><span class="content">/openhab.log</span><span class="delimiter">&quot;</span></span>
@@ -5116,28 +5279,28 @@ recognized.</p>
       <pre class="lines">
 
 
-466
-467
-468
-469
-470
-471
-472
-473
-474
-475
-476
-477
-478
-479
-480
-481
-482
-483
-484</pre>
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 466</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/rspec/helpers.rb', line 496</span>
 
 <span class="keyword">def</span> <span class="function">spec_log_lines</span>
   lines = []
@@ -5521,7 +5684,7 @@ The event supplies its own type, topic, payload, and source.</p>
 </div>
 
         <footer>
-  Generated on Mon Nov 23 22:20:21 2026 by
+  Generated on Mon Nov 23 23:03:53 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.13).
 </footer>
