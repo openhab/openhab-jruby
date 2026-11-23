@@ -9,6 +9,8 @@ module OpenHAB
   module Thermos
     # Owns one runtime process; individual commands use ScriptEngines in that process.
     class RuntimeManager
+      class BootError < ClientError; end
+
       attr_reader :pid, :child, :spawn_env, :background_env
 
       def initialize(spawn_env, background_env)
@@ -33,6 +35,12 @@ module OpenHAB
 
           worker&.to_i&.nonzero?
         end
+      rescue BootError => e
+        log "runtime failed to start: #{e.message}"
+        stop
+        @pid = nil
+        report_boot_error(client, e)
+        nil
       rescue Errno::ECONNRESET, Errno::EPIPE => e
         log "runtime disconnected: #{e.message}"
         nil
@@ -53,6 +61,14 @@ module OpenHAB
       end
 
       private
+
+      def report_boot_error(client, error)
+        streams = Array.new(3) { client.recv_io }
+        streams[1].puts(error.message)
+        client.puts(1)
+      ensure
+        streams&.each(&:close)
+      end
 
       def start_child
         require "securerandom"
@@ -83,13 +99,21 @@ module OpenHAB
           @pid = nil if @pid == started_pid
         end
         unless listener.wait_readable(Thermos.boot_timeout)
-          raise "Runtime failed to connect within #{Thermos.boot_timeout} seconds"
+          raise BootError,
+                "Runtime failed to connect within #{Thermos.boot_timeout} seconds; see #{background_env.log_file.path}"
         end
 
         @child = listener.accept
         # Keep Ruby-level reads interruptible while waiting for a running command.
         @child.nonblock = true
-        raise "Runtime failed to start" unless child.gets
+        unless child.wait_readable(Thermos.boot_timeout)
+          raise BootError,
+                "Runtime failed to start within #{Thermos.boot_timeout} seconds; see #{background_env.log_file.path}"
+        end
+
+        ready = child.gets
+        raise BootError, child.read(Integer(ready.split.last)) if ready&.start_with?("error ")
+        raise BootError, "Runtime failed to start; see #{background_env.log_file.path}" unless ready
       ensure
         listener&.close
         FileUtils.rm_f(socket_path) if socket_path
