@@ -81,6 +81,7 @@ Additional [example rules are available](docs/examples.md), as well as examples 
   - [Transformations](#transformations)
   - [Profile](#profile)
   - [Sitemaps](#sitemaps)
+  - [MainUI Pages](#mainui-pages)
 - [File Based Rules](#file-based-rules)
   - [Basic Rule Structure](#basic-rule-structure)
   - [Rule Triggers](#rule-triggers)
@@ -1507,6 +1508,135 @@ sitemaps.build do
   end
 end
 ```
+
+### MainUI Pages
+
+Create MainUI pages with {OpenHAB::Core::Pages::Registry#build pages.build}, using the same nested block style as the
+sitemap builder:
+
+```ruby
+pages.build do
+  layout_page "ruby_home", label: "My Home", sidebar: true do
+    block title: "Lighting" do
+      grid_row do
+        grid_col do
+          toggle_card item: LivingRoomLight, title: "Living Room"
+        end
+      end
+    end
+  end
+
+  map_page "ruby_map", label: "Locations" do
+    map_marker item: GardenLocation, label: "Garden"
+  end
+
+  tabbed_page "ruby_tabs", label: "Home & Garden" do
+    tab title: "Home", page: "ruby_home"
+    tab title: "Garden", page: "ruby_map"
+  end
+end
+```
+
+The page helpers are `layout_page`, `map_page`, `plan_page`, `tabs_page`, and `chart_page`. For other root components,
+use `page "uid", component: "component-name"`.
+
+Component helpers follow MainUI names: remove `oh-` and replace remaining hyphens with underscores. For example,
+`oh-toggle-card` becomes `toggle_card`. Shared helpers are documented by category in {OpenHAB::DSL::UI::Components};
+specialized helpers are documented on their page builder classes. System widgets, standalone cards, list items, cells,
+and home cards are available in every page context. Layout, map, floorplan, chart, and tab helpers are available in
+their respective builder classes. Layout helper blocks retain layout helpers for nested containers. Map markers,
+floorplan markers, chart elements, and tabs create generic component builders with shared helpers only. An embedded
+`chart` helper creates a chart builder. Generic `component` / `c` blocks have only the shared helper categories,
+regardless of the component name or enclosing builder. Generic `page` likewise has only the shared helpers; use the
+page-specific helpers to obtain a specialized page builder. The DSL passes configuration through to MainUI; it does not
+validate every combination of children or options.
+
+Children go into the `default` slot. Use `slot` for other MainUI slots; names retain their exact spelling. For example,
+a chart uses separate slots for its axes and series:
+
+```ruby
+pages.build do
+  chart_page "ruby_temperature", label: "Temperature", period: "D" do
+    slot("xAxis") { time_axis }
+    slot("yAxis") { value_axis }
+    slot("series") { time_series item: LivingRoomTemperature }
+  end
+end
+```
+
+Inside a layout page, `masonry { ... }` automatically uses the `masonry` slot. An explicitly selected slot is preserved.
+Repeated calls to a slot append children.
+
+A slot block can take a builder argument, just like other builder blocks. This keeps the surrounding Ruby `self`, while
+the argument provides access to the current component builder:
+
+```ruby
+pages.build do |b|
+  b.chart_page "ruby_temperature", label: "Temperature" do
+    b.slot "series" do |series|
+      series.time_series item: LivingRoomTemperature
+    end
+  end
+end
+```
+
+Here `series` and `b` are the same builder proxy; a slot selects where children are added within the current component,
+rather than creating another component.
+
+Built-in helpers group related configuration into hashes. For example:
+
+```ruby
+pages.build do
+  plan_page "ruby_plan", image: { url: "/static/plan.png", width: 1000, height: 600 } do
+    plan_marker item: LivingRoomLight,
+                icon: { value: "f7:lightbulb", size: 24, color: "yellow" },
+                tooltip: { value: "Living Room", font_size: "14px", color: "white" },
+                action: { value: "command", item: LivingRoomLight, command: "ON" }
+  end
+end
+```
+
+Use `value:` for a group's base value. A scalar remains valid when setting only the base value, such as
+`tooltip: "Living Room"` or `action: "toggle"`. Groups without a base value accept a hash only, such as
+`screen: { width: 1280, height: 720 }`. Detailed settings must use the grouped form; flat keywords such as
+`tooltip_font_size` and `action_item` are not accepted by built-in helpers. Each helper documents its supported groups
+and their keys. Unknown keys in a group raise `ArgumentError`.
+
+Generic `component` / `c` keyword configuration uses Ruby snake_case: `action_item` becomes MainUI's `actionItem`. Item
+references become item names, including references to items not yet created. MainUI expression strings are preserved.
+Nested hashes and explicit `config:` keys retain their spelling. Use
+{OpenHAB::DSL::UI::ComponentBuilder#component component}, or its alias `c`, for custom widgets, Framework7 components,
+or other component names:
+
+```ruby
+pages.build do
+  layout_page "ruby_custom", label: "Custom" do
+    masonry do
+      c "widget:my_card", config: { "my_item" => LivingRoomLight }
+    end
+  end
+end
+```
+
+To retain the surrounding Ruby context and call helper methods, use an explicit builder argument:
+
+```ruby
+pages.build do |b|
+  b.layout_page "ruby_home", label: "My Home" do
+    b.block do
+      b.grid_row do
+        b.grid_col { b.toggle_card item: LivingRoomLight }
+      end
+    end
+  end
+end
+```
+
+Access pages with `pages["ruby_home"]` and enumerate them with `pages.each`. Rebuilding a page updates it by default;
+`pages.build(update: false)` rejects existing UIDs. Pages created by this script are removed when it unloads, and can be
+removed explicitly with `pages.remove("ruby_home")`. Pages owned by MainUI, configuration files, or another script can
+be read but cannot be replaced or removed. Reusable widget definitions will be supported separately; existing custom
+widgets can be referenced now.
 
 ## File Based Rules
 
