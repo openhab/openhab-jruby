@@ -15,6 +15,29 @@ module OpenHAB
     module Hooks
       class << self
         attr_accessor :cache_script_extension
+
+        # @!visibility private
+        def reset_rule_debouncers
+          delegate_class =
+            org.openhab.core.automation.module.script.rulesupport.shared.simple.SimpleRuleActionHandlerDelegate
+          manager = Core.automation_manager
+          manager.class.field_reader :scriptedPrivateModuleHandlerFactory
+          factory = manager.scriptedPrivateModuleHandlerFactory
+          factory.class.field_reader :privateTypes
+
+          $rules.all.each do |rule|
+            rule.actions.each do |action|
+              next unless action.type_uid == "jsr223.ScriptedAction"
+
+              delegate = factory.privateTypes.get(action.configuration.get("privId"))
+              next unless delegate.is_a?(delegate_class)
+
+              delegate.class.field_reader :handler
+              handler = delegate.handler
+              handler.reset_debouncer if handler.is_a?(DSL::Rules::AutomationRule)
+            end
+          end
+        end
       end
       self.cache_script_extension = nil
     end
@@ -56,6 +79,8 @@ module OpenHAB
         end
 
         config.before do
+          DSL.debouncers.each_value(&:reset)
+          Hooks.reset_rule_debouncers
           suspend_rules do
             $ir.for_each do |_provider, item|
               next if item.is_a?(GroupItem) # groups only have calculated states

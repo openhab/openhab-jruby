@@ -403,6 +403,10 @@ RSpec.describe OpenHAB::DSL do
   end
 
   describe "#debounce" do
+    it "rejects a nil interval" do
+      expect { debounce(for: nil) { nil } }.to raise_error(ArgumentError, "Debounce interval cannot be nil")
+    end
+
     it "works" do
       counter = 0
       Timecop.freeze do
@@ -421,6 +425,10 @@ RSpec.describe OpenHAB::DSL do
   end
 
   describe "#debounce_for" do
+    it "rejects a nil interval" do
+      expect { debounce_for(nil) { nil } }.to raise_error(ArgumentError, "Debounce interval cannot be nil")
+    end
+
     it "works" do
       exec_counter = 0
       Timecop.freeze do
