@@ -8,6 +8,12 @@ module OpenHAB
     #
     module Configuration
       class << self
+        # Location of the private Karaf test instance.
+        #
+        # Default `.karaf` in the current working directory.
+        # @return [String]
+        attr_accessor :karaf_path
+
         #
         # Copy binding configuration from the root openHAB instance.
         #
@@ -47,6 +53,7 @@ module OpenHAB
         attr_accessor :use_root_instance
       end
 
+      self.karaf_path = nil
       self.include_bindings = true
       self.include_jsondb = true
       self.private_confdir = false

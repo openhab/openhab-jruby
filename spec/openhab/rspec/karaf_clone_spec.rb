@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "tmpdir"
+require "pathname"
 
 RSpec.describe OpenHAB::RSpec::Karaf do
   let(:scratch) { File.realpath(Dir.mktmpdir("karaf clone spec")) }
@@ -13,6 +14,35 @@ RSpec.describe OpenHAB::RSpec::Karaf do
   end
 
   after { FileUtils.remove_entry(scratch) }
+
+  describe "#initialize" do
+    it "defaults to .karaf in the current working directory" do
+      expect(described_class.new.path).to eq File.join(Dir.pwd, ".karaf")
+    end
+
+    it "uses the default path when explicitly passed nil" do
+      expect(described_class.new(nil).path).to eq File.join(Dir.pwd, ".karaf")
+    end
+
+    it "preserves an explicit path" do
+      expect(karaf.path).to eq clone_path
+    end
+
+    it "makes a relative path absolute" do
+      expect(described_class.new(".karaf-worker-1").path).to eq "#{Dir.pwd}/.karaf-worker-1"
+    end
+
+    it "preserves .. after a symlink when making the path absolute" do
+      FileUtils.mkdir_p("#{scratch}/actual/child")
+      File.symlink("#{scratch}/actual/child", "#{scratch}/link")
+      relative = "#{Pathname.new(scratch).relative_path_from(Pathname.pwd)}/link/../clone"
+
+      path = described_class.new(relative).path
+
+      expect(path).to end_with("/link/../clone")
+      expect(OpenHAB::RSpec::InstanceService.send(:real_path, path)).to eq "#{scratch}/actual/clone"
+    end
+  end
 
   describe "#prepare" do
     let(:userdata) { "#{scratch}/userdata" }
@@ -29,9 +59,13 @@ RSpec.describe OpenHAB::RSpec::Karaf do
     end
 
     around do |example|
-      properties = %w[karaf.data karaf.instances karaf.etc].to_h { |key| [key, java.lang.System.get_property(key)] }
+      conf = ENV.fetch("OPENHAB_CONF", nil)
+      properties = %w[karaf.data karaf.instances karaf.etc openhab.conf].to_h do |key|
+        [key, java.lang.System.get_property(key)]
+      end
       example.run
     ensure
+      conf ? ENV["OPENHAB_CONF"] = conf : ENV.delete("OPENHAB_CONF")
       properties.each do |key, value|
         value ? java.lang.System.set_property(key, value) : java.lang.System.clear_property(key)
       end
@@ -41,7 +75,7 @@ RSpec.describe OpenHAB::RSpec::Karaf do
       %i[set_env set_java_properties set_java_properties_from_env].each do |step|
         allow(karaf).to receive(step)
       end
-      allow(karaf).to receive(:oh_userdata).and_return(userdata)
+      allow(karaf).to receive_messages(oh_userdata: userdata, oh_conf: "#{scratch}/live-conf")
       java.lang.System.set_property("karaf.data", userdata)
       java.lang.System.set_property("karaf.etc", "#{registered_root}/etc")
       register_root(registered_root)
@@ -73,6 +107,37 @@ RSpec.describe OpenHAB::RSpec::Karaf do
       karaf.use_root_instance = true
 
       expect { karaf.prepare(rebuild: true) }.to raise_error(ArgumentError, "Cannot rebuild the root instance")
+    end
+
+    %i[same
+       inside
+       contains
+       symlink
+       symlink_parent].product(%i[oh_home oh_runtime oh_conf oh_userdata]) do |overlap, location|
+      it "protects #{location} when the clone is #{overlap} before writing clone files" do
+        live = "#{scratch}/live"
+        write("#{live}/keep", "keep me")
+        target = case overlap
+                 when :same then live
+                 when :inside then "#{live}/clone"
+                 when :contains then scratch
+                 when :symlink
+                   File.symlink(live, "#{scratch}/alias")
+                   "#{scratch}/alias"
+                 when :symlink_parent
+                   File.symlink(live, "#{scratch}/alias")
+                   "#{scratch}/alias/new/clone"
+                 end
+        allow(karaf).to receive(:path).and_return(target)
+        allow(karaf).to receive(location).and_return(live)
+        allow(karaf).to receive(:load_boot_jars)
+        karaf.private_confdir = true
+        expect(karaf).not_to receive(:create_private_confdir)
+        expect(karaf).not_to receive(:redirect_instances)
+
+        expect { karaf.prepare(rebuild: true) }.to raise_error(ArgumentError, /contains it/)
+        expect(File.read("#{live}/keep")).to eq "keep me"
+      end
     end
 
     it "protects the registered root when userdata is elsewhere" do
