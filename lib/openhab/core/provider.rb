@@ -229,6 +229,7 @@ module OpenHAB
 
       # @!visibility private
       def unregister
+        ScriptHandlingCallbacks.script_unloaded_hooks[@unload_priority].delete(@unload_hook)
         clear
         self.class.registry&.remove_provider(self)
       end
@@ -239,7 +240,9 @@ module OpenHAB
         super()
         @elements = java.util.concurrent.ConcurrentHashMap.new
         self.class.registry&.add_provider(self)
-        ScriptHandling.script_unloaded(priority: unload_priority) { unregister }
+        @unload_priority = unload_priority || 0
+        @unload_hook = proc { unregister }
+        ScriptHandling.script_unloaded(priority: @unload_priority, &@unload_hook)
         # @deprecated OH 5.2: Remove the rest of this method when dropping OH 5.1
         extra_initialize
       end
