@@ -215,7 +215,7 @@ module OpenHAB
             next unless idle?(now) || max_interval?(now)
           end
 
-          @leading_timestamp = now
+          @last_timestamp = @leading_timestamp = now
           call!
         end
       end

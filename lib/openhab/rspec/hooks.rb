@@ -16,6 +16,7 @@ module OpenHAB
       class << self
         attr_accessor :cache_script_extension
 
+        # @!visibility private
         def reset_rule_debouncers
           delegate_class =
             org.openhab.core.automation.module.script.rulesupport.shared.simple.SimpleRuleActionHandlerDelegate

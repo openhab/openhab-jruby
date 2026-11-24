@@ -13,6 +13,32 @@ RSpec.describe OpenHAB::DSL::Debouncer do
   end
 
   describe "Leading Edge Triggers" do
+    [false, true].each do |reset|
+      it "recovers from a failed first invocation after #{reset ? "reset" : "initialization"}" do
+        debouncer = described_class.new(for: 100.ms, leading: true, idle_time: 200.ms)
+        if reset
+          debouncer.call { nil }
+          debouncer.reset
+        end
+        attempts = 0
+
+        expect do
+          debouncer.call do
+            attempts += 1
+            raise "first invocation failed" if attempts == 1
+          end
+        end.to raise_error(RuntimeError, "first invocation failed")
+
+        time_travel_and_execute_timers(110.ms)
+        debouncer.call
+        expect(attempts).to eq 1
+
+        time_travel_and_execute_timers(210.ms)
+        debouncer.call
+        expect(attempts).to eq 2
+      end
+    end
+
     it "works" do
       counter = 0
       debouncer = described_class.new(for: 100.ms, leading: true)

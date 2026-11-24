@@ -42,6 +42,7 @@ RSpec.describe "debouncer isolation" do
     # rubocop:disable RSpec/BeforeAfterAll
     before(:all) do
       built_rule = rule id: "rspec-rule-debouncer-isolation" do
+        every :day
         debounce for: 1.hour, leading: true, idle_time: 2.hours
         run { executions << true }
       end
