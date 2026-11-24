@@ -56,6 +56,7 @@ module OpenHAB
         end
 
         config.before do
+          DSL.debouncers.each_value(&:reset)
           suspend_rules do
             $ir.for_each do |_provider, item|
               next if item.is_a?(GroupItem) # groups only have calculated states
