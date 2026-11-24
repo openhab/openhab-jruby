@@ -82,6 +82,7 @@ Additional [example rules are available](docs/examples.md), as well as examples 
   - [Profile](#profile)
   - [Sitemaps](#sitemaps)
   - [MainUI Pages](#mainui-pages)
+  - [MainUI Widgets](#mainui-widgets)
 - [File Based Rules](#file-based-rules)
   - [Basic Rule Structure](#basic-rule-structure)
   - [Rule Triggers](#rule-triggers)
@@ -1605,14 +1606,14 @@ and their keys. Unknown keys in a group raise `ArgumentError`.
 Generic `component` / `c` keyword configuration uses Ruby snake_case: `action_item` becomes MainUI's `actionItem`. Item
 references become item names, including references to items not yet created. MainUI expression strings are preserved.
 Nested hashes and explicit `config:` keys retain their spelling. Use
-{OpenHAB::DSL::UI::ComponentBuilder#component component}, or its alias `c`, for custom widgets, Framework7 components,
-or other component names:
+{OpenHAB::DSL::UI::ComponentBuilder#component component}, or its alias `c`, for arbitrary component names. For personal
+widgets, {OpenHAB::DSL::UI::ComponentBuilder#widget widget} automatically prefixes the UID with `widget:`:
 
 ```ruby
 pages.build do
   layout_page "ruby_custom", label: "Custom" do
     masonry do
-      c "widget:my_card", config: { "my_item" => LivingRoomLight }
+      widget "my_card", config: { "my_item" => LivingRoomLight }
     end
   end
 end
@@ -1635,8 +1636,82 @@ end
 Access pages with `pages["ruby_home"]` and enumerate them with `pages.each`. Rebuilding a page updates it by default;
 `pages.build(update: false)` rejects existing UIDs. Pages created by this script are removed when it unloads, and can be
 removed explicitly with `pages.remove("ruby_home")`. Pages owned by MainUI, configuration files, or another script can
-be read but cannot be replaced or removed. Reusable widget definitions will be supported separately; existing custom
-widgets can be referenced now.
+be read but cannot be replaced or removed.
+
+### MainUI Widgets
+
+Create reusable MainUI widgets with {OpenHAB::Core::Widgets::Registry#build widgets.build}. Each widget has a UID,
+optional tags, a property schema, and exactly one root component. The root component is the widget itself; the builder
+does not add a wrapper component.
+
+```ruby
+widgets.build do
+  widget "light_card", tags: ["lighting"] do
+    props do
+      parameter :light_item, :text, label: "Light", context: "item", required: true
+      group :appearance, label: "Appearance" do
+        parameter :title, :text, label: "Title", default: "Light"
+      end
+    end
+
+    toggle_card item: "=props.light_item", title: "=props.title"
+  end
+end
+
+pages.build do
+  layout_page "lighting", label: "Lighting" do
+    masonry do
+      widget "light_card", config: { "light_item" => LivingRoomLight, "title" => "Living Room" }
+      widget "light_card", config: { "light_item" => KitchenLight, "title" => "Kitchen" }
+    end
+  end
+end
+```
+
+The `props` block uses the {OpenHAB::DSL::ConfigDescription::Builder#parameter parameter} DSL, including types,
+labels, defaults, required flags, numeric limits, options, item contexts, and filter criteria. Property names retain
+their spelling, including underscores. Reference them with MainUI expressions such as `=props.light_item`.
+{OpenHAB::DSL::Widgets::PropertiesBuilder#group group} blocks assign their parameters to a property group; groups cannot
+be nested. A group with `context: "action"` can provide MainUI action settings without declaring individual parameters.
+Widgets can omit `props`, define only groups, or append declarations with multiple `props` blocks.
+
+Use shared component helpers such as `card`, `toggle_card`, and `repeater` to build the widget.
+Generic `component` / `c` calls also support Framework7 and HTML roots, as well as references to other custom widgets.
+Declare slots inside the root component block:
+
+```ruby
+widgets.build do
+  widget "status_card" do
+    c "f7-card" do
+      slot("header") { c "span", content: "Status" }
+      slot("content") { label_card item: SystemStatus }
+    end
+  end
+end
+```
+
+The widget, property, group, and component blocks support explicit builder arguments. With one, the block retains its
+surrounding Ruby `self`, and the builder follows the current nested context:
+
+```ruby
+widgets.build do |b|
+  b.widget "light_card" do
+    b.props do
+      b.group :appearance do
+        b.parameter :title, :text, default: "Light"
+      end
+      b.parameter :light_item, :text, context: "item"
+    end
+    b.toggle_card item: "=props.light_item", title: "=props.title"
+  end
+end
+```
+
+Look up a definition with `widgets["light_card"]`, enumerate definitions with `widgets.each`, or remove an owned widget
+with `widgets.remove("light_card")`. Rebuilding updates an owned widget by default; `widgets.build(update: false)`
+rejects existing UIDs. Definitions disappear when their script unloads. MainUI widgets and widgets from other scripts
+can be read but cannot be replaced or removed. Page and widget UIDs belong to separate namespaces, so they can share a
+name without interfering with each other.
 
 ## File Based Rules
 
