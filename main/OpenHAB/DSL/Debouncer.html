@@ -4666,17 +4666,17 @@ False if there were no outstanding executions.</p>
       <pre class="lines">
 
 
-173
-174
 175
 176
 177
 178
 179
-180</pre>
+180
+181
+182</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/debouncer.rb', line 173</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/debouncer.rb', line 175</span>
 
 <span class="keyword">def</span> <span class="function">flush</span>
   <span class="instance-variable">@mutex</span>.synchronize <span class="keyword">do</span>
@@ -4733,12 +4733,12 @@ False if there were no outstanding executions.</p>
       <pre class="lines">
 
 
-187
-188
-189</pre>
+189
+190
+191</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/debouncer.rb', line 187</span>
+      <pre class="code"><span class="info file"># File 'lib/openhab/dsl/debouncer.rb', line 189</span>
 
 <span class="keyword">def</span> <span class="function">leading?</span>
   <span class="instance-variable">@leading</span>
@@ -4800,15 +4800,19 @@ of a new debounce period.</li>
 159
 160
 161
-162</pre>
+162
+163
+164</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/openhab/dsl/debouncer.rb', line 157</span>
 
 <span class="keyword">def</span> <span class="function">reset</span>
   <span class="instance-variable">@mutex</span>.synchronize <span class="keyword">do</span>
-    <span class="instance-variable">@last_timestamp</span> = <span class="instance-variable">@leading_timestamp</span> = <span class="instance-variable">@interval</span>.begin.ago - <span class="integer">1</span>.second <span class="keyword">if</span> leading?
-    <span class="instance-variable">@timer</span>&amp;.cancel
+    <span class="instance-variable">@last_timestamp</span> = <span class="instance-variable">@leading_timestamp</span> = <span class="predefined-constant">nil</span> <span class="keyword">if</span> leading?
+    cancelled = <span class="instance-variable">@timer</span>&amp;.cancel
+    <span class="instance-variable">@timer</span> = <span class="predefined-constant">nil</span>
+    cancelled
   <span class="keyword">end</span>
 <span class="keyword">end</span></pre>
     </td>
@@ -4821,7 +4825,7 @@ of a new debounce period.</li>
 </div>
 
         <footer>
-  Generated on Tue Nov 24 17:31:50 2026 by
+  Generated on Tue Nov 24 23:25:30 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.13).
 </footer>
