@@ -157,7 +157,9 @@ module OpenHAB
       def reset
         @mutex.synchronize do
           @last_timestamp = @leading_timestamp = nil if leading?
-          @timer&.cancel
+          cancelled = @timer&.cancel
+          @timer = nil
+          cancelled
         end
       end
 

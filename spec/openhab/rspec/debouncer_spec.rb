@@ -9,6 +9,7 @@ RSpec.describe "debouncer isolation" do
 
   after(:all) do
     OpenHAB::DSL.debouncers.remove("rspec-debouncer-isolation")
+    OpenHAB::DSL.debouncers.remove("rspec-trailing-debouncer-isolation")
   end
   # rubocop:enable RSpec/BeforeAfterAll
 
@@ -18,6 +19,15 @@ RSpec.describe "debouncer isolation" do
 
       debounce(for: 1.hour, leading: true, id: "rspec-debouncer-isolation") { called = true }
 
+      expect(called).to be true
+    end
+
+    it "uses the initial interval for cached trailing debouncers before each example" do
+      called = false
+      debounce(for: 100.ms, idle_time: 500.ms, id: "rspec-trailing-debouncer-isolation") { called = true }
+      expect(called).to be false
+
+      time_travel_and_execute_timers(110.ms)
       expect(called).to be true
     end
   end
@@ -64,6 +74,41 @@ RSpec.describe "debouncer isolation" do
         persistent_rule.trigger
         persistent_rule.trigger
 
+        expect(executions).to eq [true]
+      end
+    end
+  end
+
+  context "with a persistent trailing edge rule" do
+    # rubocop:disable-next RSpec/LeakyLocalVariable -- observe the same persistent rule across examples
+    executions = []
+    let(:persistent_rule) { rules["rspec-trailing-rule-debouncer-isolation"] }
+
+    # rubocop:disable RSpec/BeforeAfterAll
+    before(:all) do
+      rule id: "rspec-trailing-rule-debouncer-isolation" do
+        every :day
+        debounce for: 100.ms, idle_time: 500.ms
+        run { executions << true }
+      end
+    end
+
+    after(:all) do
+      rules.remove("rspec-trailing-rule-debouncer-isolation")
+    end
+    # rubocop:enable RSpec/BeforeAfterAll
+
+    before do
+      executions.clear
+      Timecop.freeze(2000, 1, 1)
+    end
+
+    2.times do
+      it "uses the initial interval before each example even with a longer idle time" do
+        persistent_rule.trigger
+        expect(executions).to be_empty
+
+        time_travel_and_execute_timers(110.ms)
         expect(executions).to eq [true]
       end
     end

@@ -401,6 +401,20 @@ RSpec.describe OpenHAB::DSL::Debouncer do
   end
 
   describe "#reset" do
+    it "uses the initial interval after resetting a trailing debouncer with a longer idle time" do
+      counter = 0
+      debouncer = described_class.new(for: 100.ms, idle_time: 500.ms)
+      debouncer.call { counter += 1 }
+
+      expect(debouncer.reset).to be true
+      expect(debouncer.reset).to be_nil
+
+      debouncer.call
+      time_travel_and_execute_timers(110.ms)
+
+      expect(counter).to eq 1
+    end
+
     it "starts a new leading edge cycle when the clock moves backwards after reset" do
       counter = 0
       debouncer = described_class.new(for: 100.ms, leading: true, idle_time: 1.second)
