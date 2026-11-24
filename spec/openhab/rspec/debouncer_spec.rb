@@ -21,4 +21,16 @@ RSpec.describe "debouncer isolation" do
       expect(called).to be true
     end
   end
+
+  context "when an example freezes time in the past" do
+    before { Timecop.freeze(2000, 1, 1) }
+
+    it "starts a fresh leading edge debounce cycle" do
+      called = false
+
+      debounce(for: 1.hour, leading: true, id: "rspec-debouncer-isolation") { called = true }
+
+      expect(called).to be true
+    end
+  end
 end

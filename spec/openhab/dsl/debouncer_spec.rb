@@ -375,6 +375,19 @@ RSpec.describe OpenHAB::DSL::Debouncer do
   end
 
   describe "#reset" do
+    it "starts a new leading edge cycle when the clock moves backwards after reset" do
+      counter = 0
+      debouncer = described_class.new(for: 100.ms, leading: true, idle_time: 1.second)
+      debouncer.call { counter += 1 }
+      debouncer.reset
+
+      Timecop.freeze(1999, 1, 1)
+      debouncer.call
+      debouncer.call
+
+      expect(counter).to eq 2
+    end
+
     it "cancels outstanding trailing events" do
       captured = []
       debouncer = described_class.new(for: 100.ms)

@@ -156,7 +156,7 @@ module OpenHAB
       #
       def reset
         @mutex.synchronize do
-          @last_timestamp = @leading_timestamp = @interval.begin.ago - 1.second if leading?
+          @last_timestamp = @leading_timestamp = nil if leading?
           @timer&.cancel
         end
       end
@@ -210,8 +210,10 @@ module OpenHAB
 
       def leading_edge_debounce(now)
         @mutex.synchronize do
-          next if too_soon?(now)
-          next unless idle?(now) || max_interval?(now)
+          if @leading_timestamp
+            next if too_soon?(now)
+            next unless idle?(now) || max_interval?(now)
+          end
 
           @leading_timestamp = now
           call!

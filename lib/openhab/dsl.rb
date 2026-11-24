@@ -496,6 +496,8 @@ module OpenHAB
     # @!visibility private
     def debounce(for:, leading: false, idle_time: nil, id: nil, &block)
       interval = binding.local_variable_get(:for)
+      raise ArgumentError, "Debounce interval cannot be nil" if interval.nil?
+
       id ||= block.source_location
       DSL.debouncers.compute(id) do |_key, debouncer|
         debouncer ||= Debouncer.new(for: interval, leading:, idle_time:)
