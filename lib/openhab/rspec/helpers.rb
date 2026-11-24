@@ -522,7 +522,7 @@ module OpenHAB
         return false if loaded[key]
 
         logger.info { "Loading script '#{key}'" }
-        load file
+        DSL::ThreadLocal.thread_local(**DSL::ThreadLocal.persist) { load file }
         loaded[key] = true
       end
 
