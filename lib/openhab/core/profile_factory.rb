@@ -120,7 +120,8 @@ module OpenHAB
         @uri_to_uid = {}
 
         @registration = OSGi.register_service(self)
-        ScriptHandling.script_unloaded { unregister }
+        @unload_hook = proc { unregister }
+        ScriptHandling.script_unloaded(&@unload_hook)
       end
 
       #
@@ -130,6 +131,7 @@ module OpenHAB
       # @return [void]
       #
       def unregister
+        ScriptHandlingCallbacks.script_unloaded_hooks[0].delete(@unload_hook)
         @registration.unregister
       end
 

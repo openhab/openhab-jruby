@@ -64,7 +64,7 @@ module OpenHAB
           # rubocop:enable Naming/MethodName
 
           def unregister
-            clear
+            super
             @registration.unregister
           end
 
