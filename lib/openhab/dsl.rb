@@ -10,7 +10,7 @@ require_relative "core"
 
 Dir[File.expand_path("dsl/**/*.rb", __dir__)].each do |f|
   # some files are excluded because they're autoloaded
-  require f unless f.include?("/rules/") || f =~ %r{dsl/(items|sitemaps|things)/builder.rb$}
+  require f unless f.include?("/rules/") || f =~ %r{dsl/(items|sitemaps|things)/builder(?:/|\.rb$)}
 end
 
 require_relative "core_ext"
