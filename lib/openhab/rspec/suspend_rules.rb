@@ -7,6 +7,10 @@ module OpenHAB
       # I'd prefer to prepend a module, but I can't because of
       # https://github.com/jruby/jruby/issues/6966#issuecomment-1172983776
       class ::OpenHAB::DSL::Rules::AutomationRule # rubocop:disable Style/ClassAndModuleChildren
+        def reset_debouncer
+          @debouncer.reset if @debouncer.interval
+        end
+
         def execute(mod = nil, inputs = nil)
           if SuspendRules.suspended?
             logger.trace { "Skipping execution of #{uid} because rules are suspended." }
