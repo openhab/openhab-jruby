@@ -2,10 +2,13 @@
 
 # Execute these functions on start
 
+require "rbconfig"
+
 require_relative "openhab"
 
 def openhab_deploy
-  system("rake openhab:deploy 1>/dev/null 2>/dev/null") || raise("Error Deploying Libraries")
+  system(RbConfig.ruby, File.expand_path("../../bin/rake", __dir__), "openhab:deploy") ||
+    raise("Error Deploying Libraries")
 end
 
 def prepare_openhab

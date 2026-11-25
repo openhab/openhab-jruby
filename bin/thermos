@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# This file loads Thermos without loading other gems in the Gemfile in order to be fast.
+# It gets overwritten when you run the `thermos binstub` command.
+
+unless defined?(OpenHAB::Thermos::Client) || (defined?(OpenHAB::Thermos.context) && OpenHAB::Thermos.context)
+  require "bundler"
+
+  spec = Bundler.locked_gems.specs.find { |candidate| candidate.name == "openhab-scripting" }
+  if spec
+    Gem.use_paths Gem.dir, Bundler.bundle_path.to_s, *Gem.path
+    installed = Gem::Specification.find_all_by_name("openhab-scripting", spec.version.to_s).first
+    library = if installed
+                File.join(installed.full_gem_path, "lib")
+              elsif spec.source.respond_to?(:path)
+                File.expand_path("lib", spec.source.path.expand_path(Bundler.root))
+              end
+    $LOAD_PATH.unshift(library) if library
+  end
+  require "openhab/thermos/binstub"
+end

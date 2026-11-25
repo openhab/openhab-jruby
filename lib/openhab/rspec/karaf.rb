@@ -204,6 +204,10 @@ module OpenHAB
             resolver = org.apache.karaf.main.util.SimpleMavenResolver.new(bundle_dirs)
             self.classLoader = send_private(:createClassLoader, resolver)
             factory = send_private(:loadFrameworkFactory, classLoader)
+            if defined?(OpenHAB::Thermos::Runtime) && OpenHAB::Thermos::Runtime.active?
+              # Keep the launcher's JRuby extension jars out of addon runtimes.
+              config.props.put("org.osgi.framework.bundle.parent", "ext")
+            end
             self.framework = factory.new_framework(config.props)
 
             send_private(:setLogger)
@@ -278,6 +282,15 @@ module OpenHAB
             field.set(fs, Mocks::BundleInstallSupport.new(fs.installSupport, self))
           end
           wait_for_service("org.osgi.service.cm.ConfigurationAdmin") do |ca|
+            if defined?(OpenHAB::Thermos::Runtime) && OpenHAB::Thermos::Runtime.active?
+              # The addon supplies engines; only the client should load automation files.
+              watcher = ca.get_configuration(
+                "org.openhab.automation.jrubyscripting.internal.watch.JRubyScriptFileWatcher", nil
+              )
+              properties = watcher.properties || java.util.Hashtable.new
+              properties.put("osgi.ds.satisfying.condition.target", "(osgi.condition.id=openhab.rspec.disabled)")
+              watcher.update(properties)
+            end
             # register a listener, so that we can know if the Start Level Service is busted
             bundle = org.osgi.framework.FrameworkUtil.get_bundle(ca.java_class)
             listener = org.osgi.service.cm.ConfigurationListener.impl do |_method, event|
@@ -368,6 +381,9 @@ module OpenHAB
       private_constant :ALLOWED_BUNDLES
 
       BLOCKED_COMPONENTS = {
+        "org.openhab.automation.jrubyscripting" => %w[
+          org.openhab.automation.jrubyscripting.internal.watch.JRubyScriptFileWatcher
+        ].freeze,
         "org.openhab.core" => %w[
           org.openhab.core.addon.AddonEventFactory
           org.openhab.core.binding.i18n.BindingI18nLocalizationService
@@ -607,6 +623,11 @@ module OpenHAB
       end
 
       def blocked_bundle?(bundle)
+        if defined?(OpenHAB::Thermos::Runtime) && OpenHAB::Thermos::Runtime.active? &&
+           bundle.symbolic_name == "org.openhab.automation.jrubyscripting"
+          return false
+        end
+
         return false if ALLOWED_BUNDLES.include?(bundle.symbolic_name)
 
         BLOCKED_COMPONENTS.fetch(bundle.symbolic_name, false).nil? ||

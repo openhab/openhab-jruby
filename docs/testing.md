@@ -22,7 +22,7 @@ use the same version of JRuby that openHAB is using internally.
 - Either create an empty directory, or use `$OPENHAB_CONF` itself (the former
    is untested)
 - Create a `Gemfile`, with the following contents (you can configure your actual
-  openHAB Gemfile to point here, ensure both environments stay in sync):
+  openHAB Gemfile to point here to ensure both environments stay in sync):
 
 ```ruby
 source "https://rubygems.org"
@@ -87,6 +87,58 @@ end
 ```
 
 - Run your specs: `bundle exec rspec`
+
+### Reusing a background runtime with Thermos
+
+Thermos is a preloader based on Spring, and might be familiar if you have
+used Rails before.
+
+To keep openHAB running between spec runs, install a project launcher and enable
+your RSpec binstub:
+
+```shell
+bundle exec thermos binstub rspec
+```
+
+This creates `bin/thermos` and adds its loader to `bin/rspec`.
+
+Then run `bin/rspec` with your usual RSpec arguments. The first invocation starts
+an openHAB server in the background. Subsequent invocations reuse that runtime.
+
+Each RSpec invocation creates a fresh engine inside the shared openHAB instance,
+installs the test helpers, and loads autorequires, transformations, rules, and
+specs in that engine. Spec runs execute sequentially against the shared
+openHAB instance; Ruby globals and loaded files belong to the individual engine,
+but changes to the openHAB enviornment may persist, so make sure to clean up after
+yourself in user written specs.
+
+```shell
+bin/thermos server --background
+bin/thermos status
+bin/thermos version
+bin/thermos stop
+DISABLE_THERMOS=1 bin/rspec
+```
+
+Clients can use CRuby for convencience and faster startup. When starting a server from CRuby,
+Thermos locates the JRuby embedded in the jrubyscripting addon and launches it
+using `$JAVA_HOME/bin/java` (or `java` on `$PATH`). If no addon
+is found, start the server with an installed JRuby instead. The embedded launcher
+clears CRuby gem paths and startup options. It reads `gem_home` from the addon’s persisted
+settings in `$OPENHAB_USERDATA/config/org/openhab/automation/jrubyscripting.config`
+and `$OPENHAB_CONF/services/*.cfg` expanding the addon’s Ruby version placeholders.
+When unset, the addon default is `$OPENHAB_CONF/automation/ruby/.gem/<JRuby version>`.
+An explicitly empty setting leaves JRuby’s default gem paths in use.
+
+`thermos server` starts the server in the foreground; add `--background`
+to start it without running a command.
+
+Stop the server before rebuilding or refreshing the test instance, and restart
+it after changing boot configuration, the Gemfile, or helper library code.
+You can also run specs directly with `bundle exec thermos rspec`.
+Use `thermos binstub --remove --all` to remove the generated loaders.
+The normal spec runner remains available through `bundle exec rspec` or by setting
+`DISABLE_THERMOS=1`.
 
 ### Maintaining the test instance
 
@@ -218,6 +270,18 @@ OpenHAB::Transform::Ruby.compass("59 °")
 
 They're loaded into a sub-JRuby engine, just like they run in openHAB.
 
+## Standalone specs
+
+The library's client and transport specs can run under CRuby or JRuby without
+starting openHAB:
+
+```shell
+bin/rake spec:standalone
+```
+
+This task skips the repository's `.rspec` auto-requires. CI runs it under CRuby
+in the Thermos matrix jobs.
+
 ## IRB
 
 If you would like to use a REPL sandbox to play with your items,
@@ -246,3 +310,6 @@ end
 
 IRB.start(__FILE__)
 ```
+
+You can also use Thermos to speed up launching IRB by running
+`bin/thermos binstub --all` once after creating `bin/console`.
